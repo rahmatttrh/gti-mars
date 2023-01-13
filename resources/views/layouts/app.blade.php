@@ -13,9 +13,10 @@
       <link href="{{asset('css/tabler-payments.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/tabler-vendors.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/demo.min.css')}}" rel="stylesheet"/>
+      
    </head>
    <body>
-         <div class="wrapper">
+         <div class="wrapper" >
             <header class="navbar navbar-expand-md navbar-light d-print-none">
                <div class="container-xl">
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
@@ -63,7 +64,7 @@
                      </div> --}}
                      <div class="nav-item dropdown">
                      <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url(./static/avatars/000m.jpg)"></span>
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('static/avatars/000m.jpg')}})"></span>
                         <div class="d-none d-xl-block ps-2">
                            <div>Super Admin</div>
                            <div class="mt-1 small text-muted">Developer</div>
@@ -96,7 +97,7 @@
             </header>
             @include('layouts.navbar')
 
-            <div class="page-wrapper">
+            <div class="page-wrapper" style="min-height: 100vh">
                @yield('content')
                <footer class="footer footer-transparent d-print-none">
                   <div class="container-xl">
@@ -225,11 +226,43 @@
                </div>
             </div>
          </div>
+         <script src="{{asset('js/core/jquery.3.2.1.min.js')}}"></script>
+         <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
          <!-- Libs JS -->
          <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
          <!-- Tabler Core -->
          <script src="{{asset('js/tabler.min.js')}}"></script>
          <script src="{{asset('js/demo.min.js')}}"></script>
+
+         <script>
+            $(document).ready(function() {
+               $('.basic-datatables').DataTable( {
+                  "lengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
+                  "pageLength": 10,
+                  initComplete: function () {
+                     this.api().columns().every( function () {
+                        var column = this;
+                        var select = $('<select class="form-control-sm "><option value=""></option></select>')
+                        .appendTo( $(column.footer()).empty() )
+                        // .appendTo( $(column.header()).empty())
+                        .on( 'change', function () {
+                              var val = $.fn.dataTable.util.escapeRegex(
+                                 $(this).val()
+                                 );
+
+                              column
+                              .search( val ? '^'+val+'$' : '', true, false )
+                              .draw();
+                        } );
+
+                        column.data().unique().sort().each( function ( d, j ) {
+                              select.append( '<option value="'+d+'">'+d+'</option>' )
+                        } );
+                     } );
+                  }
+            });
+            });
+         </script>
          <script>
             // @formatter:off
             document.addEventListener("DOMContentLoaded", function () {
