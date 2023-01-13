@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\PortController;
+use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\VesselController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+   Route::prefix('schedule')->group(function () {
+      Route::get('index', [ScheduleController::class, 'index'])->name('schedule');
+   });
+   Route::prefix('vessel')->group(function () {
+      Route::get('index', [VesselController::class, 'index'])->name('vessel');
+   });
+   Route::prefix('port')->group(function () {
+      Route::get('index', [PortController::class, 'index'])->name('port');
+   });
 });
 
 
