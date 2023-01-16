@@ -21,10 +21,10 @@
                   New view
                   </a>
                </span> --}}
-               <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-report">
+               <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-add-port">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                  Create new schedule
+                  Create new port
                </a>
                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -38,279 +38,30 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="card">
-            
-            <div class="card-body border-bottom py-3">
-               <div class="d-flex">
-                  <div class="text-muted">
-                     Show
-                     <div class="mx-2 d-inline-block">
-                     <input type="text" class="form-control form-control-sm" value="8" size="3" aria-label="Invoices count">
+            {{-- <div class="card-header">
+              <h3 class="card-title">People</h3>
+            </div> --}}
+            <div class="list-group list-group-flush ">
+              {{-- <div class="list-group-header sticky-top">A</div> --}}
+               @foreach ($ports as $port)
+                  <div class="list-group-item">
+                     <div class="row">
+                        <div class="col-auto">
+                        <a href="#">
+                           <span class="avatar" style="background-image: url(./static/avatars/023f.jpg)"><!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="11" r="3" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg></span>
+                        </a>
+                        </div>
+                        <div class="col text-truncate">
+                        <a href="#" class="text-body d-block">{{$port->name}}</a>
+                        <div class="text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                        </div>
                      </div>
-                     entries
                   </div>
-                  <div class="ms-auto text-muted">
-                     Search:
-                     <div class="ms-2 d-inline-block">
-                     <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                     </div>
-                  </div>
-               </div>
+               @endforeach
             </div>
-            <div class="table-responsive">
-               <table class="table card-table table-vcenter text-nowrap datatable">
-                  <thead>
-                     <tr>
-                     <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
-                        
-                     </th>
-                     <th>Vessel name</th>
-                     <th>Owner</th>
-                     {{-- <th>Operator</th> --}}
-                     <th>Destination</th>
-                     <th>Date</th>
-                     <th>Time</th>
-                     <th></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>1</td>
-                        <td><span class="text-muted">Triton Jawara</span></td>
-                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Triton Global Maritim</a></td>
-                        {{-- <td>
-                           <span class="flag flag-country-us"></span>
-                           Triton Global Marindo
-                        </td> --}}
-                        <td>
-                           Cinta-T
-                        </td>
-                        <td>
-                           15 Dec 2017
-                        </td>
-                        <td>09:00 WIB</td>
-                        {{-- <td>
-                           <span class="badge bg-success me-1"></span> Paid
-                        </td> --}}
-                        <td >
-                           {{-- <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                              </div>
-                           </div> --}}
-                           <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-start">
-                              <a class="dropdown-item" href="#">
-                                 Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                 Another action
-                              </a>
-                              </div>
-                           </span>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>1</td>
-                        <td><span class="text-muted">Triton Jawara</span></td>
-                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Triton Global Maritim</a></td>
-                        {{-- <td>
-                           <span class="flag flag-country-us"></span>
-                           Triton Global Marindo
-                        </td> --}}
-                        <td>
-                           Cinta-T
-                        </td>
-                        <td>
-                           15 Dec 2017
-                        </td>
-                        <td>09:00 WIB</td>
-                        {{-- <td>
-                           <span class="badge bg-success me-1"></span> Paid
-                        </td> --}}
-                        <td >
-                           {{-- <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                              </div>
-                           </div> --}}
-                           <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-start">
-                              <a class="dropdown-item" href="#">
-                                 Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                 Another action
-                              </a>
-                              </div>
-                           </span>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>1</td>
-                        <td><span class="text-muted">Triton Jawara</span></td>
-                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Triton Global Maritim</a></td>
-                        {{-- <td>
-                           <span class="flag flag-country-us"></span>
-                           Triton Global Marindo
-                        </td> --}}
-                        <td>
-                           Cinta-T
-                        </td>
-                        <td>
-                           15 Dec 2017
-                        </td>
-                        <td>09:00 WIB</td>
-                        {{-- <td>
-                           <span class="badge bg-success me-1"></span> Paid
-                        </td> --}}
-                        <td >
-                           {{-- <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                              </div>
-                           </div> --}}
-                           <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-start">
-                              <a class="dropdown-item" href="#">
-                                 Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                 Another action
-                              </a>
-                              </div>
-                           </span>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>1</td>
-                        <td><span class="text-muted">Triton Jawara</span></td>
-                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Triton Global Maritim</a></td>
-                        {{-- <td>
-                           <span class="flag flag-country-us"></span>
-                           Triton Global Marindo
-                        </td> --}}
-                        <td>
-                           Cinta-T
-                        </td>
-                        <td>
-                           15 Dec 2017
-                        </td>
-                        <td>09:00 WIB</td>
-                        {{-- <td>
-                           <span class="badge bg-success me-1"></span> Paid
-                        </td> --}}
-                        <td >
-                           {{-- <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                              </div>
-                           </div> --}}
-                           <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-start">
-                              <a class="dropdown-item" href="#">
-                                 Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                 Another action
-                              </a>
-                              </div>
-                           </span>
-                        </td>
-                     </tr>
-                     <tr>
-                        <td>1</td>
-                        <td><span class="text-muted">Triton Jawara</span></td>
-                        <td><a href="invoice.html" class="text-reset" tabindex="-1">Triton Global Maritim</a></td>
-                        {{-- <td>
-                           <span class="flag flag-country-us"></span>
-                           Triton Global Marindo
-                        </td> --}}
-                        <td>
-                           Cinta-T
-                        </td>
-                        <td>
-                           15 Dec 2017
-                        </td>
-                        <td>09:00 WIB</td>
-                        {{-- <td>
-                           <span class="badge bg-success me-1"></span> Paid
-                        </td> --}}
-                        <td >
-                           {{-- <div class="dropdown">
-                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              Dropdown button
-                              </button>
-                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="#">Action</a>
-                              <a class="dropdown-item" href="#">Another action</a>
-                              <a class="dropdown-item" href="#">Something else here</a>
-                              </div>
-                           </div> --}}
-                           <span class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                              <div class="dropdown-menu dropdown-menu-start">
-                              <a class="dropdown-item" href="#">
-                                 Action
-                              </a>
-                              <a class="dropdown-item" href="#">
-                                 Another action
-                              </a>
-                              </div>
-                           </span>
-                        </td>
-                     </tr>
-                  
-                  </tbody>
-               </table>
-            </div>
-            <div class="card-footer d-flex align-items-center">
-              <p class="m-0 text-muted">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
-              <ul class="pagination m-0 ms-auto">
-                <li class="page-item disabled">
-                  <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                    <!-- Download SVG icon from http://tabler-icons.io/i/chevron-left -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="15 6 9 12 15 18" /></svg>
-                    prev
-                  </a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item active"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    next <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="9 6 15 12 9 18" /></svg>
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+         </div>
       </div>
    </div>
+   <x-modal.add-port />
 @endsection
