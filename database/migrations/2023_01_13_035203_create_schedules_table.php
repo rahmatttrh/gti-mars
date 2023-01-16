@@ -6,26 +6,32 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSchedulesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('schedules', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   /**
+    * Run the migrations.
+    *
+    * @return void
+    */
+   public function up()
+   {
+      Schema::create('schedules', function (Blueprint $table) {
+         $table->id();
+         $table->mediumInteger('vessel_id');
+         $table->mediumInteger('port_id');
+         $table->mediumInteger('cargo_id')->nullable();
+         $table->smallInteger('status');
+         $table->dateTime('departure');
+         $table->dateTime('arrival');
+         $table->timestamps();
+      });
+   }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('schedules');
-    }
+   /**
+    * Reverse the migrations.
+    *
+    * @return void
+    */
+   public function down()
+   {
+      Schema::dropIfExists('schedules');
+   }
 }

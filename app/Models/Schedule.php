@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Schedule extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function vessel()
+   {
+      return $this->belongsTo(Vessel::class);
+   }
+
+   public function port()
+   {
+      return $this->belongsTo(Port::class);
+   }
 }

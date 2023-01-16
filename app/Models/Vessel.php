@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vessel extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function shcedules()
+   {
+      return $this->hasMany(Schedule::class);
+   }
 }

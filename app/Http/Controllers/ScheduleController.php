@@ -2,12 +2,37 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Port;
+use App\Models\Schedule;
+use App\Models\Vessel;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
    public function index()
    {
-      return view('pages.schedule.index');
+      $schedules = Schedule::get();
+      $vessels = Vessel::get();
+      $ports = Port::get();
+      return view('pages.schedule.index', [
+         'schedules' => $schedules,
+         'vessels' => $vessels,
+         'ports' => $ports
+      ])->with('i');
+   }
+
+   public function store(Request $req)
+   {
+      $req->validate([]);
+
+      Schedule::create([
+         'vessel_id' => $req->vessel,
+         'port_id' => $req->port,
+         'status' => 1,
+         'departure' => $req->departure,
+         'arrival' => $req->arrival
+      ]);
+
+      return redirect()->back()->with('success', 'Schedule successfuly added');
    }
 }

@@ -233,12 +233,12 @@
          <!-- Tabler Core -->
          <script src="{{asset('js/tabler.min.js')}}"></script>
          <script src="{{asset('js/demo.min.js')}}"></script>
-
+         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
          <script>
             $(document).ready(function() {
                $('.basic-datatables').DataTable( {
                   "lengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
-                  "pageLength": 10,
+                  "pageLength": 3,
                   initComplete: function () {
                      this.api().columns().every( function () {
                         var column = this;
@@ -263,6 +263,33 @@
             });
             });
          </script>
+
+         @if (session('success'))
+         
+         <script>
+            $(document).ready(function() {
+               // import Swal from 'sweetalert2'
+
+               // CommonJS
+               // const Swal = require('sweetalert2')
+               Swal.fire(
+               'Success!',
+               '{{ Session::get('success') }}',
+               'success'
+               )
+               // Swal.fire({
+               //    title: 'Success!',
+               //    text: '{{ Session::get('success') }}',
+               //    icon: 'error',
+               //    confirmButtonText: 'Cool'
+               //    })
+               
+            });
+         </script>
+         @endif
+
+
+
          <script>
             // @formatter:off
             document.addEventListener("DOMContentLoaded", function () {

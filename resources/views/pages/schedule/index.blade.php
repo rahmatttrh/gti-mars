@@ -6,12 +6,12 @@
          <div class="row align-items-center">
             <div class="col">
             <!-- Page pre-title -->
-            <div class="page-pretitle">
-               Overview
-            </div>
-            <h2 class="page-title">
-               Vessel Schedule
-            </h2>
+               <div class="page-pretitle">
+                  Overview
+               </div>
+               <h2 class="page-title">
+                  Vessel Schedule
+               </h2>
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
@@ -54,57 +54,50 @@
                         <th>Arrival</th>
                         <th>Status</th>
                         <th>Cargo</th>
-                        {{-- <th></th> --}}
+                        <th></th>
                         {{-- <th></th> --}}
                      </tr>
                   </thead>
                   <tbody>
-
-                     <tr>
-                        <td class="text-muted text-center"><small>1</small></td>
-                        <td><span class="">Triton Jawara</span></td>
-                        {{-- <td><a href="invoice.html" class="text-muted" tabindex="-1">Triton Global Maritim</a></td> --}}
-                        <td class="text-muted">
-                           Cinta-T
-                        </td>
-                        <td class="text-muted">
-                           15 Dec 2017, 09:00 WIB
-                        </td>
-                        <td class="text-muted">
-                           15 Dec 2017, 09:00 WIB
-                        </td>
-                         <td>
-                           <span class="badge bg-success me-1"></span> Boarding
-                        </td>
-                        <td><small>145M2/300M2</small> <div class="progress progress-xs">
-                           <div class="progress-bar bg-primary" style="width: 71.0%"></div>
-                         </div></td>
-                      
-                     </tr>
-
-                     <tr>
-                        <td class="text-muted text-center"><small>2</small></td>
-                        <td><span class="">Triton Jawara</span></td>
-                        {{-- <td><a href="invoice.html" class="text-muted" tabindex="-1">Triton Global Maritim</a></td> --}}
-                        <td class="text-muted">
-                           Cinta-T
-                        </td>
-                        <td class="text-muted">
-                           15 Dec 2017, 09:00 WIB
-                        </td>
-                        <td class="text-muted">
-                           15 Dec 2017, 09:00 WIB
-                        </td>
-                         <td>
-                           <span class="badge bg-success me-1"></span> Boarding
-                        </td>
-                        <td><small>175M2/350M2</small> <div class="progress progress-xs">
-                           <div class="progress-bar bg-primary" style="width: 55.0%"></div>
-                         </div></td>
-                      
-                     </tr>
-                    
-                  
+                     @foreach ($schedules as $schedule)
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td><span class="">{{$schedule->vessel->name}}</span></td>
+                           <td class="text-muted">
+                              {{$schedule->port->name}}
+                           </td>
+                           <td class="text-muted">
+                              {{-- 15 Dec 2017, 09:00 WIB --}}
+                              {{$schedule->departure}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->arrival}}
+                           </td>
+                           <td>
+                              <span class="badge bg-success me-1"></span> Boarding
+                           </td>
+                           <td><small>145M2/300M2</small> <div class="progress progress-xs">
+                              <div class="progress-bar bg-primary" style="width: 71.0%"></div>
+                           </div>
+                           </td>
+                           <td>
+                              <div class="dropdown">
+                                 <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                 Actions
+                                 </button>
+                                 <div class="dropdown-menu dropdown-menu-end">
+                                 <a class="dropdown-item" href="#">
+                                    Action
+                                 </a>
+                                 <a class="dropdown-item" href="#">
+                                    Another action
+                                 </a>
+                                 </div>
+                              </div>
+                           </td>
+                        
+                        </tr>
+                     @endforeach
                   </tbody>
                </table>
             </div>
@@ -112,5 +105,5 @@
       </div>
    </div>
 
-   <x-modal.add-schedule />
+   <x-modal.add-schedule :vessels="$vessels" :ports="$ports" />
 @endsection
