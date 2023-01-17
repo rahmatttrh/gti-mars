@@ -27,12 +27,23 @@ class ScheduleController extends Controller
 
       Schedule::create([
          'vessel_id' => $req->vessel,
-         'port_id' => $req->port,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
          'status' => 1,
          'departure' => $req->departure,
          'arrival' => $req->arrival
       ]);
 
       return redirect()->back()->with('success', 'Schedule successfuly added');
+   }
+
+   public function detail($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+
+      return view('pages.schedule.detail', [
+         'schedule' => $schedule
+      ]);
    }
 }

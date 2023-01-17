@@ -9,7 +9,7 @@
             @csrf
             <div class="modal-body">
                <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                      <div class="form-group mb-3 ">
                         <label class="form-label">Vessel</label>
                         <div >
@@ -22,7 +22,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-md-6">
+                  {{-- <div class="col-md-6">
                      <div class="form-group mb-3 ">
                         <label class="form-label">Location</label>
                         <div >
@@ -33,10 +33,34 @@
                            </select>
                         </div>
                      </div>
-                  </div>
+                  </div> --}}
                </div>
 
                <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group mb-3 ">
+                        <label class="form-label">Origin</label>
+                        <div >
+                           <select name="origin" id="origin" class="form-select">
+                              @foreach ($ports as $port)
+                                 <option value="{{$port->id}}">{{$port->name}}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group mb-3 ">
+                        <label class="form-label">Destination</label>
+                        <div >
+                           <select name="destination" id="destination" class="form-select">
+                              @foreach ($ports as $port)
+                                 <option value="{{$port->id}}">{{$port->name}}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                     </div>
+                  </div>
                   <div class="col-md-6">
                      <div class="mb-3">
                         <label class="form-label">Departure</label>

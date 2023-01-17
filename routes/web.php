@@ -21,6 +21,7 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('schedule')->group(function () {
       Route::get('index', [ScheduleController::class, 'index'])->name('schedule');
       Route::post('store', [ScheduleController::class, 'store'])->name('schedule.store');
+      Route::get('detail/{schedule:id}', [ScheduleController::class, 'detail'])->name('schedule.detail');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');

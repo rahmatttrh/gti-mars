@@ -70,10 +70,13 @@
                </a>
                <div class="dropdown-menu">
                   <a class="dropdown-item" href="{{route('schedule')}}" >
-                     Schedule
+                     Schedule Fixed
+                  </a>
+                  <a class="dropdown-item" href="{{route('schedule')}}" >
+                     Schedule Request
                   </a>
                   <a class="dropdown-item" href="#" >
-                     History
+                     Schedule History
                   </a>
                </div>
             </li>

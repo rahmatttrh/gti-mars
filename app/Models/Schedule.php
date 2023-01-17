@@ -15,8 +15,18 @@ class Schedule extends Model
       return $this->belongsTo(Vessel::class);
    }
 
-   public function port()
+   public function origin()
    {
       return $this->belongsTo(Port::class);
    }
+
+   public function destination()
+   {
+      return $this->belongsTo(Port::class);
+   }
+
+   // public function port()
+   // {
+   //    return $this->belongsTo(Port::class);
+   // }
 }

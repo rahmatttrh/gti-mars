@@ -38,7 +38,7 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         <div class="row row-deck row-cards">
+         {{-- <div class="row row-deck row-cards">
             <div class="col-sm-6 col-lg-3">
                <div class="card">
                   <div class="card-body">
@@ -160,7 +160,7 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> --}}
          <div class="row mt-1 row-cards">
             <div class="col-lg-7">
                <div class="card mb-2">
@@ -659,10 +659,10 @@
                          </div>
                          <div class="col">
                            <div class="font-weight-medium">
-                             132 Sales
+                             132 Logistic
                            </div>
                            <div class="text-muted">
-                             12 waiting payments
+                             12 waiting
                            </div>
                          </div>
                        </div>
@@ -681,10 +681,10 @@
                          </div>
                          <div class="col">
                            <div class="font-weight-medium">
-                             1352 Members
+                             13 Vessel
                            </div>
                            <div class="text-muted">
-                             163 registered today
+                             163 today
                            </div>
                          </div>
                        </div>
@@ -702,7 +702,7 @@
                          </div>
                          <div class="col">
                            <div class="font-weight-medium">
-                             623 Shares
+                             8 Port
                            </div>
                            <div class="text-muted">
                              16 today

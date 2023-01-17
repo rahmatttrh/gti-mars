@@ -42,14 +42,14 @@
             
       
             <div class="table-responsive">
-               <table class="table card-table table-vcenter ">
+               <table class="table card-table table-vcenter " >
                   <thead>
                      <tr>
                         <th class="text-center w-1">No.</th>
                         <th>Vessel name</th>
-                        {{-- <th>Owner</th> --}}
+                        {{-- <th>Rute</th> --}}
                         {{-- <th>Operator</th> --}}
-                        <th>Destination</th>
+                        {{-- <th>Destination</th> --}}
                         <th>Departure</th>
                         <th>Arrival</th>
                         <th>Status</th>
@@ -63,17 +63,22 @@
                         <tr>
                            <td class="text-muted text-center"><small>{{++$i}}</small></td>
                            <td><span class="">{{$schedule->vessel->name}}</span></td>
-                           <td class="text-muted">
-                              {{$schedule->port->name}}
-                           </td>
+                           {{-- <td class="text-muted">
+                              {{$schedule->origin->name}} - {{$schedule->destination->name}}
+                           </td> --}}
+                           {{-- <td class="text-muted">
+                              {{$schedule->destination->name}}
+                           </td> --}}
                            <td class="text-muted">
                               {{-- 15 Dec 2017, 09:00 WIB --}}
+                              {{$schedule->origin->name}} <br>
                               {{$schedule->departure}}
                            </td>
                            <td class="text-muted">
+                              {{$schedule->destination->name}} <br>
                               {{$schedule->arrival}}
                            </td>
-                           <td>
+                           <td class="text-muted">
                               <span class="badge bg-success me-1"></span> Boarding
                            </td>
                            <td><small>145M2/300M2</small> <div class="progress progress-xs">
@@ -81,7 +86,19 @@
                            </div>
                            </td>
                            <td>
-                              <div class="dropdown">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-secondary">Detail</a>
+                              
+                              {{-- <div class="dropdown">
+                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   Dropdown button
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                   <a class="dropdown-item" href="#">Action</a>
+                                   <a class="dropdown-item" href="#">Another action</a>
+                                   <a class="dropdown-item" href="#">Something else here</a>
+                                 </div>
+                               </div> --}}
+                              {{-- <div class="dropdown">
                                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                                  Actions
                                  </button>
@@ -93,7 +110,7 @@
                                     Another action
                                  </a>
                                  </div>
-                              </div>
+                              </div> --}}
                            </td>
                         
                         </tr>
