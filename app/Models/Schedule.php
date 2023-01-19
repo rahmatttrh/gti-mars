@@ -20,6 +20,11 @@ class Schedule extends Model
       return $this->belongsTo(Port::class);
    }
 
+   public function jetty()
+   {
+      return $this->belongsTo(Jetty::class);
+   }
+
    public function destination()
    {
       return $this->belongsTo(Port::class);

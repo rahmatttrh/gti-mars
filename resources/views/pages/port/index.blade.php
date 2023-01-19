@@ -47,14 +47,14 @@
                   <div class="list-group-item">
                      <div class="row">
                         <div class="col-auto">
-                        <a href="#">
-                           <span class="avatar" style="background-image: url(./static/avatars/023f.jpg)"><!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="11" r="3" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg></span>
-                        </a>
-                        </div>
-                        <div class="col text-truncate">
-                        <a href="#" class="text-body d-block">{{$port->name}}</a>
-                        <div class="text-muted text-truncate mt-n1">Change deprecated html tags to text decoration classes (#29604)</div>
+                           <a href="{{route('port.detail', enkripRambo($port->id))}}">
+                              <span class="avatar" style="background-image: url(./static/avatars/023f.jpg)"><!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
+                                 <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="11" r="3" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg></span>
+                           </a>
+                           </div>
+                           <div class="col text-truncate">
+                           <a href="{{route('port.detail', enkripRambo($port->id))}}" class="text-body d-block">{{$port->name}}</a>
+                           <div class="text-muted text-truncate mt-n1"><small>{{$port->latitude}} - {{$port->longitude}}</small></div>
                         </div>
                      </div>
                   </div>

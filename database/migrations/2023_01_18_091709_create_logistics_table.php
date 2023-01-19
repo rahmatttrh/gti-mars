@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVesselsTable extends Migration
+class CreateLogisticsTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,15 +13,11 @@ class CreateVesselsTable extends Migration
     */
    public function up()
    {
-      Schema::create('vessels', function (Blueprint $table) {
+      Schema::create('logistics', function (Blueprint $table) {
          $table->id();
          $table->string('name');
-         $table->string('imo')->nullable();
-         $table->string('type')->nullable();
-         $table->string('flag')->nullable();
-         $table->string('owner')->nullable();
-         $table->string('operator')->nullable();
-         $table->integer('deck_cargo_capacity')->nullable();
+         $table->integer('weight')->nullable();
+         $table->integer('size')->nullable();
          $table->timestamps();
       });
    }
@@ -33,6 +29,6 @@ class CreateVesselsTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('vessels');
+      Schema::dropIfExists('logistics');
    }
 }

@@ -16,280 +16,283 @@
       
    </head>
    <body>
-         <div class="wrapper" >
-            <div class="sticky-top">
-               <header class="navbar navbar-expand-md navbar-light sticky-top d-print-none">
-                  <div class="container-xl">
-                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-                        <span class="navbar-toggler-icon"></span>
-                     </button>
-                     <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-                        <a href="/" class="d-flex align-items-center">
-                        <img src="{{asset('img/harbour.png')}}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP-PHE</div>
-                        </a>
-                     </h1>
-                     <div class="navbar-nav flex-row order-md-last">
-                        <div class="nav-item d-none d-md-flex me-3">
-                        <div class="btn-list">
-                           {{-- <a href="https://github.com/tabler/tabler" class="btn" target="_blank" rel="noreferrer">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/brand-github -->
-                              <svg xmlns="http://www.w3.org/2000/svg" class="icon text-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
-                              Source code
-                           </a> --}}
-                           <a href="https://github.com/sponsors/codecalm" class="btn" target="_blank" rel="noreferrer">
-                              <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
-                              {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg> --}}
-                              SUPERADMIN
-                           </a>
-                        </div>
-                        </div>
-                        {{-- <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
-                        </a>
-                        <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+      <div class="wrapper" >
+         <div class="sticky-top">
+            <header class="navbar navbar-expand-md navbar-light sticky-top d-print-none">
+               <div class="container-xl">
+                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                     <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                     <a href="/" class="d-flex align-items-center">
+                     <img src="{{asset('img/harbour.png')}}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
+                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP-PHE</div>
+                     </a>
+                  </h1>
+                  <div class="navbar-nav flex-row order-md-last">
+                     <div class="nav-item d-none d-md-flex me-3">
+                     <div class="btn-list">
+                        {{-- <a href="https://github.com/tabler/tabler" class="btn" target="_blank" rel="noreferrer">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/brand-github -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon text-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" /></svg>
+                           Source code
                         </a> --}}
-                        {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
-                        <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
-                           <span class="badge bg-red"></span>
+                        <a href="https://github.com/sponsors/codecalm" class="btn" target="_blank" rel="noreferrer">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/heart -->
+                           {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon text-pink" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572" /></svg> --}}
+                           SUPERADMIN
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
-                           <div class="card">
-                              <div class="card-body">
-                              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad amet consectetur exercitationem fugiat in ipsa ipsum, natus odio quidem quod repudiandae sapiente. Amet debitis et magni maxime necessitatibus ullam.
-                              </div>
+                     </div>
+                     </div>
+                     {{-- <a href="?theme=dark" class="nav-link px-0 hide-theme-dark" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
+                     </a>
+                     <a href="?theme=light" class="nav-link px-0 hide-theme-light" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+                     </a> --}}
+                     {{-- <div class="nav-item dropdown d-none d-md-flex me-3">
+                     <a href="#" class="nav-link px-0" data-bs-toggle="dropdown" tabindex="-1" aria-label="Show notifications">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" /><path d="M9 17v1a3 3 0 0 0 6 0v-1" /></svg>
+                        <span class="badge bg-red"></span>
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-card">
+                        <div class="card">
+                           <div class="card-body">
+                           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ad amet consectetur exercitationem fugiat in ipsa ipsum, natus odio quidem quod repudiandae sapiente. Amet debitis et magni maxime necessitatibus ullam.
                            </div>
                         </div>
-                        </div> --}}
-                        <div class="nav-item dropdown">
-                        <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                           <span class="avatar avatar-sm" style="background-image: url({{asset('static/avatars/000m.jpg')}})"></span>
-                           <div class="d-none d-xl-block ps-2">
-                              <div>Super Admin</div>
-                              <div class="mt-1 small text-muted">Developer</div>
-                           </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                           <a href="#" class="dropdown-item">Set status</a>
-                           <a href="#" class="dropdown-item">Profile & account</a>
-                           <a href="#" class="dropdown-item">Feedback</a>
-                           <div class="dropdown-divider"></div>
-                           <a href="#" class="dropdown-item">Settings</a>
-                           <a class="dropdown-item" href="{{ route('logout') }}"
-                           onclick="event.preventDefault();
-                                          document.getElementById('logout-form').submit();">
-                              
-                                 {{-- <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                                                document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                 </a> --}}
+                     </div>
+                     </div> --}}
+                     <div class="nav-item dropdown">
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('static/avatars/000m.jpg')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>Super Admin</div>
+                           <div class="mt-1 small text-muted">Developer</div>
+                        </div>
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                        <a href="#" class="dropdown-item">Set status</a>
+                        <a href="#" class="dropdown-item">Profile & account</a>
+                        <a href="#" class="dropdown-item">Feedback</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Settings</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                       document.getElementById('logout-form').submit();">
+                           
+                              {{-- <a class="dropdown-item" href="{{ route('logout') }}"
+                                 onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
                                  {{ __('Logout') }}
-                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                 </form>
-                           </a>
-                        </div>
-                        </div>
+                              </a> --}}
+                              {{ __('Logout') }}
+                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                 @csrf
+                              </form>
+                        </a>
+                     </div>
                      </div>
                   </div>
-               </header>
-               @include('layouts.navbar')
-            </div>
-            
-
-            <div class="page-wrapper" style="min-height: 100vh">
-               @yield('content')
-               <footer class="footer footer-transparent d-print-none">
-                  <div class="container-xl">
-                     <div class="row text-center align-items-center flex-row-reverse">
-                        <div class="col-lg-auto ms-lg-auto">
-                        <ul class="list-inline list-inline-dots mb-0">
-                           <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">v1.0.0-beta</a></li>
-                           
-                        </ul>
-                        </div>
-                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                        <ul class="list-inline list-inline-dots mb-0">
-                           <li class="list-inline-item">
-                              Copyright &copy; 2022
-                              <a href="." class="link-secondary">GTI</a>.
-                              All rights reserved.
-                           </li>
-                           
-                        </ul>
-                        </div>
-                     </div>
-                  </div>
-               </footer>
-            </div>
+               </div>
+            </header>
+            @include('layouts.navbar')
          </div>
+         
 
-         <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-               <div class="modal-content">
-                  <div class="modal-header">
-                  <h5 class="modal-title">New report</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         <div class="page-wrapper" style="min-height: 100vh">
+            @yield('content')
+            <footer class="footer footer-transparent d-print-none">
+               <div class="container-xl">
+                  <div class="row text-center align-items-center flex-row-reverse">
+                     <div class="col-lg-auto ms-lg-auto">
+                     <ul class="list-inline list-inline-dots mb-0">
+                        <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">v1.0.0-beta</a></li>
+                        
+                     </ul>
+                     </div>
+                     <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                     <ul class="list-inline list-inline-dots mb-0">
+                        <li class="list-inline-item">
+                           Copyright &copy; 2022
+                           <a href="." class="link-secondary">GTI</a>.
+                           All rights reserved.
+                        </li>
+                        
+                     </ul>
+                     </div>
                   </div>
-                  <div class="modal-body">
-                  <div class="mb-3">
-                     <label class="form-label">Name</label>
-                     <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
-                  </div>
-                  <label class="form-label">Report type</label>
-                  <div class="form-selectgroup-boxes row mb-3">
-                     <div class="col-lg-6">
-                        <label class="form-selectgroup-item">
-                        <input type="radio" name="report-type" value="1" class="form-selectgroup-input" checked>
-                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                           <span class="me-3">
-                              <span class="form-selectgroup-check"></span>
-                           </span>
-                           <span class="form-selectgroup-label-content">
-                              <span class="form-selectgroup-title strong mb-1">Simple</span>
-                              <span class="d-block text-muted">Provide only basic data needed for the report</span>
-                           </span>
+               </div>
+            </footer>
+         </div>
+      </div>
+
+      <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+               <h5 class="modal-title">New report</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               </div>
+               <div class="modal-body">
+               <div class="mb-3">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" name="example-text-input" placeholder="Your report name">
+               </div>
+               <label class="form-label">Report type</label>
+               <div class="form-selectgroup-boxes row mb-3">
+                  <div class="col-lg-6">
+                     <label class="form-selectgroup-item">
+                     <input type="radio" name="report-type" value="1" class="form-selectgroup-input" checked>
+                     <span class="form-selectgroup-label d-flex align-items-center p-3">
+                        <span class="me-3">
+                           <span class="form-selectgroup-check"></span>
                         </span>
-                        </label>
-                     </div>
-                     <div class="col-lg-6">
-                        <label class="form-selectgroup-item">
-                        <input type="radio" name="report-type" value="1" class="form-selectgroup-input">
-                        <span class="form-selectgroup-label d-flex align-items-center p-3">
-                           <span class="me-3">
-                              <span class="form-selectgroup-check"></span>
-                           </span>
-                           <span class="form-selectgroup-label-content">
-                              <span class="form-selectgroup-title strong mb-1">Advanced</span>
-                              <span class="d-block text-muted">Insert charts and additional advanced analyses to be inserted in the report</span>
-                           </span>
+                        <span class="form-selectgroup-label-content">
+                           <span class="form-selectgroup-title strong mb-1">Simple</span>
+                           <span class="d-block text-muted">Provide only basic data needed for the report</span>
                         </span>
-                        </label>
+                     </span>
+                     </label>
+                  </div>
+                  <div class="col-lg-6">
+                     <label class="form-selectgroup-item">
+                     <input type="radio" name="report-type" value="1" class="form-selectgroup-input">
+                     <span class="form-selectgroup-label d-flex align-items-center p-3">
+                        <span class="me-3">
+                           <span class="form-selectgroup-check"></span>
+                        </span>
+                        <span class="form-selectgroup-label-content">
+                           <span class="form-selectgroup-title strong mb-1">Advanced</span>
+                           <span class="d-block text-muted">Insert charts and additional advanced analyses to be inserted in the report</span>
+                        </span>
+                     </span>
+                     </label>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-8">
+                     <div class="mb-3">
+                     <label class="form-label">Report url</label>
+                     <div class="input-group input-group-flat">
+                        <span class="input-group-text">
+                           https://tabler.io/reports/
+                        </span>
+                        <input type="text" class="form-control ps-0"  value="report-01" autocomplete="off">
+                     </div>
                      </div>
                   </div>
-                  <div class="row">
-                     <div class="col-lg-8">
-                        <div class="mb-3">
-                        <label class="form-label">Report url</label>
-                        <div class="input-group input-group-flat">
-                           <span class="input-group-text">
-                              https://tabler.io/reports/
-                           </span>
-                           <input type="text" class="form-control ps-0"  value="report-01" autocomplete="off">
-                        </div>
-                        </div>
-                     </div>
-                     <div class="col-lg-4">
-                        <div class="mb-3">
-                        <label class="form-label">Visibility</label>
-                        <select class="form-select">
-                           <option value="1" selected>Private</option>
-                           <option value="2">Public</option>
-                           <option value="3">Hidden</option>
-                        </select>
-                        </div>
+                  <div class="col-lg-4">
+                     <div class="mb-3">
+                     <label class="form-label">Visibility</label>
+                     <select class="form-select">
+                        <option value="1" selected>Private</option>
+                        <option value="2">Public</option>
+                        <option value="3">Hidden</option>
+                     </select>
                      </div>
                   </div>
-                  </div>
-                  <div class="modal-body">
-                  <div class="row">
-                     <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label class="form-label">Client name</label>
-                        <input type="text" class="form-control">
-                        </div>
-                     </div>
-                     <div class="col-lg-6">
-                        <div class="mb-3">
-                        <label class="form-label">Reporting period</label>
-                        <input type="date" class="form-control">
-                        </div>
-                     </div>
-                     <div class="col-lg-12">
-                        <div>
-                        <label class="form-label">Additional information</label>
-                        <textarea class="form-control" rows="3"></textarea>
-                        </div>
+               </div>
+               </div>
+               <div class="modal-body">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="mb-3">
+                     <label class="form-label">Client name</label>
+                     <input type="text" class="form-control">
                      </div>
                   </div>
+                  <div class="col-lg-6">
+                     <div class="mb-3">
+                     <label class="form-label">Reporting period</label>
+                     <input type="date" class="form-control">
+                     </div>
                   </div>
-                  <div class="modal-footer">
-                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
-                     Cancel
-                  </a>
-                  <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                     Create new report
-                  </a>
+                  <div class="col-lg-12">
+                     <div>
+                     <label class="form-label">Additional information</label>
+                     <textarea class="form-control" rows="3"></textarea>
+                     </div>
                   </div>
+               </div>
+               </div>
+               <div class="modal-footer">
+               <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                  Cancel
+               </a>
+               <a href="#" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                  Create new report
+               </a>
                </div>
             </div>
          </div>
-         <script src="{{asset('js/core/jquery.3.2.1.min.js')}}"></script>
-         <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
-         <!-- Libs JS -->
-         <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
-         <!-- Tabler Core -->
-         <script src="{{asset('js/tabler.min.js')}}"></script>
-         <script src="{{asset('js/demo.min.js')}}"></script>
-         <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-         <script>
-            $(document).ready(function() {
-               $('.basic-datatables').DataTable( {
-                  "lengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
-                  "pageLength": 3,
-                  initComplete: function () {
-                     this.api().columns().every( function () {
-                        var column = this;
-                        var select = $('<select class="form-control-sm "><option value=""></option></select>')
-                        .appendTo( $(column.footer()).empty() )
-                        // .appendTo( $(column.header()).empty())
-                        .on( 'change', function () {
-                              var val = $.fn.dataTable.util.escapeRegex(
-                                 $(this).val()
-                                 );
+      </div>
+      <script src="{{asset('js/core/jquery.3.2.1.min.js')}}"></script>
+      <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
+      <!-- Libs JS -->
+      <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
+      <!-- Tabler Core -->
+      <script src="{{asset('js/tabler.min.js')}}"></script>
+      <script src="{{asset('js/demo.min.js')}}"></script>
+      <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script>
+         $(document).ready(function() {
+            $('.basic-datatables').DataTable( {
+               "lengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
+               "pageLength": 3,
+               initComplete: function () {
+                  this.api().columns().every( function () {
+                     var column = this;
+                     var select = $('<select class="form-control-sm "><option value=""></option></select>')
+                     .appendTo( $(column.footer()).empty() )
+                     // .appendTo( $(column.header()).empty())
+                     .on( 'change', function () {
+                           var val = $.fn.dataTable.util.escapeRegex(
+                              $(this).val()
+                              );
 
-                              column
-                              .search( val ? '^'+val+'$' : '', true, false )
-                              .draw();
-                        } );
-
-                        column.data().unique().sort().each( function ( d, j ) {
-                              select.append( '<option value="'+d+'">'+d+'</option>' )
-                        } );
+                           column
+                           .search( val ? '^'+val+'$' : '', true, false )
+                           .draw();
                      } );
-                  }
-            });
-            });
-         </script>
 
-         @if (session('success'))
-         
+                     column.data().unique().sort().each( function ( d, j ) {
+                           select.append( '<option value="'+d+'">'+d+'</option>' )
+                     } );
+                  } );
+               }
+         });
+         });
+      </script>
+
+      @stack('ports')
+
+      @if (session('success'))
          <script>
             $(document).ready(function() {
-               // import Swal from 'sweetalert2'
-
-               // CommonJS
-               // const Swal = require('sweetalert2')
                Swal.fire(
                'Success!',
                '{{ Session::get('success') }}',
                'success'
                )
-               // Swal.fire({
-               //    title: 'Success!',
-               //    text: '{{ Session::get('success') }}',
-               //    icon: 'error',
-               //    confirmButtonText: 'Cool'
-               //    })
-               
             });
          </script>
-         @endif
+         @elseif(session('warning'))
+         <script>
+            $(document).ready(function() {
+               Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: '{{ Session::get('warning') }}',
+                  confirmButtonColor: '#9e9e9e',
+                  // footer: '<a href="">Why do I have this issue?</a>'
+               })
+            });
+         </script>
+      @endif
+
 
 
 

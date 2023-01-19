@@ -16,13 +16,19 @@ class VesselSeeder extends Seeder
    {
       DB::table('vessels')->insert([
          'name' => 'Elok Jaya',
+         'imo' => '92313',
          'type' => 'Anchor Handling Tug Supply',
+         'flag' => 'Indonesia',
+         'deck_cargo_capacity' => 500,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
          'name' => 'Triton Jawara',
+         'imo' => '4423424',
          'type' => 'Tug Boat',
+         'flag' => 'Indonesia',
+         'deck_cargo_capacity' => 350,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

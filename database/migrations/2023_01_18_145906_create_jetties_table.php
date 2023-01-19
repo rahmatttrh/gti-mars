@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVesselsTable extends Migration
+class CreateJettiesTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,15 +13,10 @@ class CreateVesselsTable extends Migration
     */
    public function up()
    {
-      Schema::create('vessels', function (Blueprint $table) {
+      Schema::create('jetties', function (Blueprint $table) {
          $table->id();
+         $table->mediumInteger('port_id');
          $table->string('name');
-         $table->string('imo')->nullable();
-         $table->string('type')->nullable();
-         $table->string('flag')->nullable();
-         $table->string('owner')->nullable();
-         $table->string('operator')->nullable();
-         $table->integer('deck_cargo_capacity')->nullable();
          $table->timestamps();
       });
    }
@@ -33,6 +28,6 @@ class CreateVesselsTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('vessels');
+      Schema::dropIfExists('jetties');
    }
 }

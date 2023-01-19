@@ -9,32 +9,63 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-   public function index()
+   public function fixed()
    {
-      $schedules = Schedule::get();
+      $schedules = Schedule::where('type', 1)->get();
       $vessels = Vessel::get();
       $ports = Port::get();
       return view('pages.schedule.index', [
+         'typeName' => 'Fix',
+         'type' => 1,
          'schedules' => $schedules,
          'vessels' => $vessels,
          'ports' => $ports
       ])->with('i');
    }
 
+   public function request()
+   {
+      $schedules = Schedule::where('type', 2)->get();
+      $vessels = Vessel::get();
+      $ports = Port::get();
+      return view('pages.schedule.index', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'schedules' => $schedules,
+         'vessels' => $vessels,
+         'ports' => $ports
+      ])->with('i');
+   }
+
+   public function create()
+   {
+      $vessels = Vessel::get();
+      $ports = Port::get();
+      return view('pages.schedule.create', [
+         'vessels' => $vessels,
+         'ports' => $ports
+      ]);
+   }
+
    public function store(Request $req)
    {
       $req->validate([]);
+      // dd($req->type);
 
       Schedule::create([
-         'vessel_id' => $req->vessel,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
+         'type' => 2,
          'status' => 1,
+         'vessel_id' => $req->vessel,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'jetty_id' => $req->jetty,
+         'docking' => $req->docking,
          'departure' => $req->departure,
+         'destination_id' => $req->destination,
          'arrival' => $req->arrival
       ]);
 
-      return redirect()->back()->with('success', 'Schedule successfuly added');
+      return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
    }
 
    public function detail($id)

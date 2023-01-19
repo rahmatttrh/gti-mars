@@ -12,6 +12,11 @@ class Port extends Model
 
    public function schedules()
    {
-      return $this->hasMany(Schedule::class);
+      return $this->hasMany(Schedule::class, 'origin_id');
+   }
+
+   public function jetties()
+   {
+      return $this->hasMany(Jetty::class);
    }
 }

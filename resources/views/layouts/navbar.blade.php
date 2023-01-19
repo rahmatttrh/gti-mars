@@ -23,7 +23,7 @@
                   </span>
                </a>
                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#" >
+                  <a class="dropdown-item" href="{{route('logistic')}}" >
                      Logistic
                   </a>
                   <a class="dropdown-item" href="{{route('vessel')}}" >
@@ -32,7 +32,7 @@
                   <a class="dropdown-item" href="{{route('port')}}" >
                      Port
                   </a>
-                  <a class="dropdown-item" href="#" >
+                  <a class="dropdown-item" href="{{route('user')}}" >
                      User
                   </a>
                </div>
@@ -69,10 +69,10 @@
                   </span>
                </a>
                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{route('schedule')}}" >
+                  <a class="dropdown-item" href="{{route('schedule.fixed')}}" >
                      Schedule Fixed
                   </a>
-                  <a class="dropdown-item" href="{{route('schedule')}}" >
+                  <a class="dropdown-item" href="{{route('schedule.request')}}" >
                      Schedule Request
                   </a>
                   <a class="dropdown-item" href="#" >

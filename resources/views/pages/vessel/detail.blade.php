@@ -27,13 +27,13 @@
                </a> --}}
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                     Actions
+                     Options
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item" href="#">
+                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-edit-vessel">
                         Edit
                      </a>
-                     <a class="dropdown-item" href="#">
+                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-vessel">
                         Delete
                      </a>
                      </div>
@@ -135,4 +135,6 @@
          </div>
       </div>
    </div>
+   <x-modal.edit-vessel :vessel="$vessel" />
+   <x-modal.delete-vessel :vessel="$vessel" />
 @endsection

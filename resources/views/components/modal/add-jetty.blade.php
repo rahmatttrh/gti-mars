@@ -1,30 +1,17 @@
-<div class="modal modal-blur fade" id="modal-add-port" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-add-jetty" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Create new port</h5>
+            <h5 class="modal-title">Add jetty</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
-         <form action="{{route('port.store')}}" method="POST">
+         <form action="{{route('port.add.jetty')}}" method="POST">
             @csrf
+            <input type="number" name="port" id="port" value="{{$port->id}}" hidden>
             <div class="modal-body">
                <div class="mb-3">
                   <label class="form-label">Name</label>
-                  <input type="text" class="form-control" name="name" id="name" placeholder="Your vessel name">
-               </div>
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="mb-3">
-                        <label class="form-label">Latitude</label>
-                        <input type="text" class="form-control" name="latitude" id="latitude" placeholder="Your vessel type">
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="mb-3">
-                        <label class="form-label">Longitude</label>
-                        <input type="text" class="form-control" name="longitude" id="longitude" placeholder="Your vessel flag">
-                     </div>
-                  </div>
+                  <input type="text" class="form-control" name="name" id="name" placeholder="Your jetty name">
                </div>
             </div>
             

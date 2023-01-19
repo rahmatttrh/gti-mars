@@ -1,24 +1,26 @@
-<div class="modal modal-blur fade" id="modal-add-vessel" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="modal-edit-vessel" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Create new vessel</h5>
+            <h5 class="modal-title">Edit vessel</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
-         <form action="{{route('vessel.store')}}" method="POST">
+         <form action="{{route('vessel.update')}}" method="POST">
             @csrf
+            @method('PUT')
+            <input type="number" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
             <div class="modal-body">
                <div class="row">
                   <div class="col-md-8">
                      <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Your vessel name">
+                        <input type="text" class="form-control" value="{{$vessel->name}}" name="name" id="name" placeholder="Your vessel name">
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="mb-3">
                         <label class="form-label">IMO Number</label>
-                        <input type="text" class="form-control" name="imo" id="imo" placeholder="Your IMO number">
+                        <input type="text" class="form-control" value="{{$vessel->imo}}" name="imo" id="imo" placeholder="Your IMO number">
                      </div>
                   </div>
                </div>
@@ -26,13 +28,13 @@
                   <div class="col-md-8">
                      <div class="mb-3">
                         <label class="form-label">Type</label>
-                        <input type="text" class="form-control" name="type" id="type" placeholder="Your vessel type">
+                        <input type="text" class="form-control" value="{{$vessel->type}}" name="type" id="type" placeholder="Your vessel type">
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="mb-3">
                         <label class="form-label">Flag</label>
-                        <input type="text" class="form-control" name="flag" id="flag" placeholder="Your vessel flag">
+                        <input type="text" class="form-control" value="{{$vessel->flag}}" name="flag" id="flag" placeholder="Your vessel flag">
                      </div>
                   </div>
                </div>
@@ -40,20 +42,20 @@
                   <div class="col-md-8">
                      <div class="mb-3">
                         <label class="form-label">Owner</label>
-                        <input type="text" class="form-control" name="owner" id="owner" placeholder="Your vessel owner">
+                        <input type="text" class="form-control" value="{{$vessel->owner}}" name="owner" id="owner" placeholder="Your vessel owner">
                      </div>
                   </div>
                   <div class="col-md-4">
                      <div class="mb-3">
                         <label class="form-label">Operator</label>
-                        <input type="text" class="form-control" name="operator" id="operator" placeholder="Your vessel operator">
+                        <input type="text" class="form-control" value="{{$vessel->operator}}" name="operator" id="operator" placeholder="Your vessel operator">
                      </div>
                   </div>
                </div>
                
                <div class="mb-3">
                   <label class="form-label">Deck Cargo Capacity</label>
-                  <input type="text" class="form-control" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
+                  <input type="text" class="form-control" value="{{$vessel->deck_cargo_capacity}}" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
                </div>
             </div>
             
@@ -63,7 +65,7 @@
                </a>
                <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
-                  Save
+                  Update
                </button>
             </div>
          </form>

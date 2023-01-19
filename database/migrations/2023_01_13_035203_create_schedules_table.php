@@ -15,12 +15,17 @@ class CreateSchedulesTable extends Migration
    {
       Schema::create('schedules', function (Blueprint $table) {
          $table->id();
-         $table->mediumInteger('vessel_id');
-         $table->mediumInteger('origin_id');
-         $table->mediumInteger('destination_id');
-         $table->mediumInteger('cargo_id')->nullable();
+         $table->smallInteger('type');
          $table->smallInteger('status');
-         $table->dateTime('departure');
+         $table->mediumInteger('vessel_id');
+         $table->mediumInteger('cargo_id')->nullable();
+         $table->mediumInteger('origin_id');
+         $table->mediumInteger('jetty_id');
+         $table->date('date');
+         $table->time('docking');
+         $table->time('departure');
+
+         $table->mediumInteger('destination_id');
          $table->dateTime('arrival');
          $table->timestamps();
       });
