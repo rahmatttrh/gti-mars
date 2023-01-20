@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,6 +15,40 @@ class ScheduleSeeder extends Seeder
     */
    public function run()
    {
+      $today = new Carbon('23-01-2023');
+
+      DB::table('schedules')->insert([
+         'type' => 1,
+         'status' => 1,
+         'vessel_id' => 1,
+         'origin_id' => 1,
+         'jetty_id' => 1,
+         'date' => $today,
+         'docking' => '07:00:00',
+         'departure' => '07:30:00',
+         'destination_id' => 4,
+         'arrival' => $today,
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('schedules')->insert([
+         'type' => 1,
+         'status' => 1,
+         'vessel_id' => 1,
+         'origin_id' => 1,
+         'jetty_id' => 1,
+         'date' => $today->addDay(1),
+         'docking' => '07:00:00',
+         'departure' => '07:30:00',
+         'destination_id' => 4,
+         'arrival' => $today->addDay(1),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+
+
+
       DB::table('schedules')->insert([
          'type' => 2,
          'status' => 1,

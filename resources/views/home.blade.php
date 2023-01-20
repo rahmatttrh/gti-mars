@@ -38,7 +38,94 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         <div class="row row-deck row-cards">
+         <div class="row row-cards">
+            <div class="col-3">
+               <div class="card card-sm">
+                  <div class="card-body">
+                     <div class="row align-items-center">
+                     <div class="col-auto">
+                        <span class="bg-blue text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
+                        </span>
+                     </div>
+                     <div class="col">
+                        <div class="font-weight-medium">
+                           132 Logistic
+                        </div>
+                        <div class="text-muted">
+                           12 waiting
+                        </div>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+            <div class="col-3">
+              <div class="card card-sm">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="bg-yellow text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/users -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                      </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-medium">
+                        13 Vessel
+                      </div>
+                      <div class="text-muted">
+                        163 today
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <div class="card card-sm">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-auto">
+                      <span class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" /></svg>
+                      </span>
+                    </div>
+                    <div class="col">
+                      <div class="font-weight-medium">
+                        8 Port
+                      </div>
+                      <div class="text-muted">
+                        16 today
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+               <div class="card card-sm">
+                 <div class="card-body">
+                   <div class="row align-items-center">
+                     <div class="col-auto">
+                       <span class="bg-yellow text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/users -->
+                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
+                       </span>
+                     </div>
+                     <div class="col">
+                       <div class="font-weight-medium">
+                         13 Vessel
+                       </div>
+                       <div class="text-muted">
+                         163 today
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+         </div>
+         {{-- <div class="row row-deck row-cards">
             <div class="col-sm-6 col-lg-3">
                <div class="card">
                   <div class="card-body">
@@ -160,10 +247,13 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> --}}
          <div class="row mt-1 row-cards">
-            <div class="col-lg-12">
+            <div class="col-lg-7">
                <div class="card mb-2">
+                  <div class="card-header border-0">
+                     <div class="card-title">Schedules by Request</div>
+                  </div>
                   {{-- <div class="card-header border-0 bg-info">
                      <div class="btn btn-sm btn-light">Create new schedule</div>
                   </div> --}}
@@ -172,7 +262,7 @@
                         <thead class="bg-primary">
                            <tr>
                               <th>Vessel</th>
-                              <th>Date</th>
+                              {{-- <th>Date</th> --}}
                               <th>From</th>
                               <th>Destination</th>
                               <th >Status</th>
@@ -186,20 +276,20 @@
                                        {{$schedule->vessel->name}}
                                     </div>
                                  </td>
-                                 <td class="text-nowrap text-muted">
+                                 {{-- <td class="text-nowrap text-muted">
                                     {{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }} 
-                                 </td>
+                                 </td> --}}
                                  <td class="text-muted">
                                     {{$schedule->origin->name}} -
-                                    {{$schedule->jetty->name}}
+                                    {{$schedule->jetty->name}} <br>
+                                    <small>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }} </small> 
                                  </td>
                                  <td class="text-muted">
-                                    {{$schedule->destination->name}} -
-                                    {{-- {{$schedule->arrival}} --}}
-                                    {{ \Carbon\Carbon::parse($schedule->arrival)->format('l d/m/Y h:m') }} 
+                                    {{$schedule->destination->name}} <br>
+                                    <small>{{ \Carbon\Carbon::parse($schedule->arrival)->format('d/m/Y h:m') }}</small> 
                                  </td>
                                  <td class="text-muted">
-                                    <span class="badge bg-success me-1"></span> Docking
+                                    <span class="badge bg-success me-1"></span> <small>Docking</small>
                                  </td>
                               </tr>
                            @endforeach
@@ -215,31 +305,37 @@
             </div>
             <div class="col-md-5">
                <div class="card mb-2">
-                  {{-- <div class="card-header border-0">
-                     <div class="card-title">Vessel Schedule Fix</div>
-                  </div> --}}
+                  <div class="card-header border-0">
+                     <div class="card-title">Routine Schedules</div>
+                  </div>
                   
                   <div class="card-table table-responsive ">
                      <table class="table table-vcenter">
                         <thead class="bg-primary">
                            <tr>
                               <th>Vessel</th>
-                              <th class="text-center">Destination</th>
-                              <th class="text-center">Day</th>
-                              <th class="text-center">Time</th>
+                              <th>Route</th>
+                              <th>Day</th>
+                              <th>Status</th>
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($vessel3 as $vessel)
+                           @foreach ($schedulesFix as $schedule)
                               <tr>
-                                 <td class="td-truncate ">
-                                    <div class=" text-nowrap text-muted text-truncate">
-                                       {{$vessel->name}}
+                                 <td class=" ">
+                                    <div class=" text-nowrap text-muted ">
+                                       {{$schedule->vessel->name}}
                                     </div>
                                  </td>
-                                 <td class="text-nowrap text-muted text-center">Cinta-T</td>
-                                 <td class="text-nowrap text-muted text-center">Senin</td>
-                                 <td class="text-nowrap text-muted text-center">08:30 WIB</td>
+                                 <td class="text-nowrap text-muted">
+                                    {{$schedule->origin->name}} - {{$schedule->destination->name}}
+                                 </td>
+                                 <td class="text-nowrap text-muted">
+                                    {{ \Carbon\Carbon::parse($schedule->date)->format('l') }}
+                                 </td>
+                                 <td class="text-muted">
+                                    <span class="badge bg-success me-1"></span><small>Docking</small> 
+                                 </td>
                               </tr>
                            @endforeach
                         </tbody>
@@ -249,72 +345,7 @@
                      {{$vessels->links()}}
                   </div> --}}
                </div>
-               <div class="row row-cards">
-                 <div class="col-12">
-                   <div class="card card-sm">
-                     <div class="card-body">
-                       <div class="row align-items-center">
-                         <div class="col-auto">
-                           <span class="bg-blue text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
-                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" /><path d="M12 3v3m0 12v3" /></svg>
-                           </span>
-                         </div>
-                         <div class="col">
-                           <div class="font-weight-medium">
-                             132 Logistic
-                           </div>
-                           <div class="text-muted">
-                             12 waiting
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-                 
-                 <div class="col-12">
-                   <div class="card card-sm">
-                     <div class="card-body">
-                       <div class="row align-items-center">
-                         <div class="col-auto">
-                           <span class="bg-yellow text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/users -->
-                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="9" cy="7" r="4" /><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /><path d="M21 21v-2a4 4 0 0 0 -3 -3.85" /></svg>
-                           </span>
-                         </div>
-                         <div class="col">
-                           <div class="font-weight-medium">
-                             13 Vessel
-                           </div>
-                           <div class="text-muted">
-                             163 today
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-                 <div class="col-12">
-                   <div class="card card-sm">
-                     <div class="card-body">
-                       <div class="row align-items-center">
-                         <div class="col-auto">
-                           <span class="bg-twitter text-white avatar"><!-- Download SVG icon from http://tabler-icons.io/i/brand-twitter -->
-                             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" /></svg>
-                           </span>
-                         </div>
-                         <div class="col">
-                           <div class="font-weight-medium">
-                             8 Port
-                           </div>
-                           <div class="text-muted">
-                             16 today
-                           </div>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
+               
              </div>
             
          </div>

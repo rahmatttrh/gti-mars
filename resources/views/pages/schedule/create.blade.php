@@ -153,6 +153,7 @@
                                     </div>
                                  </div>
                               </div>
+                              
                               {{-- <div class="list-group-item">
                                  <div class="row">
                                     <div class="col text-truncate">
@@ -193,6 +194,9 @@
                                     </div>
                                  </div>
                               </div> --}}
+                           </div>
+                           <div class="card-footer">
+                              <small class="text-muted">Silahkan memilih waktu Docking dan Departure selain waktu diatas</small>
                            </div>
                         </div>
                      </div>

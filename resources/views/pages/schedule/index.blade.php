@@ -21,16 +21,19 @@
                   New view
                   </a>
                </span> --}}
-               <a href="{{route('schedule.create')}}" class="btn btn-primary d-none d-sm-inline-block">
-                  <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                  Create schedule
-               </a>
-               <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-add-schedule">
+               @if ($type == 2)
+                  <a href="{{route('schedule.create')}}" class="btn btn-primary d-none d-sm-inline-block">
+                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                     Create schedule
+                  </a>
+               @endif
+               
+               {{-- <a href="#" class="btn btn-primary d-none d-sm-inline-block" data-bs-toggle="modal" data-bs-target="#modal-add-schedule">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                   Create new schedule
-               </a>
+               </a> --}}
                <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
                   <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
@@ -48,10 +51,11 @@
                   <thead>
                      <tr>
                         <th class="text-center w-1">No.</th>
-                        <th>Vessel name</th>
-                        <th>From</th>
+                        <th>Vessel</th>
                         <th>Date</th>
+                        <th>From</th>
                         <th>Time</th>
+                        <th>Destination</th>
                         <th>Arrival</th>
                         <th>Status</th>
                         {{-- <th>Cargo</th> --}}
@@ -65,11 +69,11 @@
                            <td class="text-muted text-center"><small>{{++$i}}</small></td>
                            <td><span class="">{{$schedule->vessel->name}}</span></td>
                            <td class="text-muted">
-                              {{$schedule->origin->name}} -
-                              {{$schedule->jetty->name}}
+                              {{ \Carbon\Carbon::parse($schedule->date)->format('l, d/m/Y') }} 
                            </td>
                            <td class="text-muted">
-                              {{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }} 
+                              {{$schedule->origin->name}} -
+                              {{$schedule->jetty->name}}
                            </td>
                            <td class="text-muted">
                               {{$schedule->docking}} - {{$schedule->departure}}
@@ -77,9 +81,10 @@
                               {{ \Carbon\Carbon::parse($schedule->departure)->format('h:m') }}  --}}
                            </td>
                            <td class="text-muted">
-                              {{$schedule->destination->name}} -
-                              {{-- {{$schedule->arrival}} --}}
-                              {{ \Carbon\Carbon::parse($schedule->arrival)->format('l d/m/Y h:m') }} 
+                              {{$schedule->destination->name}}
+                           </td>
+                           <td class="text-muted">
+                              {{ \Carbon\Carbon::parse($schedule->arrival)->format('l, d/m/Y h:m') }} 
                            </td>
                            <td class="text-muted">
                               <span class="badge bg-success me-1"></span> <small>Docking</small>  
