@@ -67,9 +67,10 @@
                      @foreach ($schedules as $schedule)
                         <tr>
                            <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                           <td><span class="">{{$schedule->vessel->name}}</span></td>
+                           <td><span class="text-muted">{{$schedule->vessel->name}}</span></td>
                            <td class="text-muted">
-                              {{ \Carbon\Carbon::parse($schedule->date)->format('l, d/m/Y') }} 
+                              <small>{{ \Carbon\Carbon::parse($schedule->date)->format('l') }}</small> <br>
+                              <small>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }} </small>
                            </td>
                            <td class="text-muted">
                               {{$schedule->origin->name}} -
@@ -84,7 +85,8 @@
                               {{$schedule->destination->name}}
                            </td>
                            <td class="text-muted">
-                              {{ \Carbon\Carbon::parse($schedule->arrival)->format('l, d/m/Y h:m') }} 
+                              <small>{{ \Carbon\Carbon::parse($schedule->arrival)->format('l') }}</small> <br>
+                              <small>{{ \Carbon\Carbon::parse($schedule->arrival)->format('d/m/Y h:m') }} </small>
                            </td>
                            <td class="text-muted">
                               <span class="badge bg-success me-1"></span> <small>Docking</small>  

@@ -34,5 +34,23 @@ class UserSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       $superuser->assignRole('user');
+
+      $ej = User::create([
+         'name' => 'Elok Jaya',
+         'email' => 'ej@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $ej->assignRole('vessel');
+
+      $tj = User::create([
+         'name' => 'Triton Jawara',
+         'email' => 'tj@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $tj->assignRole('vessel');
    }
 }

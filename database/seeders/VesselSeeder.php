@@ -17,6 +17,7 @@ class VesselSeeder extends Seeder
       DB::table('vessels')->insert([
          'name' => 'Elok Jaya',
          'imo' => '92313',
+         'email' => 'ej@gmail.com',
          'type' => 'Anchor Handling Tug Supply',
          'flag' => 'Indonesia',
          'deck_cargo_capacity' => 500,
@@ -26,6 +27,7 @@ class VesselSeeder extends Seeder
       DB::table('vessels')->insert([
          'name' => 'Triton Jawara',
          'imo' => '4423424',
+         'email' => 'tj@gmail.com',
          'type' => 'Tug Boat',
          'flag' => 'Indonesia',
          'deck_cargo_capacity' => 350,

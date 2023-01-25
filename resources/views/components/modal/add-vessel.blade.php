@@ -9,52 +9,56 @@
             @csrf
             <div class="modal-body">
                <div class="row">
-                  <div class="col-md-8">
-                     <div class="mb-3">
-                        <label class="form-label">Name</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="name" id="name" placeholder="Your vessel name">
+                        <label for="name">Name</label>
                      </div>
                   </div>
-                  <div class="col-md-4">
-                     <div class="mb-3">
-                        <label class="form-label">IMO Number</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Your vessel email">
+                        <label for="email">Email</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="imo" id="imo" placeholder="Your IMO number">
+                        <label for="imo">IMO Number</label>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-8">
-                     <div class="mb-3">
-                        <label class="form-label">Type</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="type" id="type" placeholder="Your vessel type">
+                        <label for="type">Type</label>
                      </div>
                   </div>
-                  <div class="col-md-4">
-                     <div class="mb-3">
-                        <label class="form-label">Flag</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="flag" id="flag" placeholder="Your vessel flag">
+                        <label for="flag">Flag</label>
                      </div>
                   </div>
-               </div>
-               <div class="row">
-                  <div class="col-md-8">
-                     <div class="mb-3">
-                        <label class="form-label">Owner</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="owner" id="owner" placeholder="Your vessel owner">
+                        <label for="owner">Owner</label>
                      </div>
                   </div>
-                  <div class="col-md-4">
-                     <div class="mb-3">
-                        <label class="form-label">Operator</label>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="operator" id="operator" placeholder="Your vessel operator">
+                        <label for="operator">Operator</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
+                        <label for="deck_cargo_capacity">Deck Cargo Capacity</label>
                      </div>
                   </div>
                </div>
                
-               <div class="mb-3">
-                  <label class="form-label">Deck Cargo Capacity</label>
-                  <input type="text" class="form-control" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
-               </div>
             </div>
             
             <div class="modal-footer">

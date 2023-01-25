@@ -1,0 +1,368 @@
+@extends('layouts.app')
+@section('content')
+   <div class="container-xl">
+      <!-- Page title -->
+      <div class="page-header d-print-none">
+         <div class="row align-items-center">
+            <div class="col">
+            <!-- Page pre-title -->
+               <div class="page-pretitle">
+                  Form
+               </div>
+               <h2 class="page-title">
+                  Create Vessel
+               </h2>
+            </div>
+            <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+            <div class="btn-list">
+             
+               <div class="dropdown">
+                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                  Option
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end">
+                     <a class="dropdown-item" href="#">
+                        Edit
+                     </a>
+                     <a class="dropdown-item" href="#">
+                        Delete
+                     </a>
+                     
+                  </div>
+               </div>
+                  {{-- <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Actions
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end">
+                        
+                        <a class="dropdown-item" href="#">
+                           Update
+                        </a>
+                        <a class="dropdown-item" href="#">
+                           Timeline
+                        </a>
+                        <a class="dropdown-item" href="#">
+                           Print Preview
+                        </a>
+                     </div>
+                  </div> --}}
+            </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="page-body" >
+      <div class="container-xl">
+         <div class="card">
+            <form action="{{route('vessel.store')}}" method="POST">
+               @csrf
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-8">
+                        <div class="row">
+                           <div class="col-md-12">
+                              
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="name" id="name" placeholder="Your vessel name">
+                                 <label for="name">Vessel Name</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="prev_name" id="prev_name" placeholder="Your previous vessel name">
+                                 <label for="prev_name">Previous Name</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="imo" id="imo" placeholder="Your IMO number">
+                                 <label for="imo">IMO Number</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="type" id="type" placeholder="Your vessel type">
+                                 <label for="type">Type</label>
+                              </div>
+                           </div><div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="call_sign" id="call_sign" placeholder="Your vessel flag">
+                                 <label for="call_sign">Call Sign</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="flag" id="flag" placeholder="Your vessel flag">
+                                 <label for="flag">Flag</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="owner" id="owner" placeholder="Your vessel owner">
+                                 <label for="owner">Owner</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="operator" id="operator" placeholder="Your vessel operator">
+                                 <label for="operator">Operator</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating">
+                                 <input type="text" class="form-control" name="port" id="port" placeholder="Your vessel port">
+                                 <label for="port">Port of Registry</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating">
+                                 <input type="text" class="form-control" name="build" id="build" placeholder="Your vessel ">
+                                 <label for="build">Year of Build</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating">
+                                 <input type="text" class="form-control" name="classed_by" id="classed_by" placeholder="Your vessel ">
+                                 <label for="classed_by">Vessel Classed by</label>
+                              </div>
+                           </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="class_notation" id="class_notation" placeholder="Your vessel limit cargo">
+                                 <label for="class_notation">Class Notation</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="loa" id="loa" placeholder="Your vessel limit cargo">
+                                 <label for="loa">LOA / Length Registered (meter)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="beam" id="beam" placeholder="Your vessel limit cargo">
+                                 <label for="beam">Beam (meter)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="depth" id="depth" placeholder="Your vessel limit cargo">
+                                 <label for="depth">Depth (meter)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="max_draft" id="max_draft" placeholder="Your vessel limit cargo">
+                                 <label for="max_draft">Maximum Draft (meter)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="deadweight" id="deadweight" placeholder="Your vessel limit cargo">
+                                 <label for="deadweight">Deadweight Tonnage (meter)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="gross" id="gross" placeholder="Your vessel limit cargo">
+                                 <label for="gross">Gross Tonnage / Net Tonnage (ton)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="desk_space" id="desk_space" placeholder="Your vessel limit cargo">
+                                 <label for="desk_space">Clear Deck Space (m2)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="deck_strength" id="deck_strength" placeholder="Your vessel limit cargo">
+                                 <label for="deck_strength">Deck Strength (t/m2)</label>
+                              </div>
+                              
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
+                                 <label for="deck_cargo_capacity">Deck Cargo Capacity (ton)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="main_engine" id="main_engine" placeholder="Your vessel limit cargo">
+                                 <label for="main_engine">Main Engine Horsepower and Manufacture</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="no_engine" id="no_engine" placeholder="Your vessel limit cargo">
+                                 <label for="no_engine">Number of Engines</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="no_main_propeller" id="no_main_propeller" placeholder="Your vessel limit cargo">
+                                 <label for="no_main_propeller">Number and Type of Main Propellers</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="no_rudder" id="no_rudder" placeholder="Your vessel limit cargo">
+                                 <label for="no_rudder">Number of Rudders</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="generator_and_manufacture" id="generator_and_manufacture" placeholder="Your vessel limit cargo">
+                                 <label for="generator_and_manufacture">Generator and Manufacturer</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="no_generator" id="no_generator" placeholder="Your vessel limit cargo">
+                                 <label for="no_generator">Number of Generator</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="generator_detail" id="generator_detail" placeholder="Your vessel limit cargo">
+                                 <label for="generator_detail">Specified Detail Generator (Kw/Kva/Voltage/Hz)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="kort_nozzle" id="kort_nozzle" placeholder="Your vessel limit cargo">
+                                 <label for="kort_nozzle">Kort Nozzles Fitted</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="bow_thruster" id="bow_thruster" placeholder="Your vessel limit cargo">
+                                 <label for="bow_thruster">Bow Thruster Fitted (Number and Type)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="stern_thruster" id="stern_thruster" placeholder="Your vessel limit cargo">
+                                 <label for="stern_thruster">Stern Thruster Fitted (Number and Type)</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="other_propulsor" id="other_propulsor" placeholder="Your vessel limit cargo">
+                                 <label for="other_propulsor">Other Propulsors Fitted (Number and Type)</label>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="speed_max" id="speed_max" placeholder="Your vessel limit cargo">
+                                       <label for="speed_max">Speed Maximum</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="speed_eco" id="speed_eco" placeholder="Your vessel limit cargo">
+                                       <label for="speed_eco">Speed Economical</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="speed_towing" id="speed_towing" placeholder="Your vessel limit cargo">
+                                       <label for="speed_towing   ">Speed Towing</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="no_berth" id="no_berth" placeholder="Your vessel limit cargo">
+                                 <label for="no_berth">No. of Berth or Pax</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="berth_detail" id="berth_detail" placeholder="Your vessel limit cargo">
+                                 <label for="berth_detail">Berth Detail</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="crane" id="crane" placeholder="Your vessel limit cargo">
+                                 <label for="crane">Crane</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="com_system" id="com_system" placeholder="Your vessel limit cargo">
+                                 <label for="com_system">Communication System</label>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="bunker_type" id="bunker_type" placeholder="Your vessel limit cargo">
+                                       <label for="bunker_type">Bunker Type</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="bunker_capacity" id="bunker_capacity" placeholder="Your vessel limit cargo">
+                                       <label for="bunker_capacity">Bunker Capacity</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="daily_fuel_consumption" id="daily_fuel_consumption" placeholder="Your vessel limit cargo">
+                                 <label for="daily_fuel_consumption">Daily Fuel Consumption</label>
+                              </div>
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="potable_water_capacity" id="potable_water_capacity" placeholder="Your vessel limit cargo">
+                                       <label for="potable_water_capacity">Potable Water Capacity</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="potable_water" id="potable_water" placeholder="Your vessel limit cargo">
+                                       <label for="potable_water">Vessel Can Potable Water</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="fifi_pump" id="fifi_pump" placeholder="Your vessel limit cargo">
+                                 <label for="fifi_pump">Fifi Pump / Fire Pump Capacity</label>
+                              </div>
+                              
+                              <div class="row">
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="no_immarsat" id="no_immarsat" placeholder="Your vessel limit cargo">
+                                       <label for="no_immarsat">No. Immarsat</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" name="no_vsat" id="no_vsat" placeholder="Your vessel limit cargo">
+                                       <label for="no_vsat">No. V-Sat</label>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <div class="col-md-4">  
+                        <div class="card mb-3">
+                           <div class="card-header bg-secondary text-light">
+                              Contact
+                           </div>
+                           <div class="card-body">
+                              <div class="form-floating mb-3">
+                                 <input type="email" class="form-control" name="email" id="email" placeholder="Your vessel email">
+                                 <label for="email">Vessel Email</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="telp" id="telp" placeholder="Your vessel telp">
+                                 <label for="telp">Vessel Telp Number</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="text" class="form-control" name="dpa_name" id="dpa_name" placeholder="Your vessel dpa_name">
+                                 <label for="dpa_name">DPA Name</label>
+                              </div>
+                              <div class="form-floating mb-3">
+                                 <input type="number" class="form-control" name="dpa_telp" id="dpa_telp" placeholder="Your vessel dpa_telp">
+                                 <label for="dpa_telp">DPA Telp Number</label>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="card">
+                           <div class="card-header">
+                           <small class="">Info</small>
+                           </div>
+                           <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 12rem">
+                              
+                              <div class="list-group-item">
+                                 <div class="row">
+                                    <div class="col text-muted">
+                                       <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. At enim quisquam, omnis excepturi exercitationem officia impedit, ipsa, cum doloremque eum sapiente esse. Saepe.</small>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="card-footer">
+                              <small class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque, rerum?</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-footer">
+                  <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                     Save
+                  </button>
+               </div>
+            </form>
+         </div>
+       </div>
+   </div>
+
+@endsection

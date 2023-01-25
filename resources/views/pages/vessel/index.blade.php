@@ -16,11 +16,16 @@
             <div class="col-auto ms-auto d-print-none">
                <div class="d-flex">
                   {{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…"/> --}}
-                  <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-vessel">
+                  <a href="{{route('vessel.create')}}" class="btn btn-primary"   >
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                      New vessel
                   </a>
+                  {{-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-vessel">
+                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                     New vessel
+                  </a> --}}
                </div>
             </div>
          </div>

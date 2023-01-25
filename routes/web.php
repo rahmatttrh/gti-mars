@@ -31,6 +31,7 @@ Route::middleware(["auth"])->group(function () {
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
+      Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
