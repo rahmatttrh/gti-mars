@@ -18,7 +18,7 @@ class ScheduleSeeder extends Seeder
       $today = new Carbon('23-01-2023');
 
       DB::table('schedules')->insert([
-         'type' => 1,
+         'type' => 2,
          'status' => 1,
          'origin_id' => 1,
          'jetty_id' => 1,
@@ -37,7 +37,7 @@ class ScheduleSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('schedules')->insert([
-         'type' => 1,
+         'type' => 2,
          'status' => 1,
          'origin_id' => 1,
          'jetty_id' => 1,
@@ -56,7 +56,7 @@ class ScheduleSeeder extends Seeder
       ]);
 
       DB::table('schedules')->insert([
-         'type' => 1,
+         'type' => 2,
          'status' => 2,
          'vessel_id' => 1,
          'origin_id' => 1,

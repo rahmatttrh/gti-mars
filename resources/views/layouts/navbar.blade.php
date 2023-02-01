@@ -84,7 +84,7 @@
                   </a>
                   @if (auth()->user()->hasRole('superuser'))
                      <a class="dropdown-item" href="{{route('schedule.request')}}" >
-                        Request
+                        Plan
                      </a>
                      @elseif(auth()->user()->hasRole('marine'))
                      <a class="dropdown-item" href="{{route('schedule.request.marine')}}" >
