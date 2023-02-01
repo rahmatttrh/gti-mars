@@ -96,6 +96,16 @@ class VesselController extends Controller
       return redirect()->back()->with('success', 'Vessel successfuly added');
    }
 
+   public function edit($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vessel = Vessel::find($dekripId);
+
+      return view('pages.vessel.edit', [
+         'vessel' => $vessel
+      ]);
+   }
+
    public function update(Request $req)
    {
       $req->validate([]);

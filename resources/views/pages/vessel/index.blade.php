@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+   Vessel List
+@endsection
 @section('content')
    <div class="container-xl">
       <!-- Page title -->

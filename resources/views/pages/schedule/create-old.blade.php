@@ -10,7 +10,7 @@
             <div class="col">
             <!-- Page pre-title -->
                <div class="page-pretitle">
-                  Form
+                  Overview
                </div>
                <h2 class="page-title">
                   Create Schedule
@@ -20,7 +20,7 @@
             <div class="col-auto ms-auto d-print-none">
             <div class="btn-list">
              
-               {{-- <div class="dropdown">
+               <div class="dropdown">
                   <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                   Option
                   </button>
@@ -50,7 +50,7 @@
                         Print Preview
                      </a>
                   </div>
-               </div> --}}
+               </div>
             </div>
             </div>
          </div>
@@ -66,38 +66,20 @@
                      <div class="col-md-8">
                         <div class="row">
                            <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="func" name="func" >
-                                 <label for="func">Function</label>
+                              <div class="form-floating">
+                                 <select name="vessel" required id="vessel" class="form-select">
+                                    @foreach ($vessels as $vessel)
+                                       <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                    @endforeach
+                                    
+                                 </select>
+                                 <label for="floatingSelect">Vessel</label>
                               </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="station" name="station" >
-                                 <label for="station">Station</label>
-                              </div>
-                           </div>
-                           <div class="col-md-12">
-                              <div class="mb-3">
-                                 <label class="form-label text-muted">Activity</label>
-                                 <textarea class="form-control" name="Activity" id="activity" rows="4" placeholder="Activity.."></textarea>
-                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <input type="date" required class="form-control" id="date" name="date" >
                                  <label for="date">Date</label>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <select required name="req_boat" id="req_boat" class="form-select">
-                                    <option  disabled selected>Choose one</option>
-                                    
-                                       <option value="SCV">SCV</option>
-                                       <option value="AHTS">AHTS</option>
-                                 </select>
-                                 <label for="req_boat">Required Boat</label>
                               </div>
                            </div>
                         </div>
@@ -116,6 +98,31 @@
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
+                                 <select required name="jetty" id="jetty" class="form-select">
+                                 
+                                 </select>
+                                 <label for="jetty">Jetty</label>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="row mt-3">
+                           <div class="col-md-6">
+                              <div class="form-floating ">
+                                 <input type="time" class="form-control" required id="docking" name="docking" >
+                                 <label for="docking">Docking</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating ">
+                                 <input type="time" class="form-control" required id="departure" name="departure" >
+                                 <label for="departure">Departure</label>
+                              </div>
+                           </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-floating">
                                  <select required name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
@@ -124,6 +131,12 @@
                                     
                                  </select>
                                  <label for="origin">Destination</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="datetime-local" class="form-control" required id="arrival" name="arrival" >
+                                 <label for="arrival">Arrival</label>
                               </div>
                            </div>
                         </div>

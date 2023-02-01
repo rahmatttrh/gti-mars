@@ -28,6 +28,11 @@ class RoleSeeder extends Seeder
          'name' => 'vessel',
          'guard_name' => 'web'
       ]);
+
+      Role::create([
+         'name' => 'marine',
+         'guard_name' => 'web'
+      ]);
       // Role::create([
       //    'name' => 'user',
       //    'guard-name' => 'web'

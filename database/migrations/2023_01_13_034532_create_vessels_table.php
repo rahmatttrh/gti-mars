@@ -18,6 +18,7 @@ class CreateVesselsTable extends Migration
          $table->string('name');
          $table->string('email')->nullable();
          $table->string('telp')->nullable();
+         $table->string('require')->nullable();
          $table->string('imo')->nullable();
          $table->string('type')->nullable();
          $table->string('prev_name')->nullable();

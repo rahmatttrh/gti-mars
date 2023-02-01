@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Create Schedule
+   Edit Schedule
 @endsection
 @section('content')
    <div class="container-xl">
@@ -13,45 +13,15 @@
                   Form
                </div>
                <h2 class="page-title">
-                  Create Schedule
+                  Edit Schedule
                </h2>
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-             
-               {{-- <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Option
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item" href="#">
-                        Edit
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Delete
-                     </a>
-                     
-                  </div>
+               <div class="btn-list">
+               
+               
                </div>
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Actions
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                     
-                     <a class="dropdown-item" href="#">
-                        Update
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Timeline
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Print Preview
-                     </a>
-                  </div>
-               </div> --}}
-            </div>
             </div>
          </div>
       </div>
@@ -59,33 +29,35 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('schedule.store')}}" method="POST">
+            <form action="{{route('schedule.update')}}" method="POST">
                @csrf
+               @method('PUT')
+               <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
                         <div class="row">
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="func" name="func" >
+                                 <input type="text" required class="form-control" id="func" name="func" value="{{$schedule->func}}" >
                                  <label for="func">Function</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="station" name="station" >
+                                 <input type="text" required class="form-control" id="station" name="station" value="{{$schedule->station}}">
                                  <label for="station">Station</label>
                               </div>
                            </div>
                            <div class="col-md-12">
                               <div class="mb-3">
                                  <label class="form-label text-muted">Activity</label>
-                                 <textarea class="form-control" name="Activity" id="activity" rows="4" placeholder="Activity.."></textarea>
+                                 <textarea class="form-control" name="activity" id="activity" rows="4" placeholder="Activity..">{{$schedule->activity}}</textarea>
                                </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="date" required class="form-control" id="date" name="date" >
+                                 <input type="date" required class="form-control" id="date" name="date" value="{{$schedule->date}}">
                                  <label for="date">Date</label>
                               </div>
                            </div>
@@ -93,9 +65,8 @@
                               <div class="form-floating mb-3">
                                  <select required name="req_boat" id="req_boat" class="form-select">
                                     <option  disabled selected>Choose one</option>
-                                    
-                                       <option value="SCV">SCV</option>
-                                       <option value="AHTS">AHTS</option>
+                                       <option {{$schedule->req_boat == 'SVC' ? 'selected' : ''}} value="SVC">SCV</option>
+                                       <option {{$schedule->req_boat == 'AHTS' ? 'selected' : ''}} value="AHTS">AHTS</option>
                                  </select>
                                  <label for="req_boat">Required Boat</label>
                               </div>
@@ -107,7 +78,7 @@
                                  <select required name="origin" id="origin" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{$schedule->origin_id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                     
                                  </select>
@@ -119,7 +90,7 @@
                                  <select required name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{$schedule->destination_id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                     
                                  </select>
@@ -195,7 +166,7 @@
                <div class="card-footer">
                   <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
-                     Save
+                     Update
                   </button>
                </div>
             </form>

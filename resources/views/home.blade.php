@@ -39,6 +39,11 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="row row-cards">
+            {{-- @if (auth()->user()->hasRole(['superadmin']))
+            <h1>Superrrr</h1>
+            @elseif(auth()->user()->hasRole(['marine']))
+            <h1>Marineeee</h1>
+            @endif --}}
             <div class="col-3">
                <div class="card card-sm">
                   <div class="card-body">
@@ -281,7 +286,7 @@
                                  </td> --}}
                                  <td class="text-muted">
                                     {{$schedule->origin->name}} -
-                                    {{$schedule->jetty->name}} <br>
+                                    {{-- {{$schedule->jetty->name}} <br> --}}
                                     <small>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }} </small> 
                                  </td>
                                  <td class="text-muted">
@@ -320,7 +325,7 @@
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($schedulesFix as $schedule)
+                           {{-- @foreach ($schedulesFix as $schedule)
                               <tr>
                                  <td class=" ">
                                     <div class=" text-nowrap text-muted ">
@@ -337,7 +342,7 @@
                                     <span class="badge bg-success me-1"></span><small>Docking</small> 
                                  </td>
                               </tr>
-                           @endforeach
+                           @endforeach --}}
                         </tbody>
                      </table>
                   </div>

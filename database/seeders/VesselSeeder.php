@@ -16,11 +16,21 @@ class VesselSeeder extends Seeder
    {
       DB::table('vessels')->insert([
          'name' => 'Elok Jaya',
+         'prev_name' => '-',
          'imo' => '92313',
          'email' => 'ej@gmail.com',
+         'telp' => '021323445',
+         'require' => 'SCV',
          'type' => 'Anchor Handling Tug Supply',
          'flag' => 'Indonesia',
+         'call_sign' => 'XYZ',
+         'owner' => 'PT XYZ',
+         'operator' => 'PHE',
+         'port' => 'Jakarta',
+         'build' => '2004',
          'deck_cargo_capacity' => 500,
+         'dpa_name' => 'Ahmad Juantoro',
+         'dpa_telp' => '089991213131',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -28,6 +38,8 @@ class VesselSeeder extends Seeder
          'name' => 'Triton Jawara',
          'imo' => '4423424',
          'email' => 'tj@gmail.com',
+         'require' => 'AHTS',
+         'telp' => '0899231314',
          'type' => 'Tug Boat',
          'flag' => 'Indonesia',
          'deck_cargo_capacity' => 350,

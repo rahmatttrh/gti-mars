@@ -52,5 +52,14 @@ class UserSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       $tj->assignRole('vessel');
+
+      $marine = User::create([
+         'name' => 'Marine SSO',
+         'email' => 'marine@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $marine->assignRole('marine');
    }
 }
