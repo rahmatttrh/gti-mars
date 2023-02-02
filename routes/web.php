@@ -39,6 +39,9 @@ Route::middleware(["auth"])->group(function () {
       Route::get('marine/request', [MarineController::class, 'scheduleRequest'])->name('schedule.request.marine');
       Route::put('marine/select/vessel', [MarineController::class, 'scheduleSelectVessel'])->name('schedule.select.vessel');
 
+      Route::get('vessel/request/{vessel:id}', [VesselController::class, 'schedule'])->name('schedule.request.vessel');
+      Route::get('vessel/month/{month}', [VesselController::class, 'scheduleMonth'])->name('schedule.month.request.vessel');
+
       Route::get('month/{month}', [ScheduleController::class, 'month'])->name('schedule.month');
       Route::get('print/{month}', [ExportController::class, 'schedule'])->name('schedule.print');
    });

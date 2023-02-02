@@ -15,6 +15,7 @@ class VesselSeeder extends Seeder
    public function run()
    {
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Elok Jaya',
          'prev_name' => '-',
          'imo' => '92313',
@@ -35,6 +36,7 @@ class VesselSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 2,
          'name' => 'Triton Jawara',
          'imo' => '4423424',
          'email' => 'tj@gmail.com',
@@ -47,54 +49,65 @@ class VesselSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Transko Balihe',
+         'email' => 'tb@gmail.com',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Logindo Overcomer',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Hafar Jupiter',
          'type' => 'Tug Boat',
+         'email' => 'hj@gmail.com',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Peteka 5401',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Transko Moloko',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Giat Jaya',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'ENC One',
          'type' => 'Patrol',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'ENC Rhayden',
          'type' => 'Anchor Handling Tug Supply',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
          'name' => 'Mitra Anugerah 35',
          'type' => 'Tug Boat',
          'created_at' => NOW(),

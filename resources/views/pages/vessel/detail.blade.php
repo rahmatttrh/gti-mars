@@ -59,6 +59,18 @@
             <div class="card-body text-center">
               <div class="card-title mb-1">{{$vessel->name}}</div>
               <div class="text-muted">{{$vessel->type}}</div>
+              <hr>
+              <div class="mb-3">
+               <label class="form-label"><span class="badge bg-info me-1"></span>Sailing</label>
+               {{-- <div class="progress mb-2">
+                 <div class="progress-bar" style="width: 38%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">
+                   <span class="visually-hidden">38% Complete</span>
+                 </div>
+               </div> --}}
+               <div class="progress">
+                 <div class="progress-bar progress-bar-indeterminate bg-info"></div>
+               </div>
+             </div>
             </div>
          </div>
          <div class="row mt-3">

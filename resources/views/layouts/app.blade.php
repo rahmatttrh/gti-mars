@@ -37,6 +37,8 @@
                                  SUPERUSER
                                  @elseif(auth()->user()->hasRole('marine'))
                                  MARINE SSO
+                                 @elseif(auth()->user()->hasRole('vessel'))
+                                 MASTER
                               @endif
                            </div>
                         </div>
@@ -47,7 +49,7 @@
                      <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                         <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/businessman.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
-                           <div>Super User</div>
+                           <div>{{auth()->user()->name}}</div>
                            <div class="mt-1 small text-muted">Developer</div>
                         </div>
                      </a>
@@ -55,8 +57,16 @@
                      <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
                         <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/auditor.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
-                           <div>Marine SSO</div>
+                           <div>{{auth()->user()->name}}</div>
                            <div class="mt-1 small text-muted">Marine</div>
+                        </div>
+                     </a>
+                     @elseif(auth()->user()->hasRole('vessel'))
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/captain.png')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>{{auth()->user()->name}}</div>
+                           <div class="mt-1 small text-muted">Master</div>
                         </div>
                      </a>
                      @endif

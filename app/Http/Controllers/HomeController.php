@@ -32,9 +32,14 @@ class HomeController extends Controller
       $vessels = Vessel::get();
       $vessel3 = Vessel::paginate('3');
       if (auth()->user()->hasRole('marine')) {
+         $vessel = '';
          $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
-      } else {
+      } elseif (auth()->user()->hasRole('superuser')) {
+         $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('vessel')) {
+         $vessel = Vessel::where('email', auth()->user()->email)->first();
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
       }
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
@@ -66,7 +71,9 @@ class HomeController extends Controller
       }
 
       return view('home', [
+         'today' => $today,
          'monthName' => $monthName,
+         'vessel' => $vessel,
          'vessels' => $vessels,
          'vessel3' => $vessel3,
          'schedules' => $schedules,

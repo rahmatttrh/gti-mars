@@ -86,7 +86,10 @@
                   {{-- <a class="dropdown-item" href="{{route('schedule.fixed')}}" >
                      Fixed
                   </a> --}}
-                  @if (auth()->user()->hasRole('superuser'))
+                  <a class="dropdown-item" href="{{route('schedule.request')}}" >
+                     Plan
+                  </a>
+                  {{-- @if (auth()->user()->hasRole('superuser'))
                      <a class="dropdown-item" href="{{route('schedule.request')}}" >
                         Plan
                      </a>
@@ -94,7 +97,11 @@
                      <a class="dropdown-item" href="{{route('schedule.request.marine')}}" >
                         Plan
                      </a>
-                  @endif
+                     @elseif(auth()->user()->hasRole('vessel'))
+                     <a class="dropdown-item" href="{{route('schedule.request.vessel', enkripRambo(auth()->user()->getVesselId()))}}" >
+                        Plan
+                     </a>
+                  @endif --}}
                   
                   <a class="dropdown-item" href="#" >
                      History
@@ -167,7 +174,7 @@
                </a>
             </li> --}}
          </ul>
-         <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
+         {{-- <div class="my-2 my-md-0 flex-grow-1 flex-md-grow-0 order-first order-md-last">
             <form action="." method="get">
                <div class="input-icon">
                <span class="input-icon-addon">
@@ -177,7 +184,7 @@
                <input type="text" class="form-control" placeholder="Search…" aria-label="Search in website">
                </div>
             </form>
-         </div>
+         </div> --}}
          </div>
       </div>
    </div>

@@ -19,7 +19,7 @@
          .tablesm td {
             border: 1px solid rgb(194, 193, 193);
             
-            font-size: 11px;
+            font-size: 12px;
          }
 
          .tablesm th {
@@ -28,7 +28,7 @@
          }
 
          .tablesm td {
-            padding: 3px;
+            padding: 4px;
          }
 
          .header {
@@ -65,7 +65,7 @@
                <th>Station</th>
                <th>Activity</th>
                <th>Location</th>
-               <th>Required Boat</th>
+               <th>Req. Boat</th>
                <th>Boat Assignment</th>
                <th>Date</th>
                <th>Status</th>

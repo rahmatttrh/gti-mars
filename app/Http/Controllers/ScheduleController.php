@@ -28,9 +28,14 @@ class ScheduleController extends Controller
    {
 
       $today = Carbon::now();
-      // dd($today->format('m'));
       $month = $today->format('m');
-      $schedules = Schedule::whereMonth('date', $month)->get();
+
+      if (auth()->user()->hasRole('vessel')) {
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('date', $month)->get();
+      } else {
+         $schedules = Schedule::whereMonth('date', $month)->get();
+      }
+
       $vessels = Vessel::get();
       $ports = Port::get();
 
@@ -73,7 +78,12 @@ class ScheduleController extends Controller
    public function month($month)
    {
       $dekripMonth = dekripRambo($month);
-      $schedules = Schedule::whereMonth('date', $dekripMonth)->get();
+      if (auth()->user()->hasRole('vessel')) {
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('date', $dekripMonth)->get();
+      } else {
+         $schedules = Schedule::whereMonth('date', $dekripMonth)->get();
+      }
+
       $vessels = Vessel::get();
       $ports = Port::get();
 

@@ -42,4 +42,10 @@ class User extends Authenticatable
    protected $casts = [
       'email_verified_at' => 'datetime',
    ];
+
+   public function getVesselId()
+   {
+      $vessel = Vessel::where('email', auth()->user()->email)->first();
+      return $vessel->id;
+   }
 }
