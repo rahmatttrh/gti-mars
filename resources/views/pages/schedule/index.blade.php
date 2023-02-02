@@ -13,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  BOAT PLANNING  <div class="uppercase"> [{{$monthName}}]</div>
+                  BOAT PLANNING &nbsp;  <span class="text-uppercase text-info"> {{$monthName}}</span>
                </h2>
             </div>
             <!-- Page title actions -->
@@ -105,7 +105,7 @@
                         <th>Station</th>
                         <th>Activity</th>
                         <th>Location (Form - To)</th>
-                        <th>Required Boat</th>
+                        {{-- <th>Required Boat</th> --}}
                         <th>Assignment Boat</th>
                         <th>Status</th>
                         <th></th>
@@ -117,12 +117,12 @@
                         <td class="text-muted text-center"><small>{{++$i}}</small></td>
                         <td class="text-muted text-truncate">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         <td class="text-muted">{{$schedule->func}}</td>
-                        <td class="text-muted">{{$schedule->station}}</td>
-                        <td class="text-muted text-truncate" style="max-width: 20px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
+                        <td class="text-muted text-truncate">{{$schedule->station}}</td>
+                        <td class="text-muted text-truncate" style="max-width: 300px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
                            {{$schedule->activity}}
                         </td>
                         <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
-                        <td class="text-muted">SCV</td>
+                        {{-- <td class="text-muted">SCV</td> --}}
                         <td class="text-muted text-truncate">
                            @if ($schedule->status == 1)
                               -
@@ -134,7 +134,17 @@
                            <x-status.schedule :schedule="$schedule" />
                         </td>
                         <td>
-                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
+                           <div class="btn-group" role="group" aria-label="Basic example">
+                              @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
+                              <a href="" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Boat</a>
+                              @else
+                              
+                              @endif
+                              
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
+                           </div>
+                           
+                           
                            {{-- <div class="dropdown">
                               <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                               Action
@@ -167,9 +177,9 @@
                         <td class="text-muted"></td>
                         <td class="text-muted"></td>
                         <td class="text-muted"></td>
-                        <td class="text-muted">
+                        {{-- <td class="text-muted">
                            
-                        </td>
+                        </td> --}}
                         <td class="text-left">
                            <div class="btn-group">
                               {{-- <a href="#" class="btn btn-outline-secondary ">Detail</a> --}}

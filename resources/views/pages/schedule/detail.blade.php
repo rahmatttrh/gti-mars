@@ -46,9 +46,9 @@
                   Actions
                   </button>
                   <div class="dropdown-menu dropdown-menu-end">
-                     @if ($schedule->status == 1)
+                     @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
                      <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">
-                        Select Vessel
+                        Select Boat
                      </a>
                      @endif
                      

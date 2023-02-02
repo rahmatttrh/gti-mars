@@ -2,7 +2,7 @@
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Select vessel</h5>
+            <h5 class="modal-title">Select Boat</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <form action="{{route('schedule.select.vessel')}}" method="POST">
@@ -12,13 +12,13 @@
             <div class="modal-body">
                <div class="form-floating">
                   <select required name="vessel" id="vessel" class="form-select">
-                     <option  disabled selected>Choose vessel</option>
+                     <option  disabled selected>Choose boat</option>
                      @foreach ($vessels as $vessel)
                         <option value="{{$vessel->id}}">{{$vessel->name}}</option>
                      @endforeach
                      
                   </select>
-                  <label for="origin">Vessel</label>
+                  <label for="origin">Boat</label>
                </div>
             </div>
             

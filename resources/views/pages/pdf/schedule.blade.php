@@ -5,7 +5,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta http-equiv="X-UA-Compatible" content="ie=edge">
       <link rel="icon" href="" type="image/x-icon"/>
-      <title>E Fleet - PMS Deck</title>
+      <title>DSP - PHE Schedule</title>
       {{-- <link rel="stylesheet" href="{{host()}}public/css/custom.css"> --}}
       <style>
          .tablesm {
@@ -17,9 +17,9 @@
 
          .tablesm th,
          .tablesm td {
-            border: 1px solid rgb(94, 92, 92);
+            border: 1px solid rgb(194, 193, 193);
             
-            font-size: 12px;
+            font-size: 11px;
          }
 
          .tablesm th {
@@ -68,6 +68,7 @@
                <th>Required Boat</th>
                <th>Boat Assignment</th>
                <th>Date</th>
+               <th>Status</th>
             </tr>
          </thead>
          <tbody>
@@ -79,8 +80,17 @@
                   <td>{{$schedule->activity}}</td>
                   <td>{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
                   <td>{{$schedule->req_boat}}</td>
-                  <td>{{$schedule->vessel->name}}</td>
+                  <td>
+                     @if ($schedule->status == 1)
+-
+                     @else
+                     {{$schedule->vessel->name}}
+                     @endif
+                  </td>
                   <td>{{$schedule->date}}</td>
+                  <td>
+                     <x-status.schedule :schedule="$schedule" />
+                  </td>
                </tr>
             @endforeach
          </tbody>

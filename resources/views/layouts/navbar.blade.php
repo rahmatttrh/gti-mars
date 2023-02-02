@@ -13,6 +13,7 @@
                </span>
                </a>
             </li>
+            @if (auth()->user()->hasRole('superuser'))
             <li class="nav-item dropdown {{request()->is('vessel/index') ? 'active' : ''}} {{request()->is('port/index') ? 'active' : ''}}">
                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -47,7 +48,6 @@
                    </div>
                </div>
             </li>
-            
             <li class="nav-item dropdown">
                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -69,6 +69,10 @@
                   </a>
                </div>
             </li>
+            @endif
+            
+            
+            
             <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
                <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                   <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
@@ -79,16 +83,16 @@
                   </span>
                </a>
                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="{{route('schedule.fixed')}}" >
+                  {{-- <a class="dropdown-item" href="{{route('schedule.fixed')}}" >
                      Fixed
-                  </a>
+                  </a> --}}
                   @if (auth()->user()->hasRole('superuser'))
                      <a class="dropdown-item" href="{{route('schedule.request')}}" >
                         Plan
                      </a>
                      @elseif(auth()->user()->hasRole('marine'))
                      <a class="dropdown-item" href="{{route('schedule.request.marine')}}" >
-                        Request
+                        Plan
                      </a>
                   @endif
                   
