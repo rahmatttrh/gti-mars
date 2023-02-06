@@ -46,7 +46,7 @@ class CreateVesselsTable extends Migration
          $table->string('no_engine')->nullable();
          $table->string('no_main_propellers')->nullable();
          $table->string('no_rudder')->nullable();
-         $table->string('generators_and_manufactures')->nullable();
+         $table->string('generators')->nullable();
          $table->string('no_generator')->nullable();
          $table->string('generator_detail')->nullable();
          $table->string('kort_nozzles')->nullable();

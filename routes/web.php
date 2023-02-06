@@ -6,6 +6,7 @@ use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\MarineController;
 use App\Http\Controllers\PortController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VesselController;
@@ -44,6 +45,8 @@ Route::middleware(["auth"])->group(function () {
 
       Route::get('month/{month}', [ScheduleController::class, 'month'])->name('schedule.month');
       Route::get('print/{month}', [ExportController::class, 'schedule'])->name('schedule.print');
+
+      Route::get('report/departure/{schedule:id}', [ReportController::class, 'departure'])->name('schedule.report.departure');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');

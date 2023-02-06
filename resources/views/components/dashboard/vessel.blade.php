@@ -45,7 +45,6 @@
                               </div>
                            </td>
                         </tr>
-                        <x-modal.select-vessel :vessels="$vessels" :schedule="$schedule" />
                      @endforeach
                   </tbody>
                </table>

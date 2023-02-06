@@ -49,7 +49,7 @@
                               </div>
                            </td>
                         </tr>
-                        <x-modal.select-vessel :vessels="$vessels" :schedule="$schedule" />
+                        <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
                      @endforeach
                   </tbody>
                </table>

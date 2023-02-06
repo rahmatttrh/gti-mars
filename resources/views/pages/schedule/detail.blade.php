@@ -52,9 +52,18 @@
                      </a>
                      @endif
                      
-                     <a class="dropdown-item" href="#">
-                        Update
-                     </a>
+                     @if ($schedule->status == 2 && auth()->user()->hasRole('vessel'))
+                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-departure">
+                           Berangkat bosss
+                        </a>
+                     @endif
+
+                     @if ($schedule->status == 3 && auth()->user()->hasRole('vessel'))
+                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-arrived">
+                           Arrived
+                        </a>
+                     @endif
+                     
                      <div class="dropdown-divider"></div>
                      <a class="dropdown-item" href="#">
                         Timeline
@@ -77,8 +86,16 @@
                   <div class="card-body">
                     <div class="row g-2 align-items-center">
                       <div class="col-auto">
-                        <span class="avatar avatar-lg bg-info text-white"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-event -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><rect x="8" y="15" width="2" height="2" /></svg></span>
+                        <span class="avatar avatar-lg bg-blue-lt text-white p-2"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-event -->
+                           {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><rect x="8" y="15" width="2" height="2" /></svg> --}}
+                           @if ($schedule->status == 1)
+                           <img src="{{asset('img/vessel/file.png')}}" alt="">
+                           @elseif($schedule->status == 2)
+                           <img src="{{asset('img/vessel/docking.png')}}" alt="">
+                           @elseif($schedule->status == 3)
+                           <img src="{{asset('img/vessel/ship.png')}}" alt="">
+                           @endif
+                        </span>
                       </div>
                       <div class="col ms-2">
                         <div class="text-muted">
@@ -88,9 +105,8 @@
                            @if ($schedule->status == 1)
                            [Please select boat by click Action button]
                            @else
-                           <a href="#">{{$schedule->vessel->name}}</a>
+                           <a href="{{route('vessel.detail', enkripRambo($schedule->vessel_id))}}">{{$schedule->vessel->name}}</a>
                            @endif
-                          
                         </h4>
                         <small>{{$schedule->activity}}</small>
                         <div class="mt-1">
@@ -163,24 +179,6 @@
          
          <div class="card card-lg">
             <div class="card-body">
-               {{-- <div class="row mt--4 mb-2">
-                  <div class="col-6">
-                     <p class="h3">Origin</p>
-                     <address>
-                        {{$schedule->origin->name}} - {{$schedule->jetty->name}} <br>
-                        {{ \Carbon\Carbon::parse($schedule->departure)->format('d/m/Y') }} <br>
-                        Docking : {{$schedule->docking}} WIB<br>
-                        Departure : {{$schedule->departure}} WIB
-                     </address>
-                  </div>
-                  <div class="col-6 text-end">
-                     <p class="h3">Destination</p>
-                     <address>
-                        {{$schedule->destination->name}}<br>
-                        {{ \Carbon\Carbon::parse($schedule->arrival)->format('l d/m/Y h:m') }} 
-                     </address>
-                  </div>
-               </div> --}}
                <div class="accordion" id="accordion-example ">
                   <div class="accordion-item">
                      <h2 class="accordion-header" id="heading-1">
@@ -212,18 +210,21 @@
                               <dt class="col-2">Activity</dt>
                               <dd class="col-10">: {{$schedule->activity}}</dd>
 
-                              <dt class="col-2">Depart</dt>
-                              <dd class="col-10">: {{$schedule->departure}}</dd>
-                              <dt class="col-2">Arrived</dt>
-                              <dd class="col-10">: {{$schedule->departure}}</dd>
-                              <dt class="col-2">Return to Base</dt>
-                              <dd class="col-10">: {{$schedule->departure}}</dd>
+                              @if ($schedule->status >= 3)
+                                 <dt class="col-2">Departure</dt>
+                                 <dd class="col-10">: {{\Carbon\Carbon::parse($report->departure)->format('h:m')}}</dd>
+                                 <dt class="col-2">Arrived</dt>
+                                 <dd class="col-10">: {{$report->arrived}}</dd>
+                                 <dt class="col-2">Return to Base</dt>
+                                 <dd class="col-10">: {{$report->return}}</dd>
+                              @endif
+                              
                            </dl>
                         </div>
                      </div>
                   </div>
                </div>
-      <hr>
+               <hr>
                <div class="accordion" id="accordion-example ">
                   <div class="accordion-item">
                      <h2 class="accordion-header" id="heading-1">
@@ -305,13 +306,13 @@
                      </div>
                   </div>
                </div>
-
-               
             </div>
          </div>
-       </div>
+      </div>
    </div>
 
-   <x-modal.select-vessel :schedule="$schedule" :vessels="$vessels" />
+   <x-modal.schedule.select-vessel :schedule="$schedule" :vessels="$vessels" />
+   <x-modal.schedule.departure :schedule="$schedule" />
+   <x-modal.schedule.arrived :schedule="$schedule"/>
 
 @endsection

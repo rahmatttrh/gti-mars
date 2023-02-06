@@ -41,8 +41,16 @@
                <div class="col-md-6 col-lg-3">
                   <div class="card">
                      <div class="card-body p-4 text-center">
-                        <span class="avatar avatar-xl mb-3 avatar-rounded"><!-- Download SVG icon from http://tabler-icons.io/i/ship -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg></span>
+                        <span class="avatar avatar-xl mb-3 avatar-rounded "><!-- Download SVG icon from http://tabler-icons.io/i/ship -->
+                           {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg> --}}
+                           @if ($vessel->status == 1)
+                           <img src="{{asset('img/vessel/docking.png')}}" alt="">
+                           @elseif($vessel->status == 2)
+                           <img src="{{asset('img/vessel/ship.png')}}" alt="">
+                           @endif
+                           
+
+                        </span>
                         <h3 class="m-0 mb-1"><a href="#">{{$vessel->name}}</a></h3>
                         <div class="text-muted">{{$vessel->type}}</div>
                         {{-- <div class="mt-3">

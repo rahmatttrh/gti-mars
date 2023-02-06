@@ -52,101 +52,178 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="card" href="#">
-            <div class="card-cover card-cover-blurred text-center bg-info" style="background-image: url(./static/photos/2854fd67ddbd6217.jpg
-)">
-              <span class="avatar avatar-xl avatar-thumb avatar-rounded" > <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg></span>
+            <div class="card-cover text-center bg-azure" >
+               <span class="avatar avatar-xl avatar-thumb avatar-rounded" > 
+                  {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg> --}}
+                  @if ($vessel->status == 1)
+                     <img src="{{asset('img/vessel/docking.png')}}" alt="">
+                     @elseif($vessel->status == 2)
+                     <img src="{{asset('img/vessel/ship.png')}}" alt="">
+                  @endif
+               </span>
             </div>
             <div class="card-body text-center">
               <div class="card-title mb-1">{{$vessel->name}}</div>
               <div class="text-muted">{{$vessel->type}}</div>
-              <hr>
-              <div class="mb-3">
-               <label class="form-label"><span class="badge bg-info me-1"></span>Sailing</label>
-               {{-- <div class="progress mb-2">
-                 <div class="progress-bar" style="width: 38%" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100">
-                   <span class="visually-hidden">38% Complete</span>
-                 </div>
-               </div> --}}
-               <div class="progress">
-                 <div class="progress-bar progress-bar-indeterminate bg-info"></div>
-               </div>
-             </div>
+              {{-- <hr>
+               <x-status.vessel :vessel="$vessel" /> --}}
             </div>
          </div>
          <div class="row mt-3">
-            <div class="col-md-6">
+            <div class="col-md-8">
                <div class="card">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      Detail
+                    </h3>
+                    
+                  </div>
                   <div class="card-body">
-                    <div class="card-title">Basic info</div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/book -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><line x1="3" y1="6" x2="3" y2="19" /><line x1="12" y1="6" x2="12" y2="19" /><line x1="21" y1="6" x2="21" y2="19" /></svg>
-                      Went to: <strong>University of Ljubljana</strong>
-                    </div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/briefcase -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><line x1="12" y1="12" x2="12" y2="12.01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
-                      Worked at: <strong>Devpulse</strong>
-                    </div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/home -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-                      Lives in: <strong>Šentilj v Slov. Goricah, Slovenia</strong>
-                    </div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="11" r="3" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
-                      From: <strong><span class="flag flag-country-si"></span>
-                        Slovenia</strong>
-                    </div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><line x1="11" y1="15" x2="12" y2="15" /><line x1="12" y1="15" x2="12" y2="18" /></svg>
-                      Birth date: <strong>13/01/1985</strong>
-                    </div>
-                    <div>
-                      <!-- Download SVG icon from http://tabler-icons.io/i/clock -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 15" /></svg>
-                      Time zone: <strong>Europe/Ljubljana</strong>
-                    </div>
+                     <dl class="row">
+                        <dt class="col-5">Name</dt>
+                        <dd class="col-7">: {{$vessel->name}}</dd>
+                        <dt class="col-5">Prev Name</dt>
+                        <dd class="col-7">: {{$vessel->prev_name ?? '-'}}   </dd>
+                        <dt class="col-5">IMO Number</dt>
+                        <dd class="col-7">: {{$vessel->imo}}</dd>
+                        <dt class="col-5">Type of Vessel</dt>
+                        <dd class="col-7">: {{$vessel->type}}</dd>
+                        <dt class="col-5">Vessel Owner</dt>
+                        <dd class="col-7">: {{$vessel->owner}}</dd>
+                        <dt class="col-5">Vessel Operator</dt>
+                        <dd class="col-7">: {{$vessel->operator}}</dd>
+                        <dt class="col-5">Flag</dt>
+                        <dd class="col-7">: {{$vessel->flag}}</dd>
+                        <dt class="col-5">Call Sign</dt>
+                        <dd class="col-7">: {{$vessel->call_sign}}</dd>
+                        <dt class="col-5">Port of Registry</dt>
+                        <dd class="col-7">: {{$vessel->port}}</dd>
+                        <dt class="col-5">Year of Build</dt>
+                        <dd class="col-7">: {{$vessel->build}}</dd>
+                        <dt class="col-5">Vessel Classed by</dt>
+                        <dd class="col-7">: {{$vessel->classed_by}}</dd>
+                        <dt class="col-5">Class Notation</dt>
+                        <dd class="col-7">: {{$vessel->class_notation}}</dd>
+                        <dt class="col-5">LOA / Length Registered</dt>
+                        <dd class="col-7">: {{$vessel->loa}}</dd>
+                        <dt class="col-5">Beam</dt>
+                        <dd class="col-7">: {{$vessel->beam}}</dd>
+                        <dt class="col-5">Depth</dt>
+                        <dd class="col-7">: {{$vessel->depth}}</dd>
+                        <dt class="col-5">Maximum Draft</dt>
+                        <dd class="col-7">: {{$vessel->max_draft}}</dd>
+                        <dt class="col-5">Deadweight Tonnage</dt>
+                        <dd class="col-7">: {{$vessel->deadweight}}</dd>
+                        <dt class="col-5">Gross Tonnage / Net Tonnage</dt>
+                        <dd class="col-7">: {{$vessel->gross}}</dd>
+                        <dt class="col-5">Clear Deck Space</dt>
+                        <dd class="col-7">: {{$vessel->deck_space}}</dd>
+                        <dt class="col-5">Deck Strength</dt>
+                        <dd class="col-7">: {{$vessel->deck_strength}}</dd>
+                        <dt class="col-5">Deck Cargo Capacity</dt>
+                        <dd class="col-7">: {{$vessel->deck_cargo_capacity}}</dd>
+                        
+                     </dl>
                   </div>
                </div>
+
+               <div class="card mt-3">
+                  <div class="card-header">
+                    <h3 class="card-title">
+                      More Detail
+                    </h3>
+                    
+                  </div>
+                  <div class="card-body">
+                     <dl class="row">
+                        <dt class="col-5">Main Engine HP and Manufacture</dt>
+                        <dd class="col-7">: {{$vessel->main_engine}}</dd>
+                        <dt class="col-5">Number of Engine</dt>
+                        <dd class="col-7">: {{$vessel->no_engine}}   </dd>
+                        <dt class="col-5">Number and Type of Main Propellers</dt>
+                        <dd class="col-7">: {{$vessel->no_main_propeller}}</dd>
+                        <dt class="col-5">Number of Rudders</dt>
+                        <dd class="col-7">: {{$vessel->no_rudder}}</dd>
+                        <dt class="col-5">Generator and Manufacture</dt>
+                        <dd class="col-7">: {{$vessel->generator}}</dd>
+                        <dt class="col-5">Number of Generator</dt>
+                        <dd class="col-7">: {{$vessel->no_generator}}</dd>
+                        <dt class="col-5">Specified Detail</dt>
+                        <dd class="col-7">: {{$vessel->generator_detail}}</dd>
+                        <dt class="col-5">Kort Nozzles Fitted</dt>
+                        <dd class="col-7">: {{$vessel->kort_nozzle}}</dd>
+                        <dt class="col-5">Bow Thruster Fitted</dt>
+                        <dd class="col-7">: {{$vessel->bow_thruster}}</dd>
+                        <dt class="col-5">Stern Thruster Fitted</dt>
+                        <dd class="col-7">: {{$vessel->stern_thruster}}</dd>
+                        <dt class="col-5">Other Propulsors Fitted</dt>
+                        <dd class="col-7">: {{$vessel->other_propulsors}}</dd>
+                        <dt class="col-5">Speed Maximum</dt>
+                        <dd class="col-7">: {{$vessel->speed_max}}</dd>
+                        <dt class="col-5">Speed Economical</dt>
+                        <dd class="col-7">: {{$vessel->speed_eco}}</dd>
+                        <dt class="col-5">Speed Towing</dt>
+                        <dd class="col-7">: {{$vessel->speed_towing}}</dd>
+                        <dt class="col-5">No of Birth or Pax</dt>
+                        <dd class="col-7">: {{$vessel->no_birth}}</dd>
+                        <dt class="col-5">Birth Detail</dt>
+                        <dd class="col-7">: {{$vessel->birth_detail}}</dd>
+                        <dt class="col-5">Crane</dt>
+                        <dd class="col-7">: {{$vessel->crane}}</dd>
+                        <dt class="col-5">Communication System</dt>
+                        <dd class="col-7">: {{$vessel->comm_system}}</dd>
+                        <dt class="col-5">Type of Bunkers</dt>
+                        <dd class="col-7">: {{$vessel->bunker_type}}</dd>
+                        <dt class="col-5">Bunker Capacity</dt>
+                        <dd class="col-7">: {{$vessel->bunker_capacity}}</dd>
+                        <dt class="col-5">Daily Fuel Consumption</dt>
+                        <dd class="col-7">: {{$vessel->daily_fuel_consumption}}</dd>
+                        <dt class="col-5">Potable Water Capacity</dt>
+                        <dd class="col-7">: {{$vessel->daily_fuel_consumption}}</dd>
+                        <dt class="col-5">Potable Water Capacity</dt>
+                        <dd class="col-7">: {{$vessel->potable_water}}</dd>
+                        <dt class="col-5">Fifi Pump / Fire Pump Capacity</dt>
+                        <dd class="col-7">: {{$vessel->fifi_pump_capacity}}</dd>
+                        <dt class="col-5">Immarsat Number</dt>
+                        <dd class="col-7">: {{$vessel->no_immarsat}}</dd>
+                        <dt class="col-5">V-Sat Number</dt>
+                        <dd class="col-7">: {{$vessel->vsat_number}}</dd>
+                        
+                     </dl>
+                  </div>
+               </div>
+               
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                <div class="card">
                   <div class="card-body">
-                    <div class="card-title">Basic info</div>
+                    <div class="card-title">Contact</div>
                     <div class="mb-2">
                       <!-- Download SVG icon from http://tabler-icons.io/i/book -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0" /><line x1="3" y1="6" x2="3" y2="19" /><line x1="12" y1="6" x2="12" y2="19" /><line x1="21" y1="6" x2="21" y2="19" /></svg>
-                      Went to: <strong>University of Ljubljana</strong>
+                      Telp: <strong>{{$vessel->telp}}</strong>
                     </div>
                     <div class="mb-2">
                       <!-- Download SVG icon from http://tabler-icons.io/i/briefcase -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="3" y="7" width="18" height="13" rx="2" /><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2" /><line x1="12" y1="12" x2="12" y2="12.01" /><path d="M3 13a20 20 0 0 0 18 0" /></svg>
-                      Worked at: <strong>Devpulse</strong>
+                      Email: <strong>{{$vessel->email}}</strong>
                     </div>
                     <div class="mb-2">
                       <!-- Download SVG icon from http://tabler-icons.io/i/home -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="5 12 3 12 12 3 21 12 19 12" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-                      Lives in: <strong>Šentilj v Slov. Goricah, Slovenia</strong>
+                      DPA Name: <strong>{{$vessel->dpa_name}}</strong>
                     </div>
                     <div class="mb-2">
                       <!-- Download SVG icon from http://tabler-icons.io/i/map-pin -->
                       <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="11" r="3" /><path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0z" /></svg>
-                      From: <strong><span class="flag flag-country-si"></span>
-                        Slovenia</strong>
+                      DPA No. Telp: <strong>{{$vessel->dpa_telp}}</strong>
                     </div>
-                    <div class="mb-2">
-                      <!-- Download SVG icon from http://tabler-icons.io/i/calendar -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><line x1="11" y1="15" x2="12" y2="15" /><line x1="12" y1="15" x2="12" y2="18" /></svg>
-                      Birth date: <strong>13/01/1985</strong>
-                    </div>
-                    <div>
-                      <!-- Download SVG icon from http://tabler-icons.io/i/clock -->
-                      <svg xmlns="http://www.w3.org/2000/svg" class="icon me-2 text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><polyline points="12 7 12 12 15 15" /></svg>
-                      Time zone: <strong>Europe/Ljubljana</strong>
-                    </div>
+                    
+                  </div>
+               </div>
+               <div class="card mt-3">
+                  <div class="card-body">
+                     <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi perspiciatis animi quibusdam quisquam fugiat, aliquam laudantium, ratione ullam minima ipsam pariatur, mollitia inventore at iusto!</small>
                   </div>
                </div>
             </div>

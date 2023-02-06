@@ -30,6 +30,11 @@ class Schedule extends Model
       return $this->belongsTo(Port::class);
    }
 
+   public function reports()
+   {
+      return $this->hasMany(Report::class);
+   }
+
    // public function port()
    // {
    //    return $this->belongsTo(Port::class);

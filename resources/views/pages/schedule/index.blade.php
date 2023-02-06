@@ -78,9 +78,12 @@
                         Option
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
+                           @if (auth()->user()->hasRole('superuser'))
                            <a class="dropdown-item" href="{{route('schedule.create')}}">
                               Create
                            </a>
+                           @endif
+                           
                            <a class="dropdown-item" target="_blank" href="{{route('schedule.print', enkripRambo($month))}}">
                               Print Preview
                            </a>
@@ -165,7 +168,6 @@
                            </div> --}}
                         </td>
                      </tr>
-                     <x-modal.select-vessel :vessels="$vessels" :schedule="$schedule" />
                      @endforeach
                      
                      <tr class="mb-4">

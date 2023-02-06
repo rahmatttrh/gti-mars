@@ -314,6 +314,7 @@
                      <tr>
                         <th>Date</th>
                         <th>Vessel</th>
+                        <th>Activity</th>
                         <th>Location</th>
                         <th >Status</th>
                         <th></th>
@@ -331,6 +332,9 @@
                                     {{$schedule->vessel->name}}
                                  @endif
                               </div>
+                           </td>
+                           <td class="text-muted text-truncate" style="max-width: 300px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
+                              {{$schedule->activity}}
                            </td>
                            <td class="text-muted">
                               {{$schedule->origin->name}} - {{$schedule->destination->name}}
