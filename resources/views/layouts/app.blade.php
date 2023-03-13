@@ -6,13 +6,16 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
       <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
       <title>DSP - @yield('title')</title>
-      <link rel="icon" href="{{asset('img/harbour.png')}}" type="image/x-icon"/>
+      <link rel="icon" href="{{asset('img/logo/harbour.png')}}" type="image/x-icon"/>
       <!-- CSS files -->
       <link href="{{asset('css/tabler.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/tabler-flags.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/tabler-payments.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/tabler-vendors.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/demo.min.css')}}" rel="stylesheet"/>
+
+      {{-- <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> --}}
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
       
    </head>
    <body>
@@ -23,20 +26,57 @@
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                      <span class="navbar-toggler-icon"></span>
                   </button>
-                  <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                  {{-- navbar-brand-autodark  --}}
+                  <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="d-flex align-items-center">
-                     <img src="{{asset('img/harbour.png')}}" width="110" height="32" alt="Tabler" class="navbar-brand-image">
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP-PHE</div>
+                     @if (auth()->user()->hasRole('superuser'))
+                     <img src="{{asset('img/logo/wolf.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">DIGITAL SMART PORT <span class="text-primary">SYSTEM</span></div>
+                     @elseif(auth()->user()->hasRole('platform'))
+                        @if (auth()->user()->getLogo())
+                        <img src="{{asset('storage/' . auth()->user()->getLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @else
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @endif
+                     
+                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getSystem()}}  <span class="text-primary">SYSTEM</span></div>
+                     @elseif(auth()->user()->hasRole('retail'))
+                     <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
+                     @elseif(auth()->user()->hasRole('supplier'))
+                        @if (auth()->user()->getPartyLogo())
+                           <img src="{{asset('storage/' . auth()->user()->getPartyLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                           @else
+                           <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                           @endif   
+                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
+                     @endif
+                     
+                     
                      </a>
                   </h1>
                   <div class="navbar-nav flex-row order-md-last">
+                     <a href="?theme=dark" class="nav-link px-0 hide-theme-dark me-3" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
+                        </a>
+                        <a href="?theme=light" class="nav-link px-0 hide-theme-light me-3" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
+                        </a>
                      <div class="nav-item d-none d-md-flex me-3">
                         <div class="btn-list">
                            <div class="btn">
                               @if (auth()->user()->hasRole('superuser'))
                                  SUPERUSER
-                                 @elseif(auth()->user()->hasRole('marine'))
-                                 MARINE SSO
+                                 @elseif(auth()->user()->hasRole('platform'))
+                                 PLATFORM
+                                 @elseif(auth()->user()->hasRole('supplier'))
+                                 SUPPLIER
+                                 @elseif(auth()->user()->hasRole('tenant'))
+                                 TENANT
+                                 @elseif(auth()->user()->hasRole('retail'))
+                                 RETAIL
                                  @elseif(auth()->user()->hasRole('vessel'))
                                  MASTER
                               @endif
@@ -47,18 +87,34 @@
                      <div class="nav-item dropdown">
                      @if (auth()->user()->hasRole('superuser'))
                      <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/businessman.png')}})"></span>
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/hacker.png')}});"></span>
                         <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Developer</div>
+                           <div>Developer </div>
+                           <div class="mt-1 small text-muted">Super User</div>
                         </div>
                      </a>
-                     @elseif(auth()->user()->hasRole('marine'))
+                     @elseif(auth()->user()->hasRole('platform'))
                      <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/auditor.png')}})"></span>
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
                            <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Marine</div>
+                           <div class="mt-1 small text-muted">Platform</div>
+                        </div>
+                     </a>
+                     @elseif(auth()->user()->hasRole('retail'))
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>{{auth()->user()->name}}</div>
+                           <div class="mt-1 small text-muted">Retail</div>
+                        </div>
+                     </a>
+                     @elseif(auth()->user()->hasRole('supplier'))
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>{{auth()->user()->name}}</div>
+                           <div class="mt-1 small text-muted">Supplier</div>
                         </div>
                      </a>
                      @elseif(auth()->user()->hasRole('vessel'))
@@ -72,11 +128,16 @@
                      @endif
                      
                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        <a href="#" class="dropdown-item">Set status</a>
+                        @if (auth()->user()->hasRole('superuser'))
+                        <a href="{{route('user')}}" class="dropdown-item">User Management</a>
+                        @elseif(auth()->user()->hasRole('platform'))
+                        <a href="{{route('platform.detail', enkripRambo(auth()->user()->getPlatformId()))}}" class="dropdown-item">Profile & account</a>
+                        @else
                         <a href="#" class="dropdown-item">Profile & account</a>
-                        <a href="#" class="dropdown-item">Feedback</a>
+                        @endif
+                        
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">Settings</a>
+                        {{-- <a href="#" class="dropdown-item">Settings</a> --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
@@ -114,7 +175,7 @@
                      <div class="col-12 col-lg-auto mt-3 mt-lg-0">
                      <ul class="list-inline list-inline-dots mb-0">
                         <li class="list-inline-item">
-                           Copyright &copy; 2022
+                           Copyright &copy; 2023
                            <a href="." class="link-secondary">GTI</a>.
                            All rights reserved.
                         </li>
@@ -231,6 +292,8 @@
       </div>
       <script src="{{asset('js/core/jquery.3.2.1.min.js')}}"></script>
       <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
+
+      
       <!-- Libs JS -->
       <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
       <!-- Tabler Core -->
@@ -239,34 +302,7 @@
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script>
          $(document).ready(function() {
-            $(function () {
-             $('[data-toggle="tooltip"]').tooltip()
-            })
-            $('.basic-datatables').DataTable( {
-               "lengthMenu": [[5, 10, 15, 25, 50, 100 , -1], [5, 10, 15, 25, 50, 100, "All"]],
-               "pageLength": 3,
-               initComplete: function () {
-                  this.api().columns().every( function () {
-                     var column = this;
-                     var select = $('<select class="form-control-sm "><option value=""></option></select>')
-                     .appendTo( $(column.footer()).empty() )
-                     // .appendTo( $(column.header()).empty())
-                     .on( 'change', function () {
-                           var val = $.fn.dataTable.util.escapeRegex(
-                              $(this).val()
-                              );
-
-                           column
-                           .search( val ? '^'+val+'$' : '', true, false )
-                           .draw();
-                     } );
-
-                     column.data().unique().sort().each( function ( d, j ) {
-                           select.append( '<option value="'+d+'">'+d+'</option>' )
-                     } );
-                  } );
-               }
-         });
+            $('#example').DataTable();
          });
       </script>
 

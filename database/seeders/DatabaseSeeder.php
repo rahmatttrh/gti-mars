@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
          ScheduleSeeder::class,
          LogisticSeeder::class,
          JettySeeder::class,
+         PlatformSeeder::class,
+         PartySeeder::class,
+         CarrierSeeder::class
       ]);
    }
 }

@@ -98,11 +98,12 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <div class="table-responsive">
-               <table class="table card-table table-vcenter " >
+           
+            <div class="table-responsive pt-4 pb-4">
+               <table id="example"  class="table " >
                   <thead>
                      <tr>
-                        <th class="text-center w-1" rowspan="2">No.</th>
+                        <th >No.</th>
                         <th>Date</th>
                         <th>Function</th>
                         <th>Station</th>
@@ -168,27 +169,10 @@
                            </div> --}}
                         </td>
                      </tr>
+                     <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
                      @endforeach
                      
-                     <tr class="mb-4">
-                        <td class="text-muted text-center"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        <td class="text-muted"></td>
-                        {{-- <td class="text-muted">
-                           
-                        </td> --}}
-                        <td class="text-left">
-                           <div class="btn-group">
-                              {{-- <a href="#" class="btn btn-outline-secondary ">Detail</a> --}}
-                           </div>
-                           
-                        </td>
-                     </tr>
+                     
                      
                   </tbody>
                </table>

@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+   User Management
+@endsection
 @section('content')
    <div class="container-xl">
       <!-- Page title -->
@@ -10,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  User
+                  User Management
                </h2>
             </div>
             <!-- Page title actions -->
@@ -33,7 +36,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <div class="card-body border-bottom py-3">
+            {{-- <div class="card-body border-bottom py-3">
                <div class="d-flex">
                  <div class="text-muted ">
                   Page
@@ -48,37 +51,65 @@
                    </div>
                  </div>
                </div>
-            </div>
-            <div class="table-responsive">
-               <table class="table card-table table-vcenter " >
-                  <thead>
-                     <tr>
-                        <th class="text-center w-1">No.</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($users as $user)
+            </div> --}}
+            {{-- <div class="card-body"> --}}
+               <div class="table-responsive my-4">
+                  {{-- <table class="table card-table table-vcenter " > --}}
+                     <table id="example"  class="table" >
+                     <thead>
                         <tr>
-                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                           <td><span class="">{{$user->name}}</span></td>
-                           <td class="text-muted">
-                              {{$user->email}} m
-                           </td>
-                           <td class="d-flex align-items-center">
-                              <div class="ms-auto">
-                                 <a href="" class="btn btn-secondary btn-sm">Edit</a>
-                                 <a href="" class="btn btn-danger btn-sm">Delete</a>
-                              </div>
-                           </td>
+                           <th class="text-center w-1">No.</th>
+                           <th>Name</th>
+                           <th>Role</th>
+                           <th>Email</th>
+                           <th></th>
                         </tr>
-                     @endforeach
-                  </tbody>
-               </table>
-            </div>
-            <div class="card-footer d-flex align-items-center">
+                     </thead>
+                     <tbody>
+                        @foreach ($users as $user)
+                           @if ($user->hasRole('superuser'))
+                              @else
+                              <tr>
+                                 <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                                 <td class="text-muted">{{$user->name}}</td>
+                                 <td class="text-muted">
+                                    @if ($user->hasRole('superuser'))
+                                       Super User
+                                       @elseif($user->hasRole('platform'))
+                                       Platform
+                                       @elseif($user->hasRole('supplier'))
+                                       Supplier
+                                       @elseif($user->hasRole('tenant'))
+                                       Tenant  
+                                       @elseif($user->hasRole('retail'))
+                                       Retail   
+                                    @endif
+                                 </td>
+                                 <td class="text-muted">
+                                    {{$user->email}} 
+                                 </td>
+                                 <td class="text-end">
+                                    <div class="btn-group">
+                                       @if (auth()->user()->hasRole('superuser'))
+                                       <a href="" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#editUser_{{$user->id}}">Edit</a>
+                                       @endif
+                                       
+                                       @if ($user->hasRole('platform'))
+                                          <a href="{{route('platform.detail', enkripRambo($user->getPlatformId()))}}" class="btn btn-secondary btn-sm">Detail</a>
+                                          @elseif($user->hasRole('supplier') || $user->hasRole('retail') || $user->hasRole('tenant') )
+                                          <a href="{{route('party.detail', enkripRambo($user->getPartyId()))}}" class="btn btn-secondary btn-sm">Detail</a>
+                                       @endif
+                                    </div>
+                                 </td>
+                              </tr>
+                           @endif
+                           <x-modal.user.edit :user="$user" />
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            {{-- </div> --}}
+            {{-- <div class="card-footer d-flex align-items-center">
                <small>
                   <p class="m-0 text-muted">Showing <span>{{$users->firstItem()}}</span> to <span>{{$users->lastItem()}}</span> of <span>{{$totalUser}}</span> entries</p>
                </small>
@@ -86,7 +117,7 @@
                   {{$users->links()}}
                </div>
             
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>

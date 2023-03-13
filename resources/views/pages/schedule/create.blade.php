@@ -80,7 +80,7 @@
                            <div class="col-md-12">
                               <div class="mb-3">
                                  <label class="form-label text-muted">Activity</label>
-                                 <textarea class="form-control" name="Activity" id="activity" rows="4" placeholder="Activity.."></textarea>
+                                 <textarea class="form-control" name="activity" id="activity" rows="4" placeholder="Activity.."></textarea>
                                </div>
                            </div>
                            <div class="col-md-6">

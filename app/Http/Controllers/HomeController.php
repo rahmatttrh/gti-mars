@@ -31,16 +31,29 @@ class HomeController extends Controller
 
       $vessels = Vessel::get();
       $vessel3 = Vessel::paginate('3');
-      if (auth()->user()->hasRole('marine')) {
-         $vessel = '';
-         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
-      } elseif (auth()->user()->hasRole('superuser')) {
+      if (auth()->user()->hasRole('superuser')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-      } elseif (auth()->user()->hasRole('vessel')) {
+      } elseif (auth()->user()->hasRole('supplier')) {
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('platform')) {
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('retail')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
-         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
+         $schedules = Schedule::get();
       }
+      // if (auth()->user()->hasRole('marine')) {
+      //    $vessel = '';
+      //    $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
+      // } elseif (auth()->user()->hasRole('superuser')) {
+      //    $vessel = '';
+      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      // } elseif (auth()->user()->hasRole('vessel')) {
+      //    $vessel = Vessel::where('email', auth()->user()->email)->first();
+      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
+      // }
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
 

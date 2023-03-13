@@ -48,4 +48,46 @@ class User extends Authenticatable
       $vessel = Vessel::where('email', auth()->user()->email)->first();
       return $vessel->id;
    }
+
+   public function getPlatformId()
+   {
+      $platform = Platform::where('email', $this->email)->first();
+      return $platform->id;
+   }
+
+   public function getPartyId()
+   {
+      $party = Party::where('email', $this->email)->first();
+      return $party->id;
+   }
+
+   public function getLogo()
+   {
+      $platform = Platform::where('email', $this->email)->first();
+      return $platform->logo;
+   }
+
+   public function getPartyLogo()
+   {
+      $party = Party::where('email', $this->email)->first();
+      return $party->logo;
+   }
+
+   public function getSystem()
+   {
+      $platform = Platform::where('email', $this->email)->first();
+      return $platform->system;
+   }
+
+   public function getPlatformLogo()
+   {
+      $party = Party::where('email', $this->email)->first();
+      return $party->platform->logo;
+   }
+
+   public function getPlatformSystem()
+   {
+      $party = Party::where('email', $this->email)->first();
+      return $party->platform->system;
+   }
 }
