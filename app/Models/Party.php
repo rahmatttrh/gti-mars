@@ -14,4 +14,9 @@ class Party extends Model
    {
       return $this->belongsTo(Platform::class);
    }
+
+   public function wo()
+   {
+      return $this->hasMany(Wo::class);
+   }
 }

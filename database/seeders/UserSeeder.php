@@ -108,58 +108,58 @@ class UserSeeder extends Seeder
       $krisna->assignRole('retail');
 
 
-      // $superuser = User::create([
-      //    'name' => 'User',
-      //    'email' => 'user@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $superuser->assignRole('user');
+      $superuser = User::create([
+         'name' => 'User',
+         'email' => 'user@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $superuser->assignRole('user');
 
-      // $ej = User::create([
-      //    'name' => 'Elok Jaya',
-      //    'email' => 'ej@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $ej->assignRole('vessel');
+      $ej = User::create([
+         'name' => 'Elok Jaya',
+         'email' => 'ej@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $ej->assignRole('vessel');
 
-      // $tj = User::create([
-      //    'name' => 'Triton Jawara',
-      //    'email' => 'tj@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $tj->assignRole('vessel');
+      $tj = User::create([
+         'name' => 'Triton Jawara',
+         'email' => 'tj@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $tj->assignRole('vessel');
 
-      // $hj = User::create([
-      //    'name' => 'Hafar Jupiter',
-      //    'email' => 'hj@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $hj->assignRole('vessel');
+      $hj = User::create([
+         'name' => 'Hafar Jupiter',
+         'email' => 'hj@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $hj->assignRole('vessel');
 
-      // $tb = User::create([
-      //    'name' => 'Transko Balihe',
-      //    'email' => 'tb@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $tb->assignRole('vessel');
+      $tb = User::create([
+         'name' => 'Transko Balihe',
+         'email' => 'tb@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $tb->assignRole('vessel');
 
-      // $marine = User::create([
-      //    'name' => 'Marine SSO',
-      //    'email' => 'marine@gmail.com',
-      //    'password' => Hash::make('12345678'),
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
-      // $marine->assignRole('marine');
+      $marine = User::create([
+         'name' => 'Marine SSO',
+         'email' => 'marine@gmail.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $marine->assignRole('marine');
    }
 }
