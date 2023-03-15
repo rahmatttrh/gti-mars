@@ -1,6 +1,6 @@
 <div>
    <div class="row mt--1 row-cards">
-      <div class="col-lg-9">
+      <div class="col-lg-8">
          <div class="card mb-2">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
@@ -16,32 +16,24 @@
                         <th>Activity</th>
                         <th>Route</th>
                         <th>Status</th>
-                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($schedules as $schedule)
-                        <tr>
-                           <td class="text-muted">14/03/23</td>
-                           <td class="text-muted">Logistic</td>
-                           <td class="text-muted">Material Cargo</td>
-                           <td class="text-muted">KJ4 - PAB</td>
-                           <td>
-                              <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Sailing</div>
-                           </td>
-                           <td>
-                              <a href="" class="btn btn-sm btn-secondary">Detail</a>
-                           </td>
-                           
-                        </tr>
-                        <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
-                     @endforeach
+                     <tr>
+                        <td class="text-muted"><a href="">14/03/23</a></td>
+                        <td class="text-muted">Logistic</td>
+                        <td class="text-muted">Material Cargo</td>
+                        <td class="text-muted">KJ4 - PAB</td>
+                        <td>
+                           <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Draft</div>
+                        </td>
+                     </tr>
                   </tbody>
                </table>
             </div>
          </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
          <div class="card">
             <div class="card-body">
                <div class="d-flex align-items-center">

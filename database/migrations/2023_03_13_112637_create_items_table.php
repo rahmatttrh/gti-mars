@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePortsTable extends Migration
+class CreateItemsTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,12 +13,13 @@ class CreatePortsTable extends Migration
     */
    public function up()
    {
-      Schema::create('ports', function (Blueprint $table) {
+      Schema::create('items', function (Blueprint $table) {
          $table->id();
-         $table->string('name');
-         $table->string('type');
-         $table->string('latitude')->nullable();
-         $table->string('longitude')->nullable();
+         $table->mediumInteger('cargo_id');
+         $table->string('no_doc');
+         $table->string('desc');
+         $table->integer('qty');
+
          $table->timestamps();
       });
    }
@@ -30,6 +31,6 @@ class CreatePortsTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('ports');
+      Schema::dropIfExists('items');
    }
 }

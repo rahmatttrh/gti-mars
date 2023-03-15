@@ -7,5 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cargo extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function origin()
+   {
+      return $this->belongsTo(Port::class);
+   }
+
+   public function destination()
+   {
+      return $this->belongsTo(Port::class);
+   }
 }

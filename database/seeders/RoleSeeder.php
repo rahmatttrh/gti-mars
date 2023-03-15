@@ -20,24 +20,39 @@ class RoleSeeder extends Seeder
       ]);
 
       Role::create([
-         'name' => 'platform',
+         'name' => 'marine',
          'guard_name' => 'web'
       ]);
 
       Role::create([
-         'name' => 'supplier',
+         'name' => 'logistic',
          'guard_name' => 'web'
       ]);
 
       Role::create([
-         'name' => 'tenant',
+         'name' => 'drilling',
          'guard_name' => 'web'
       ]);
 
-      Role::create([
-         'name' => 'retail',
-         'guard_name' => 'web'
-      ]);
+      // Role::create([
+      //    'name' => 'platform',
+      //    'guard_name' => 'web'
+      // ]);
+
+      // Role::create([
+      //    'name' => 'supplier',
+      //    'guard_name' => 'web'
+      // ]);
+
+      // Role::create([
+      //    'name' => 'tenant',
+      //    'guard_name' => 'web'
+      // ]);
+
+      // Role::create([
+      //    'name' => 'retail',
+      //    'guard_name' => 'web'
+      // ]);
 
       // Role::create([
       //    'name' => 'user',
@@ -54,8 +69,8 @@ class RoleSeeder extends Seeder
       //    'guard_name' => 'web'
       // ]);
       // Role::create([
-      //    'name' => 'user',
-      //    'guard-name' => 'web'
+      //    'name' => 'receiving',
+      //    'guard_name' => 'web'
       // ]);
    }
 }

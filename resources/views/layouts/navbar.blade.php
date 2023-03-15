@@ -76,6 +76,67 @@
                      </span>
                      </a>
                   </li> --}}
+                  @elseif(auth()->user()->hasRole('marine'))
+                  <li class="nav-item dropdown {{request()->is('vessel/index') ? 'active' : ''}} {{request()->is('port/index') ? 'active' : ''}}">
+                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                        </span>
+                        <span class="nav-link-title">
+                           Master Data
+                        </span>
+                     </a>
+                     <div class="dropdown-menu">
+                        
+                        <a class="dropdown-item" href="{{route('vessel')}}" >
+                           Vessel
+                        </a>
+                     </div>
+                  </li>
+                  <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
+                  <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                     <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                     </span>
+                     <span class="nav-link-title">
+                        Schedule
+                     </span>
+                  </a>
+                  <div class="dropdown-menu">
+                     <a class="dropdown-item" href="{{route('schedule.request')}}" >
+                        Plan
+                     </a>
+                     <a class="dropdown-item" href="#" >
+                        History
+                     </a>
+                  </div>
+               </li>
+                  
+                  @elseif(auth()->user()->hasRole('logistic'))
+                     <li class="nav-item dropdown {{request()->is('vessel/index') ? 'active' : ''}} {{request()->is('port/index') ? 'active' : ''}}">
+                        <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                           <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
+                           </span>
+                           <span class="nav-link-title">
+                              Request
+                           </span>
+                        </a>
+                        <div class="dropdown-menu">
+                           <a class="dropdown-item" href="{{route('request.create')}}">
+                              Create
+                           </a>
+                           <a class="dropdown-item" href="" >
+                              Draft
+                           </a>
+                           <a class="dropdown-item" href="" >
+                              Progress
+                           </a>
+                           <a class="dropdown-item" href="" >
+                              History
+                           </a>
+                        </div>
+                     </li>
                   @elseif(auth()->user()->hasRole('platform'))
                   {{-- <li class="nav-item {{request()->is('platform/party/' .  enkripRambo(auth()->user()->getPlatformId())) ? 'active' : ''}}">
                      <a class="nav-link" href="{{route('platform.party', enkripRambo(auth()->user()->getPlatformId()))}}" >
@@ -123,14 +184,14 @@
                         <a class="dropdown-item" href="#" >
                            Draft
                         </a>
-                        <a class="dropdown-item" href="#" >
+                        <a class="dropdown-item" href="{{route('cargo.progress')}}" >
                            Progress
                         </a>
                      </div>
                   </li>
                @endif
    
-               <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
+               {{-- <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
                   <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
                      <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z" /></svg>
@@ -147,7 +208,7 @@
                         History
                      </a>
                   </div>
-               </li>
+               </li> --}}
                
                {{-- @if(auth()->user()->hasRole('superuser'))
                <li class="nav-item {{request()->is('/user/index') ? 'active' : ''}}">

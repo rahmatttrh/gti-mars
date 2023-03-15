@@ -41,8 +41,15 @@
             <x-dashboard.superuser :schedules="$schedules" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('marine'))
             <x-dashboard.marine :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
+            @elseif(auth()->user()->hasRole('logistic'))
+            <x-dashboard.logistic  :monthname="$monthName"/>
+            
             @elseif(auth()->user()->hasRole('supplier'))
             <x-dashboard.supplier :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
+            @elseif(auth()->user()->hasRole('retail'))
+            <x-dashboard.retail :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
+            @elseif(auth()->user()->hasRole('receiving'))
+            <x-dashboard.receiving :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
             @elseif(auth()->user()->hasRole('vessel'))
             <x-dashboard.vessel :schedules="$schedules" :monthname="$monthName"  :vessels="$vessels" :vessel="$vessel"/>
          @endif

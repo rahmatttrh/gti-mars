@@ -11,10 +11,12 @@ use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\PortController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VesselController;
 use App\Models\Platform;
+use App\Models\Request;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Route;
 
@@ -111,12 +113,22 @@ Route::middleware(["auth"])->group(function () {
    });
    Route::prefix('cargo')->group(function () {
       Route::get('create', [CargoController::class, 'create'])->name('cargo.create');
-      Route::get('check', [CargoController::class, 'check'])->name('cargo.check');
+      Route::post('check', [CargoController::class, 'check'])->name('cargo.check');
+      Route::post('choose', [CargoController::class, 'choose'])->name('cargo.choose');
+
+      Route::get('progress', [CargoController::class, 'progress'])->name('cargo.progress');
+      Route::get('timeline', [CargoController::class, 'timeline'])->name('cargo.timeline');
+      Route::get('receipt', [ExportController::class, 'cargo'])->name('cargo.receipt');
+
+      Route::get('check-dummy', [CargoController::class, 'checkDummy'])->name('cargo.check.dummy');
       Route::get('detail', [CargoController::class, 'detail'])->name('cargo.detail');
    });
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::put('update', [UserController::class, 'update'])->name('user.update');
+   });
+   Route::prefix('request')->group(function () {
+      Route::get('create', [RequestController::class, 'create'])->name('request.create');
    });
 });
 

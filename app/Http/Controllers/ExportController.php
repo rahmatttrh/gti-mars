@@ -53,4 +53,20 @@ class ExportController extends Controller
       $pdf->loadHTML($html)->setPaper("a4", "landscape");
       return $pdf->stream($filename);
    }
+
+   public function cargo()
+   {
+
+      $now = Carbon::now();
+      $html = view("pages.pdf.cargo-receipt", [
+         "now" => $now
+      ])->with("i");
+
+      $filename = "Cargo Receipt";
+
+      $pdf = \App::make("dompdf.wrapper");
+
+      $pdf->loadHTML($html)->setPaper("a4", "landscape");
+      return $pdf->stream($filename);
+   }
 }

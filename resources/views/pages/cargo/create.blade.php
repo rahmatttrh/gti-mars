@@ -59,22 +59,21 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('schedule.store')}}" method="POST">
+            <form action="{{route('cargo.check')}}" method="POST">
                @csrf
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
                         <div class="row">
-                           <div class="col-md-12">
+                           {{-- <div class="col-md-12">
                               <div class="form-floating mb-3">
                                  <input type="text" required class="form-control" id="name" name="name" >
                                  <label for="name">Name</label>
                               </div>
-                           </div>
+                           </div> --}}
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <select required name="origin" id="origin" class="form-select">
-                                    <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
                                        <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
@@ -86,7 +85,6 @@
                            <div class="col-md-6">
                               <div class="form-floating">
                                  <select required name="destination" id="destination" class="form-select">
-                                    <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
                                        <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
@@ -97,12 +95,18 @@
                            </div>
                           
                            <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="date" required class="form-control" id="date" name="date" >
-                                 <label for="date">Date</label>
+                              <div class="form-floating">
+                                 <input type="date" required class="form-control" id="departure_date" name="departure_date" >
+                                 <label for="departure_date">Departure Date</label>
                               </div>
                            </div>
                            <div class="col-md-6">
+                              <div class="form-floating">
+                                 <input type="date" class="form-control" id="return_date" name="return_date" >
+                                 <label for="return_date">Return Date (Optional)</label>
+                              </div>
+                           </div>
+                           {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <select required name="req_boat" id="req_boat" class="form-select">
                                     <option  disabled selected>Choose one</option>
@@ -112,18 +116,18 @@
                                  </select>
                                  <label for="req_boat">Required Boat</label>
                               </div>
-                           </div>
+                           </div> --}}
                         </div>
                         <hr>
-                        {{-- <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
                            Check
-                        </button> --}}
-                     <a href="{{route('cargo.check')}} " class="btn btn-primary ms-auto">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                        </button>
+                        {{-- <a href="{{route('cargo.check.dummy')}} " class="btn btn-primary ms-auto">
+	                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
                            Check
-                        </a>
-                     </div>
+                        </a> --}}
+                     </div> 
                      
                      <div class="col-md-4">
                         <div class="card">

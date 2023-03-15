@@ -18,44 +18,62 @@
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-               {{-- <span class="d-none d-sm-inline">
-                  <a href="#" class="btn btn-white">
-                  New view
-                  </a>
-               </span> --}}
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Option
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item" href="#">
-                        Delete
+               <div class="btn-list">
+                  {{-- <span class="d-none d-sm-inline">
+                     <a href="#" class="btn btn-white">
+                     New view
                      </a>
-                     
+                  </span> --}}
+                  <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Option
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end">
+                        @if (auth()->user()->hasRole('retail'))
+                           <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#arriveCargoPlan">
+                              Arrive
+                           </a>
+                           @elseif(auth()->user()->hasRole('receiving'))
+                           <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#approveCargoPlan">
+                              Approve
+                           </a>
+                           @elseif(auth()->user()->hasRole('supplier'))
+                           <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                              Release
+                           </a>
+                           <div class="dropdown-divider"></div>
+                           <a class="dropdown-item" href="#">
+                              Delete
+                           </a>
+                        @endif
+                        
+                        
+                        
+                     </div>
                   </div>
-               </div>
-               
-               
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Actions
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                     
-                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addCargoItem">
-                        Add Cargo Item
-                     </a>
-                     <div class="dropdown-divider"></div>
-                     <a class="dropdown-item" href="#">
-                        Timeline
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Print Preview
-                     </a>
+                  
+                  
+                  @if(auth()->user()->hasRole('supplier'))
+                  <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Actions
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end">
+                        
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addCargoItem">
+                           Add Cargo Item
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route('cargo.timeline')}}">
+                           Timeline
+                        </a>
+                        <a class="dropdown-item" target="_blank" href="{{route('cargo.receipt')}}">
+                           Print Preview
+                        </a>
+                     </div>
                   </div>
+                  @endif
                </div>
-            </div>
             </div>
          </div>
       </div>
@@ -68,9 +86,9 @@
                   <div class="card-body">
                     <div class="row g-2 align-items-center">
                       <div class="col ms-2">
-                        <h1>ID Cargo</h1>
+                        <h1>14/C/MAR/23</h1>
                         <h4 class="card-title m-0">
-                           Lorem, ipsum dolor.
+                           Indofood
                         </h4>
                         <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Commodi ipsam maxime possimus.</small>
                         
@@ -126,38 +144,38 @@
                      <tr>
                         <td>343422</td>
                         <td class="text-muted">
-                           Lorem ipsum dolor sit.
+                           Lorem ipsum dolor sit
                         </td>
                         <td class="text-muted">1</td>
                         <td class="text-muted">Unit</td>
                         <td class="text-muted">7.0</td>
                         <td class="text-muted">9.2</td>
                         <td class="text-muted">Lorem, ipsum.</td>
-                        <td><a href="">Delete</a></td>
+                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a></td>
                      </tr>
                      <tr>
-                        <td>343422</td>
+                        <td>773248</td>
                         <td class="text-muted">
-                           Lorem ipsum dolor sit.
+                           Consectetur adipisicing elit
                         </td>
                         <td class="text-muted">1</td>
                         <td class="text-muted">Unit</td>
-                        <td class="text-muted">7.0</td>
-                        <td class="text-muted">9.2</td>
+                        <td class="text-muted">3.0</td>
+                        <td class="text-muted">2.8</td>
                         <td class="text-muted">Lorem, ipsum.</td>
-                        <td><a href="">Delete</a></td>
+                        <td><a href="" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a></td>
                      </tr>
                      <tr>
-                        <td>343422</td>
+                        <td>991234</td>
                         <td class="text-muted">
-                           Lorem ipsum dolor sit.
+                           Spernatur totam distinctio!
                         </td>
                         <td class="text-muted">1</td>
                         <td class="text-muted">Unit</td>
-                        <td class="text-muted">7.0</td>
-                        <td class="text-muted">9.2</td>
+                        <td class="text-muted">5.0</td>
+                        <td class="text-muted">5.1</td>
                         <td class="text-muted">Lorem, ipsum.</td>
-                        <td><a href="">Delete</a></td>
+                        <td><a href="" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a></td>
                      </tr>
                   </tbody>
                </table>
@@ -167,5 +185,66 @@
    </div>
 
    <x-modal.cargo.add />
+   <div class="modal modal-blur fade" id="deleteCargoItem" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title">Are you sure?</div>
+            <div>If you proceed, you will lose this data</b>.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+            <a href="" class="btn btn-danger" >Yes, delete this data</a>
+            {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
+          </div>
+        </div>
+      </div>
+   </div>
+   <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title">Are you sure?</div>
+            <div>If you proceed, you will not able to edit this data again</b>.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+            <a href="{{route('cargo.progress')}}" class="btn btn-primary" >Yes, release</a>
+            {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
+          </div>
+        </div>
+      </div>
+   </div>
+   <div class="modal modal-blur fade" id="arriveCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title">Are you sure?</div>
+            <div>Make sure the ID Cargo match</b>.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+            <a href="#" class="btn btn-primary" >Yes, Arrive</a>
+            {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
+          </div>
+        </div>
+      </div>
+   </div>
+
+   <div class="modal modal-blur fade" id="approveCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-title">Are you sure?</div>
+            <div>Convert to Manifest</b>.</div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+            <a href="#" class="btn btn-primary" >Yes, Approve</a>
+            {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
+          </div>
+        </div>
+      </div>
+   </div>
 
 @endsection

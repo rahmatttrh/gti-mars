@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePortsTable extends Migration
+class CreateDepartmentsTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,12 +13,11 @@ class CreatePortsTable extends Migration
     */
    public function up()
    {
-      Schema::create('ports', function (Blueprint $table) {
+      Schema::create('departments', function (Blueprint $table) {
          $table->id();
          $table->string('name');
-         $table->string('type');
-         $table->string('latitude')->nullable();
-         $table->string('longitude')->nullable();
+         $table->string('email');
+         $table->string('pic')->nullable();
          $table->timestamps();
       });
    }
@@ -30,6 +29,6 @@ class CreatePortsTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('ports');
+      Schema::dropIfExists('departments');
    }
 }

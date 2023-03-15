@@ -43,17 +43,20 @@ class HomeController extends Controller
       } elseif (auth()->user()->hasRole('retail')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
          $schedules = Schedule::get();
+      } elseif (auth()->user()->hasRole('receiving')) {
+         $vessel = '';
+         $schedules = Schedule::get();
       }
-      // if (auth()->user()->hasRole('marine')) {
-      //    $vessel = '';
-      //    $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
-      // } elseif (auth()->user()->hasRole('superuser')) {
-      //    $vessel = '';
-      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-      // } elseif (auth()->user()->hasRole('vessel')) {
-      //    $vessel = Vessel::where('email', auth()->user()->email)->first();
-      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
-      // }
+      if (auth()->user()->hasRole('marine')) {
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('superuser')) {
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('vessel')) {
+         $vessel = Vessel::where('email', auth()->user()->email)->first();
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
+      }
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
 
@@ -86,11 +89,11 @@ class HomeController extends Controller
       return view('home', [
          'today' => $today,
          'monthName' => $monthName,
-         'vessel' => $vessel,
+         // 'vessel' => $vessel,
          'vessels' => $vessels,
-         'vessel3' => $vessel3,
+         // 'vessel3' => $vessel3,
          'schedules' => $schedules,
-         'schedulesFix' => $schedulesFix
+         // 'schedulesFix' => $schedulesFix
       ]);
    }
 }

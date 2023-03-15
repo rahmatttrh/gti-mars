@@ -25,87 +25,114 @@ class UserSeeder extends Seeder
       ]);
       $superuser->assignRole('superuser');
 
-      $enc = User::create([
-         'name' => 'ENC',
-         'email' => 'enc@gmail.com',
+      $marine = User::create([
+         'name' => 'Marine',
+         'email' => 'marine@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $enc->assignRole('platform');
+      $marine->assignRole('marine');
 
-      $gs = User::create([
-         'name' => 'Graha Segara',
-         'email' => 'gs@gmail.com',
+      $logistic = User::create([
+         'name' => 'Logistic',
+         'email' => 'logistic@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $gs->assignRole('platform');
+      $logistic->assignRole('logistic');
 
-      $peip = User::create([
-         'name' => 'PEIP',
-         'email' => 'peip@gmail.com',
+      $drilling = User::create([
+         'name' => 'Drilling',
+         'email' => 'drilling@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $peip->assignRole('platform');
+      $drilling->assignRole('drilling');
 
-      $indofood = User::create([
-         'name' => 'Indofood',
-         'email' => 'indofood@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $indofood->assignRole('supplier');
+      // $enc = User::create([
+      //    'name' => 'ENC',
+      //    'email' => 'enc@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $enc->assignRole('platform');
 
-      $unilever = User::create([
-         'name' => 'Unilever',
-         'email' => 'unilever@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $unilever->assignRole('supplier');
+      // $gs = User::create([
+      //    'name' => 'Graha Segara',
+      //    'email' => 'gs@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $gs->assignRole('platform');
 
-      $kalbe = User::create([
-         'name' => 'Kalbe',
-         'email' => 'kalbe@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $kalbe->assignRole('supplier');
+      // $peip = User::create([
+      //    'name' => 'PEIP',
+      //    'email' => 'peip@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $peip->assignRole('platform');
 
-      $gemilang = User::create([
-         'name' => 'Gemilang Logistic',
-         'email' => 'gemilang@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $gemilang->assignRole('tenant');
+      // $indofood = User::create([
+      //    'name' => 'Indofood',
+      //    'email' => 'indofood@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $indofood->assignRole('supplier');
+
+      // $unilever = User::create([
+      //    'name' => 'Unilever',
+      //    'email' => 'unilever@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $unilever->assignRole('supplier');
+
+      // $kalbe = User::create([
+      //    'name' => 'Kalbe',
+      //    'email' => 'kalbe@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $kalbe->assignRole('supplier');
+
+      // $gemilang = User::create([
+      //    'name' => 'Gemilang Logistic',
+      //    'email' => 'gemilang@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $gemilang->assignRole('tenant');
 
 
-      $intan = User::create([
-         'name' => 'Intan Area',
-         'email' => 'intan@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $intan->assignRole('retail');
+      // $intan = User::create([
+      //    'name' => 'Intan Area',
+      //    'email' => 'intan@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $intan->assignRole('retail');
 
-      $krisna = User::create([
-         'name' => 'Krisna',
-         'email' => 'krisna@gmail.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $krisna->assignRole('retail');
+      // $krisna = User::create([
+      //    'name' => 'Krisna',
+      //    'email' => 'krisna@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $krisna->assignRole('retail');
 
 
       // $superuser = User::create([
@@ -161,5 +188,14 @@ class UserSeeder extends Seeder
       //    'updated_at' => NOW()
       // ]);
       // $marine->assignRole('marine');
+
+      // $receiving = User::create([
+      //    'name' => 'Receiving',
+      //    'email' => 'receiving@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $receiving->assignRole('receiving');
    }
 }
