@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateWosTable extends Migration
+class CreatePayloadTypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateWosTable extends Migration
      */
     public function up()
     {
-        Schema::create('wos', function (Blueprint $table) {
-            $table->id();
-            $table->smallInteger('party_id');
-            $table->smallInteger('schedule_id');
-            $table->tinyInteger('payloadtype_id');
-            $table->string('status', 3);
+        Schema::create('payload_types', function (Blueprint $table) {
+            $table->tinyIncrements('id');
+            $table->string('code', 3);
+            $table->string('description');
+            $table->string('status', 3)->default('1');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateWosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('wos');
+        Schema::dropIfExists('payload_types');
     }
 }

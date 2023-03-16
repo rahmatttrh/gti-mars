@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PayloadType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,7 +25,8 @@ class DatabaseSeeder extends Seeder
          JettySeeder::class,
          PlatformSeeder::class,
          PartySeeder::class,
-         CarrierSeeder::class
+         CarrierSeeder::class,
+         PayloadTypeSeeder::class
       ]);
    }
 }

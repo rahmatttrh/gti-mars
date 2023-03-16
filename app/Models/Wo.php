@@ -24,4 +24,9 @@ class Wo extends Model
     {
         return $this->belongsTo(Party::class);
     }
+
+    public function payload_type()
+    {
+        return $this->belongsTo(PayloadType::class);
+    }
 }
