@@ -18,7 +18,10 @@ class CreateWosTable extends Migration
             $table->smallInteger('party_id');
             $table->smallInteger('schedule_id');
             $table->tinyInteger('payloadtype_id');
-            $table->string('status', 3);
+            $table->string('activity')->nullable();
+            $table->string('status', 3)->default('0');
+            $table->dateTime('departure')->nullable();
+            $table->dateTime('release_at')->nullable();
             $table->timestamps();
         });
     }

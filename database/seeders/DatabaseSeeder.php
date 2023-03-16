@@ -26,7 +26,9 @@ class DatabaseSeeder extends Seeder
          PlatformSeeder::class,
          PartySeeder::class,
          CarrierSeeder::class,
-         PayloadTypeSeeder::class
+         PayloadTypeSeeder::class,
+         WoSeeder::class,
+         CargoSeeder::class
       ]);
    }
 }

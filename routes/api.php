@@ -31,7 +31,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // 
 
 
-// 1 GET SCHEDULE
+// 0.1 GET SCHEDULE
 Route::post('/get-schedule', function (Request $request) {
 
     $validator = $request->validate([
@@ -51,7 +51,7 @@ Route::post('/get-schedule', function (Request $request) {
     if (isset($data)) {
         # code...
         $response = [
-            'message' => 'success',
+            'message' => 'Get successfully ',
             'data' => $data
 
         ];
@@ -61,8 +61,7 @@ Route::post('/get-schedule', function (Request $request) {
     return $response;
 });
 
-
-// 2 Insert WO when Click Select Button
+// 1.1 Insert WO when Click Select Button
 Route::post('/wo', function (Request $request) {
 
     $validator = $request->validate([
@@ -86,7 +85,7 @@ Route::post('/wo', function (Request $request) {
 
         if ($result) {
             $respon = [
-                'message' => 'success',
+                'message' => 'Inserted successfully ',
                 'data' => $result
             ];
         } else {
@@ -103,7 +102,38 @@ Route::post('/wo', function (Request $request) {
     return $respon;
 });
 
-// 3 Get Detail WO
+// 1.2 Update WO
+Route::put('/wo/{id}', function (Request $request, $id) {
+
+    $validator = $request->validate([
+        'party_id' => ['required'],
+        'payloadtype_id' => ['required'],
+        'schedule_id' => ['required']
+    ]);
+
+    // return isset($data);
+    $result = Wo::where('id', $id)->update([
+        'party_id' => $request->party_id,
+        'schedule_id' => $request->schedule_id,
+        'payloadtype_id' => $request->payloadtype_id,
+        'updated_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Updated successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.3 Get Detail WO
 Route::get('/wo/{id}', function ($id) {
 
     $data = WO::where('id', $id)->first();
@@ -111,7 +141,7 @@ Route::get('/wo/{id}', function ($id) {
     if (isset($data)) {
 
         $respon = [
-            'message' => 'success',
+            'message' => 'Get successfully',
             'data' => $data
         ];
     } else {
@@ -124,7 +154,81 @@ Route::get('/wo/{id}', function ($id) {
     return $respon;
 });
 
-// 4 Get Index Cargo Plan
+// 1.4 Update WO
+Route::patch('/wo/{id}/update', function (Request $request, $id) {
+
+    $validator = $request->validate([
+        'activity' => ['required'],
+        'departure' => ['required']
+    ]);
+
+    $result = Wo::where('id', $id)->update([
+        'activity' => $request->activity,
+        'departure' => $request->departure,
+        'updated_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Updated successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.5 Delete WO
+Route::delete('/wo/{id}/delete', function ($id) {
+
+    $result = Wo::destroy($id);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Deleted successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.5 Release WO
+Route::patch('/wo/{id}/release', function (Request $request, $id) {
+
+    // $validator = $request->validate([
+    //     'activity' => ['required'],
+    //     'departure' => ['required']
+    // ]);
+
+    $result = Wo::where('id', $id)->update([
+        'status' => '1',
+        'release_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Release successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 2.1 Get Index Cargo Plan
 Route::get('/wo/{id}/cargoplan', function ($id) {
 
     $data = Wo::where('id', $id)->first();
@@ -151,7 +255,7 @@ Route::get('/wo/{id}/cargoplan', function ($id) {
     return $respon;
 });
 
-// 5 Insert Cargo Plan 
+// 2.2 Insert Cargo Plan 
 Route::post('/cargo', function (Request $request) {
 
     $validator = $request->validate([
@@ -194,7 +298,7 @@ Route::post('/cargo', function (Request $request) {
     return $respon;
 });
 
-// 6 Show Cargo
+// 2.3 Show Cargo
 Route::get('/cargo/{id}', function ($id) {
 
     $data = Cargo::where('id', $id)->first();
@@ -215,7 +319,7 @@ Route::get('/cargo/{id}', function ($id) {
     return $respon;
 });
 
-// 7 Update Cargo
+// 2.4 Update Cargo
 Route::put('/cargo/{id}', function (Request $request, $id) {
 
     $validator = $request->validate([
@@ -241,7 +345,7 @@ Route::put('/cargo/{id}', function (Request $request, $id) {
 
     if ($result) {
         $respon = [
-            'message' => 'success',
+            'message' => 'Updated successfully',
             'data' => $result
         ];
     } else {
@@ -253,6 +357,7 @@ Route::put('/cargo/{id}', function (Request $request, $id) {
     return $respon;
 });
 
+// 2.5 Delete Cargo
 Route::delete('/cargo/{id}/delete', function ($id) {
 
     $result = Cargo::destroy($id);
