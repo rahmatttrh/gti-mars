@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Helpers\general;
+use App\Models\Port;
+use App\Models\Route as ModelsRoute;
 use App\Models\Wo;
 
 /*
@@ -374,4 +376,46 @@ Route::delete('/cargo/{id}/delete', function ($id) {
     }
 
     return $respon;
+});
+
+// 3.1 Port Assign route
+
+Route::get('/port/assign', function () {
+
+    $data = Port::get();
+
+    $response = 0;
+
+
+    foreach ($data as $key => $port) {
+
+        $destinations = Port::where('id', '!=', $port->id)->get();
+
+        foreach ($destinations as $key => $destination) {
+            # code...
+            $cekData = ModelsRoute::where('origin_id', $port->id)->where('destination_id', $destination->id)->first();
+
+            if (!isset($cekData)) {
+                $insert = ModelsRoute::insert([
+                    "routetype_id" => '1',
+                    "origin_id" => $port->id,
+                    "destination_id" => $destination->id,
+                    "created_at" => NOW(),
+                    "updated_at" => NOW()
+                ]);
+
+                if ($insert) {
+                    $response += 1;
+                }
+            }
+            // } else {
+            //     $response = 'Ada data';
+            // }
+
+
+        }
+    }
+
+
+    return 'Total data di insert : ' . $response;
 });
