@@ -1,11 +1,96 @@
 <div>
    <div class="row mt--1 row-cards">
-      <div class="col-lg-9">
+      {{-- <div class="col-4">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">CBU</h4>
+            </div>
+            <div class="card-body">
+               
+               <div class="mb-2">
+                  <div>Giat Jaya</div>
+                  <div>Triton Jawara</div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+      <div class="col-4">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">CBU</h4>
+            </div>
+            <div class="card-body">
+               
+               <div class="mb-2">
+                  <div>Giat Jaya</div>
+                  <div>Triton Jawara</div>
+               </div>
+               
+            </div>
+         </div>
+      </div>
+      <div class="col-4">
+         <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">CBU</h4>
+            </div>
+            <div class="card-body">
+               
+               <div class="mb-2">
+                  <div>Giat Jaya</div>
+                  <div>Triton Jawara</div>
+               </div>
+               
+            </div>
+         </div>
+      </div> --}}
+      <div class="col-md-9">
          <div class="card mb-2">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
                   
-                  REQUEST ACTIVITY</div>
+                  RECENT REQUEST ACTIVITY</div>
+            </div>
+            <div class="card-table table-responsive ">
+               <table class="table table-vcenter">
+                  <thead class="bg-primary">
+                     <tr>
+                        {{-- <th>Code</th> --}}
+                        <th>Created</th>
+                        <th>Func</th>
+                        <th>Activity</th>
+                        <th>Route</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($requests as $r)
+                        <tr>
+                           {{-- <td class="text-muted">{{$r->code}}</td> --}}
+                           <td class="text-muted">{{$r->date}}</td>
+                           <td class="text-muted">{{$r->department->code}}</td>
+                           <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
+                           <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
+                           <td>
+                              <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>01</div>
+                           </td>
+                        </tr>
+                        
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+      {{-- <div class="col-md-6">
+         <div class="card mb-2">
+            <div class="card-header border-0 bg-danger text-white">
+               <div class="card-title">
+                  
+                  REQUEST ACTIVITY PENDING</div>
             </div>
             <div class="card-table table-responsive ">
                <table class="table table-vcenter">
@@ -15,62 +100,50 @@
                         <th>Func</th>
                         <th>Activity</th>
                         <th>Route</th>
-                        <th>Status</th>
-                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($schedules as $schedule)
-                        <tr>
-                           <td class="text-muted">14/03/23</td>
-                           <td class="text-muted">Logistic</td>
-                           <td class="text-muted">Material Cargo</td>
-                           <td class="text-muted">KJ4 - PAB</td>
-                           <td>
-                              <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Sailing</div>
-                           </td>
-                           <td>
-                              <a href="" class="btn btn-sm btn-secondary">Detail</a>
-                           </td>
-                           
-                        </tr>
-                        <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
-                     @endforeach
+                     <tr>
+                        <td class="text-muted">14/03/23</td>
+                        <td class="text-muted">Logistic</td>
+                        <td class="text-muted">Material Cargo</td>
+                        <td class="text-muted">KJ4 - PAB</td>
+                     </tr>
                   </tbody>
                </table>
             </div>
          </div>
-      </div>
+      </div> --}}
       <div class="col-md-3">
          <div class="card">
+            <div class="card-header">
+               <h4 class="card-title">SBU</h4>
+            </div>
             <div class="card-body">
-               <div class="d-flex align-items-center">
-               <div class="subheader">Sales</div>
-               <div class="ms-auto lh-1">
-                  <div class="dropdown">
-                     <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
-                     <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item active" href="#">Last 7 days</a>
-                     <a class="dropdown-item" href="#">Last 30 days</a>
-                     <a class="dropdown-item" href="#">Last 3 months</a>
-                     </div>
-                  </div>
+               <div class="mb-2">
+                  <div>Prisai</div>
+                  <div>PM6</div>
                </div>
+            </div>
+         </div>
+         <div class="card mt-2">
+            <div class="card-header">
+               <h4 class="card-title">CBU</h4>
+            </div>
+            <div class="card-body">
+               <div class="mb-2">
+                  <div>Clarisa</div>
+                  <div>Clara 58</div>
                </div>
-               <div class="h1 mb-3">75%</div>
-               <div class="d-flex mb-2">
-               <div>Conversion rate</div>
-               <div class="ms-auto">
-                  <span class="text-green d-inline-flex align-items-center lh-1">
-                     7% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><polyline points="3 17 9 11 13 15 21 7" /><polyline points="14 7 21 7 21 14" /></svg>
-                  </span>
-               </div>
-               </div>
-               <div class="progress progress-sm">
-               <div class="progress-bar bg-blue" style="width: 75%" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100">
-                  <span class="visually-hidden">75% Complete</span>
-               </div>
+            </div>
+         </div>
+         <div class="card mt-2">
+            <div class="card-header">
+               <h4 class="card-title">NBU</h4>
+            </div>
+            <div class="card-body">
+               <div class="mb-2">
+                  <div>Salatiga</div>
                </div>
             </div>
          </div>

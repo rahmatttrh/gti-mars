@@ -78,7 +78,7 @@
                         Option
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
-                           @if (auth()->user()->hasRole('superuser'))
+                           @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('marine'))
                            <a class="dropdown-item" href="{{route('schedule.create')}}">
                               Create
                            </a>
@@ -105,11 +105,8 @@
                      <tr>
                         <th >No.</th>
                         <th>Date</th>
-                        <th>Function</th>
-                        <th>Station</th>
-                        <th>Activity</th>
                         <th>Location (Form - To)</th>
-                        {{-- <th>Required Boat</th> --}}
+                        <th>Required Boat</th>
                         <th>Assignment Boat</th>
                         <th>Status</th>
                         <th></th>
@@ -120,13 +117,13 @@
                      <tr>
                         <td class="text-muted text-center"><small>{{++$i}}</small></td>
                         <td class="text-muted text-truncate">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
-                        <td class="text-muted">{{$schedule->func}}</td>
-                        <td class="text-muted text-truncate">{{$schedule->station}}</td>
-                        <td class="text-muted text-truncate" style="max-width: 300px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
+                        {{-- <td class="text-muted">{{$schedule->func}}</td>
+                        <td class="text-muted text-truncate">{{$schedule->station}}</td> --}}
+                        {{-- <td class="text-muted text-truncate" style="max-width: 300px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
                            {{$schedule->activity}}
-                        </td>
+                        </td> --}}
                         <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
-                        {{-- <td class="text-muted">SCV</td> --}}
+                        <td class="text-muted">{{$schedule->req_boat}}</td>
                         <td class="text-muted text-truncate">
                            @if ($schedule->status == 1)
                               -

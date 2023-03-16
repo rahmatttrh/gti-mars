@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
+use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -34,6 +36,15 @@ class HomeController extends Controller
       if (auth()->user()->hasRole('superuser')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      } elseif (auth()->user()->hasRole('marine')) {
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
+         $requests = ModelsRequest::get();
+      } elseif (auth()->user()->hasRole('logistic')) {
+         $department = Department::where('email', auth()->user()->email)->first();
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+         $requests = ModelsRequest::where('department_id', $department->id)->get();
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
@@ -47,16 +58,16 @@ class HomeController extends Controller
          $vessel = '';
          $schedules = Schedule::get();
       }
-      if (auth()->user()->hasRole('marine')) {
-         $vessel = '';
-         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
-      } elseif (auth()->user()->hasRole('superuser')) {
-         $vessel = '';
-         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-      } elseif (auth()->user()->hasRole('vessel')) {
-         $vessel = Vessel::where('email', auth()->user()->email)->first();
-         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
-      }
+      // if (auth()->user()->hasRole('marine')) {
+      //    $vessel = '';
+      //    $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
+      // } elseif (auth()->user()->hasRole('superuser')) {
+      //    $vessel = '';
+      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      // } elseif (auth()->user()->hasRole('vessel')) {
+      //    $vessel = Vessel::where('email', auth()->user()->email)->first();
+      //    $schedules = Schedule::where('type', 2)->where('status', '>', 1)->where('vessel_id', $vessel->id)->whereMonth('date', $month)->get();
+      // }
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
 
@@ -88,6 +99,7 @@ class HomeController extends Controller
 
       return view('home', [
          'today' => $today,
+         'requests' => $requests,
          'monthName' => $monthName,
          // 'vessel' => $vessel,
          'vessels' => $vessels,

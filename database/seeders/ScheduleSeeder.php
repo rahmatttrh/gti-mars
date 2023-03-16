@@ -19,126 +19,140 @@ class ScheduleSeeder extends Seeder
       $now = Carbon::now();
 
       DB::table('schedules')->insert([
+         'type_id' => 1,
          'type' => 2,
          'status' => 1,
-         'origin_id' => 1,
-         'jetty_id' => 1,
-         'date' => $date,
-         'func' => 'WOWS',
-         'station' => 'C-225',
-         'activity' => 'Towing Boat',
-         'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
-         'destination_id' => 2,
-         'arrival' => $date,
-         'return' => $date,
-         'remark' => 'Organik SBU',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('schedules')->insert([
-         'type' => 2,
-         'status' => 1,
-         'origin_id' => 1,
-         'jetty_id' => 1,
-         'date' => $date->addDay(1),
-         'func' => 'WOWS',
-         'station' => 'C-222',
-         'activity' => 'Mobilisasi Material from Pabelokan ex KJ4 (ESP WIDD-07 unit & etc...)',
-         'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
-         'destination_id' => 4,
-         'arrival' => $date->addDay(1),
-         'return' => $date->addDay(1),
-         'remark' => 'Organik NBU',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('schedules')->insert([
-         'type' => 2,
-         'status' => 2,
-         'vessel_id' => 1,
-         'origin_id' => 1,
-         'jetty_id' => 1,
-         'date' => $date->addDay(1),
-         'func' => 'WOWS',
-         'station' => 'C-455',
-         'activity' => 'Mobilisasi Supply',
-         'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
-         'destination_id' => 6,
-         'arrival' => $date->addDay(1),
-         'return' => $date->addDay(1),
-         'remark' => 'Organik',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('schedules')->insert([
-         'type' => 2,
-         'status' => 1,
-         'origin_id' => 1,
-         'jetty_id' => 1,
          'date' => $now,
-         'func' => 'WOWS',
-         'station' => 'C-767',
-         'activity' => 'Mobilisasi Crew',
          'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
-         'destination_id' => 5,
-         'arrival' => $now,
-         'return' => $now,
-         'remark' => 'Organik',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('schedules')->insert([
-         'type' => 2,
-         'status' => 2,
-         'vessel_id' => 3,
          'origin_id' => 1,
-         'jetty_id' => 2,
-         'date' => $now->addDay(2),
-         'func' => 'WOWS',
-         'station' => 'C-767',
-         'activity' => 'ESP unit Reda Farida-C 14',
-         'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
          'destination_id' => 2,
-         'arrival' => $now->addDay(2),
-         'return' => $now->addDay(2),
-         'remark' => 'Organik Example',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-
       DB::table('schedules')->insert([
+         'type_id' => 2,
          'type' => 2,
-         'status' => 2,
-         'vessel_id' => 10,
+         'status' => 1,
+         'date' => $now,
+         'req_boat' => 'AHTS',
          'origin_id' => 1,
-         'jetty_id' => 2,
-         'date' => $now->addDay(5),
-         'func' => 'WOWS',
-         'station' => 'C-767',
-         'activity' => 'Back Load Pulling Tool Powerlift ',
-         'req_boat' => 'SVC',
-         'docking' => '07:00:00',
-         'departure' => '07:30:00',
-         'destination_id' => 12,
-         'arrival' => $now->addDay(5),
-         'return' => $now->addDay(5),
-         'remark' => 'Organik Example',
+         'destination_id' => 3,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      DB::table('schedules')->insert([
+         'type_id' => 2,
+         'type' => 2,
+         'status' => 1,
+         'date' => $now,
+         'req_boat' => 'AHTS',
+         'origin_id' => 1,
+         'destination_id' => 7,
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      // DB::table('schedules')->insert([
+      //    'type' => 2,
+      //    'status' => 1,
+      //    'origin_id' => 1,
+      //    'jetty_id' => 1,
+      //    'date' => $date->addDay(1),
+      //    'func' => 'WOWS',
+      //    'station' => 'C-222',
+      //    'activity' => 'Mobilisasi Material from Pabelokan ex KJ4 (ESP WIDD-07 unit & etc...)',
+      //    'req_boat' => 'SVC',
+      //    'docking' => '07:00:00',
+      //    'departure' => '07:30:00',
+      //    'destination_id' => 4,
+      //    'arrival' => $date->addDay(1),
+      //    'return' => $date->addDay(1),
+      //    'remark' => 'Organik NBU',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('schedules')->insert([
+      //    'type' => 2,
+      //    'status' => 2,
+      //    'vessel_id' => 1,
+      //    'origin_id' => 1,
+      //    'jetty_id' => 1,
+      //    'date' => $date->addDay(1),
+      //    'func' => 'WOWS',
+      //    'station' => 'C-455',
+      //    'activity' => 'Mobilisasi Supply',
+      //    'req_boat' => 'SVC',
+      //    'docking' => '07:00:00',
+      //    'departure' => '07:30:00',
+      //    'destination_id' => 6,
+      //    'arrival' => $date->addDay(1),
+      //    'return' => $date->addDay(1),
+      //    'remark' => 'Organik',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('schedules')->insert([
+      //    'type' => 2,
+      //    'status' => 1,
+      //    'origin_id' => 1,
+      //    'jetty_id' => 1,
+      //    'date' => $now,
+      //    'func' => 'WOWS',
+      //    'station' => 'C-767',
+      //    'activity' => 'Mobilisasi Crew',
+      //    'req_boat' => 'SVC',
+      //    'docking' => '07:00:00',
+      //    'departure' => '07:30:00',
+      //    'destination_id' => 5,
+      //    'arrival' => $now,
+      //    'return' => $now,
+      //    'remark' => 'Organik',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('schedules')->insert([
+      //    'type' => 2,
+      //    'status' => 2,
+      //    'vessel_id' => 3,
+      //    'origin_id' => 1,
+      //    'jetty_id' => 2,
+      //    'date' => $now->addDay(2),
+      //    'func' => 'WOWS',
+      //    'station' => 'C-767',
+      //    'activity' => 'ESP unit Reda Farida-C 14',
+      //    'req_boat' => 'SVC',
+      //    'docking' => '07:00:00',
+      //    'departure' => '07:30:00',
+      //    'destination_id' => 2,
+      //    'arrival' => $now->addDay(2),
+      //    'return' => $now->addDay(2),
+      //    'remark' => 'Organik Example',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('schedules')->insert([
+      //    'type' => 2,
+      //    'status' => 2,
+      //    'vessel_id' => 10,
+      //    'origin_id' => 1,
+      //    'jetty_id' => 2,
+      //    'date' => $now->addDay(5),
+      //    'func' => 'WOWS',
+      //    'station' => 'C-767',
+      //    'activity' => 'Back Load Pulling Tool Powerlift ',
+      //    'req_boat' => 'SVC',
+      //    'docking' => '07:00:00',
+      //    'departure' => '07:30:00',
+      //    'destination_id' => 12,
+      //    'arrival' => $now->addDay(5),
+      //    'return' => $now->addDay(5),
+      //    'remark' => 'Organik Example',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
 

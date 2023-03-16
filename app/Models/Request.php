@@ -7,5 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class Request extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function activity()
+   {
+      return $this->belongsTo(Activity::class);
+   }
+
+   public function schedule()
+   {
+      return $this->belongsTo(Schedule::class);
+   }
+
+   public function department()
+   {
+      return $this->belongsTo(Department::class);
+   }
+
+   public function cargoItems()
+   {
+      return $this->hasMany(CargoItem::class);
+   }
 }

@@ -54,7 +54,7 @@
                            </div>
                            <div class="col text-truncate">
                            <a href="{{route('port.detail', enkripRambo($port->id))}}" class="text-body d-block">{{$port->name}}</a>
-                           <div class="text-muted text-truncate mt-n1"><small>{{$port->latitude}} - {{$port->longitude}}</small></div>
+                           <div class="text-muted text-truncate mt-n1"><small>{{$port->type}}</small></div>
                         </div>
                      </div>
                   </div>

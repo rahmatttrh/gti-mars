@@ -43,6 +43,11 @@ class Schedule extends Model
       return $this->hasMany(Wo::class);
    }
 
+   public function requests()
+   {
+      return $this->hasMany(Request::class);
+   }
+
    // public function port()
    // {
    //    return $this->belongsTo(Port::class);

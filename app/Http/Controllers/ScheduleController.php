@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\Schedule;
+use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -131,9 +132,11 @@ class ScheduleController extends Controller
    {
       $vessels = Vessel::get();
       $ports = Port::get();
+      $types = Type::get();
       return view('pages.schedule.create', [
          'vessels' => $vessels,
-         'ports' => $ports
+         'ports' => $ports,
+         'types' => $types
       ]);
    }
 
@@ -153,6 +156,7 @@ class ScheduleController extends Controller
       // dd($req->type);
 
       Schedule::create([
+         'type_id' => $req->type_id,
          'type' => 2,
          'status' => 1,
          'func' => $req->func,

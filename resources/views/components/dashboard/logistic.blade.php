@@ -1,39 +1,69 @@
 <div>
    <div class="row mt--1 row-cards">
-      <div class="col-lg-8">
+      <div class="col-md-4">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center">
+               <div class="subheader">Draft Request</div>
+               </div>
+               <div class="h2 ">{{$requests->where('status', 1)->count()}} Request Activity</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-4">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center">
+               <div class="subheader">Progress Request</div>
+               </div>
+               <div class="h2 ">{{$requests->where('status', 2)->count()}} Request Activity</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-md-4">
+         <div class="card">
+            <div class="card-body">
+               <div class="d-flex align-items-center">
+               <div class="subheader">Complete Request</div>
+               </div>
+               <div class="h2 ">{{$requests->where('status', 3)->count()}} Request Activity</div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-12">
          <div class="card mb-2">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
                   
-                  REQUEST ACTIVITY</div>
+                  RECENT REQUEST ACTIVITY</div>
             </div>
             <div class="card-table table-responsive ">
                <table class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>
-                        <th>Date</th>
-                        <th>Func</th>
+                        <th>Code</th>
+                        <th>Created</th>
                         <th>Activity</th>
                         <th>Route</th>
                         <th>Status</th>
                      </tr>
                   </thead>
                   <tbody>
+                     @foreach ($requests as $r)
                      <tr>
-                        <td class="text-muted"><a href="">14/03/23</a></td>
-                        <td class="text-muted">Logistic</td>
-                        <td class="text-muted">Material Cargo</td>
-                        <td class="text-muted">KJ4 - PAB</td>
-                        <td>
-                           <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Draft</div>
-                        </td>
+                        <td class="text-muted">{{$r->code}}</td>
+                        <td class="text-muted">{{$r->date}}</td>
+                        <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
+                        <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
+                        <td><x-status.request :request="$r" /></td>
                      </tr>
+                     @endforeach
                   </tbody>
                </table>
             </div>
          </div>
       </div>
-      <div class="col-md-4">
+      {{-- <div class="col-md-4">
          <div class="card">
             <div class="card-body">
                <div class="d-flex align-items-center">
@@ -66,6 +96,6 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> --}}
    </div>
 </div>

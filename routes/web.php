@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CargoController;
+use App\Http\Controllers\CargoItemController;
 use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
@@ -129,6 +130,16 @@ Route::middleware(["auth"])->group(function () {
    });
    Route::prefix('request')->group(function () {
       Route::get('create', [RequestController::class, 'create'])->name('request.create');
+      Route::post('check', [RequestController::class, 'check'])->name('request.check');
+      Route::post('store', [RequestController::class, 'store'])->name('request.store');
+      Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
+
+      Route::get('draft', [RequestController::class, 'draft'])->name('request.draft');
+      Route::get('progress', [RequestController::class, 'progress'])->name('request.progress');
+      Route::get('release/{request:id}', [RequestController::class, 'release'])->name('request.release');
+   });
+   Route::prefix('cargo/item')->group(function () {
+      Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
    });
 });
 

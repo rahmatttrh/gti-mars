@@ -15,23 +15,26 @@ class CreateSchedulesTable extends Migration
    {
       Schema::create('schedules', function (Blueprint $table) {
          $table->id();
+         $table->smallInteger('type_id');
          $table->smallInteger('type');
          $table->smallInteger('status');
+         $table->date('date')->nullable();
          $table->mediumInteger('vessel_id')->nullable();
-         $table->mediumInteger('cargo_id')->nullable();
-         $table->string('func')->nullable();
-         $table->string('station')->nullable();
-         $table->string('activity')->nullable();
+         // $table->mediumInteger('cargo_id')->nullable();
+         // $table->string('func')->nullable();
+         // $table->string('station')->nullable();
+         // $table->string('activity')->nullable();
          $table->string('req_boat')->nullable();
          $table->mediumInteger('origin_id')->nullable();
-         $table->mediumInteger('jetty_id')->nullable();
-         $table->date('date')->nullable();
-         $table->time('docking')->nullable();
-         $table->time('departure')->nullable();
-         $table->time('return')->nullable();
-
          $table->mediumInteger('destination_id')->nullable();
-         $table->time('arrival')->nullable();
+         // $table->mediumInteger('jetty_id')->nullable();
+         // $table->date('date')->nullable();
+         // $table->time('docking')->nullable();
+         // $table->time('departure')->nullable();
+         // $table->time('return')->nullable();
+
+
+         // $table->time('arrival')->nullable();
 
          $table->string('remark')->nullable();
          $table->timestamps();

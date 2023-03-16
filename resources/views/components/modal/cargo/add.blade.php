@@ -5,48 +5,48 @@
             <h5 class="modal-title">Add Cargo Item</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
-         <form action="{{route('schedule.select.vessel')}}" method="POST">
+         <form action="{{route('cargo.item.store')}}" method="POST">
             @csrf
-            @method('PUT')
-            <input type="number" name="schedule" id="schedule" value="" hidden>
+            
+            <input type="number" name="req" id="req" value="{{$request->id}}" hidden>
             <div class="modal-body">
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="name" name="name" >
-                  <label for="name">No Document</label>
+                  <input type="text" required class="form-control" id="no_document" name="no_document" >
+                  <label for="no_document">No Document</label>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="name" name="name" >
-                  <label for="name">Description</label>
+                  <input type="text" required class="form-control" id="desc" name="desc" >
+                  <label for="desc">Description</label>
                </div>
                <div class="row">
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="name" name="name" >
-                        <label for="name">Qty</label>
+                        <input type="number" required class="form-control" id="qty" name="qty" >
+                        <label for="qty">Qty</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="name" name="name" >
-                        <label for="name">Unit</label>
+                        <input type="text"  class="form-control" id="unit" name="unit" >
+                        <label for="unit">Unit</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="name" name="name" >
-                        <label for="name">M</label>
+                        <input type="text"  class="form-control" id="size" name="size" >
+                        <label for="size">M</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="name" name="name" >
-                        <label for="name">Ton</label>
+                        <input type="text"  class="form-control" id="weight" name="weight" >
+                        <label for="weight">Ton</label>
                      </div>
                   </div>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="name" name="name" >
-                  <label for="name">Remark</label>
+                  <input type="text"  class="form-control" id="remark" name="remark" >
+                  <label for="remark">Remark</label>
                </div>
                
             </div>
