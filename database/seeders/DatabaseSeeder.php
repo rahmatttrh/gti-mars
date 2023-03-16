@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
          RoleSeeder::class,
          UserSeeder::class,
          VesselSeeder::class,
+         RouteTypeSeeder::class,
          PortSeeder::class,
          ScheduleSeeder::class,
          LogisticSeeder::class,
