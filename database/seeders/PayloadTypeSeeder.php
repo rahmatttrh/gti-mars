@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class TypeSeeder extends Seeder
+class PayloadTypeSeeder extends Seeder
 {
    /**
     * Run the database seeds.
@@ -14,26 +14,24 @@ class TypeSeeder extends Seeder
     */
    public function run()
    {
-      DB::table('types')->insert([
-         'name' => 'Material Cargo',
+      //
+      DB::table('payload_types')->insert([
+         'code' => 'CRG',
+         'description' => 'Material Cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('types')->insert([
-         'name' => 'Passenger',
+      DB::table('payload_types')->insert([
+         'code' => 'PSR',
+         'description' => 'Passenger',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('types')->insert([
-         'name' => 'Anchor Towing',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('types')->insert([
-         'name' => 'Crew Change',
+      DB::table('payload_types')->insert([
+         'code' => 'CRW',
+         'description' => 'CREW',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

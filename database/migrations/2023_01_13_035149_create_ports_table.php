@@ -14,7 +14,7 @@ class CreatePortsTable extends Migration
    public function up()
    {
       Schema::create('ports', function (Blueprint $table) {
-         $table->id();
+         $table->smallIncrements('id');
          $table->string('name');
          $table->string('type');
          $table->string('latitude')->nullable();

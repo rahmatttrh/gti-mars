@@ -1,11 +1,14 @@
 <?php
 
 use App\Models\Schedule;
-use App\Models\Wo;
+use App\Models\Cargo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Helpers\general;
+use App\Models\Port;
+use App\Models\Route as ModelsRoute;
+use App\Models\Wo;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +33,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // 
 
 
-// 1 GET SCHEDULE
+// 0.1 GET SCHEDULE
 Route::post('/get-schedule', function (Request $request) {
 
     $validator = $request->validate([
@@ -50,7 +53,7 @@ Route::post('/get-schedule', function (Request $request) {
     if (isset($data)) {
         # code...
         $response = [
-            'message' => 'success',
+            'message' => 'Get successfully ',
             'data' => $data
 
         ];
@@ -60,16 +63,16 @@ Route::post('/get-schedule', function (Request $request) {
     return $response;
 });
 
-
-// 2 Insert WO when Click Select Button
+// 1.1 Insert WO when Click Select Button
 Route::post('/wo', function (Request $request) {
 
     $validator = $request->validate([
         'party_id' => ['required'],
+        'payloadtype_id' => ['required'],
         'schedule_id' => ['required']
     ]);
 
-    $data = WO::where('status', '0')->where('party_id', $request->party_id)->where('schedule_id', $request->schedule_id)->first();
+    $data = WO::where('status', '0')->where('party_id', $request->party_id)->where('schedule_id', $request->schedule_id)->where('payloadtype_id', $request->payloadtype_id)->first();
 
     // return isset($data);
 
@@ -78,12 +81,13 @@ Route::post('/wo', function (Request $request) {
         $result = Wo::create([
             'party_id' => $request->party_id,
             'schedule_id' => $request->schedule_id,
+            'payloadtype_id' => $request->payloadtype_id,
             'status' => '0'
         ]);
 
         if ($result) {
             $respon = [
-                'message' => 'success',
+                'message' => 'Inserted successfully ',
                 'data' => $result
             ];
         } else {
@@ -100,10 +104,206 @@ Route::post('/wo', function (Request $request) {
     return $respon;
 });
 
-// 3 Get Detail WO
+// 1.2 Update WO
+Route::put('/wo/{id}', function (Request $request, $id) {
+
+    $validator = $request->validate([
+        'party_id' => ['required'],
+        'payloadtype_id' => ['required'],
+        'schedule_id' => ['required']
+    ]);
+
+    // return isset($data);
+    $result = Wo::where('id', $id)->update([
+        'party_id' => $request->party_id,
+        'schedule_id' => $request->schedule_id,
+        'payloadtype_id' => $request->payloadtype_id,
+        'updated_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Updated successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.3 Get Detail WO
 Route::get('/wo/{id}', function ($id) {
 
     $data = WO::where('id', $id)->first();
+
+    if (isset($data)) {
+
+        $respon = [
+            'message' => 'Get successfully',
+            'data' => $data
+        ];
+    } else {
+        $respon = [
+            'message' => 'success',
+            'data' => 'Tidak Ada Data'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.4 Update WO
+Route::patch('/wo/{id}/update', function (Request $request, $id) {
+
+    $validator = $request->validate([
+        'activity' => ['required'],
+        'departure' => ['required']
+    ]);
+
+    $result = Wo::where('id', $id)->update([
+        'activity' => $request->activity,
+        'departure' => $request->departure,
+        'updated_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Updated successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.5 Delete WO
+Route::delete('/wo/{id}/delete', function ($id) {
+
+    $result = Wo::destroy($id);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Deleted successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 1.5 Release WO
+Route::patch('/wo/{id}/release', function (Request $request, $id) {
+
+    // $validator = $request->validate([
+    //     'activity' => ['required'],
+    //     'departure' => ['required']
+    // ]);
+
+    $result = Wo::where('id', $id)->update([
+        'status' => '1',
+        'release_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'Release successfully',
+            'data' => $id
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 2.1 Get Index Cargo Plan
+Route::get('/wo/{id}/cargoplan', function ($id) {
+
+    $data = Wo::where('id', $id)->first();
+    $cargos = Cargo::where('wo_id', $id)->get();
+    $ton = Cargo::where('wo_id', $id)->sum('ton');
+    $m3 = Cargo::where('wo_id', $id)->sum('m3');
+
+    if (isset($data)) {
+
+        $respon = [
+            'message' => 'success',
+            'data' => $data,
+            'ton' => $ton,
+            'm3' => $m3,
+            'cargos' => $cargos
+        ];
+    } else {
+        $respon = [
+            'message' => 'success',
+            'data' => 'Tidak Ada Data'
+        ];
+    }
+
+    return $respon;
+});
+
+// 2.2 Insert Cargo Plan 
+Route::post('/cargo', function (Request $request) {
+
+    $validator = $request->validate([
+        'doc_no' => ['required'],
+        'description' => ['required'],
+        'qty' => ['required'],
+        'unit' => ['required'],
+        'ton' => ['required'],
+        'm3' => ['required'],
+    ]);
+
+
+    if (!isset($request->wo_id)) {
+        $request->wo_id == null;
+    }
+
+    $result = Cargo::create([
+        'wo_id' => $request->wo_id,
+        'doc_no' => $request->doc_no,
+        'description' => $request->description,
+        'qty' => $request->qty,
+        'unit' => $request->unit,
+        'ton' => $request->ton,
+        'm3' => $request->m3,
+        'created_at' => NOW(),
+        'updated_at' => NOW()
+    ]);
+
+    if ($result) {
+        $respon = [
+            'message' => 'success',
+            'data' => $result
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 2.3 Show Cargo
+Route::get('/cargo/{id}', function ($id) {
+
+    $data = Cargo::where('id', $id)->first();
 
     if (isset($data)) {
 
@@ -121,23 +321,101 @@ Route::get('/wo/{id}', function ($id) {
     return $respon;
 });
 
-// 3 Get Detail WO
-Route::get('/wo/{id}/plancargo', function ($id) {
+// 2.4 Update Cargo
+Route::put('/cargo/{id}', function (Request $request, $id) {
 
-    $data = WO::where('id', $id)->first();
+    $validator = $request->validate([
+        // 'id' => ['required'],
+        'doc_no' => ['required'],
+        'description' => ['required'],
+        'qty' => ['required'],
+        'unit' => ['required'],
+        'ton' => ['required'],
+        'm3' => ['required'],
+    ]);
 
-    if (isset($data)) {
+    $result = Cargo::where('id', $id)->update([
+        'doc_no' => $request->doc_no,
+        'description' => $request->description,
+        'qty' => $request->qty,
+        'unit' => $request->unit,
+        'ton' => $request->ton,
+        'm3' => $request->m3,
+        'created_at' => NOW(),
+        'updated_at' => NOW()
+    ]);
 
+    if ($result) {
         $respon = [
-            'message' => 'success',
-            'data' => $data->party
+            'message' => 'Updated successfully',
+            'data' => $result
         ];
     } else {
         $respon = [
-            'message' => 'success',
-            'data' => 'Tidak Ada Data'
+            'message' => 'error'
         ];
     }
 
     return $respon;
+});
+
+// 2.5 Delete Cargo
+Route::delete('/cargo/{id}/delete', function ($id) {
+
+    $result = Cargo::destroy($id);
+
+    if ($result) {
+        $respon = [
+            'message' => 'success',
+            'data' => $result
+        ];
+    } else {
+        $respon = [
+            'message' => 'error'
+        ];
+    }
+
+    return $respon;
+});
+
+// 3.1 Port Assign route
+
+Route::get('/port/assign', function () {
+
+    $data = Port::get();
+
+    $response = 0;
+
+
+    foreach ($data as $key => $port) {
+
+        $destinations = Port::where('id', '!=', $port->id)->get();
+
+        foreach ($destinations as $key => $destination) {
+            # code...
+            $cekData = ModelsRoute::where('origin_id', $port->id)->where('destination_id', $destination->id)->first();
+
+            if (!isset($cekData)) {
+                $insert = ModelsRoute::insert([
+                    "routetype_id" => '1',
+                    "origin_id" => $port->id,
+                    "destination_id" => $destination->id,
+                    "created_at" => NOW(),
+                    "updated_at" => NOW()
+                ]);
+
+                if ($insert) {
+                    $response += 1;
+                }
+            }
+            // } else {
+            //     $response = 'Ada data';
+            // }
+
+
+        }
+    }
+
+
+    return 'Total data di insert : ' . $response;
 });

@@ -14,4 +14,9 @@ class Activity extends Model
    {
       return $this->hasMany(Request::class);
    }
+
+   public function type()
+   {
+      return $this->belongsTo(Type::class);
+   }
 }

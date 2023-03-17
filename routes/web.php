@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CargoItemController;
 use App\Http\Controllers\CarrierController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VesselController;
+use App\Models\Activity;
 use App\Models\Platform;
 use App\Models\Request;
 use App\Models\Schedule;
@@ -140,6 +142,12 @@ Route::middleware(["auth"])->group(function () {
    });
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
+   });
+   Route::prefix('activity')->group(function () {
+      Route::get('/', [ActivityController::class, 'index'])->name('activity');
+      Route::post('store', [ActivityController::class, 'store'])->name('activity.store');
+      Route::put('update', [ActivityController::class, 'update'])->name('activity.update');
+      Route::get('delete/{activity:id}', [ActivityController::class, 'delete'])->name('activity.delete');
    });
 });
 

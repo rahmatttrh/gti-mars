@@ -15,12 +15,14 @@ class CreateCargosTable extends Migration
    {
       Schema::create('cargos', function (Blueprint $table) {
          $table->id();
-         $table->mediumInteger('party_id');
-         $table->mediumInteger('schedule_id')->nullable();
-         $table->mediumInteger('origin_id')->nullable();
-         $table->mediumInteger('destination_id')->nullable();
-         $table->date('departure');
-         $table->date('return')->nullable();
+         $table->bigInteger('wo_id')->nullable();
+         $table->string('doc_no');
+         $table->string('description');
+         $table->integer('qty');
+         $table->string('unit', 20);
+         $table->decimal('ton', $precision =  6, $scale = 2);
+         $table->decimal('m3', $precision =  6, $scale = 2);
+         $table->string('status', '3')->default('0');
          $table->timestamps();
       });
    }

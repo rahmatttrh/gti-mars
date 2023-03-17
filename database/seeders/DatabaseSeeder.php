@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\PayloadType;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,7 @@ class DatabaseSeeder extends Seeder
          RoleSeeder::class,
          UserSeeder::class,
          VesselSeeder::class,
+         RouteTypeSeeder::class,
          PortSeeder::class,
          ScheduleSeeder::class,
          LogisticSeeder::class,
@@ -27,7 +29,10 @@ class DatabaseSeeder extends Seeder
          CarrierSeeder::class,
          DepartmentSeeder::class,
          TypeSeeder::class,
-         ActivitySeeder::class
+         ActivitySeeder::class,
+         PayloadTypeSeeder::class,
+         WoSeeder::class,
+         CargoSeeder::class
       ]);
    }
 }

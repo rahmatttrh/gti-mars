@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Type extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function activities()
+   {
+      return $this->hasMany(Activity::class);
+   }
 }
