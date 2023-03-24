@@ -70,12 +70,12 @@
                               <label for="departure_date">Departure Date</label>
                            </div>
                         </div>
-                        {{-- <div class="col-md-6">
+                        <div class="col-md-9">
                            <div class="form-floating">
-                              <input type="date" class="form-control" id="return_date" name="return_date" >
-                              <label for="return_date">Return Date (Optional)</label>
+                              <input type="text" class="form-control" value="{{$desc}}" id="desc" name="desc" >
+                              <label for="desc">Description</label>
                            </div>
-                        </div> --}}
+                        </div>
                      </div>
                      <hr>
                      <a href="{{route('request.create')}}" class="btn btn-danger ms-auto">Cancel</a>
@@ -124,6 +124,7 @@
                                           <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
                                           <input type="number" name="department" id="department" value="{{$department->id}}" hidden>
                                           <input type="date" name="date" id="date" value="{{$date}}" hidden>
+                                          <input type="text" name="desc" id="desc" value="{{$desc}}" hidden>
                                           <button type="submit" class="btn btn-info">Save</button>
                                        </form>
                                        {{-- <a href="{{route('cargo.detail')}}" class="btn btn-primary" >Yes, go ahead</a> --}}

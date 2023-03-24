@@ -27,20 +27,20 @@
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text"  class="form-control" id="unit" name="unit" >
+                        <input type="number"  class="form-control" id="unit" name="unit" >
                         <label for="unit">Unit</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text"  class="form-control" id="size" name="size" >
-                        <label for="size">M</label>
+                        <input type="number"  class="form-control" id="size" name="size" >
+                        <label for="size">Size</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text"  class="form-control" id="weight" name="weight" >
-                        <label for="weight">Ton</label>
+                        <input type="number"  class="form-control" id="weight" name="weight" >
+                        <label for="weight">Weight</label>
                      </div>
                   </div>
                </div>

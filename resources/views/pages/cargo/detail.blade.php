@@ -151,7 +151,9 @@
                         <td class="text-muted">7.0</td>
                         <td class="text-muted">9.2</td>
                         <td class="text-muted">Lorem, ipsum.</td>
-                        <td><a href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a></td>
+                        <td>
+                           <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a>
+                        </td>
                      </tr>
                      <tr>
                         <td>773248</td>

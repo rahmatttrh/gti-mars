@@ -61,6 +61,6 @@ class MarineController extends Controller
          'status' => 2,
          'vessel_id' => $req->vessel
       ]);
-      return redirect()->back()->with('success', 'Boat berhasil di pilih.');
+      return redirect()->back()->with('success', 'Boat successfully assigned.');
    }
 }

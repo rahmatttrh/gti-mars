@@ -29,7 +29,7 @@
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="d-flex align-items-center">
-                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic'))
+                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling'))
                         <img src="{{asset('img/logo/wolf.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
                         <div class="ml-2" style="margin-left: 10px; font-weight: 900">DIGITAL SMART PORT <span class="text-primary">SYSTEM</span></div>
                         
@@ -84,6 +84,8 @@
                                  SUPERUSER
                                  @elseif(auth()->user()->hasRole('logistic'))
                                  LOGISTIC
+                                 @elseif(auth()->user()->hasRole('drilling'))
+                                 DRILLING
                                  @elseif(auth()->user()->hasRole('platform'))
                                  PLATFORM
                                  @elseif(auth()->user()->hasRole('supplier'))
@@ -118,6 +120,14 @@
                         <div class="d-none d-xl-block ps-2">
                            <div>{{auth()->user()->name}}</div>
                            <div class="mt-1 small text-muted">Logistic</div>
+                        </div>
+                     </a>
+                     @elseif(auth()->user()->hasRole('drilling'))
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>{{auth()->user()->name}}</div>
+                           <div class="mt-1 small text-muted">Drilling</div>
                         </div>
                      </a>
                      @elseif(auth()->user()->hasRole('platform'))

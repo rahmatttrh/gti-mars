@@ -50,7 +50,7 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Code</th>
-                        <th>Created</th>
+                        <th>Date</th>
                         <th>Activity</th>
                         <th>Route</th>
                         <th>Status</th>
@@ -65,7 +65,7 @@
                            <td>{{$request->activity->name}}</td>
                            <td>{{$request->schedule->origin->name}} - {{$request->schedule->destination->name}}</td>
                            <td>
-                              <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>01</div>
+                              <x-status.request :request="$request" />
                            </td>
                         </tr>
                      @endforeach

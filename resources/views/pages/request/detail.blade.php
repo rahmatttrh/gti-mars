@@ -35,7 +35,7 @@
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#approveCargoPlan">
                            Approve
                         </a> --}}
-                        @if (auth()->user()->hasRole('logistic') && $request->status == 1)
+                        @if (auth()->user()->hasRole('logistic') && $request->status == 0)
                            <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
                               Release
                            </a>
@@ -57,9 +57,9 @@
                      Actions
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        @if (auth()->user()->hasRole('logistic') && $request->status == 1)
+                        @if (auth()->user()->hasRole('logistic') && $request->status == 0)
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#addCargoItem">
-                           Add Cargo Item
+                           Add Item
                         </a>
                         @endif
                         
@@ -91,10 +91,13 @@
                            <h4 class="card-title m-0">
                               {{$request->activity->name}}
                            </h4>
-                           @if ($request->status == 1)
-                              <div class="btn btn-warning mt-3">STATUS : 01</div>
-                              @elseif($request->status == 2)
-                              <div class="btn btn-info mt-3">STATUS : 02</div>
+                           <h4 class="card-title m-0">
+                              {{$request->desc}}
+                           </h4>
+                           @if ($request->status == 0)
+                              <div class="btn btn-warning mt-3">STATUS : 00</div>
+                              @elseif($request->status == 1)
+                              <div class="btn btn-info mt-3">STATUS : 01</div>
                            @endif
                            
                         </div>
@@ -142,8 +145,8 @@
                         <th>Descriptioin</th>
                         <th>Qty</th>
                         <th>Unit</th>
-                        <th>M</th>
-                        <th>Ton</th>
+                        <th>Size</th>
+                        <th>Weight</th>
                         <th>Remarks</th>
                         <th></th>
                      </tr>
@@ -158,11 +161,16 @@
                            <td class="text-muted">{{$item->desc}}</td>
                            <td class="text-muted">{{$item->qty}}</td>
                            <td class="text-muted">{{$item->unit}}</td>
-                           <td class="text-muted">{{$item->size}}</td>
-                           <td class="text-muted">{{$item->weight}}</td>
+                           <td class="text-muted">{{$item->size}} m<sup>2</sup></td>
+                           <td class="text-muted">{{$item->weight}} ton</td>
                            <td class="text-muted">{{$item->remark}}</td>
-                           <td><a href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem">Delete</a></td>
+                           <td>
+                              @if ($request->status == 0)
+                              <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                              @endif
+                           </td>
                         </tr>
+                        <x-modal.cargo.delete :item="$item" />
                      @endforeach
                   </tbody>
                </table>
@@ -172,21 +180,7 @@
    </div>
 
    <x-modal.cargo.add :request="$request" />
-   <div class="modal modal-blur fade" id="deleteCargoItem" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-body">
-            <div class="modal-title">Are you sure?</div>
-            <div>If you proceed, you will lose this data</b>.</div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-            <a href="" class="btn btn-danger" >Yes, delete this data</a>
-            {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
-          </div>
-        </div>
-      </div>
-   </div>
+   
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
         <div class="modal-content">

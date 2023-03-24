@@ -19,7 +19,14 @@ class CargoItemController extends Controller
          'size' => $r->size,
          'weight' => $r->weight
       ]);
-
       return redirect()->back()->with('success', 'Cargo Item successfully added.');
+   }
+
+   public function delete($id)
+   {
+      $dekripId = dekripRambo($id);
+      $cargoItem = CargoItem::find($dekripId);
+      $cargoItem->delete();
+      return redirect()->back()->with('success', 'Item successfully deleted');
    }
 }

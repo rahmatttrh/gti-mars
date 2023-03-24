@@ -50,7 +50,7 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Code</th>
-                        <th>Created</th>
+                        <th>Date</th>
                         <th>Activity</th>
                         <th>Route</th>
                         <th>Status</th>

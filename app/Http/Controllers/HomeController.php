@@ -45,6 +45,11 @@ class HomeController extends Controller
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
          $requests = ModelsRequest::where('department_id', $department->id)->get();
+      } elseif (auth()->user()->hasRole('drilling')) {
+         $department = Department::where('email', auth()->user()->email)->first();
+         $vessel = '';
+         $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+         $requests = ModelsRequest::where('department_id', $department->id)->get();
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();

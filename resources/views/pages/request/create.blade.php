@@ -72,12 +72,12 @@
                                  <label for="departure_date">Departure Date</label>
                               </div>
                            </div>
-                           {{-- <div class="col-md-6">
+                           <div class="col-md-9">
                               <div class="form-floating">
-                                 <input type="date" class="form-control" id="return_date" name="return_date" >
-                                 <label for="return_date">Return Date (Optional)</label>
+                                 <input type="text" class="form-control" id="desc" name="desc" >
+                                 <label for="desc">Description</label>
                               </div>
-                           </div> --}}
+                           </div>
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">

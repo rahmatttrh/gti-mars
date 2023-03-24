@@ -137,7 +137,7 @@
                         <td>
                            <div class="btn-group" role="group" aria-label="Basic example">
                               @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
-                              <a href="" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Boat</a>
+                              <a href="" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Assign Boat</a>
                               @else
                               
                               @endif

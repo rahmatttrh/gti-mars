@@ -14,6 +14,17 @@ use Illuminate\Http\Request;
 
 class RequestController extends Controller
 {
+   public function index()
+   {
+      $today = Carbon::now();
+      $month = $today->format('m');
+      $requests = ModelsRequest::get();
+      return view('pages.request.index', [
+         'requests' => $requests,
+         'month' => $month
+      ])->with('i');
+   }
+
    public function create()
    {
       $activities = Activity::get();
@@ -39,6 +50,7 @@ class RequestController extends Controller
          'destination' => $req->destination,
          'date' => $req->departure_date,
          'activity' => $activity,
+         'desc' => $req->desc,
          'schedules' => $schedules,
          'activities' => $activities,
          'ports' => $ports
@@ -64,7 +76,8 @@ class RequestController extends Controller
          'activity_id' => $req->activity,
          'date' => $req->date,
          'schedule_id' => $req->schedule,
-         'status' => 01
+         'desc' => $req->desc,
+         'status' => 00
       ]);
 
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
@@ -83,7 +96,7 @@ class RequestController extends Controller
 
    public function draft()
    {
-      $requests = ModelsRequest::where('status', 1)->get();
+      $requests = ModelsRequest::where('status', 0)->get();
       return view('pages.request.draft', [
          'requests' => $requests
       ])->with('i');
@@ -91,7 +104,7 @@ class RequestController extends Controller
 
    public function progress()
    {
-      $requests = ModelsRequest::where('status', 2)->get();
+      $requests = ModelsRequest::where('status', 1)->get();
       return view('pages.request.progress', [
          'requests' => $requests
       ])->with('i');
@@ -106,9 +119,21 @@ class RequestController extends Controller
       $request = ModelsRequest::find($dekripId);
 
       $request->update([
+         'status' => 01
+      ]);
+
+      return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
+   }
+
+   public function approve($id)
+   {
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $request->update([
          'status' => 02
       ]);
 
-      return redirect()->back()->with('success', 'Request Activity successfully send to marine');
+      return redirect()->back()->with('success', 'Request Activity successfully approved');
    }
 }

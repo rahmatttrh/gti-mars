@@ -21,6 +21,7 @@ class CreateRequestsTable extends Migration
          $table->smallInteger('activity_id');
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();
+         $table->string('desc')->nullable();
          $table->date('date');
          $table->smallInteger('schedule_id');
          $table->smallInteger('status');

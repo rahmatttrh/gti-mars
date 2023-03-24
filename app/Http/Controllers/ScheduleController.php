@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Port;
 use App\Models\Report;
+use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Type;
 use App\Models\Vessel;
@@ -224,12 +225,14 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', 2)->get();
       $report = Report::where('schedule_id', $schedule->id)->first();
       $vessel = Vessel::get();
-
+      // dd($schedule->requests());
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,
+         'requests' => $requests,
          'vessels' => $vessel
       ]);
    }

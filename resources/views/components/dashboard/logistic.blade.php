@@ -6,7 +6,7 @@
                <div class="d-flex align-items-center">
                <div class="subheader">Draft Request</div>
                </div>
-               <div class="h2 ">{{$requests->where('status', 1)->count()}} Request Activity</div>
+               <div class="h2 ">{{$requests->where('status', 0)->count()}} Request Activity</div>
             </div>
          </div>
       </div>
@@ -16,7 +16,7 @@
                <div class="d-flex align-items-center">
                <div class="subheader">Progress Request</div>
                </div>
-               <div class="h2 ">{{$requests->where('status', 2)->count()}} Request Activity</div>
+               <div class="h2 ">{{$requests->where('status', '>', 0)->count()}} Request Activity</div>
             </div>
          </div>
       </div>
@@ -42,7 +42,7 @@
                   <thead class="bg-primary">
                      <tr>
                         <th>Code</th>
-                        <th>Created</th>
+                        <th>Date</th>
                         <th>Activity</th>
                         <th>Route</th>
                         <th>Status</th>

@@ -131,6 +131,7 @@ Route::middleware(["auth"])->group(function () {
       Route::put('update', [UserController::class, 'update'])->name('user.update');
    });
    Route::prefix('request')->group(function () {
+      Route::get('/', [RequestController::class, 'index'])->name('request');
       Route::get('create', [RequestController::class, 'create'])->name('request.create');
       Route::post('check', [RequestController::class, 'check'])->name('request.check');
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
@@ -139,9 +140,13 @@ Route::middleware(["auth"])->group(function () {
       Route::get('draft', [RequestController::class, 'draft'])->name('request.draft');
       Route::get('progress', [RequestController::class, 'progress'])->name('request.progress');
       Route::get('release/{request:id}', [RequestController::class, 'release'])->name('request.release');
+      Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
+
+      Route::get('print/{month}', [ExportController::class, 'request'])->name('request.print');
    });
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
+      Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
    });
    Route::prefix('activity')->group(function () {
       Route::get('/', [ActivityController::class, 'index'])->name('activity');

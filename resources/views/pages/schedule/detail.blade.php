@@ -81,110 +81,65 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="row row-deck">
-            <div class="col-md-7">
+            <div class="col-md-10">
                <div class="card mb-3">
                   <div class="card-body">
-                    <div class="row g-2 align-items-center">
-                      <div class="col-auto">
-                        <span class="avatar avatar-lg bg-blue-lt text-white p-2"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-event -->
-                           {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><rect x="8" y="15" width="2" height="2" /></svg> --}}
-                           @if ($schedule->status == 1)
-                           <img src="{{asset('img/vessel/file.png')}}" alt="">
-                           @elseif($schedule->status == 2)
-                           <img src="{{asset('img/vessel/docking.png')}}" alt="">
-                           @elseif($schedule->status == 3)
-                           <img src="{{asset('img/vessel/ship.png')}}" alt="">
-                           @endif
-                        </span>
-                      </div>
-                      <div class="col ms-2">
-                        <div class="text-muted">
-                           Vessel
-                         </div>
-                        <h4 class="card-title m-0">
-                           @if ($schedule->status == 1)
-                           [Please select boat by click Action button]
-                           @else
-                           <a href="{{route('vessel.detail', enkripRambo($schedule->vessel_id))}}">{{$schedule->vessel->name}}</a>
-                           @endif
-                        </h4>
-                        <small>{{$schedule->activity}}</small>
-                        <div class="mt-1">
-                          <x-status.schedule :schedule="$schedule" />
+                     <div class="row g-2 align-items-center">
+                        {{-- <div class="col-auto">
+                           <span class="avatar avatar-lg bg-blue-lt text-white p-2"><!-- Download SVG icon from http://tabler-icons.io/i/calendar-event -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><rect x="8" y="15" width="2" height="2" /></svg>
+                              @if ($schedule->status == 1)
+                              <img src="{{asset('img/vessel/file.png')}}" alt="">
+                              @elseif($schedule->status == 2)
+                              <img src="{{asset('img/vessel/docking.png')}}" alt="">
+                              @elseif($schedule->status == 3)
+                              <img src="{{asset('img/vessel/ship.png')}}" alt="">
+                              @endif
+                           </span>
+                        </div> --}}
+                        <div class="col ms-2">
+                           <div class="text-muted">
+                              {{$schedule->origin->name}} - {{$schedule->destination->name}}
+                           </div>
+                           <h4 class="card-title m-0">
+
+                              {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
+                              {{-- @if ($schedule->status == 1)
+                              [Please select boat by click Action button]
+                              @else
+                              <a href="{{route('vessel.detail', enkripRambo($schedule->vessel_id))}}">{{$schedule->vessel->name}}</a>
+                              @endif --}}
+                           </h4>
+                           <small>{{$schedule->activity}}</small>
+                           <div class="mt-1">
+                           <x-status.schedule :schedule="$schedule" />
+                           </div>
                         </div>
-                        
-                      </div>
-                      
-                      
-                    </div>
-                    <div class="row">
-                     <div class="col-md-12">
-                      
                      </div>
-                    </div>
                   </div>
                </div>
             </div>
-            <div class="col-md-5">
-               <div class="card mb-3">
-                  <div class="card-body">
-                     @if ($schedule->status == 1)
-                     [Please select boat by click Action button]
-                        @else
-                        <div class="mt-2 mb-2">
-                           <div class="row g-2 align-items-center mb-2">
-                             <div class="col-4">
-                              Capacity Pax [105]
-                             </div>
-                             <div class="col-8">
-                               <div class="progress progress-lg">
-                                 <div class="progress-bar" style="width: 100%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                   <span class="visually-hidden">25% Complete</span>
-                                 </div>
-                               </div>
-                             </div>
-                           </div>
-   
-                           <div class="row g-2 align-items-center mb-2">
-                              <div class="col-4">
-                               Pax Onduty [103]
-                              </div>
-                              <div class="col-8">
-                                <div class="progress progress-lg">
-                                  <div class="progress-bar" style="width: 25%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="visually-hidden">25% Complete</span>
-                                  </div>
-                                </div>
-                              </div>
-                           </div>
-   
-                           <div class="row g-2 align-items-center">
-                              <div class="col-4">
-                               Pax Offduty [120]
-                              </div>
-                              <div class="col-8">
-                                <div class="progress progress-lg">
-                                  <div class="progress-bar" style="width: 40%" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-                                    <span class="visually-hidden">25% Complete</span>
-                                  </div>
-                                </div>
-                              </div>
-                           </div>
-                        </div>
-                     @endif
-                  </div>
-               </div>
+            <div class="col-md-2">
+               @if ($schedule->status == 1)
+               <a href="#" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}" class="btn btn-primary mb-3 btn-block" style="width: 100%">Assign Boat</a>
+               
+               @else
+               <a href="#" class="btn btn-light border mb-3 btn-block" style="width: 100%"><small>Boat assigned</small></a>
+               @endif
+               
+              
             </div>
          </div>
          
          <div class="card card-lg">
             <div class="card-body">
-               <div class="accordion" id="accordion-example ">
+               @foreach ($requests as $request)
+               <div class="accordion mb-2" id="accordion-example ">
                   <div class="accordion-item">
                      <h2 class="accordion-header" id="heading-1">
                         <button class="accordion-button " type="button" data-bs-toggle="collapse"
                            data-bs-target="#collapse-1" aria-expanded="true">
-                           Detail
+                           {{$request->code}}
                         </button>
                      </h2>
                      <div id="collapse-1" class="accordion-collapse collapse show"
@@ -193,38 +148,20 @@
                            <hr>
                            <dl class="row">
                               <dt class="col-2">Date</dt>
-                              <dd class="col-10">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
-                              
-                              <dt class="col-2">From</dt>
-                              <dd class="col-10">: {{$schedule->origin->name}}</dd>
-
-                              <dt class="col-2">Destination</dt>
-                              <dd class="col-10">: {{$schedule->destination->name}}</dd>
-                             
-                              <dt class="col-2">Function</dt>
-                              <dd class="col-10">: {{$schedule->func}}</dd>
-
-                              <dt class="col-2">Station</dt>
-                              <dd class="col-10">: {{$schedule->station}}</dd>
-
+                              <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd>
+                              <dt class="col-2">Department</dt>
+                              <dd class="col-10">: {{$request->department->name}}</dd>
                               <dt class="col-2">Activity</dt>
-                              <dd class="col-10">: {{$schedule->activity}}</dd>
-
-                              @if ($schedule->status >= 3)
-                                 <dt class="col-2">Departure</dt>
-                                 <dd class="col-10">: {{\Carbon\Carbon::parse($report->departure)->format('h:m')}}</dd>
-                                 <dt class="col-2">Arrived</dt>
-                                 <dd class="col-10">: {{$report->arrived}}</dd>
-                                 <dt class="col-2">Return to Base</dt>
-                                 <dd class="col-10">: {{$report->return}}</dd>
-                              @endif
-                              
+                              <dd class="col-10">: {{$request->activity->name}} - {{$request->desc}}</dd>
+                           
                            </dl>
                         </div>
                      </div>
                   </div>
                </div>
-               <hr>
+               @endforeach
+               
+               {{-- <hr>
                <div class="accordion" id="accordion-example ">
                   <div class="accordion-item">
                      <h2 class="accordion-header" id="heading-1">
@@ -305,13 +242,13 @@
                         </div>
                      </div>
                   </div>
-               </div>
+               </div> --}}
             </div>
          </div>
       </div>
    </div>
 
-   <x-modal.schedule.select-vessel :schedule="$schedule" :vessels="$vessels" />
+   <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
    <x-modal.schedule.departure :schedule="$schedule" />
    <x-modal.schedule.arrived :schedule="$schedule"/>
 
