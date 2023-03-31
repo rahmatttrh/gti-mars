@@ -16,6 +16,7 @@ class CreatePortsTable extends Migration
       Schema::create('ports', function (Blueprint $table) {
          $table->smallIncrements('id');
          $table->string('name');
+         $table->string('email');
          $table->string('type');
          $table->string('latitude')->nullable();
          $table->string('longitude')->nullable();

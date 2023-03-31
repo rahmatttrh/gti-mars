@@ -106,67 +106,31 @@
                         <th >No.</th>
                         <th>Date</th>
                         <th>Location (Form - To)</th>
-                        <th>Required Boat</th>
                         <th>Assignment Boat</th>
+                        <th>Activity</th>
                         <th>Status</th>
-                        <th></th>
+                        {{-- <th></th> --}}
                      </tr>
                   </thead>
                   <tbody>
                      @foreach ($schedules as $schedule)
                      <tr>
                         <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                        <td class="text-muted text-truncate">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
-                        {{-- <td class="text-muted">{{$schedule->func}}</td>
-                        <td class="text-muted text-truncate">{{$schedule->station}}</td> --}}
-                        {{-- <td class="text-muted text-truncate" style="max-width: 300px;" data-toggle="tooltip" data-placement="top" title="{{$schedule->activity}}">
-                           {{$schedule->activity}}
-                        </td> --}}
+                        <td class="text-muted text-truncate"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></td>
+                  
                         <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
-                        <td class="text-muted">{{$schedule->req_boat}}</td>
                         <td class="text-muted text-truncate">
-                           @if ($schedule->status == 1)
-                              -
-                              @else
-                              {{$schedule->vessel->name}}
-                           @endif
+                           {{$schedule->vessel->name ?? ''}}
+                        </td>
+                        <td class="text-muted">
+                           {{$schedule->requests()->count()}}
                         </td>
                         <td class="text-muted">
                            <x-status.schedule :schedule="$schedule" />
                         </td>
-                        <td>
-                           <div class="btn-group" role="group" aria-label="Basic example">
-                              @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
-                              <a href="" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Assign Boat</a>
-                              @else
-                              
-                              @endif
-                              
-                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
-                           </div>
-                           
-                           
-                           {{-- <div class="dropdown">
-                              <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                              Action
-                              </button>
-                              <div class="dropdown-menu dropdown-menu-end">
-                                 @if ($schedule->status == 1)
-                                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">
-                                       Select Vessel
-                                    </a>
-                                    @else
-                                 @endif
-                                 
-                                 <div class="dropdown-divider"></div>
-                                 <a class="dropdown-item" href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                                    Detail
-                                 </a>
-                              </div>
-                           </div> --}}
-                        </td>
+                        
                      </tr>
-                     <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" />
+                     {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
                      @endforeach
                      
                      

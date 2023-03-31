@@ -19,35 +19,41 @@ class ScheduleSeeder extends Seeder
       $now = Carbon::now();
 
       DB::table('schedules')->insert([
-         'type_id' => 1,
+         // 'type_id' => 1,
          'type' => 2,
          'status' => 1,
          'date' => $now,
-         'req_boat' => 'SVC',
+         'vessel_id' => 1,
          'origin_id' => 1,
-         'destination_id' => 2,
+         'destination_id' => 6,
+         'departure_estimasi' => $now->addHour(2),
+         'arrive_estimasi' => $now->addHour(6),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('schedules')->insert([
-         'type_id' => 2,
+         // 'type_id' => 2,
          'type' => 2,
          'status' => 1,
-         'date' => $now,
-         'req_boat' => 'AHTS',
+         'date' => $now->addDay(1),
+         'vessel_id' => 2,
          'origin_id' => 1,
          'destination_id' => 3,
+         'departure_estimasi' => $now->addDay(1)->addHour(1),
+         'arrive_estimasi' => $now->addDay(1)->addHour(4),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('schedules')->insert([
-         'type_id' => 2,
+         // 'type_id' => 2,
          'type' => 2,
          'status' => 1,
-         'date' => $now,
-         'req_boat' => 'AHTS',
+         'date' => $now->addDay(3),
+         'vessel_id' => 4,
          'origin_id' => 1,
-         'destination_id' => 7,
+         'destination_id' => 5,
+         'departure_estimasi' => $now->addDay(3)->addHour(1),
+         'arrive_estimasi' => $now->addDay(3)->addHour(5),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

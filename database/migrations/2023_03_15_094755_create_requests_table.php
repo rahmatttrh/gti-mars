@@ -16,15 +16,20 @@ class CreateRequestsTable extends Migration
       Schema::create('requests', function (Blueprint $table) {
          $table->id();
          $table->string('code');
+         $table->smallInteger('schedule_id')->nullable();
+         $table->smallInteger('status');
+         $table->date('date');
          $table->smallInteger('department_id');
-         $table->smallInteger('type_id');
-         $table->smallInteger('activity_id');
+         $table->string('func')->nullable();
+         // $table->smallInteger('type_id');
+         $table->smallInteger('activity_id')->nullable();
+         $table->string('description')->nullable();
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();
-         $table->string('desc')->nullable();
-         $table->date('date');
-         $table->smallInteger('schedule_id');
-         $table->smallInteger('status');
+
+
+
+
          $table->timestamps();
       });
    }

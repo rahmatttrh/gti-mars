@@ -12,28 +12,25 @@
                   <thead class="bg-primary">
                      <tr>
                         <th>Date</th>
-                        <th>Activity</th>
                         <th>Location</th>
-                        <th >Status</th>
-                        <th></th>
+                        <th>Activity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
                      </tr>
                   </thead>
                   <tbody>
                      @foreach ($schedules as $schedule)
                         <tr>
-                           <td>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</td>
-                           <td class="">
-                              <div class=" text-nowrap text-muted ">
-                                 {{$schedule->activity}}
-                              </div>
-                           </td>
+                           <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
+                           
                            <td class="text-muted">
                               {{$schedule->origin->name}} - {{$schedule->destination->name}}
                            </td>
+                           <td>{{$schedule->requests->count()}} Activity</td>
                            <td>
                               <x-status.schedule :schedule="$schedule" />
                            </td>
-                           <td>
+                           {{-- <td>
                               <div class="btn-group" role="group" aria-label="Basic example">
                                  @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
                                  <a href="" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Boat</a>
@@ -43,7 +40,7 @@
                                  
                                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
                               </div>
-                           </td>
+                           </td> --}}
                         </tr>
                      @endforeach
                   </tbody>

@@ -98,7 +98,7 @@
                         </a>
                      </div>
                   </li>
-                  <li class="nav-item {{request()->is('/request') ? 'active' : ''}}">
+                  {{-- <li class="nav-item {{request()->is('/request') ? 'active' : ''}}">
                      <a class="nav-link" href="{{route('request')}}" >
                         <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/home -->
                            <!-- Download SVG icon from http://tabler-icons.io/i/calendar-event -->
@@ -108,6 +108,24 @@
                            Request
                         </span>
                      </a>
+                  </li> --}}
+                  <li class="nav-item dropdown {{request()->is('request') ? 'active' : ''}}">
+                     <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
+                        <span class="nav-link-icon d-md-none d-lg-inline-block"><!-- Download SVG icon from http://tabler-icons.io/i/star -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><rect x="4" y="5" width="16" height="16" rx="2" /><line x1="16" y1="3" x2="16" y2="7" /><line x1="8" y1="3" x2="8" y2="7" /><line x1="4" y1="11" x2="20" y2="11" /><rect x="8" y="15" width="2" height="2" /></svg>
+                        </span>
+                        <span class="nav-link-title">
+                           Request
+                        </span>
+                     </a>
+                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{route('request')}}" >
+                           Inbox
+                        </a>
+                        <a class="dropdown-item" href="{{route('request.progress.marine')}}" >
+                           Progress
+                        </a>
+                     </div>
                   </li>
                   <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
                      <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false" >
@@ -139,13 +157,13 @@
                            </span>
                         </a>
                         <div class="dropdown-menu">
-                           <a class="dropdown-item" href="{{route('request.create')}}">
+                           <a class="dropdown-item" href="{{route('depart.request.create')}}">
                               Create
                            </a>
-                           <a class="dropdown-item" href="{{route('request.draft')}}" >
+                           <a class="dropdown-item" href="{{route('depart.request.draft')}}" >
                               Draft
                            </a>
-                           <a class="dropdown-item" href="{{route('request.progress')}}" >
+                           <a class="dropdown-item" href="{{route('depart.request.progress')}}" >
                               Progress
                            </a>
                            <a class="dropdown-item" href="" >

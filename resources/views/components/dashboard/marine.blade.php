@@ -45,12 +45,12 @@
             </div>
          </div>
       </div> --}}
-      <div class="col-md-9">
+      <div class="col-md-12">
          <div class="card mb-3">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
-                  
-                  RECENT REQUEST ACTIVITY</div>
+                  RECENT REQUEST ACTIVITY
+               </div>
             </div>
             <div class="card-table table-responsive ">
                <table class="table table-vcenter">
@@ -59,30 +59,40 @@
                         {{-- <th>Code</th> --}}
                         <th>Date</th>
                         <th>Func</th>
-                        <th>Activity</th>
                         <th>Route</th>
+                        <th>Activity</th>
+                        
+                        {{-- <th>Boat</th> --}}
                         <th>Status</th>
-                        <th></th>
+                        {{-- <th></th> --}}
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($requests->where('status', 1) as $r)
+                     @if ($requests->count() > 0 )
+                        @foreach ($requests->where('status', 1) as $r)
+                           <tr>
+                              {{-- <td class="text-muted">{{$r->code}}</td> --}}
+                              <td class="text-muted">{{$r->date}}</td>
+                              <td class="text-muted">{{$r->department->code}}</td>
+                              <td class="text-muted">{{$r->origin->name}} - {{$r->destination->name}}</td>
+                              <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td>
+                              
+                              {{-- <td class="text-muted">{{$r->schedule->vessel->name ?? '-'}}</td> --}}
+                              <td>
+                                 <x-status.request :request="$r" />
+                              </td>
+                              {{-- <td>
+                                 <a href="" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#approveRequest_{{$r->id}}">Approve</a>
+                              </td> --}}
+                           </tr>
+                           <x-modal.activity.approve :request="$r" />
+                           {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                        @endforeach
+                        @else
                         <tr>
-                           {{-- <td class="text-muted">{{$r->code}}</td> --}}
-                           <td class="text-muted">{{$r->date}}</td>
-                           <td class="text-muted">{{$r->department->code}}</td>
-                           <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
-                           <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
-                           <td>
-                              <x-status.request :request="$r" />
-                           </td>
-                           <td>
-                              <a href="" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#approveRequest_{{$r->id}}">Approve</a>
-                           </td>
+                           <td colspan="7" style="text-align: center"><small>Empty</small></td>
                         </tr>
-                        <x-modal.activity.approve :request="$r" />
-                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
-                     @endforeach
+                     @endif
                   </tbody>
                </table>
             </div>
@@ -102,24 +112,32 @@
                         <th>Func</th>
                         <th>Activity</th>
                         <th>Route</th>
+                        <th>Boat</th>
                         <th>Status</th>
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($requests->where('status', '>', 1) as $r)
+                     @if ($requests->where('status', '>', 1)->count() > 0)
+                        @foreach ($requests->where('status', '>', 1) as $r)
+                           <tr>
+                              {{-- <td class="text-muted">{{$r->code}}</td> --}}
+                              <td class="text-muted">{{$r->date}}</td>
+                              <td class="text-muted">{{$r->department->code}}</td>
+                              <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
+                              <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
+                              <td class="text-muted">{{$r->schedule->vessel->name ?? '-'}}</td>
+                              <td>
+                                 <x-status.request :request="$r" />
+                              </td>
+                           </tr>
+                           
+                           {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                        @endforeach
+                        @else
                         <tr>
-                           {{-- <td class="text-muted">{{$r->code}}</td> --}}
-                           <td class="text-muted">{{$r->date}}</td>
-                           <td class="text-muted">{{$r->department->code}}</td>
-                           <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
-                           <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
-                           <td>
-                              <x-status.request :request="$r" />
-                           </td>
+                           <td colspan="7" style="text-align: center"><small>Empty</small></td>
                         </tr>
-                        
-                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
-                     @endforeach
+                     @endif
                   </tbody>
                </table>
             </div>

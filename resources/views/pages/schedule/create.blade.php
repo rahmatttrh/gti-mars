@@ -99,25 +99,27 @@
                                  <label for="type_id">Activity</label>
                               </div>
                            </div> --}}
-                           <div class="col-md-6">
+                           <div class="col-md-3">
                               <div class="form-floating mb-3">
                                  <input type="date" required class="form-control" id="date" name="date" >
                                  <label for="date">Date</label>
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           <div class="col-md-9">
                               <div class="form-floating mb-3">
-                                 <select required name="req_boat" id="req_boat" class="form-select">
-                                    <option  disabled selected>Choose one</option>
+                                 <select required name="vessel" id="vessel" class="form-select">
+                                    <option  disabled selected>Choose</option>
+                                    @foreach ($vessels as $vessel)
+                                       <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                    @endforeach
                                     
-                                       <option value="SCV">SCV</option>
-                                       <option value="AHTS">AHTS</option>
                                  </select>
-                                 <label for="req_boat">Required Boat</label>
+                                 <label for="vessel">Boat</label>
                               </div>
                            </div>
                         </div>
                         <div class="row">
+                           
                            <div class="col-md-6">
                               <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
@@ -131,7 +133,7 @@
                               </div>
                            </div>
                            <div class="col-md-6">
-                              <div class="form-floating">
+                              <div class="form-floating mb-3">
                                  <select required name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
@@ -142,20 +144,32 @@
                                  <label for="origin">Destination</label>
                               </div>
                            </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="datetime-local" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                 <label for="departure_estimasi">Estimasi Keberangkatan</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="datetime-local" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
+                                 <label for="arrive_estimasi">Estimasi Kedatangan</label>
+                              </div>
+                           </div>
                         </div>
                      </div>
                      
                      <div class="col-md-4">
                         <div class="card">
                            <div class="card-header">
-                           <small class="">Reserved</small>
+                           <small class="">Info</small>
                            </div>
                            <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 12rem">
                               
                               <div class="list-group-item">
                                  <div class="row">
                                     <div class="col text-truncate">
-                                       <small>Schedule will show here</small>
+                                       <small>Lorem, ipsum dolor.</small>
                                     </div>
                                  </div>
                               </div>
@@ -202,7 +216,7 @@
                               </div> --}}
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">Silahkan memilih waktu Docking dan Departure selain waktu diatas</small>
+                              <small class="text-muted">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, non! Minus officia molestiae non.</small>
                            </div>
                         </div>
                      </div>

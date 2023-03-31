@@ -8,9 +8,11 @@ use App\Models\Department;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
+use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RequestController extends Controller
 {
@@ -19,21 +21,112 @@ class RequestController extends Controller
       $today = Carbon::now();
       $month = $today->format('m');
       $requests = ModelsRequest::get();
+      $vessels = Vessel::get();
+      $schedules = Schedule::get();
+
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '=', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
       return view('pages.request.index', [
-         'requests' => $requests,
+         'title' => 'Inbox',
+         'departs' => $departs,
+         'vessels' => $vessels,
+         'schedules' => $schedules,
          'month' => $month
       ])->with('i');
    }
 
-   public function create()
+   public function month($month)
    {
-      $activities = Activity::get();
-      $ports = Port::get();
-      return view('pages.request.create', [
-         'activities' => $activities,
-         'ports' => $ports
-      ]);
+      $dekripMonth = dekripRambo($month);
+      $requests = ModelsRequest::whereMonth('date', $dekripMonth)->where('status', '=', 1)->get();
+
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+      $vessels = Vessel::get();
+      $schedules = Schedule::get();
+
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->whereMonth('date', $dekripMonth)->where('status', '=', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
+      return view('pages.request.index', [
+         'title' => 'Inbox',
+         'departs' => $departs,
+         'vessels' => $vessels,
+         'schedules' => $schedules,
+         'month' => $dekripMonth,
+         'monthName' => $monthName
+      ])->with('i');
    }
+
+   public function monthProgress($month)
+   {
+      $dekripMonth = dekripRambo($month);
+      $requests = ModelsRequest::whereMonth('date', $dekripMonth)->where('status', '>', 1)->get();
+
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+
+      $vessels = Vessel::get();
+      $schedules = Schedule::get();
+
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->whereMonth('date', $dekripMonth)->where('status', '=', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
+      return view('pages.request.progress', [
+         'title' => 'Progress',
+         'departs' => $departs,
+         'vessels' => $vessels,
+         'schedules' => $schedules,
+         'month' => $dekripMonth,
+         'monthName' => $monthName
+      ])->with('i');
+   }
+
+   
 
    public function check(Request $req)
    {
@@ -72,15 +165,58 @@ class RequestController extends Controller
       $request = ModelsRequest::create([
          'code' => $code,
          'department_id' => $req->department,
+         'func' => $department->code,
          'type_id' => $req->type,
          'activity_id' => $req->activity,
          'date' => $req->date,
          'schedule_id' => $req->schedule,
-         'desc' => $req->desc,
+         'description' => $req->desc,
          'status' => 00
       ]);
 
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
+   }
+
+   
+
+   public function selectSchedule(Request $req)
+   {
+      // dd($req->request_id);
+      $request = ModelsRequest::find($req->request_id);
+      $request->update([
+         'status' => 02,
+         'schedule_id' => $req->schedule
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');
+   }
+
+   // public function progressMarine()
+   // {
+   //    $requests = ModelsRequest::where('status', '>', 1)->get();
+   //    // dd($requests);
+   //    return view('pages.request.progress', [
+   //       'requests' => $requests
+   //    ])->with('i');
+   // }
+
+   public function progressMarine()
+   {
+      $today = Carbon::now();
+      $month = $today->format('m');
+      $requests = ModelsRequest::get();
+      $vessels = Vessel::get();
+      $schedules = Schedule::get();
+
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '>', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
+      return view('pages.request.progress', [
+         'title' => 'Progress',
+         'departs' => $departs,
+         'vessels' => $vessels,
+         'schedules' => $schedules,
+         'month' => $month
+      ])->with('i');
    }
 
    public function detail($id)
@@ -88,42 +224,22 @@ class RequestController extends Controller
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      $schedules = Schedule::where('origin_id', $request->origin_id)->where('destination_id', $request->destination_id)->get();
       return view('pages.request.detail', [
          'request' => $request,
+         'schedules' => $schedules,
          'cargoItems' => $cargoItems
       ])->with('i');
    }
 
-   public function draft()
-   {
-      $requests = ModelsRequest::where('status', 0)->get();
-      return view('pages.request.draft', [
-         'requests' => $requests
-      ])->with('i');
-   }
+   
 
-   public function progress()
-   {
-      $requests = ModelsRequest::where('status', 1)->get();
-      return view('pages.request.progress', [
-         'requests' => $requests
-      ])->with('i');
-   }
+   
 
 
 
 
-   public function release($id)
-   {
-      $dekripId = dekripRambo($id);
-      $request = ModelsRequest::find($dekripId);
-
-      $request->update([
-         'status' => 01
-      ]);
-
-      return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
-   }
+   
 
    public function approve($id)
    {

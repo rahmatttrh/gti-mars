@@ -15,18 +15,21 @@ class CreateSchedulesTable extends Migration
    {
       Schema::create('schedules', function (Blueprint $table) {
          $table->id();
-         $table->smallInteger('type_id');
+         // $table->smallInteger('type_id');
          $table->smallInteger('type');
          $table->smallInteger('status');
          $table->date('date')->nullable();
          $table->mediumInteger('vessel_id')->nullable();
+         $table->mediumInteger('origin_id')->nullable();
+         $table->mediumInteger('destination_id')->nullable();
+         $table->dateTime('departure_estimasi')->nullable();
+         $table->dateTime('arrive_estimasi')->nullable();
          // $table->mediumInteger('cargo_id')->nullable();
          // $table->string('func')->nullable();
          // $table->string('station')->nullable();
          // $table->string('activity')->nullable();
-         $table->string('req_boat')->nullable();
-         $table->mediumInteger('origin_id')->nullable();
-         $table->mediumInteger('destination_id')->nullable();
+         // $table->string('req_boat')->nullable();
+
          // $table->mediumInteger('jetty_id')->nullable();
          // $table->date('date')->nullable();
          // $table->time('docking')->nullable();

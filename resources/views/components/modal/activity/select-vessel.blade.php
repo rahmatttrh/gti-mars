@@ -5,10 +5,10 @@
             <h5 class="modal-title">Select Boat</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
-         <form action="{{route('schedule.select.vessel')}}" method="POST">
+         <form action="{{route('request.select.schedule')}}" method="POST">
             @csrf
             @method('PUT')
-            <input type="number" name="schedule" id="schedule" value="{{$request->id}}" hidden>
+            <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
             <div class="modal-body">
                <small>Request</small>
                <div>{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}} - {{$request->origin->name}} to {{$request->destination->name}}</div>
@@ -18,7 +18,7 @@
                </div> --}}
                
                <div class="form-floating mt-3">
-                  <select required name="vessel" id="vessel" class="form-select">
+                  <select required name="schedule" id="schedule" class="form-select">
                      <option  disabled selected>Choose</option>
                      {{-- @foreach ($vessels as $vessel)
                         @if ($vessel->schedules()->first() != null)
@@ -43,7 +43,7 @@
                               <option  value="{{$schedule->id}}">{{$schedule->vessel->name}}</option>
                            @endif
                         @endif --}}
-                        <option value="{{$schedule->id}}">{{$schedule->vessel->name}}</option>  
+                        <option value="{{$schedule->id}}">{{$schedule->vessel->name}} - {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</option>  
                      @endforeach
                      
                   </select>

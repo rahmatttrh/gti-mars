@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CargoItemController;
 use App\Http\Controllers\CarrierController;
+use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
 use App\Http\Controllers\JettyController;
@@ -98,17 +99,17 @@ Route::middleware(["auth"])->group(function () {
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
    });
-   Route::prefix('port')->group(function () {
-      Route::get('index', [PortController::class, 'index'])->name('port');
-      Route::post('store', [PortController::class, 'store'])->name('port.store');
-      Route::put('update', [PortController::class, 'update'])->name('port.update');
-      Route::get('detail/{port:id}', [PortController::class, 'detail'])->name('port.detail');
-      Route::get('delete/{port:id}', [PortController::class, 'delete'])->name('port.delete');
+   // Route::prefix('port')->group(function () {
+   //    Route::get('index', [PortController::class, 'index'])->name('port');
+   //    Route::post('store', [PortController::class, 'store'])->name('port.store');
+   //    Route::put('update', [PortController::class, 'update'])->name('port.update');
+   //    Route::get('detail/{port:id}', [PortController::class, 'detail'])->name('port.detail');
+   //    Route::get('delete/{port:id}', [PortController::class, 'delete'])->name('port.delete');
 
-      Route::post('jetty/store', [JettyController::class, 'store'])->name('port.add.jetty');
-      Route::put('jety/update', [JettyController::class, 'update'])->name('port.update.jetty');
-      Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
-   });
+   //    Route::post('jetty/store', [JettyController::class, 'store'])->name('port.add.jetty');
+   //    Route::put('jety/update', [JettyController::class, 'update'])->name('port.update.jetty');
+   //    Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
+   // });
    Route::prefix('logistic')->group(function () {
       Route::get('index', [LogisticController::class, 'index'])->name('logistic');
       Route::post('store', [LogisticController::class, 'store'])->name('logistic.store');
@@ -132,22 +133,27 @@ Route::middleware(["auth"])->group(function () {
    });
    Route::prefix('request')->group(function () {
       Route::get('/', [RequestController::class, 'index'])->name('request');
-      Route::get('create', [RequestController::class, 'create'])->name('request.create');
+      Route::get('month/{month}', [RequestController::class, 'month'])->name('request.month');
+      Route::get('progress/month/{month}', [RequestController::class, 'monthProgress'])->name('request.month.progress');
+
       Route::post('check', [RequestController::class, 'check'])->name('request.check');
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
       Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
 
-      Route::get('draft', [RequestController::class, 'draft'])->name('request.draft');
-      Route::get('progress', [RequestController::class, 'progress'])->name('request.progress');
-      Route::get('release/{request:id}', [RequestController::class, 'release'])->name('request.release');
+
+
+
       Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
 
       Route::get('print/{month}', [ExportController::class, 'request'])->name('request.print');
+      Route::get('progress/print/{month}', [ExportController::class, 'requestProgress'])->name('request.print.progress');
+
+
+
+      Route::put('select/schedule', [RequestController::class, 'selectSchedule'])->name('request.select.schedule');
+      Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
    });
-   Route::prefix('cargo/item')->group(function () {
-      Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
-      Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
-   });
+
    Route::prefix('activity')->group(function () {
       Route::get('/', [ActivityController::class, 'index'])->name('activity');
       Route::post('store', [ActivityController::class, 'store'])->name('activity.store');
@@ -155,6 +161,58 @@ Route::middleware(["auth"])->group(function () {
       Route::get('delete/{activity:id}', [ActivityController::class, 'delete'])->name('activity.delete');
    });
 });
+
+// Route::middleware(["auth", "marine"])->group(function () {
+//    Route::prefix('port')->group(function () {
+//       Route::get('index', [PortController::class, 'index'])->name('port');
+//       Route::post('store', [PortController::class, 'store'])->name('port.store');
+//       Route::put('update', [PortController::class, 'update'])->name('port.update');
+//       Route::get('detail/{port:id}', [PortController::class, 'detail'])->name('port.detail');
+//       Route::get('delete/{port:id}', [PortController::class, 'delete'])->name('port.delete');
+
+//       Route::post('jetty/store', [JettyController::class, 'store'])->name('port.add.jetty');
+//       Route::put('jety/update', [JettyController::class, 'update'])->name('port.update.jetty');
+//       Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
+//    });
+// });
+
+Route::group(['middleware' => ['role:marine']], function () {
+   Route::prefix('port')->group(function () {
+      Route::get('index', [PortController::class, 'index'])->name('port');
+      Route::post('store', [PortController::class, 'store'])->name('port.store');
+      Route::put('update', [PortController::class, 'update'])->name('port.update');
+      Route::get('detail/{port:id}', [PortController::class, 'detail'])->name('port.detail');
+      Route::get('delete/{port:id}', [PortController::class, 'delete'])->name('port.delete');
+
+      Route::post('jetty/store', [JettyController::class, 'store'])->name('port.add.jetty');
+      Route::put('jety/update', [JettyController::class, 'update'])->name('port.update.jetty');
+      Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
+   });
+});
+
+Route::group(['middleware' => ['role:logistic']], function () {
+   Route::prefix('department/request')->group(function () {
+      Route::get('create', [DepartmentRequestController::class, 'create'])->name('depart.request.create');
+      Route::post('save', [DepartmentRequestController::class, 'save'])->name('depart.request.save');
+      Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('depart.request.draft');
+      Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('depart.request.progress');
+      Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('depart.request.release');
+   });
+
+   Route::prefix('cargo/item')->group(function () {
+      Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
+      Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
+   });
+});
+
+
+
+
+
+
+
+
+
 
 
 Route::prefix('fetch')->group(function () {

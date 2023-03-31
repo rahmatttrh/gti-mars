@@ -29,9 +29,9 @@
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="d-flex align-items-center">
-                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling'))
-                        <img src="{{asset('img/logo/wolf.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DIGITAL SMART PORT <span class="text-primary">SYSTEM</span></div>
+                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port'))
+                        <img src="{{asset('img/logo/phe.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+                        {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
                         
                      @elseif(auth()->user()->hasRole('platform'))
                         @if (auth()->user()->getLogo())

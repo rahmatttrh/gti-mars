@@ -49,15 +49,21 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($requests as $r)
-                     <tr>
-                        <td class="text-muted">{{$r->code}}</td>
-                        <td class="text-muted">{{$r->date}}</td>
-                        <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
-                        <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
-                        <td><x-status.request :request="$r" /></td>
-                     </tr>
-                     @endforeach
+                     @if ($requests->count() > 0)
+                        @foreach ($requests as $r)
+                        <tr>
+                           <td class="text-muted">{{$r->code}}</td>
+                           <td class="text-muted">{{$r->date}}</td>
+                           <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td>
+                           <td class="text-muted">{{$r->origin->name}} - {{$r->destination->name}}</td>
+                           <td><x-status.request :request="$r" /></td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                           <td colspan="5" style="text-align: center"><small>Empty</small></td>
+                        </tr>
+                     @endif
                   </tbody>
                </table>
             </div>

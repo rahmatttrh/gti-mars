@@ -13,18 +13,57 @@
                   Request Activity
                </div>
                <h2 class="page-title">
-                  Progress  {{$monthName ?? ''}}
+                  {{$title}}  {{$monthName ?? ''}}
                </h2>
             </div>
             <!-- Page title actions -->
             
             <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
-                  {{-- <div class="dropdown">
+                  <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Month
                      </button>
+                     @if ($title == 'Inbox')
                         <div class="dropdown-menu dropdown-menu-end">
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(01))}}">
+                              Januari
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(02))}}">
+                              Februari
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(03))}}">
+                              Maret
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(04))}}">
+                              April
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(05))}}">
+                              Mei
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(06))}}">
+                              Juni
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(07))}}">
+                              Juli
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(8))}}">
+                              Agustus
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(9))}}">
+                              September
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(10))}}">
+                              Oktober
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(11))}}">
+                              November
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month', enkripRambo(12))}}">
+                              Desember
+                           </a>
+                        </div>
+                        @else<div class="dropdown-menu dropdown-menu-end">
                            <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(01))}}">
                               Januari
                            </a>
@@ -62,21 +101,28 @@
                               Desember
                            </a>
                         </div>
-                  </div> --}}
+                     @endif
+                  </div>
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        {{-- @if (auth()->user()->hasRole('logistic'))
+                        @if (auth()->user()->hasRole('logistic'))
                         <a class="dropdown-item" href="{{route('request.create')}}">
                            Create
                         </a>
-                        @endif --}}
+                        @endif
                         
-                        <a class="dropdown-item" target="_blank" href="{{route('request.print.progress', enkripRambo($month))}}">
-                           Print Preview
-                        </a>
+                        @if ($title == 'Inbox')
+                           <a class="dropdown-item" target="_blank" href="{{route('request.print', enkripRambo($month))}}">
+                              Print Preview
+                           </a>
+                           @else
+                           <a class="dropdown-item" target="_blank" href="{{route('request.print.progress', enkripRambo($month))}}">
+                              Print Preview
+                           </a>
+                        @endif
                         
                      </div>
                   </div>
@@ -102,7 +148,6 @@
                               <th>Date</th>
                               <th>Route</th>
                               <th>Activity</th>
-                              <th>Boat</th>
                               <th>Status</th>
                               {{-- <th></th> --}}
                            </tr>
@@ -111,16 +156,15 @@
                            @if ($departs->count() > 0)
                               @foreach ($departs as $depart => $reqs)
                                  <tr>
-                                 <td class="text-center text-muted" rowspan="{{count($reqs)+1}}">{{$depart}}</td>
+                                 <td class="text-center" rowspan="{{count($reqs)+1}}">{{$depart}}</td>
                                  </tr>
                                  @foreach ($reqs as $request)
                                  <tr>
                                     
                                     {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
-                                    <td class="text-muted">{{$request->date}}</td>
-                                    <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
+                                    <td>{{$request->date}}</td>
+                                    <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                                     <td><a href="{{route('request.detail', enkripRambo($request->id))}}"> {{$request->activity->name ?? ''}} {{$request->description}}</a></td>
-                                    <td class="text-muted">{{$request->schedule->vessel->name ?? 'Not available yet'}}</td>
                                     <td><x-status.request :request="$request" /></td>
                                     
                                     {{-- <td>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-   Request Draft
+   Request Progress
 @endsection
 @section('content')
    <div class="container-xl">
@@ -10,10 +10,10 @@
             <div class="col">
             <!-- Page pre-title -->
                <div class="page-pretitle">
-                  Overview
+                  Request Activity
                </div>
                <h2 class="page-title">
-                  Request Draft
+                  Progress
                </h2>
             </div>
             <!-- Page title actions -->
@@ -24,10 +24,10 @@
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        {{-- <a class="dropdown-item" href="{{route('request.create')}}">
+                        <a class="dropdown-item" href="{{route('request.create')}}">
                            Create
                         </a>
-                         --}}
+                        
                         <a class="dropdown-item" target="_blank" href="#">
                            Print Preview
                         </a>
@@ -44,8 +44,8 @@
             {{-- <div class="card-header">
               <h3 class="card-title">People</h3>
             </div> --}}
-            <div class="table-responsive ">
-               <table  class="table" >
+            <div class="table-responsive py-4">
+               <table  id="example" class="table" >
                   <thead>
                      <tr>
                         <th class="text-center">No.</th>
@@ -57,25 +57,18 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($requests->count() > 0)
-                        @foreach ($requests as $request)
-                           <tr>
-                              <td class="text-center">{{++$i}}</td>
-                              <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
-                              <td>{{$request->date}}</td>
-                              <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
-                              <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
-                              <td>
-                                 <x-status.request :request="$request" />
-                              </td>
-                           </tr>
-                        @endforeach
-                        @else
+                     @foreach ($requests as $request)
                         <tr>
-                           <td colspan="6" style="text-align: center"><small>Emtpy</small></td>
+                           <td class="text-center">{{++$i}}</td>
+                           <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
+                           <td>{{$request->date}}</td>
+                           <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
+                           <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
+                           <td>
+                              <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>0{{$request->status}}</div>
+                           </td>
                         </tr>
-                     @endif
-                     
+                     @endforeach
                   </tbody>
                </table>
             </div>

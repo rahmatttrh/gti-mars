@@ -15,6 +15,11 @@ class Port extends Model
       return $this->hasMany(Schedule::class, 'origin_id');
    }
 
+   public function requests()
+   {
+      return $this->hasMany(Request::class, 'origin_id');
+   }
+
    public function cargos()
    {
       return $this->hasMany(Cargo::class, 'origin_id');

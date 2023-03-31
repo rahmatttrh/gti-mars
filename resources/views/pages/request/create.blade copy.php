@@ -22,21 +22,28 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('depart.request.save')}}" method="POST">
+            <form action="{{route('request.check')}}" method="POST">
                @csrf
                <div class="card-body">
                   <div class="row">
-                     <div class="col-md-8">
+                     <div class="col-md-12">
                         <div class="row">
+                           {{-- <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" required class="form-control" id="name" name="name" >
+                                 <label for="name">Name</label>
+                              </div>
+                           </div> --}}
+                           
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <select name="activity" id="activity" class="form-select">
+                                 <select required name="activity" id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>
                                     @foreach ($activities as $act)
                                        <option value="{{$act->id}}">{{$act->name}}</option>
                                     @endforeach
                                  </select>
-                                 <label for="activity">Activity</label>
+                                 <label for="origin">Activity</label>
                               </div>
                            </div>
                            <div class="col-md-12">
@@ -47,8 +54,8 @@
                            </div>
                            <div class="col-md-4">
                               <div class="form-floating">
-                                 <input type="date" required class="form-control" id="date" name="date" >
-                                 <label for="date">Departure Date</label>
+                                 <input type="date" required class="form-control" id="departure_date" name="departure_date" >
+                                 <label for="departure_date">Departure Date</label>
                               </div>
                            </div>
                            <div class="col-md-4">
@@ -68,34 +75,76 @@
                                        <option value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
-                                 <label for="destination">Destination</label>
+                                 <label for="origin">Destination</label>
                               </div>
                            </div>
+                          
+                           
+                           
                         </div>
                         <hr>
                         <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
-                           Save
+                           Check
                         </button>
+                        {{-- <a href="{{route('cargo.check.dummy')}} " class="btn btn-primary ms-auto">
+	                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="10" cy="10" r="7" /><line x1="21" y1="21" x2="15" y2="15" /></svg>
+                           Check
+                        </a> --}}
                      </div> 
                      
                      <div class="col-md-4">
                         <div class="card">
                            <div class="card-header">
-                           <small class="">Information</small>
+                           <small class="">Schedules</small>
                            </div>
                            <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 20rem">
                               
                               <div class="list-group-item">
                                  <div class="row">
-                                    <div class="col">
-                                       <small>Jika pilihan Activity tidak ada dalam List anda bisa mengisi Form Description, atau bisa juga mengisi keduanya</small>
+                                    <div class="col text-truncate">
+                                       <small>Schedule will show here</small>
+                                    </div>
+                                 </div>
+                              </div>
+                              
+                              
+                              <div class="list-group-item">
+                                 <div class="d-flex justify-content-between">
+                                    <div class="text-truncate">
+                                       <a href="#" class="text-body d-block">13:00 - 15:00</a>
+                                       <div class="text-muted text-truncate mt-n1 text-uppercase">ENC Rhayden</div>
+                                    </div>
+                                    <div class="text-right">
+                                       <a href="" class="btn btn-sm btn-dark">Choose</a>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="list-group-item">
+                                 <div class="d-flex justify-content-between">
+                                    <div class="text-truncate">
+                                       <a href="#" class="text-body d-block">07:00 - 8:00</a>
+                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Elok Jaya</div>
+                                    </div>
+                                    <div class="text-right">
+                                       <a href="" class="btn btn-sm btn-dark">Choose</a>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="list-group-item">
+                                 <div class="d-flex justify-content-between">
+                                    <div class="text-truncate">
+                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
+                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
+                                    </div>
+                                    <div class="text-right">
+                                       <a href="" class="btn btn-sm btn-dark">Choose</a>
                                     </div>
                                  </div>
                               </div>
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">DSP - PHE</small>
+                              <small class="text-muted">Silahkan memilih waktu Docking dan Departure yang tersedia diatas</small>
                            </div>
                         </div>
                      </div>

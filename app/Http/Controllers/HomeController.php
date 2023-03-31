@@ -50,6 +50,10 @@ class HomeController extends Controller
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
          $requests = ModelsRequest::where('department_id', $department->id)->get();
+      } elseif (auth()->user()->hasRole('vessel')) {
+         $vessel = Vessel::where('email', auth()->user()->email)->first();
+         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>=', 1)->get();
+         $requests = '';
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
@@ -106,7 +110,7 @@ class HomeController extends Controller
          'today' => $today,
          'requests' => $requests,
          'monthName' => $monthName,
-         // 'vessel' => $vessel,
+         'vessel' => $vessel,
          'vessels' => $vessels,
          // 'vessel3' => $vessel3,
          'schedules' => $schedules,

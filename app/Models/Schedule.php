@@ -15,15 +15,16 @@ class Schedule extends Model
       return $this->belongsTo(Vessel::class);
    }
 
+   public function jetty()
+   {
+      return $this->belongsTo(Jetty::class);
+   }
+
    public function origin()
    {
       return $this->belongsTo(Port::class);
    }
 
-   public function jetty()
-   {
-      return $this->belongsTo(Jetty::class);
-   }
 
    public function destination()
    {

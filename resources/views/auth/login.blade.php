@@ -26,8 +26,8 @@
          <div class="container-tight ">
             <div class="text-center mb-3">
                <div  class=" ">
-                  <img class="mr-4" src="{{asset('img/logo/harbour.png')}}" height="68" alt=""> 
-                  <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART PORT <span class="text-primary">SYSTEM</span></h1>
+                  <img class="mb-4" src="{{asset('img/logo/phe2.png')}}" height="68" alt=""> 
+                  <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
                </div>
             </div>
             <div class="card">

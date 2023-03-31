@@ -36,6 +36,16 @@ class VesselSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
+         'status' => 1,
+         'name' => 'Giat Jaya',
+         'email' => 'gj@gmail.com',
+         'type' => 'Anchor Handling Tug Supply',
+         'require' => 'SCV',
+         'telp' => '0899231314',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('vessels')->insert([
          'status' => 2,
          'name' => 'Triton Jawara',
          'imo' => '4423424',
@@ -48,21 +58,21 @@ class VesselSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Transko Balihe',
-         'email' => 'tb@gmail.com',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Logindo Overcomer',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'Transko Balihe',
+      //    'email' => 'tb@gmail.com',
+      //    'type' => 'Anchor Handling Tug Supply',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'Logindo Overcomer',
+      //    'type' => 'Anchor Handling Tug Supply',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
       DB::table('vessels')->insert([
          'status' => 1,
          'name' => 'Hafar Jupiter',
@@ -71,47 +81,41 @@ class VesselSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Peteka 5401',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Transko Moloko',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Giat Jaya',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'ENC One',
-         'type' => 'Patrol',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'ENC Rhayden',
-         'type' => 'Anchor Handling Tug Supply',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('vessels')->insert([
-         'status' => 1,
-         'name' => 'Mitra Anugerah 35',
-         'type' => 'Tug Boat',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'Peteka 5401',
+      //    'type' => 'Anchor Handling Tug Supply',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'Transko Moloko',
+      //    'type' => 'Anchor Handling Tug Supply',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'ENC One',
+      //    'type' => 'Patrol',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'ENC Rhayden',
+      //    'type' => 'Anchor Handling Tug Supply',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('vessels')->insert([
+      //    'status' => 1,
+      //    'name' => 'Mitra Anugerah 35',
+      //    'type' => 'Tug Boat',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
    }
 }
