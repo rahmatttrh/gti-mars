@@ -25,14 +25,23 @@ class UserSeeder extends Seeder
       ]);
       $superuser->assignRole('superuser');
 
-      $marine = User::create([
-         'name' => 'Marine',
-         'email' => 'marine@gmail.com',
+      // $marine = User::create([
+      //    'name' => 'Marine',
+      //    'email' => 'marine@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $marine->assignRole('marine');
+
+      $msso = User::create([
+         'name' => 'Marine SSO',
+         'email' => 'msso@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $marine->assignRole('marine');
+      $msso->assignRole('marine');
 
       $logistic = User::create([
          'name' => 'Logistic',

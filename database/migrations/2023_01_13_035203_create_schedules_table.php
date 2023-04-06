@@ -22,8 +22,10 @@ class CreateSchedulesTable extends Migration
          $table->mediumInteger('vessel_id')->nullable();
          $table->mediumInteger('origin_id')->nullable();
          $table->mediumInteger('destination_id')->nullable();
-         $table->dateTime('departure_estimasi')->nullable();
-         $table->dateTime('arrive_estimasi')->nullable();
+         $table->dateTime('etd')->nullable();
+         $table->dateTime('eta')->nullable();
+         $table->string('remark')->nullable();
+         $table->timestamps();
          // $table->mediumInteger('cargo_id')->nullable();
          // $table->string('func')->nullable();
          // $table->string('station')->nullable();
@@ -39,8 +41,7 @@ class CreateSchedulesTable extends Migration
 
          // $table->time('arrival')->nullable();
 
-         $table->string('remark')->nullable();
-         $table->timestamps();
+
       });
    }
 

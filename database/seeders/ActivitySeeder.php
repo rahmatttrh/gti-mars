@@ -16,37 +16,56 @@ class ActivitySeeder extends Seeder
    {
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Mobilize material from Jakarta ( Chemical stimulasi -  4 Plt )',
+         'name' => 'Mobilize material',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Backload material ( Material drilling, etc )',
+         'name' => 'Backload material',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('activities')->insert([
+         'type_id' => 1,
+         'name' => 'Backload ESP unit',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Mobilisasi Next well Material , from Pabelokan',
+         'name' => 'Bunker',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Backload ESP unit ex well and other material',
+         'name' => 'Backload cargo',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('activities')->insert([
+         'type_id' => 1,
+         'name' => 'Distribute cargo',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('activities')->insert([
+         'type_id' => 1,
+         'name' => 'Pickup general cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 3,
-         'name' => 'Towing Boat ( WIDD p/f- INTANB  p/f)',
+         'name' => 'Towing Boat',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 3,
-         'name' => 'Moving Barge ',
+         'name' => 'Moving Barge',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

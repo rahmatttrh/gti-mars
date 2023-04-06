@@ -16,12 +16,16 @@ class CreateReportsTable extends Migration
       Schema::create('reports', function (Blueprint $table) {
          $table->id();
          $table->mediumInteger('schedule_id');
+         $table->mediumInteger('vessel_id');
          $table->dateTime('asign')->nullable();
-         $table->dateTime('loading')->nullable();
+         $table->dateTime('loading_start')->nullable();
+         $table->dateTime('loading_end')->nullable();
          $table->dateTime('castoff')->nullable();
          $table->dateTime('fullaway')->nullable();
          $table->dateTime('arrive')->nullable();
-         $table->dateTime('return')->nullable();
+         $table->dateTime('unloading_start')->nullable();
+         $table->dateTime('unloading_end')->nullable();
+         $table->dateTime('complete')->nullable();
          $table->timestamps();
       });
    }

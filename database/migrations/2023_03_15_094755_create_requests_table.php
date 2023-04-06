@@ -17,6 +17,7 @@ class CreateRequestsTable extends Migration
          $table->id();
          $table->string('code');
          $table->smallInteger('schedule_id')->nullable();
+         $table->smallInteger('employee_id');
          $table->smallInteger('status');
          $table->date('date');
          $table->smallInteger('department_id');
@@ -26,10 +27,7 @@ class CreateRequestsTable extends Migration
          $table->string('description')->nullable();
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();
-
-
-
-
+         $table->string('remark')->nullable();
          $table->timestamps();
       });
    }

@@ -11,6 +11,7 @@
                <table class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>
+                        <th class="text-center">No.</th>
                         <th>Date</th>
                         <th>Location</th>
                         <th>Activity</th>
@@ -21,12 +22,13 @@
                   <tbody>
                      @foreach ($schedules as $schedule)
                         <tr>
+                           <td class="text-muted text-center">{{++$i}}</td>
                            <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
                            
                            <td class="text-muted">
                               {{$schedule->origin->name}} - {{$schedule->destination->name}}
                            </td>
-                           <td>{{$schedule->requests->count()}} Activity</td>
+                           <td class="text-muted">{{$schedule->requests->count()}} Activity</td>
                            <td>
                               <x-status.schedule :schedule="$schedule" />
                            </td>

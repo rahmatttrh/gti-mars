@@ -22,6 +22,7 @@ class CreateCargoItemsTable extends Migration
          $table->string('unit')->nullable();
          $table->decimal('size', 6, 2)->nullable();
          $table->decimal('weight', 6, 2)->nullable();
+         $table->string('remark')->nullable();
          $table->timestamps();
       });
    }

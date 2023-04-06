@@ -64,9 +64,12 @@
                         @endif
                         
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('cargo.timeline')}}">
-                           Timeline
+                        @if ($request->status > 1)
+                        <a class="dropdown-item" href="{{route('schedule.timeline', enkripRambo($request->schedule->id))}}">
+                           Timeline 
                         </a>
+                        @endif
+                        
                         <a class="dropdown-item" target="_blank" href="{{route('cargo.receipt')}}">
                            Print Preview
                         </a>
@@ -115,17 +118,17 @@
                            <div class="mb-1">
                               Date : {{$request->schedule->date}}
                            </div>
-                           <div class="mb-1">
+                           {{-- <div class="mb-1">
                               Route : {{$request->schedule->origin->name}} - {{$request->schedule->destination->name}}
-                           </div>
+                           </div> --}}
                            <div class="mb-1">
                               Boat : {{$request->schedule->vessel->name ?? 'Not Available'}}
                            </div>
                            <div class="mb-1">
-                              Estimasi Keberangkatan : {{$request->schedule->departure_estimasi ?? 'Not Available'}}
+                              ETD : {{$request->schedule->etd ?? 'Not Available'}}
                            </div>
                            <div class="mb-1">
-                              Estimasi Kedatangan : {{$request->schedule->arrive_estimasi ?? 'Not Available'}}
+                              ETA : {{$request->schedule->eta ?? 'Not Available'}}
                            </div>
                         </div>
                         @else

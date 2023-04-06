@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Vessel;
@@ -37,14 +38,16 @@ class HomeController extends Controller
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
       } elseif (auth()->user()->hasRole('marine')) {
+         $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
+         // dd($vessel);
          $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
          $requests = ModelsRequest::get();
       } elseif (auth()->user()->hasRole('logistic')) {
-         $department = Department::where('email', auth()->user()->email)->first();
+         $employee = Employee::where('email', auth()->user()->email)->first();
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-         $requests = ModelsRequest::where('department_id', $department->id)->get();
+         $requests = ModelsRequest::where('department_id', $employee->department->id)->get();
       } elseif (auth()->user()->hasRole('drilling')) {
          $department = Department::where('email', auth()->user()->email)->first();
          $vessel = '';
@@ -52,7 +55,7 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('department_id', $department->id)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
-         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>=', 1)->get();
+         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>=', 0)->get();
          $requests = '';
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';
@@ -115,6 +118,6 @@ class HomeController extends Controller
          // 'vessel3' => $vessel3,
          'schedules' => $schedules,
          // 'schedulesFix' => $schedulesFix
-      ]);
+      ])->with('i');
    }
 }

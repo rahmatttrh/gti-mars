@@ -156,20 +156,21 @@ class ScheduleController extends Controller
    {
       $req->validate([]);
       // dd($req->type);
+      $vessel = Vessel::find($req->vessel);
 
       Schedule::create([
-         // 'type_id' => 1,
          'type' => 2,
-         'status' => 1,
-         // 'func' => $req->func,
-         // 'station' => $req->station,
-         // 'activity' => $req->activity,
+         'status' => 0,
          'vessel_id' => $req->vessel,
          'date' => $req->date,
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
-         'departure_estimasi' => $req->departure_estimasi,
-         'arrive_estimasi' => $req->arrive_estimasi
+         'etd' => $req->departure_estimasi,
+         'eta' => $req->arrive_estimasi
+      ]);
+
+      $vessel->update([
+         'status' => 1
       ]);
 
       return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
@@ -228,15 +229,28 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', 2)->get();
-      $report = Report::where('schedule_id', $schedule->id)->first();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->get();
+      // $report = Report::where('schedule_id', $schedule->id)->first();
       $vessel = Vessel::get();
+      $report = Report::where('schedule_id', $schedule->id)->first();
       // dd($schedule->requests());
+      // dd($report->loading);
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,
          'requests' => $requests,
-         'vessels' => $vessel
+         'vessels' => $vessel,
+         // 'report' => $requests
+      ]);
+   }
+
+   public function timeline($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+
+      return view('pages.schedule.timeline', [
+         'schedule' => $schedule
       ]);
    }
 }

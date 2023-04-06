@@ -29,4 +29,8 @@ class Port extends Model
    {
       return $this->hasMany(Jetty::class);
    }
+   public function employees()
+   {
+      return $this->hasMany(Employee::class);
+   }
 }

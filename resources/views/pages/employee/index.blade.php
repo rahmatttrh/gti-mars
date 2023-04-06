@@ -10,7 +10,7 @@
                Overview
             </div>
             <h2 class="page-title">
-               Port
+               Employee
             </h2>
             </div>
             <!-- Page title actions -->
@@ -35,78 +35,97 @@
          <div class="row">
             <div class="col-md-4">
                <div class="card">
-                  <form action="{{route('port.store')}}" method="POST">
+                  <form action="{{route('employee.store')}}" method="POST">
                      @csrf
-                     <div class="card-body">
-                        <div class="form-floating mb-3">
-                           <input type="text" required class="form-control" id="name" name="name" >
-                           <label for="name">Name</label>
-                        </div>
-                        <div class="row">
-                           <div class="col-12">
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="type" name="type" >
-                                 <label for="type">Type</label>
-                              </div>
-                           </div>
-                           <div class="col-12">
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="email" name="email" >
-                                 <label for="email">Email</label>
-                              </div>
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col">
+                           <div class="form-floating mb-3">
+                              <select required name="department" id="department" class="form-select">
+                                 <option  disabled selected>Choose</option>
+                                 @foreach ($departments as $department)
+                                    <option value="{{$department->id}}">{{$department->name}}</option>
+                                 @endforeach
+                              </select>
+                              <label for="department">Department</label>
                            </div>
                         </div>
-                        
-                        <div class="row">
-                           <div class="col">
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="latitude" name="latitude" >
-                                 <label for="latitude">Latitude</label>
-                              </div>
-                           </div>
-                           <div class="col">
-                              <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="longitude" name="longitude" >
-                                 <label for="longitude">Longitude</label>
-                              </div>
+                        <div class="col">
+                           <div class="form-floating mb-3">
+                              <select required name="port" id="port" class="form-select">
+                                 <option  disabled selected>Choose</option>
+                                 @foreach ($ports as $port)
+                                    <option value="{{$port->id}}">{{$port->name}}</option>
+                                 @endforeach
+                              </select>
+                              <label for="port">Location</label>
                            </div>
                         </div>
-                        
-                        
                      </div>
-                     <div class="card-footer">
-                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
-                           Save
-                        </button>
+                     <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="name" name="name" >
+                        <label for="name">Name</label>
                      </div>
-                  </form>
+                     <div class="form-floating mb-3">
+                        <input type="email" required class="form-control" id="email" name="email" >
+                        <label for="email">Email</label>
+                     </div>
+                     <div class="form-floating mb-3">
+                        <input type="string" required class="form-control" id="ekstensi" name="ekstensi" >
+                        <label for="ekstensi">Ekstensi</label>
+                     </div>
+                  </div>
+                  
+                  <div class="card-footer">
+                     <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                        Save
+                     </button>
+                  </div>
+
+               </form>
                </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8 ">
                <div class="card">
                   <div class="table-responsive">
-                     <table   class="table " >
+                     <table  class="table " >
                         <thead>
                            <tr>
                               <th class="text-center">No.</th>
                               <th>Name</th>
-                              <th>Type</th>
-                              <th>Latittude</th>
-                              <th>Logitude</th>
+                              <th>Department</th>
+                              <th>Loc</th>
                               <th>Email</th>
+                              <th>Ekstensi</th>
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($ports as $port)
+                           @foreach ($employees as $employee)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td><a href="{{route('port.detail', enkripRambo($port->id))}}">{{$port->name}}</a></td>
-                                 <td>{{$port->type}}</td>
-                                 <td>{{$port->latitude}}</td>
-                                 <td>{{$port->longitude}}</td>
-                                 <td>{{$port->email}}</td>
+                                 <td>
+                                    <div class="dropdown">
+                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                          {{$employee->name}}
+                                       </a>
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="#">
+                                             Edit
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployee_{{$employee->id}}">
+                                             Delete
+                                          </a>
+                                       </div>
+                                    </div>
+                                 </td>
+                                 <td>{{$employee->department->name}}</td>
+                                 <td>{{$employee->port->name}}</td>
+                                 <td>{{$employee->email}}</td>
+                                 <td>{{$employee->ekstensi}}</td>
                               </tr>
+
+                              <x-modal.employee.delete :employee="$employee" />
                            @endforeach
                         </tbody>
                      </table>

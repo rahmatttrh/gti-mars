@@ -150,7 +150,7 @@ class ExportController extends Controller
 
       $requests = ModelsRequest::whereMonth('date', $dekripMonth)->get();
       // $requests = ModelsRequest::whereMonth('date', $dekripMonth)->groupBy('department_id')->get();
-      $departs = ModelsRequest::selectRaw('id, department_id, code, date, func, description, schedule_id, activity_id')->orderBy('department_id', 'desc')->whereMonth('date', $dekripMonth)->where('status', '>', 1)->get()->groupBy('func');
+      $departs = ModelsRequest::selectRaw('id, department_id, code,status,  date, func, description, schedule_id, activity_id')->orderBy('department_id', 'desc')->whereMonth('date', $dekripMonth)->where('status', '>', 1)->get()->groupBy('func');
 
       $now = Carbon::now();
       $html = view("pages.pdf.request", [

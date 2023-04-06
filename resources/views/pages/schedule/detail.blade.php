@@ -42,16 +42,24 @@
                @endif
 
                @if (auth()->user()->hasRole('vessel'))
-                  @if ($schedule->status == 1 )
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-departure">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/crane -->
-	                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 21h6" /><path d="M9 21v-18l-6 6h18" /><path d="M9 3l10 6" /><path d="M17 9v4a2 2 0 1 1 -2 2" /></svg>
+                  @if ($schedule->status == 0 )
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading">
+                        
                         Loading
                      </button>
+                     @elseif($schedule->status == 1)
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-castoff">
+                        
+                        Cast Off
+                     </button>
                      @elseif($schedule->status == 2)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-castoff">Cast Off</button>
-                     @elseif($schedule->status == 3)
                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-fullaway">Full Away</button>
+                     @elseif($schedule->status == 3)
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-arrive">Arrive</button>
+                     @elseif($schedule->status == 4)
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-unloading">Unloading</button>
+                     @elseif($schedule->status == 5)
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-complete">Complete</button>
                   @endif
                @endif
                
@@ -89,28 +97,50 @@
          <div class="row row-deck">
             <div class="col-md-8">
                <div class="card">
+                  <div class="card-header">
+                    
+                     <div class="text-muted">Date : {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                     <br>
+                     Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}</div>
+                  </div>
                   <div class="card-body">
-                     <div class="text-muted">Date : {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</div>
-                     <div class="text-muted">
-                        Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}
-                     </div>
-                     <h2>
+                     
+                     <h1>
                         {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
-                     </h2>
+                     </h1>
+                     <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-footer">
                      
-                     <div class="text-muted">ETD : {{$schedule->departure_estimasi}}</div>
-                     <div class="text-muted">ETA : {{$schedule->arrive_estimasi}}</div>
+                     <div class="text-muted">ETD : {{\Carbon\Carbon::parse($schedule->etd)->format('H:i, d/m/Y')}}</div>
+                     <div class="text-muted">ETA : {{\Carbon\Carbon::parse($schedule->eta)->format('H:i, d/m/Y')}}</div>
                   </div>
                </div>
             </div>
             <div class="col-md-4">
                <div class="card">
                   <div class="card-header">
-                     <x-status.schedule :schedule="$schedule" />
+                     <small>Timeline</small>
                   </div>
                   <div class="card-body">
+                     @if ($report)
+                        <dl class="row">
+                           <dt class="col-4">Loading</dt>
+                           <dd class="col-8">: {{ $report->loading ? \Carbon\Carbon::parse($report->loading)->format('H:i, d/m/Y') : '-'}}</dd>
+                           <dt class="col-4">Cast Off</dt>
+                           <dd class="col-8">: {{ $report->castoff ? \Carbon\Carbon::parse($report->castoff)->format('H:i, d/m/Y') : '-'}}</dd>
+                           <dt class="col-4">Full Away</dt>
+                           <dd class="col-8">: {{ $report->fullaway ? \Carbon\Carbon::parse($report->fullaway)->format('H:i, d/m/Y') : '-'}}</dd>
+                           <dt class="col-4">Arrive</dt>
+                           <dd class="col-8">: {{ $report->arrive ? \Carbon\Carbon::parse($report->arrive)->format('H:i, d/m/Y') : '-'}}</dd>
+                           <dt class="col-4">Unloading</dt>
+                           <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->arrive)->format('H:i, d/m/Y') : '-'}}</dd>
+                           <dt class="col-4">Complete</dt>
+                           <dd class="col-8">: {{ $report->complete ? \Carbon\Carbon::parse($report->arrive)->format('H:i, d/m/Y') : '-'}}</dd>
+                        </dl>
+                        @else
+                        <small>Report empty</small>
+                     @endif
                      
                   </div>
                </div>
@@ -149,7 +179,7 @@
                            <dt class="col-2">Department</dt>
                            <dd class="col-10">: {{$request->department->name}}</dd>
                            <dt class="col-2">Activity</dt>
-                           <dd class="col-10">: {{$request->activity->name}} - {{$request->description}}</dd>
+                           <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
                         
                         </dl>
                      </div>
@@ -157,14 +187,18 @@
                </div>
             </div>
          @endforeach
-
-
-         
          
       </div>
    </div>
 
    {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+   <x-modal.schedule.loading :schedule="$schedule" />
+   <x-modal.schedule.castoff :schedule="$schedule" />
+   <x-modal.schedule.fullaway :schedule="$schedule" />
+   <x-modal.schedule.arrive :schedule="$schedule" />
+   <x-modal.schedule.unloading :schedule="$schedule" />
+   <x-modal.schedule.complete :schedule="$schedule" />
+
    <x-modal.schedule.departure :schedule="$schedule" />
    <x-modal.schedule.arrived :schedule="$schedule"/>
 

@@ -24,6 +24,8 @@ class PortController extends Controller
 
       Port::create([
          'name' => $req->name,
+         'email' => $req->email,
+         'type' => $req->type,
          'latitude' => $req->latitude,
          'longitude' => $req->longitude
       ]);

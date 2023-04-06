@@ -33,15 +33,19 @@
                      Options
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                     {{-- <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-edit-vessel">
-                        Edit
-                     </a> --}}
-                     <a class="dropdown-item" href="{{route('vessel.edit', enkripRambo($vessel->id))}}" >
-                        Edit
-                     </a>
-                     <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-vessel">
-                        Delete
-                     </a>
+                        {{-- <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-edit-vessel">
+                           Edit
+                        </a> --}}
+                        <a class="dropdown-item" href="{{route('vessel.edit', enkripRambo($vessel->id))}}" >
+                           Edit
+                        </a>
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-vessel">
+                           Delete
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route('vessel.history', enkripRambo($vessel->id))}}">
+                           History
+                        </a>
                      </div>
                   </div>
                </div>
@@ -52,21 +56,16 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="card" href="#">
-            <div class="card-cover text-center bg-azure" >
+            {{-- <div class="card-cover text-center bg-azure" >
                <span class="avatar avatar-xl avatar-thumb avatar-rounded" > 
-                  {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg> --}}
-                  @if ($vessel->status == 1)
-                     <img src="{{asset('img/vessel/docking.png')}}" alt="">
-                     @elseif($vessel->status == 2)
-                     <img src="{{asset('img/vessel/ship.png')}}" alt="">
-                  @endif
+                  <img src="{{asset('img/vessel/ship.png')}}" alt="">
                </span>
-            </div>
+            </div> --}}
             <div class="card-body text-center">
               <div class="card-title mb-1">{{$vessel->name}}</div>
-              <div class="text-muted">{{$vessel->type}}</div>
-              {{-- <hr>
-               <x-status.vessel :vessel="$vessel" /> --}}
+              <div class="text-muted mb-2">{{$vessel->type}}</div>
+              {{-- <hr> --}}
+               <x-status.vessel :vessel="$vessel" />
             </div>
          </div>
          <div class="row mt-3">
@@ -97,7 +96,7 @@
                         <dt class="col-5">Call Sign</dt>
                         <dd class="col-7">: {{$vessel->call_sign}}</dd>
                         <dt class="col-5">Port of Registry</dt>
-                        <dd class="col-7">: {{$vessel->port}}</dd>
+                        <dd class="col-7">: {{$vessel->portname}}</dd>
                         <dt class="col-5">Year of Build</dt>
                         <dd class="col-7">: {{$vessel->build}}</dd>
                         <dt class="col-5">Vessel Classed by</dt>

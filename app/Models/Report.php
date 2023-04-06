@@ -14,4 +14,9 @@ class Report extends Model
    {
       return $this->belongsTo(Schedule::class);
    }
+
+   public function vessel()
+   {
+      return $this->belongsTo(Vessel::class);
+   }
 }

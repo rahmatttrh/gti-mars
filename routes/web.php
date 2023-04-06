@@ -5,6 +5,8 @@ use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CargoItemController;
 use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\Department\DepartmentRequestController;
+use App\Http\Controllers\Department\DepartmentScheduleController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
 use App\Http\Controllers\JettyController;
@@ -17,6 +19,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
 use App\Models\Activity;
 use App\Models\Platform;
@@ -88,6 +91,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('print/{month}', [ExportController::class, 'schedule'])->name('schedule.print');
 
       Route::get('report/departure/{schedule:id}', [ReportController::class, 'departure'])->name('schedule.report.departure');
+      Route::get('timeline/{schedule:id}', [ScheduleController::class, 'timeline'])->name('schedule.timeline');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
@@ -98,6 +102,8 @@ Route::middleware(["auth"])->group(function () {
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
+
+      Route::get('history/{vessel:id}', [VesselController::class, 'history'])->name('vessel.history');
    });
    // Route::prefix('port')->group(function () {
    //    Route::get('index', [PortController::class, 'index'])->name('port');
@@ -176,6 +182,8 @@ Route::middleware(["auth"])->group(function () {
 //    });
 // });
 
+
+
 Route::group(['middleware' => ['role:marine']], function () {
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
@@ -187,6 +195,12 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('jetty/store', [JettyController::class, 'store'])->name('port.add.jetty');
       Route::put('jety/update', [JettyController::class, 'update'])->name('port.update.jetty');
       Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
+   });
+
+   Route::prefix('employee')->group(function () {
+      Route::get('/', [EmployeeController::class, 'index'])->name('employee');
+      Route::post('/store', [EmployeeController::class, 'store'])->name('employee.store');
+      Route::get('/delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 });
 
@@ -202,6 +216,17 @@ Route::group(['middleware' => ['role:logistic']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
+   });
+});
+
+Route::group(['middleware' => ['role:vessel']], function () {
+   Route::prefix('schedule')->group(function () {
+      Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
+      Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');
+      Route::get('fullaway/{schedule:id}', [VesselScheduleController::class, 'fullaway'])->name('schedule.fullaway');
+      Route::get('arrive/{schedule:id}', [VesselScheduleController::class, 'arrive'])->name('schedule.arrive');
+      Route::get('unloading/{schedule:id}', [VesselScheduleController::class, 'unloading'])->name('schedule.unloading');
+      Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.complete');
    });
 });
 

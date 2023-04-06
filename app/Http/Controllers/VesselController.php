@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Port;
+use App\Models\Report;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vessel;
@@ -17,7 +18,7 @@ class VesselController extends Controller
       $vessels = Vessel::get();
       return view('pages.vessel.index', [
          'vessels' => $vessels
-      ]);
+      ])->with('i');
    }
 
    public function create()
@@ -40,7 +41,7 @@ class VesselController extends Controller
          'call_sign' => $req->call_sign,
          'owner' => $req->owner,
          'operator' => $req->operator,
-         'port' => $req->port,
+         'portname' => $req->port,
          'build' => $req->build,
          'classed_by' => $req->classed_by,
 
@@ -138,6 +139,7 @@ class VesselController extends Controller
       $dekripId = dekripRambo($id);
       // dd($dekripId);
       $vessel = Vessel::find($dekripId);
+      // dd($vessel->port->name);
       return view('pages.vessel.detail', [
          'vessel' => $vessel
       ]);
@@ -160,7 +162,16 @@ class VesselController extends Controller
       }
    }
 
-
+   public function history($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vessel = Vessel::find($dekripId);
+      $reports = Report::where('vessel_id', $vessel->id)->where('complete', '!=', null)->get();
+      return view('pages.vessel.history', [
+         'vessel' => $vessel,
+         'reports' => $reports
+      ])->with('i');
+   }
 
 
    public function schedule($id)

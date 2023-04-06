@@ -96,6 +96,9 @@
                         <a class="dropdown-item" href="{{route('activity')}}" >
                            Activity
                         </a>
+                        <a class="dropdown-item" href="{{route('employee')}}" >
+                           Employee
+                        </a>
                      </div>
                   </li>
                   {{-- <li class="nav-item {{request()->is('/request') ? 'active' : ''}}">

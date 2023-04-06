@@ -45,7 +45,7 @@
             </div>
          </div>
       </div> --}}
-      <div class="col-md-12">
+      <div class="col-md-9">
          <div class="card mb-3">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
@@ -68,7 +68,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($requests->count() > 0 )
+                     @if ($requests->where('status', 1)->count() > 0 )
                         @foreach ($requests->where('status', 1) as $r)
                            <tr>
                               {{-- <td class="text-muted">{{$r->code}}</td> --}}
@@ -99,12 +99,12 @@
          </div>
          <div class="card mb-2">
             <div class="card-header ">
-               <div class="card-title">
+               <div  class="card-title">
                   
                   REQUEST ACTIVITY</div>
             </div>
             <div class="card-table table-responsive ">
-               <table class="table table-vcenter">
+               <table id="example" class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>
                         {{-- <th>Code</th> --}}
@@ -123,7 +123,7 @@
                               {{-- <td class="text-muted">{{$r->code}}</td> --}}
                               <td class="text-muted">{{$r->date}}</td>
                               <td class="text-muted">{{$r->department->code}}</td>
-                              <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name}}</a></td>
+                              <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? '-'}} {{$r->description}}</a></td>
                               <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
                               <td class="text-muted">{{$r->schedule->vessel->name ?? '-'}}</td>
                               <td>
@@ -173,17 +173,19 @@
          </div>
       </div> --}}
       <div class="col-md-3">
-         <div class="card">
-            <div class="card-header">
-               <h4 class="card-title">SBU</h4>
-            </div>
-            <div class="card-body">
-               <div class="mb-2">
-                  <div>Prisai</div>
-                  <div>PM6</div>
+         @foreach ($vessels as $vessel)
+            <a class="card" href="#">
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col">
+                        <div class="font-weight-medium mb-1">{{$vessel->name}}</div>
+                        <div class="text-muted"><x-status.vessel :vessel="$vessel" /></div>
+                     </div>
+                  </div>
                </div>
-            </div>
-         </div>
+            </a>
+         @endforeach
+         
       </div>
    </div>
 </div>

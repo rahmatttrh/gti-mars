@@ -21,39 +21,39 @@ class ScheduleSeeder extends Seeder
       DB::table('schedules')->insert([
          // 'type_id' => 1,
          'type' => 2,
-         'status' => 1,
+         'status' => 0,
          'date' => $now,
          'vessel_id' => 1,
          'origin_id' => 1,
          'destination_id' => 6,
-         'departure_estimasi' => $now->addHour(2),
-         'arrive_estimasi' => $now->addHour(6),
+         'etd' => $now->addHour(2),
+         'eta' => $now->addHour(6),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('schedules')->insert([
          // 'type_id' => 2,
          'type' => 2,
-         'status' => 1,
+         'status' => 0,
          'date' => $now->addDay(1),
          'vessel_id' => 2,
          'origin_id' => 1,
          'destination_id' => 3,
-         'departure_estimasi' => $now->addDay(1)->addHour(1),
-         'arrive_estimasi' => $now->addDay(1)->addHour(4),
+         'etd' => $now->addDay(1)->addHour(1),
+         'eta' => $now->addDay(1)->addHour(4),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('schedules')->insert([
          // 'type_id' => 2,
          'type' => 2,
-         'status' => 1,
+         'status' => 0,
          'date' => $now->addDay(3),
          'vessel_id' => 4,
          'origin_id' => 1,
          'destination_id' => 5,
-         'departure_estimasi' => $now->addDay(3)->addHour(1),
-         'arrive_estimasi' => $now->addDay(3)->addHour(5),
+         'etd' => $now->addDay(3)->addHour(1),
+         'eta' => $now->addDay(3)->addHour(5),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

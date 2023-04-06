@@ -40,4 +40,9 @@ class Request extends Model
    {
       return $this->belongsTo(Port::class);
    }
+
+   public function employee()
+   {
+      return $this->belongsTo(Employee::class);
+   }
 }

@@ -16,6 +16,7 @@ class VesselSeeder extends Seeder
    {
       DB::table('vessels')->insert([
          'status' => 1,
+         'port_id' => 1,
          'name' => 'Elok Jaya',
          'prev_name' => '-',
          'imo' => '92313',
@@ -27,7 +28,7 @@ class VesselSeeder extends Seeder
          'call_sign' => 'XYZ',
          'owner' => 'PT XYZ',
          'operator' => 'PHE',
-         'port' => 'Jakarta',
+         'portname' => 'Jakarta',
          'build' => '2004',
          'deck_cargo_capacity' => 500,
          'dpa_name' => 'Ahmad Juantoro',
@@ -46,7 +47,7 @@ class VesselSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
-         'status' => 2,
+         'status' => 0,
          'name' => 'Triton Jawara',
          'imo' => '4423424',
          'email' => 'tj@gmail.com',

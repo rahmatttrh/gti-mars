@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-   Vessel List
+   History Vessel
 @endsection
 @section('content')
    <div class="container-xl">
@@ -12,18 +12,18 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  Vessel
+                  History {{$vessel->name}}
                </h2>
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                <div class="d-flex">
                   {{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…"/> --}}
-                  <a href="{{route('vessel.create')}}" class="btn btn-primary"   >
+                  {{-- <a href="{{route('vessel.create')}}" class="btn btn-primary"   >
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                      New vessel
-                  </a>
+                  </a> --}}
                   {{-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-vessel">
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
@@ -43,24 +43,30 @@
                   <thead>
                      <tr>
                         <th class="text-center">No.</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Owner</th>
-                        <th>Operator</th>
-                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($vessels as $vessel)
+                     @if ($reports->count() > 0)
+                        @foreach ($reports as $report)
+                           <tr>
+                              <td class="text-center">{{++$i}}</td>
+                              <td>{{\Carbon\Carbon::parse($report->schedule->date)->format('d/m/Y')}}</td>
+                              <td>
+                                 {{$report->schedule->origin->name}} - {{\Carbon\Carbon::parse($report->castoff)->format('H:i')}}<br>
+                              </td>
+                              <td>
+                                 {{$report->schedule->destination->name}} - {{\Carbon\Carbon::parse($report->arrive)->format('H:i')}} <br>
+                              </td>
+                           </tr>
+                        @endforeach
+                        @else
                         <tr>
-                           <td class="text-center">{{++$i}}</td>
-                           <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
-                           <td>{{$vessel->type}}</td>
-                           <td>{{$vessel->owner}}</td>
-                           <td>{{$vessel->operator}}</td>
-                           <td><x-status.vessel :vessel="$vessel" /></td>
+                           <td colspan="4" style="text-align: center"><small>Empty</small></td>
                         </tr>
-                     @endforeach
+                     @endif
                   </tbody>
                </table>
             </div>

@@ -1,13 +1,14 @@
-<div class="mb-3">
-   @if ($vessel->status == 1)
-      <label class="form-label"><span class="badge bg-secondary me-1"></span>Docking</label>
-      <div class="progress">
-         <div class="progress-bar progress-bar-indeterminate bg-secondary"></div>
-      </div>
+<div class="">
+   @if ($vessel->status == 0)
+   <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Ready</div>
+      @elseif($vessel->status == 1)
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Schedule On Set</div>
       @elseif($vessel->status == 2)
-      <label class="form-label"><span class="badge bg-info me-1"></span>Sailing</label>
-      <div class="progress">
-         <div class="progress-bar progress-bar-indeterminate bg-info"></div>
-      </div>
+      {{-- <label class="form-label"><span class="badge bg-info me-1"></span>Docking at {{$vessel->port->name}}</label> --}}
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Docking at {{$vessel->port->name}}</div>
+      @elseif($vessel->status == 3 || $vessel->status == 4)
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Sailing</div>
+      @elseif($vessel->status == 5)
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Docking at {{$vessel->port->name}}</div>
    @endif
  </div>
