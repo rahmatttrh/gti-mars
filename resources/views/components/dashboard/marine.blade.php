@@ -103,7 +103,7 @@
                   
                   REQUEST ACTIVITY</div>
             </div>
-            <div class="card-table table-responsive ">
+            <div class="card-table table-responsive py-2">
                <table id="example" class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>

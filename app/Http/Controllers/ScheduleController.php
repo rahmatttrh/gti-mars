@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activity;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
@@ -166,7 +167,8 @@ class ScheduleController extends Controller
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
          'etd' => $req->departure_estimasi,
-         'eta' => $req->arrive_estimasi
+         'eta' => $req->arrive_estimasi,
+         'remark' => $req->remark
       ]);
 
       $vessel->update([
@@ -201,11 +203,14 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $ports = Port::get();
-
+      $vessels = Vessel::get();
+      $activities = Activity::get();
 
       return view('pages.schedule.edit', [
          'schedule' => $schedule,
-         'ports' => $ports
+         'ports' => $ports,
+         'vessels' => $vessels,
+         'activities' => $vessels
       ]);
    }
 
@@ -213,13 +218,13 @@ class ScheduleController extends Controller
    {
       $schedule = Schedule::find($req->schedule);
       $schedule->update([
-         'func' => $req->func,
-         'station' => $req->station,
-         'activity' => $req->activity,
+         'vessel_id' => $req->vessel,
          'date' => $req->date,
-         'req_boat' => $req->req_boat,
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
+         'etd' => $req->departure_estimasi,
+         'eta' => $req->arrive_estimasi,
+         'remark' => $req->remark
       ]);
 
       return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule has successfully updated');

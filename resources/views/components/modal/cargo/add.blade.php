@@ -34,13 +34,13 @@
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
                         <input type="text"  class="form-control" id="size" name="size" >
-                        <label for="size">Size</label>
+                        <label for="size">Size (m<sup>2</sup>)</label>
                      </div>
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
                         <input type="text"  class="form-control" id="weight" name="weight" >
-                        <label for="weight">Weight</label>
+                        <label for="weight">Weight (ton)</label>
                      </div>
                   </div>
                </div>

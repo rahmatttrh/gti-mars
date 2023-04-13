@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Department;
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
 use App\Models\Department;
+use App\Models\Employee;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
+use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,21 +18,34 @@ class DepartmentRequestController extends Controller
 {
    public function create()
    {
-      $activities = Activity::get();
+      if (auth()->user()->hasRole('logistic')) {
+         $acts = Activity::where('type_id', 1)->get();
+      } elseif (auth()->user()->hasRole('drilling')) {
+         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->get();
+      }
+      $activities = $acts;
+      $types = Type::get();
       $ports = Port::get();
       return view('pages.request.create', [
          'activities' => $activities,
-         'ports' => $ports
+         'ports' => $ports,
+         'types' => $types
       ]);
    }
 
    public function save(Request $req)
    {
 
-      $department = Department::where('email', auth()->user()->email)->first();
-      // dd($department);
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $department = Department::find($employee->department->id);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
+
+      if ($department->id == 2) {
+         $type = 1;
+      } elseif ($department->id == 3) {
+         $type = 2;
+      }
 
       if (isset($request)) {
          $code =
@@ -40,6 +55,8 @@ class DepartmentRequestController extends Controller
       }
       $request = ModelsRequest::create([
          'code' => $code,
+         'type' => $type,
+         'employee_id' => $employee->id,
          'department_id' => $department->id,
          'func' => $department->code,
          'activity_id' => $req->activity,
@@ -55,7 +72,9 @@ class DepartmentRequestController extends Controller
 
    public function draft()
    {
-      $requests = ModelsRequest::where('status', 0)->get();
+      $employee = Employee::where('email', auth()->user()->email)->first();
+
+      $requests = ModelsRequest::where('status', 0)->where('department_id', $employee->department_id)->get();
       return view('pages.request.draft', [
          'requests' => $requests
       ])->with('i');
@@ -63,13 +82,14 @@ class DepartmentRequestController extends Controller
 
    public function progress()
    {
+      $employee = Employee::where('email', auth()->user()->email)->first();
       $today = Carbon::now();
       $month = $today->format('m');
       $vessels = Vessel::get();
       $schedules = Schedule::get();
-      $depart = Department::where('email', auth()->user()->email)->first();
+      // $depart = Department::where('email', auth()->user()->email)->first();
 
-      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('department_id', $depart->id)->where('status', '>', 0)->orderBy('department_id', 'desc')->get()->groupBy('func');
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('department_id', $employee->department_id)->where('status', '>', 0)->orderBy('department_id', 'desc')->get()->groupBy('func');
 
       return view('pages.request.progress', [
          'title' => 'Progress',
@@ -89,6 +109,6 @@ class DepartmentRequestController extends Controller
          'status' => 01
       ]);
 
-      return redirect()->route('depart.request.progress')->with('success', 'Request Activity successfully send to marine');
+      return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
    }
 }

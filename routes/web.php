@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CargoController;
-use App\Http\Controllers\CargoItemController;
 use App\Http\Controllers\CarrierController;
+use App\Http\Controllers\Department\CargoItemController;
 use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
+use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
@@ -204,28 +205,39 @@ Route::group(['middleware' => ['role:marine']], function () {
    });
 });
 
-Route::group(['middleware' => ['role:logistic']], function () {
+Route::group(['middleware' => ['role:logistic|drilling']], function () {
    Route::prefix('department/request')->group(function () {
-      Route::get('create', [DepartmentRequestController::class, 'create'])->name('depart.request.create');
-      Route::post('save', [DepartmentRequestController::class, 'save'])->name('depart.request.save');
-      Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('depart.request.draft');
-      Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('depart.request.progress');
-      Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('depart.request.release');
+      Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
+      Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
+      Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
+      Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
+      Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
    });
+});
 
+Route::group(['middleware' => ['role:logistic']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
    });
 });
 
+Route::group(['middleware' => ['role:drilling']], function () {
+   Route::prefix('passenger/item')->group(function () {
+      Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
+      Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.item.delete');
+   });
+});
+
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
       Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
+      Route::get('loading/complete/{schedule:id}', [VesselScheduleController::class, 'loadingEnd'])->name('schedule.loading.complete');
       Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');
       Route::get('fullaway/{schedule:id}', [VesselScheduleController::class, 'fullaway'])->name('schedule.fullaway');
       Route::get('arrive/{schedule:id}', [VesselScheduleController::class, 'arrive'])->name('schedule.arrive');
       Route::get('unloading/{schedule:id}', [VesselScheduleController::class, 'unloading'])->name('schedule.unloading');
+      Route::get('unloading/complete/{schedule:id}', [VesselScheduleController::class, 'unloadingComplete'])->name('schedule.unloading.complete');
       Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.complete');
    });
 });

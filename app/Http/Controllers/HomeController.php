@@ -47,12 +47,13 @@ class HomeController extends Controller
          $employee = Employee::where('email', auth()->user()->email)->first();
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+         // dd($employee->name);
          $requests = ModelsRequest::where('department_id', $employee->department->id)->get();
       } elseif (auth()->user()->hasRole('drilling')) {
-         $department = Department::where('email', auth()->user()->email)->first();
+         $employee = Employee::where('email', auth()->user()->email)->first();
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-         $requests = ModelsRequest::where('department_id', $department->id)->get();
+         $requests = ModelsRequest::where('department_id', $employee->department_id)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
          $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>=', 0)->get();

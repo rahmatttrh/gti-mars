@@ -43,23 +43,41 @@ class UserSeeder extends Seeder
       ]);
       $msso->assignRole('marine');
 
-      $logistic = User::create([
-         'name' => 'Logistic',
-         'email' => 'logistic@gmail.com',
+      $juan = User::create([
+         'name' => 'Ahmad Juantoro',
+         'email' => 'juan@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $logistic->assignRole('logistic');
+      $juan->assignRole('logistic');
 
-      $drilling = User::create([
-         'name' => 'Drilling',
-         'email' => 'drilling@gmail.com',
+      $dareza = User::create([
+         'name' => 'Dareza Arvian',
+         'email' => 'dareza@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $drilling->assignRole('drilling');
+      $dareza->assignRole('drilling');
+
+      // $logistic = User::create([
+      //    'name' => 'Logistic',
+      //    'email' => 'logistic@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $logistic->assignRole('logistic');
+
+      // $drilling = User::create([
+      //    'name' => 'Drilling',
+      //    'email' => 'drilling@gmail.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $drilling->assignRole('drilling');
 
       // Kapal
       $ej = User::create([

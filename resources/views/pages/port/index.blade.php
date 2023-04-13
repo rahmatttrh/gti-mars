@@ -101,12 +101,30 @@
                            @foreach ($ports as $port)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td><a href="{{route('port.detail', enkripRambo($port->id))}}">{{$port->name}}</a></td>
+                                 <td>
+                                    {{-- <a href="{{route('port.detail', enkripRambo($port->id))}}">{{$port->name}}</a> --}}
+                                    <div class="dropdown">
+                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                          {{$port->name}}
+                                       </a>
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPort_{{$port->id}}">
+                                             Edit
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalDeletePort_{{$port->id}}">
+                                             Delete
+                                          </a>
+                                       </div>
+                                    </div>
+                                 </td>
                                  <td>{{$port->type}}</td>
                                  <td>{{$port->latitude}}</td>
                                  <td>{{$port->longitude}}</td>
                                  <td>{{$port->email}}</td>
                               </tr>
+
+                              <x-modal.port.edit :port="$port" />
+                              <x-modal.port.delete :port="$port" />
                            @endforeach
                         </tbody>
                      </table>

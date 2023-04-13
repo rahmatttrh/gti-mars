@@ -33,7 +33,7 @@ class EmployeeSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('employees')->insert([
-         'department_id' => 2,
+         'department_id' => 3,
          'port_id' => 1,
          'name' => 'Dareza Arvian',
          'email' => 'dareza@gmail.com',

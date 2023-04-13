@@ -37,42 +37,28 @@
                   <div class="row">
                      <div class="col-md-8">
                         <div class="row">
-                           <div class="col-md-6">
+                           <div class="col-md-3">
                               <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="func" name="func" value="{{$schedule->func}}" >
-                                 <label for="func">Function</label>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="station" name="station" value="{{$schedule->station}}">
-                                 <label for="station">Station</label>
-                              </div>
-                           </div>
-                           <div class="col-md-12">
-                              <div class="mb-3">
-                                 <label class="form-label text-muted">Activity</label>
-                                 <textarea class="form-control" name="activity" id="activity" rows="4" placeholder="Activity..">{{$schedule->activity}}</textarea>
-                               </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="date" required class="form-control" id="date" name="date" value="{{$schedule->date}}">
+                                 <input type="date" value="{{$schedule->date}}" required class="form-control" id="date" name="date" >
                                  <label for="date">Date</label>
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           <div class="col-md-9">
                               <div class="form-floating mb-3">
-                                 <select required name="req_boat" id="req_boat" class="form-select">
-                                    <option  disabled selected>Choose one</option>
-                                       <option {{$schedule->req_boat == 'SVC' ? 'selected' : ''}} value="SVC">SCV</option>
-                                       <option {{$schedule->req_boat == 'AHTS' ? 'selected' : ''}} value="AHTS">AHTS</option>
+                                 <select required name="vessel" id="vessel" class="form-select">
+                                    <option  disabled selected>Choose</option>
+                                    @foreach ($vessels as $vessel)
+                                       <option {{$schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                    @endforeach
+                                    
                                  </select>
-                                 <label for="req_boat">Required Boat</label>
+                                 <label for="vessel">Boat</label>
                               </div>
                            </div>
                         </div>
+                        
                         <div class="row">
+                           
                            <div class="col-md-6">
                               <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
@@ -86,7 +72,7 @@
                               </div>
                            </div>
                            <div class="col-md-6">
-                              <div class="form-floating">
+                              <div class="form-floating mb-3">
                                  <select required name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
@@ -95,6 +81,24 @@
                                     
                                  </select>
                                  <label for="origin">Destination</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="datetime-local" value="{{$schedule->etd}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                 <label for="departure_estimasi">Estimasi Keberangkatan</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <input type="datetime-local" value="{{$schedule->eta}}" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
+                                 <label for="arrive_estimasi">Estimasi Kedatangan</label>
+                              </div>
+                           </div>
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" required value="{{$schedule->remark}}" class="form-control" id="remark" name="remark" >
+                                 <label for="remark">Remark</label>
                               </div>
                            </div>
                         </div>

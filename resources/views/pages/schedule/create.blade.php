@@ -65,40 +65,6 @@
                   <div class="row">
                      <div class="col-md-8">
                         <div class="row">
-                           {{-- <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="func" name="func" >
-                                 <label for="func">Function</label>
-                              </div>
-                           </div>
-                           <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="station" name="station" >
-                                 <label for="station">Station</label>
-                              </div>
-                           </div> --}}
-                           {{-- <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="activity" name="activity" >
-                                 <label for="activity">Activity</label>
-                              </div>
-                           </div> --}}
-                           {{-- <div class="col-md-12">
-                              <div class="mb-3">
-                                 <label class="form-label text-muted">Activity</label>
-                                 <textarea class="form-control" name="activity" id="activity" rows="4" placeholder="Activity.."></textarea>
-                               </div>
-                           </div> --}}
-                           {{-- <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                 <select required name="type_id" id="type_id" class="form-select">
-                                    @foreach ($types as $type)
-                                       <option value="{{$type->id}}">{{$type->name}}</option>
-                                    @endforeach
-                                 </select>
-                                 <label for="type_id">Activity</label>
-                              </div>
-                           </div> --}}
                            <div class="col-md-3">
                               <div class="form-floating mb-3">
                                  <input type="date" required class="form-control" id="date" name="date" >
@@ -154,6 +120,12 @@
                               <div class="form-floating mb-3">
                                  <input type="datetime-local" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
                                  <label for="arrive_estimasi">Estimasi Kedatangan</label>
+                              </div>
+                           </div>
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" required class="form-control" id="remark" name="remark" >
+                                 <label for="remark">Remark</label>
                               </div>
                            </div>
                         </div>

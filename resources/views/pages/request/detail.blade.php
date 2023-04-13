@@ -32,18 +32,35 @@
                      </button>
                   @endif
                   
-                  @if (auth()->user()->hasRole('logistic') && $request->status == 00)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                        Release
-                     </button>
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        Add Cargo
-                     </button>
+                  @if ($request->status == 00)
+                     @if (auth()->user()->hasRole('logistic') )
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                           Release
+                        </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                           Add Cargo
+                        </button>
+                        @elseif(auth()->user()->hasRole('drilling') )
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                           Release
+                        </button>
+                        @if ($request->activity->type_id == 2 || $request->activity->type_id == 4)
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                           Add Passenger
+                        </button>
+                        @endif
+                        
+                     @endif
                   @endif
+                  
                   
                   
                   <div class="dropdown">
@@ -90,19 +107,25 @@
                      <h1>{{$request->code}}</h1>
                      
                      <small> {{$request->department->name}} Department</small>
-                     <h4 class="card-title m-0 mb-1">
+                     <h4 class="card-title m-0 ">
                         {{$request->activity->name ?? ''}}  {{$request->description}}
                      </h4>
+                     <small>
+                        {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
+                     , {{$request->origin->name}} to {{$request->destination->name}}
+                     </small>
+                     
+                     <div class="mb-3"></div>
                      {{-- @if ($request->status == 0)
                         <div class="badge">STATUS : 00</div>
                         @elseif($request->status == 1)
                         <div class="badge">STATUS : 01</div>
                      @endif --}}
-                     <x-status.request :request="$request" />
+                     <x-status.request  :request="$request" />
                   </div>
                   <div class="card-footer">
-                     {{$request->date}}
-                     , {{$request->origin->name}} to {{$request->destination->name}}
+                     <small >Requested by : {{$request->employee->name}}</small><br>
+                     <small >Request date : {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                   </div>
                </div>
             </div>
@@ -114,23 +137,37 @@
                   </div>
                   <div class="card-body">
                      @if ($request->schedule)
-                        <div class="mt-2 mb-2">
+                     <dl class="row">
+                        <dt class="col-3">Boat</dt>
+                        <dd class="col-9">: {{$request->schedule->vessel->name ?? 'Not Available'}}</dd>
+                        <dt class="col-3">Date</dt>
+                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</dd>
+                        <dt class="col-3">ETD</dt>
+                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</dd>
+                        <dt class="col-3">ETA</dt>
+                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</dd>
+                        <small># {{$request->schedule->remark}}</small>
+                        {{-- <dt class="col-5">Operating system:</dt>
+                        <dd class="col-7">OS X 10.15.2 64-bit</dd>
+                        <dt class="col-5">Browser:</dt>
+                        <dd class="col-7">Chrome</dd> --}}
+                     </dl>
+                        {{-- <div class=" mb-2 text-muted">
                            <div class="mb-1">
-                              Date : {{$request->schedule->date}}
+                              <small>Boat : {{$request->schedule->vessel->name ?? 'Not Available'}}</small> 
                            </div>
-                           {{-- <div class="mb-1">
-                              Route : {{$request->schedule->origin->name}} - {{$request->schedule->destination->name}}
-                           </div> --}}
                            <div class="mb-1">
-                              Boat : {{$request->schedule->vessel->name ?? 'Not Available'}}
+                              <small>Date :  {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</small> 
                            </div>
                            <div class="mb-1">
                               ETD : {{$request->schedule->etd ?? 'Not Available'}}
+                              <small>ETD : {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</small> 
                            </div>
                            <div class="mb-1">
                               ETA : {{$request->schedule->eta ?? 'Not Available'}}
+                              <small>ETA : {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</small> 
                            </div>
-                        </div>
+                        </div> --}}
                         @else
                         <small>Not Available</small>
                      @endif
@@ -140,57 +177,101 @@
             </div>
          </div>
          
-         <div class="card card-lg">
-            <div class="table-responsive">
-               <table class="table table-vcenter card-table">
-                  <thead>
-                     <tr>
-                        <th>No.</th>
-                        <th>No Document</th>
-                        <th>Descriptioin</th>
-                        <th>Qty</th>
-                        <th>Unit</th>
-                        <th>Size</th>
-                        <th>Weight</th>
-                        <th>Remarks</th>
-                        <th></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @if ($cargoItems->count() > 0)
-                        @foreach ($cargoItems as $item)
-                           <tr>
-                              <td class="text-muted">{{++$i}}</td>
-                              <td class="text-muted">
-                                 {{$item->no_doc}}
-                              </td>
-                              <td class="text-muted">{{$item->desc}}</td>
-                              <td class="text-muted">{{$item->qty}}</td>
-                              <td class="text-muted">{{$item->unit}}</td>
-                              <td class="text-muted">{{$item->size}} m<sup>2</sup></td>
-                              <td class="text-muted">{{$item->weight}} ton</td>
-                              <td class="text-muted">{{$item->remark}}</td>
-                              <td>
-                                 @if ($request->status == 0)
-                                 <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
-                                 @endif
-                              </td>
-                           </tr>
-                           <x-modal.cargo.delete :item="$item" />
-                        @endforeach
-                        @else
+         @if ($request->activity->type_id == 1)
+            <div class="card card-lg">
+               <div class="table-responsive">
+                  <table class="table table-vcenter card-table">
+                     <thead>
                         <tr>
-                           <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                           <th>No.</th>
+                           <th>No Document</th>
+                           <th>Descriptioin</th>
+                           <th>Qty</th>
+                           <th>Unit</th>
+                           <th>Size</th>
+                           <th>Weight</th>
+                           <th>Remarks</th>
+                           <th></th>
                         </tr>
-                     @endif
-                  </tbody>
-               </table>
-            </div>
-         </div>
+                     </thead>
+                     <tbody>
+                        @if ($cargoItems->count() > 0)
+                           @foreach ($cargoItems as $item)
+                              <tr>
+                                 <td class="text-muted">{{++$i}}</td>
+                                 <td class="text-muted">
+                                    {{$item->no_doc}}
+                                 </td>
+                                 <td class="text-muted">{{$item->desc}}</td>
+                                 <td class="text-muted">{{$item->qty}}</td>
+                                 <td class="text-muted">{{$item->unit}}</td>
+                                 <td class="text-muted">{{$item->size}} m<sup>2</sup></td>
+                                 <td class="text-muted">{{$item->weight}} ton</td>
+                                 <td class="text-muted">{{$item->remark}}</td>
+                                 <td>
+                                    @if ($request->status == 0)
+                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                    @endif
+                                 </td>
+                              </tr>
+                              <x-modal.cargo.delete :item="$item" />
+                           @endforeach
+                           @else
+                           <tr>
+                              <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                           </tr>
+                        @endif
+                     </tbody>
+                  </table>
+               </div>
+            </div> 
+            @elseif($request->activity->type_id == 2 || $request->activity->type_id == 4 )
+            <div class="card card-lg">
+               <div class="table-responsive">
+                  <table class="table table-vcenter card-table">
+                     <thead>
+                        <tr>
+                           <th>No.</th>
+                           <th>Number</th>
+                           <th>Name</th>
+                           
+                           <th></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @if ($passengerItems->count() > 0)
+                           @foreach ($passengerItems as $item)
+                              <tr>
+                                 <td class="text-muted">{{++$i}}</td>
+                                 <td class="text-muted">
+                                    {{$item->number}}
+                                 </td>
+                                 <td class="text-muted">{{$item->name}}</td>
+                                 
+                                 <td class="text-end">
+                                    @if ($request->status == 0)
+                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$item->id}}">Delete</a>
+                                    @endif
+                                 </td>
+                              </tr>
+                              <x-modal.passenger.delete :item="$item" />
+                           @endforeach
+                           @else
+                           <tr>
+                              <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                           </tr>
+                        @endif
+                     </tbody>
+                  </table>
+               </div>
+            </div> 
+         @endif
+         
       </div>
    </div>
 
    <x-modal.cargo.add :request="$request" />
+   <x-modal.passenger.add :request="$request" />
    
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
@@ -201,7 +282,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-            <a href="{{route('depart.request.release', enkripRambo($request->id))}}" class="btn btn-primary" >Yes, release</a>
+            <a href="{{route('request.release', enkripRambo($request->id))}}" class="btn btn-primary" >Yes, release</a>
             {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
           </div>
         </div>

@@ -43,6 +43,8 @@
             <x-dashboard.marine :requests="$requests" :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
             @elseif(auth()->user()->hasRole('logistic'))
             <x-dashboard.logistic :requests="$requests" :monthname="$monthName"/>
+            @elseif(auth()->user()->hasRole('drilling'))
+            <x-dashboard.drilling :requests="$requests" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('vessel'))
             <x-dashboard.vessel :schedules="$schedules" :monthname="$monthName"  :vessels="$vessels" :vessel="$vessel" i="0"/>
 

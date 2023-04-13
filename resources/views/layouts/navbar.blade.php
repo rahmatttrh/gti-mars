@@ -140,8 +140,11 @@
                         </span>
                      </a>
                      <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{{route('schedule.create')}}" >
+                           Create
+                        </a>
                         <a class="dropdown-item" href="{{route('schedule.request')}}" >
-                           Plan
+                           Planning
                         </a>
                         <a class="dropdown-item" href="#" >
                            History
@@ -160,13 +163,13 @@
                            </span>
                         </a>
                         <div class="dropdown-menu">
-                           <a class="dropdown-item" href="{{route('depart.request.create')}}">
+                           <a class="dropdown-item" href="{{route('request.create')}}">
                               Create
                            </a>
-                           <a class="dropdown-item" href="{{route('depart.request.draft')}}" >
+                           <a class="dropdown-item" href="{{route('request.draft')}}" >
                               Draft
                            </a>
-                           <a class="dropdown-item" href="{{route('depart.request.progress')}}" >
+                           <a class="dropdown-item" href="{{route('request.progress')}}" >
                               Progress
                            </a>
                            <a class="dropdown-item" href="" >

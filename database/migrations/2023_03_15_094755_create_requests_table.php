@@ -16,6 +16,7 @@ class CreateRequestsTable extends Migration
       Schema::create('requests', function (Blueprint $table) {
          $table->id();
          $table->string('code');
+         $table->smallInteger('type');
          $table->smallInteger('schedule_id')->nullable();
          $table->smallInteger('employee_id');
          $table->smallInteger('status');

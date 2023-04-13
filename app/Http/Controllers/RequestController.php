@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\CargoItem;
 use App\Models\Department;
+use App\Models\Employee;
+use App\Models\PassengerItem;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
@@ -126,7 +128,7 @@ class RequestController extends Controller
       ])->with('i');
    }
 
-   
+
 
    public function check(Request $req)
    {
@@ -155,7 +157,7 @@ class RequestController extends Controller
       $department = Department::find($req->department);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
-
+      $employee = Employee::where('email', auth()->user()->email)->first();
       if (isset($request)) {
          $code =
             "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
@@ -164,6 +166,7 @@ class RequestController extends Controller
       }
       $request = ModelsRequest::create([
          'code' => $code,
+         'employee_id' => $employee->id,
          'department_id' => $req->department,
          'func' => $department->code,
          'type_id' => $req->type,
@@ -177,7 +180,7 @@ class RequestController extends Controller
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
    }
 
-   
+
 
    public function selectSchedule(Request $req)
    {
@@ -224,22 +227,24 @@ class RequestController extends Controller
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      $passengerItems = PassengerItem::where('request_id', $request->id)->get();
       $schedules = Schedule::where('origin_id', $request->origin_id)->where('destination_id', $request->destination_id)->get();
       return view('pages.request.detail', [
          'request' => $request,
          'schedules' => $schedules,
-         'cargoItems' => $cargoItems
+         'cargoItems' => $cargoItems,
+         'passengerItems' => $passengerItems
       ])->with('i');
    }
 
-   
-
-   
 
 
 
 
-   
+
+
+
+
 
    public function approve($id)
    {

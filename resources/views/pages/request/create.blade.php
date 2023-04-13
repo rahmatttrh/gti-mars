@@ -22,7 +22,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('depart.request.save')}}" method="POST">
+            <form action="{{route('request.save')}}" method="POST">
                @csrf
                <div class="card-body">
                   <div class="row">
@@ -32,8 +32,8 @@
                               <div class="form-floating mb-3">
                                  <select name="activity" id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>
-                                    @foreach ($activities as $act)
-                                       <option value="{{$act->id}}">{{$act->name}}</option>
+                                    @foreach ($activities as $activity)
+                                       <option value="{{$activity->id}}">{{$activity->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="activity">Activity</label>
