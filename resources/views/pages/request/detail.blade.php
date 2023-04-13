@@ -74,6 +74,9 @@
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#approveCargoPlan">
                            Approve
                         </a> --}}
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
+                           Undo
+                        </a>
                         @if (auth()->user()->hasRole('logistic') && $request->status == 00)
                         <a class="dropdown-item" href="#">
                            Delete
@@ -272,6 +275,7 @@
 
    <x-modal.cargo.add :request="$request" />
    <x-modal.passenger.add :request="$request" />
+   <x-modal.request.undo :request="$request" />
    
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
