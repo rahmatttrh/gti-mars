@@ -212,6 +212,7 @@ Route::group(['middleware' => ['role:logistic|drilling']], function () {
       Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
       Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
       Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
+      Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
    });
 });
 

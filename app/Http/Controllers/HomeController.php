@@ -34,15 +34,55 @@ class HomeController extends Controller
 
       $vessels = Vessel::get();
       $vessel3 = Vessel::paginate('3');
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+
       if (auth()->user()->hasRole('superuser')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
       } elseif (auth()->user()->hasRole('marine')) {
          $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
-         // dd($vessel);
          $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
          $requests = ModelsRequest::get();
+         $requestRecents = ModelsRequest::where('status', 1)->get();
+         $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
+         $requestUndos = ModelsRequest::where('status', 202)->get();
+
+         return view('home', [
+            'today' => $today,
+            'requests' => $requests,
+            'monthName' => $monthName,
+            'vessel' => $vessel,
+            'vessels' => $vessels,
+            'schedules' => $schedules,
+            'requestUndos' => $requestUndos
+         ])->with('i');
       } elseif (auth()->user()->hasRole('logistic')) {
          $employee = Employee::where('email', auth()->user()->email)->first();
          $vessel = '';
@@ -84,31 +124,7 @@ class HomeController extends Controller
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
 
-      if ($month == 1) {
-         $monthName = 'Januari';
-      } elseif ($month == 2) {
-         $monthName = 'Februari';
-      } elseif ($month == 3) {
-         $monthName = 'Maret';
-      } elseif ($month == 4) {
-         $monthName = 'April';
-      } elseif ($month == 5) {
-         $monthName = 'Mei';
-      } elseif ($month == 6) {
-         $monthName = 'Juni';
-      } elseif ($month == 7) {
-         $monthName = 'Juli';
-      } elseif ($month == 8) {
-         $monthName = 'Agustus';
-      } elseif ($month == 9) {
-         $monthName = 'September';
-      } elseif ($month == 10) {
-         $monthName = 'Oktober';
-      } elseif ($month == 11) {
-         $monthName = 'November';
-      } elseif ($month == 12) {
-         $monthName = 'Desember';
-      }
+
 
       return view('home', [
          'today' => $today,

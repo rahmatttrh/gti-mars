@@ -40,7 +40,7 @@
          @if (auth()->user()->hasRole('superuser'))
             <x-dashboard.superuser :schedules="$schedules" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('marine'))
-            <x-dashboard.marine :requests="$requests" :schedules="$schedules" :monthname="$monthName" :vessels="$vessels"/>
+            <x-dashboard.marine :requests="$requests" :schedules="$schedules" :monthname="$monthName" :vessels="$vessels" :requestundos="$requestUndos"/>
             @elseif(auth()->user()->hasRole('logistic'))
             <x-dashboard.logistic :requests="$requests" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('drilling'))

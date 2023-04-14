@@ -117,7 +117,10 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($requests->where('status', '>', 1)->count() > 0)
+                     {{-- @if ($requests->where('status', '==', 202))
+                        @elseif($requests->where('status', '!=', 202))
+                     @endif --}}
+                     @if ($requests->where('status', '>', 1)->where('status', '!=', 202)->count() > 0)
                         @foreach ($requests->where('status', '>', 1) as $r)
                            <tr>
                               {{-- <td class="text-muted">{{$r->code}}</td> --}}
@@ -173,13 +176,13 @@
          </div>
       </div> --}}
       <div class="col-md-3">
-         @foreach ($vessels as $vessel)
+         @foreach ($requestundos as $undo)
             <a class="card" href="#">
                <div class="card-body">
                   <div class="row">
                      <div class="col">
-                        <div class="font-weight-medium mb-1">{{$vessel->name}}</div>
-                        <div class="text-muted"><x-status.vessel :vessel="$vessel" /></div>
+                        <div class="font-weight-medium mb-1">{{$undo->code}}</div>
+                        <div class="text-muted">{{$undo->activity->name}}</div>
                      </div>
                   </div>
                </div>

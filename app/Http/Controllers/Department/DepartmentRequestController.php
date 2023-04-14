@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestHistory;
 use App\Models\Schedule;
 use App\Models\Type;
 use App\Models\Vessel;
@@ -110,5 +111,19 @@ class DepartmentRequestController extends Controller
       ]);
 
       return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
+   }
+
+   public function undo(Request $req)
+   {
+      $request = ModelsRequest::find($req->requestId);
+      $now = Carbon::now();
+
+      $request->update([
+         'status' => 202,
+         'undo' => $now,
+         'reason' => $req->reason
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity successfully Canceled, waiting approve Marine');
    }
 }

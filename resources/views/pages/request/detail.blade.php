@@ -74,9 +74,13 @@
                         <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#approveCargoPlan">
                            Approve
                         </a> --}}
+                        @if ( $request->status == 202)
+                        @else
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
                            Undo
                         </a>
+                        @endif
+                        
                         @if (auth()->user()->hasRole('logistic') && $request->status == 00)
                         <a class="dropdown-item" href="#">
                            Delete
@@ -84,11 +88,13 @@
                         @endif
                         
                         <div class="dropdown-divider"></div>
-                        @if ($request->status > 1)
+                       
+                        @if ($request->schedule_id)
                         <a class="dropdown-item" href="{{route('schedule.timeline', enkripRambo($request->schedule->id))}}">
                            Timeline 
                         </a>
                         @endif
+                        
                         
                         <a class="dropdown-item" target="_blank" href="{{route('cargo.receipt')}}">
                            Print Preview
