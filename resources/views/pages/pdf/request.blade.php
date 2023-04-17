@@ -127,10 +127,10 @@
                </tr>
                @foreach ($reqs as $req)
                   <tr>
-                     <td>{{$req->schedule->destination->name}}</td>
+                     <td>{{$req->schedule->destination->name ?? '-'}}</td>
                      <td>{{$req->activity->name}} {{$req->desc}}</td>
-                     <td>{{$req->schedule->origin->name}} - {{$req->schedule->destination->name}}</td>
-                     <td>{{$req->schedule->req_boat}}</td>
+                     <td>{{$req->schedule->origin->name ?? '-'}} - {{$req->schedule->destination->name ?? '-'}}</td>
+                     <td>{{$req->schedule->req_boat ?? '-'}}</td>
                      <td>{{$req->schedule->vessel->name ?? '-'}}</td>
                      <td>{{$req->date}}</td>
                      <td style="text-align: center">

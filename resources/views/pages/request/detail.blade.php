@@ -133,7 +133,7 @@
                      <x-status.request  :request="$request" />
                   </div>
                   <div class="card-footer">
-                     <small >Requested by : {{$request->employee->name}}</small><br>
+                     <small >Requested by : {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
                      <small >Request date : {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                   </div>
                </div>

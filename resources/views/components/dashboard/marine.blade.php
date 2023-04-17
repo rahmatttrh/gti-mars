@@ -127,7 +127,7 @@
                               <td class="text-muted">{{$r->date}}</td>
                               <td class="text-muted">{{$r->department->code}}</td>
                               <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? '-'}} {{$r->description}}</a></td>
-                              <td class="text-muted">{{$r->schedule->origin->name}} - {{$r->schedule->destination->name}}</td>
+                              <td class="text-muted">{{$r->schedule->origin->name ?? '-'}} - {{$r->schedule->destination->name ?? '-'}}</td>
                               <td class="text-muted">{{$r->schedule->vessel->name ?? '-'}}</td>
                               <td>
                                  <x-status.request :request="$r" />

@@ -84,6 +84,7 @@
                            Arrived
                         </a>
                      @endif
+                     {{-- <a href="" data-bs-toggle="modal" data-bs-target="#modal-arrived"></a> --}}
                      
                      <div class="dropdown-divider"></div>
                      <a class="dropdown-item" href="#">

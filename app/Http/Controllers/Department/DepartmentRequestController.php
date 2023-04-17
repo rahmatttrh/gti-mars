@@ -22,7 +22,7 @@ class DepartmentRequestController extends Controller
       if (auth()->user()->hasRole('logistic')) {
          $acts = Activity::where('type_id', 1)->get();
       } elseif (auth()->user()->hasRole('drilling')) {
-         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->get();
+         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
       }
       $activities = $acts;
       $types = Type::get();
