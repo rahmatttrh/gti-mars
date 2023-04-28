@@ -10,8 +10,10 @@ use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\Marine\MarineRequestController;
 use App\Http\Controllers\MarineController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
@@ -186,6 +188,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 Route::group(['middleware' => ['role:marine']], function () {
+   Route::get('chart', [HomeController::class, 'chart'])->name('chart');
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
       Route::post('store', [PortController::class, 'store'])->name('port.store');
@@ -202,6 +205,10 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('/', [EmployeeController::class, 'index'])->name('employee');
       Route::post('/store', [EmployeeController::class, 'store'])->name('employee.store');
       Route::get('/delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+   });
+
+   Route::prefix('request')->group(function () {
+      Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
 });
 

@@ -37,10 +37,10 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         @if (auth()->user()->hasRolee('superuser'))
+         @if (auth()->user()->hasRole('superuser'))
             <x-dashboard.superuser :schedules="$schedules" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('marine'))
-            <x-dashboard.marine :requests="$requests" :schedules="$schedules" :monthname="$monthName" :vessels="$vessels" :requestundos="$requestUndos"/>
+            <x-dashboard.marine :requestrecents="$requestRecents" :requestprogress="$requestProgress" :schedules="$schedules" :monthname="$monthName" />
             @elseif(auth()->user()->hasRole('logistic'))
             <x-dashboard.logistic :requests="$requests" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('drilling'))

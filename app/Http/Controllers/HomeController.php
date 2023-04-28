@@ -27,6 +27,16 @@ class HomeController extends Controller
     *
     * @return \Illuminate\Contracts\Support\Renderable
     */
+
+   public function chart()
+   {
+      $schedules = Schedule::get();
+
+      return view('chart', [
+         'schedules' => $schedules
+      ])->with('i');
+   }
+
    public function index()
    {
       $today = Carbon::now();
@@ -70,18 +80,16 @@ class HomeController extends Controller
          $vessel = '';
          $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
          $requests = ModelsRequest::get();
-         $requestRecents = ModelsRequest::where('status', 1)->get();
+         $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
          return view('home', [
             'today' => $today,
-            'requests' => $requests,
             'monthName' => $monthName,
-            'vessel' => $vessel,
-            'vessels' => $vessels,
+            'requestRecents' => $requestRecents,
+            'requestProgress' => $requestProgress,
             'schedules' => $schedules,
-            'requestUndos' => $requestUndos
          ])->with('i');
       } elseif (auth()->user()->hasRole('logistic')) {
          $employee = Employee::where('email', auth()->user()->email)->first();

@@ -359,6 +359,8 @@
          });
       </script>
 
+      @stack('chart')
+
       @stack('ports')
 
       @if (session('success'))

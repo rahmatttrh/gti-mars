@@ -61,15 +61,12 @@
                         <th>Func</th>
                         <th>Route</th>
                         <th>Activity</th>
-                        
-                        {{-- <th>Boat</th> --}}
                         <th>Status</th>
-                        {{-- <th></th> --}}
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($requests->where('status', 1)->count() > 0 )
-                        @foreach ($requests->where('status', 1) as $r)
+                     @if ($requestrecents->count() > 0 )
+                        @foreach ($requestrecents as $r)
                            <tr>
                               {{-- <td class="text-muted">{{$r->code}}</td> --}}
                               <td class="text-muted">{{$r->date}}</td>
@@ -120,8 +117,8 @@
                      {{-- @if ($requests->where('status', '==', 202))
                         @elseif($requests->where('status', '!=', 202))
                      @endif --}}
-                     @if ($requests->where('status', '>', 1)->where('status', '!=', 202)->count() > 0)
-                        @foreach ($requests->where('status', '>', 1) as $r)
+                     @if ($requestprogress->count() > 0)
+                        @foreach ($requestprogress as $r)
                            <tr>
                               {{-- <td class="text-muted">{{$r->code}}</td> --}}
                               <td class="text-muted">{{$r->date}}</td>
@@ -176,7 +173,7 @@
          </div>
       </div> --}}
       <div class="col-md-3">
-         @foreach ($requestundos as $undo)
+         {{-- @foreach ($requestundos as $undo)
             <a class="card" href="#">
                <div class="card-body">
                   <div class="row">
@@ -187,7 +184,7 @@
                   </div>
                </div>
             </a>
-         @endforeach
+         @endforeach --}}
          
       </div>
    </div>

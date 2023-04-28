@@ -19,21 +19,48 @@
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
-                  {{-- <span class="d-none d-sm-inline">
-                     <a href="#" class="btn btn-white">
-                     New view
-                     </a>
-                  </span> --}}
-                  @if (auth()->user()->hasRole('marine') && $request->status == 01)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$request->id}}">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/ship -->
-	                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg>
-                        Set Schedule
-                     </button>
+                  @if (auth()->user()->hasRole('marine'))
+
+                     @if ($request->status == 01)
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$request->id}}">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/ship -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 20a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1" /><path d="M4 18l-1 -5h18l-2 4" /><path d="M5 13v-6h8l4 6" /><path d="M7 7v-4h-1" /></svg>
+                           Set Schedule
+                        </button>
+                        @elseif($request->status == 202)
+                        <button class="btn btn-danger " data-bs-toggle="modal" data-bs-target="#modal-cancel-request">
+                           Approve Cancel Request
+                        </button>
+                     @endif
+                     
+                  @endif
+
+
+
+                  @if (auth()->user()->hasRole('logistic'))
+                     @if ($request->status == 00)
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                           Release
+                        </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                           Add Cargo
+                        </button>
+                        @if ($request->activity->type_id == 2 || $request->activity->type_id == 4)
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                           Add Passenger
+                        </button>
+                        @endif
+                     @endif
                   @endif
                   
-                  @if ($request->status == 00)
-                     @if (auth()->user()->hasRole('logistic') )
+                  {{-- @if ($request->status == 00)
+                     @if ( auth()->user()->hasRole('logistic'))
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
                            <!-- Download SVG icon from http://tabler-icons.io/i/send -->
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
@@ -59,7 +86,7 @@
                         @endif
                         
                      @endif
-                  @endif
+                  @endif --}}
                   
                   
                   
@@ -77,7 +104,7 @@
                         @if ( $request->status == 202)
                         @else
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
-                           Undo
+                           Cancel
                         </a>
                         @endif
                         
@@ -131,6 +158,8 @@
                         <div class="badge">STATUS : 01</div>
                      @endif --}}
                      <x-status.request  :request="$request" />
+                    
+                     <small></small>
                   </div>
                   <div class="card-footer">
                      <small >Requested by : {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
@@ -139,50 +168,50 @@
                </div>
             </div>
             <div class="col-md-5">
-               
-               <div class="card mb-3">
-                  <div class="card-header">
-                     Schedule
+               @if ($request->status == 202)
+                  <div class="card    mb-3">
+                     <div class="card-header ">
+                        Cancel Request Activity
+                     </div>
+                     <div class="card-body">
+                        <small>{{$request->reason}}</small>
+                     </div>
                   </div>
-                  <div class="card-body">
-                     @if ($request->schedule)
-                     <dl class="row">
-                        <dt class="col-3">Boat</dt>
-                        <dd class="col-9">: {{$request->schedule->vessel->name ?? 'Not Available'}}</dd>
-                        <dt class="col-3">Date</dt>
-                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</dd>
-                        <dt class="col-3">ETD</dt>
-                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</dd>
-                        <dt class="col-3">ETA</dt>
-                        <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</dd>
-                        <small># {{$request->schedule->remark}}</small>
-                        {{-- <dt class="col-5">Operating system:</dt>
-                        <dd class="col-7">OS X 10.15.2 64-bit</dd>
-                        <dt class="col-5">Browser:</dt>
-                        <dd class="col-7">Chrome</dd> --}}
-                     </dl>
-                        {{-- <div class=" mb-2 text-muted">
-                           <div class="mb-1">
-                              <small>Boat : {{$request->schedule->vessel->name ?? 'Not Available'}}</small> 
-                           </div>
-                           <div class="mb-1">
-                              <small>Date :  {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</small> 
-                           </div>
-                           <div class="mb-1">
-                              ETD : {{$request->schedule->etd ?? 'Not Available'}}
-                              <small>ETD : {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</small> 
-                           </div>
-                           <div class="mb-1">
-                              ETA : {{$request->schedule->eta ?? 'Not Available'}}
-                              <small>ETA : {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</small> 
-                           </div>
-                        </div> --}}
-                        @else
-                        <small>Not Available</small>
-                     @endif
+               @else
+                  <div class="card mb-3">
+                     <div class="card-header">
+                        Schedule
+                     </div>
+                     <div class="card-body">
+                        @if ($request->schedule)
+                           <dl class="row">
+                              <dt class="col-3">Boat</dt>
+                              <dd class="col-9">: {{$request->schedule->vessel->name ?? 'Not Available'}}</dd>
+                              <dt class="col-3">Date</dt>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</dd>
+                              <dt class="col-3">ETD</dt>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</dd>
+                              <dt class="col-3">ETA</dt>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</dd>
+                              <small># {{$request->schedule->remark}}</small>
+                              {{-- <dt class="col-5">Operating system:</dt>
+                              <dd class="col-7">OS X 10.15.2 64-bit</dd>
+                              <dt class="col-5">Browser:</dt>
+                              <dd class="col-7">Chrome</dd> --}}
+                           </dl>
+                           @else
+                           <small>Not Available</small>
+                        @endif
+                     </div>
+                     <div class="card-footer">
+                        @if ($requestHistories->count() > 0)
+                           @foreach ($requestHistories as $history)
+                              <small>Cancel : {{$history->approve}} [{{$history->reason}}]</small>
+                           @endforeach
+                        @endif
+                     </div>
                   </div>
-               </div>
-                  
+               @endif
             </div>
          </div>
          
@@ -282,6 +311,7 @@
    <x-modal.cargo.add :request="$request" />
    <x-modal.passenger.add :request="$request" />
    <x-modal.request.undo :request="$request" />
+   <x-modal.request.undo-approve :request="$request" />
    
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

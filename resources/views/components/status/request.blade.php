@@ -21,6 +21,6 @@
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>08 : Complete</div>
 
       @elseif($request->status == 202)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>202 : Undo Proccess</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>202 : Canceling Proccess</div>
    @endif
 </div>

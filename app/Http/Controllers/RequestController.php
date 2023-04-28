@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\PassengerItem;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestHistory;
 use App\Models\Schedule;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -226,11 +227,14 @@ class RequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
+      $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       $passengerItems = PassengerItem::where('request_id', $request->id)->get();
       $schedules = Schedule::where('origin_id', $request->origin_id)->where('destination_id', $request->destination_id)->get();
+
       return view('pages.request.detail', [
          'request' => $request,
+         'requestHistories' => $requestHistories,
          'schedules' => $schedules,
          'cargoItems' => $cargoItems,
          'passengerItems' => $passengerItems
