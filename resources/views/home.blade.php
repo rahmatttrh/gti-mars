@@ -20,17 +20,71 @@
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-               {{$today->format('l, d/m/Y')}}
-               {{-- <div class="btn-list">
-                  <span class="d-none d-sm-inline">
-                     <a href="#" class="btn btn-white">
-                     New view
-                     </a>
-                  </span>
-                  <a href="#" class="btn btn-primary d-sm-none btn-icon" data-bs-toggle="modal" data-bs-target="#modal-report" aria-label="Create new report">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                  </a>
-               </div> --}}
+               <div class="btn-list">
+                  {{-- <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Month
+                     </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(01))}}">
+                              Januari
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(02))}}">
+                              Februari
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(03))}}">
+                              Maret
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(04))}}">
+                              April
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(05))}}">
+                              Mei
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(06))}}">
+                              Juni
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(07))}}">
+                              Juli
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(8))}}">
+                              Agustus
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(9))}}">
+                              September
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(10))}}">
+                              Oktober
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(11))}}">
+                              November
+                           </a>
+                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(12))}}">
+                              Desember
+                           </a>
+                        </div>
+                  </div> --}}
+                  <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Option
+                     </button>
+                     <div class="dropdown-menu dropdown-menu-end">
+                        {{-- @if (auth()->user()->hasRole('logistic'))
+                        <a class="dropdown-item" href="{{route('request.create')}}">
+                           Create
+                        </a>
+                        @endif --}}
+                        
+                        <a class="dropdown-item" href="/">
+                           Chart
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.table')}}">
+                           Table
+                        </a>
+                        
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
       </div>

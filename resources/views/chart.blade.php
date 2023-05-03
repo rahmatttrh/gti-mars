@@ -15,7 +15,7 @@
                   Overview
                </div>
             <h2 class="page-title">
-               Chart
+               Dashboard
             </h2>
             </div>
             <!-- Page title actions -->
@@ -26,40 +26,40 @@
                      Month
                      </button>
                         <div class="dropdown-menu dropdown-menu-end">
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(01))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 1)}}">
                               Januari
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(02))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 2)}}">
                               Februari
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(03))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 3)}}">
                               Maret
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(04))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 4)}}">
                               April
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(05))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 5)}}">
                               Mei
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(06))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 6)}}">
                               Juni
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(07))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 7)}}">
                               Juli
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(8))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 8)}}">
                               Agustus
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(9))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 9)}}">
                               September
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(10))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 10)}}">
                               Oktober
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(11))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 11)}}">
                               November
                            </a>
-                           <a class="dropdown-item" href="{{route('request.month.progress', enkripRambo(12))}}">
+                           <a class="dropdown-item" href="{{route('dashboard.chart', 12)}}">
                               Desember
                            </a>
                         </div>
@@ -75,8 +75,11 @@
                         </a>
                         @endif --}}
                         
-                        <a class="dropdown-item" target="_blank" href="">
-                           Print Preview
+                        <a class="dropdown-item"  href="/">
+                           Chart
+                        </a>
+                        <a class="dropdown-item" href="{{route('dashboard.table')}}">
+                           Table
                         </a>
                         
                      </div>
@@ -89,7 +92,7 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="row row-cards">
-            <div class="col-md-12">
+            {{-- <div class="col-md-12">
                <div class="card">
                   <div class="card-header">
                      Request & Schedule
@@ -104,24 +107,25 @@
                      </small>
                   </div>
                </div>
-            </div>
+            </div> --}}
 
             
 
             <div class="col-md-9">
                <div class="card">
                   <div class="card-header border-0">
-                     <div class="card-title">Request Activity April</div>
+                     <div class="card-title text-uppercase">{{$monthName}}</div>
                   </div>
                   <div class="position-relative">
                      <div class="position-absolute top-0 left-0 px-3 mt-1 w-75">
                         <div class="row g-2">
-                           <div class="col-auto">
+                           {{-- <div class="col-auto">
                               <div class="chart-sparkline chart-sparkline-square" id="sparkline-activity"></div>
-                           </div>
+                           </div> --}}
                            <div class="col">
-                              <div>Quantity: 56 Request Activity</div>
-                              <div class="text-muted">
+                              <div>{{$totalSchedule}} Schedules</div>
+                              <div>{{$totalRequest}} Request Activity</div>
+                              {{-- <div class="text-muted">
                                  <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline text-green"
                                     width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
@@ -132,7 +136,7 @@
                                     <polyline points="14 7 21 7 21 14" />
                                  </svg>
                                  +20 more than last month
-                              </div>
+                              </div> --}}
                            </div>
                         </div>
                      </div>
@@ -149,16 +153,23 @@
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($schedules as $schedule)
-                           <tr>
-                              <td>
-                                 {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                              </td>
-                              <td class="">{{$schedule->vessel->name}}</td>
-                              <td class="">{{$schedule->requests()->count()}} Request Activity</td>
-                              <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
-                           </tr>
-                           @endforeach
+                           @if ($schedules->count() > 0)
+                              @foreach ($schedules as $schedule)
+                              <tr>
+                                 <td>
+                                    {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                                 </td>
+                                 <td class="">{{$schedule->vessel->name}}</td>
+                                 <td class="">{{$schedule->requests()->count()}} Request Activity</td>
+                                 <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
+                              </tr>
+                              @endforeach
+                              @else
+                              <tr>
+                                 <td colspan="4" class="text-center"><small>Empty</small></td>
+                              </tr>
+                           @endif
+                           
                            {{-- <tr>
                               <td class="w-1">
                                  <span class="avatar avatar-sm"
@@ -239,9 +250,24 @@
             </div>
 
             <div class="col-md-3">
+               <div class="card mb-3">
+                  <div class="card-body">
+                     <div class="d-flex align-items-center mb-2">
+                        <div class="subheader">Complete Rate</div>
+                     </div>
+                     <div class="h1 mb-1">{{$persentage}}%</div>
+                     
+                     <div class="progress progress-sm">
+                        <div class="progress-bar bg-blue" style="width: {{$persentage}} %" role="progressbar" aria-valuenow="{{$persentage}}"
+                           aria-valuemin="0" aria-valuemax="100">
+                           <span class="visually-hidden">{{$persentage}}%  Complete</span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
                <div class="card">
                   <div class="card-header">
-                     Request Activity
+                     Department Request
                   </div>
                  <div class="card-body">
                    <div id="chart-demo-pie"></div>
@@ -262,66 +288,104 @@
 @push('chart')
 <script>
    // @formatter:off
+   
+
    document.addEventListener("DOMContentLoaded", function () {
+      window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-activity'), {
+         chart: {
+            type: "radialBar",
+            fontFamily: 'inherit',
+            height: 40,
+            width: 40,
+            animations: {
+               enabled: false
+            },
+            sparkline: {
+               enabled: true
+            },
+         },
+         tooltip: {
+            enabled: false,
+         },
+         plotOptions: {
+            radialBar: {
+               hollow: {
+                  margin: 0,
+                  size: '75%'
+               },
+               track: {
+                  margin: 0
+               },
+               dataLabels: {
+                  show: false
+               }
+            }
+         },
+         colors: ["#206bc4"],
+         series: [35],
+      })).render();
+
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-development-activity'), {
-            chart: {
-               type: "area",
-               fontFamily: 'inherit',
-               height: 192,
-               sparkline: {
-                  enabled: true
-               },
-               animations: {
-                  enabled: false
-               },
+         chart: {
+            type: "area",
+            fontFamily: 'inherit',
+            height: 192,
+            sparkline: {
+               enabled: true
             },
-            dataLabels: {
-               enabled: false,
+            animations: {
+               enabled: false
             },
-            fill: {
-               opacity: .16,
-               type: 'solid'
+         },
+         dataLabels: {
+            enabled: false,
+         },
+         fill: {
+            opacity: .16,
+            type: 'solid'
+         },
+         stroke: {
+            width: 2,
+            lineCap: "round",
+            curve: "smooth",
+         },
+         series: [{
+            name: "Request",
+            data: {!! $qtyRequests !!}
+
+         }],
+         grid: {
+            strokeDashArray: 4,
+         },
+         xaxis: {
+            labels: {
+               padding: 0,
             },
-            stroke: {
-               width: 2,
-               lineCap: "round",
-               curve: "smooth",
+            tooltip: {
+               enabled: false
             },
-            series: [{
-               name: "Purchases",
-               data: [3, 5, 4, 6, 7, 5, 6, 8, 24, 7, 12, 5, 6, 3, 8, 4, 14, 30, 17, 19, 15, 14, 25, 32, 40, 55, 60, 48, 52, 70]
-            }],
-            grid: {
-               strokeDashArray: 4,
-            },
-            xaxis: {
-               labels: {
-                  padding: 0,
-               },
-               tooltip: {
-                  enabled: false
-               },
-               axisBorder: {
-                  show: false,
-               },
-               type: 'datetime',
-            },
-            yaxis: {
-               labels: {
-                  padding: 4
-               },
-            },
-            labels: [
-               '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24', '2020-06-25', '2020-06-26', '2020-06-27', '2020-06-28', '2020-06-29', '2020-06-30', '2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04', '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12', '2020-07-13', '2020-07-14', '2020-07-15', '2020-07-16', '2020-07-17', '2020-07-18', '2020-07-19'
-            ],
-            colors: ["#206bc4"],
-            legend: {
+            axisBorder: {
                show: false,
             },
-            point: {
-               show: false
+            type: 'datetime',
+         },
+         yaxis: {
+            labels: {
+               padding: 4
             },
-         })).render();
+         },
+         labels: {!! $dateSchedules !!},
+         // labels: [
+         //    '2020-06-20', '2020-06-21', '2020-06-22', '2020-06-23', '2020-06-24'
+         // ],
+         colors: ["#206bc4"],
+         legend: {
+            show: false,
+         },
+         point: {
+            show: false
+         },
+      })).render();
 
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-demo-pie'), {
          chart: {
@@ -338,8 +402,9 @@
          fill: {
             opacity: 1,
          },
-         series: [44, 55, 12],
-         labels: ["Complete", "Progress", "Draft"],
+         // series: [0, 0],
+         series: [{!! $requestLogistics !!}, {!! $requestDrillings!!}],
+         labels: ["Logistic", "Drilling"],
          grid: {
             strokeDashArray: 4,
          },
@@ -364,67 +429,67 @@
       })).render();
 
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-temperature'), {
-      		chart: {
-      			type: "line",
-      			fontFamily: 'inherit',
-      			height: 240,
-      			parentHeightOffset: 0,
-      			toolbar: {
-      				show: false,
-      			},
-      			animations: {
-      				enabled: false
-      			},
-      		},
-      		fill: {
-      			opacity: 1,
-      		},
-      		stroke: {
-      			width: 2,
-      			lineCap: "round",
-      			curve: "smooth",
-      		},
-      		series: [{
-      			name: "Tokyo",
-      			data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-      		},{
-      			name: "London",
-      			data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-      		}],
-      		grid: {
-      			padding: {
-      				top: -20,
-      				right: 0,
-      				left: -4,
-      				bottom: -4
-      			},
-      			strokeDashArray: 4,
-      		},
-      		dataLabels: {
-      			enabled: true,
-      		},
-      		xaxis: {
-      			labels: {
-      				padding: 0,
-      			},
-      			tooltip: {
-      				enabled: false
-      			},
-      			categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      		},
-      		yaxis: {
-      			labels: {
-      				padding: 4
-      			},
-      		},
-      		colors: ["#206bc4", "#5eba00"],
-      		legend: {
-      			show: false,
-      		},
-      		markers: {
-      			size: 2
-      		},
-      	})).render();
+         chart: {
+            type: "line",
+            fontFamily: 'inherit',
+            height: 240,
+            parentHeightOffset: 0,
+            toolbar: {
+               show: false,
+            },
+            animations: {
+               enabled: false
+            },
+         },
+         fill: {
+            opacity: 1,
+         },
+         stroke: {
+            width: 2,
+            lineCap: "round",
+            curve: "smooth",
+         },
+         series: [{
+            name: "Tokyo",
+            data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+         },{
+            name: "London",
+            data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+         }],
+         grid: {
+            padding: {
+               top: -20,
+               right: 0,
+               left: -4,
+               bottom: -4
+            },
+            strokeDashArray: 4,
+         },
+         dataLabels: {
+            enabled: true,
+         },
+         xaxis: {
+            labels: {
+               padding: 0,
+            },
+            tooltip: {
+               enabled: false
+            },
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+         },
+         yaxis: {
+            labels: {
+               padding: 4
+            },
+         },
+         colors: ["#206bc4", "#5eba00"],
+         legend: {
+            show: false,
+         },
+         markers: {
+            size: 2
+         },
+      })).render();
 
       window.ApexCharts && (new ApexCharts(document.getElementById('chart-completion-tasks-10'), {
          chart: {

@@ -207,6 +207,11 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('/delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 
+   Route::prefix('dashboard')->group(function () {
+      Route::get('table', [HomeController::class, 'dashboardTable'])->name('dashboard.table');
+      Route::get('chart/{month}', [HomeController::class, 'dashboardChart'])->name('dashboard.chart');
+   });
+
    Route::prefix('request')->group(function () {
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });

@@ -45,7 +45,7 @@
             </div>
          </div>
       </div> --}}
-      <div class="col-md-9">
+      <div class="col-md-12">
          <div class="card mb-3">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">

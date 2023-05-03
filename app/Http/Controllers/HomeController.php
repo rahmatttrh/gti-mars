@@ -28,12 +28,111 @@ class HomeController extends Controller
     * @return \Illuminate\Contracts\Support\Renderable
     */
 
-   public function chart()
+   public function dashboardChart($month)
    {
-      $schedules = Schedule::get();
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+      $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
+      $requests = ModelsRequest::whereMonth('date', $month)->get();
+      $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
+      if ($requests->count() > 0) {
+         $persentage = ($completeRequests->count() / $requests->count()) * 100;
+      } else {
+         $persentage = 0;
+      }
+      $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
+      $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
+      $requestLogistics = ModelsRequest::whereMonth('date', $month)->where('department_id', 2)->get();
+      $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
+
+      $customSchedules = [];
+      $customQtyRequests = [];
+      foreach ($schedules as $schedule) {
+         $customSchedules[] = $schedule->date;
+         $customQtyRequests[] = $schedule->requests()->count();
+      }
+      // dd($customSchedules);
 
       return view('chart', [
-         'schedules' => $schedules
+         'monthName' => $monthName,
+         'requestRecents' => $requestRecents,
+         'requestProgress' => $requestProgress,
+         'schedules' => $schedules,
+         'dateSchedules' => collect($customSchedules)->toJson(),
+         'qtyRequests' => collect($customQtyRequests)->toJson(),
+         'totalSchedule' => $schedules->count(),
+         'totalRequest' => $requests->count(),
+         'requestLogistics' => $requestLogistics->count(),
+         'requestDrillings' => $requestDrillings->count(),
+         'persentage' => $persentage
+      ])->with('i');
+   }
+
+   public function dashboardTable()
+   {
+      $today = Carbon::now();
+      $month = $today->format('m');
+      $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
+      $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
+      $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+      return view('home', [
+         'today' => $today,
+         'monthName' => $monthName,
+         'requestRecents' => $requestRecents,
+         'requestProgress' => $requestProgress,
+         'schedules' => $schedules,
       ])->with('i');
    }
 
@@ -78,18 +177,48 @@ class HomeController extends Controller
       } elseif (auth()->user()->hasRole('marine')) {
          $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
-         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
-         $requests = ModelsRequest::get();
+         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
+         $requests = ModelsRequest::whereMonth('date', $month)->get();
+         $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
+         if ($requests->count() > 0) {
+            $persentage = ($completeRequests->count() / $requests->count()) * 100;
+            // dd($requests->count());
+         } else {
+            $persentage = 0;
+         }
+
+
+         // $requests = ModelsRequest::get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
-         return view('home', [
+         $requestLogistics = ModelsRequest::whereMonth('date', $month)->where('department_id', 2)->get();
+         $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
+
+         $customSchedules = [];
+         $customQtyRequests = [];
+         foreach ($schedules as $schedule) {
+            $customSchedules[] = $schedule->date;
+            $customQtyRequests[] = $schedule->requests()->count();
+         }
+         // $dateSchedules = collect($geoLocationTeknisi)->toJson()
+         // dd(collect($customQtyRequests)->toJson());
+         // dd($requestLogistics);
+
+         return view('chart', [
             'today' => $today,
             'monthName' => $monthName,
             'requestRecents' => $requestRecents,
             'requestProgress' => $requestProgress,
             'schedules' => $schedules,
+            'dateSchedules' => collect($customSchedules)->toJson(),
+            'qtyRequests' => collect($customQtyRequests)->toJson(),
+            'totalSchedule' => $schedules->count(),
+            'totalRequest' => $requests->count(),
+            'requestLogistics' => $requestLogistics->count(),
+            'requestDrillings' => $requestDrillings->count(),
+            'persentage' => $persentage
          ])->with('i');
       } elseif (auth()->user()->hasRole('logistic')) {
          $employee = Employee::where('email', auth()->user()->email)->first();
