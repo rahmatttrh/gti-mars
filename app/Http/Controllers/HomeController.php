@@ -58,6 +58,7 @@ class HomeController extends Controller
       }
 
       $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
+      $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->paginate(5);
       $requests = ModelsRequest::whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
       if ($requests->count() > 0) {
@@ -89,7 +90,8 @@ class HomeController extends Controller
          'totalRequest' => $requests->count(),
          'requestLogistics' => $requestLogistics->count(),
          'requestDrillings' => $requestDrillings->count(),
-         'persentage' => $persentage
+         'persentage' => $persentage,
+         'scheduleRecents' => $scheduleRecents
       ])->with('i');
    }
 

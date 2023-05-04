@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+   Port Detail
+@endsection
 @section('content')
    <div class="container-xl">
       <!-- Page title -->
