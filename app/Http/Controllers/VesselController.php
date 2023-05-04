@@ -162,14 +162,42 @@ class VesselController extends Controller
       }
    }
 
-   public function history($id)
+   public function history($id, $month)
    {
       $dekripId = dekripRambo($id);
       $vessel = Vessel::find($dekripId);
-      $reports = Report::where('vessel_id', $vessel->id)->where('complete', '!=', null)->get();
+      // ->where('complete', '!=', null)
+      $reports = Report::where('vessel_id', $vessel->id)->whereMonth('created_at', $month)->get();
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
       return view('pages.vessel.history', [
          'vessel' => $vessel,
-         'reports' => $reports
+         'reports' => $reports,
+         'monthName' => $monthName
       ])->with('i');
    }
 

@@ -143,6 +143,7 @@ class HomeController extends Controller
 
       $vessels = Vessel::get();
       $vessel3 = Vessel::paginate('3');
+      // dd($today->format('m'));
 
       if ($month == 1) {
          $monthName = 'Januari';
@@ -186,7 +187,6 @@ class HomeController extends Controller
          } else {
             $persentage = 0;
          }
-
 
          // $requests = ModelsRequest::get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();

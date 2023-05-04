@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Chart
+    Dashboard Chart
 @endsection
 
 @section('content')
@@ -91,6 +91,12 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
+         @if ($requestRecents)
+         <div class="alert alert-primary" role="alert">
+            You have {{$requestRecents->count()}} Request Activity. Click <a href="{{route('request')}}" class="alert-link">here</a> to check.
+          </div>
+         @endif
+         
          <div class="row row-cards">
             {{-- <div class="col-md-12">
                <div class="card">
@@ -150,6 +156,7 @@
                               <th>Vessel</th>
                               <th>Activity</th>
                               <th>Route</th>
+                              <th>Status</th>
                            </tr>
                         </thead>
                         <tbody>
@@ -157,12 +164,16 @@
                               @foreach ($schedules as $schedule)
                               <tr>
                                  <td>
-                                    {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                                    <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
+                                       {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                                    </a>
                                  </td>
-                                 <td class="">{{$schedule->vessel->name}}</td>
-                                 <td class="">{{$schedule->requests()->count()}} Request Activity</td>
+                                 <td class=""><a href="{{route('vessel.history', [enkripRambo($schedule->vessel->id), $today->format('m') ])}}">{{$schedule->vessel->name}}</a></td>
+                                 <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Request Activity</a></td>
                                  <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
+                                 <td><x-status.schedule :schedule="$schedule"  /></td>
                               </tr>
+                              <x-modal.schedule.request :schedule="$schedule" />
                               @endforeach
                               @else
                               <tr>
@@ -250,7 +261,7 @@
             </div>
 
             <div class="col-md-3">
-               <div class="card mb-3">
+               {{-- <div class="card mb-3">
                   <div class="card-body">
                      <div class="d-flex align-items-center mb-2">
                         <div class="subheader">Complete Rate</div>
@@ -264,11 +275,11 @@
                         </div>
                      </div>
                   </div>
-               </div>
+               </div> --}}
                <div class="card">
-                  <div class="card-header">
+                  {{-- <div class="card-header">
                      Department Request
-                  </div>
+                  </div> --}}
                  <div class="card-body">
                    <div id="chart-demo-pie"></div>
                  </div>
@@ -281,6 +292,8 @@
    </div>
 
    <x-modal.add-vessel />
+   
+   
    
    
 @endsection
@@ -391,7 +404,7 @@
          chart: {
             type: "donut",
             fontFamily: 'inherit',
-            height: 240,
+            height: 150,
             sparkline: {
                enabled: true
             },

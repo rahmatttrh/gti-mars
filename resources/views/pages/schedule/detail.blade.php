@@ -44,17 +44,14 @@
                @if (auth()->user()->hasRole('vessel'))
                   @if ($schedule->status == 0 )
                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading">
-                        
                         Loading
                      </button>
                      @elseif($schedule->status == 1)
                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading-complete">
-                        
                         Complete Loading
                      </button>
                      @elseif($schedule->status == 2)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-castoff">
-                        
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-castoff">  
                         Cast Off
                      </button>
                      @elseif($schedule->status == 3)
@@ -133,7 +130,7 @@
                   </div>
                   <div class="card-body">
                      @if ($report)
-                        <dl class="row">
+                        {{-- <dl class="row">
                            <dt class="col-4">Loading Start</dt>
                            <dd class="col-8">: {{ $report->loading_start ? \Carbon\Carbon::parse($report->loading_start)->format('d/m/Y - H:i') : '-'}}</dd>
                            <dt class="col-4">Loading End</dt>
@@ -150,6 +147,23 @@
                            <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_end)->format('d/m/Y - H:i, ') : '-'}}</dd>
                            <dt class="col-4">Complete</dt>
                            <dd class="col-8">: {{ $report->complete ? \Carbon\Carbon::parse($report->complete)->format('d/m/Y - H:i, ') : '-'}}</dd>
+                        </dl> --}}
+                        <dl class="row">
+                           <dt class="col-4">Loading</dt>
+                           <dd class="col-8">: {{ $report->loading_start ? \Carbon\Carbon::parse($report->loading_start)->format('H:i') : ''}} - {{ $report->loading_end ? \Carbon\Carbon::parse($report->loading_end)->format('d/m/Y - H:i') : ''}}</dd>
+                         
+                           <dt class="col-4">Cast Off</dt>
+                           <dd class="col-8">: {{ $report->castoff ? \Carbon\Carbon::parse($report->castoff)->format('d/m/Y - H:i, ') : ''}}</dd>
+                           <dt class="col-4">Full Away</dt>
+                           <dd class="col-8">: {{ $report->fullaway ? \Carbon\Carbon::parse($report->fullaway)->format('d/m/Y - H:i, ') : ''}}</dd>
+                           <dt class="col-4">Arrive</dt>
+                           <dd class="col-8">: {{ $report->arrive ? \Carbon\Carbon::parse($report->arrive)->format('d/m/Y - H:i, ') : ''}}</dd>
+                           <dt class="col-4">Unloading</dt>
+                           <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_start)->format('H:i, ') : ''}} - {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_end)->format('d/m/Y - H:i, ') : ''}}</dd>
+                           {{-- <dt class="col-4">Unloading End</dt>
+                           <dd class="col-8">: </dd> --}}
+                           <dt class="col-4">Complete</dt>
+                           <dd class="col-8">: {{ $report->complete ? \Carbon\Carbon::parse($report->complete)->format('d/m/Y - H:i, ') : ''}}</dd>
                         </dl>
                         @else
                         <small>Report empty</small>

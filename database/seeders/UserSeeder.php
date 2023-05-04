@@ -35,8 +35,8 @@ class UserSeeder extends Seeder
       // $marine->assignRole('marine');
 
       $msso = User::create([
-         'name' => 'Marine SSO',
-         'email' => 'msso@gmail.com',
+         'name' => 'Marine',
+         'email' => 'marine@gmail.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()

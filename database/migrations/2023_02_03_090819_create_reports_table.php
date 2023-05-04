@@ -18,11 +18,13 @@ class CreateReportsTable extends Migration
          $table->mediumInteger('schedule_id');
          $table->mediumInteger('vessel_id');
          $table->dateTime('asign')->nullable();
+         $table->dateTime('standby')->nullable();
          $table->dateTime('loading_start')->nullable();
          $table->dateTime('loading_end')->nullable();
          $table->dateTime('castoff')->nullable();
          $table->dateTime('fullaway')->nullable();
          $table->dateTime('arrive')->nullable();
+         $table->dateTime('standby_dest')->nullable();
          $table->dateTime('unloading_start')->nullable();
          $table->dateTime('unloading_end')->nullable();
          $table->dateTime('complete')->nullable();

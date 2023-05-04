@@ -9,26 +9,59 @@
          <div class="row align-items-center">
             <div class="col">
                <div class="page-pretitle">
-                  Overview
+                  History
                </div>
                <h2 class="page-title">
-                  History {{$vessel->name}}
+                  {{$vessel->name}} - {{$monthName}}
                </h2>
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-               <div class="d-flex">
-                  {{-- <input type="search" class="form-control d-inline-block w-9 me-3" placeholder="Search user…"/> --}}
-                  {{-- <a href="{{route('vessel.create')}}" class="btn btn-primary"   >
-                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                     New vessel
-                  </a> --}}
-                  {{-- <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-vessel">
-                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                     New vessel
-                  </a> --}}
+               <div class="btn-list">
+                  <div class="dropdown">
+                     <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                     Month
+                     </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 1])}}">
+                              Januari
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 2])}}">
+                              Februari
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 3])}}">
+                              Maret
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 4])}}">
+                              April
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 5])}}">
+                              Mei
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 6])}}">
+                              Juni
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 7])}}">
+                              Juli
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 8])}}">
+                              Agustus
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 9])}}">
+                              September
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 10])}}">
+                              Oktober
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 11])}}">
+                              November
+                           </a>
+                           <a class="dropdown-item" href="{{route('vessel.history', [enkripRambo($vessel->id), 12])}}">
+                              Desember
+                           </a>
+                        </div>
+                  </div>
+                  
                </div>
             </div>
          </div>
@@ -36,41 +69,114 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         <div class="card">
+         <div class="row">
+            <div class="col-md-9">
+               <div class="card">
            
-            <div class="table-responsive">
-               <table   class="table " >
-                  <thead>
-                     <tr>
-                        <th class="text-center">No.</th>
-                        <th>Date</th>
-                        <th>Origin</th>
-                        <th>Destination</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @if ($reports->count() > 0)
-                        @foreach ($reports as $report)
+                  <div class="table-responsive">
+                     <table   class="table " >
+                        <thead>
                            <tr>
-                              <td class="text-center">{{++$i}}</td>
-                              <td>{{\Carbon\Carbon::parse($report->schedule->date)->format('d/m/Y')}}</td>
-                              <td>
-                                 {{$report->schedule->origin->name}} - {{\Carbon\Carbon::parse($report->castoff)->format('H:i')}}<br>
-                              </td>
-                              <td>
-                                 {{$report->schedule->destination->name}} - {{\Carbon\Carbon::parse($report->arrive)->format('H:i')}} <br>
-                              </td>
+                              <th>No.</th>
+                              <th>Date</th>
+                              <th>Activity</th>
+                              <th>Origin</th>
+                              <th>Deviasi</th>
+                              <th>Destination</th>
                            </tr>
-                        @endforeach
-                        @else
-                        <tr>
-                           <td colspan="4" style="text-align: center"><small>Empty</small></td>
-                        </tr>
-                     @endif
-                  </tbody>
-               </table>
+                        </thead>
+                        <tbody>
+                           @if ($reports->count() > 0)
+                              @foreach ($reports as $report)
+                                 <tr>
+                                    <td >{{++$i}}</td>
+                                    <td>
+                                       <a href="{{route('schedule.detail', enkripRambo($report->schedule->id))}}">
+                                          {{\Carbon\Carbon::parse($report->schedule->date)->format('d/m/Y')}}
+                                       </a>
+                                    </td>
+                                    <td>
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$report->schedule->id}}">{{$report->schedule->requests->count()}} Activity</a>
+                                       </td>
+                                    <td>
+                                       {{$report->schedule->origin->name}} - {{\Carbon\Carbon::parse($report->castoff)->format('H:i')}}<br>
+                                    </td>
+                                    <td>-</td>
+                                    <td>
+                                       {{$report->schedule->destination->name}} - {{\Carbon\Carbon::parse($report->arrive)->format('H:i')}} <br>
+                                    </td>
+                                 </tr>
+                                 <x-modal.schedule.request :schedule="$report->schedule" />
+                              @endforeach
+                              @else
+                              <tr>
+                                 <td colspan="6" style="text-align: center"><small>Empty</small></td>
+                              </tr>
+                           @endif
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="card card-sm mb-2">
+                  <div class="card-body">
+                     <div class="row align-items-center">
+                        <div class="col-auto">
+                           <span class="bg-blue text-white avatar">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/currency-dollar -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                 <path
+                                    d="M16.7 8a3 3 0 0 0 -2.7 -2h-4a3 3 0 0 0 0 6h4a3 3 0 0 1 0 6h-4a3 3 0 0 1 -2.7 -2" />
+                                 <path d="M12 3v3m0 12v3" />
+                              </svg>
+                           </span>
+                        </div>
+                        <div class="col">
+                           <div class="font-weight-medium">
+                              24
+                           </div>
+                           <div class="text-muted">
+                              Total Schedule
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="card card-sm">
+                  <div class="card-body">
+                     <div class="row align-items-center">
+                        <div class="col-auto">
+                           <span class="bg-yellow text-white avatar">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/users -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24"
+                                 viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                                 stroke-linecap="round" stroke-linejoin="round">
+                                 <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                 <circle cx="9" cy="7" r="4" />
+                                 <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                                 <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                 <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                              </svg>
+                           </span>
+                        </div>
+                        <div class="col">
+                           <div class="font-weight-medium">
+                              36
+                           </div>
+                           <div class="text-muted">
+                              Total Activity
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
+         
          {{-- <div class="row  row-deck row-cards">
             @if ($vessels->count() > 0)
                @foreach ($vessels as $vessel)

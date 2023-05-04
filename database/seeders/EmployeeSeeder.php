@@ -17,8 +17,8 @@ class EmployeeSeeder extends Seeder
       DB::table('employees')->insert([
          'department_id' => 1,
          'port_id' => 1,
-         'name' => 'Marine SSO',
-         'email' => 'msso@gmail.com',
+         'name' => 'Marine',
+         'email' => 'marine@gmail.com',
          'ekstensi' => '223',
          'created_at' => NOW(),
          'updated_at' => NOW()

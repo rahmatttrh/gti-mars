@@ -27,7 +27,7 @@ class RequestController extends Controller
       $vessels = Vessel::get();
       $schedules = Schedule::get();
 
-      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '=', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '=', 1)->orWhere('status', 202)->orderBy('department_id', 'desc')->get()->groupBy('func');
 
       return view('pages.request.index', [
          'title' => 'Inbox',

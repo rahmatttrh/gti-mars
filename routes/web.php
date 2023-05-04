@@ -106,7 +106,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
 
-      Route::get('history/{vessel:id}', [VesselController::class, 'history'])->name('vessel.history');
+      Route::get('history/{vessel:id}/{month}', [VesselController::class, 'history'])->name('vessel.history');
    });
    // Route::prefix('port')->group(function () {
    //    Route::get('index', [PortController::class, 'index'])->name('port');
