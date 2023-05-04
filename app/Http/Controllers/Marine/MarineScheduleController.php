@@ -44,7 +44,7 @@ class MarineScheduleController extends Controller
          'remark' => $req->remark
       ]);
 
-   
+
 
       return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
    }
@@ -55,7 +55,7 @@ class MarineScheduleController extends Controller
       $schedule = Schedule::find($dekripId);
 
       $now = Carbon::now();
-      oreach ($schedule->requests as $req) {
+      foreach ($schedule->requests as $req) {
          $req->update([
             'status' => 3
          ]);
