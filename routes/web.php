@@ -14,6 +14,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\Marine\MarineRequestController;
+use App\Http\Controllers\Marine\MarineScheduleController;
 use App\Http\Controllers\MarineController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
@@ -215,6 +216,9 @@ Route::group(['middleware' => ['role:marine']], function () {
    Route::prefix('request')->group(function () {
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
+   Route::prefix('schedule')->group(function () {
+      Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
+   });
 });
 
 Route::group(['middleware' => ['role:logistic|drilling']], function () {
@@ -244,6 +248,7 @@ Route::group(['middleware' => ['role:drilling']], function () {
 
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
+      Route::get('standby/test/loading{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
       Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
       Route::get('loading/complete/{schedule:id}', [VesselScheduleController::class, 'loadingEnd'])->name('schedule.loading.complete');
       Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');

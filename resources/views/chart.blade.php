@@ -91,7 +91,7 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         @if ($requestRecents)
+         @if ($requestRecents->count() > 0)
          <div class="alert alert-primary" role="alert">
             You have {{$requestRecents->count()}} Request Activity. Click <a href="{{route('request')}}" class="alert-link">here</a> to check.
           </div>
@@ -130,7 +130,7 @@
                            </div> --}}
                            <div class="col">
                               <div>{{$totalSchedule}} Schedules</div>
-                              <div>{{$totalRequest}} Request Activity</div>
+                              <div>{{$totalRequest}} Activity</div>
                               {{-- <div class="text-muted">
                                  <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
                                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-inline text-green"
@@ -169,7 +169,7 @@
                                     </a>
                                  </td>
                                  <td class=""><a href="{{route('vessel.history', [enkripRambo($schedule->vessel->id), $today->format('m') ])}}">{{$schedule->vessel->name}}</a></td>
-                                 <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Request Activity</a></td>
+                                 <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Activity</a></td>
                                  <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
                                  <td><x-status.schedule :schedule="$schedule"  /></td>
                               </tr>
@@ -276,13 +276,300 @@
                      </div>
                   </div>
                </div> --}}
-               <div class="card">
+               <div class="card mb-2">
                   {{-- <div class="card-header">
                      Department Request
                   </div> --}}
                  <div class="card-body">
                    <div id="chart-demo-pie"></div>
                  </div>
+               </div>
+               <div class="card" style="height: calc(16rem + 10px)">
+                  <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                     <div class="divide-y">
+                        @foreach ($scheduleRecents as $scherecent)
+                        <div>
+                           <div class="row">
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$schedule" /> 
+                                 </div>
+                                 <div class="text-muted">{{$scherecent->updated_at->diffForHumans()}}</div>
+                              </div>
+                              {{-- <div class="col-auto align-self-center">
+                                 <div class="badge bg-primary"></div>
+                              </div> --}}
+                           </div>
+                        </div>
+                        @endforeach
+                       
+                        <div>
+                           <div class="row">
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Triton Jawara</strong> Arrive on CINTA
+                                 </div>
+                                 <div class="text-muted">45 minutes ago</div>
+                              </div>
+                              <div class="col-auto align-self-center">
+                                 <div class="badge bg-primary"></div>
+                              </div>
+                           </div>
+                        </div>
+
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/002m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    It's <strong>Mallory Hulme</strong>'s birthday. Wish him well!
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                              <div class="col-auto align-self-center">
+                                 <div class="badge bg-primary"></div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/003m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Dunn Slane</strong> posted <strong>"Well, what do you want?"</strong>.
+                                 </div>
+                                 <div class="text-muted">today</div>
+                              </div>
+                              <div class="col-auto align-self-center">
+                                 <div class="badge bg-primary"></div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/000f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Emmy Levet</strong> created a new project <strong>Morning alarm
+                                       clock</strong>.
+                                 </div>
+                                 <div class="text-muted">4 days ago</div>
+                              </div>
+                              <div class="col-auto align-self-center">
+                                 <div class="badge bg-primary"></div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/001f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Maryjo Lebarree</strong> liked your photo.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar">EP</span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Egan Poetz</strong> registered new client as <strong>Trilia</strong>.
+                                 </div>
+                                 <div class="text-muted">yesterday</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/002f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Kellie Skingley</strong> closed a new deal on project <strong>Pen
+                                       Pineapple Apple Pen</strong>.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/003f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Christabel Charlwood</strong> created a new project for
+                                    <strong>Wikibox</strong>.
+                                 </div>
+                                 <div class="text-muted">4 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar">HS</span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Haskel Shelper</strong> change status of <strong>Tabler Icons</strong>
+                                    from <strong>open</strong> to <strong>closed</strong>.
+                                 </div>
+                                 <div class="text-muted">today</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/006m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Lorry Mion</strong> liked <strong>Tabler UI Kit</strong>.
+                                 </div>
+                                 <div class="text-muted">yesterday</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/004f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Leesa Beaty</strong> posted new video.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/007m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Perren Keemar</strong> and 3 others followed you.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar">SA</span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Sunny Airey</strong> upload 3 new photos to category
+                                    <strong>Inspirations</strong>.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/009m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Geoffry Flaunders</strong> made a <strong>$10</strong> donation.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/010m.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Thatcher Keel</strong> created a profile.
+                                 </div>
+                                 <div class="text-muted">3 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/005f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Dyann Escala</strong> hosted the event <strong>Tabler UI
+                                       Birthday</strong>.
+                                 </div>
+                                 <div class="text-muted">4 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar"
+                                    style="background-image: url(./static/avatars/006f.jpg)"></span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Avivah Mugleston</strong> mentioned you on <strong>Best of
+                                       2020</strong>.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="row">
+                              <div class="col-auto">
+                                 <span class="avatar">AA</span>
+                              </div>
+                              <div class="col">
+                                 <div class="text-truncate">
+                                    <strong>Arlie Armstead</strong> sent a Review Request to <strong>Amanda
+                                       Blake</strong>.
+                                 </div>
+                                 <div class="text-muted">2 days ago</div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
                </div>
             </div>
             

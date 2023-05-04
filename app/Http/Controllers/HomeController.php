@@ -189,7 +189,8 @@ class HomeController extends Controller
          }
 
          // $requests = ModelsRequest::get();
-         $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
+         $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
+         $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->paginate(5);
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
@@ -218,7 +219,8 @@ class HomeController extends Controller
             'totalRequest' => $requests->count(),
             'requestLogistics' => $requestLogistics->count(),
             'requestDrillings' => $requestDrillings->count(),
-            'persentage' => $persentage
+            'persentage' => $persentage,
+            'scheduleRecents' => $scheduleRecents
          ])->with('i');
       } elseif (auth()->user()->hasRole('logistic')) {
          $employee = Employee::where('email', auth()->user()->email)->first();
