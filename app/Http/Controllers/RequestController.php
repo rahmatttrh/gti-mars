@@ -183,17 +183,7 @@ class RequestController extends Controller
 
 
 
-   public function selectSchedule(Request $req)
-   {
-      // dd($req->request_id);
-      $request = ModelsRequest::find($req->request_id);
-      $request->update([
-         'status' => 02,
-         'schedule_id' => $req->schedule
-      ]);
-
-      return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');
-   }
+   
 
    // public function progressMarine()
    // {

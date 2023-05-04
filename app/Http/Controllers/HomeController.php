@@ -179,7 +179,7 @@ class HomeController extends Controller
          $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
          $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
-         $requests = ModelsRequest::whereMonth('date', $month)->get();
+         $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
          $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
          if ($requests->count() > 0) {
             $persentage = ($completeRequests->count() / $requests->count()) * 100;
@@ -190,7 +190,7 @@ class HomeController extends Controller
 
          // $requests = ModelsRequest::get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
-         $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->paginate(5);
+         $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->paginate(5);
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
@@ -235,7 +235,7 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('department_id', $employee->department_id)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
-         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>=', 0)->get();
+         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 0)->get();
          $requests = '';
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';

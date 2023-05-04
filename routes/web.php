@@ -77,9 +77,9 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('schedule')->group(function () {
       Route::get('fixed', [ScheduleController::class, 'fixed'])->name('schedule.fixed');
       Route::get('request', [ScheduleController::class, 'request'])->name('schedule.request');
-      Route::get('create', [ScheduleController::class, 'create'])->name('schedule.create');
+
       Route::get('create-old', [ScheduleController::class, 'createOld'])->name('schedule.create.old');
-      Route::post('store', [ScheduleController::class, 'store'])->name('schedule.store');
+
       Route::get('edit/{schedule:id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
       Route::put('update', [ScheduleController::class, 'update'])->name('schedule.update');
 
@@ -160,7 +160,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-      Route::put('select/schedule', [RequestController::class, 'selectSchedule'])->name('request.select.schedule');
+
       Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
    });
 
@@ -214,9 +214,12 @@ Route::group(['middleware' => ['role:marine']], function () {
    });
 
    Route::prefix('request')->group(function () {
+      Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
    Route::prefix('schedule')->group(function () {
+      Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
+      Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
    });
 });

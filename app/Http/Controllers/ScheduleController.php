@@ -131,17 +131,7 @@ class ScheduleController extends Controller
 
 
 
-   public function create()
-   {
-      $vessels = Vessel::get();
-      $ports = Port::get();
-      $types = Type::get();
-      return view('pages.schedule.create', [
-         'vessels' => $vessels,
-         'ports' => $ports,
-         'types' => $types
-      ]);
-   }
+  
 
    public function createOld()
    {
@@ -153,30 +143,7 @@ class ScheduleController extends Controller
       ]);
    }
 
-   public function store(Request $req)
-   {
-      $req->validate([]);
-      // dd($req->type);
-      $vessel = Vessel::find($req->vessel);
-
-      Schedule::create([
-         'type' => 2,
-         'status' => 0,
-         'vessel_id' => $req->vessel,
-         'date' => $req->date,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
-         'etd' => $req->departure_estimasi,
-         'eta' => $req->arrive_estimasi,
-         'remark' => $req->remark
-      ]);
-
-      $vessel->update([
-         'status' => 1
-      ]);
-
-      return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
-   }
+   
 
    public function storeOld(Request $req)
    {

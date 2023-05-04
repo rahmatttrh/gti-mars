@@ -1,21 +1,23 @@
 <small>
    @if ($schedule->status == 0)
-      Waiting
+      Draft
       @elseif($schedule->status == 1)
-      Start Loading at {{$schedule->origin->name}}
+      Standby
       @elseif($schedule->status == 2)
-      Complete Loading at {{$schedule->origin->name}}
+      Start Loading at {{$schedule->origin->name}}
       @elseif($schedule->status == 3)
-      Cast Off
+      Complete Loading at {{$schedule->origin->name}}
       @elseif($schedule->status == 4)
-      Full Away
+      Cast Off
       @elseif($schedule->status == 5)
-      Arrive at {{$schedule->destination->name}}
+      Full Away
       @elseif($schedule->status == 6)
-      Start Unloading at {{$schedule->destination->name}}
+      Arrive at {{$schedule->destination->name}}
       @elseif($schedule->status == 7)
-      Complete Unloading at {{$schedule->destination->name}}
+      Start Unloading at {{$schedule->destination->name}}
       @elseif($schedule->status == 8)
+      Complete Unloading at {{$schedule->destination->name}}
+      @elseif($schedule->status == 9)
       Complete
    @endif
 </small>

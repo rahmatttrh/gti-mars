@@ -3,13 +3,52 @@
 namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
+use App\Models\Port;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
+use App\Models\Type;
+use App\Models\Vessel;
 use Illuminate\Http\Request;
 
 class MarineScheduleController extends Controller
 {
+
+   public function create()
+   {
+      $vessels = Vessel::get();
+      $ports = Port::get();
+      $types = Type::get();
+      return view('pages.schedule.create', [
+         'vessels' => $vessels,
+         'ports' => $ports,
+         'types' => $types
+      ]);
+   }
+
+   public function store(Request $req)
+   {
+      $req->validate([]);
+      // dd($req->type);
+      $vessel = Vessel::find($req->vessel);
+
+      Schedule::create([
+         'type' => 2,
+         'status' => 0,
+         'vessel_id' => $req->vessel,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'etd' => $req->departure_estimasi,
+         'eta' => $req->arrive_estimasi,
+         'remark' => $req->remark
+      ]);
+
+   
+
+      return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
+   }
+
    public function send($id)
    {
       $dekripId = dekripRambo($id);
@@ -31,7 +70,7 @@ class MarineScheduleController extends Controller
       $schedule->update([
          'status' => 1
       ]);
-cc
+
       $vessel->update([
          'status' => 2,
          'port_id' => $schedule->origin_id,
