@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Deviation;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
@@ -207,11 +208,15 @@ class ScheduleController extends Controller
       $report = Report::where('schedule_id', $schedule->id)->first();
       // dd($schedule->requests());
       // dd($report->loading);
+      $ports = Port::get();
+      $deviations = Deviation::where('schedule_id', $schedule->id)->get();
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,
          'requests' => $requests,
          'vessels' => $vessel,
+         'ports' => $ports,
+         'deviations' => $deviations
          // 'report' => $requests
       ]);
    }

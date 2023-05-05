@@ -66,15 +66,26 @@
                      <br>
                      Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}</div> --}}
                      
-                     {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
-                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                     {{-- {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
+                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} --}}
+                     <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
                      
                      <h1>
                         {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                      </h1>
-                     <x-status.schedule :schedule="$schedule" />
+                     {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
+                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
+
+                     @if ($deviations->count() > 0)
+                        <div class="border-top pt-1 mt-2">
+                           <small>Deviation</small><br>
+                           @foreach ($deviations as $dev)
+                              {{$dev->port->name}} - {{$dev->desc}}
+                           @endforeach
+                        </div>
+                     @endif
                      
                      
                   </div>
@@ -154,5 +165,7 @@
 
    <x-modal.schedule.departure :schedule="$schedule" />
    <x-modal.schedule.arrived :schedule="$schedule"/>
+
+   <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports"/>
 
 @endsection

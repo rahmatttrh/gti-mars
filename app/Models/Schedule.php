@@ -49,6 +49,11 @@ class Schedule extends Model
       return $this->hasMany(Request::class);
    }
 
+   public function deviations()
+   {
+      return $this->hasMany(Deviation::class);
+   }
+
    // public function port()
    // {
    //    return $this->belongsTo(Port::class);
