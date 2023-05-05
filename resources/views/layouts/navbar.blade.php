@@ -143,7 +143,7 @@
                         <a class="dropdown-item" href="{{route('schedule.create')}}" >
                            Create
                         </a>
-                        <a class="dropdown-item" href="{{route('schedule.request')}}" >
+                        <a class="dropdown-item" href="{{route('schedule.plan')}}" >
                            Planning
                         </a>
                         <a class="dropdown-item" href="#" >

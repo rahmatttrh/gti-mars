@@ -18,90 +18,39 @@
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-               {{-- <span class="d-none d-sm-inline">
-                  <a href="#" class="btn btn-white">
-                  New view
-                  </a>
-               </span> --}}
-               @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-send">
-                     <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-	                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                     Send
-                  </button>
+               <div class="btn-list">
+
+                  @if (auth()->user()->hasRole('marine'))
+                     <x-schedule.action-marine :schedule="$schedule" />
+                  @endif
+
+                  @if (auth()->user()->hasRole('vessel'))
+                     <x-schedule.action-vessel :schedule="$schedule" />
+                  @endif
+                  
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                     Action
+                     Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
+                        @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                         <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
                            Edit
                         </a>
                         <a class="dropdown-item" href="#">
                            Delete
                         </a>
-                        
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                           Timeline
+                        </a>
+                        <a class="dropdown-item" href="#">
+                           Print Preview
+                        </a>
                      </div>
                   </div>
-               @endif
-
-               @if (auth()->user()->hasRole('vessel'))
-                  @if ($schedule->status == 0 )
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-standby">
-                        Standby
-                     </button>
-                     @elseif($schedule->status == 1)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading">
-                        Loading
-                     </button>
-                     @elseif($schedule->status == 1)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading-complete">
-                        Complete Loading
-                     </button>
-                     @elseif($schedule->status == 2)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-castoff">  
-                        Cast Off
-                     </button>
-                     @elseif($schedule->status == 3)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-fullaway">Full Away</button>
-                     @elseif($schedule->status == 4)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-arrive">Arrive</button>
-                     @elseif($schedule->status == 5)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-unloading">Unloading</button>
-                     @elseif($schedule->status == 6)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-unloading-complete">Complete Unloading</button>
-                     @elseif($schedule->status == 7)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-complete">Complete</button>
-                  @endif
-               @endif
-               
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Option
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                    
-                     
-                     
-
-                     @if ($schedule->status == 3 && auth()->user()->hasRole('vessel'))
-                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#modal-arrived">
-                           Arrived
-                        </a>
-                     @endif
-                     {{-- <a href="" data-bs-toggle="modal" data-bs-target="#modal-arrived"></a> --}}
-                     
-                     <div class="dropdown-divider"></div>
-                     <a class="dropdown-item" href="#">
-                        Timeline
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Print Preview
-                     </a>
-                  </div>
                </div>
-            </div>
             </div>
          </div>
       </div>
@@ -112,10 +61,13 @@
             <div class="col-md-7">
                <div class="card">
                   <div class="card-header">
-                    
+{{--                     
                      <div class="text-muted">Date : {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
                      <br>
-                     Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}</div>
+                     Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}</div> --}}
+                     
+                     {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
+                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
                   </div>
                   <div class="card-body">
                      
@@ -123,6 +75,8 @@
                         {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                      </h1>
                      <x-status.schedule :schedule="$schedule" />
+                     
+                     
                   </div>
                   <div class="card-footer">
                      
@@ -135,45 +89,11 @@
             <div class="col-md-5">
                <div class="card">
                   <div class="card-header">
-                     <small>Timeline</small>
+                     {{-- <small>Timeline</small> --}}
                   </div>
                   <div class="card-body">
                      @if ($report)
-                        {{-- <dl class="row">
-                           <dt class="col-4">Loading Start</dt>
-                           <dd class="col-8">: {{ $report->loading_start ? \Carbon\Carbon::parse($report->loading_start)->format('d/m/Y - H:i') : '-'}}</dd>
-                           <dt class="col-4">Loading End</dt>
-                           <dd class="col-8">: {{ $report->loading_end ? \Carbon\Carbon::parse($report->loading_end)->format('d/m/Y - H:i') : '-'}}</dd>
-                           <dt class="col-4">Cast Off</dt>
-                           <dd class="col-8">: {{ $report->castoff ? \Carbon\Carbon::parse($report->castoff)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                           <dt class="col-4">Full Away</dt>
-                           <dd class="col-8">: {{ $report->fullaway ? \Carbon\Carbon::parse($report->fullaway)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                           <dt class="col-4">Arrive</dt>
-                           <dd class="col-8">: {{ $report->arrive ? \Carbon\Carbon::parse($report->arrive)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                           <dt class="col-4">Unloading Start</dt>
-                           <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_start)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                           <dt class="col-4">Unloading End</dt>
-                           <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_end)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                           <dt class="col-4">Complete</dt>
-                           <dd class="col-8">: {{ $report->complete ? \Carbon\Carbon::parse($report->complete)->format('d/m/Y - H:i, ') : '-'}}</dd>
-                        </dl> --}}
-                        <dl class="row">
-                           <dt class="col-4">Loading</dt>
-                           <dd class="col-8">: {{ $report->loading_start ? \Carbon\Carbon::parse($report->loading_start)->format('H:i') : ''}} - {{ $report->loading_end ? \Carbon\Carbon::parse($report->loading_end)->format('d/m/Y - H:i') : ''}}</dd>
-                         
-                           <dt class="col-4">Cast Off</dt>
-                           <dd class="col-8">: {{ $report->castoff ? \Carbon\Carbon::parse($report->castoff)->format('d/m/Y - H:i, ') : ''}}</dd>
-                           <dt class="col-4">Full Away</dt>
-                           <dd class="col-8">: {{ $report->fullaway ? \Carbon\Carbon::parse($report->fullaway)->format('d/m/Y - H:i, ') : ''}}</dd>
-                           <dt class="col-4">Arrive</dt>
-                           <dd class="col-8">: {{ $report->arrive ? \Carbon\Carbon::parse($report->arrive)->format('d/m/Y - H:i, ') : ''}}</dd>
-                           <dt class="col-4">Unloading</dt>
-                           <dd class="col-8">: {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_start)->format('H:i, ') : ''}} - {{ $report->unloading ? \Carbon\Carbon::parse($report->unloading_end)->format('d/m/Y - H:i, ') : ''}}</dd>
-                           {{-- <dt class="col-4">Unloading End</dt>
-                           <dd class="col-8">: </dd> --}}
-                           <dt class="col-4">Complete</dt>
-                           <dd class="col-8">: {{ $report->complete ? \Carbon\Carbon::parse($report->complete)->format('d/m/Y - H:i, ') : ''}}</dd>
-                        </dl>
+                        <x-schedule.report :report="$report" />
                         @else
                         <small>Report empty</small>
                      @endif
@@ -181,16 +101,6 @@
                   </div>
                </div>
             </div>
-            {{-- <div class="col-md-2">
-               @if ($schedule->status == 1)
-               <a href="#" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}" class="btn btn-primary mb-3 btn-block" style="width: 100%">Assign Boat</a>
-               
-               @else
-               <a href="#" class="btn btn-light border mb-3 btn-block" style="width: 100%"><small>Boat assigned</small></a>
-               @endif
-               
-              
-            </div> --}}
          </div>
 
          <hr>
@@ -218,8 +128,7 @@
                            <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
                            <dt class="col-2">Request by</dt>
                            <dd class="col-10">: {{$request->employee->name ?? ''}}</dd>
-                           <dt class="col-2">Status</dt>
-                           <dd class="col-10">: <x-status.request :request="$request" /></dd>
+                           <dt class="col-2"><x-status.request :request="$request" /></dt>
                         </dl>
                      </div>
                   </div>
@@ -238,6 +147,7 @@
    <x-modal.schedule.castoff :schedule="$schedule" />
    <x-modal.schedule.fullaway :schedule="$schedule" />
    <x-modal.schedule.arrive :schedule="$schedule" />
+   <x-modal.schedule.standby-dest :schedule="$schedule" />
    <x-modal.schedule.unloading :schedule="$schedule" />
    <x-modal.schedule.unloading-complete :schedule="$schedule" />
    <x-modal.schedule.complete :schedule="$schedule" />

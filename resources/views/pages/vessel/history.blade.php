@@ -99,11 +99,11 @@
                                        <a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$report->schedule->id}}">{{$report->schedule->requests->count()}} Activity</a>
                                        </td>
                                     <td>
-                                       {{$report->schedule->origin->name}} - {{\Carbon\Carbon::parse($report->castoff)->format('H:i')}}<br>
+                                       {{$report->schedule->origin->name}} 
                                     </td>
                                     <td>-</td>
                                     <td>
-                                       {{$report->schedule->destination->name}} - {{\Carbon\Carbon::parse($report->arrive)->format('H:i')}} <br>
+                                       {{$report->schedule->destination->name}} <br>
                                     </td>
                                  </tr>
                                  <x-modal.schedule.request :schedule="$report->schedule" />
@@ -137,7 +137,7 @@
                         </div>
                         <div class="col">
                            <div class="font-weight-medium">
-                              24
+                              {{$schedules->count()}}
                            </div>
                            <div class="text-muted">
                               Total Schedule
@@ -165,7 +165,7 @@
                         </div>
                         <div class="col">
                            <div class="font-weight-medium">
-                              36
+                              {{$totalRequests}}
                            </div>
                            <div class="text-muted">
                               Total Activity

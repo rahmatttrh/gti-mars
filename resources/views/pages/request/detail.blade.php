@@ -20,7 +20,6 @@
             <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
                   @if (auth()->user()->hasRole('marine'))
-
                      @if ($request->status == 01)
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$request->id}}">
                            <!-- Download SVG icon from http://tabler-icons.io/i/ship -->
@@ -32,10 +31,7 @@
                            Approve Cancel Request
                         </button>
                      @endif
-                     
                   @endif
-
-
 
                   @if (auth()->user()->hasRole('logistic'))
                      @if ($request->status == 00)
@@ -66,7 +62,6 @@
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                            Release
                         </button>
-                        
                      @endif
                   @endif
                   
@@ -106,33 +101,30 @@
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        {{-- <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#arriveCargoPlan">
-                           Arrive
-                        </a>
-                        <a class="dropdown-item" href="" data-bs-toggle="modal" data-bs-target="#approveCargoPlan">
-                           Approve
-                        </a> --}}
-                        @if ( $request->status == 202)
-                        @else
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
-                           Cancel
-                        </a>
-                        @endif
-                        
-                        @if (auth()->user()->hasRole('logistic') && $request->status == 00)
-                        <a class="dropdown-item" href="#">
-                           Delete
-                        </a>
+                       
+                        @if (auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling'))
+                           @if ( $request->status == 202)
+                           @else
+                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
+                              Cancel
+                           </a>
+                           @endif
+                           @if ($request->status == 00)
+                              
+                              <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a>
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteRequest">
+                                 Delete
+                              </a>
+                           @endif
                         @endif
                         
                         <div class="dropdown-divider"></div>
                        
                         @if ($request->schedule_id)
-                        <a class="dropdown-item" href="{{route('schedule.timeline', enkripRambo($request->schedule->id))}}">
-                           Timeline 
-                        </a>
+                           <a class="dropdown-item" href="{{route('schedule.timeline', enkripRambo($request->schedule->id))}}">
+                              Timeline 
+                           </a>
                         @endif
-                        
                         
                         <a class="dropdown-item" target="_blank" href="{{route('cargo.receipt')}}">
                            Print Preview
@@ -188,7 +180,7 @@
                         <small>{{$request->reason}}</small>
                      </div>
                   </div>
-               @else
+                  @elseif($request->status >= 3)
                   <div class="card mb-3">
                      <div class="card-header">
                         Schedule
@@ -199,11 +191,11 @@
                               <dt class="col-3">Boat</dt>
                               <dd class="col-9">: {{$request->schedule->vessel->name ?? 'Not Available'}}</dd>
                               <dt class="col-3">Date</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y - H:i')}}</dd>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y')}}</dd>
                               <dt class="col-3">ETD</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('d/m/Y - H:i')}}</dd>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('H:i')}}</dd>
                               <dt class="col-3">ETA</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('d/m/Y - H:i')}}</dd>
+                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('H:i')}}</dd>
                               <small># {{$request->schedule->remark}}</small>
                               {{-- <dt class="col-5">Operating system:</dt>
                               <dd class="col-7">OS X 10.15.2 64-bit</dd>
@@ -220,6 +212,18 @@
                               <small>Cancel : {{$history->approve}} [{{$history->reason}}]</small>
                            @endforeach
                         @endif
+                     </div>
+                  </div>
+                  @else
+                  <div class="card mb-3">
+                     <div class="card-header">
+                        Schedule
+                     </div>
+                     <div class="card-body text-center">
+                        <small>Empty</small>
+                     </div>
+                     <div class="card-footer">
+                        
                      </div>
                   </div>
                @endif
@@ -323,6 +327,7 @@
    <x-modal.passenger.add :request="$request" />
    <x-modal.request.undo :request="$request" />
    <x-modal.request.undo-approve :request="$request" />
+   <x-modal.request.delete :request="$request" />
    
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

@@ -140,8 +140,10 @@ class VesselController extends Controller
       // dd($dekripId);
       $vessel = Vessel::find($dekripId);
       // dd($vessel->port->name);
+      $today = Carbon::now();
       return view('pages.vessel.detail', [
-         'vessel' => $vessel
+         'vessel' => $vessel,
+         'today' => $today
       ]);
    }
 
@@ -168,6 +170,15 @@ class VesselController extends Controller
       $vessel = Vessel::find($dekripId);
       // ->where('complete', '!=', null)
       $reports = Report::where('vessel_id', $vessel->id)->whereMonth('created_at', $month)->get();
+      $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 0)->whereMonth('date', $month)->get();
+
+      $totalRequests = 0;
+      foreach ($schedules as $schedule) {
+         $totalRequests = $totalRequests + $schedule->requests()->count();
+      }
+
+      // dd($schedules);
+
 
       if ($month == 1) {
          $monthName = 'Januari';
@@ -197,7 +208,9 @@ class VesselController extends Controller
       return view('pages.vessel.history', [
          'vessel' => $vessel,
          'reports' => $reports,
-         'monthName' => $monthName
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+         'totalRequests' => $totalRequests
       ])->with('i');
    }
 

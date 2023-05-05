@@ -293,9 +293,9 @@
                               <div class="row">
                                  <div class="col">
                                     <div class="text-truncate">
-                                       <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$schedule" /> 
+                                       <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$scherecent" /> 
                                     </div>
-                                    <div class="text-muted">{{$scherecent->updated_at->diffForHumans()}}</div>
+                                    <div class="text-muted"><small>{{$scherecent->updated_at->diffForHumans()}}</small></div>
                                  </div>
                                  {{-- <div class="col-auto align-self-center">
                                     <div class="badge bg-primary"></div>

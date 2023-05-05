@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-   Create Request Activity
+   Edit Request Activity
 @endsection
 @section('content')
    <div class="container-xl">
@@ -13,7 +13,7 @@
                   Form
                </div>
                <h2 class="page-title">
-                  Create Request Activity
+                  Edit Request Activity
                </h2>
             </div>
          </div>
@@ -22,8 +22,10 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('request.save')}}" method="POST">
+            <form action="{{route('request.update')}}" method="POST">
                @csrf
+               @method('PUT')
+               <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
@@ -33,7 +35,7 @@
                                  <select name="activity" id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>
                                     @foreach ($activities as $activity)
-                                       <option value="{{$activity->id}}">{{$activity->name}}</option>
+                                       <option {{$request->activity_id == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="activity">Activity</label>
@@ -41,13 +43,13 @@
                            </div>
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="desc" name="desc" >
+                                 <input type="text" class="form-control" id="desc" name="desc" value="{{$request->description}}">
                                  <label for="desc">Description</label>
                               </div>
                            </div>
                            <div class="col-md-4">
                               <div class="form-floating">
-                                 <input type="date" required class="form-control" id="date" name="date" >
+                                 <input type="date" required class="form-control" id="date" name="date"  value="{{$request->date}}">
                                  <label for="date">Departure Date</label>
                               </div>
                            </div>
@@ -55,7 +57,7 @@
                               <div class="form-floating mb-3">
                                  <select required name="origin" id="origin" class="form-select">
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{$request->origin_id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="origin">From</label>
@@ -65,7 +67,7 @@
                               <div class="form-floating">
                                  <select required name="destination" id="destination" class="form-select">
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{$request->destination->id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="destination">Destination</label>
@@ -75,7 +77,7 @@
                         <hr>
                         <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                            
-                           Save
+                           Update
                         </button>
                      </div> 
                      

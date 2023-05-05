@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 
 class VesselScheduleController extends Controller
 {
-   public function loading($id)
+
+   public function standby($id)
    {
       $now = Carbon::now();
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $vessel = Vessel::find($schedule->vessel_id);
-      $port = Port::find($schedule->origin_id);
 
       foreach ($schedule->requests as $req) {
          $req->update([
@@ -26,19 +26,45 @@ class VesselScheduleController extends Controller
          ]);
       }
 
-      Report::create([
+      $report = Report::where('schedule_id', $schedule->id)->first();
+      $report->update([
          'schedule_id' => $schedule->id,
-         'vessel_id' => $schedule->vessel_id,
-         'loading_start' => $now
+         'standby' => $now
       ]);
 
       $schedule->update([
-         'status' => 1
+         'status' => 2
       ]);
 
       $vessel->update([
          'status' => 2,
          'port_id' => $schedule->origin_id,
+      ]);
+
+      return redirect()->back()->with('success', 'Report successfully saved');
+   }
+
+   public function loading($id)
+   {
+      $now = Carbon::now();
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $vessel = Vessel::find($schedule->vessel_id);
+
+      foreach ($schedule->requests as $req) {
+         $req->update([
+            // Loading
+            'status' => 4
+         ]);
+      }
+
+      $report = Report::where('schedule_id', $schedule->id)->first();
+      $report->update([
+         'loading_start' => $now
+      ]);
+
+      $schedule->update([
+         'status' => 3
       ]);
 
       return redirect()->back()->with('success', 'Report successfully saved');
@@ -53,17 +79,16 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 4
+            'status' => 5
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
          'loading_end' => $now
       ]);
       $schedule->update([
-         'status' => 2
+         'status' => 4
       ]);
 
       return redirect()->back()->with('success', 'Report successfully saved');
@@ -75,23 +100,18 @@ class VesselScheduleController extends Controller
       $now = Carbon::now();
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 5
+            'status' => 6
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
          'castoff' => $now
       ]);
       $schedule->update([
-         'status' => 3
-      ]);
-      $vessel->update([
-         'status' => 3
+         'status' => 5
       ]);
 
       return redirect()->back()->with('success', 'Report successfully saved');
@@ -105,20 +125,19 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 6
+            'status' => 7
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
          'fullaway' => $now
       ]);
       $schedule->update([
-         'status' => 4
+         'status' => 6
       ]);
       $vessel->update([
-         'status' => 4,
+         'status' => 3,
          'port_id' => null
       ]);
 
@@ -133,27 +152,47 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 7
+            'status' => 8
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
          'arrive' => $now
       ]);
       $schedule->update([
-         'status' => 5
+         'status' => 7
       ]);
       $vessel->update([
-         'status' => 5,
+         'status' => 2,
          'port_id' => $schedule->destination_id
       ]);
 
       return redirect()->back()->with('success', 'Report successfully saved');
    }
 
+   public function standbyDest($id)
+   {
+      $now = Carbon::now();
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $vessel = Vessel::find($schedule->vessel_id);
+      foreach ($schedule->requests as $req) {
+         $req->update([
+            'status' => 9
+         ]);
+      }
 
+      $report = Report::where('schedule_id', $schedule->id)->first();
+      $report->update([
+         'standby_dest' => $now
+      ]);
+      $schedule->update([
+         'status' => 8
+      ]);
+
+      return redirect()->back()->with('success', 'Report successfully saved');
+   }
 
    public function unloading($id)
    {
@@ -163,17 +202,16 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 8
+            'status' => 10
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
-         'unloading' => $now
+         'unloading_start' => $now
       ]);
       $schedule->update([
-         'status' => 6
+         'status' => 9
       ]);
       // $vessel->update([
       //    'status' => 5,
@@ -191,17 +229,16 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 9
+            'status' => 11
          ]);
       }
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $report->update([
-         'schedule_id' => $schedule->id,
-         'unloading' => $now
+         'unloading_end' => $now
       ]);
       $schedule->update([
-         'status' => 7
+         'status' => 10
       ]);
       // $vessel->update([
       //    'status' => 5,
@@ -219,7 +256,7 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $req) {
          $req->update([
-            'status' => 10
+            'status' => 12
          ]);
       }
 
@@ -229,12 +266,12 @@ class VesselScheduleController extends Controller
          'complete' => $now
       ]);
       $schedule->update([
-         'status' => 8
+         'status' => 11
       ]);
-      $vessel->update([
-         'status' => 0,
-         'port_id' => $schedule->destination_id
-      ]);
+      // $vessel->update([
+      //    'status' => 0,
+      //    'port_id' => $schedule->destination_id
+      // ]);
 
       return redirect()->back()->with('success', 'Report successfully saved');
    }

@@ -29,16 +29,16 @@ class ScheduleController extends Controller
       ])->with('i');
    }
 
-   public function request()
+   public function plan()
    {
 
       $today = Carbon::now();
       $month = $today->format('m');
 
       if (auth()->user()->hasRole('vessel')) {
-         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->get();
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->orderBy('date', 'asc')->get();
       } else {
-         $schedules = Schedule::get();
+         $schedules = Schedule::orderBy('date', 'asc')->get();
       }
 
       $vessels = Vessel::get();
@@ -131,7 +131,7 @@ class ScheduleController extends Controller
 
 
 
-  
+
 
    public function createOld()
    {
@@ -143,7 +143,7 @@ class ScheduleController extends Controller
       ]);
    }
 
-   
+
 
    public function storeOld(Request $req)
    {

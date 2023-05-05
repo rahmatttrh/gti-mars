@@ -15,8 +15,8 @@ class VesselSeeder extends Seeder
    public function run()
    {
       DB::table('vessels')->insert([
-         'status' => 1,
-         'port_id' => 1,
+         'status' => 0,
+         // 'port_id' => 1,
          'name' => 'Elok Jaya',
          'prev_name' => '-',
          'imo' => '92313',
@@ -37,7 +37,7 @@ class VesselSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('vessels')->insert([
-         'status' => 1,
+         'status' => 0,
          'name' => 'Giat Jaya',
          'email' => 'gj@gmail.com',
          'type' => 'Anchor Handling Tug Supply',

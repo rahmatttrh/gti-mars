@@ -53,8 +53,10 @@ class MarineScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      $vessel = Vessel::find($schedule->vessel_id);
 
       $now = Carbon::now();
+
       foreach ($schedule->requests as $req) {
          $req->update([
             'status' => 3
@@ -64,7 +66,7 @@ class MarineScheduleController extends Controller
       Report::create([
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
-         'loading_start' => $now
+         'assign' => $now
       ]);
 
       $schedule->update([
@@ -72,10 +74,9 @@ class MarineScheduleController extends Controller
       ]);
 
       $vessel->update([
-         'status' => 2,
-         'port_id' => $schedule->origin_id,
+         'status' => 1,
       ]);
 
-      dd($schedule->id);
+      return redirect()->back()->with('success', 'Schedule successfully assign to' . $vessel->name);
    }
 }

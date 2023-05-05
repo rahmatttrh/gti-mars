@@ -58,7 +58,7 @@ class HomeController extends Controller
       }
 
       $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
-      $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->paginate(5);
+      $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->first();
       $requests = ModelsRequest::whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
       if ($requests->count() > 0) {
@@ -77,7 +77,7 @@ class HomeController extends Controller
          $customSchedules[] = $schedule->date;
          $customQtyRequests[] = $schedule->requests()->count();
       }
-      // dd($customSchedules);
+      dd($scheduleRecents->status);
 
       return view('chart', [
          'monthName' => $monthName,
@@ -192,7 +192,7 @@ class HomeController extends Controller
 
          // $requests = ModelsRequest::get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
-         $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->paginate(5);
+         $scheduleRecents = Schedule::orderBy('updated_at', 'desc')->where('status', '>=', 1)->paginate(5);
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
@@ -207,7 +207,7 @@ class HomeController extends Controller
          }
          // $dateSchedules = collect($geoLocationTeknisi)->toJson()
          // dd(collect($customQtyRequests)->toJson());
-         // dd($requestLogistics);
+         // dd($scheduleRecents->status);
 
          return view('chart', [
             'today' => $today,

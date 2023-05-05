@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Models\Activity;
+use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Port;
@@ -71,6 +72,42 @@ class DepartmentRequestController extends Controller
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
    }
 
+   public function edit($id)
+   {
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      if (auth()->user()->hasRole('logistic')) {
+         $acts = Activity::where('type_id', 1)->get();
+      } elseif (auth()->user()->hasRole('drilling')) {
+         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
+      }
+      $activities = $acts;
+      $types = Type::get();
+      $ports = Port::get();
+      return view('pages.request.edit', [
+         'request' => $request,
+         'activities' => $activities,
+         'ports' => $ports,
+         'types' => $types
+      ]);
+   }
+
+   public function update(Request $req)
+   {
+      $request = ModelsRequest::find($req->requestId);
+
+      $request->update([
+         'activity_id' => $req->activity,
+         'date' => $req->date,
+         'description' => $req->desc,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+      ]);
+
+      return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully updated');
+   }
+
    public function draft()
    {
       $employee = Employee::where('email', auth()->user()->email)->first();
@@ -125,5 +162,20 @@ class DepartmentRequestController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Request Activity successfully Canceled, waiting approve Marine');
+   }
+
+   public function delete($id)
+   {
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      foreach ($cargoItems as $item) {
+         $item->delete();
+      }
+
+      $request->delete();
+
+      return redirect()->to('/')->with('success', 'Request Activity successfully deleted');
    }
 }

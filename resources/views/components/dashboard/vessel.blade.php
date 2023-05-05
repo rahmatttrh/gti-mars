@@ -28,7 +28,7 @@
                            <td class="text-muted">
                               {{$schedule->origin->name}} - {{$schedule->destination->name}}
                            </td>
-                           <td class="text-muted">{{$schedule->requests->count()}} Activity</td>
+                           <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
                            <td>
                               <x-status.schedule :schedule="$schedule" />
                            </td>
@@ -44,6 +44,7 @@
                               </div>
                            </td> --}}
                         </tr>
+                        <x-modal.schedule.request :schedule="$schedule" />
                      @endforeach
                   </tbody>
                </table>

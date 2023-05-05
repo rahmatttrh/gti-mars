@@ -76,7 +76,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix('schedule')->group(function () {
       Route::get('fixed', [ScheduleController::class, 'fixed'])->name('schedule.fixed');
-      Route::get('request', [ScheduleController::class, 'request'])->name('schedule.request');
+      Route::get('plann', [ScheduleController::class, 'plan'])->name('schedule.plan');
 
       Route::get('create-old', [ScheduleController::class, 'createOld'])->name('schedule.create.old');
 
@@ -232,6 +232,9 @@ Route::group(['middleware' => ['role:logistic|drilling']], function () {
       Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
       Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
       Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
+      Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
+      Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
+      Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
    });
 });
 
@@ -251,14 +254,15 @@ Route::group(['middleware' => ['role:drilling']], function () {
 
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
-      Route::get('standby/test/loading{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
+      Route::get('standby/{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
       Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
       Route::get('loading/complete/{schedule:id}', [VesselScheduleController::class, 'loadingEnd'])->name('schedule.loading.complete');
       Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');
       Route::get('fullaway/{schedule:id}', [VesselScheduleController::class, 'fullaway'])->name('schedule.fullaway');
       Route::get('arrive/{schedule:id}', [VesselScheduleController::class, 'arrive'])->name('schedule.arrive');
+      Route::get('standby-dest/{schedule:id}', [VesselScheduleController::class, 'standbyDest'])->name('schedule.standby.dest');
       Route::get('unloading/{schedule:id}', [VesselScheduleController::class, 'unloading'])->name('schedule.unloading');
-      Route::get('unloading/complete/{schedule:id}', [VesselScheduleController::class, 'unloadingComplete'])->name('schedule.unloading.complete');
+      Route::get('unloading/complete/{schedule:id}', [VesselScheduleController::class, 'unloadingEnd'])->name('schedule.unloading.complete');
       Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.complete');
    });
 });

@@ -43,7 +43,7 @@
                            Delete
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route('vessel.history', enkripRambo($vessel->id))}}">
+                        <a class="dropdown-item" href="{{route('vessel.history',[enkripRambo($vessel->id), $today->format('m')])}}">
                            History
                         </a>
                      </div>
