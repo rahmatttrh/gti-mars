@@ -20,32 +20,39 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($schedules as $schedule)
+                     @if ($schedules->count() > 0 )
+                        @foreach ($schedules as $schedule)
+                           <tr>
+                              <td class="text-muted text-center">{{++$i}}</td>
+                              <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
+                              
+                              <td class="text-muted">
+                                 {{$schedule->origin->name}} - {{$schedule->destination->name}}
+                              </td>
+                              <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
+                              <td>
+                                 <x-status.schedule :schedule="$schedule" />
+                              </td>
+                              {{-- <td>
+                                 <div class="btn-group" role="group" aria-label="Basic example">
+                                    @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
+                                    <a href="" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Boat</a>
+                                    @else
+                                    
+                                    @endif
+                                    
+                                    <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
+                                 </div>
+                              </td> --}}
+                           </tr>
+                           <x-modal.schedule.request :schedule="$schedule" />
+                        @endforeach
+                        @else
                         <tr>
-                           <td class="text-muted text-center">{{++$i}}</td>
-                           <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
-                           
-                           <td class="text-muted">
-                              {{$schedule->origin->name}} - {{$schedule->destination->name}}
-                           </td>
-                           <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
-                           <td>
-                              <x-status.schedule :schedule="$schedule" />
-                           </td>
-                           {{-- <td>
-                              <div class="btn-group" role="group" aria-label="Basic example">
-                                 @if ($schedule->status == 1 && auth()->user()->hasRole('marine'))
-                                 <a href="" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-select-vessel-{{$schedule->id}}">Boat</a>
-                                 @else
-                                 
-                                 @endif
-                                 
-                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-secondary">Detail</a>
-                              </div>
-                           </td> --}}
+                           <td colspan="5" class="text-center">Empty</td>
                         </tr>
-                        <x-modal.schedule.request :schedule="$schedule" />
-                     @endforeach
+                     @endif
+                     
                   </tbody>
                </table>
             </div>

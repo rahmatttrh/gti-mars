@@ -19,4 +19,9 @@ class Deviation extends Model
    {
       return $this->belongsTo(Port::class);
    }
+
+   public function report()
+   {
+      return $this->hasOne(DeviationReport::class);
+   }
 }

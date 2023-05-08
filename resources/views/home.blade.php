@@ -64,17 +64,12 @@
                            </a>
                         </div>
                   </div> --}}
+                  @if (auth()->user()->hasRole('marine'))
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        {{-- @if (auth()->user()->hasRole('logistic'))
-                        <a class="dropdown-item" href="{{route('request.create')}}">
-                           Create
-                        </a>
-                        @endif --}}
-                        
                         <a class="dropdown-item" href="/">
                            Chart
                         </a>
@@ -84,6 +79,8 @@
                         
                      </div>
                   </div>
+                  @endif
+                  
                </div>
             </div>
          </div>
@@ -115,7 +112,6 @@
       </div>
    </div>
 
-   <x-modal.add-vessel />
    
    
 @endsection

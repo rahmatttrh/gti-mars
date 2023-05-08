@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Vessel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deviation;
+use App\Models\DeviationReport;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\Schedule;
@@ -275,4 +277,6 @@ class VesselScheduleController extends Controller
 
       return redirect()->back()->with('success', 'Report successfully saved');
    }
+
+   
 }

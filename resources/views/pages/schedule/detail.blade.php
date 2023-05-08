@@ -57,95 +57,65 @@
    </div>
    <div class="page-body" >
       <div class="container-xl">
-         <div class="row row-deck">
-            <div class="col-md-7">
+         <x-notification.deviation :deviations="$deviations" />
+         
+         <div class="row">
+            <div class="col-md-8">
                <div class="card">
                   <div class="card-header">
-{{--                     
-                     <div class="text-muted">Date : {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                     <br>
-                     Loc : {{$schedule->origin->name}} to {{$schedule->destination->name}}</div> --}}
-                     
-                     {{-- {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
-                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} --}}
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
-                     
                      <h1>
                         {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                      </h1>
                      {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
                      {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
-
-                     @if ($deviations->count() > 0)
-                        <div class="border-top pt-1 mt-2">
-                           <small>Deviation</small><br>
-                           @foreach ($deviations as $dev)
-                              {{$dev->port->name}} - {{$dev->desc}}
-                           @endforeach
-                        </div>
-                     @endif
-                     
-                     
+                     <div class="text-muted mt-2">ETD : {{\Carbon\Carbon::parse($schedule->etd)->format('d/m/Y - H:i')}}</div>
+                     <div class="text-muted">ETA : {{\Carbon\Carbon::parse($schedule->eta)->format('d/m/Y - H:i')}}</div>
+                     <div class="text-muted">NOTE : {{$schedule->remark}}</div>
                   </div>
                   <div class="card-footer">
                      
-                     <div class="text-muted">ETD : {{\Carbon\Carbon::parse($schedule->etd)->format('d/m/Y - H:i')}}</div>
-                     <div class="text-muted">ETA : {{\Carbon\Carbon::parse($schedule->eta)->format('d/m/Y - H:i')}}</div>
-                     <div class="text-muted"># {{$schedule->remark}}</div>
                   </div>
                </div>
+               {{-- <hr> --}}
+               <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
+               @if ($requests->count() > 0)
+               <x-schedule.request :requests="$requests" />
+               @else
+               <div class="card">
+                  <div class="card-body">
+                     <small class="text-muted">Empty</small>
+                  </div>
+               </div>
+               
+               @endif
+               
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                <div class="card">
                   <div class="card-header">
-                     {{-- <small>Timeline</small> --}}
+                     Timeline
                   </div>
                   <div class="card-body">
                      @if ($report)
                         <x-schedule.report :report="$report" />
                         @else
-                        <small>Report empty</small>
+                        <small class="text-muted">Empty</small>
                      @endif
-                     
                   </div>
                </div>
+               {{-- <div class="card">
+                  <div class="card-body">
+                     <h1>halo</h1>
+                  </div>
+               </div> --}}
+               <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
+               <x-schedule.deviation :deviations="$deviations" />
             </div>
          </div>
-
-         <hr>
-         {{-- <h5>Activity</h5> --}}
          
-         @foreach ($requests as $request)
-            <div class="accordion mb-2 bg-white" id="accordion-example_{{$request->id}} ">
-               <div class="accordion-item">
-                  <h2 class="accordion-header" id="heading-{{$request->id}}">
-                     <button class="accordion-button " type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapse-{{$request->id}}" aria-expanded="true">
-                        {{$request->code}}
-                     </button>
-                  </h2>
-                  <div id="collapse-{{$request->id}}" class="accordion-collapse collapse show"
-                     data-bs-parent="#accordion-example_{{$request->id}}">
-                     <div class="accordion-body pt-0">
-                        <hr>
-                        <dl class="row">
-                           {{-- <dt class="col-2">Date</dt>
-                           <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
-                           <dt class="col-2">Department</dt>
-                           <dd class="col-10">: {{$request->department->name}}</dd>
-                           <dt class="col-2">Activity</dt>
-                           <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
-                           <dt class="col-2">Request by</dt>
-                           <dd class="col-10">: {{$request->employee->name ?? ''}}</dd>
-                           <dt class="col-2"><x-status.request :request="$request" /></dt>
-                        </dl>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         @endforeach
          
       </div>
    </div>
@@ -167,5 +137,6 @@
    <x-modal.schedule.arrived :schedule="$schedule"/>
 
    <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports"/>
+   
 
 @endsection

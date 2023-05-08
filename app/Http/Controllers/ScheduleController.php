@@ -209,7 +209,14 @@ class ScheduleController extends Controller
       // dd($schedule->requests());
       // dd($report->loading);
       $ports = Port::get();
-      $deviations = Deviation::where('schedule_id', $schedule->id)->get();
+      if (auth()->user()->hasRole('marine')) {
+         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
+      } elseif (auth()->user()->hasRole('vessel')) {
+         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>', 1)->get();
+      } else {
+         $deviation = null;
+      }
+
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,

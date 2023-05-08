@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
 use App\Models\Deviation;
+use App\Models\DeviationReport;
 use App\Models\Port;
 use App\Models\Schedule;
 use Carbon\Carbon;
@@ -84,14 +85,20 @@ class MarineScheduleController extends Controller
    public function addDeviation(Request $req)
    {
       $req->validate([]);
+      $now = Carbon::now();
 
-      Deviation::create([
+      $deviation = Deviation::create([
          'status' => 0,
          'schedule_id' => $req->schedule,
          'port_id' => $req->port,
          'desc' => $req->desc
       ]);
 
-      return redirect()->back()->with('success', 'Deviaton successfully added to Schedule');
+      DeviationReport::create([
+         'deviation_id' => $deviation->id,
+         'assign' => $now
+      ]);
+
+      return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
    }
 }
