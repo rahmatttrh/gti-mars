@@ -34,9 +34,9 @@ class Schedule extends Model
 
    // Primary Key
 
-   public function reports()
+   public function report()
    {
-      return $this->hasMany(Report::class);
+      return $this->hasOne(Report::class);
    }
 
    public function wo()

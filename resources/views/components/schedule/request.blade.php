@@ -11,8 +11,8 @@
             <div id="collapse-{{$request->id}}" class="accordion-collapse collapse show"
                data-bs-parent="#accordion-example_{{$request->id}}">
                <div class="accordion-body pt-0">
-                  <hr>
-                  <dl class="row">
+                  {{-- <hr> --}}
+                  <dl class="row border-top pt-2">
                      {{-- <dt class="col-2">Date</dt>
                      <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
                      <dt class="col-2">Department</dt>

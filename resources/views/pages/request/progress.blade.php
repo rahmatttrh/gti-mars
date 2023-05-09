@@ -99,10 +99,11 @@
                            <tr>
                               <th class="text-center">FUNC</th>
                               {{-- <th>Code </th> --}}
+                              <th>Activity</th>
                               <th>Date</th>
                               <th>Route</th>
-                              <th>Activity</th>
-                              <th>Boat</th>
+                              
+                              {{-- <th>Boat</th> --}}
                               <th>Status</th>
                               {{-- <th></th> --}}
                            </tr>
@@ -117,10 +118,11 @@
                                  <tr>
                                     
                                     {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
-                                    <td class="text-muted">{{$request->date}}</td>
-                                    <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
                                     <td><a href="{{route('request.detail', enkripRambo($request->id))}}"> {{$request->activity->name ?? ''}} {{$request->description}}</a></td>
-                                    <td class="text-muted">{{$request->schedule->vessel->name ?? 'Not available yet'}}</td>
+                                    <td class="text-muted">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</td>
+                                    <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
+                                    
+                                    {{-- <td class="text-muted">{{$request->schedule->vessel->name ?? 'Not available yet'}}</td> --}}
                                     <td><x-status.request :request="$request" /></td>
                                     
                                     {{-- <td>

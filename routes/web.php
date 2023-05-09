@@ -11,6 +11,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\Marine\MarineRequestController;
@@ -170,6 +171,10 @@ Route::middleware(["auth"])->group(function () {
       Route::post('store', [ActivityController::class, 'store'])->name('activity.store');
       Route::put('update', [ActivityController::class, 'update'])->name('activity.update');
       Route::get('delete/{activity:id}', [ActivityController::class, 'delete'])->name('activity.delete');
+   });
+
+   Route::prefix('invoice')->group(function () {
+      Route::get('/request/{request:id}', [InvoiceController::class, 'request'])->name('invoice.request');
    });
 });
 

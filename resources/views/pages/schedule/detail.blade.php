@@ -62,7 +62,7 @@
          <div class="row">
             <div class="col-md-8">
                <div class="card">
-                  <div class="card-header">
+                  <div class="card-header bg-secondary">
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
@@ -71,9 +71,9 @@
                      </h1>
                      {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
                      {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
-                     <div class="text-muted mt-2">ETD : {{\Carbon\Carbon::parse($schedule->etd)->format('d/m/Y - H:i')}}</div>
-                     <div class="text-muted">ETA : {{\Carbon\Carbon::parse($schedule->eta)->format('d/m/Y - H:i')}}</div>
-                     <div class="text-muted">NOTE : {{$schedule->remark}}</div>
+                     <div class="text-muted mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
+                     <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div>
+                     <div class="text-muted">#Note {{$schedule->remark}}</div>
                   </div>
                   <div class="card-footer">
                      

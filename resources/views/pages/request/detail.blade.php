@@ -45,13 +45,6 @@
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                            Add Cargo
                         </button>
-                        @if ($request->activity->type_id == 2 || $request->activity->type_id == 4)
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                           Add Passenger
-                        </button>
-                        @endif
                      @endif
                   @endif
 
@@ -62,38 +55,13 @@
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                            Release
                         </button>
-                     @endif
-                  @endif
-                  
-                  {{-- @if ($request->status == 00)
-                     @if ( auth()->user()->hasRole('logistic'))
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                           Release
-                        </button>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                           Add Cargo
-                        </button>
-                        @elseif(auth()->user()->hasRole('drilling') )
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                           Release
-                        </button>
-                        @if ($request->activity->type_id == 2 || $request->activity->type_id == 4)
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
                            <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                            Add Passenger
                         </button>
-                        @endif
-                        
                      @endif
-                  @endif --}}
-                  
+                  @endif
                   
                   
                   <div class="dropdown">
@@ -126,7 +94,7 @@
                            </a>
                         @endif
                         
-                        <a class="dropdown-item" target="_blank" href="{{route('cargo.receipt')}}">
+                        <a class="dropdown-item" target="_blank" href="{{route('invoice.request', enkripRambo($request->id))}}">
                            Print Preview
                         </a>
                         
@@ -139,8 +107,8 @@
    </div>
    <div class="page-body" >
       <div class="container-xl">
-         <div class="row row-deck">
-            <div class="col-md-7">
+         <div class="row">
+            <div class="col-md-8">
                <div class="card mb-3">
                   <div class="card-body">
                      <h1>{{$request->code}}</h1>
@@ -165,14 +133,24 @@
                      <small></small>
                   </div>
                   <div class="card-footer">
-                     <small >Requested by : {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
-                     <small >Request date : {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                     <small >Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
+                     <small >Requested at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                   </div>
                </div>
+               <x-requests.cargo :request="$request" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
+               {{-- @if (auth()->user()->hasRole('marine')) --}}
+                  @if ($request->status >= 2)
+                  <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" />
+                  {{-- @elseif ($request->status >= 3)
+                  <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" /> --}}
+                  @endif
+               {{-- @endif --}}
+
+               
                @if ($request->status == 202)
-                  <div class="card    mb-3">
+                  <div class="card  mb-3">
                      <div class="card-header ">
                         Cancel Request Activity
                      </div>
@@ -180,145 +158,29 @@
                         <small>{{$request->reason}}</small>
                      </div>
                   </div>
-                  @elseif($request->status >= 3)
-                  <div class="card mb-3">
-                     <div class="card-header">
-                        Schedule
-                     </div>
-                     <div class="card-body">
-                        @if ($request->schedule)
-                           <dl class="row">
-                              <dt class="col-3">Boat</dt>
-                              <dd class="col-9">: {{$request->schedule->vessel->name ?? 'Not Available'}}</dd>
-                              <dt class="col-3">Date</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->date)->format('d/m/Y')}}</dd>
-                              <dt class="col-3">ETD</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->etd)->format('H:i')}}</dd>
-                              <dt class="col-3">ETA</dt>
-                              <dd class="col-9">: {{\Carbon\Carbon::parse($request->schedule->eta)->format('H:i')}}</dd>
-                              <small># {{$request->schedule->remark}}</small>
-                              {{-- <dt class="col-5">Operating system:</dt>
-                              <dd class="col-7">OS X 10.15.2 64-bit</dd>
-                              <dt class="col-5">Browser:</dt>
-                              <dd class="col-7">Chrome</dd> --}}
-                           </dl>
-                           @else
-                           <small>Not Available</small>
-                        @endif
-                     </div>
-                     <div class="card-footer">
-                        @if ($requestHistories->count() > 0)
-                           @foreach ($requestHistories as $history)
-                              <small>Cancel : {{$history->approve}} [{{$history->reason}}]</small>
-                           @endforeach
-                        @endif
-                     </div>
-                  </div>
-                  @else
-                  <div class="card mb-3">
-                     <div class="card-header">
-                        Schedule
-                     </div>
-                     <div class="card-body text-center">
-                        <small>Empty</small>
-                     </div>
-                     <div class="card-footer">
-                        
-                     </div>
-                  </div>
                @endif
+
+               @if (!$request->schedule)
+               <div class="card mb-3">
+                  <div class="card-header">
+                     Schedule
+                  </div>
+                  <div class="card-body text-center">
+                     <small>Empty</small>
+                  </div>
+               </div>
+               @endif
+
+               @if ($request->schedule)
+                  @if ($request->schedule->report)
+                  <x-requests.timeline :report="$request->schedule->report" />
+                  @endif
+               @endif
+               
             </div>
          </div>
          
-         @if ($request->activity->type_id == 1)
-            <div class="card card-lg">
-               <div class="table-responsive">
-                  <table class="table table-vcenter card-table">
-                     <thead>
-                        <tr>
-                           <th>No.</th>
-                           <th>No Document</th>
-                           <th>Descriptioin</th>
-                           <th>Qty</th>
-                           <th>Unit</th>
-                           <th>Size</th>
-                           <th>Weight</th>
-                           <th>Remarks</th>
-                           <th></th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @if ($cargoItems->count() > 0)
-                           @foreach ($cargoItems as $item)
-                              <tr>
-                                 <td class="text-muted">{{++$i}}</td>
-                                 <td class="text-muted">
-                                    {{$item->no_doc}}
-                                 </td>
-                                 <td class="text-muted">{{$item->desc}}</td>
-                                 <td class="text-muted">{{$item->qty}}</td>
-                                 <td class="text-muted">{{$item->unit}}</td>
-                                 <td class="text-muted">{{$item->size}} m<sup>2</sup></td>
-                                 <td class="text-muted">{{$item->weight}} ton</td>
-                                 <td class="text-muted">{{$item->remark}}</td>
-                                 <td>
-                                    @if ($request->status == 0)
-                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
-                                    @endif
-                                 </td>
-                              </tr>
-                              <x-modal.cargo.delete :item="$item" />
-                           @endforeach
-                           @else
-                           <tr>
-                              <td colspan="9" style="text-align: center"><small>Empty</small></td>
-                           </tr>
-                        @endif
-                     </tbody>
-                  </table>
-               </div>
-            </div> 
-            @elseif($request->activity->type_id == 2 || $request->activity->type_id == 4 )
-            <div class="card card-lg">
-               <div class="table-responsive">
-                  <table class="table table-vcenter card-table">
-                     <thead>
-                        <tr>
-                           <th>No.</th>
-                           <th>Number</th>
-                           <th>Name</th>
-                           
-                           <th></th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @if ($passengerItems->count() > 0)
-                           @foreach ($passengerItems as $item)
-                              <tr>
-                                 <td class="text-muted">{{++$i}}</td>
-                                 <td class="text-muted">
-                                    {{$item->number}}
-                                 </td>
-                                 <td class="text-muted">{{$item->name}}</td>
-                                 
-                                 <td class="text-end">
-                                    @if ($request->status == 0)
-                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$item->id}}">Delete</a>
-                                    @endif
-                                 </td>
-                              </tr>
-                              <x-modal.passenger.delete :item="$item" />
-                           @endforeach
-                           @else
-                           <tr>
-                              <td colspan="9" style="text-align: center"><small>Empty</small></td>
-                           </tr>
-                        @endif
-                     </tbody>
-                  </table>
-               </div>
-            </div> 
-         @endif
+         
          
       </div>
    </div>

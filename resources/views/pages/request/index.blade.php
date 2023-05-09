@@ -145,9 +145,10 @@
                            <tr>
                               <th class="text-center">FUNC</th>
                               {{-- <th>Code </th> --}}
+                              <th>Activity</th>
                               <th>Date</th>
                               <th>Route</th>
-                              <th>Activity</th>
+                              
                               <th>Status</th>
                               {{-- <th></th> --}}
                            </tr>
@@ -156,15 +157,16 @@
                            @if ($departs->count() > 0)
                               @foreach ($departs as $depart => $reqs)
                                  <tr>
-                                 <td class="text-center" rowspan="{{count($reqs)+1}}">{{$depart}}</td>
+                                 <td class="text-center text-muted" rowspan="{{count($reqs)+1}}">{{$depart}}</td>
                                  </tr>
                                  @foreach ($reqs as $request)
                                  <tr>
                                     
                                     {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
-                                    <td>{{$request->date}}</td>
-                                    <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                                     <td><a href="{{route('request.detail', enkripRambo($request->id))}}"> {{$request->activity->name ?? ''}} {{$request->description}}</a></td>
+                                    <td class="text-muted">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</td>
+                                    <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
+                                   
                                     <td><x-status.request :request="$request" /></td>
                                     
                                     {{-- <td>

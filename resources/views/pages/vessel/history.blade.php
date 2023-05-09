@@ -220,5 +220,4 @@
       </div>
    </div>
 
-   <x-modal.add-vessel />
 @endsection

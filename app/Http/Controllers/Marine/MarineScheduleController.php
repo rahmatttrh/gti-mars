@@ -48,7 +48,7 @@ class MarineScheduleController extends Controller
 
 
 
-      return redirect()->route('schedule.request')->with('success', 'Schedule successfuly added');
+      return redirect()->route('schedule.plan')->with('success', 'Schedule successfuly added');
    }
 
    public function send($id)
