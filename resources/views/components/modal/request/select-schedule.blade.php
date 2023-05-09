@@ -2,7 +2,7 @@
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Select Boat</h5>
+            <h5 class="modal-title">Select Schedule</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <form action="{{route('request.select.schedule')}}" method="POST">
@@ -10,8 +10,10 @@
             @method('PUT')
             <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
             <div class="modal-body">
-               <small>Request</small>
-               <div>{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}} - {{$request->origin->name}} to {{$request->destination->name}}</div>
+               <small class="mb-4">Request</small>
+               
+               <div class="mt-3">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}} - {{$request->origin->name}} to {{$request->destination->name}}</div>
+               <div>Total Weight {{$request->total_weight}} ton</div>
                {{-- <div class="form-floating mb-3">
                   <input type="text" required class="form-control" id="date" name="date" value="{{$request->date}}" >
                   <label for="station">Date</label>

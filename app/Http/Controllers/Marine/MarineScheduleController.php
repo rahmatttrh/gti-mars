@@ -9,6 +9,7 @@ use App\Models\Port;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
+use App\Models\Request as ModelsRequest;
 use App\Models\Type;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -100,5 +101,18 @@ class MarineScheduleController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
+   }
+
+   public function removeRequest($id)
+   {
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $request->update([
+         'status' => 1,
+         'schedule_id' => null
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity successfully removed from list');
    }
 }

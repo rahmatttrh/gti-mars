@@ -32,7 +32,7 @@
                   <h1 class="text-primary border-bottom pb-2">MANIFEST VESSEL</h1>
                </div>
                <div class="col-6">
-                  <p class="h3">Detail</p>
+                  <p class="h3">Detail Information</p>
                   <dl class="row">
                      <dd class="col-3">Date</dd>
                      <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
@@ -41,9 +41,9 @@
                      <dd class="col-3">Route</dd>
                      <dd class="col-9">: {{$schedule->origin->name}} - {{$schedule->destination->name}}</dd>
                      <dd class="col-3">ETD</dd>
-                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('d/m/Y')}}</dd>
+                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
                      <dd class="col-3">ETA</dd>
-                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->eta)->format('d/m/Y')}}</dd>
+                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd>
                   </dl>
                </div>
                <div class="col-6 text-end">

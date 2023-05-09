@@ -15,7 +15,7 @@
                   <dl class="row border-top pt-2">
                      {{-- <dt class="col-2">Date</dt>
                      <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
-                     <dt class="col-12 mb-2"><x-status.request :request="$request" /></dt>
+                     {{-- <dt class="col-12 mb-2"><x-status.request :request="$request" /></dt> --}}
                      <dt class="col-2">Department</dt>
                      <dd class="col-10">: {{$request->department->name}}</dd>
                      <dt class="col-2">Activity</dt>
@@ -25,9 +25,14 @@
                      
                   </dl>
                   <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
+                  <div class="mt-2"></div>
+                     <a class="mt-2" href="#" data-bs-toggle="modal" data-bs-target="#remove-request-{{$request->id}}">
+                     Remove
+                  </a>
                </div>
             </div>
          </div>
       </div>
+      <x-modal.schedule.remove-request :request="$request" />
    @endforeach
 </span>

@@ -31,6 +31,7 @@ class VesselSeeder extends Seeder
          'portname' => 'Jakarta',
          'build' => '2004',
          'deck_cargo_capacity' => 500,
+         'deadweight' => 3.00,
          'dpa_name' => 'Ahmad Juantoro',
          'dpa_telp' => '089991213131',
          'created_at' => NOW(),
@@ -43,6 +44,7 @@ class VesselSeeder extends Seeder
          'type' => 'Anchor Handling Tug Supply',
          'require' => 'SCV',
          'telp' => '0899231314',
+         'deadweight' => 1,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

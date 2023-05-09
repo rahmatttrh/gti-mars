@@ -217,13 +217,16 @@ class ScheduleController extends Controller
          $deviation = null;
       }
 
+      $persen = $schedule->total_weight / $schedule->vessel->deadweight * 100;
+      // dd(round($persen));
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,
          'requests' => $requests,
          'vessels' => $vessel,
          'ports' => $ports,
-         'deviations' => $deviations
+         'deviations' => $deviations,
+         'persen' => round($persen)
          // 'report' => $requests
       ]);
    }

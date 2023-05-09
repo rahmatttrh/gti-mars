@@ -94,6 +94,36 @@
                
             </div>
             <div class="col-md-4">
+               <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      
+                      <div class="col">
+                        <h3 class="card-title mb-1">
+                         Deadweight {{$schedule->vessel->deadweight}} ton
+                        </h3>
+                        <div class="text-muted">
+                          Filled {{$schedule->total_weight}} ton
+                        </div>
+                        <div class="mt-3">
+                          <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                              {{$persen}}%
+                            </div>
+                            <div class="col">
+                              <div class="progress progress-sm">
+                                <div class="progress-bar" style="width: {{$persen}}%" role="progressbar" aria-valuenow="{{$persen}}" aria-valuemin="0" aria-valuemax="100">
+                                  <span class="visually-hidden">25% Complete</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+               </div>
                <div class="card">
                   <div class="card-header">
                      Timeline

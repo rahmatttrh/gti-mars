@@ -233,6 +233,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
       Route::post('deviation/add', [MarineScheduleController::class, 'addDeviation'])->name('schedule.add.deviation');
+      Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
    });
 });
 

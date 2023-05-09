@@ -132,6 +132,7 @@
                         {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
                      , {{$request->origin->name}} to {{$request->destination->name}}
                      </small>
+                     <p><small>Total Weight {{$request->total_weight}} ton</small></p>
                      
                      <div class="mb-3"></div>
                      {{-- @if ($request->status == 0)
@@ -249,6 +250,6 @@
       </div>
    </div>
 
-   <x-modal.activity.select-vessel :schedules="$schedules" :request="$request" />
+   <x-modal.request.select-schedule :schedules="$schedules" :request="$request" />
 
 @endsection

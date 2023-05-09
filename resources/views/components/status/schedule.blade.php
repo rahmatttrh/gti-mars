@@ -24,4 +24,8 @@
       @elseif($schedule->status == 11)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>11 : Complete</div>
    @endif
+
+   @if ($schedule->deviations->where('status', 0)->count() > 0)
+   <div class="badge bg-danger">Deviation Alert!</div>
+   @endif
 </div>
