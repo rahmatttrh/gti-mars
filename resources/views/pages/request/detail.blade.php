@@ -33,18 +33,33 @@
                      @endif
                   @endif
 
-                  @if (auth()->user()->hasRole('logistic'))
+                  @if (auth()->user()->hasRole('department'))
                      @if ($request->status == 00)
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                           Release
-                        </button>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                           Add Cargo
-                        </button>
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                        <!-- Download SVG icon from http://tabler-icons.io/i/send -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                        Release
+                     </button>
+                        @if ($request->type == 1)
+                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                              Add Cargo
+                           </button>
+                        @elseif($request->status == 2)
+                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
+                              <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                              Add Passenger
+                           </button>
+                        @endif
+                     @endif
+                  @endif
+
+                  {{-- @if (auth()->user()->hasRole('logistic'))
+                     @if ($request->status == 00)
+                        
+                        
                      @endif
                   @endif
 
@@ -55,13 +70,9 @@
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                            Release
                         </button>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addPassengerItem">
-                           <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                           Add Passenger
-                        </button>
+                        
                      @endif
-                  @endif
+                  @endif --}}
                   
                   
                   <div class="dropdown">
@@ -70,7 +81,7 @@
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
                        
-                        @if (auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling'))
+                        @if (auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('department'))
                            @if ( $request->status == 202)
                            @else
                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
@@ -87,15 +98,15 @@
                         @endif
                         
                         <div class="dropdown-divider"></div>
-                       
+{{--                        
                         @if ($request->schedule_id)
                            <a class="dropdown-item" href="{{route('schedule.timeline', enkripRambo($request->schedule->id))}}">
                               Timeline 
                            </a>
-                        @endif
+                        @endif --}}
                         
                         <a class="dropdown-item" target="_blank" href="{{route('invoice.request', enkripRambo($request->id))}}">
-                           Print Preview
+                           Preview Invoice
                         </a>
                         
                      </div>

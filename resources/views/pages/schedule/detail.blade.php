@@ -42,11 +42,11 @@
                         </a>
                         @endif
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
+                        {{-- <a class="dropdown-item" href="#">
                            Timeline
-                        </a>
-                        <a class="dropdown-item" href="#">
-                           Print Preview
+                        </a> --}}
+                        <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">
+                           Preview Manifest
                         </a>
                      </div>
                   </div>
@@ -62,7 +62,7 @@
          <div class="row">
             <div class="col-md-8">
                <div class="card">
-                  <div class="card-header bg-secondary">
+                  <div class="card-header bg-info">
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
@@ -71,18 +71,18 @@
                      </h1>
                      {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
                      {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
-                     <div class="text-muted mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
-                     <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div>
                      <div class="text-muted">#Note {{$schedule->remark}}</div>
                   </div>
                   <div class="card-footer">
+                     <div class="text-muted mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
+                     <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div>
                      
                   </div>
                </div>
                {{-- <hr> --}}
                <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
                @if ($requests->count() > 0)
-               <x-schedule.request :requests="$requests" />
+               <x-schedule.request :requests="$requests"  />
                @else
                <div class="card">
                   <div class="card-body">

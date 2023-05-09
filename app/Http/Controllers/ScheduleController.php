@@ -212,7 +212,7 @@ class ScheduleController extends Controller
       if (auth()->user()->hasRole('marine')) {
          $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
-         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>', 1)->get();
+         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } else {
          $deviation = null;
       }

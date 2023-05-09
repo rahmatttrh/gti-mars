@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $juan->assignRole('logistic');
+      $juan->assignRole('department');
 
       $dareza = User::create([
          'name' => 'Dareza Arvian',
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $dareza->assignRole('drilling');
+      $dareza->assignRole('department');
 
       // $logistic = User::create([
       //    'name' => 'Logistic',

@@ -40,9 +40,10 @@ class EmployeeController extends Controller
          'password' => Hash::make('12345678'),
       ]);
 
-      if ($req->department == 2) {
-         $user->assignRole('logistic');
-      }
+      // if ($req->department == 2) {
+      //    $user->assignRole('logistic');
+      // }
+      $user->assignRole('department');
 
 
       return redirect()->back()->with('success', 'Employee data successfully added');

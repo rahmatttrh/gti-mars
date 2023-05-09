@@ -29,6 +29,8 @@ class CreateRequestsTable extends Migration
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();
          $table->string('remark')->nullable();
+         $table->decimal('total_size', 6, 2)->nullable();
+         $table->decimal('total_weight', 6, 2)->nullable();
          $table->dateTime('undo')->nullable();
          $table->string('reason')->nullable();
 

@@ -7,6 +7,7 @@ use App\Http\Controllers\Department\CargoItemController;
 use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
@@ -176,6 +177,10 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('invoice')->group(function () {
       Route::get('/request/{request:id}', [InvoiceController::class, 'request'])->name('invoice.request');
    });
+
+   Route::prefix('document')->group(function () {
+      Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
+   });
 });
 
 // Route::middleware(["auth", "marine"])->group(function () {
@@ -231,7 +236,7 @@ Route::group(['middleware' => ['role:marine']], function () {
    });
 });
 
-Route::group(['middleware' => ['role:logistic|drilling']], function () {
+Route::group(['middleware' => ['role:logistic|drilling|department']], function () {
    Route::prefix('department/request')->group(function () {
       Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
       Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
@@ -245,14 +250,14 @@ Route::group(['middleware' => ['role:logistic|drilling']], function () {
    });
 });
 
-Route::group(['middleware' => ['role:logistic']], function () {
+Route::group(['middleware' => ['role:logistic|department']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
    });
 });
 
-Route::group(['middleware' => ['role:drilling']], function () {
+Route::group(['middleware' => ['role:drilling|department']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
       Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.item.delete');

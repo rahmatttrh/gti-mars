@@ -90,4 +90,10 @@ class User extends Authenticatable
       $party = Party::where('email', $this->email)->first();
       return $party->platform->system;
    }
+
+   public function getDepartment()
+   {
+      $employee = Employee::where('email', $this->email)->first();
+      return $employee->department;
+   }
 }

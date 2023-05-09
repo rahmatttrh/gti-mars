@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Marine;
 use App\Http\Controllers\Controller;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestHistory;
+use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -35,9 +36,15 @@ class MarineRequestController extends Controller
    {
       // dd($req->request_id);
       $request = ModelsRequest::find($req->request_id);
+      $schedule = Schedule::find($req->schedule);
       $request->update([
          'status' => 02,
          'schedule_id' => $req->schedule
+      ]);
+
+      $schedule->update([
+         'total_size' => $schedule->total_size + $request->total_size,
+         'total_weight' => $schedule->total_weight + $request->total_weight
       ]);
 
       return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');

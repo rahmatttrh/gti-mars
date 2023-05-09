@@ -28,6 +28,7 @@ class ScheduleSeeder extends Seeder
          'destination_id' => 6,
          'etd' => $now->addHour(2),
          'eta' => $now->addHour(6),
+
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

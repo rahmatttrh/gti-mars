@@ -30,6 +30,11 @@ class Request extends Model
       return $this->hasMany(CargoItem::class);
    }
 
+   public function passengerItems()
+   {
+      return $this->hasMany(PassengerItem::class);
+   }
+
    public function origin()
    {
       return $this->belongsTo(Port::class);

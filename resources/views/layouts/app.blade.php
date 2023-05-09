@@ -29,7 +29,7 @@
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="d-flex align-items-center">
-                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port'))
+                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
                         <img src="{{asset('img/logo/phe.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                         {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
                         
@@ -82,6 +82,8 @@
                            <div class="btn">
                               @if (auth()->user()->hasRole('superuser'))
                                  SUPERUSER
+                                 @elseif(auth()->user()->hasRole('department'))
+                                 {{auth()->user()->getDepartment()->name}}
                                  @elseif(auth()->user()->hasRole('logistic'))
                                  LOGISTIC
                                  @elseif(auth()->user()->hasRole('drilling'))
@@ -112,6 +114,14 @@
                         <div class="d-none d-xl-block ps-2">
                            <div>Developer </div>
                            <div class="mt-1 small text-muted">Super User</div>
+                        </div>
+                     </a>
+                     @elseif(auth()->user()->hasRole('department'))
+                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
+                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
+                        <div class="d-none d-xl-block ps-2">
+                           <div>{{auth()->user()->name}}</div>
+                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()->name}}</div>
                         </div>
                      </a>
                      @elseif(auth()->user()->hasRole('logistic'))

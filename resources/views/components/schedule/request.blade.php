@@ -15,14 +15,16 @@
                   <dl class="row border-top pt-2">
                      {{-- <dt class="col-2">Date</dt>
                      <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
+                     <dt class="col-12 mb-2"><x-status.request :request="$request" /></dt>
                      <dt class="col-2">Department</dt>
                      <dd class="col-10">: {{$request->department->name}}</dd>
                      <dt class="col-2">Activity</dt>
                      <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
                      <dt class="col-2">Request by</dt>
                      <dd class="col-10">: {{$request->employee->name ?? ''}}</dd>
-                     <dt class="col-2"><x-status.request :request="$request" /></dt>
+                     
                   </dl>
+                  <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
                </div>
             </div>
          </div>
