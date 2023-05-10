@@ -77,9 +77,9 @@ class DepartmentRequestController extends Controller
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
 
-      if (auth()->user()->hasRole('logistic')) {
+      if (auth()->user()->getDepartment()->name == 'Logistic') {
          $acts = Activity::where('type_id', 1)->get();
-      } elseif (auth()->user()->hasRole('drilling')) {
+      } elseif (auth()->user()->getDepartment()->name == 'drilling') {
          $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
       }
       $activities = $acts;

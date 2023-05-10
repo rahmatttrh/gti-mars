@@ -19,7 +19,7 @@
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
                   <dt class="col-3">ETA</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd>
-                  <small># {{$schedule->remark}}</small>
+                  <small># {{$request->remark}}</small>
                </dl>
                @else
                <small>Not Available</small>

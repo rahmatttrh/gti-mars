@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
+use App\Models\Activity;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
 use App\Models\Port;
@@ -16,6 +17,56 @@ use Illuminate\Http\Request;
 
 class MarineScheduleController extends Controller
 {
+   public function plan()
+   {
+
+      $today = Carbon::now();
+      $month = $today->format('m');
+
+      if (auth()->user()->hasRole('vessel')) {
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->orderBy('date', 'asc')->get();
+      } else {
+         $schedules = Schedule::orderBy('date', 'asc')->get();
+      }
+
+      $vessels = Vessel::get();
+      $ports = Port::get();
+
+      // if ($month == 1) {
+      //    $monthName = 'Januari';
+      // } elseif ($month == 2) {
+      //    $monthName = 'Februari';
+      // } elseif ($month == 3) {
+      //    $monthName = 'Maret';
+      // } elseif ($month == 4) {
+      //    $monthName = 'April';
+      // } elseif ($month == 5) {
+      //    $monthName = 'Mei';
+      // } elseif ($month == 6) {
+      //    $monthName = 'Juni';
+      // } elseif ($month == 7) {
+      //    $monthName = 'Juli';
+      // } elseif ($month == 8) {
+      //    $monthName = 'Agustus';
+      // } elseif ($month == 9) {
+      //    $monthName = 'September';
+      // } elseif ($month == 10) {
+      //    $monthName = 'Oktober';
+      // } elseif ($month == 11) {
+      //    $monthName = 'November';
+      // } elseif ($month == 12) {
+      //    $monthName = 'Desember';
+      // }
+      return view('pages.schedule.index', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $month,
+         'monthName' => '',
+         'schedules' => $schedules,
+         'vessels' => $vessels,
+         'ports' => $ports
+      ])->with('i');
+   }
 
    public function create()
    {
@@ -50,6 +101,38 @@ class MarineScheduleController extends Controller
 
 
       return redirect()->route('schedule.plan')->with('success', 'Schedule successfuly added');
+   }
+
+   public function edit($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $ports = Port::get();
+      $vessels = Vessel::get();
+      $activities = Activity::get();
+
+      return view('pages.schedule.edit', [
+         'schedule' => $schedule,
+         'ports' => $ports,
+         'vessels' => $vessels,
+         'activities' => $activities
+      ]);
+   }
+
+   public function update(Request $req)
+   {
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'vessel_id' => $req->vessel,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'etd' => $req->departure_estimasi,
+         'eta' => $req->arrive_estimasi,
+         'remark' => $req->remark
+      ]);
+
+      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule has successfully updated');
    }
 
    public function send($id)

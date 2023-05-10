@@ -108,5 +108,5 @@
       </div>
    </div>
 
-   <x-modal.add-vessel />
+   {{-- <x-modal.add-vessel /> --}}
 @endsection

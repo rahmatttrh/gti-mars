@@ -10,16 +10,23 @@
             @method('PUT')
             <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
             <div class="modal-body">
-               <small class="mb-4">Request</small>
+               <div class="">{{$request->activity->name}} {{$request->description}}</div>
                
-               <div class="mt-3">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}} - {{$request->origin->name}} to {{$request->destination->name}}</div>
-               <div>Total Weight {{$request->total_weight}} ton</div>
+               <div class="">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}} - {{$request->origin->name}} to {{$request->destination->name}}</div>
+               <dl class="row mt-3 border-top pt-2">
+                  <dd class="col-2">Weight</dd>
+                  <dd class="col-10">: {{$request->total_weight}} ton</dd>
+                  <dd class="col-2">Size</dd>
+                  <dd class="col-10">: {{$request->total_size}} m<sup>2</sup></dd>
+               </dl>
+               {{-- <div class="mt-2 border-top pt-2">Total Weight {{$request->total_weight}} ton</div>
+               <div>Total Size {{$request->total_size}} m<sup>2</sup></div> --}}
                {{-- <div class="form-floating mb-3">
                   <input type="text" required class="form-control" id="date" name="date" value="{{$request->date}}" >
                   <label for="station">Date</label>
                </div> --}}
                
-               <div class="form-floating mt-3">
+               <div class="form-floating mt-2 mb-3">
                   <select required name="schedule" id="schedule" class="form-select">
                      <option  disabled selected>Choose</option>
                      {{-- @foreach ($vessels as $vessel)
@@ -50,6 +57,10 @@
                      
                   </select>
                   <label for="origin">Boat</label>
+               </div>
+               <div class="form-floating mb-3">
+                  <input type="text" required class="form-control" id="remark" name="remark" >
+                  <label for="remark">Remark (Optional)</label>
                </div>
             </div>
             

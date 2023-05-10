@@ -37,12 +37,12 @@ class CreateVesselsTable extends Migration
          $table->integer('loa')->nullable();
          $table->integer('beam')->nullable();
          $table->decimal('depth', 6, 2)->nullable();
-         $table->decimal('max_draft', 6, 2)->nullable();
+         $table->decimal('maxdraft', 6, 2)->nullable();
          $table->decimal('deadweight', 6, 2)->nullable();
          $table->decimal('gross', 6, 2)->nullable();
-         $table->decimal('desk_space', 6, 2)->nullable();
-         $table->decimal('deck_strength', 6, 2)->nullable();
-         $table->decimal('deck_cargo_capacity', 6, 2)->nullable();
+         $table->decimal('deckspace', 6, 2)->nullable();
+         $table->decimal('deckstrength', 6, 2)->nullable();
+         $table->decimal('deckcapacity', 6, 2)->nullable();
 
          $table->string('main_engine')->nullable();
          $table->string('no_engine')->nullable();

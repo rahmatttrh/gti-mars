@@ -79,12 +79,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix('schedule')->group(function () {
       Route::get('fixed', [ScheduleController::class, 'fixed'])->name('schedule.fixed');
-      Route::get('plann', [ScheduleController::class, 'plan'])->name('schedule.plan');
-
       Route::get('create-old', [ScheduleController::class, 'createOld'])->name('schedule.create.old');
-
-      Route::get('edit/{schedule:id}', [ScheduleController::class, 'edit'])->name('schedule.edit');
-      Route::put('update', [ScheduleController::class, 'update'])->name('schedule.update');
 
       Route::get('detail/{schedule:id}', [ScheduleController::class, 'detail'])->name('schedule.detail');
 
@@ -101,15 +96,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('timeline/{schedule:id}', [ScheduleController::class, 'timeline'])->name('schedule.timeline');
    });
    Route::prefix('vessel')->group(function () {
-      Route::get('index', [VesselController::class, 'index'])->name('vessel');
-      Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
-
-      Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
-      Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
-      Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
-      Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
-
       Route::get('history/{vessel:id}/{month}', [VesselController::class, 'history'])->name('vessel.history');
    });
    // Route::prefix('port')->group(function () {
@@ -229,11 +216,23 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
    Route::prefix('schedule')->group(function () {
+      Route::get('plan', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
       Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
+      Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
+      Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
+
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
       Route::post('deviation/add', [MarineScheduleController::class, 'addDeviation'])->name('schedule.add.deviation');
       Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
+   });
+   Route::prefix('vessel')->group(function () {
+      Route::get('index', [VesselController::class, 'index'])->name('vessel');
+      Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
+      Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
+      Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
+      Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
+      Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
    });
 });
 

@@ -18,40 +18,40 @@
             </div>
             <!-- Page title actions -->
             <div class="col-auto ms-auto d-print-none">
-            <div class="btn-list">
-             
-               <div class="dropdown">
-                  <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                  Option
-                  </button>
-                  <div class="dropdown-menu dropdown-menu-end">
-                     <a class="dropdown-item" href="#">
-                        Edit
-                     </a>
-                     <a class="dropdown-item" href="#">
-                        Delete
-                     </a>
-                     
-                  </div>
-               </div>
-                  {{-- <div class="dropdown">
+               <div class="btn-list">
+               
+                  <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                     Actions
+                     Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
+                        <a class="dropdown-item" href="#">
+                           Edit
+                        </a>
+                        <a class="dropdown-item" href="#">
+                           Delete
+                        </a>
                         
-                        <a class="dropdown-item" href="#">
-                           Update
-                        </a>
-                        <a class="dropdown-item" href="#">
-                           Timeline
-                        </a>
-                        <a class="dropdown-item" href="#">
-                           Print Preview
-                        </a>
                      </div>
-                  </div> --}}
-            </div>
+                  </div>
+                     {{-- <div class="dropdown">
+                        <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                        Actions
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end">
+                           
+                           <a class="dropdown-item" href="#">
+                              Update
+                           </a>
+                           <a class="dropdown-item" href="#">
+                              Timeline
+                           </a>
+                           <a class="dropdown-item" href="#">
+                              Print Preview
+                           </a>
+                        </div>
+                     </div> --}}
+               </div>
             </div>
          </div>
       </div>
@@ -66,7 +66,6 @@
                      <div class="col-md-8">
                         <div class="row">
                            <div class="col-md-12">
-                              
                               <div class="form-floating mb-3">
                                  <input type="text" class="form-control" value="{{$vessel->name}}" name="name" id="name" placeholder="Your vessel name">
                                  <label for="name">Vessel Name</label>
@@ -152,8 +151,8 @@
                                  <label for="depth">Depth (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="max_draft" id="max_draft" placeholder="Your vessel limit cargo">
-                                 <label for="max_draft">Maximum Draft (meter)</label>
+                                 <input type="number" class="form-control" name="maxdraft" id="maxdraft" placeholder="Your vessel limit cargo">
+                                 <label for="maxdraft">Maximum Draft (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
                                  <input type="text" class="form-control" name="deadweight" id="deadweight" placeholder="Your vessel limit cargo">
@@ -164,17 +163,17 @@
                                  <label for="gross">Gross Tonnage / Net Tonnage (ton)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="desk_space" id="desk_space" placeholder="Your vessel limit cargo">
-                                 <label for="desk_space">Clear Deck Space (m2)</label>
+                                 <input type="number" class="form-control" name="deckspace" id="deckspace" placeholder="Your vessel limit cargo">
+                                 <label for="deckspace">Clear Deck Space (m2)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="deck_strength" id="deck_strength" placeholder="Your vessel limit cargo">
-                                 <label for="deck_strength">Deck Strength (t/m2)</label>
+                                 <input type="number" class="form-control" name="deckstrength" id="deckstrength" placeholder="Your vessel limit cargo">
+                                 <label for="deckstrength">Deck Strength (t/m2)</label>
                               </div>
                               
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="deck_cargo_capacity" id="deck_cargo_capacity" placeholder="Your vessel limit cargo">
-                                 <label for="deck_cargo_capacity">Deck Cargo Capacity (ton)</label>
+                                 <input type="number" class="form-control" name="deckcapacity" id="deckcapacity" placeholder="Your vessel limit cargo">
+                                 <label for="deckcapacity">Deck Cargo Capacity (ton)</label>
                               </div>
                               <div class="form-floating mb-3">
                                  <input type="text" class="form-control" name="main_engine" id="main_engine" placeholder="Your vessel limit cargo">

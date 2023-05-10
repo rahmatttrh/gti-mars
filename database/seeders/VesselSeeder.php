@@ -30,8 +30,8 @@ class VesselSeeder extends Seeder
          'operator' => 'PHE',
          'portname' => 'Jakarta',
          'build' => '2004',
-         'deck_cargo_capacity' => 500,
-         'desk_space' => 30,
+         'deckcapacity' => 500,
+         'deckspace' => 30,
          'deadweight' => 3.00,
          'dpa_name' => 'Ahmad Juantoro',
          'dpa_telp' => '089991213131',
@@ -45,8 +45,8 @@ class VesselSeeder extends Seeder
          'type' => 'Anchor Handling Tug Supply',
          'require' => 'SCV',
          'telp' => '0899231314',
-         'deck_cargo_capacity' => 500,
-         'desk_space' => 30,
+         'deckcapacity' => 500,
+         'deckspace' => 30,
          'deadweight' => 1,
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -60,7 +60,9 @@ class VesselSeeder extends Seeder
          'telp' => '0899231314',
          'type' => 'Tug Boat',
          'flag' => 'Indonesia',
-         'deck_cargo_capacity' => 350,
+         'deckcapacity' => 350,
+         'deckspace' => 15,
+         'deadweight' => 2.00,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -84,6 +86,8 @@ class VesselSeeder extends Seeder
          'name' => 'Hafar Jupiter',
          'type' => 'Tug Boat',
          'email' => 'hj@gmail.com',
+         'deckspace' => 23,
+         'deadweight' => 2.5,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

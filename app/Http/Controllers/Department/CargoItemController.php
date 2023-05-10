@@ -36,6 +36,12 @@ class CargoItemController extends Controller
    {
       $dekripId = dekripRambo($id);
       $cargoItem = CargoItem::find($dekripId);
+      $request = ModelsRequest::find($cargoItem->request_id);
+
+      $request->update([
+         'total_size' => $request->total_size - $cargoItem->size,
+         'total_weight' => $request->total_weight -  $cargoItem->weight
+      ]);
       $cargoItem->delete();
       return redirect()->back()->with('success', 'Item successfully deleted');
    }

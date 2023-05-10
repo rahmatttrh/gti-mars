@@ -145,7 +145,7 @@
                     <div class="row align-items-center">
                       <div class="col">
                         <div class="text-muted">
-                           Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} ton
+                           Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} (m<sup>2</sup>)
                         </div>
                         <div class="mt-2">
                           <div class="row g-2 align-items-center">

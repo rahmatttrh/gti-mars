@@ -82,18 +82,17 @@
                      <div class="dropdown-menu dropdown-menu-end">
                        
                         @if (auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('department'))
-                           @if ( $request->status == 202)
-                           @else
-                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
-                              Cancel
-                           </a>
-                           @endif
                            @if ($request->status == 00)
                               
                               <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a>
                               <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteRequest">
                                  Delete
                               </a>
+                              @elseif($request->status == 1)
+                              <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#undoRequest">
+                                 Cancel
+                              </a>
+                              @elseif($request->status == 202)
                            @endif
                         @endif
                         
@@ -106,7 +105,7 @@
                         @endif --}}
                         
                         <a class="dropdown-item" target="_blank" href="{{route('invoice.request', enkripRambo($request->id))}}">
-                           Preview Invoice
+                           Preview
                         </a>
                         
                      </div>
@@ -121,9 +120,12 @@
          <div class="row">
             <div class="col-md-8">
                <div class="card mb-3">
+                  <div class="card-header">
+                     <x-status.request  :request="$request" />
+                  </div>
                   <div class="card-body">
-                     <h1>{{$request->code}}</h1>
-                     
+                     {{-- <h1>{{$request->code}}</h1> --}}
+                     <small>{{$request->code}}</small><br>
                      <small> {{$request->department->name}} Department</small>
                      <h4 class="card-title m-0 ">
                         {{$request->activity->name ?? ''}}  {{$request->description}}
@@ -132,15 +134,15 @@
                         {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
                      , {{$request->origin->name}} to {{$request->destination->name}}
                      </small>
-                     <p><small>Total Weight {{$request->total_weight}} ton</small></p>
+                     {{-- <p><small>Total Weight {{$request->total_weight}} ton</small></p> --}}
                      
-                     <div class="mb-3"></div>
+                     {{-- <div class="mb-3"></div> --}}
                      {{-- @if ($request->status == 0)
                         <div class="badge">STATUS : 00</div>
                         @elseif($request->status == 1)
                         <div class="badge">STATUS : 01</div>
                      @endif --}}
-                     <x-status.request  :request="$request" />
+                     
                     
                      <small></small>
                   </div>
@@ -153,8 +155,8 @@
             </div>
             <div class="col-md-4">
                {{-- @if (auth()->user()->hasRole('marine')) --}}
-                  @if ($request->status >= 2)
-                  <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" />
+                  @if ($request->status >= 2 && $request->status != 202)
+                     <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
                   {{-- @elseif ($request->status >= 3)
                   <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" /> --}}
                   @endif

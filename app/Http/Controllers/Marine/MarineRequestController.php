@@ -40,13 +40,17 @@ class MarineRequestController extends Controller
       $schedule = Schedule::find($req->schedule);
       $vessel = Vessel::find($schedule->vessel_id);
       $weight = $schedule->total_weight + $request->total_weight;
+      $size = $schedule->total_size + $request->total_size;
 
       if ($weight > $vessel->deadweight) {
          return redirect()->back()->with('warning', 'Failed, Total Weight (' . $request->total_weight  .  ' ton) melebihi Deadweight Vessel (' . $schedule->total_weight  . 'ton /' . $vessel->deadweight . ' ton)');
+      } elseif ($size > $vessel->deckspace) {
+         return redirect()->back()->with('warning', 'Failed, Total Size (' . $request->total_size  .  ') melebihi Deck Space Vessel (' . $schedule->total_size  . ' /' . $vessel->deckspace . ')');
       } else {
          $request->update([
             'status' => 02,
-            'schedule_id' => $req->schedule
+            'schedule_id' => $req->schedule,
+            'remark' => $req->remark
          ]);
 
          $schedule->update([
