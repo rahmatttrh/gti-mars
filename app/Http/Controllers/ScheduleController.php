@@ -217,7 +217,8 @@ class ScheduleController extends Controller
          $deviation = null;
       }
 
-      $persen = $schedule->total_weight / $schedule->vessel->deadweight * 100;
+      $persenWeight = $schedule->total_weight / $schedule->vessel->deadweight * 100;
+      $persenSize = $schedule->total_size / $schedule->vessel->desk_space * 100;
       // dd(round($persen));
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
@@ -226,7 +227,8 @@ class ScheduleController extends Controller
          'vessels' => $vessel,
          'ports' => $ports,
          'deviations' => $deviations,
-         'persen' => round($persen)
+         'persenWeight' => round($persenWeight),
+         'persenSize' => round($persenSize)
          // 'report' => $requests
       ]);
    }

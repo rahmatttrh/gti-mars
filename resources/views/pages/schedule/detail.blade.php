@@ -94,33 +94,74 @@
                
             </div>
             <div class="col-md-4">
+               {{-- <div class="row">
+                  <div class="col-md-6">
+                     <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="row align-items-center">
+                            <div class="col-auto">
+                              <div class="chart-sparkline chart-sparkline-square" id="sparkline-sales"></div>
+                            </div>
+                            <div class="col">
+                              <div class="font-weight-medium">
+                                132 Sales
+                              </div>
+                              <div class="text-muted">
+                                12 waiting payments
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                     </div>
+                  </div>
+               </div> --}}
                <div class="card mb-3">
                   <div class="card-body">
                     <div class="row align-items-center">
-                      
                       <div class="col">
-                        <h3 class="card-title mb-1">
-                         Deadweight {{$schedule->vessel->deadweight}} ton
-                        </h3>
                         <div class="text-muted">
-                          Filled {{$schedule->total_weight}} ton
+                           Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton
                         </div>
-                        <div class="mt-3">
+                        <div class="mt-2">
                           <div class="row g-2 align-items-center">
                             <div class="col-auto">
-                              {{$persen}}%
+                              {{$persenWeight}}%
                             </div>
                             <div class="col">
                               <div class="progress progress-sm">
-                                <div class="progress-bar" style="width: {{$persen}}%" role="progressbar" aria-valuenow="{{$persen}}" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="visually-hidden">25% Complete</span>
+                                <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
+                                  {{-- <span class="visually-hidden">25% Complete</span> --}}
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
                       </div>
-                      
+                    </div>
+                  </div>
+               </div>
+               <div class="card mb-3">
+                  <div class="card-body">
+                    <div class="row align-items-center">
+                      <div class="col">
+                        <div class="text-muted">
+                           Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} ton
+                        </div>
+                        <div class="mt-2">
+                          <div class="row g-2 align-items-center">
+                            <div class="col-auto">
+                              {{$persenSize}}%
+                            </div>
+                            <div class="col">
+                              <div class="progress progress-sm">
+                                <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
+                                  {{-- <span class="visually-hidden">25% Complete</span> --}}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                </div>
@@ -170,3 +211,43 @@
    
 
 @endsection
+
+@push('capacity')
+   <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      	window.ApexCharts && (new ApexCharts(document.getElementById('sparkline-sales'), {
+      		chart: {
+      			type: "radialBar",
+      			fontFamily: 'inherit',
+      			height: 40,
+      			width: 40,
+      			animations: {
+      				enabled: false
+      			},
+      			sparkline: {
+      				enabled: true
+      			},
+      		},
+      		tooltip: {
+      			enabled: false,
+      		},
+      		plotOptions: {
+      			radialBar: {
+      				hollow: {
+      					margin: 0,
+      					size: '75%'
+      				},
+      				track: {
+      					margin: 0
+      				},
+      				dataLabels: {
+      					show: false
+      				}
+      			}
+      		},
+      		colors: ["#206bc4"],
+      		series: [56],
+      	})).render();
+      });
+   </script>
+@endpush

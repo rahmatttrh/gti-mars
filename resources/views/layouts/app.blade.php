@@ -373,6 +373,8 @@
 
       @stack('ports')
 
+      @stack('capacity')
+
       @if (session('success'))
          <script>
             $(document).ready(function() {

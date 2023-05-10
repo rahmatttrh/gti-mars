@@ -107,10 +107,15 @@ class MarineScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
-
+      $schedule = Schedule::find($request->schedule_id);
       $request->update([
          'status' => 1,
          'schedule_id' => null
+      ]);
+
+      $schedule->update([
+         'total_weight' => $schedule->total_weight - $request->total_weight,
+         'total_size' => $schedule->total_size - $request->total_size
       ]);
 
       return redirect()->back()->with('success', 'Request Activity successfully removed from list');
