@@ -35,5 +35,12 @@ class DepartmentSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      DB::table('departments')->insert([
+         'name' => 'Operation',
+         'code' => 'OPS',
+         'email' => 'operation@gmail.com',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
    }
 }

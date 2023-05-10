@@ -15,6 +15,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\Marine\MarineDeviationController;
 use App\Http\Controllers\Marine\MarineRequestController;
 use App\Http\Controllers\Marine\MarineScheduleController;
 use App\Http\Controllers\MarineController;
@@ -202,8 +203,9 @@ Route::group(['middleware' => ['role:marine']], function () {
 
    Route::prefix('employee')->group(function () {
       Route::get('/', [EmployeeController::class, 'index'])->name('employee');
-      Route::post('/store', [EmployeeController::class, 'store'])->name('employee.store');
-      Route::get('/delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+      Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
+      Route::put('update', [EmployeeController::class, 'update'])->name('employee.update');
+      Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 
    Route::prefix('dashboard')->group(function () {
@@ -223,7 +225,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
 
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
-      Route::post('deviation/add', [MarineScheduleController::class, 'addDeviation'])->name('schedule.add.deviation');
+
       Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
    });
    Route::prefix('vessel')->group(function () {
@@ -233,6 +235,10 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
+   });
+   Route::prefix('deviation')->group(function () {
+      Route::post('add', [MarineDeviationController::class, 'add'])->name('schedule.add.deviation');
+      Route::get('delete/{deviation:id}', [MarineDeviationController::class, 'delete'])->name('schedule.delete.deviation');
    });
 });
 

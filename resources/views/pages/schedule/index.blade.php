@@ -13,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  BOAT PLANNING &nbsp;  <span class="text-uppercase text-info"> {{$monthName}}</span>
+                  SCHEDULE PLAN &nbsp;  <span class="text-uppercase text-info"> {{$monthName}}</span>
                </h2>
             </div>
             <!-- Page title actions -->
@@ -105,9 +105,10 @@
                      <tr>
                         <th >No.</th>
                         <th>Date</th>
-                        <th>Location (Form - To)</th>
+                        <th>Route</th>
                         <th>Assignment Boat</th>
                         <th>Activity</th>
+                        <th>Capacity</th>
                         <th>Status</th>
                         {{-- <th></th> --}}
                      </tr>
@@ -126,6 +127,9 @@
                            {{$schedule->requests()->count()}}
                         </td>
                         <td class="text-muted">
+                           {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                        </td>
+                        <td class="text-muted">
                            <x-status.schedule :schedule="$schedule" />
                         </td>
                         
@@ -142,6 +146,6 @@
       </div>
    </div>
 
-   <x-modal.add-schedule :vessels="$vessels" :ports="$ports" :type="$type" />
+   {{-- <x-modal.add-schedule :vessels="$vessels" :ports="$ports" :type="$type" /> --}}
    {{-- <x-modal.select-month /> --}}
 @endsection

@@ -110,7 +110,7 @@
                                           {{$employee->name}}
                                        </a>
                                        <div class="dropdown-menu dropdown-menu-end">
-                                          <a class="dropdown-item" href="#">
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditEmployee_{{$employee->id}}">
                                              Edit
                                           </a>
                                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployee_{{$employee->id}}">
@@ -126,6 +126,7 @@
                               </tr>
 
                               <x-modal.employee.delete :employee="$employee" />
+                              <x-modal.employee.edit :employee="$employee" :departments="$departments" :ports="$ports" />
                            @endforeach
                         </tbody>
                      </table>
@@ -156,5 +157,4 @@
          </div> --}}
       </div>
    </div>
-   <x-modal.add-port />
 @endsection

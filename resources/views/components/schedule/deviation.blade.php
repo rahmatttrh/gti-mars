@@ -27,13 +27,11 @@
                            <dt class="col-4">Complete</dt>
                            <dd class="col-8">: {{$dev->report->complete ? \Carbon\Carbon::parse($dev->report->complete)->format('H:i ') : ''}}</dd>
                            @endif
-                           @if (auth()->user()->hasRole('vessel'))
-                              @if ($dev->status == 1)
-                                 <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-arrive-{{$dev->id}}">Arrive</button>
-                                 @elseif($dev->status == 2)
-                                 <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-complete-{{$dev->id}}">Complete</button>
+                           
+                              @if ($dev->status == 0)
+                                 <button class="btn mt-2 btn-small btn-danger" data-bs-toggle="modal" data-bs-target="#modal-deviation-delete-{{$dev->id}}">Delete</button>
+                                 
                               @endif
-                           @endif
                         </dl>
                      </div>
                   </div>
@@ -41,6 +39,7 @@
             </div>
             <x-modal.deviation.arrive :deviation="$dev" />
             <x-modal.deviation.complete :deviation="$dev" />
+            <x-modal.deviation.delete :deviation="$dev" />
          @endforeach
       @else
       <div class="card">

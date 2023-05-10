@@ -16,19 +16,17 @@
                      {{-- <dt class="col-2">Date</dt>
                      <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
                      {{-- <dt class="col-12 mb-2"><x-status.request :request="$request" /></dt> --}}
-                     <dt class="col-2">Department</dt>
-                     <dd class="col-10">: {{$request->department->name}}</dd>
-                     <dt class="col-2">Activity</dt>
+                     <dd class="col-2">User</dd>
+                     <dd class="col-10">: {{$request->department->name}} / {{$request->employee->name ?? ''}}</dd>
+                     <dd class="col-2">Activity</dd>
                      <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
-                     <dt class="col-2">Request by</dt>
-                     <dd class="col-10">: {{$request->employee->name ?? ''}}</dd>
-                     
                   </dl>
                   <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
-                  <div class="mt-2"></div>
-                     <a class="mt-2" href="#" data-bs-toggle="modal" data-bs-target="#remove-request-{{$request->id}}">
-                     Remove
-                  </a>
+                  <div class="mt-2 mb-2">
+                     <a class="" href="#" data-bs-toggle="modal" data-bs-target="#remove-request-{{$request->id}}">
+                        <small>Remove from list</small> 
+                     </a>
+                  </div>
                </div>
             </div>
          </div>

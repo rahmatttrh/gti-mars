@@ -49,6 +49,25 @@ class EmployeeController extends Controller
       return redirect()->back()->with('success', 'Employee data successfully added');
    }
 
+   public function update(Request $req)
+   {
+      $employee = Employee::find($req->employee);
+      $user = User::where('email', $employee)->first();
+      $employee->update([
+         'department_id' => $req->department,
+         'port_id' => $req->port,
+         'name' => $req->name,
+         // 'email' => $req->email,
+         'ekstensi' => $req->ekstensi
+      ]);
+
+      $user->update([
+         'name' => $req->name
+      ]);
+
+      return redirect()->back()->with('success', 'Employee data successfully updated');
+   }
+
 
    public function delete($id)
    {

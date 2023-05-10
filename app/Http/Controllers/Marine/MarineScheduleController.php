@@ -166,25 +166,7 @@ class MarineScheduleController extends Controller
       return redirect()->back()->with('success', 'Schedule successfully assign to' . $vessel->name);
    }
 
-   public function addDeviation(Request $req)
-   {
-      $req->validate([]);
-      $now = Carbon::now();
 
-      $deviation = Deviation::create([
-         'status' => 0,
-         'schedule_id' => $req->schedule,
-         'port_id' => $req->port,
-         'desc' => $req->desc
-      ]);
-
-      DeviationReport::create([
-         'deviation_id' => $deviation->id,
-         'assign' => $now
-      ]);
-
-      return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
-   }
 
    public function removeRequest($id)
    {
