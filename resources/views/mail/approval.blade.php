@@ -100,8 +100,8 @@
                                  {{-- <td style="width:50px;">
                                     <img alt="image description" height="auto" src="https://codedmails.com/images/logo-circle.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td> --}}
-                                 <td style="width:50px;">
-                                    <img alt="image description" height="auto" src="{{asset('img/logo/phe.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
+                                 <td style="width:230px;">
+                                    <img alt="image description" height="auto" src="{{asset('img/draw/notification.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td>
                               </tr>
                            </tbody>
