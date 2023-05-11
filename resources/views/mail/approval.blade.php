@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
-   <title> Welcome to Coded Mails </title>
+   <title> </title>
    <!--[if !mso]><!-- -->
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    <!--<![endif]-->
@@ -108,13 +108,13 @@
                         </table>
                         </td>
                      </tr>
-                   <tr>
+                   {{-- <tr>
                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
                          <h1 style="margin: 0; font-size: 24px; line-height: normal; font-weight: bold;"> DSP-Notification </h1>
                        </div>
                      </td>
-                   </tr>
+                   </tr> --}}
                  </tbody></table>
                </div>
              </td>
