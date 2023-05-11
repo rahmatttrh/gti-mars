@@ -74,7 +74,10 @@
                            Create
                         </a>
                         @endif --}}
-                        
+                        <a class="dropdown-item"  href="{{route('test.email')}}">
+                           Tes Email
+                        </a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item"  href="/">
                            Chart
                         </a>

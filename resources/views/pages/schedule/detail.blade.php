@@ -82,7 +82,7 @@
                {{-- <hr> --}}
                <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
                @if ($requests->count() > 0)
-               <x-schedule.request :requests="$requests"  />
+               <x-schedule.request :requests="$requests" :schedule="$schedule" />
                @else
                <div class="card">
                   <div class="card-body">

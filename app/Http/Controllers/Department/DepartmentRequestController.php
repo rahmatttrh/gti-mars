@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApprovalEmail;
+use App\Mail\NotificationEmail;
 use App\Models\Activity;
 use App\Models\CargoItem;
 use App\Models\Department;
@@ -15,6 +17,7 @@ use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DepartmentRequestController extends Controller
 {
@@ -143,9 +146,23 @@ class DepartmentRequestController extends Controller
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
 
-      $request->update([
-         'status' => 01
-      ]);
+      $activityName = $request->activity->name . ' ' . $request->description;
+
+      $data = [
+         'to' => 'Marine',
+         'from' => $request->department->name,
+         'subject' => 'Request Activity Approval',
+         'request' => $request,
+         'activityName' => $activityName,
+         'cargos' => $request->cargoItems,
+         'link' => route('request.detail', enkripRambo($request->id))
+      ];
+      Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
+      // return redirect()->back()->with('success', 'Email has sent');
+
+      // $request->update([
+      //    'status' => 01
+      // ]);
 
       return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
    }

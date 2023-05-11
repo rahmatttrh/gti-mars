@@ -8,6 +8,7 @@ use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
@@ -48,6 +49,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+   Route::get('send-email', [EmailController::class, 'test'])->name('test.email');
+
    Route::prefix('platform')->group(function () {
       Route::get('/', [PlatformController::class, 'index'])->name('platform');
       Route::get('/create', [PlatformController::class, 'create'])->name('platform.create');
