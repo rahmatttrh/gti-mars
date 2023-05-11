@@ -149,20 +149,20 @@ class DepartmentRequestController extends Controller
       $activityName = $request->activity->name . ' ' . $request->description;
 
       $data = [
-         'to' => 'Marine',
-         'from' => $request->department->name,
+         'to' => 'Marine Department',
+         'from' => $request->department->name . ' Department',
          'subject' => 'Request Activity Approval',
          'request' => $request,
          'activityName' => $activityName,
          'cargos' => $request->cargoItems,
          'link' => route('request.detail', enkripRambo($request->id))
       ];
-      Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
+      Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
       // return redirect()->back()->with('success', 'Email has sent');
 
-      // $request->update([
-      //    'status' => 01
-      // ]);
+      $request->update([
+         'status' => 01
+      ]);
 
       return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
    }
