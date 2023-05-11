@@ -168,11 +168,14 @@
                      </td>
                    </tr>
                    <tr>
-                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                       <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#2149fa;">
-                         <p style="margin: 0;">Contains {{$data['cargos']->count()}} Cargo items. </p>
-                       </div>
-                     </td>
+                     @if ($data['cargos'])
+                        <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                           <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#2149fa;">
+                           <p style="margin: 0;">Contains {{$data['cargos']->count()}} Cargo items. </p>
+                           </div>
+                        </td>
+                     @endif
+                     
                    </tr>
                    <tr>
                      <td align="right" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">

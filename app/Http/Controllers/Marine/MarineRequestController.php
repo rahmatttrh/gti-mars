@@ -52,16 +52,16 @@ class MarineRequestController extends Controller
 
 
 
-         // $request->update([
-         //    'status' => 02,
-         //    'schedule_id' => $req->schedule,
-         //    'remark' => $req->remark
-         // ]);
+         $request->update([
+            'status' => 02,
+            'schedule_id' => $req->schedule,
+            'remark' => $req->remark
+         ]);
 
-         // $schedule->update([
-         //    'total_size' => $schedule->total_size + $request->total_size,
-         //    'total_weight' => $schedule->total_weight + $request->total_weight
-         // ]);
+         $schedule->update([
+            'total_size' => $schedule->total_size + $request->total_size,
+            'total_weight' => $schedule->total_weight + $request->total_weight
+         ]);
 
          $body = $request->activity->name . ' ' . $request->description . ' has successfully set on schedule vessel ' . $schedule->vessel->name . ' at ' . Carbon::parse($schedule->date)->format('d/m/Y');
 
@@ -71,10 +71,10 @@ class MarineRequestController extends Controller
             'subject' => 'Request Activity Progress',
             'request' => $request,
             'body' => $body,
-            'cargos' => $request->cargoItems,
+            'cargos' => null,
             'link' => route('request.detail', enkripRambo($request->id))
          ];
-         Mail::to("develop@gmail.com")->send(new ApprovalEmail($data));
+         Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
 
 
 
