@@ -163,7 +163,7 @@
                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:bold;line-height:24px;text-align:left;color:#2149fa;">
                          {{-- <p class="date" style="margin: 0; margin-bottom: 5px; font-size: 16px;">INFO</p> --}}
-                         <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">{{$data['activityName']}}</h2>
+                         <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">{{$data['body']}}</h2>
                        </div>
                      </td>
                    </tr>

@@ -59,7 +59,7 @@
                   <label for="origin">Boat</label>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="remark" name="remark" >
+                  <input type="text" class="form-control" id="remark" name="remark" >
                   <label for="remark">Remark (Optional)</label>
                </div>
             </div>
