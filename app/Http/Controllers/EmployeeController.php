@@ -104,9 +104,9 @@ class EmployeeController extends Controller
       $employee = Employee::find($dekripId);
       $user = User::where('email', $employee->email)->first();
 
-      $request = ModelsRequest::where('employee_id', $employee->id)->get();
+      $requests = ModelsRequest::where('employee_id', $employee->id)->get();
       // dd($request->count());
-      if ($request) {
+      if ($requests->count() > 0) {
          return redirect()->back()->with('warning', 'Failed, Employee has Request Activity');
       } else {
          $employee->delete();
