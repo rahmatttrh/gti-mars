@@ -47,7 +47,7 @@
                               <select required name="department" id="department" class="form-select">
                                  <option  disabled selected>Choose</option>
                                  @foreach ($departments as $department)
-                                    <option value="{{$department->id}}">{{$department->name}}</option>
+                                    <option  {{old('department') == $department->id ? 'selected' : ''}} value="{{$department->id}}">{{$department->name}}</option>
                                  @endforeach
                               </select>
                               <label for="department">Department</label>
@@ -58,7 +58,7 @@
                               <select required name="port" id="port" class="form-select">
                                  <option  disabled selected>Choose</option>
                                  @foreach ($ports as $port)
-                                    <option value="{{$port->id}}">{{$port->name}}</option>
+                                    <option {{old('port') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                  @endforeach
                               </select>
                               <label for="port">Location</label>
@@ -66,15 +66,21 @@
                         </div>
                      </div>
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="name" name="name" >
+                        <input type="text" required class="form-control" id="name" name="name" value="{{old('name')}}" >
                         <label for="name">Name</label>
+                        @error('name')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                      <div class="form-floating mb-3">
-                        <input type="email" required class="form-control" id="email" name="email" >
+                        <input type="email" required class="form-control" id="email" name="email" value="{{old('email')}}">
                         <label for="email">Email</label>
+                        @error('email')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
                      </div>
                      <div class="form-floating mb-3">
-                        <input type="string" required class="form-control" id="ekstensi" name="ekstensi" >
+                        <input type="string" required class="form-control" id="ekstensi" name="ekstensi" value="{{old('ekstensi')}}">
                         <label for="ekstensi">Ekstensi</label>
                      </div>
                   </div>

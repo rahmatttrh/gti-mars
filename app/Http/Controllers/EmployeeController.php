@@ -6,6 +6,7 @@ use App\Mail\WelcomeEmail;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Port;
+use App\Models\Request as ModelsRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,9 @@ class EmployeeController extends Controller
 
    public function store(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'email' => 'unique:users'
+      ]);
       $employee = Employee::create([
          'department_id' => $req->department,
          'port_id' => $req->port,
@@ -90,10 +93,16 @@ class EmployeeController extends Controller
       $dekripId = dekripRambo($id);
       $employee = Employee::find($dekripId);
       $user = User::where('email', $employee->email)->first();
-      $employee->delete();
-      $user->delete();
 
+      $request = ModelsRequest::where('employee_id', $employee->id)->get();
+      // dd($request->count());
+      if ($request) {
+         return redirect()->back()->with('warning', 'Failed, Employee has Request Activity');
+      } else {
+         $employee->delete();
+         $user->delete();
 
-      return redirect()->back()->with('success', 'Employee data successfully deleted');
+         return redirect()->back()->with('success', 'Employee data successfully deleted');
+      }
    }
 }
