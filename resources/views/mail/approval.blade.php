@@ -101,20 +101,20 @@
                                     <img alt="image description" height="auto" src="https://codedmails.com/images/logo-circle.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td> --}}
                                  <td style="width:230px;">
-                                    <img alt="image description" height="auto" src="{{asset('img/draw/notification.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
+                                    <img alt="image description" height="auto" src="{{$data['img']}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td>
                               </tr>
                            </tbody>
                         </table>
                         </td>
                      </tr>
-                   {{-- <tr>
+                   <tr>
                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
-                         <h1 style="margin: 0; font-size: 24px; line-height: normal; font-weight: bold;"> DSP-Notification </h1>
+                         <h1 style="margin: 0; font-size: 24px; line-height: normal; font-weight: bold;"> {{$data['subject']}} </h1>
                        </div>
                      </td>
-                   </tr> --}}
+                   </tr>
                  </tbody></table>
                </div>
              </td>
@@ -140,7 +140,7 @@
                    <tr>
                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
-                         <p style="margin: 0;">We have some {{$data['subject']}} from {{$data['from']}} .</p>
+                         <p style="margin: 0;">You have a {{$data['subject']}} from {{$data['from']}} .</p>
                        </div>
                      </td>
                    </tr>
@@ -163,7 +163,7 @@
                      <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:bold;line-height:24px;text-align:left;color:#2149fa;">
                          {{-- <p class="date" style="margin: 0; margin-bottom: 5px; font-size: 16px;">INFO</p> --}}
-                         <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">{{$data['body']}}</h2>
+                         <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">{!!$data['body']!!}</h2>
                        </div>
                      </td>
                    </tr>
@@ -172,6 +172,14 @@
                         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                            <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#2149fa;">
                            <p style="margin: 0;">Contains {{$data['cargos']->count()}} Cargo items. </p>
+                           </div>
+                        </td>
+                     @endif
+
+                     @if ($data['activities'])
+                        <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                           <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#2149fa;">
+                           <p style="margin: 0;">Contains {{$data['activities']->count()}} Activities. </p>
                            </div>
                         </td>
                      @endif

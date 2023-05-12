@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApprovalEmail;
 use App\Models\Activity;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
@@ -14,6 +15,7 @@ use App\Models\Request as ModelsRequest;
 use App\Models\Type;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class MarineScheduleController extends Controller
 {
@@ -143,25 +145,42 @@ class MarineScheduleController extends Controller
 
       $now = Carbon::now();
 
-      foreach ($schedule->requests as $req) {
-         $req->update([
-            'status' => 3
-         ]);
-      }
+      // foreach ($schedule->requests as $req) {
+      //    $req->update([
+      //       'status' => 3
+      //    ]);
+      // }
 
-      Report::create([
-         'schedule_id' => $schedule->id,
-         'vessel_id' => $schedule->vessel_id,
-         'assign' => $now
-      ]);
+      // Report::create([
+      //    'schedule_id' => $schedule->id,
+      //    'vessel_id' => $schedule->vessel_id,
+      //    'assign' => $now
+      // ]);
 
-      $schedule->update([
-         'status' => 1
-      ]);
+      // $schedule->update([
+      //    'status' => 1
+      // ]);
 
-      $vessel->update([
-         'status' => 1,
-      ]);
+      // $vessel->update([
+      //    'status' => 1,
+      // ]);
+
+      $date = Carbon::parse($schedule->date)->format('d/m/Y');
+
+      $body = $date;
+      $body .= '<br>';
+      $body .= $schedule->origin->name . ' - ' . $schedule->destination->name;
+
+      $data = [
+         'to' => $schedule->vessel->name,
+         'from' => 'Marine Department',
+         'subject' => 'Schedule Plan',
+         'body' => $body,
+         'cargos' => null,
+         'activities' => $schedule->requests,
+         'link' => route('schedule.detail', enkripRambo($schedule->id))
+      ];
+      Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
 
       return redirect()->back()->with('success', 'Schedule successfully assign to' . $vessel->name);
    }
