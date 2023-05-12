@@ -112,7 +112,7 @@
                        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:collapse;border-spacing:0px;">
                          <tbody>
                            <tr>
-                             <td style="width:50px;">
+                             <td style="width:230px;">
                                <img alt="image description" height="auto" src="{{asset('img/draw/welcome.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                              </td>
                            </tr>
