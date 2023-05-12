@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\WelcomeEmail;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\Port;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class EmployeeController extends Controller
 {
@@ -45,6 +47,20 @@ class EmployeeController extends Controller
       // }
       $user->assignRole('department');
 
+      $body = 'Selamat datang di DSP PHE';
+
+      $data = [
+         'to' => $employee->email,
+         'from' => 'Marine Department',
+         'subject' => 'Welcome',
+         'body' => $body,
+         'employee' => $employee,
+         'link' => 'http://103.21.206.66:8005/'
+      ];
+
+      // Mail::to("rahmattrust@gmail.com")->send(new WelcomeEmail($data));
+      Mail::to("develop@ekanuri.com")->send(new WelcomeEmail($data));
+
 
       return redirect()->back()->with('success', 'Employee data successfully added');
    }
@@ -73,8 +89,10 @@ class EmployeeController extends Controller
    {
       $dekripId = dekripRambo($id);
       $employee = Employee::find($dekripId);
-
+      $user = User::where('email', $employee->email)->first();
       $employee->delete();
+      $user->delete();
+
 
       return redirect()->back()->with('success', 'Employee data successfully deleted');
    }
