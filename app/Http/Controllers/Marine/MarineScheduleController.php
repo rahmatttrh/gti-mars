@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApprovalEmail;
+use App\Mail\AssignEmail;
 use App\Models\Activity;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
@@ -180,7 +181,8 @@ class MarineScheduleController extends Controller
          'activities' => $schedule->requests,
          'link' => route('schedule.detail', enkripRambo($schedule->id))
       ];
-      Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
+
+      Mail::to("rahmattrust@gmail.com")->send(new AssignEmail($data));
 
       return redirect()->back()->with('success', 'Schedule successfully assign to' . $vessel->name);
    }

@@ -153,7 +153,6 @@ class DepartmentRequestController extends Controller
          'from' => $request->department->name . ' Department',
          'subject' => 'Request Activity Approval',
          'request' => $request,
-         'img' => asset('img/draw/notification.png'),
          'body' => $activityName,
          'cargos' => $request->cargoItems,
          'link' => route('request.detail', enkripRambo($request->id))

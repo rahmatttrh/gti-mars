@@ -63,18 +63,18 @@ class MarineRequestController extends Controller
             'total_weight' => $schedule->total_weight + $request->total_weight
          ]);
 
-         $body = $request->activity->name . ' ' . $request->description . ' has successfully set on schedule vessel ' . $schedule->vessel->name . ' at ' . Carbon::parse($schedule->date)->format('d/m/Y');
+         // $body = $request->activity->name . ' ' . $request->description . ' has successfully set on schedule vessel ' . $schedule->vessel->name . ' at ' . Carbon::parse($schedule->date)->format('d/m/Y');
 
-         $data = [
-            'to' => $request->employee->name,
-            'from' => 'Marine Department',
-            'subject' => 'Request Activity Progress',
-            'request' => $request,
-            'body' => $body,
-            'cargos' => null,
-            'link' => route('request.detail', enkripRambo($request->id))
-         ];
-         Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+         // $data = [
+         //    'to' => $request->employee->name,
+         //    'from' => 'Marine Department',
+         //    'subject' => 'Request Activity Progress',
+         //    'request' => $request,
+         //    'body' => $body,
+         //    'cargos' => null,
+         //    'link' => route('request.detail', enkripRambo($request->id))
+         // ];
+         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
 
 
 

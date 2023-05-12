@@ -101,7 +101,7 @@
                                     <img alt="image description" height="auto" src="https://codedmails.com/images/logo-circle.png" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td> --}}
                                  <td style="width:230px;">
-                                    <img alt="image description" height="auto" src="{{asset('img/draw/notification.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
+                                    <img alt="image description" height="auto" src="{{asset('img/draw/calendar.png')}}" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="50" />
                                  </td>
                               </tr>
                            </tbody>
@@ -168,9 +168,10 @@
                      </td>
                    </tr>
                    <tr>
+                     
                         <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                            <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#2149fa;">
-                           <p style="margin: 0;">Contains {{$data['cargos']->count()}} Cargo items. </p>
+                           <p style="margin: 0;">Contains {{$data['activities']->count()}} Activities. </p>
                            </div>
                         </td>
                    </tr>
