@@ -59,7 +59,7 @@ class EmployeeController extends Controller
       ];
 
       // Mail::to("rahmattrust@gmail.com")->send(new WelcomeEmail($data));
-      Mail::to("develop@ekanuri.com")->send(new WelcomeEmail($data));
+      Mail::to($employee->email)->send(new WelcomeEmail($data));
 
 
       return redirect()->back()->with('success', 'Employee data successfully added');

@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office"><head>
-   <title> Welcome to Coded Mails </title>
+   <title></title>
    <!--[if !mso]><!-- -->
    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
    <!--<![endif]-->
@@ -82,7 +82,7 @@
  </head>
  
  <body style="background-color:#ffffff;">
-   <div style="display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;"> Preview - Welcome to Coded Mails </div>
+  
    <div style="background-color:#ffffff;">
      <!--[if mso | IE]>
        <table
