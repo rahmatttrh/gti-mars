@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Jetty;
 use App\Models\Port;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PortController extends Controller
 {
@@ -20,15 +22,26 @@ class PortController extends Controller
 
    public function store(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'email' => 'unique:ports'
+      ]);
 
-      Port::create([
+      $employee = Port::create([
          'name' => $req->name,
          'email' => $req->email,
          'type' => $req->type,
          'latitude' => $req->latitude,
          'longitude' => $req->longitude
       ]);
+
+      // $user = User::create([
+      //    'name' => $employee->name,
+      //    'email' => $employee->email,
+      //    'password' => Hash::make('12345678'),
+      // ]);
+
+
+      // $user->assignRole('port');
 
       return redirect()->back()->with('success', 'Port successfully added');
    }

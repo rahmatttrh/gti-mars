@@ -30,25 +30,37 @@
                   <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
                </div>
             </div>
+            
             <div class="card">
                
                <form  method="POST" action="{{ route('login') }}" autocomplete="off">
                   @csrf
                   <div class="card-body">
                      <small class="card-title text-center mb-4">Login to your account</small>
+                     @error('email')
+                     <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                     </div>
+                     @enderror
+
+                     @error('password')
+                     <div class="alert alert-danger" role="alert">
+                        {{ $message }}
+                     </div>
+                     @enderror
                      <div class="form-floating mb-3">
-                        <input type="email" required class="form-control @error('email') is-invalid @enderror" id="email" name="email" >
+                        <input type="email" value="{{old('email')}}" required class="form-control @error('email') is-invalid @enderror" id="email" name="email" >
                         <label for="email">Email</label>
-                        @error('email')
+                        {{-- @error('email')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
+                        @enderror --}}
                      </div>
                      <div class="form-floating mb-3">
                         <input type="password" required class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
                         <label for="password">Password</label>
-                        @error('password')
+                        {{-- @error('password')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
+                        @enderror --}}
                      </div>
                      {{-- <div class="mb-3">
                         <label class="form-label">Email address</label>

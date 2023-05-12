@@ -58,11 +58,10 @@
    <div class="page-body" >
       <div class="container-xl">
          <x-notification.deviation :deviations="$deviations" />
-         
          <div class="row">
             <div class="col-md-8">
                <div class="card">
-                  <div class="card-header bg-info">
+                  <div class="card-header bg-secondary">
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">

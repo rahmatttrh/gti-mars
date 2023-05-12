@@ -195,8 +195,12 @@
                         <a href="{{route('user')}}" class="dropdown-item">User Management</a>
                         @elseif(auth()->user()->hasRole('platform'))
                         <a href="{{route('platform.detail', enkripRambo(auth()->user()->getPlatformId()))}}" class="dropdown-item">Profile & account</a>
-                        @else
-                        <a href="#" class="dropdown-item">Profile & account</a>
+                        @elseif(auth()->user()->hasRole('department'))
+                        <a href="{{route('employee.profile', enkripRambo(auth()->user()->getEmployeeId()))}}" class="dropdown-item">Profile & account</a>
+                        <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
+                        @elseif(auth()->user()->hasRole('vessel'))
+                        <a href="{{route('vessel.detail', enkripRambo(auth()->user()->getVesselId()))}}" class="dropdown-item">Profile & account</a>
+                        <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
                         @endif
                         
                         <div class="dropdown-divider"></div>

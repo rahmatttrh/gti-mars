@@ -96,4 +96,10 @@ class User extends Authenticatable
       $employee = Employee::where('email', $this->email)->first();
       return $employee->department;
    }
+
+   public function getEmployeeId()
+   {
+      $employee = Employee::where('email', $this->email)->first();
+      return $employee->id;
+   }
 }

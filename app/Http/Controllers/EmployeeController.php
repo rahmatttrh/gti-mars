@@ -61,8 +61,8 @@ class EmployeeController extends Controller
          'link' => 'http://103.21.206.66:8005/'
       ];
 
-      // Mail::to("rahmattrust@gmail.com")->send(new WelcomeEmail($data));
-      Mail::to($employee->email)->send(new WelcomeEmail($data));
+      Mail::to("rahmattrust@gmail.com")->send(new WelcomeEmail($data));
+      // Mail::to($employee->email)->send(new WelcomeEmail($data));
 
 
       return redirect()->back()->with('success', 'Employee data successfully added');

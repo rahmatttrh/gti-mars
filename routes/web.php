@@ -177,6 +177,10 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('employee')->group(function () {
       Route::get('/profile/{employee:id}', [EmployeeController::class, 'profile'])->name('employee.profile');
    });
+
+   Route::get('/forgot-password', function () {
+      return view('auth.forgot-password');
+   })->name('password.request');
 });
 
 // Route::middleware(["auth", "marine"])->group(function () {

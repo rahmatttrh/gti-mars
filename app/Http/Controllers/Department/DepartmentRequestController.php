@@ -158,8 +158,8 @@ class DepartmentRequestController extends Controller
          'link' => route('request.detail', enkripRambo($request->id))
       ];
 
-      Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
-      // Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
+      // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+      Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
       // return redirect()->back()->with('success', 'Email has sent');
 
       $request->update([

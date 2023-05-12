@@ -36,12 +36,15 @@
                         {{-- <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-edit-vessel">
                            Edit
                         </a> --}}
+                        @if (auth()->user()->hasRole('marine'))
                         <a class="dropdown-item" href="{{route('vessel.edit', enkripRambo($vessel->id))}}" >
                            Edit
                         </a>
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-vessel">
                            Delete
                         </a>
+                        @endif
+                        
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route('vessel.history',[enkripRambo($vessel->id), $today->format('m')])}}">
                            History
