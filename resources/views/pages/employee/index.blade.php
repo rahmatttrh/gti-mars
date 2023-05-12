@@ -114,11 +114,27 @@
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
                                  <td>
+                                    {{-- <div class="dropdown">
+                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                           {{$employee->name}}
+                                       </a>
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPort_{{$port->id}}">
+                                             Edit
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalDeletePort_{{$port->id}}">
+                                             Delete
+                                          </a>
+                                       </div>
+                                    </div> --}}
                                     <div class="dropdown">
                                        <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                                           {{$employee->name}}
                                        </a>
                                        <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="{{route('employee.profile', enkripRambo($employee->id))}}">
+                                             Profile
+                                          </a>
                                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditEmployee_{{$employee->id}}">
                                              Edit
                                           </a>
@@ -137,6 +153,12 @@
                               <x-modal.employee.delete :employee="$employee" />
                               <x-modal.employee.edit :employee="$employee" :departments="$departments" :ports="$ports" />
                            @endforeach
+                           <tr>
+                              <td colspan="6" class="p-4"></td>
+                           </tr>
+                           <tr>
+                              <td colspan="6" class="p-4"></td>
+                           </tr>
                         </tbody>
                      </table>
                   </div>

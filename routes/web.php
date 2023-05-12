@@ -173,6 +173,10 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('document')->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
    });
+
+   Route::prefix('employee')->group(function () {
+      Route::get('/profile/{employee:id}', [EmployeeController::class, 'profile'])->name('employee.profile');
+   });
 });
 
 // Route::middleware(["auth", "marine"])->group(function () {

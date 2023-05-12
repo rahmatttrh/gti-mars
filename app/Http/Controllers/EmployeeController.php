@@ -87,6 +87,16 @@ class EmployeeController extends Controller
       return redirect()->back()->with('success', 'Employee data successfully updated');
    }
 
+   public function profile($id)
+   {
+      $dekripId = dekripRambo($id);
+      $employee = Employee::find($dekripId);
+
+      return view('pages.employee.profile', [
+         'employee' => $employee
+      ])->with('i');
+   }
+
 
    public function delete($id)
    {

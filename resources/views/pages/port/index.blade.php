@@ -89,7 +89,7 @@
             <div class="col-md-8">
                <div class="card">
                   <div class="table-responsive">
-                     <table   class="table " >
+                     <table   class="table" >
                         <thead>
                            <tr>
                               <th class="text-center">No.</th>
@@ -158,5 +158,5 @@
          </div> --}}
       </div>
    </div>
-   <x-modal.add-port />
+   {{-- <x-modal.add-port /> --}}
 @endsection
