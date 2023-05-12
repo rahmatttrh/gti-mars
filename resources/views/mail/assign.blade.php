@@ -193,7 +193,99 @@
          </tbody>
        </table>
      </div>
-     <div style="margin:0px auto;max-width:600px;">
+
+     
+   <div style="margin:0px auto;max-width:600px;margin-top:50px;">
+      <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
+         <tbody>
+            <tr>
+               <td style="direction:ltr;font-size:0px;padding:0;text-align:center;">
+                  <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                     <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
+                        <tbody>
+                           <tr>
+                              <td align="left" class="receipt-table" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+                                 <table cellpadding="0" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;table-layout:auto;width:100%;border:none;">
+                                    <tbody>
+
+                                       @foreach ($data['activities'] as $activity)
+                                          <tr valign="top">
+                                             <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                                <p style="margin: 0;"> {{$activity->activity->name}} </p>
+                                                <p style="margin: 0; color: #ACA9BB; padding-bottom: 10px;"> {{$activity->description}} </p>
+                                             </td>
+                                             <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
+                                                <p style="margin: 0;">{{$activity->total_size}} m<sup>2</sup></p>
+                                             </td>
+                                             <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 5px;">
+                                                <p style="margin: 0;">{{$activity->total_weight}} ton</p>
+                                             </td>
+                                          </tr>
+                                       @endforeach
+                                       
+                                       <tr>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
+                                       </tr>
+                                       {{-- <tr>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;"></td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;">
+                                             <p style="margin: 0;"><small>Subtotal</small></p>
+                                          </td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;">
+                                             <p style="margin: 0;"><small>$64.90</small></p>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;"></td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;">
+                                             <p style="margin: 0;"><small>Savings</small></p>
+                                          </td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 10px;">
+                                             <p style="margin: 0;"><small>-$6.48</small></p>
+                                          </td>
+                                       </tr>
+                                       <tr>
+                                          <td style="font-size: 16px; line-height: 20px; word-break: normal;"></td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                             <p style="margin: 0;"><small>Shipping</small></p>
+                                          </td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                             <p style="margin: 0;"><small>$0.00</small></p>
+                                          </td>
+                                       </tr>--}}
+                                       <tr>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                             <p style="margin: 0;"><small>Total</small></p>
+                                          </td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal;">
+                                             <p style="margin: 0;"><small>{{$data['schedule']->total_size}} m<sup>2</sup></small></p>
+                                          </td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal;padding-top: 5px;">
+                                             <p style="margin: 0;"><small>{{$data['schedule']->total_weight}} ton</small></p>
+                                          </td>
+                                       </tr> 
+                                       {{-- <tr>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 20px;"><strong>Total</strong></td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 20px;"><strong>{{$data['schedule']->total_size}} m<sup>2</sup></strong></td>
+                                          <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-top: 20px;"><strong>{{$data['schedule']->total_weight}} ton</strong></td>
+                                       </tr> --}}
+                                    </tbody>
+                                 </table>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+
+
+     <div style="margin:0px auto;max-width:600px;margin-top:80px">
        <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
          <tbody>
            <tr>
