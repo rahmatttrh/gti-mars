@@ -2,13 +2,13 @@
    @if ($schedule->status == 0)
       Draft
       @elseif($schedule->status == 1)
-      Assigned
+      Assigned to {{$schedule->vessel->name}}
       @elseif($schedule->status == 2)
       Standby at {{$schedule->origin->name}}
       @elseif($schedule->status == 3)
-      Start Loading at {{$schedule->origin->name}}
+      Loading Start at {{$schedule->origin->name}}
       @elseif($schedule->status == 4)
-      Complete Loading at {{$schedule->origin->name}}
+      Loading Complete at {{$schedule->origin->name}}
       @elseif($schedule->status == 5)
       Cast Off
       @elseif($schedule->status == 6)
@@ -16,10 +16,12 @@
       @elseif($schedule->status == 7)
       Arrive at {{$schedule->destination->name}}
       @elseif($schedule->status == 8)
-      Start Unloading at {{$schedule->destination->name}}
+      Waiting at {{$schedule->destination->name}}
       @elseif($schedule->status == 9)
-      Complete Unloading at {{$schedule->destination->name}}
+      Unloading Start at {{$schedule->destination->name}}
       @elseif($schedule->status == 10)
+      Unloading Complete at {{$schedule->destination->name}}
+      @elseif($schedule->status == 11)
       Complete
    @endif
 </span>
