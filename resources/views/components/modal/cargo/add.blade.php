@@ -27,24 +27,27 @@
                   </div>
                   <div class="col-md-6">
                      <div class="form-floating mb-3">
-                        <input type="text"  class="form-control" id="unit" name="unit" >
+                        <input type="text"  class="form-control" id="unit" name="unit">
                         <label for="unit">Unit</label>
+                        <small class="text-muted">example : Unit/Pallete/..</small>
                      </div>
                   </div>
                   <div class="col-md-6">
-                     <div class="form-floating mb-3">
+                     <div class="form-floating">
                         <input type="text"  class="form-control" id="size" name="size" >
                         <label for="size">Size (m<sup>2</sup>)</label>
+                        <small class="text-muted mb-3">example : 3 or 3.5</small>
                      </div>
                   </div>
                   <div class="col-md-6">
-                     <div class="form-floating mb-3">
+                     <div class="form-floating ">
                         <input type="text"  class="form-control" id="weight" name="weight" >
                         <label for="weight">Weight (ton)</label>
+                        <small class="text-muted mb-3">example : 1 or 0.4</small>
                      </div>
                   </div>
                </div>
-               <div class="form-floating mb-3">
+               <div class="form-floating mb-3 mt-3">
                   <input type="text"  class="form-control" id="remark" name="remark" >
                   <label for="remark">Remark</label>
                </div>
