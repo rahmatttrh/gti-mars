@@ -80,7 +80,7 @@
                                     @endforeach
                                     
                                  </select>
-                                 <label for="vessel">Boat</label>
+                                 <label for="vessel">Vessel</label>
                               </div>
                            </div>
                         </div>
@@ -123,8 +123,8 @@
                               </div>
                            </div>
                            <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                 <input type="text" required class="form-control" id="remark" name="remark" >
+                              <div class="form-floating">
+                                 <input type="text" required class="form-control" id="remark" name="remark" value="{{old('remark')}}" >
                                  <label for="remark">Remark</label>
                               </div>
                            </div>
@@ -133,62 +133,14 @@
                      
                      <div class="col-md-4">
                         <div class="card">
-                           <div class="card-header">
+                           {{-- <div class="card-header">
                            <small class="">Info</small>
-                           </div>
-                           <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 12rem">
-                              
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <small>Lorem, ipsum dolor.</small>
-                                    </div>
-                                 </div>
-                              </div>
-                              
-                              {{-- <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
-                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
-                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
-                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
-                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col text-truncate">
-                                       <a href="#" class="text-body d-block">09:00 - 10:00</a>
-                                       <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
-                                    </div>
-                                 </div>
-                              </div> --}}
+                           </div> --}}
+                           <div class="card-body text-center">
+                              <img height="140px" width="auto" src="{{asset('img/draw/calendar.png')}}" alt="">
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste, non! Minus officia molestiae non.</small>
+                              <small class="text-muted">Hint : Vessel schedule can accommodate several activities in one schedule.</small>
                            </div>
                         </div>
                      </div>

@@ -115,7 +115,7 @@ class DepartmentRequestController extends Controller
    {
       $employee = Employee::where('email', auth()->user()->email)->first();
 
-      $requests = ModelsRequest::where('status', 0)->where('department_id', $employee->department_id)->get();
+      $requests = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->get();
       return view('pages.request.draft', [
          'requests' => $requests
       ])->with('i');
@@ -130,7 +130,7 @@ class DepartmentRequestController extends Controller
       $schedules = Schedule::get();
       // $depart = Department::where('email', auth()->user()->email)->first();
 
-      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('department_id', $employee->department_id)->where('status', '>', 0)->orderBy('department_id', 'desc')->get()->groupBy('func');
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
 
       return view('pages.request.progress', [
          'title' => 'Progress',
@@ -167,6 +167,26 @@ class DepartmentRequestController extends Controller
       ]);
 
       return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
+   }
+
+   public function history()
+   {
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $today = Carbon::now();
+      $month = $today->format('m');
+      $vessels = Vessel::get();
+      $schedules = Schedule::get();
+      // $depart = Department::where('email', auth()->user()->email)->first();
+
+      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '=', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
+      return view('pages.request.history', [
+         'title' => 'Progress',
+         'departs' => $departs,
+         'vessels' => $vessels,
+         'schedules' => $schedules,
+         'month' => $month
+      ])->with('i');
    }
 
    public function undo(Request $req)

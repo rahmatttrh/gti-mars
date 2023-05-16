@@ -235,7 +235,7 @@
                   <div class="row text-center align-items-center flex-row-reverse">
                      <div class="col-lg-auto ms-lg-auto">
                      <ul class="list-inline list-inline-dots mb-0">
-                        <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">v1.0.0-beta</a></li>
+                        <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">DSP-PHE v1.0.0-beta</a></li>
                         
                      </ul>
                      </div>

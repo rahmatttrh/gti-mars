@@ -83,21 +83,14 @@
                      
                      <div class="col-md-4">
                         <div class="card">
-                           <div class="card-header">
+                           {{-- <div class="card-header">
                            <small class="">Information</small>
-                           </div>
-                           <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 20rem">
-                              
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col">
-                                       <small>Jika pilihan Activity tidak ada dalam List anda bisa mengisi Form Description, atau bisa juga mengisi keduanya</small>
-                                    </div>
-                                 </div>
-                              </div>
+                           </div> --}}
+                           <div class="card-body text-center">
+                              <img height="140px" width="auto" src="{{asset('img/draw/task.png')}}" alt="">
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">DSP - PHE</small>
+                              <small>Hint : If the Activity option is not in the List, you can fill in the Form Description, or you can fill in both</small>
                            </div>
                         </div>
                      </div>

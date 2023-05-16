@@ -13,14 +13,14 @@
                   Request Activity
                </div>
                <h2 class="page-title">
-                  Progress  {{$monthName ?? ''}}
+                  History
                </h2>
             </div>
             <!-- Page title actions -->
             
-            <div class="col-auto ms-auto d-print-none">
+            {{-- <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
-                  {{-- <div class="dropdown">
+                  <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Month
                      </button>
@@ -62,8 +62,8 @@
                               Desember
                            </a>
                         </div>
-                  </div> --}}
-                  {{-- <div class="dropdown">
+                  </div>
+                  <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
                      </button>
@@ -74,9 +74,9 @@
                         </a>
                         
                      </div>
-                  </div> --}}
+                  </div>
                </div>
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>
@@ -141,7 +141,7 @@
                      </table>
                   </div>
                   <div class="card-footer">
-                     <small>Hint : This is a list of activity request data that has been sent to marine</small>
+                     <small>Hint : This is a list of activity request data that has been complete</small>
                   </div>
                </div>
             </div>

@@ -17,24 +17,21 @@
                </h2>
             </div>
             <!-- Page title actions -->
-            <div class="col-auto ms-auto d-print-none">
+            {{-- <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        {{-- <a class="dropdown-item" href="{{route('request.create')}}">
-                           Create
-                        </a>
-                         --}}
+                      
                         <a class="dropdown-item" target="_blank" href="#">
                            Print Preview
                         </a>
                      </div>
                   </div>
                </div>
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>
@@ -44,6 +41,7 @@
             {{-- <div class="card-header">
               <h3 class="card-title">People</h3>
             </div> --}}
+            
             <div class="table-responsive ">
                <table  class="table" >
                   <thead>
@@ -78,6 +76,10 @@
                      
                   </tbody>
                </table>
+            </div>
+         
+            <div class="card-footer">
+               <small>Hint : This is a list of activity request data that has not been sent to marine, and can still be changed</small>
             </div>
          </div>
       </div>

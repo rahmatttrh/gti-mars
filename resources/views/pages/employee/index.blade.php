@@ -83,13 +83,19 @@
                         <input type="string" required class="form-control" id="ekstensi" name="ekstensi" value="{{old('ekstensi')}}">
                         <label for="ekstensi">Ekstensi</label>
                      </div>
-                  </div>
-                  
-                  <div class="card-footer">
                      <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
                         Save
                      </button>
+                  </div>
+                  
+                  
+                  <div class="card-footer">
+                     {{-- <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                        Save
+                     </button> --}}
+                     <small>Hint : after the data is stored, the user will receive a notification email containing instructions to Sign In into system</small>
                   </div>
 
                </form>

@@ -91,9 +91,11 @@ class EmployeeController extends Controller
    {
       $dekripId = dekripRambo($id);
       $employee = Employee::find($dekripId);
+      $requests = ModelsRequest::where('employee_id', $employee->id)->where('status', '>', 0)->get();
 
       return view('pages.employee.profile', [
-         'employee' => $employee
+         'employee' => $employee,
+         'requests' => $requests
       ])->with('i');
    }
 

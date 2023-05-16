@@ -85,7 +85,10 @@ class MarineScheduleController extends Controller
 
    public function store(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'origin_id' => 'different:destination_id',
+         'destination_id' => 'different:origin_id'
+      ]);
       // dd($req->type);
       $vessel = Vessel::find($req->vessel);
 

@@ -116,30 +116,52 @@
                </div> --}}
                <div class="card mb-3">
                   <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="text-muted">
-                           Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton
+                     <div class="row mb-3 align-items-center">
+                        <div class="col">
+                           <div class="text-muted">
+                              Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton
+                           </div>
+                           <div class="mt-2">
+                              <div class="row g-2 align-items-center">
+                                 <div class="col-auto">
+                                    {{$persenWeight}}%
+                                 </div>
+                                 <div class="col">
+                                    <div class="progress progress-sm">
+                                    <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
+                                       {{-- <span class="visually-hidden">25% Complete</span> --}}
+                                    </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
                         </div>
-                        <div class="mt-2">
-                          <div class="row g-2 align-items-center">
-                            <div class="col-auto">
-                              {{$persenWeight}}%
-                            </div>
-                            <div class="col">
-                              <div class="progress progress-sm">
-                                <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
-                                  {{-- <span class="visually-hidden">25% Complete</span> --}}
+                     </div>
+                     <div class="row mb-3 align-items-center">
+                        <div class="col">
+                          <div class="text-muted">
+                             Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} (m<sup>2</sup>)
+                          </div>
+                          <div class="mt-2">
+                            <div class="row g-2 align-items-center">
+                              <div class="col-auto">
+                                {{$persenSize}}%
+                              </div>
+                              <div class="col">
+                                <div class="progress progress-sm">
+                                  <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
+                                    {{-- <span class="visually-hidden">25% Complete</span> --}}
+                                  </div>
                                 </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
+                     </div>
+                     <small>Hint : this data refers to the selected vessel data</small>
                   </div>
                </div>
-               <div class="card mb-3">
+               {{-- <div class="card mb-3">
                   <div class="card-body">
                     <div class="row align-items-center">
                       <div class="col">
@@ -154,7 +176,7 @@
                             <div class="col">
                               <div class="progress progress-sm">
                                 <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
-                                  {{-- <span class="visually-hidden">25% Complete</span> --}}
+                                  <span class="visually-hidden">25% Complete</span>
                                 </div>
                               </div>
                             </div>
@@ -163,7 +185,7 @@
                       </div>
                     </div>
                   </div>
-               </div>
+               </div>  --}}
                <div class="card">
                   <div class="card-header">
                      Timeline

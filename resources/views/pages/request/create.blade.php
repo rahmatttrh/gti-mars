@@ -52,7 +52,7 @@
                               </div>
                            </div>
                            <div class="col-md-4">
-                              <div class="form-floating mb-3">
+                              <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
                                     @foreach ($ports as $port)
                                        <option value="{{$port->id}}">{{$port->name}}</option>
@@ -61,7 +61,7 @@
                                  <label for="origin">From</label>
                               </div>
                            </div>
-                           <div class="col-md-4">
+                           <div class="col-md-4 mb-3">
                               <div class="form-floating">
                                  <select required name="destination" id="destination" class="form-select">
                                     @foreach ($ports as $port)
@@ -72,37 +72,30 @@
                               </div>
                            </div>
                         </div>
-                        <hr>
-                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                           
-                           Save
-                        </button>
+                        
+                        
                      </div> 
                      
                      <div class="col-md-4">
                         <div class="card">
-                           <div class="card-header">
+                           {{-- <div class="card-header">
                            <small class="">Information</small>
-                           </div>
-                           <div class="list-group list-group-flush overflow-auto" id="reserved" style="max-height: 20rem">
-                              
-                              <div class="list-group-item">
-                                 <div class="row">
-                                    <div class="col">
-                                       <small>Jika pilihan Activity tidak ada dalam List anda bisa mengisi Form Description, atau bisa juga mengisi keduanya</small>
-                                    </div>
-                                 </div>
-                              </div>
+                           </div> --}}
+                           <div class="card-body text-center">
+                              <img height="140px" width="auto" src="{{asset('img/draw/task.png')}}" alt="">
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">DSP - PHE</small>
+                              <small>Hint : If the Activity option is not in the List, you can fill in the Form Description, or you can fill in both</small>
                            </div>
                         </div>
                      </div>
                   </div>
                </div>
                <div class="card-footer">
-                  
+                  <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                           
+                     Save
+                  </button>
                </div>
             </form>
          </div>

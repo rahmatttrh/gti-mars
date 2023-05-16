@@ -172,7 +172,7 @@
                         <a class="dropdown-item" href="{{route('request.progress')}}" >
                            Progress
                         </a>
-                        <a class="dropdown-item" href="" >
+                        <a class="dropdown-item" href="{{route('request.history')}}" >
                            History
                         </a>
                      </div>

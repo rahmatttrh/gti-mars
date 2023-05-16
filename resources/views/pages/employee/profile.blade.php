@@ -65,18 +65,28 @@
                      <table  class="table " >
                         <thead>
                            <tr>
-                              <th class="text-center">No.</th>
-                              <th>Name</th>
-                              <th>Department</th>
-                              <th>Loc</th>
-                              <th>Email</th>
-                              <th>Ekstensi</th>
+                              <th>Code</th>
+                              <th>Date</th>
+                              <th>Activity</th>
+                              <th>Route</th>
+                              <th>Status</th>
                            </tr>
                         </thead>
                         <tbody>
-
+                           @foreach ($requests as $request)
+                           <tr>
+                              <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a> </td>
+                              <td>{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</td>
+                              <td>{{$request->activity->name}} {{$request->description}}</td>
+                              <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
+                              <td><x-status.request :request="$request" /></td>
+                           </tr>
+                           @endforeach
                         </tbody>
                      </table>
+                  </div>
+                  <div class="card-footer">
+                     <small>Hint : This is a list of activity request history data from this user</small>
                   </div>
                </div>
             </div>
