@@ -52,9 +52,12 @@
                      @if ($requests->count() > 0)
                         @foreach ($requests as $r)
                         <tr>
-                           <td class="text-muted">{{$r->code}}</td>
+                           <td class="text-muted">
+                              <a href="{{route('request.detail.parent', enkripRambo($r->parent->id))}}">{{$r->parent->code}}</a>
+                           </td>
                            <td class="text-muted">{{$r->date}}</td>
-                           <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td>
+                           {{-- <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}
+                           <td class="text-muted">{{$r->activity->name ?? ''}} {{$r->description}}</td>
                            <td class="text-muted">{{$r->origin->name}} - {{$r->destination->name}}</td>
                            <td><x-status.request :request="$r" /></td>
                         </tr>
