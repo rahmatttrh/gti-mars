@@ -24,4 +24,9 @@ class Employee extends Model
    {
       return $this->hasMany(Request::class);
    }
+
+   public function parents()
+   {
+      return $this->hasMany(ParentRequest::class);
+   }
 }

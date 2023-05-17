@@ -77,7 +77,7 @@ class HomeController extends Controller
          $customSchedules[] = $schedule->date;
          $customQtyRequests[] = $schedule->requests()->count();
       }
-      dd($scheduleRecents->status);
+      // dd($scheduleRecents->status);
 
       return view('chart', [
          'monthName' => $monthName,

@@ -67,66 +67,66 @@
                         <div class="row">
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->name}}" name="name" id="name" placeholder="Your vessel name">
+                                 <input type="text" class="form-control" value="{{$vessel->name}}">
                                  <label for="name">Vessel Name</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->prev_name}}" name="prev_name" id="prev_name" placeholder="Your previous vessel name">
+                                 <input type="text" class="form-control" value="{{$vessel->prev_name}}" name="prev_name" id="prev_name">
                                  <label for="prev_name">Previous Name</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->imo}}" name="imo" id="imo" placeholder="Your IMO number">
+                                 <input type="text" class="form-control" value="{{$vessel->imo}}" name="imo" id="imo">
                                  <label for="imo">IMO Number</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->type}}" name="type" id="type" placeholder="Your vessel type">
+                                 <input type="text" class="form-control" value="{{$vessel->type}}" name="type" id="type" >
                                  <label for="type">Type</label>
                               </div>
                            </div><div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->call_sign}}" name="call_sign" id="call_sign" placeholder="Your vessel flag">
+                                 <input type="text" class="form-control" value="{{$vessel->call_sign}}" name="call_sign" id="call_sign">
                                  <label for="call_sign">Call Sign</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->flag}}" name="flag" id="flag" placeholder="Your vessel flag">
+                                 <input type="text" class="form-control" value="{{$vessel->flag}}" name="flag" id="flag">
                                  <label for="flag">Flag</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->owner}}" name="owner" id="owner" placeholder="Your vessel owner">
+                                 <input type="text" class="form-control" value="{{$vessel->owner}}" name="owner" id="owner">
                                  <label for="owner">Owner</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" value="{{$vessel->operator}}" name="operator" id="operator" placeholder="Your vessel operator">
+                                 <input type="text" class="form-control" value="{{$vessel->operator}}" name="operator" id="operator">
                                  <label for="operator">Operator</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
-                                 <input type="text" class="form-control" value="{{$vessel->port}}" name="port" id="port" placeholder="Your vessel port">
+                                 <input type="text" class="form-control" value="{{$vessel->port}}" name="port" id="port">
                                  <label for="port">Port of Registry</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
-                                 <input type="text" class="form-control" value="{{$vessel->build}}" name="build" id="build" placeholder="Your vessel ">
+                                 <input type="text" class="form-control" value="{{$vessel->build}}" name="build" id="build">
                                  <label for="build">Year of Build</label>
                               </div>
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
-                                 <input type="text" class="form-control" name="classed_by" id="classed_by" placeholder="Your vessel ">
+                                 <input type="text" class="form-control" name="classed_by" id="classed_by" >
                                  <label for="classed_by">Vessel Classed by</label>
                               </div>
                            </div>

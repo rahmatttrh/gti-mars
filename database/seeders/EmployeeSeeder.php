@@ -18,7 +18,7 @@ class EmployeeSeeder extends Seeder
          'department_id' => 1,
          'port_id' => 1,
          'name' => 'Marine',
-         'email' => 'marine@gmail.com',
+         'email' => 'marine@pertamina.com',
          'ekstensi' => '223',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -27,7 +27,7 @@ class EmployeeSeeder extends Seeder
          'department_id' => 2,
          'port_id' => 1,
          'name' => 'Ahmad Juantoro',
-         'email' => 'juan@gmail.com',
+         'email' => 'juan@pertamina.com',
          'ekstensi' => '223',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -36,7 +36,7 @@ class EmployeeSeeder extends Seeder
          'department_id' => 3,
          'port_id' => 1,
          'name' => 'Dareza Arvian',
-         'email' => 'dareza@gmail.com',
+         'email' => 'dareza@pertamina.com',
          'ekstensi' => '669',
          'created_at' => NOW(),
          'updated_at' => NOW()

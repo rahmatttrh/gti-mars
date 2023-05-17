@@ -22,7 +22,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            <form action="{{route('request.save')}}" method="POST">
+            <form action="{{route('request.store')}}" method="POST">
                @csrf
                <div class="card-body">
                   <div class="row">

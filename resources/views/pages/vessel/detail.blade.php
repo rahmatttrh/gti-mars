@@ -113,17 +113,17 @@
                         <dt class="col-5">Depth</dt>
                         <dd class="col-7">: {{$vessel->depth}}</dd>
                         <dt class="col-5">Maximum Draft</dt>
-                        <dd class="col-7">: {{$vessel->max_draft}}</dd>
+                        <dd class="col-7">: {{$vessel->maxdraft}}</dd>
                         <dt class="col-5">Deadweight Tonnage</dt>
                         <dd class="col-7">: {{$vessel->deadweight}}</dd>
                         <dt class="col-5">Gross Tonnage / Net Tonnage</dt>
                         <dd class="col-7">: {{$vessel->gross}}</dd>
                         <dt class="col-5">Clear Deck Space</dt>
-                        <dd class="col-7">: {{$vessel->deck_space}}</dd>
+                        <dd class="col-7">: {{$vessel->deckspace}}</dd>
                         <dt class="col-5">Deck Strength</dt>
-                        <dd class="col-7">: {{$vessel->deck_strength}}</dd>
+                        <dd class="col-7">: {{$vessel->deckstrength}}</dd>
                         <dt class="col-5">Deck Cargo Capacity</dt>
-                        <dd class="col-7">: {{$vessel->deck_cargo_capacity}}</dd>
+                        <dd class="col-7">: {{$vessel->deckcapacity}}</dd>
                         
                      </dl>
                   </div>
@@ -159,7 +159,7 @@
                         <dt class="col-5">Stern Thruster Fitted</dt>
                         <dd class="col-7">: {{$vessel->stern_thruster}}</dd>
                         <dt class="col-5">Other Propulsors Fitted</dt>
-                        <dd class="col-7">: {{$vessel->other_propulsors}}</dd>
+                        <dd class="col-7">: {{$vessel->other_propulsor}}</dd>
                         <dt class="col-5">Speed Maximum</dt>
                         <dd class="col-7">: {{$vessel->speed_max}}</dd>
                         <dt class="col-5">Speed Economical</dt>

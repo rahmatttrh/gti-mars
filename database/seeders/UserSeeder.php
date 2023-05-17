@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
    {
       $superuser = User::create([
          'name' => 'Super User',
-         'email' => 'superuser@gmail.com',
+         'email' => 'superuser@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
       // $marine = User::create([
       //    'name' => 'Marine',
-      //    'email' => 'marine@gmail.com',
+      //    'email' => 'marine@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -36,7 +36,7 @@ class UserSeeder extends Seeder
 
       $msso = User::create([
          'name' => 'Marine',
-         'email' => 'marine@gmail.com',
+         'email' => 'marine@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -45,7 +45,7 @@ class UserSeeder extends Seeder
 
       $juan = User::create([
          'name' => 'Ahmad Juantoro',
-         'email' => 'juan@gmail.com',
+         'email' => 'juan@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
 
       $dareza = User::create([
          'name' => 'Dareza Arvian',
-         'email' => 'dareza@gmail.com',
+         'email' => 'dareza@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -63,7 +63,7 @@ class UserSeeder extends Seeder
 
       // $logistic = User::create([
       //    'name' => 'Logistic',
-      //    'email' => 'logistic@gmail.com',
+      //    'email' => 'logistic@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
 
       // $drilling = User::create([
       //    'name' => 'Drilling',
-      //    'email' => 'drilling@gmail.com',
+      //    'email' => 'drilling@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -82,7 +82,7 @@ class UserSeeder extends Seeder
       // Kapal
       $ej = User::create([
          'name' => 'Elok Jaya',
-         'email' => 'ej@gmail.com',
+         'email' => 'ej@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -91,7 +91,7 @@ class UserSeeder extends Seeder
 
       $gj = User::create([
          'name' => 'Giat Jaya',
-         'email' => 'gj@gmail.com',
+         'email' => 'gj@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -100,7 +100,7 @@ class UserSeeder extends Seeder
 
       $tj = User::create([
          'name' => 'Triton Jawara',
-         'email' => 'tj@gmail.com',
+         'email' => 'tj@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -109,7 +109,7 @@ class UserSeeder extends Seeder
 
       $hj = User::create([
          'name' => 'Hafar Jupiter',
-         'email' => 'hj@gmail.com',
+         'email' => 'hj@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -118,7 +118,7 @@ class UserSeeder extends Seeder
 
       // $enc = User::create([
       //    'name' => 'ENC',
-      //    'email' => 'enc@gmail.com',
+      //    'email' => 'enc@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -127,7 +127,7 @@ class UserSeeder extends Seeder
 
       // $gs = User::create([
       //    'name' => 'Graha Segara',
-      //    'email' => 'gs@gmail.com',
+      //    'email' => 'gs@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -136,7 +136,7 @@ class UserSeeder extends Seeder
 
       // $peip = User::create([
       //    'name' => 'PEIP',
-      //    'email' => 'peip@gmail.com',
+      //    'email' => 'peip@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -145,7 +145,7 @@ class UserSeeder extends Seeder
 
       // $indofood = User::create([
       //    'name' => 'Indofood',
-      //    'email' => 'indofood@gmail.com',
+      //    'email' => 'indofood@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -154,7 +154,7 @@ class UserSeeder extends Seeder
 
       // $unilever = User::create([
       //    'name' => 'Unilever',
-      //    'email' => 'unilever@gmail.com',
+      //    'email' => 'unilever@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -163,7 +163,7 @@ class UserSeeder extends Seeder
 
       // $kalbe = User::create([
       //    'name' => 'Kalbe',
-      //    'email' => 'kalbe@gmail.com',
+      //    'email' => 'kalbe@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -172,7 +172,7 @@ class UserSeeder extends Seeder
 
       // $gemilang = User::create([
       //    'name' => 'Gemilang Logistic',
-      //    'email' => 'gemilang@gmail.com',
+      //    'email' => 'gemilang@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -182,7 +182,7 @@ class UserSeeder extends Seeder
 
       // $intan = User::create([
       //    'name' => 'Intan Area',
-      //    'email' => 'intan@gmail.com',
+      //    'email' => 'intan@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -191,7 +191,7 @@ class UserSeeder extends Seeder
 
       // $krisna = User::create([
       //    'name' => 'Krisna',
-      //    'email' => 'krisna@gmail.com',
+      //    'email' => 'krisna@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -201,7 +201,7 @@ class UserSeeder extends Seeder
 
       // $superuser = User::create([
       //    'name' => 'User',
-      //    'email' => 'user@gmail.com',
+      //    'email' => 'user@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -210,7 +210,7 @@ class UserSeeder extends Seeder
 
       // $ej = User::create([
       //    'name' => 'Elok Jaya',
-      //    'email' => 'ej@gmail.com',
+      //    'email' => 'ej@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -219,7 +219,7 @@ class UserSeeder extends Seeder
 
       // $tj = User::create([
       //    'name' => 'Triton Jawara',
-      //    'email' => 'tj@gmail.com',
+      //    'email' => 'tj@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -228,7 +228,7 @@ class UserSeeder extends Seeder
 
       // $hj = User::create([
       //    'name' => 'Hafar Jupiter',
-      //    'email' => 'hj@gmail.com',
+      //    'email' => 'hj@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -237,7 +237,7 @@ class UserSeeder extends Seeder
 
       // $tb = User::create([
       //    'name' => 'Transko Balihe',
-      //    'email' => 'tb@gmail.com',
+      //    'email' => 'tb@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -246,7 +246,7 @@ class UserSeeder extends Seeder
 
       // $marine = User::create([
       //    'name' => 'Marine SSO',
-      //    'email' => 'marine@gmail.com',
+      //    'email' => 'marine@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
@@ -255,7 +255,7 @@ class UserSeeder extends Seeder
 
       // $receiving = User::create([
       //    'name' => 'Receiving',
-      //    'email' => 'receiving@gmail.com',
+      //    'email' => 'receiving@pertamina.com',
       //    'password' => Hash::make('12345678'),
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()

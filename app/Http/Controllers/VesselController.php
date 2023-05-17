@@ -28,9 +28,20 @@ class VesselController extends Controller
 
    public function store(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'name' => 'required',
+         'email' => 'required|email',
+         'deadweight' => 'required|numeric',
+         'deckspace' => 'required|numeric',
+         'type' => 'required',
+         'owner' => 'required',
+         'operator' => 'required'
+      ]);
 
       Vessel::create([
+         'status' => 0,
+         'port_id' => null,
+
          'name' => $req->name,
          'email' => $req->email,
          'telp' => $req->telp,
@@ -60,10 +71,10 @@ class VesselController extends Controller
          'no_engine' => $req->no_engine,
          'no_main_propellers' => $req->no_main_propellers,
          'no_rudder' => $req->no_rudder,
-         'generators_and_manufactures' => $req->generators_and_manufactures,
+         'generators' => $req->generators_and_manufactures,
          'no_generator' => $req->no_generator,
          'generator_detail' => $req->generator_detail,
-         'kort_nozzle' => $req->kort_nozzle,
+         'kort_nozzles' => $req->kort_nozzle,
          'bow_thruster' => $req->bow_thruster,
          'stern_thruster' => $req->stern_thruster,
          'other_propulsors' => $req->other_propulsors,
@@ -97,7 +108,7 @@ class VesselController extends Controller
 
       $user->assignRole('vessel');
 
-      return redirect()->back()->with('success', 'Vessel successfuly added');
+      return redirect()->route('vessel')->with('success', 'Vessel successfuly added');
    }
 
    public function edit($id)
@@ -112,7 +123,12 @@ class VesselController extends Controller
 
    public function update(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'name' => 'required',
+         'email' => 'required|email',
+         'deadweight' => 'required',
+         'deckspace' => 'required'
+      ]);
 
       $vessel = Vessel::find($req->vessel);
       $user = User::where('email', $req->email)->first();
@@ -146,10 +162,10 @@ class VesselController extends Controller
          'no_engine' => $req->no_engine,
          'no_main_propellers' => $req->no_main_propellers,
          'no_rudder' => $req->no_rudder,
-         'generators_and_manufactures' => $req->generators_and_manufactures,
+         'generators' => $req->generators_and_manufactures,
          'no_generator' => $req->no_generator,
          'generator_detail' => $req->generator_detail,
-         'kort_nozzle' => $req->kort_nozzle,
+         'kort_nozzles' => $req->kort_nozzle,
          'bow_thruster' => $req->bow_thruster,
          'stern_thruster' => $req->stern_thruster,
          'other_propulsors' => $req->other_propulsors,

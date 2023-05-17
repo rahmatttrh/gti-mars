@@ -10,6 +10,11 @@ class Port extends Model
    use HasFactory;
    protected $guarded = [];
 
+   public function parents()
+   {
+      return $this->hasMany(ParentRequest::class, 'origin_id');
+   }
+
    public function schedules()
    {
       return $this->hasMany(Schedule::class, 'origin_id');

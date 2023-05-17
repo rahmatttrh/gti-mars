@@ -46,15 +46,15 @@ class CreateVesselsTable extends Migration
 
          $table->string('main_engine')->nullable();
          $table->string('no_engine')->nullable();
-         $table->string('no_main_propellers')->nullable();
+         $table->string('no_main_propeller')->nullable();
          $table->string('no_rudder')->nullable();
-         $table->string('generators')->nullable();
+         $table->string('generator')->nullable();
          $table->string('no_generator')->nullable();
          $table->string('generator_detail')->nullable();
-         $table->string('kort_nozzles')->nullable();
+         $table->string('kort_nozzle')->nullable();
          $table->string('bow_thruster')->nullable();
          $table->string('stern_thruster')->nullable();
-         $table->string('other_propulsors')->nullable();
+         $table->string('other_propulsor')->nullable();
          $table->string('speed_max')->nullable();
          $table->string('speed_eco')->nullable();
          $table->string('speed_towing')->nullable();

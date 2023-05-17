@@ -15,12 +15,13 @@ class CreateRequestsTable extends Migration
    {
       Schema::create('requests', function (Blueprint $table) {
          $table->id();
+         $table->mediumInteger('parent_id');
          $table->string('code');
-         $table->smallInteger('type');
+         $table->smallInteger('type')->nullable();
          $table->smallInteger('schedule_id')->nullable();
          $table->smallInteger('employee_id');
          $table->smallInteger('status');
-         $table->date('date');
+         $table->date('date')->nullable();
          $table->smallInteger('department_id');
          $table->string('func')->nullable();
          // $table->smallInteger('type_id');

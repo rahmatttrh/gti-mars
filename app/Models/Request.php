@@ -10,6 +10,11 @@ class Request extends Model
    use HasFactory;
    protected $guarded = [];
 
+   public function parent()
+   {
+      return $this->belongsTo(ParentRequest::class);
+   }
+
    public function activity()
    {
       return $this->belongsTo(Activity::class);

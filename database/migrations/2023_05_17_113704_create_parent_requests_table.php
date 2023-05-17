@@ -1,0 +1,38 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateParentRequestsTable extends Migration
+{
+   /**
+    * Run the migrations.
+    *
+    * @return void
+    */
+   public function up()
+   {
+      Schema::create('parent_requests', function (Blueprint $table) {
+         $table->id();
+         // $table->mediumInteger('parent_id');
+         // $table->mediumInteger('request_id');
+         $table->string('code');
+         $table->mediumInteger('origin_id');
+         $table->dateTime('date');
+         $table->mediumInteger('employee_id');
+         $table->mediumInteger('department_id');
+         $table->timestamps();
+      });
+   }
+
+   /**
+    * Reverse the migrations.
+    *
+    * @return void
+    */
+   public function down()
+   {
+      Schema::dropIfExists('parent_requests');
+   }
+}

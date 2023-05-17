@@ -19,4 +19,9 @@ class Department extends Model
    {
       return $this->hasMany(Employee::class);
    }
+
+   public function parents()
+   {
+      return $this->hasMany(ParentRequest::class);
+   }
 }

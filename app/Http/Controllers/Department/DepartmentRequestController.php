@@ -9,6 +9,7 @@ use App\Models\Activity;
 use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\ParentRequest;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestHistory;
@@ -27,6 +28,8 @@ class DepartmentRequestController extends Controller
          $acts = Activity::where('type_id', 1)->get();
       } elseif (auth()->user()->getDepartment()->name == 'drilling') {
          $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
+      } else {
+         $acts = Activity::get();
       }
       $activities = $acts;
       $types = Type::get();
@@ -75,6 +78,104 @@ class DepartmentRequestController extends Controller
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
    }
 
+   public function store(Request $req)
+   {
+      $date = Carbon::today();
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $department = Department::find($employee->department->id);
+      $now = Carbon::today();
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+
+      if ($department->id == 2) {
+         $type = 1;
+      } elseif ($department->id == 3) {
+         $type = 2;
+      }
+
+      $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
+
+      if (isset($parentLast)) {
+         $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
+      } else {
+         $code = "PR/"  . $date->format("dmy") . '/' . 1;
+      }
+
+      $parent = ParentRequest::create([
+         'code' => $code,
+         'origin_id' => $req->origin,
+         'date' => $req->date,
+         'employee_id' => $employee->id,
+         'department_id' => $department->id,
+      ]);
+
+
+      if (isset($request)) {
+         $code =
+            "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      $request = ModelsRequest::create([
+         'parent_id' => $parent->id,
+         'code' => $code,
+         'type' => $type,
+         'employee_id' => $employee->id,
+         'department_id' => $department->id,
+         'func' => $department->code,
+         'activity_id' => $req->activity,
+         'date' => $req->date,
+         'description' => $req->desc,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'status' => 00
+      ]);
+
+
+
+      return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
+   }
+
+   public function add(Request $req)
+   {
+      $req->validate([
+         'activity' => 'required'
+      ]);
+      $now = Carbon::today();
+      $parent = ParentRequest::find($req->parent);
+
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $department = Department::find($employee->department->id);
+
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      if (isset($request)) {
+         $code =
+            "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      ModelsRequest::create([
+         'code' => $code,
+         'type' => 0,
+         'parent_id' => $parent->id,
+         'employee_id' => $employee->id,
+         'status' => 0,
+         'date' => $parent->date,
+         'department_id' => $department->id,
+         'origin_id' => $parent->origin_id,
+         'destination_id' => $req->destination,
+         'activity_id' => $req->activity,
+         'description' => $req->desc
+      ]);
+
+
+      return redirect()->back()->with('success', 'Request Activity successfully added');
+   }
+
+
+
+
    public function edit($id)
    {
       $dekripId = dekripRambo($id);
@@ -115,7 +216,8 @@ class DepartmentRequestController extends Controller
    {
       $employee = Employee::where('email', auth()->user()->email)->first();
 
-      $requests = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->get();
+      $requests = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
+      // $parents = ParentRequest::where()
       return view('pages.request.draft', [
          'requests' => $requests
       ])->with('i');

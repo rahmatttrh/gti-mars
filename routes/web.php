@@ -7,6 +7,7 @@ use App\Http\Controllers\Department\CargoItemController;
 use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Marine\MarineDeviationController;
 use App\Http\Controllers\Marine\MarineRequestController;
 use App\Http\Controllers\Marine\MarineScheduleController;
 use App\Http\Controllers\MarineController;
+use App\Http\Controllers\ParentRequestController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\PortController;
@@ -31,6 +33,7 @@ use App\Http\Controllers\Vessel\VesselDeviationController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
 use App\Models\Activity;
+use App\Models\ParentRequest;
 use App\Models\Platform;
 use App\Models\Request;
 use App\Models\Schedule;
@@ -144,9 +147,7 @@ Route::middleware(["auth"])->group(function () {
       Route::post('check', [RequestController::class, 'check'])->name('request.check');
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
       Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
-
-
-
+      Route::get('parent/detail/{parent:id}', [ParentRequestController::class, 'detail'])->name('request.detail.parent');
 
       Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
 
@@ -258,12 +259,16 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
    Route::prefix('department/request')->group(function () {
       Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
       Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
+      Route::post('store', [DepartmentRequestController::class, 'store'])->name('request.store');
+      Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
+
       Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
       Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
       Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
       Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
       Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
       Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
+      Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
       Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
       Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
    });
