@@ -5,7 +5,7 @@
             <h2 class="accordion-header" id="heading-{{$request->id}}">
                <button class="accordion-button " type="button" data-bs-toggle="collapse"
                   data-bs-target="#collapse-{{$request->id}}" aria-expanded="true">
-                  {{$request->code}}
+                  {{$request->destination->name}}
                </button>
             </h2>
             <div id="collapse-{{$request->id}}" class="accordion-collapse collapse show"

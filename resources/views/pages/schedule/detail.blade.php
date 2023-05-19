@@ -61,14 +61,23 @@
          <div class="row">
             <div class="col-md-8">
                <div class="card">
-                  <div class="card-header bg-secondary">
+                  <div class="card-header bg-dark">
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
                      <h1>
                         {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                      </h1>
-                     {{$schedule->origin->name}} - {{$schedule->destination->name}}<br>
+                     <h3>From {{$schedule->origin->name}} </h3>
+                        {{-- @foreach ($schedule->requests as $req)
+                            {{$req->destination->name}} -
+                        @endforeach --}}
+                        {{-- $departs as $depart => $reqs --}}
+                       <h3> {{$schedule->origin->name}}
+                        @foreach ($destinations as  $destination => $dest)
+                            - {{$destination}} 
+                        @endforeach
+                     </h3>
                      {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
                      <div class="text-muted">#Note {{$schedule->remark}}</div>
                   </div>
@@ -93,6 +102,32 @@
                
             </div>
             <div class="col-md-4">
+               @if ($schedule->status == 0)
+               <div class="card mb-3" style="height: calc(12rem + 10px)">
+                  <div class="card-header bg-dark text-white">
+                     Recent Request Activity
+                  </div>
+                  <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                     <div class="divide-y">
+                        @foreach ($recentRequests as $req)
+                           <div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="text-truncate">
+                                       <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
+                                       {{$req->activity->name}} {{$req->description}}</a>
+                                    </div>
+                                    <div class="text-muted">{{$req->destination->name}}</div>
+                                 </div>
+                              </div>
+                           </div>
+                           <x-modal.schedule.add-request :request="$req" :schedule="$schedule" />
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+               @endif
+               
                {{-- <div class="row">
                   <div class="col-md-6">
                      <div class="card card-sm">

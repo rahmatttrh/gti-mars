@@ -100,7 +100,7 @@
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating mb-3">
-                                 <select required name="destination" id="destination" class="form-select">
+                                 <select name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
                                        <option value="{{$port->id}}">{{$port->name}}</option>

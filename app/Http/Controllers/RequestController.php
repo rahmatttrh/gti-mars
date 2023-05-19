@@ -220,7 +220,9 @@ class RequestController extends Controller
       $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       $passengerItems = PassengerItem::where('request_id', $request->id)->get();
-      $schedules = Schedule::where('origin_id', $request->origin_id)->where('destination_id', $request->destination_id)->where('status', 0)->get();
+      $schedules = Schedule::where('origin_id', $request->origin_id)->where('status', 0)->get();
+
+      
 
       return view('pages.request.detail', [
          'request' => $request,

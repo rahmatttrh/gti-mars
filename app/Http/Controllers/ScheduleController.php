@@ -123,7 +123,16 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->get();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get();
+      $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
+
+      // $destinations = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->get();
+
+      // $dests = ModelsRequest::select('destination_id')->where('schedule_id', $schedule->id)->where('status', '>=', 2)
+      //    ->get();
+      $destinations = ModelsRequest::selectRaw('destination_name')->where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get()->groupBy('destination_name');
+      // dd($destinations);
+
       // $report = Report::where('schedule_id', $schedule->id)->first();
       $vessel = Vessel::get();
       $report = Report::where('schedule_id', $schedule->id)->first();
@@ -149,7 +158,9 @@ class ScheduleController extends Controller
          'ports' => $ports,
          'deviations' => $deviations,
          'persenWeight' => round($persenWeight),
-         'persenSize' => round($persenSize)
+         'persenSize' => round($persenSize),
+         'destinations' => $destinations,
+         'recentRequests' => $recentRequests
          // 'report' => $requests
       ]);
    }

@@ -17,6 +17,7 @@ class CreateParentRequestsTable extends Migration
          $table->id();
          // $table->mediumInteger('parent_id');
          // $table->mediumInteger('request_id');
+         $table->smallInteger('status');
          $table->string('code');
          $table->mediumInteger('origin_id');
          $table->dateTime('date');

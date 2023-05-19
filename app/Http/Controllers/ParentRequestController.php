@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovalEmail;
 use App\Models\Activity;
 use App\Models\ParentRequest;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ParentRequestController extends Controller
 {
@@ -54,5 +56,42 @@ class ParentRequestController extends Controller
       } elseif ($status == 1) {
          return redirect()->back()->with('success', 'Failed, this Master Request has atleast one Request Activity On Progress');
       }
+   }
+
+   public function release($id)
+   {
+      $dekripId = dekripRambo($id);
+      $parent = ParentRequest::find($dekripId);
+
+      foreach ($parent->requests as $request) {
+         $request->update([
+            'status' => 01
+         ]);
+
+         $activityName = $request->activity->name . ' ' . $request->description;
+
+         $data = [
+            'to' => 'Marine Department',
+            'from' => $request->department->name . ' Department',
+            'subject' => 'Request Activity Approval',
+            'request' => $request,
+            'body' => $activityName,
+            'cargos' => $request->cargoItems,
+            'link' => route('request.detail', enkripRambo($request->id))
+         ];
+
+         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+         Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
+         // return redirect()->back()->with('success', 'Email has sent');
+      }
+
+      $parent->update([
+         'status' => 01
+      ]);
+
+
+
+
+      return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
    }
 }

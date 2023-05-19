@@ -1,14 +1,15 @@
-<div class="modal modal-blur fade" id="modal-select-vessel-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="add-request-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Select Vessel</h5>
+            <h5 class="modal-title">Add Request</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <form action="{{route('request.select.schedule')}}" method="POST">
             @csrf
             @method('PUT')
             <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
+            <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
             <div class="modal-body">
                <div class="">{{$request->activity->name}} {{$request->description}}</div>
                
@@ -26,18 +27,7 @@
                   <label for="station">Date</label>
                </div> --}}
                
-               <div class="form-floating mt-2 mb-3">
-                  <select required name="schedule" id="schedule" required class="form-select">
-                     <option  disabled selected>Choose</option>
-                    
-                     @foreach ($schedules as $schedule)
-                     
-                        <option value="{{$schedule->id}}">{{$schedule->vessel->name}} - {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</option>  
-                     @endforeach
-                     
-                  </select>
-                  <label for="origin">Vessel</label>
-               </div>
+               
                <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="remark" name="remark" >
                   <label for="remark">Remark (Optional)</label>

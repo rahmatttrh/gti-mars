@@ -85,6 +85,7 @@ class DepartmentRequestController extends Controller
       $department = Department::find($employee->department->id);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      $destination = Port::find($req->destination);
 
       if ($department->id == 2) {
          $type = 1;
@@ -101,6 +102,7 @@ class DepartmentRequestController extends Controller
       }
 
       $parent = ParentRequest::create([
+         'status' => 0,
          'code' => $code,
          'origin_id' => $req->origin,
          'date' => $req->date,
@@ -128,6 +130,7 @@ class DepartmentRequestController extends Controller
          'description' => $req->desc,
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
+         'destination_name' => $destination->name,
          'status' => 00
       ]);
 
@@ -143,6 +146,7 @@ class DepartmentRequestController extends Controller
       ]);
       $now = Carbon::today();
       $parent = ParentRequest::find($req->parent);
+      $destination = Port::find($req->destination);
 
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);
@@ -161,10 +165,12 @@ class DepartmentRequestController extends Controller
          'parent_id' => $parent->id,
          'employee_id' => $employee->id,
          'status' => 0,
+         'func' => $department->code,
          'date' => $parent->date,
          'department_id' => $department->id,
          'origin_id' => $parent->origin_id,
          'destination_id' => $req->destination,
+         'destination_name' => $destination->name,
          'activity_id' => $req->activity,
          'description' => $req->desc
       ]);
@@ -309,6 +315,7 @@ class DepartmentRequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
+      $parentId = $request->parent->id;
 
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       foreach ($cargoItems as $item) {
@@ -317,6 +324,6 @@ class DepartmentRequestController extends Controller
 
       $request->delete();
 
-      return redirect()->to('/')->with('success', 'Request Activity successfully deleted');
+      return redirect()->route('request.detail.parent', enkripRambo($parentId))->with('success', 'Request Activity successfully deleted');
    }
 }

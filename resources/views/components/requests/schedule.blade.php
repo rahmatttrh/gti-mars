@@ -14,7 +14,7 @@
                   <dt class="col-3">Boat</dt>
                   <dd class="col-9">: {{$schedule->vessel->name ?? 'Not Available'}}</dd>
                   <dt class="col-3">Date</dt>
-                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
+                  <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></dd>
                   <dt class="col-3">ETD</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
                   <dt class="col-3">ETA</dt>

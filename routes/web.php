@@ -266,6 +266,8 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
       Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
       Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
       Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
+      Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
+
       Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
       Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
       Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
