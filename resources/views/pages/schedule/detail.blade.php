@@ -61,29 +61,85 @@
          <div class="row">
             <div class="col-md-8">
                <div class="card">
-                  <div class="card-header bg-dark">
+                  <div class="card-header bg-secondary">
                      <x-status.schedule :schedule="$schedule" />
                   </div>
                   <div class="card-body">
-                     <h1>
-                        {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
-                     </h1>
-                     <h3>From {{$schedule->origin->name}} </h3>
-                        {{-- @foreach ($schedule->requests as $req)
-                            {{$req->destination->name}} -
-                        @endforeach --}}
-                        {{-- $departs as $depart => $reqs --}}
-                       <h3> {{$schedule->origin->name}}
-                        @foreach ($destinations as  $destination => $dest)
-                            - {{$destination}} 
-                        @endforeach
-                     </h3>
-                     {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} <br>
-                     <div class="text-muted">#Note {{$schedule->remark}}</div>
+                     <div class="row">
+                        <div class="col-md-8">
+                           <small>Vessel</small>
+                           <h2>
+                              {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
+                           </h2>
+                           <small>Pick up point from {{$schedule->origin->name}} </small>
+                              {{-- @foreach ($schedule->requests as $req)
+                                  {{$req->destination->name}} -
+                              @endforeach --}}
+                              {{-- $departs as $depart => $reqs --}}
+                           <h2> {{$schedule->origin->name}}
+                              @foreach ($destinations as  $destination => $dest)
+                                 - {{$destination}} 
+                              @endforeach
+                           </h2>
+                           
+                           <div class="text-muted"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</div>
+                           
+                           <div class="text-muted mb-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
+                           {{-- <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div> --}}
+                           {{-- <div class="text-muted">#Note {{$schedule->remark}}</div>    --}}
+                        </div>
+                        <div class="col-md-4">
+                           <div class="card bg-info text-white ">
+                              <div class="card-body">
+                                 <div class="row mb-3 align-items-center">
+                                    <div class="col">
+                                       <div class="text-muted text-white">
+                                          <small> Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton</small>
+                                       </div>
+                                       <div class="mt-2">
+                                          <div class="row g-2 align-items-center">
+                                             <div class="col-auto">
+                                                {{$persenWeight}}%
+                                             </div>
+                                             <div class="col">
+                                                <div class="progress progress-sm">
+                                                <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
+                                                </div>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="row mb-3 align-items-center">
+                                    <div class="col">
+                                      <div class="text-muted text-white">
+                                         <small>  Deckspace {{$schedule->total_size}} / {{$schedule->vessel->deckspace}} (m<sup>2</sup>)</small>
+                                      </div>
+                                      <div class="mt-2">
+                                        <div class="row g-2 align-items-center">
+                                          <div class="col-auto">
+                                            {{$persenSize}}%
+                                          </div>
+                                          <div class="col">
+                                            <div class="progress progress-sm">
+                                              <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                 </div>
+                                 {{-- <small>Hint : this data refers to the selected vessel data</small> --}}
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     
                   </div>
                   <div class="card-footer">
-                     <div class="text-muted mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
-                     <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div>
+                     <div class="text-muted"># {{$schedule->remark}}</div>   
                      
                   </div>
                </div>
@@ -113,6 +169,19 @@
                            <div>
                               <div class="row">
                                  <div class="col">
+                                    {{-- <div class="dropdown">
+                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                          {{$req->activity->name}} {{$req->description}}
+                                       </a>
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPort_{{$req->id}}">
+                                             Detail
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
+                                             Add to this Schedule
+                                          </a>
+                                       </div>
+                                    </div> --}}
                                     <div class="text-truncate">
                                        <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
                                        {{$req->activity->name}} {{$req->description}}</a>
@@ -149,7 +218,7 @@
                      </div>
                   </div>
                </div> --}}
-               <div class="card mb-3">
+               {{-- <div class="card mb-3">
                   <div class="card-body">
                      <div class="row mb-3 align-items-center">
                         <div class="col">
@@ -164,7 +233,6 @@
                                  <div class="col">
                                     <div class="progress progress-sm">
                                     <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
-                                       {{-- <span class="visually-hidden">25% Complete</span> --}}
                                     </div>
                                     </div>
                                  </div>
@@ -185,7 +253,6 @@
                               <div class="col">
                                 <div class="progress progress-sm">
                                   <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
-                                    {{-- <span class="visually-hidden">25% Complete</span> --}}
                                   </div>
                                 </div>
                               </div>
@@ -195,7 +262,7 @@
                      </div>
                      <small>Hint : this data refers to the selected vessel data</small>
                   </div>
-               </div>
+               </div> --}}
                {{-- <div class="card mb-3">
                   <div class="card-body">
                     <div class="row align-items-center">

@@ -59,46 +59,55 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
+            
             <form action="{{route('schedule.store')}}" method="POST">
                @csrf
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
-                        <div class="row">
-                           <div class="col-md-3">
-                              <div class="form-floating mb-3">
-                                 <input type="date" required class="form-control" id="date" name="date" >
-                                 <label for="date">Date</label>
-                              </div>
+                        @if ($errors->any())
+                           <div class="alert alert-danger text-danger">
+                              <ul>
+                                    @foreach ($errors->all() as $error)
+                                       <li><small>{{ $error }}</small></li>
+                                    @endforeach
+                              </ul>
                            </div>
-                           <div class="col-md-9">
+                        @endif
+                        <div class="row">
+                           <div class="col-md-8">
                               <div class="form-floating mb-3">
-                                 <select required name="vessel" id="vessel" class="form-select">
+                                 <select  required name="vessel" id="vessel" class="form-select">
                                     <option  disabled selected>Choose</option>
                                     @foreach ($vessels as $vessel)
-                                       <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                       <option {{ old('vessel') == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}}</option>
                                     @endforeach
-                                    
                                  </select>
                                  <label for="vessel">Vessel</label>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-floating mb-3">
+                                 <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
+                                 <label for="date">Date</label>
                               </div>
                            </div>
                         </div>
                         <div class="row">
                            
-                           <div class="col-md-6">
+                           <div class="col-md-8">
                               <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
                                     <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                     
                                  </select>
                                  <label for="origin">From</label>
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <select name="destination" id="destination" class="form-select">
                                     <option  disabled selected>Choose port</option>
@@ -109,22 +118,22 @@
                                  </select>
                                  <label for="origin">Destination</label>
                               </div>
-                           </div>
-                           <div class="col-md-6">
+                           </div> --}}
+                           <div class="col-md-4">
                               <div class="form-floating mb-3">
-                                 <input type="datetime-local" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
-                                 <label for="departure_estimasi">Estimasi Keberangkatan</label>
+                                 <input type="datetime-local" value="{{old('departure_estimasi')}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                 <label for="departure_estimasi">ETD</label>
                               </div>
                            </div>
-                           <div class="col-md-6">
+                           {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <input type="datetime-local" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
                                  <label for="arrive_estimasi">Estimasi Kedatangan</label>
                               </div>
-                           </div>
+                           </div> --}}
                            <div class="col-md-12">
                               <div class="form-floating">
-                                 <input type="text" required class="form-control" id="remark" name="remark" value="{{old('remark')}}" >
+                                 <input type="text" class="form-control" id="remark" name="remark" value="{{old('remark')}}" >
                                  <label for="remark">Remark</label>
                               </div>
                            </div>
@@ -137,10 +146,10 @@
                            <small class="">Info</small>
                            </div> --}}
                            <div class="card-body text-center">
-                              <img height="140px" width="auto" src="{{asset('img/draw/calendar.png')}}" alt="">
+                              <img height="120px" width="auto" src="{{asset('img/draw/calendar.png')}}" alt="">
                            </div>
                            <div class="card-footer">
-                              <small class="text-muted">Hint : Vessel schedule can accommodate several activities in one schedule.</small>
+                              <small class="text-muted">Hint : Vessel schedule can accommodate several activities.</small>
                            </div>
                         </div>
                      </div>

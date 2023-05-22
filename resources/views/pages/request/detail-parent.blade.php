@@ -63,7 +63,7 @@
                      <div class="row">
                         <div class="col">
                            <h2 class="text-left">{{$parent->code}}</h2>
-                           <h4>{{$parent->date}}</h4>
+                           <h4>{{\Carbon\Carbon::parse($parent->date)->format('d/m/Y')}}</h4>
                            <small>Pick Up Point from <b>{{$parent->origin->name}}</b></small>
                         </div>
                         {{-- <div class="col text-end">
@@ -91,7 +91,7 @@
                               @csrf
                               <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
                               <div class="form-floating mb-3">
-                                 <select name="activity" id="activity" class="form-select">
+                                 <select name="activity" required id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>
                                     @foreach ($activities as $activity)
                                        <option value="{{$activity->id}}">{{$activity->name}}</option>

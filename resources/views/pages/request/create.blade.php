@@ -27,13 +27,22 @@
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
+                        @if ($errors->any())
+                           <div class="alert alert-danger text-danger">
+                              <ul>
+                                    @foreach ($errors->all() as $error)
+                                       <li><small>{{ $error }}</small></li>
+                                    @endforeach
+                              </ul>
+                           </div>
+                        @endif
                         <div class="row">
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
                                  <select name="activity" id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>
                                     @foreach ($activities as $activity)
-                                       <option value="{{$activity->id}}">{{$activity->name}}</option>
+                                       <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="activity">Activity</label>
@@ -41,21 +50,22 @@
                            </div>
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="desc" name="desc" >
+                                 <input type="text" value="{{old('desc')}}" class="form-control" id="desc" name="desc" >
                                  <label for="desc">Description</label>
                               </div>
                            </div>
                            <div class="col-md-4">
                               <div class="form-floating">
-                                 <input type="date" required class="form-control" id="date" name="date" >
+                                 <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
                                  <label for="date">Departure Date</label>
                               </div>
                            </div>
                            <div class="col-md-4">
                               <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
+                                    <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="origin">From</label>
@@ -64,8 +74,9 @@
                            <div class="col-md-4 mb-3">
                               <div class="form-floating">
                                  <select required name="destination" id="destination" class="form-select">
+                                    <option  disabled selected>Choose port</option>
                                     @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
+                                       <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
                                  <label for="destination">Destination</label>
@@ -85,10 +96,10 @@
                               <img height="140px" width="auto" src="{{asset('img/draw/task.png')}}" alt="">
                            </div>
                            <div class="card-footer">
-                              <small>Hint : If the Activity option is not in the List, you can fill in the Form Description, or you can fill in both</small>
+                              <small>Hint : If the Activity option is not in the List, you can contact Marine Department to add new one</small>
                            </div>
                         </div>
-                     </div>
+                     </div>   
                   </div>
                </div>
                <div class="card-footer">

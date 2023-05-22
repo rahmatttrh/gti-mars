@@ -119,7 +119,8 @@
                         <td class="text-muted text-center"><small>{{++$i}}</small></td>
                         <td class="text-muted text-truncate"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></td>
                   
-                        <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
+                        {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                        <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
                         <td class="text-muted text-truncate">
                            {{$schedule->vessel->name ?? ''}}
                         </td>

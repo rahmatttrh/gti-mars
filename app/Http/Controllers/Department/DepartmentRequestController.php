@@ -80,6 +80,9 @@ class DepartmentRequestController extends Controller
 
    public function store(Request $req)
    {
+      $req->validate([
+         'activity' => 'required',
+      ]);
       $date = Carbon::today();
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);

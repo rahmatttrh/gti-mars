@@ -32,45 +32,45 @@ class ScheduleSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      DB::table('schedules')->insert([
-         // 'type_id' => 2,
-         'type' => 2,
-         'status' => 0,
-         'date' => $now->addDay(1),
-         'vessel_id' => 2,
-         'origin_id' => 1,
-         'destination_id' => 3,
-         'etd' => $now->addDay(1)->addHour(1),
-         'eta' => $now->addDay(1)->addHour(4),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('schedules')->insert([
-         // 'type_id' => 2,
-         'type' => 2,
-         'status' => 0,
-         'date' => $now->addDay(3),
-         'vessel_id' => 4,
-         'origin_id' => 1,
-         'destination_id' => 5,
-         'etd' => $now->addDay(3)->addHour(1),
-         'eta' => $now->addDay(3)->addHour(5),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('schedules')->insert([
-         // 'type_id' => 2,
-         'type' => 2,
-         'status' => 0,
-         'date' => $now->addDay(1),
-         'vessel_id' => 4,
-         'origin_id' => 1,
-         'destination_id' => 5,
-         'etd' => $now->addDay(3)->addHour(1),
-         'eta' => $now->addDay(3)->addHour(5),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('schedules')->insert([
+      //    // 'type_id' => 2,
+      //    'type' => 2,
+      //    'status' => 0,
+      //    'date' => $now->addDay(1),
+      //    'vessel_id' => 2,
+      //    'origin_id' => 1,
+      //    'destination_id' => 3,
+      //    'etd' => $now->addDay(1)->addHour(1),
+      //    'eta' => $now->addDay(1)->addHour(4),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('schedules')->insert([
+      //    // 'type_id' => 2,
+      //    'type' => 2,
+      //    'status' => 0,
+      //    'date' => $now->addDay(3),
+      //    'vessel_id' => 4,
+      //    'origin_id' => 1,
+      //    'destination_id' => 5,
+      //    'etd' => $now->addDay(3)->addHour(1),
+      //    'eta' => $now->addDay(3)->addHour(5),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // DB::table('schedules')->insert([
+      //    // 'type_id' => 2,
+      //    'type' => 2,
+      //    'status' => 0,
+      //    'date' => $now->addDay(1),
+      //    'vessel_id' => 4,
+      //    'origin_id' => 1,
+      //    'destination_id' => 5,
+      //    'etd' => $now->addDay(3)->addHour(1),
+      //    'eta' => $now->addDay(3)->addHour(5),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
       // DB::table('schedules')->insert([
       //    'type' => 2,
       //    'status' => 1,
