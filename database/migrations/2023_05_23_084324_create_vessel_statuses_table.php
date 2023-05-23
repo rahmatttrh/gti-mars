@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivitiesTable extends Migration
+class CreateVesselStatusesTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,11 +13,9 @@ class CreateActivitiesTable extends Migration
     */
    public function up()
    {
-      Schema::create('activities', function (Blueprint $table) {
+      Schema::create('vessel_statuses', function (Blueprint $table) {
          $table->id();
-         $table->smallInteger('type_id')->nullable();
          $table->string('name');
-         $table->text('desc')->nullable();
          $table->timestamps();
       });
    }
@@ -29,6 +27,6 @@ class CreateActivitiesTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('activities');
+      Schema::dropIfExists('vessel_statuses');
    }
 }

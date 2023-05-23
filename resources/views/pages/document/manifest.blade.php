@@ -39,7 +39,10 @@
                      <dd class="col-3">Vessel</dd>
                      <dd class="col-9">: {{$schedule->vessel->name}}</dd>
                      <dd class="col-3">Route</dd>
-                     <dd class="col-9">: {{$schedule->origin->name}} - {{$schedule->destination->name}}</dd>
+                     <dd class="col-9">:  {{$schedule->origin->name}}
+                        @foreach ($destinations as  $destination => $dest)
+                           - {{$destination}} 
+                        @endforeach</dd>
                      <dd class="col-3">ETD</dd>
                      <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
                      <dd class="col-3">ETA</dd>

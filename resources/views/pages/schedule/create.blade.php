@@ -65,15 +65,7 @@
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-8">
-                        @if ($errors->any())
-                           <div class="alert alert-danger text-danger">
-                              <ul>
-                                    @foreach ($errors->all() as $error)
-                                       <li><small>{{ $error }}</small></li>
-                                    @endforeach
-                              </ul>
-                           </div>
-                        @endif
+                        <x-error :errors="$errors" />
                         <div class="row">
                            <div class="col-md-8">
                               <div class="form-floating mb-3">

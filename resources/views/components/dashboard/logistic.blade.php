@@ -59,7 +59,7 @@
                            {{-- <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}
                            <td class="text-muted">{{$r->activity->name ?? ''}} {{$r->description}}</td>
                            <td class="text-muted">{{$r->origin->name}} - {{$r->destination->name}}</td>
-                           <td><x-status.request :request="$r" /></td>
+                           <td><x-status.request :request="$r" :lastreport="$r->schedule->lastreport()" /></td>
                         </tr>
                         @endforeach
                         @else

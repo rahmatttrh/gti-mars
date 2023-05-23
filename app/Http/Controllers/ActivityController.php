@@ -21,6 +21,9 @@ class ActivityController extends Controller
 
    public function store(Request $req)
    {
+      $req->validate([
+         'name' => 'required'
+      ]);
       Activity::create([
          'type_id' => $req->type,
          'name' => $req->name,
@@ -34,7 +37,7 @@ class ActivityController extends Controller
    {
       $activity = Activity::find($req->activity);
       $activity->update([
-         'type_id' => $req->type,
+         // 'type_id' => $req->type,
          'name' => $req->name,
          'desc' => $req->desc
       ]);

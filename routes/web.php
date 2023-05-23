@@ -240,6 +240,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
 
       Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
+      Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
@@ -293,6 +294,7 @@ Route::group(['middleware' => ['role:drilling|department']], function () {
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
       Route::get('standby/{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
+      Route::post('update/status', [VesselScheduleController::class, 'updateStatus'])->name('schedule.update.status');
       Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
       Route::get('loading/complete/{schedule:id}', [VesselScheduleController::class, 'loadingEnd'])->name('schedule.loading.complete');
       Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');

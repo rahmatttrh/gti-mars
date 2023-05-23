@@ -31,7 +31,7 @@
                               </td>
                               <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
                               <td>
-                                 <x-status.schedule :schedule="$schedule" />
+                                 <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                                  {{-- @if ($schedule->deviations->where('status', 0)->count() == 0)
                                  <div class="badge bg-danger">Deviation Alert</div>
                                  @endif --}}

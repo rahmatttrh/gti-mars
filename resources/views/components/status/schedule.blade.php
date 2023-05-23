@@ -2,6 +2,11 @@
    @if ($schedule->status == 0)
       <div class="badge bg-light border text-dark"><span class="badge bg-yellow me-1"></span>00 : Draft</div>
       @elseif($schedule->status == 1)
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>01 : {{$lastreport->status->name}} {{$lastreport->port_id == null ? '' : 'at ' . $lastreport->port->name}}</div>
+   @endif
+   {{-- @if ($schedule->status == 0)
+      <div class="badge bg-light border text-dark"><span class="badge bg-yellow me-1"></span>00 : Draft</div>
+      @elseif($schedule->status == 1)
       <div class="badge bg-light border text-dark"><span class="badge bg-yellow me-1"></span>01 : Assigned to {{$schedule->vessel->name}}</div>
       @elseif($schedule->status == 2)
       <div class="badge bg-light border text-dark"><span class="badge bg-yellow me-1"></span>02 : Standby at {{$schedule->origin->name}}</div>
@@ -23,7 +28,7 @@
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>10 : Unloading Complete at {{$schedule->destination->name}}</div>
       @elseif($schedule->status == 11)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>11 : Complete</div>
-   @endif
+   @endif --}}
 
    @if ($schedule->deviations->where('status', 0)->count() > 0)
    <div class="badge bg-danger">Deviation Alert!</div>

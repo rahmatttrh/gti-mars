@@ -41,6 +41,15 @@
                   <form action="{{route('employee.store')}}" method="POST">
                      @csrf
                   <div class="card-body">
+                     @if ($errors->any())
+                        <div class="alert alert-danger text-danger">
+                           <ul>
+                              @foreach ($errors->all() as $error)
+                                 <li><small>{{ $error }}</small></li>
+                              @endforeach
+                           </ul>
+                        </div>
+                     @endif
                      <div class="row">
                         <div class="col">
                            <div class="form-floating mb-3">

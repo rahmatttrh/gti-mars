@@ -65,7 +65,7 @@
                               <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
                               <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                               <td>
-                                 <x-status.request :request="$request" />
+                                 <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" />
                               </td>
                            </tr>
                         @endforeach

@@ -25,7 +25,17 @@
                   @endif
 
                   @if (auth()->user()->hasRole('vessel'))
-                     <x-schedule.action-vessel :schedule="$schedule" />
+                     {{-- <x-schedule.action-vessel :schedule="$schedule" /> --}}
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule-update-status">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exchange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                           <path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                           <path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                           <path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3"></path>
+                           <path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3"></path>
+                        </svg>
+                        Update Status
+                     </button>
                   @endif
                   
                   <div class="dropdown">
@@ -62,7 +72,7 @@
             <div class="col-md-8">
                <div class="card">
                   <div class="card-header bg-secondary">
-                     <x-status.schedule :schedule="$schedule" />
+                     <x-status.schedule :schedule="$schedule" :lastreport="$lastreport" />
                   </div>
                   <div class="card-body">
                      <div class="row">
@@ -81,8 +91,11 @@
                                  - {{$destination}} 
                               @endforeach
                            </h2>
+                           @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+                           <small><a href="#" data-bs-toggle="modal" data-bs-target="#schedule-reset-route">Reset route</a></small>
+                           @endif
                            
-                           <div class="text-muted"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</div>
+                           <div class="text-muted mt-3"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</div>
                            
                            <div class="text-muted mb-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
                            {{-- <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div> --}}
@@ -187,6 +200,7 @@
                                        {{$req->activity->name}} {{$req->description}}</a>
                                     </div>
                                     <div class="text-muted">{{$req->destination->name}}</div>
+                                    <div class="text-muted">{{$req->employee->name}}/{{$req->department->name}}</div>
                                  </div>
                               </div>
                            </div>
@@ -294,7 +308,7 @@
                   </div>
                   <div class="card-body">
                      @if ($report)
-                        <x-schedule.report :report="$report" />
+                        <x-schedule.report :report="$report" :reports="$reports" />
                         @else
                         <small class="text-muted">Empty</small>
                      @endif
@@ -314,6 +328,8 @@
       </div>
    </div>
 
+   <x-modal.schedule.reset :schedule="$schedule" />
+   <x-modal.schedule.update-status :schedule="$schedule" :routes="$routes" :ports="$ports" :iddestinations="$iddestinations" :destinations="$destinations" :statuses="$statuses" />
    {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
    <x-modal.schedule.send :schedule="$schedule" />
    <x-modal.schedule.standby :schedule="$schedule" />
@@ -321,14 +337,14 @@
    <x-modal.schedule.loading-complete :schedule="$schedule" />
    <x-modal.schedule.castoff :schedule="$schedule" />
    <x-modal.schedule.fullaway :schedule="$schedule" />
-   <x-modal.schedule.arrive :schedule="$schedule" />
-   <x-modal.schedule.standby-dest :schedule="$schedule" />
+   {{-- <x-modal.schedule.arrive :schedule="$schedule" /> --}}
+   {{-- <x-modal.schedule.standby-dest :schedule="$schedule" />
    <x-modal.schedule.unloading :schedule="$schedule" />
    <x-modal.schedule.unloading-complete :schedule="$schedule" />
    <x-modal.schedule.complete :schedule="$schedule" />
 
-   <x-modal.schedule.departure :schedule="$schedule" />
-   <x-modal.schedule.arrived :schedule="$schedule"/>
+   <x-modal.schedule.departure :schedule="$schedule" /> --}}
+   {{-- <x-modal.schedule.arrived :schedule="$schedule"/> --}}
 
    <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports"/>
    

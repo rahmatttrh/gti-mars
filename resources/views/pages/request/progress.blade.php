@@ -118,7 +118,7 @@
                                     <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
                                     
                                     {{-- <td class="text-muted">{{$request->schedule->vessel->name ?? 'Not available yet'}}</td> --}}
-                                    <td><x-status.request :request="$request" /></td>
+                                    <td><x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /></td>
                                     
                                     {{-- <td>
                                        @if ($request->status == 1)

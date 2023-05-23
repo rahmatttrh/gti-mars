@@ -98,12 +98,12 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-           
-            <div class="table-responsive pt-4 pb-4">
-               <table id="example"  class="table " >
+           {{-- ID Example for display datatable --}}
+            <div class="table-responsive">
+               <table id=""  class="table " >
                   <thead>
                      <tr>
-                        <th >No.</th>
+                        <th class="text-center">No.</th>
                         <th>Date</th>
                         <th>Route</th>
                         <th>Assignment Boat</th>

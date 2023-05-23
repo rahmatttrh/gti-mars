@@ -140,7 +140,7 @@
                                  <td class=""><a href="{{route('vessel.history', [enkripRambo($schedule->vessel->id), $today->format('m') ])}}">{{$schedule->vessel->name}}</a></td>
                                  <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Activity</a></td>
                                  <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
-                                 <td><x-status.schedule :schedule="$schedule"  /></td>
+                                 <td><x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" /></td>
                               </tr>
                               <x-modal.schedule.request :schedule="$schedule" />
                               @endforeach

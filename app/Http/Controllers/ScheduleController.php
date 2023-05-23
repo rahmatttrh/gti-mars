@@ -8,6 +8,8 @@ use App\Models\Port;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
+use App\Models\Status;
 use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -125,20 +127,25 @@ class ScheduleController extends Controller
       $schedule = Schedule::find($dekripId);
       $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get();
       $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
-
+      $statuses = Status::get();
+      $ports = Port::get();
+      $reports = Report::where('schedule_id', $schedule->id)->get();
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       // $destinations = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->get();
 
       // $dests = ModelsRequest::select('destination_id')->where('schedule_id', $schedule->id)->where('status', '>=', 2)
       //    ->get();
       $destinations = ModelsRequest::selectRaw('destination_name')->where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get()->groupBy('destination_name');
-      // dd($destinations);
+      $iddestinations = ModelsRequest::selectRaw('destination_id')->where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get()->groupBy('destination_id');
+      // dd($iddestinations);
 
       // $report = Report::where('schedule_id', $schedule->id)->first();
       $vessel = Vessel::get();
       $report = Report::where('schedule_id', $schedule->id)->first();
-      // dd($schedule->requests());
+      $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      // dd($report);
       // dd($report->loading);
-      $ports = Port::get();
+
       if (auth()->user()->hasRole('marine')) {
          $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
@@ -153,13 +160,18 @@ class ScheduleController extends Controller
       return view('pages.schedule.detail', [
          'schedule' => $schedule,
          'report' => $report,
+         'lastreport' => $lastreport,
+         'reports' => $reports,
          'requests' => $requests,
          'vessels' => $vessel,
          'ports' => $ports,
+         'routes' => $routes,
+         'statuses' => $statuses,
          'deviations' => $deviations,
          'persenWeight' => round($persenWeight),
          'persenSize' => round($persenSize),
          'destinations' => $destinations,
+         'iddestinations' => $iddestinations,
          'recentRequests' => $recentRequests
          // 'report' => $requests
       ]);

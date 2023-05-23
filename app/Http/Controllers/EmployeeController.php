@@ -29,7 +29,9 @@ class EmployeeController extends Controller
    public function store(Request $req)
    {
       $req->validate([
-         'email' => 'unique:users'
+         'email' => 'unique:users',
+         'department' => 'required',
+         'port' => 'required'
       ]);
       $employee = Employee::create([
          'department_id' => $req->department,

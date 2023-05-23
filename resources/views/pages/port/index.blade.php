@@ -54,7 +54,7 @@
                            </div>
                            <div class="col-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" id="email" name="email" >
+                                 <input type="text" required class="form-control" id="email" name="email" >
                                  <label for="email">Email</label>
                               </div>
                            </div>

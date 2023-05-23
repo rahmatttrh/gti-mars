@@ -13,6 +13,7 @@ use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
+use App\Models\ScheduleRoute;
 use App\Models\Type;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -156,10 +157,15 @@ class MarineScheduleController extends Controller
          ]);
       }
 
+      // Report::create([
+      //    'schedule_id' => $schedule->id,
+      //    'vessel_id' => $schedule->vessel_id,
+      //    'assign' => $now
+      // ]);
       Report::create([
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
-         'assign' => $now
+         'status_id' => 1,
       ]);
 
       $schedule->update([
@@ -210,5 +216,26 @@ class MarineScheduleController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Request Activity successfully removed from list');
+   }
+
+   public function resetRoute($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->get();
+
+      foreach ($requests as $request) {
+         $request->update([
+            'status' => 1,
+            'schedule_id' => null
+         ]);
+      }
+
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      foreach ($routes as $route) {
+         $route->delete();
+      }
+
+      return redirect()->back()->with('success', 'Schedule Route successfully reseted');
    }
 }

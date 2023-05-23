@@ -33,7 +33,9 @@ class DatabaseSeeder extends Seeder
          PayloadTypeSeeder::class,
          WoSeeder::class,
          CargoSeeder::class,
-         EmployeeSeeder::class
+         EmployeeSeeder::class,
+         StatusSeeder::class
+         // VesselStatusSeeder::class
       ]);
    }
 }

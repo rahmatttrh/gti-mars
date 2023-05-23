@@ -43,4 +43,9 @@ class Port extends Model
    {
       return $this->hasMany(Deviation::class);
    }
+
+   public function reports()
+   {
+      return $this->hasMany(Report::class);
+   }
 }

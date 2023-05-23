@@ -11,9 +11,25 @@ use App\Models\Schedule;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\FuncCall;
 
 class VesselScheduleController extends Controller
 {
+   public function updateStatus(Request $req)
+   {
+      $req->validate([]);
+
+      $schedule = Schedule::find($req->schedule);
+
+      Report::create([
+         'schedule_id' => $req->schedule,
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => $req->status,
+         'port_id' => $req->port
+      ]);
+
+      return redirect()->back()->with('success', "Schedule Status successfully updated");
+   }
 
    public function standby($id)
    {
@@ -277,6 +293,4 @@ class VesselScheduleController extends Controller
 
       return redirect()->back()->with('success', 'Report successfully saved');
    }
-
-   
 }

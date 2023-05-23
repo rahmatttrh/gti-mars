@@ -121,7 +121,7 @@
             <div class="col-md-8">
                <div class="card mb-3">
                   <div class="card-header">
-                     <x-status.request  :request="$request" />
+                     <x-status.request  :request="$request" :lastreport="$request->schedule->lastreport()" />
                   </div>
                   <div class="card-body">
                      {{-- <h1>{{$request->code}}</h1> --}}

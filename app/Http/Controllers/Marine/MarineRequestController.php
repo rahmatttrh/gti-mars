@@ -7,6 +7,7 @@ use App\Mail\ApprovalEmail;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestHistory;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -50,6 +51,17 @@ class MarineRequestController extends Controller
          return redirect()->back()->with('warning', 'Failed, Total Size (' . $request->total_size  .  ') melebihi Deck Space Vessel (' . $schedule->total_size  . ' /' . $vessel->deckspace . ')');
       } else {
 
+         $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
+         if ($route) {
+            // dd('sudah ada');
+         } else {
+            // dd('ok');
+            ScheduleRoute::create([
+               'schedule_id' => $schedule->id,
+               'port_id' => $request->destination_id,
+               'rank' => 1
+            ]);
+         }
 
 
          $request->update([
@@ -62,6 +74,7 @@ class MarineRequestController extends Controller
             'total_size' => $schedule->total_size + $request->total_size,
             'total_weight' => $schedule->total_weight + $request->total_weight
          ]);
+
 
          // $body = $request->activity->name . ' ' . $request->description . ' has successfully set on schedule vessel ' . $schedule->vessel->name . ' at ' . Carbon::parse($schedule->date)->format('d/m/Y');
 

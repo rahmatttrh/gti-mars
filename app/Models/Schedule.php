@@ -34,9 +34,15 @@ class Schedule extends Model
 
    // Primary Key
 
-   public function report()
+   public function reports()
    {
-      return $this->hasOne(Report::class);
+      return $this->hasMany(Report::class);
+   }
+
+   public function lastreport()
+   {
+      $lastreport = Report::where('schedule_id', $this->id)->orderBy('created_at', 'desc')->first();
+      return $lastreport;
    }
 
    public function wo()

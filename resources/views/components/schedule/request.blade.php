@@ -22,13 +22,13 @@
                      <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
                   </dl>
                   <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
-                  @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+                  {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                   <div class="mt-2 mb-2">
                      <a class="" href="#" data-bs-toggle="modal" data-bs-target="#remove-request-{{$request->id}}">
                         <small>Remove from list</small> 
                      </a>
                   </div>
-                  @endif
+                  @endif --}}
                   
                </div>
             </div>

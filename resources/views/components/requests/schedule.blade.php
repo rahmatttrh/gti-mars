@@ -12,7 +12,7 @@
             @if ($schedule)
                <dl class="row">
                   <dt class="col-3">Boat</dt>
-                  <dd class="col-9">: {{$schedule->vessel->name ?? 'Not Available'}}</dd>
+                  <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a></dd>
                   <dt class="col-3">Date</dt>
                   <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></dd>
                   <dt class="col-3">ETD</dt>
