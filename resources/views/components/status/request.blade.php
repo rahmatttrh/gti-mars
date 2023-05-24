@@ -28,7 +28,8 @@
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>11 : Unloading Complete at {{$request->schedule->destination->name}}</div>
       @elseif($request->status == 12)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div> --}}
-
+      @elseif($request->status == 12)
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div>
       @elseif($request->status == 202)
       <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>202 : Canceling Proccess</div>
    @endif

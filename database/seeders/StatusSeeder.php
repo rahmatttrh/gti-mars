@@ -15,7 +15,7 @@ class StatusSeeder extends Seeder
    public function run()
    {
       DB::table('statuses')->insert([
-         'name' => 'Assign',
+         'name' => 'Assigned',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -30,7 +30,7 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'Loading Complete',
+         'name' => 'Loading End',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -60,7 +60,7 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'Unloading Complete',
+         'name' => 'Unloading End',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

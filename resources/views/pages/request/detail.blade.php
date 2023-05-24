@@ -122,10 +122,10 @@
                <div class="card mb-3">
                   <div class="card-header">
                      @if ($request->status < 3)
-                                                <x-status.request :request="$request" :lastreport="null"/>
-                                                   @else
-                                                   <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                                                @endif
+                        <x-status.request :request="$request" :lastreport="null"/>
+                        @else
+                        <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                     @endif
                      {{-- <x-status.request  :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                   </div>
                   <div class="card-body">

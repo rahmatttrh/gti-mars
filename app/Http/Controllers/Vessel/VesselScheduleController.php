@@ -20,6 +20,13 @@ class VesselScheduleController extends Controller
       $req->validate([]);
 
       $schedule = Schedule::find($req->schedule);
+      foreach ($schedule->requests as $request) {
+         if ($req->status == 10 && $request->destination_id == $req->port) {
+            $request->update([
+               'status' => 12
+            ]);
+         }
+      }
 
       Report::create([
          'schedule_id' => $req->schedule,
@@ -27,6 +34,8 @@ class VesselScheduleController extends Controller
          'status_id' => $req->status,
          'port_id' => $req->port
       ]);
+
+
 
       return redirect()->back()->with('success', "Schedule Status successfully updated");
    }

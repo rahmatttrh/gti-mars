@@ -121,10 +121,10 @@
                      <table class="table table-vcenter">
                         <thead>
                            <tr>
-                              <th>Date</th>
                               <th>Vessel</th>
+                              <th>Date</th>
                               <th>Activity</th>
-                              <th>Route</th>
+                              <th>From</th>
                               <th>Status</th>
                            </tr>
                         </thead>
@@ -134,12 +134,12 @@
                               <tr>
                                  <td>
                                     <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                                       {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                                       {{$schedule->vessel->name}}
                                     </a>
                                  </td>
-                                 <td class=""><a href="{{route('vessel.history', [enkripRambo($schedule->vessel->id), $today->format('m') ])}}">{{$schedule->vessel->name}}</a></td>
+                                 <td class="">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                                  <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Activity</a></td>
-                                 <td class="text-nowrap text-muted">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td>
+                                 <td class="text-nowrap text-muted">{{$schedule->origin->name}} </td>
                                  <td><x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" /></td>
                               </tr>
                               <x-modal.schedule.request :schedule="$schedule" />

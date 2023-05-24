@@ -12,13 +12,22 @@
             @if ($schedule)
                <dl class="row">
                   <dt class="col-3">Boat</dt>
+                  @if (auth()->user()->hasRole('Marine'))
                   <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a></dd>
+                  @else
+                     @if ($schedule->status > 0)
+                     <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a></dd>
+                     @else
+                     <dd class="col-9">: {{$schedule->vessel->name}}</dd>
+                     @endif
+                  @endif
+                  
                   <dt class="col-3">Date</dt>
-                  <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></dd>
+                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
                   <dt class="col-3">ETD</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
-                  <dt class="col-3">ETA</dt>
-                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd>
+                  {{-- <dt class="col-3">ETA</dt>
+                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd> --}}
                   <small># {{$request->remark}}</small>
                </dl>
                @else

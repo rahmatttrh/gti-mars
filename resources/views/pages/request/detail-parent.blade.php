@@ -77,6 +77,7 @@
                   
                   <div class="card-body">
                      <div class="row">
+                        @if ($parent->status == 0)
                         <div class="col-md-4">
                            @if ($errors->any())
                               <div class="alert alert-danger">
@@ -120,7 +121,14 @@
                               </button>
                            </form>
                         </div>
+                        @endif
+                        
+                        @if ($parent->status == 0)
                         <div class="col-md-8">
+                           @else
+                           <div class="col-md-12">
+                        @endif
+                        
                            <div class="card">
                               {{-- <div class="card-header">
                                 <h3 class="card-title">People</h3>

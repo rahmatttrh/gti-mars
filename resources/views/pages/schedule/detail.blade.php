@@ -87,9 +87,12 @@
                               @endforeach --}}
                               {{-- $departs as $depart => $reqs --}}
                            <h2> {{$schedule->origin->name}}
-                              @foreach ($destinations as  $destination => $dest)
+                              {{-- @foreach ($destinations as  $destination => $dest)
                                  - {{$destination}} 
-                              @endforeach
+                              @endforeach --}}
+                              @foreach ($routes as  $route)
+                              - {{$route->port->name}} 
+                           @endforeach
                            </h2>
                            @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                            <small><a href="#" data-bs-toggle="modal" data-bs-target="#schedule-reset-route">Reset route</a></small>
@@ -171,9 +174,9 @@
                
             </div>
             <div class="col-md-4">
-               @if ($schedule->status == 0)
-               <div class="card mb-3" style="height: calc(12rem + 10px)">
-                  <div class="card-header bg-dark text-white">
+               @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+               <div class="card mb-3" style="height: calc(25rem + 10px)">
+                  <div class="card-header">
                      Recent Request Activity
                   </div>
                   <div class="card-body card-body-scrollable card-body-scrollable-shadow">
@@ -319,8 +322,12 @@
                      <h1>halo</h1>
                   </div>
                </div> --}}
+               
+               @if ($deviations != null)
                <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
                <x-schedule.deviation :deviations="$deviations" />
+               @endif
+               
             </div>
          </div>
          

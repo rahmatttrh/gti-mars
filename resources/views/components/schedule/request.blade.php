@@ -5,7 +5,8 @@
             <h2 class="accordion-header" id="heading-{{$request->id}}">
                <button class="accordion-button " type="button" data-bs-toggle="collapse"
                   data-bs-target="#collapse-{{$request->id}}" aria-expanded="true">
-                  {{$request->destination->name}}
+                  {{$request->destination->name}} 
+                  
                </button>
             </h2>
             <div id="collapse-{{$request->id}}" class="accordion-collapse collapse show"
@@ -20,6 +21,7 @@
                      <dd class="col-10">: {{$request->department->name}} / {{$request->employee->name ?? ''}}</dd>
                      <dd class="col-2">Activity</dd>
                      <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
+                     <dd class="col-12"><x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/></dd>
                   </dl>
                   <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
                   {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)

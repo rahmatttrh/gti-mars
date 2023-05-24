@@ -131,7 +131,7 @@
                            {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
                         </td>
                         <td class="text-muted">
-                           <x-status.schedule :schedule="$schedule" />
+                           <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                         </td>
                         
                      </tr>

@@ -151,7 +151,7 @@ class ScheduleController extends Controller
       } elseif (auth()->user()->hasRole('vessel')) {
          $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } else {
-         $deviation = null;
+         $deviations = null;
       }
 
       $persenWeight = $schedule->total_weight / $schedule->vessel->deadweight * 100;
