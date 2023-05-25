@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Deviation;
 use App\Models\Port;
+use App\Models\Postpone;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
@@ -14,6 +15,7 @@ use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\PostInc;
 
 class ScheduleController extends Controller
 {
@@ -38,9 +40,9 @@ class ScheduleController extends Controller
    {
       $dekripMonth = dekripRambo($month);
       if (auth()->user()->hasRole('vessel')) {
-         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('date', $dekripMonth)->get();
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('date', $dekripMonth)->where('status', 2)->get();
       } else {
-         $schedules = Schedule::whereMonth('date', $dekripMonth)->get();
+         $schedules = Schedule::whereMonth('date', $dekripMonth)->where('status', '<', 4)->get();
       }
 
       $vessels = Vessel::get();
@@ -125,12 +127,28 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('destination_id', 'desc')->orderBy('updated_at', 'asc')->get();
       $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
+
       $statuses = Status::get();
       $ports = Port::get();
       $reports = Report::where('schedule_id', $schedule->id)->get();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
+      // dd($lastPostpone->to);
+
+      // $inboxs = ModelsRequest::where('status', '=', 1)->get();
+
+      foreach ($routes as $route) {
+         $reqs = ModelsRequest::where('origin_id', '=', $route->port_id)->where('status', '=', 1)->get();
+         foreach ($reqs as $req) {
+            $recentRequests[] = $req;
+         }
+      }
+
+      // dd($recentRequests->count())
+
+      // dd($recentRequests);
       // $destinations = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->get();
 
       // $dests = ModelsRequest::select('destination_id')->where('schedule_id', $schedule->id)->where('status', '>=', 2)
@@ -172,7 +190,8 @@ class ScheduleController extends Controller
          'persenSize' => round($persenSize),
          'destinations' => $destinations,
          'iddestinations' => $iddestinations,
-         'recentRequests' => $recentRequests
+         'recentRequests' => $recentRequests,
+         'lastPostpone' => $lastPostpone
          // 'report' => $requests
       ]);
    }

@@ -166,7 +166,7 @@
                               </div>
                            
                               <div class="card-footer">
-                                 <small>Hint : This is a list of activity request data that has not been sent to marine, and can still be changed</small>
+                                 <small>Hint : This is a list of activity request data that has same pick up point</small>
                               </div>
                            </div>
                         </div>
@@ -174,14 +174,14 @@
                   </div>
                </div>
             </div>
-            <div class="col-md-3">
+            {{-- <div class="col-md-3">
                <div class="card">
                   <div class="card-body">
                      <small>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor nihil culpa ratione consequuntur dicta, provident temporibus aliquid! Omnis totam numquam praesentium voluptates eos.</small>
                   </div>
                </div>
                
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>

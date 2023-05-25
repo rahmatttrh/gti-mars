@@ -18,8 +18,12 @@
                   <label for="port">Destination</label>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="desc" name="desc">
+                  <input type="text"  class="form-control" id="desc" name="desc">
                   <label for="desc">Description</label>
+               </div>
+               <div class="form-floating mb-3">
+                  <input type="text"  class="form-control" id="reason" name="reason">
+                  <label for="reason">Reason</label>
                </div>
             </div>
             
@@ -27,7 +31,7 @@
                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                Cancel
                </a>
-               <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+               <button type="submit" class="btn btn-primary ms-auto">
                 
                   Add
                </button>

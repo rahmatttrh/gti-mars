@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeviationsTable extends Migration
+class CreatePostponesTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,13 +13,13 @@ class CreateDeviationsTable extends Migration
     */
    public function up()
    {
-      Schema::create('deviations', function (Blueprint $table) {
+      Schema::create('postpones', function (Blueprint $table) {
          $table->id();
          $table->smallInteger('status');
-         $table->smallInteger('schedule_id');
-         $table->smallInteger('port_id');
-         $table->text('desc');
-         $table->text('reason');
+         $table->mediumInteger('schedule_id');
+         $table->dateTime('from');
+         $table->dateTime('to');
+         $table->string('reason');
          $table->timestamps();
       });
    }
@@ -31,6 +31,6 @@ class CreateDeviationsTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('deviations');
+      Schema::dropIfExists('postpones');
    }
 }

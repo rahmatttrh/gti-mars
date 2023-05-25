@@ -104,9 +104,10 @@
                   <thead>
                      <tr>
                         <th class="text-center">No.</th>
+                        <th>Vessel</th>
                         <th>Date</th>
                         <th>Route</th>
-                        <th>Assignment Boat</th>
+                        
                         <th>Activity</th>
                         <th>Capacity</th>
                         <th>Status</th>
@@ -114,32 +115,36 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @foreach ($schedules as $schedule)
-                     <tr>
-                        <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                        <td class="text-muted text-truncate"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</a></td>
-                  
-                        {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                        <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
-                        <td class="text-muted text-truncate">
-                           {{$schedule->vessel->name ?? ''}}
-                        </td>
-                        <td class="text-muted">
-                           {{$schedule->requests()->count()}}
-                        </td>
-                        <td class="text-muted">
-                           {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
-                        </td>
-                        <td class="text-muted">
-                           <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                        </td>
+                     @if ($schedules->count() > 0)
+                        @foreach ($schedules as $schedule)
+                           <tr>
+                              <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                              <td class="text-muted text-truncate">
+                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              </td>
+                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
-                     </tr>
-                     {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
-                     @endforeach
-                     
-                     
-                     
+                              {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                              <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
+                              
+                              <td class="text-muted">
+                                 {{$schedule->requests()->count()}}
+                              </td>
+                              <td class="text-muted">
+                                 {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                              </td>
+                              <td class="text-muted">
+                                 <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                              </td>
+                              
+                           </tr>
+                           {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                        @endforeach
+                        @else
+                        <tr>
+                           <td colspan="7" class="text-center"><small class="text-muted">Empty</small></td>
+                        </tr>
+                     @endif
                   </tbody>
                </table>
             </div>

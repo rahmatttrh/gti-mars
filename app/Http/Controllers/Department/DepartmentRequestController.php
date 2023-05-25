@@ -53,6 +53,8 @@ class DepartmentRequestController extends Controller
          $type = 1;
       } elseif ($department->id == 3) {
          $type = 2;
+      } else {
+         $type = 3;
       }
 
       if (isset($request)) {
@@ -94,6 +96,8 @@ class DepartmentRequestController extends Controller
          $type = 1;
       } elseif ($department->id == 3) {
          $type = 2;
+      } else {
+         $type = 3;
       }
 
       $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
@@ -269,7 +273,7 @@ class DepartmentRequestController extends Controller
          'link' => route('request.detail', enkripRambo($request->id))
       ];
 
-      Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+      // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
       // return redirect()->back()->with('success', 'Email has sent');
 

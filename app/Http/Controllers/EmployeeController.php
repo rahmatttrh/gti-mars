@@ -63,7 +63,7 @@ class EmployeeController extends Controller
          'link' => 'http://103.21.206.66:8005/'
       ];
 
-      Mail::to($employee->email)->send(new WelcomeEmail($data));
+      // Mail::to($employee->email)->send(new WelcomeEmail($data));
       // Mail::to($employee->email)->send(new WelcomeEmail($data));
 
 

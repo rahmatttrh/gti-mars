@@ -15,6 +15,33 @@ use PhpParser\Node\Expr\FuncCall;
 
 class VesselScheduleController extends Controller
 {
+   public function index()
+   {
+
+      $today = Carbon::now();
+      $month = $today->format('m');
+
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', 2)->orderBy('date', 'asc')->get();
+
+      return view('pages.schedule.index', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $month,
+         'monthName' => '',
+         'schedules' => $schedules,
+      ])->with('i');
+   }
+   public function accept($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $schedule->update([
+         'status' => 2
+      ]);
+
+      return redirect()->back()->with('success', 'This Schedule is yours');
+   }
+
    public function updateStatus(Request $req)
    {
       $req->validate([]);
@@ -33,6 +60,10 @@ class VesselScheduleController extends Controller
          'vessel_id' => $schedule->vessel_id,
          'status_id' => $req->status,
          'port_id' => $req->port
+      ]);
+
+      $schedule->update([
+         'status' => 2
       ]);
 
 

@@ -1,30 +1,31 @@
 <div>
+  
    <div class="row mt--1 row-cards">
       <div class="col-md-4">
-         <div class="card">
+         <div class="card ">
             <div class="card-body">
                <div class="d-flex align-items-center">
-               <div class="subheader">Draft Request</div>
+               <div class="subheader ">Draft Request</div>
                </div>
                <div class="h2 ">{{$requests->where('status', 0)->count()}} Request Activity</div>
             </div>
          </div>
       </div>
       <div class="col-md-4">
-         <div class="card">
+         <div class="card bg-info text-white">
             <div class="card-body">
                <div class="d-flex align-items-center">
-               <div class="subheader">Progress Request</div>
+               <div class="subheader text-white">Progress Request</div>
                </div>
                <div class="h2 ">{{$requests->where('status', '>', 0)->count()}} Request Activity</div>
             </div>
          </div>
       </div>
       <div class="col-md-4">
-         <div class="card">
+         <div class="card bg-primary text-white">
             <div class="card-body">
                <div class="d-flex align-items-center">
-               <div class="subheader">Complete Request</div>
+               <div class="subheader text-white">Complete Request</div>
                </div>
                <div class="h2 ">{{$requests->where('status', 3)->count()}} Request Activity</div>
             </div>

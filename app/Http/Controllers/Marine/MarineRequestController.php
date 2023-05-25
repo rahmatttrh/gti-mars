@@ -91,7 +91,7 @@ class MarineRequestController extends Controller
 
 
 
-         return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');
+         return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Request Activity successfully set on Schedule');
       }
    }
 }

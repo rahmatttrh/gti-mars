@@ -65,7 +65,12 @@
                               <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
                               <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                               <td>
-                                 <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" />
+                                 {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
+                                    @if ($request->status < 3)
+                                       <x-status.request :request="$request" :lastreport="null"/>
+                                       @else
+                                       <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                                    @endif
                               </td>
                            </tr>
                         @endforeach

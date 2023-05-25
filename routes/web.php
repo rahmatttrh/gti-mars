@@ -236,9 +236,9 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
       Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
-
+      Route::get('delete/{schedule:id}', [MarineScheduleController::class, 'delete'])->name('schedule.delete');
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
-
+      Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
       Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
       Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
    });
@@ -293,8 +293,11 @@ Route::group(['middleware' => ['role:drilling|department']], function () {
 
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
-      Route::get('standby/{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
+      Route::get('vessel', [VesselScheduleController::class, 'index'])->name('schedule.vessel');
       Route::post('update/status', [VesselScheduleController::class, 'updateStatus'])->name('schedule.update.status');
+      Route::get('accept/{schedule:id}', [VesselScheduleController::class, 'accept'])->name('schedule.accept');
+
+      Route::get('standby/{schedule:id}', [VesselScheduleController::class, 'standby'])->name('schedule.standby');
       Route::get('loading/{schedule:id}', [VesselScheduleController::class, 'loading'])->name('schedule.loading');
       Route::get('loading/complete/{schedule:id}', [VesselScheduleController::class, 'loadingEnd'])->name('schedule.loading.complete');
       Route::get('castoff/{schedule:id}', [VesselScheduleController::class, 'castoff'])->name('schedule.castoff');

@@ -2,10 +2,10 @@
    @if ($request->status == 0)
       <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span>00 : Draft</div>
       
-       @elseif($request->status == 1)
+       @elseif($request->status == 1 || $request->status == 2)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>01 : Waiting</div>
-      @elseif($request->status == 2)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : Schedule Set</div>
+      {{-- @elseif($request->status == 2)
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : Schedule Set</div> --}}
       @elseif($request->status == 3)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>03 : {{$lastreport->status->name}} {{$lastreport->port_id == null ? '' : 'at ' . $lastreport->port->name}}</div>
       {{--@elseif($request->status == 3)

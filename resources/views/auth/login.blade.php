@@ -26,7 +26,7 @@
          <div class="container-tight ">
             <div class="text-center mb-3">
                <div  class=" ">
-                  <img class="mb-4" src="{{asset('img/logo/phe2.png')}}" height="68" alt=""> 
+                  <img class="mb-4 bg-light p-2 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="80" alt=""> 
                   <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
                </div>
             </div>

@@ -60,6 +60,11 @@ class Schedule extends Model
       return $this->hasMany(Deviation::class);
    }
 
+   public function postpones()
+   {
+      return $this->hasMany(Postpone::class);
+   }
+
    // public function port()
    // {
    //    return $this->belongsTo(Port::class);

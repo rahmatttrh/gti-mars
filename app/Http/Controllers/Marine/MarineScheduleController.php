@@ -9,6 +9,7 @@ use App\Models\Activity;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
 use App\Models\Port;
+use App\Models\Postpone;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
@@ -30,11 +31,11 @@ class MarineScheduleController extends Controller
       if (auth()->user()->hasRole('vessel')) {
          $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->orderBy('date', 'asc')->get();
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '<', 4)->get();
       }
 
-      $vessels = Vessel::get();
-      $ports = Port::get();
+      // $vessels = Vessel::get();
+      // $ports = Port::get();
 
       // if ($month == 1) {
       //    $monthName = 'Januari';
@@ -67,8 +68,8 @@ class MarineScheduleController extends Controller
          'month' => $month,
          'monthName' => '',
          'schedules' => $schedules,
-         'vessels' => $vessels,
-         'ports' => $ports
+         // 'vessels' => $vessels,
+         // 'ports' => $ports
       ])->with('i');
    }
 
@@ -94,7 +95,7 @@ class MarineScheduleController extends Controller
       // dd($req->type);
       $vessel = Vessel::find($req->vessel);
 
-      Schedule::create([
+      $schedule = Schedule::create([
          'type' => 2,
          'status' => 0,
          'vessel_id' => $req->vessel,
@@ -108,7 +109,7 @@ class MarineScheduleController extends Controller
 
 
 
-      return redirect()->route('schedule.plan')->with('success', 'Schedule successfuly added');
+      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule successfuly added');
    }
 
    public function edit($id)
@@ -143,6 +144,29 @@ class MarineScheduleController extends Controller
       return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule has successfully updated');
    }
 
+   public function delete($id)
+   {
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->get();
+
+      foreach ($requests as $request) {
+         $request->update([
+            'status' => 1,
+            'schedule_id' => null
+         ]);
+      }
+
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      foreach ($routes as $route) {
+         $route->delete();
+      }
+
+      $schedule->delete();
+
+      return redirect()->route('schedule.plan')->with('success', 'Schedule successfully deleted');
+   }
+
    public function send($id)
    {
       $dekripId = dekripRambo($id);
@@ -172,6 +196,8 @@ class MarineScheduleController extends Controller
          'status' => 1
       ]);
 
+
+
       $vessel->update([
          'status' => 1,
       ]);
@@ -180,7 +206,7 @@ class MarineScheduleController extends Controller
 
       $body = $date;
       $body .= '<br>';
-      $body .= $schedule->origin->name . ' - ' . $schedule->destination->name;
+      $body .= $schedule->origin->name;
 
       $data = [
          'to' => $schedule->vessel->name,
@@ -193,12 +219,10 @@ class MarineScheduleController extends Controller
       ];
 
       // Mail::to("rahmattrust@gmail.com")->send(new AssignEmail($data));
-      Mail::to("develop@ekanuri.com")->send(new AssignEmail($data));
+      // Mail::to("develop@ekanuri.com")->send(new AssignEmail($data));
 
       return redirect()->back()->with('success', 'Schedule successfully assign to ' . $vessel->name);
    }
-
-
 
    public function removeRequest($id)
    {
@@ -237,5 +261,25 @@ class MarineScheduleController extends Controller
       }
 
       return redirect()->back()->with('success', 'Schedule Route successfully reseted');
+   }
+
+   public function postpone(Request $req)
+   {
+      $req->validate([]);
+
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'date' => $req->to
+      ]);
+
+      Postpone::create([
+         'status' => 0,
+         'schedule_id' => $schedule->id,
+         'from' => $req->from,
+         'to' => $req->to,
+         'reason' => $req->reason
+      ]);
+
+      return redirect()->back()->with('success', 'Schedule has been Postpone');
    }
 }

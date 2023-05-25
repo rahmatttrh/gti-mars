@@ -243,8 +243,14 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('department_id', $employee->department_id)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
-         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 0)->get();
-         $requests = '';
+         $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->get();
+         $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
+         return view('home', [
+            'today' => $today,
+            'vessel' => $vessel,
+            'schedules' => $schedules,
+            'recentSchedules' => $recentSchedules
+         ])->with('i');
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();

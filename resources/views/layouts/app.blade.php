@@ -30,7 +30,7 @@
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="d-flex align-items-center">
                      @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
-                        <img src="{{asset('img/logo/phe.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+                        <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                         {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
                         
                      @elseif(auth()->user()->hasRole('platform'))

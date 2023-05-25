@@ -25,17 +25,8 @@
                   @endif
 
                   @if (auth()->user()->hasRole('vessel'))
-                     {{-- <x-schedule.action-vessel :schedule="$schedule" /> --}}
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule-update-status">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exchange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                           <path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                           <path d="M19 6m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
-                           <path d="M19 8v5a5 5 0 0 1 -5 5h-3l3 -3m0 6l-3 -3"></path>
-                           <path d="M5 16v-5a5 5 0 0 1 5 -5h3l-3 -3m0 6l3 -3"></path>
-                        </svg>
-                        Update Status
-                     </button>
+                     <x-schedule.action-vessel :schedule="$schedule" />
+                     
                   @endif
                   
                   <div class="dropdown">
@@ -44,17 +35,20 @@
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
                         @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                        <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
-                           Edit
-                        </a>
-                        <a class="dropdown-item" href="#">
-                           Delete
-                        </a>
+                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-postpone-schedule">
+                              Postpone
+                           </a>
                         @endif
+                        @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+                           <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
+                              Edit
+                           </a>
+                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-schedule">
+                              Delete
+                           </a>
+                        @endif
+                        
                         <div class="dropdown-divider"></div>
-                        {{-- <a class="dropdown-item" href="#">
-                           Timeline
-                        </a> --}}
                         <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">
                            Preview Manifest
                         </a>
@@ -82,27 +76,23 @@
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                            </h2>
                            <small>Pick up point from {{$schedule->origin->name}} </small>
-                              {{-- @foreach ($schedule->requests as $req)
-                                  {{$req->destination->name}} -
-                              @endforeach --}}
-                              {{-- $departs as $depart => $reqs --}}
                            <h2> {{$schedule->origin->name}}
-                              {{-- @foreach ($destinations as  $destination => $dest)
-                                 - {{$destination}} 
-                              @endforeach --}}
                               @foreach ($routes as  $route)
-                              - {{$route->port->name}} 
-                           @endforeach
+                                 - {{$route->port->name}} 
+                              @endforeach
                            </h2>
                            @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                           <small><a href="#" data-bs-toggle="modal" data-bs-target="#schedule-reset-route">Reset route</a></small>
+                              <small><a href="#" data-bs-toggle="modal" data-bs-target="#schedule-reset-route">Reset route</a></small>
                            @endif
                            
-                           <div class="text-muted mt-3"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</div>
+                           <div class="text-muted mt-3"> 
+                              @if ($lastPostpone)
+                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/Y')}} postpone to
+                              @endif
+                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                           </div>
                            
                            <div class="text-muted mb-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
-                           {{-- <div class="text-muted">ETA {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</div> --}}
-                           {{-- <div class="text-muted">#Note {{$schedule->remark}}</div>    --}}
                         </div>
                         <div class="col-md-4">
                            <div class="card bg-info text-white ">
@@ -162,166 +152,67 @@
                {{-- <hr> --}}
                <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
                @if ($requests->count() > 0)
-               <x-schedule.request :requests="$requests" :schedule="$schedule" />
+                  <x-schedule.request :requests="$requests" :schedule="$schedule" />
                @else
-               <div class="card">
-                  <div class="card-body">
-                     <small class="text-muted">Empty</small>
+                  <div class="card">
+                     <div class="card-body">
+                        <small class="text-muted">Empty</small>
+                     </div>
                   </div>
-               </div>
                
                @endif
                
             </div>
             <div class="col-md-4">
                @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-               <div class="card mb-3" style="height: calc(25rem + 10px)">
-                  <div class="card-header">
-                     Recent Request Activity
-                  </div>
-                  <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                     <div class="divide-y">
-                        @foreach ($recentRequests as $req)
-                           <div>
+                  <div class="card mb-3" style="height: calc(20rem + 10px)">
+                     <div class="card-header">
+                        Recent Request Activity
+                     </div>
+                     <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                        <div class="divide-y">
+                           @if ($recentRequests->count() > 0)
+                              @foreach ($recentRequests as $req)
+                                 <div>
+                                    <div class="row">
+                                       <div class="col">
+                                          <div class="text-truncate">
+                                             <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
+                                             {{$req->activity->name}} {{$req->description}}</a>
+                                          </div>
+                                          <div class="text-muted">{{$req->origin->name}} - {{$req->destination->name}}</div>
+                                          <div class="text-muted">{{$req->employee->name}}/{{$req->department->name}}</div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <x-modal.schedule.add-request :request="$req" :schedule="$schedule" />
+                              @endforeach
+                              @else
                               <div class="row">
                                  <div class="col">
-                                    {{-- <div class="dropdown">
-                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                          {{$req->activity->name}} {{$req->description}}
-                                       </a>
-                                       <div class="dropdown-menu dropdown-menu-end">
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPort_{{$req->id}}">
-                                             Detail
-                                          </a>
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
-                                             Add to this Schedule
-                                          </a>
-                                       </div>
-                                    </div> --}}
-                                    <div class="text-truncate">
-                                       <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
-                                       {{$req->activity->name}} {{$req->description}}</a>
-                                    </div>
-                                    <div class="text-muted">{{$req->destination->name}}</div>
-                                    <div class="text-muted">{{$req->employee->name}}/{{$req->department->name}}</div>
+                                    <small class="text-center text-muted">Empty</small>
                                  </div>
                               </div>
-                           </div>
-                           <x-modal.schedule.add-request :request="$req" :schedule="$schedule" />
-                        @endforeach
+                           @endif
+                        </div>
+                     </div>
+                     <div class="card-footer">
+                        <small>This is a list of recent activity requests that has not yet been included in this schedule. Click on activity to add into this schedule</small>
                      </div>
                   </div>
-               </div>
                @endif
-               
-               {{-- <div class="row">
-                  <div class="col-md-6">
-                     <div class="card card-sm">
-                        <div class="card-body">
-                          <div class="row align-items-center">
-                            <div class="col-auto">
-                              <div class="chart-sparkline chart-sparkline-square" id="sparkline-sales"></div>
-                            </div>
-                            <div class="col">
-                              <div class="font-weight-medium">
-                                132 Sales
-                              </div>
-                              <div class="text-muted">
-                                12 waiting payments
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                  <div class="card">
+                     <div class="card-header">
+                        Timeline
+                     </div>
+                     <div class="card-body">
+                        @if ($report)
+                           <x-schedule.report :report="$report" :reports="$reports" />
+                           @else
+                           <small class="text-muted">Empty</small>
+                        @endif
                      </div>
                   </div>
-               </div> --}}
-               {{-- <div class="card mb-3">
-                  <div class="card-body">
-                     <div class="row mb-3 align-items-center">
-                        <div class="col">
-                           <div class="text-muted">
-                              Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton
-                           </div>
-                           <div class="mt-2">
-                              <div class="row g-2 align-items-center">
-                                 <div class="col-auto">
-                                    {{$persenWeight}}%
-                                 </div>
-                                 <div class="col">
-                                    <div class="progress progress-sm">
-                                    <div class="progress-bar" style="width: {{$persenWeight}}%" role="progressbar" aria-valuenow="{{$persenWeight}}" aria-valuemin="0" aria-valuemax="100">
-                                    </div>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <div class="row mb-3 align-items-center">
-                        <div class="col">
-                          <div class="text-muted">
-                             Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} (m<sup>2</sup>)
-                          </div>
-                          <div class="mt-2">
-                            <div class="row g-2 align-items-center">
-                              <div class="col-auto">
-                                {{$persenSize}}%
-                              </div>
-                              <div class="col">
-                                <div class="progress progress-sm">
-                                  <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                     </div>
-                     <small>Hint : this data refers to the selected vessel data</small>
-                  </div>
-               </div> --}}
-               {{-- <div class="card mb-3">
-                  <div class="card-body">
-                    <div class="row align-items-center">
-                      <div class="col">
-                        <div class="text-muted">
-                           Deckspace {{$schedule->total_size}} / {{$schedule->vessel->desk_space}} (m<sup>2</sup>)
-                        </div>
-                        <div class="mt-2">
-                          <div class="row g-2 align-items-center">
-                            <div class="col-auto">
-                              {{$persenSize}}%
-                            </div>
-                            <div class="col">
-                              <div class="progress progress-sm">
-                                <div class="progress-bar" style="width: {{$persenSize}}%" role="progressbar" aria-valuenow="{{$persenSize}}" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="visually-hidden">25% Complete</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-               </div>  --}}
-               <div class="card">
-                  <div class="card-header">
-                     Timeline
-                  </div>
-                  <div class="card-body">
-                     @if ($report)
-                        <x-schedule.report :report="$report" :reports="$reports" />
-                        @else
-                        <small class="text-muted">Empty</small>
-                     @endif
-                  </div>
-               </div>
-               {{-- <div class="card">
-                  <div class="card-body">
-                     <h1>halo</h1>
-                  </div>
-               </div> --}}
                
                @if ($deviations != null)
                <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
@@ -335,15 +226,18 @@
       </div>
    </div>
 
+   <x-modal.schedule.accept :schedule="$schedule" />
+   <x-modal.schedule.postpone :schedule="$schedule" />
+   <x-modal.schedule.delete :schedule="$schedule" />
    <x-modal.schedule.reset :schedule="$schedule" />
    <x-modal.schedule.update-status :schedule="$schedule" :routes="$routes" :ports="$ports" :iddestinations="$iddestinations" :destinations="$destinations" :statuses="$statuses" />
    {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
    <x-modal.schedule.send :schedule="$schedule" />
-   <x-modal.schedule.standby :schedule="$schedule" />
+   {{-- <x-modal.schedule.standby :schedule="$schedule" />
    <x-modal.schedule.loading :schedule="$schedule" />
    <x-modal.schedule.loading-complete :schedule="$schedule" />
    <x-modal.schedule.castoff :schedule="$schedule" />
-   <x-modal.schedule.fullaway :schedule="$schedule" />
+   <x-modal.schedule.fullaway :schedule="$schedule" /> --}}
    {{-- <x-modal.schedule.arrive :schedule="$schedule" /> --}}
    {{-- <x-modal.schedule.standby-dest :schedule="$schedule" />
    <x-modal.schedule.unloading :schedule="$schedule" />

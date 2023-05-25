@@ -120,10 +120,10 @@
                                     {{-- <td class="text-muted">{{$request->schedule->vessel->name ?? 'Not available yet'}}</td> --}}
                                     <td>
                                        @if ($request->status < 3)
-                                                <x-status.request :request="$request" :lastreport="null"/>
-                                                   @else
-                                                   <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                                                @endif
+                                          <x-status.request :request="$request" :lastreport="null"/>
+                                          @else
+                                          <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                                       @endif
                                     </td>
                                     
                                     {{-- <td>
