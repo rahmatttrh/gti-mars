@@ -207,7 +207,8 @@
                      </div>
                   </div>
                @endif
-                  <div class="card">
+               <x-schedule.report :report="$report" :reports="$reports" />
+                  {{-- <div class="card">
                      <div class="card-header">
                         Timeline
                      </div>
@@ -218,7 +219,7 @@
                            <small class="text-muted">Empty</small>
                         @endif
                      </div>
-                  </div>
+                  </div> --}}
                
                @if ($deviations != null)
                <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
