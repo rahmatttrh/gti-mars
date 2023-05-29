@@ -92,7 +92,7 @@
                               @if ($lastPostpone)
                                  {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/Y')}} Postpone to
                               @endif
-                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                              <b>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</b>
                               @if ($lastPostpone)
                                  <br><small>{{$lastPostpone->reason}}</small>
                               @endif

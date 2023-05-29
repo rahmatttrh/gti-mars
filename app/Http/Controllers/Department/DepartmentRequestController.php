@@ -157,6 +157,13 @@ class DepartmentRequestController extends Controller
 
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);
+      if ($department->id == 2) {
+         $type = 1;
+      } elseif ($department->id == 3) {
+         $type = 2;
+      } else {
+         $type = 3;
+      }
 
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       if (isset($request)) {
@@ -168,7 +175,7 @@ class DepartmentRequestController extends Controller
 
       ModelsRequest::create([
          'code' => $code,
-         'type' => 0,
+         'type' => $type,
          'parent_id' => $parent->id,
          'employee_id' => $employee->id,
          'status' => 0,
