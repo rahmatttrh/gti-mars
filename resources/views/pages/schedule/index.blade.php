@@ -108,7 +108,7 @@
                         <th>Date</th>
                         <th>Route</th>
                         
-                        <th>Activity</th>
+                        <th class="text-center">Activity</th>
                         <th>Capacity</th>
                         <th>Status</th>
                         {{-- <th></th> --}}
@@ -127,7 +127,7 @@
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
                               <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
                               
-                              <td class="text-muted">
+                              <td class="text-muted text-center">
                                  {{$schedule->requests()->count()}}
                               </td>
                               <td class="text-muted">

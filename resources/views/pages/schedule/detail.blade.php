@@ -34,10 +34,13 @@
                      Option
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
-                        @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+                        @if (auth()->user()->hasRole('marine'))
+                           @if ($schedule->status == 0 || $schedule->status == 1)
                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-postpone-schedule">
                               Postpone
                            </a>
+                           @endif
+                           
                         @endif
                         @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                            <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
@@ -87,12 +90,15 @@
                            
                            <div class="text-muted mt-3"> 
                               @if ($lastPostpone)
-                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/Y')}} postpone to
+                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/Y')}} Postpone to
                               @endif
                               {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                              @if ($lastPostpone)
+                                 <br><small>{{$lastPostpone->reason}}</small>
+                              @endif
                            </div>
                            
-                           <div class="text-muted mb-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
+                           <div class="text-muted mb-2 mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
                         </div>
                         <div class="col-md-4">
                            <div class="card bg-info text-white ">

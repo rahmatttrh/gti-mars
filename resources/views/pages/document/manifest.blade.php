@@ -32,7 +32,7 @@
                   <h1 class="text-primary border-bottom pb-2">MANIFEST VESSEL</h1>
                </div>
                <div class="col-6">
-                  <p class="h3">Detail Information</p>
+                  <p class="h3">DETAIL</p>
                   <dl class="row">
                      <dd class="col-3">Date</dd>
                      <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
@@ -43,15 +43,15 @@
                         @foreach ($destinations as  $destination => $dest)
                            - {{$destination}} 
                         @endforeach</dd>
-                     <dd class="col-3">ETD</dd>
-                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
-                     <dd class="col-3">ETA</dd>
-                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd>
+                     {{-- <dd class="col-3">ETD</dd>
+                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd> --}}
+                     {{-- <dd class="col-3">ETA</dd>
+                     <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd> --}}
                   </dl>
                </div>
                <div class="col-6 text-end">
                   <p class="h3">Status</p>
-                  <x-status.schedule :schedule="$schedule" />
+                  <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()"/>
                   {{-- <address>
                      Street Address<br>
                      State, City<br>
@@ -64,9 +64,24 @@
                   <h1>{{$schedule->origin->name}} - {{$schedule->destination->name}}</h1>
                </div> --}}
             </div>
-            
+            <h4 class="">ACTIVITIES</h4>
             @foreach ($schedule->requests as $req)
-               <h3>{{$req->activity->name}} {{$req->description}}</h3>
+               <div>
+                  @if ($req->status == 12)
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                  </svg>
+                  @else
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                  </svg>
+                  @endif
+                  
+                  {{$req->activity->name}} {{$req->description}}
+
+               </div>
                <table class="table table-transparent table-responsive">
                   <thead>
                      <tr>

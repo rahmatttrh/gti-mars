@@ -62,15 +62,17 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col">
-                           <h2 class="text-left">{{$parent->code}}</h2>
+                           {{-- <h4 class="text-left">{{$parent->code}}</h4> --}}
                            <h4>{{\Carbon\Carbon::parse($parent->date)->format('d/m/Y')}}</h4>
                            <small>Pick Up Point from <b>{{$parent->origin->name}}</b></small>
+                           {{-- <small>Pick Up Point from <b>{{$parent->origin->name}}</b></small> --}}
                         </div>
-                        {{-- <div class="col text-end">
-                           <h2 class="text-left">{{$parent->code}}</h2>
-                           <h4>{{$parent->date}}</h4>
-                           <small>Pick Up Point from <b>{{$parent->origin->name}}</b></small>
-                        </div> --}}
+                        <div class="col text-end">
+                           <small>{{$parent->code}}</small>
+                           {{-- <h2 class="text-left">{{$parent->code}}</h2>
+                           <h4>{{$parent->date}}</h4> --}}
+                           
+                        </div>
                      </div>
                      
                   </div>
@@ -117,7 +119,7 @@
                               {{-- <hr> --}}
                               <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                            
-                                 Save
+                                 Add
                               </button>
                            </form>
                         </div>
@@ -135,7 +137,7 @@
                               </div> --}}
                               
                               <div class="table-responsive ">
-                                 <table  class="table" >
+                                 <table  class="table" style="shadow-none">
                                     <thead>
                                        <tr>
                                           <th>Activity</th>
@@ -165,12 +167,16 @@
                                  </table>
                               </div>
                            
-                              <div class="card-footer">
-                                 <small>Hint : This is a list of activity request data that has same pick up point</small>
-                              </div>
+                              {{-- <div class="card-footer">
+                                 <small>Hint : </small>
+                              </div> --}}
                            </div>
                         </div>
                      </div>
+                  </div>
+                  <div class="card-footer">
+                     <small>Use the form above if you have an activity request that has the same date and pick-up point</small> <br>
+                     <small>Table on the right is a list of activity request that has same date and pick up point</small>
                   </div>
                </div>
             </div>

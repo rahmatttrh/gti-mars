@@ -20,7 +20,7 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Date</th>
-                        <th>Location</th>
+                        <th>Route</th>
                         <th>Activity</th>
                         <th>Status</th>
                         {{-- <th></th> --}}
@@ -34,7 +34,7 @@
                               <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
                               
                               <td class="text-muted">
-                                 {{$schedule->origin->name}} 
+                                 From {{$schedule->origin->name}} 
                               </td>
                               <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
                               <td>
