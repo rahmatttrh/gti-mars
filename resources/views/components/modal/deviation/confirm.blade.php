@@ -13,6 +13,8 @@
                <div class="mb-2">{{$deviation->port->name}}</div>
                <small class="text-muted">Description</small>
                <div class="mb-2">{{$deviation->desc}}</div>
+               <small class="text-muted">Reason</small>
+               <div class="mb-2">{{$deviation->reason}}</div>
             </div>
             
          </div>
