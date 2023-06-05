@@ -17,19 +17,20 @@ class MarineDeviationController extends Controller
       ]);
       $now = Carbon::now();
 
-      // $deviation = Deviation::create([
-      //    'status' => 0,
-      //    'schedule_id' => $req->schedule,
-      //    'port_id' => $req->port,
-      //    'desc' => $req->desc
-      // ]);
+      $deviation = Deviation::create([
+         'status' => 0,
+         'schedule_id' => $req->schedule,
+         'port_id' => $req->port,
+         'desc' => $req->desc,
+         'reason' => $req->reason
+      ]);
 
-      // DeviationReport::create([
-      //    'deviation_id' => $deviation->id,
-      //    'assign' => $now
-      // ]);
+      DeviationReport::create([
+         'deviation_id' => $deviation->id,
+         'assign' => $now
+      ]);
 
-      // return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
+      return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
    }
 
    public function delete($id)
