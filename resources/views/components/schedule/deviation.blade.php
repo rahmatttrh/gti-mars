@@ -69,6 +69,9 @@
                            <dd class="col-8">: {{$dev->port->name}}</dd>
                            <dt class="col-4">Activity</dt>
                            <dd class="col-8">: {{$dev->desc}}</dd>
+                           <dt class="col-4">Reason</dt>
+                           <dd class="col-8">: {{$dev->reason}}</dd>
+                           <hr>
                            @if ($dev->report)
                            <dt class="col-4">Confirm</dt>
                            <dd class="col-8">: {{ $dev->report->confirm ? \Carbon\Carbon::parse($dev->report->confirm)->format('H:i ') : ''}}</dd>
