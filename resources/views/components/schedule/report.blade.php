@@ -5,9 +5,9 @@
    @endforeach
 </dl> --}}
 
-<div class="card mb-3" style="height: calc(20rem + 10px)">
+<div class="card mb-3" style="height: calc(25rem + 10px)">
    <div class="card-header">
-      Timeline
+      <div class="badge bg-info">Timeline</div>
    </div>
    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
       {{-- <div class="divide-y"> --}}

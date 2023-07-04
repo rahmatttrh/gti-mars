@@ -22,7 +22,7 @@
                   <label for="desc">Description</label>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text"  class="form-control" id="reason" name="reason">
+                  <input type="text"  class="form-control" id="reason" name="reason" autocomplete="off">
                   <label for="reason">Reason</label>
                </div>
             </div>

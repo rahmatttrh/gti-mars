@@ -13,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  Vessel Schedule Detail
+                  SAILING ORDER
                </h2>
             </div>
             <!-- Page title actions -->
@@ -165,7 +165,10 @@
                         <small class="text-muted">Empty</small>
                      </div>
                   </div>
-               
+               @endif
+
+               @if ($deviations != null)
+               <x-schedule.deviation :deviations="$deviations" />
                @endif
                
             </div>
@@ -221,10 +224,10 @@
                      </div>
                   </div> --}}
                
-               @if ($deviations != null)
+               {{-- @if ($deviations != null)
                <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
                <x-schedule.deviation :deviations="$deviations" />
-               @endif
+               @endif --}}
                
             </div>
          </div>

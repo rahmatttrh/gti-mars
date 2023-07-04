@@ -36,10 +36,12 @@
                      </button>
                      <div class="dropdown-menu dropdown-menu-end">
                        
-                        
+                        @if ($parent->status == 0)
                         <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-parent">
                            Delete
                         </a>
+                        @endif
+                        
                         
                         {{-- <div class="dropdown-divider"></div>
                         

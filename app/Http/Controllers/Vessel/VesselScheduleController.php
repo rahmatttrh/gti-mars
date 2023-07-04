@@ -62,9 +62,17 @@ class VesselScheduleController extends Controller
          'port_id' => $req->port
       ]);
 
-      $schedule->update([
-         'status' => 2
-      ]);
+      if ($req->status == 11) {
+         $schedule->update([
+            'status' => 11
+         ]);
+      } else {
+         $schedule->update([
+            'status' => 2
+         ]);
+      }
+
+
 
 
 

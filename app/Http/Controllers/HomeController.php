@@ -196,7 +196,7 @@ class HomeController extends Controller
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
-         $requestLogistics = ModelsRequest::whereMonth('date', $month)->where('department_id', 2)->get();
+         $requestLogistics = ModelsRequest::where('department_id', 2)->get();
          $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
 
          $customSchedules = [];
@@ -208,6 +208,7 @@ class HomeController extends Controller
          // $dateSchedules = collect($geoLocationTeknisi)->toJson()
          // dd(collect($customQtyRequests)->toJson());
          // dd($scheduleRecents->status);
+         // dd($requestLogis->count());
 
          return view('chart', [
             'today' => $today,

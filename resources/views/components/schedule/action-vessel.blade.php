@@ -4,6 +4,15 @@
          Accept
       </button>
       @elseif($schedule->status == 2)
+      {{-- @foreach ($deviations as $dev)
+         @if (auth()->user()->hasRole('vessel'))
+            @if ($dev->status == 1)
+               <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-arrive-{{$dev->id}}">Arrive</button>
+               @elseif($dev->status == 2)
+               <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-complete-{{$dev->id}}">Complete</button>
+            @endif
+         @endif
+      @endforeach --}}
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule-update-status">
          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exchange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -14,6 +23,7 @@
          </svg>
          Update Status
       </button>
+
       {{-- @elseif($schedule->status == 2)
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-loading">
          Loading
