@@ -61,6 +61,24 @@ class UserSeeder extends Seeder
       ]);
       $dareza->assignRole('department');
 
+      $fikri = User::create([
+         'name' => 'Abdul Fikri',
+         'email' => 'fikri@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $fikri->assignRole('department');
+
+      $ari = User::create([
+         'name' => 'Ari Pratama',
+         'email' => 'ari@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $ari->assignRole('department');
+
       // $logistic = User::create([
       //    'name' => 'Logistic',
       //    'email' => 'logistic@pertamina.com',

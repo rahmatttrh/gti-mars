@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Models\CargoItem;
+use App\Models\Offloading;
 use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 
@@ -15,6 +16,7 @@ class CargoItemController extends Controller
       $request = ModelsRequest::find($r->req);
 
       CargoItem::create([
+         'status' => 1,
          'request_id' => $r->req,
          'no_doc' => $r->no_document,
          'desc' => $r->desc,
@@ -44,5 +46,32 @@ class CargoItemController extends Controller
       ]);
       $cargoItem->delete();
       return redirect()->back()->with('success', 'Item successfully deleted');
+   }
+
+   public function offloading(Request $req)
+   {
+      $req->validate([]);
+
+      $cargoItem = CargoItem::find($req->cargoItem);
+      $offloading = $req->offloading;
+      $qty = $cargoItem->qty;
+
+      $onboard = $qty - $offloading;
+
+      $offloading = Offloading::create([
+         'cargoitem_id' => $cargoItem->id,
+         'employee_id' => auth()->user()->getEmployeeId(),
+         'qty' => $qty,
+         'offloading' => $offloading,
+         'onboard' => $onboard
+      ]);
+
+      $cargoItem->update([
+         'status' => 2,
+         'offloading_id' => $offloading->id,
+         // 'onboard' => $onboard
+      ]);
+
+      return redirect()->back()->with('success', 'Item successfully confirmed');
    }
 }

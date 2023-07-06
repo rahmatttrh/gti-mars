@@ -1,5 +1,11 @@
 <div>
-  
+   @if ($confirms->count() > 0)
+      @foreach ($confirms as $confirm)
+         <div class="alert alert-primary" role="alert">
+            You have a Arrival Cargo from {{$confirm->origin->name}}. Click <a href="{{route('request.detail', enkripRambo($confirm->id))}}" class="alert-link">here</a> to see detail.
+         </div>
+      @endforeach
+   @endif
    <div class="row mt--1 row-cards">
       <div class="col-md-4">
          <div class="card bg-dark text-white ">

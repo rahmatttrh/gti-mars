@@ -281,6 +281,7 @@ Route::group(['middleware' => ['role:logistic|department']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
+      Route::post('offloading', [CargoItemController::class, 'offloading'])->name('cargo.item.offloading');
    });
 });
 

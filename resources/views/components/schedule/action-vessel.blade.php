@@ -3,7 +3,7 @@
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-accept-schedule">
          Accept
       </button>
-      @elseif($schedule->status == 2)
+      @elseif($schedule->status == 2 || $schedule->status == 10)
       {{-- @foreach ($deviations as $dev)
          @if (auth()->user()->hasRole('vessel'))
             @if ($dev->status == 1)
@@ -13,7 +13,7 @@
             @endif
          @endif
       @endforeach --}}
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#schedule-update-status">
+      <button {{$schedule->status == 10 ? 'disabled' : ''}} class="btn {{$schedule->status == 10 ? 'btn-muted' : ''}} btn-primary" data-bs-toggle="modal" data-bs-target="#schedule-update-status">
          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-exchange" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M5 18m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>

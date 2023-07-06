@@ -118,7 +118,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                <div class="card mb-3">
                   <div class="card-header">
                      @if ($request->status < 3)
@@ -129,35 +129,69 @@
                      {{-- <x-status.request  :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                   </div>
                   <div class="card-body">
+
                      {{-- <h1>{{$request->code}}</h1> --}}
-                     <small>{{$request->code}}</small><br>
-                     <small> {{$request->department->name}} Department</small>
-                     <h4 class="card-title m-0 ">
-                        {{$request->activity->name ?? ''}}  {{$request->description}}
-                     </h4>
-                     <small>
-                        {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
-                     , {{$request->origin->name}} to {{$request->destination->name}}
-                     </small>
-                     {{-- <p><small>Total Weight {{$request->total_weight}} ton</small></p> --}}
+                     <div class="row">
+                        <div class="col-md-8">
+                           <small>{{$request->code}}</small><br>
+                           <small> {{$request->department->name}} Department</small>
+                           <h4 class="card-title m-0 ">
+                              {{$request->activity->name ?? ''}}  {{$request->description}}
+                           </h4>
+                           <small>
+                              {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
+                           , {{$request->origin->name}} to {{$request->destination->name}}
+                           </small>
+                           <hr>
+                           <small >Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
+                           <small >Requested at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                        </div>
+                        <div class="col-md-4">
+                              @if ($request->status >= 2 && $request->status != 202)
+                                 <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
+                              @endif
+
+                           
+                           @if ($request->status == 202)
+                              <div class="card  mb-3">
+                                 <div class="card-header ">
+                                    Cancel Request Activity
+                                 </div>
+                                 <div class="card-body">
+                                    <small>{{$request->reason}}</small>
+                                 </div>
+                              </div>
+                           @endif
+
+                           @if (!$request->schedule)
+                           <div class="card mb-3">
+                              <div class="card-header">
+                                 Schedule
+                              </div>
+                              <div class="card-body text-center">
+                                 <small>Empty</small>
+                              </div>
+                           </div>
+                           @endif
+
+                           @if ($request->schedule)
+                              @if ($request->schedule->report)
+                              <x-requests.timeline :report="$request->schedule->report" />
+                              @endif
+                           @endif
+                           
+                        </div>
+                     </div>
                      
-                     {{-- <div class="mb-3"></div> --}}
-                     {{-- @if ($request->status == 0)
-                        <div class="badge">STATUS : 00</div>
-                        @elseif($request->status == 1)
-                        <div class="badge">STATUS : 01</div>
-                     @endif --}}
-                     
-                    
-                     <small></small>
                   </div>
                   <div class="card-footer">
-                     <small >Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
-                     <small >Requested at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                     
                   </div>
                </div>
                <x-requests.cargo :request="$request" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
             </div>
+
+
             <div class="col-md-4">
                
                {{--   --}}
@@ -200,9 +234,6 @@
                
             </div>
          </div>
-         
-         
-         
       </div>
    </div>
 

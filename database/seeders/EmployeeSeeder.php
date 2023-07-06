@@ -41,5 +41,24 @@ class EmployeeSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+
+      DB::table('employees')->insert([
+         'department_id' => 2,
+         'port_id' => 4,
+         'name' => 'Abdul Fikri',
+         'email' => 'fikri@pertamina.com',
+         'ekstensi' => '882',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('employees')->insert([
+         'department_id' => 2,
+         'port_id' => 6,
+         'name' => 'Ari Pratama',
+         'email' => 'ari@pertamina.com',
+         'ekstensi' => '138',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
    }
 }

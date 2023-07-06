@@ -93,7 +93,7 @@
             @elseif(auth()->user()->hasRole('marine'))
             <x-dashboard.marine :requestrecents="$requestRecents" :requestprogress="$requestProgress" :schedules="$schedules" :monthname="$monthName" />
             @elseif(auth()->user()->hasRole('department'))
-            <x-dashboard.logistic :requests="$requests" :monthname="$monthName"/>
+            <x-dashboard.logistic :requests="$requests" :monthname="$monthName" :confirms="$confirms"/>
             @elseif(auth()->user()->hasRole('logistic'))
             <x-dashboard.logistic :requests="$requests" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('drilling'))

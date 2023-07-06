@@ -16,12 +16,14 @@ class CreateCargoItemsTable extends Migration
       Schema::create('cargo_items', function (Blueprint $table) {
          $table->id();
          $table->mediumInteger('request_id');
+         $table->integer('offloading_id')->nullable();
+         $table->string('status');
          $table->string('no_doc');
          $table->string('desc');
-         $table->smallInteger('qty');
          $table->string('unit')->nullable();
          $table->decimal('size', 6, 2)->nullable();
          $table->decimal('weight', 6, 2)->nullable();
+         $table->smallInteger('qty');
          $table->string('remark')->nullable();
          $table->timestamps();
       });
