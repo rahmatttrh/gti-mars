@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Department;
 use App\Http\Controllers\Controller;
 use App\Models\CargoItem;
 use App\Models\Offloading;
+use App\Models\Report;
 use App\Models\Request as ModelsRequest;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 
 class CargoItemController extends Controller
@@ -53,6 +55,9 @@ class CargoItemController extends Controller
       $req->validate([]);
 
       $cargoItem = CargoItem::find($req->cargoItem);
+      $request = ModelsRequest::find($cargoItem->request_id);
+      $schedule = Schedule::find($request->schedule_id);
+
       $offloading = $req->offloading;
       $qty = $cargoItem->qty;
 
@@ -63,7 +68,8 @@ class CargoItemController extends Controller
          'employee_id' => auth()->user()->getEmployeeId(),
          'qty' => $qty,
          'offloading' => $offloading,
-         'onboard' => $onboard
+         'onboard' => $onboard,
+         // 'desc' => $req->desc
       ]);
 
       $cargoItem->update([
@@ -71,6 +77,32 @@ class CargoItemController extends Controller
          'offloading_id' => $offloading->id,
          // 'onboard' => $onboard
       ]);
+
+      $con = true;
+      foreach ($request->cargoItems as $item) {
+         if ($item->status == 1) {
+            $con = false;
+         }
+      }
+
+      if ($con == true) {
+         // dd('true');
+         $request->update([
+            'status' => 3
+         ]);
+         $schedule->update([
+            'status' => 2
+         ]);
+
+         Report::create([
+            'schedule_id' => $schedule->id,
+            'vessel_id' => $schedule->vessel_id,
+            'status_id' => 9,
+            'port_id' => $req->port
+         ]);
+      } else {
+         // dd('false');
+      }
 
       return redirect()->back()->with('success', 'Item successfully confirmed');
    }

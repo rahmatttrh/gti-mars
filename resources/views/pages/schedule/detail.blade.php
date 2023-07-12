@@ -65,7 +65,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <x-notification.deviation :deviations="$deviations" />
-         <div class="row">
+         <div class="row row-deck">
             <div class="col-md-8">
                <div class="card">
                   <div class="card-header bg-secondary">
@@ -156,25 +156,12 @@
                   </div>
                </div>
                {{-- <hr> --}}
-               <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
-               @if ($requests->count() > 0)
-                  <x-schedule.request :requests="$requests" :schedule="$schedule" />
-               @else
-                  <div class="card">
-                     <div class="card-body">
-                        <small class="text-muted">Empty</small>
-                     </div>
-                  </div>
-               @endif
-
-               @if ($deviations != null)
-               <x-schedule.deviation :deviations="$deviations" />
-               @endif
+               
                
             </div>
             <div class="col-md-4">
                @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                  <div class="card mb-3" style="height: calc(20rem + 10px)">
+                  <div class="card " style="height: calc(20rem + 10px)">
                      <div class="card-header">
                         Recent Request Activity
                      </div>
@@ -206,11 +193,14 @@
                         </div>
                      </div>
                      <div class="card-footer">
-                        <small>This is a list of recent activity requests that has not yet been included in this schedule. Click on activity to add into this schedule</small>
+                        <small>Click on activity to add into this schedule</small>
                      </div>
                   </div>
                @endif
+               @if ($schedule->status > 0)
                <x-schedule.report :report="$report" :reports="$reports" />
+               @endif
+               
                   {{-- <div class="card">
                      <div class="card-header">
                         Timeline
@@ -229,6 +219,25 @@
                <x-schedule.deviation :deviations="$deviations" />
                @endif --}}
                
+            </div>
+
+            <div class="row">
+               <div class="col-md-12">
+                  <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
+               @if ($requests->count() > 0)
+                  <x-schedule.request :requests="$requests" :schedule="$schedule" />
+               @else
+                  <div class="card mb-2">
+                     <div class="card-body">
+                        <small class="text-muted">Empty</small>
+                     </div>
+                  </div>
+               @endif
+
+               @if ($deviations != null)
+               <x-schedule.deviation :deviations="$deviations" />
+               @endif
+               </div>
             </div>
          </div>
          

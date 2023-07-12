@@ -20,6 +20,7 @@ class CreateOffloadingsTable extends Migration
          $table->integer('qty');
          $table->integer('offloading');
          $table->integer('onboard');
+         $table->string('desc')->nullable();
          $table->timestamps();
       });
    }

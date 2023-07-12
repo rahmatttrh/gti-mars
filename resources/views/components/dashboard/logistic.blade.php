@@ -59,8 +59,11 @@
                      @if ($requests->count() > 0)
                         @foreach ($requests as $r)
                         <tr>
-                           <td class="text-muted">
+                           {{-- <td class="text-muted">
                               <a href="{{route('request.detail.parent', enkripRambo($r->parent->id))}}">{{$r->parent->code}}</a>
+                           </td> --}}
+                           <td class="text-muted">
+                              <a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->code}}</a>
                            </td>
                            <td class="text-muted">{{$r->date}}</td>
                            {{-- <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}

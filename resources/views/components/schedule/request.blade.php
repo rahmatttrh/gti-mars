@@ -34,8 +34,13 @@
                      <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
                      <dd class="col-12"><x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/></dd>
                   </dl>
-                  <x-requests.cargo :request="$request" :cargos="$request->cargoItems" :passengers="$request->passengerItems" :i="0" />
-                  {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+
+                  @if ($request->activity->type_id == 1)
+                  <x-requests.cargo :request="$request" :cargos="$request->cargoItems"  :i="0" />
+                  @elseif($request->activity->type_id == 2 || $request->activity->type_id == 4 )
+                  <x-requests.crew :request="$request" :passengers="$request->passengerItems" :i="0" />
+                  @endif
+                     {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                   <div class="mt-2 mb-2">
                      <a class="" href="#" data-bs-toggle="modal" data-bs-target="#remove-request-{{$request->id}}">
                         <small>Remove from list</small> 

@@ -192,16 +192,12 @@
             </div>
 
 
-            <div class="col-md-4">
+            {{-- <div class="col-md-4">
                
-               {{--   --}}
-               {{-- @if (auth()->user()->hasRole('marine')) --}}
                   @if ($request->status >= 2 && $request->status != 202)
                      <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
-                  {{-- @elseif ($request->status >= 3)
-                  <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" /> --}}
+                 
                   @endif
-               {{-- @endif --}}
 
                
                @if ($request->status == 202)
@@ -232,7 +228,7 @@
                   @endif
                @endif
                
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>

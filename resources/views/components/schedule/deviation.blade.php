@@ -49,7 +49,7 @@
       </div>
       
       @endif
-      @else
+   @else
       @if ($deviations->where('status', '>', 0)->count() > 0)       
          @foreach ($deviations as $dev)
             <div class="accordion mb-2 bg-white" id="accordion-deviation_{{$dev->id}} ">
@@ -78,18 +78,18 @@
                            <dd class="col-12"><x-status.deviation :deviation="$dev" /> </dd>
                            {{-- <dt class="col-4">Destination</dt>
                            <dd class="col-8">: {{$dev->port->name}}</dd> --}}
-                           <dt class="col-4">Activity</dt>
-                           <dd class="col-8">: {{$dev->desc}}</dd>
-                           <dt class="col-4">Reason</dt>
-                           <dd class="col-8">: {{$dev->reason}}</dd>
+                           <dt class="col-2">Activity</dt>
+                           <dd class="col-10">: {{$dev->desc}}</dd>
+                           <dt class="col-2">Reason</dt>
+                           <dd class="col-10">: {{$dev->reason}}</dd>
                            <hr>
                            @if ($dev->report)
-                           <dt class="col-4">Confirm</dt>
-                           <dd class="col-8">: {{ $dev->report->confirm ? \Carbon\Carbon::parse($dev->report->confirm)->format('H:i ') : ''}}</dd>
-                           <dt class="col-4">Arrive</dt>
-                           <dd class="col-8">: {{ $dev->report->arrive ? \Carbon\Carbon::parse($dev->report->arrive)->format('H:i ') : ''}}</dd>
-                           <dt class="col-4">Complete</dt>
-                           <dd class="col-8">: {{$dev->report->complete ? \Carbon\Carbon::parse($dev->report->complete)->format('H:i ') : ''}}</dd>
+                           <dt class="col-2">Confirm</dt>
+                           <dd class="col-10">: {{ $dev->report->confirm ? \Carbon\Carbon::parse($dev->report->confirm)->format('H:i ') : ''}}</dd>
+                           <dt class="col-2">Arrive</dt>
+                           <dd class="col-10">: {{ $dev->report->arrive ? \Carbon\Carbon::parse($dev->report->arrive)->format('H:i ') : ''}}</dd>
+                           <dt class="col-2">Complete</dt>
+                           <dd class="col-10">: {{$dev->report->complete ? \Carbon\Carbon::parse($dev->report->complete)->format('H:i ') : ''}}</dd>
                            @endif
                            @if (auth()->user()->hasRole('vessel'))
                               @if ($dev->status == 1)

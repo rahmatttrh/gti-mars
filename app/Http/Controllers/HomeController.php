@@ -229,7 +229,7 @@ class HomeController extends Controller
          $employee = Employee::where('email', auth()->user()->email)->first();
          $vessel = '';
          $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
-         $confirms = ModelsRequest::where('destination_id', auth()->user()->getPort())->where('status', 11)->get();
+         $confirms = ModelsRequest::where('destination_id', auth()->user()->getPort())->where('status', 10)->get();
          // dd($confirms);
          $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
       } elseif (auth()->user()->hasRole('logistic')) {
