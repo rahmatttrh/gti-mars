@@ -69,7 +69,7 @@
                   <x-modal.cargo.confirm :cargo="$item" />
                @endforeach
                <tr>
-                  @if ($request->status >= 10 )
+                  @if ($request->status >= 10 && auth()->user()->hasRole('department'))
                      <td colspan="7" class="text-muted text-end">Total</td>
                      @else
                      <td colspan="6" class="text-muted text-end">Total</td>

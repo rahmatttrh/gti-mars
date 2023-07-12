@@ -91,14 +91,16 @@
                            <dt class="col-2">Complete</dt>
                            <dd class="col-10">: {{$dev->report->complete ? \Carbon\Carbon::parse($dev->report->complete)->format('H:i ') : ''}}</dd>
                            @endif
-                           @if (auth()->user()->hasRole('vessel'))
-                              @if ($dev->status == 1)
-                                 <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-arrive-{{$dev->id}}">Arrive</button>
-                                 @elseif($dev->status == 2)
-                                 <button class="btn mt-2 btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-complete-{{$dev->id}}">Complete</button>
-                              @endif
-                           @endif
+                          
                         </dl>
+                        <hr>
+                        @if (auth()->user()->hasRole('vessel'))
+                           @if ($dev->status == 1)
+                              <button class="btn btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-arrive-{{$dev->id}}">Arrive</button>
+                              @elseif($dev->status == 2)
+                              <button class="btn  btn-small btn-info" data-bs-toggle="modal" data-bs-target="#modal-deviation-complete-{{$dev->id}}">Complete</button>
+                           @endif
+                        @endif
                      </div>
                   </div>
                </div>
