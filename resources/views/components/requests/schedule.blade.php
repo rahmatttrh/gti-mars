@@ -24,12 +24,19 @@
                   
                   <dt class="col-3">Date</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
+                 
+                  
                   <dt class="col-3">ETD</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
                   {{-- <dt class="col-3">ETA</dt>
                   <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd> --}}
                   <small># {{$request->remark}}</small>
                </dl>
+               <dt class="col-3">Route</dt>
+               <dd class="col-12">{{$schedule->origin->name}}
+                  @foreach ($schedule->routes as  $route)
+                     - {{$route->port->name}} 
+                  @endforeach</dd>
                @else
                <small>Not Available</small>
             @endif

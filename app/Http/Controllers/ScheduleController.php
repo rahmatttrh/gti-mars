@@ -139,6 +139,15 @@ class ScheduleController extends Controller
 
       // $inboxs = ModelsRequest::where('status', '=', 1)->get();
 
+      if (auth()->user()->getDepartment()->name == 'Logistic') {
+         $acts = Activity::where('type_id', 1)->get();
+      } elseif (auth()->user()->getDepartment()->name == 'drilling') {
+         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
+      } else {
+         $acts = Activity::get();
+      }
+      $activities = $acts;
+
       foreach ($routes as $route) {
          $reqs = ModelsRequest::where('origin_id', '=', $route->port_id)->where('status', '=', 1)->get();
          foreach ($reqs as $req) {
@@ -191,7 +200,8 @@ class ScheduleController extends Controller
          'destinations' => $destinations,
          'iddestinations' => $iddestinations,
          'recentRequests' => $recentRequests,
-         'lastPostpone' => $lastPostpone
+         'lastPostpone' => $lastPostpone,
+         'activities' => $activities
          // 'report' => $requests
       ]);
    }

@@ -10,12 +10,26 @@
             @method('PUT')
             <input type="number" name="port" id="port" value="{{$port->id}}" hidden>
             <div class="modal-body">
-               <div class="mb-3">
-                  <label class="form-label">Name</label>
-                  <input type="text" class="form-control" value="{{$port->name}}" name="name" id="name" placeholder="Your vessel name">
+               <div class="form-floating mb-3">
+                  <input type="text" value="{{$port->name}}" required class="form-control" id="name" name="name" >
+                  <label for="name">Name</label>
+               </div>
+               <div class="row">
+                  <div class="col">
+                     <div class="form-floating mb-3">
+                        <input type="text" value="{{$port->email}}" required class="form-control" id="email" name="email" >
+                        <label for="email">Email</label>
+                     </div>
+                  </div>
+                  <div class="col">
+                     <div class="form-floating mb-3">
+                        <input type="text" value="{{$port->type}}" required class="form-control" id="type" name="type" >
+                        <label for="type">Type</label>
+                     </div>
+                  </div>
                </div>
                
-               <div class="row">
+               {{-- <div class="row">
                   <div class="col-md-6">
                      <div class="mb-3">
                         <label class="form-label">Latitude</label>
@@ -28,7 +42,7 @@
                         <input type="text" class="form-control" value="{{$port->longitude}}" name="longitude" id="longitude" placeholder="Your vessel flag">
                      </div>
                   </div>
-               </div>
+               </div> --}}
             </div>
             
             <div class="modal-footer">

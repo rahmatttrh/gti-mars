@@ -35,11 +35,11 @@
 
                   @if (auth()->user()->hasRole('department'))
                      @if ($request->status == 00)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-                        Release
-                     </button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
+                           <!-- Download SVG icon from http://tabler-icons.io/i/send -->
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
+                           Release
+                        </button>
                         @if ($request->type == 1)
                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
                               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
@@ -52,7 +52,15 @@
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                               Add Passenger
                            </button>
+                        
                         @endif
+
+
+                     @elseif($request->status == 10)
+                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#additionalCargo">
+                       
+                        Add Additional Cargo
+                     </button>
                      @endif
                   @endif
 
@@ -147,9 +155,9 @@
                            <small >Requested at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                         </div>
                         <div class="col-md-4">
-                              @if ($request->status >= 2 && $request->status != 202)
-                                 <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
-                              @endif
+                           @if ($request->status >= 2 && $request->status != 202)
+                              <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
+                           @endif
 
                            
                            @if ($request->status == 202)
@@ -174,11 +182,11 @@
                            </div>
                            @endif
 
-                           @if ($request->schedule)
+                           {{-- @if ($request->schedule)
                               @if ($request->schedule->report)
                               <x-requests.timeline :report="$request->schedule->report" />
                               @endif
-                           @endif
+                           @endif --}}
                            
                         </div>
                      </div>
@@ -234,10 +242,12 @@
    </div>
 
    <x-modal.cargo.add :request="$request" />
+   {{-- <x-modal.cargo.additional :request="$request" /> --}}
    <x-modal.passenger.add :request="$request" />
    <x-modal.request.undo :request="$request" />
    <x-modal.request.undo-approve :request="$request" />
    <x-modal.request.delete :request="$request" />
+
    
    <div class="modal modal-blur fade" id="releaseCargoPlan" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

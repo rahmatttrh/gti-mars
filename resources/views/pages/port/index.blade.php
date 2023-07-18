@@ -60,7 +60,7 @@
                            </div>
                         </div>
                         
-                        <div class="row">
+                        {{-- <div class="row">
                            <div class="col">
                               <div class="form-floating mb-3">
                                  <input type="text" class="form-control" id="latitude" name="latitude" >
@@ -73,7 +73,7 @@
                                  <label for="longitude">Longitude</label>
                               </div>
                            </div>
-                        </div>
+                        </div> --}}
                         
                         
                      </div>
@@ -95,8 +95,8 @@
                               <th class="text-center">No.</th>
                               <th>Name</th>
                               <th>Type</th>
-                              <th>Latittude</th>
-                              <th>Logitude</th>
+                              {{-- <th>Latittude</th>
+                              <th>Logitude</th> --}}
                               <th>Email</th>
                            </tr>
                         </thead>
@@ -121,8 +121,8 @@
                                     </div>
                                  </td>
                                  <td>{{$port->type}}</td>
-                                 <td>{{$port->latitude}}</td>
-                                 <td>{{$port->longitude}}</td>
+                                 {{-- <td>{{$port->latitude}}</td>
+                                 <td>{{$port->longitude}}</td> --}}
                                  <td>{{$port->email}}</td>
                               </tr>
 

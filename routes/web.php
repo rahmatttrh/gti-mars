@@ -261,6 +261,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
       Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
       Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
       Route::post('store', [DepartmentRequestController::class, 'store'])->name('request.store');
+      Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
       Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
 
       Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');

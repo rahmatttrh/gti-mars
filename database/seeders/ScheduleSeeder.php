@@ -24,8 +24,7 @@ class ScheduleSeeder extends Seeder
          'status' => 0,
          'date' => $now,
          'vessel_id' => 1,
-         'origin_id' => 1,
-         'destination_id' => 6,
+         'origin_id' => 16,
          'etd' => $now->addHour(2),
          'eta' => $now->addHour(6),
 

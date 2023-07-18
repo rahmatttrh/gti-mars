@@ -26,7 +26,10 @@
 
                   @if (auth()->user()->hasRole('vessel'))
                      <x-schedule.action-vessel :schedule="$schedule" />
-                     
+                  @endif
+
+                  @if (auth()->user()->hasRole('department'))
+                     <x-schedule.action-department :schedule="$schedule" />
                   @endif
                   
                   <div class="dropdown">
@@ -245,6 +248,7 @@
       </div>
    </div>
 
+   <x-modal.cargo.additional :schedule="$schedule" :routes="$routes" :activities="$activities"/>
    <x-modal.schedule.accept :schedule="$schedule" />
    <x-modal.schedule.postpone :schedule="$schedule" />
    <x-modal.schedule.delete :schedule="$schedule" />

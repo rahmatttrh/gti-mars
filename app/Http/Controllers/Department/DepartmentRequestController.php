@@ -146,6 +146,75 @@ class DepartmentRequestController extends Controller
       return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
    }
 
+   public function additionalStore(Request $req)
+   {
+      $req->validate([
+         'activity' => 'required',
+      ]);
+
+      
+
+      $date = Carbon::today();
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $department = Department::find($employee->department->id);
+      $now = Carbon::today();
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      $destination = Port::find($req->destination);
+
+      if ($department->id == 2) {
+         $type = 1;
+      } elseif ($department->id == 3) {
+         $type = 2;
+      } else {
+         $type = 3;
+      }
+
+      $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
+
+      if (isset($parentLast)) {
+         $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
+      } else {
+         $code = "PR/"  . $date->format("dmy") . '/' . 1;
+      }
+
+      $parent = ParentRequest::create([
+         'status' => 0,
+         'code' => $code,
+         'origin_id' => $req->origin,
+         'date' => $req->date,
+         'employee_id' => $employee->id,
+         'department_id' => $department->id,
+      ]);
+
+
+      if (isset($request)) {
+         $code =
+            "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      $request = ModelsRequest::create([
+         'parent_id' => $parent->id,
+         'code' => $code,
+         'type' => $type,
+         'employee_id' => $employee->id,
+         'department_id' => $department->id,
+         'func' => $department->code,
+         'activity_id' => $req->activity,
+         'date' => $req->date,
+         'description' => $req->desc,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'destination_name' => $destination->name,
+         'status' => 00
+      ]);
+
+
+
+      return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
+   }
+
    public function add(Request $req)
    {
       $req->validate([

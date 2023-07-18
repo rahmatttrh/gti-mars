@@ -65,6 +65,11 @@ class Schedule extends Model
       return $this->hasMany(Postpone::class);
    }
 
+   public function routes()
+   {
+      return $this->hasMany(ScheduleRoute::class);
+   }
+
    // public function port()
    // {
    //    return $this->belongsTo(Port::class);

@@ -1,27 +1,20 @@
-<span>
+<div>
    @if ($schedule->status == 0)
-      Draft
+      <div class=""><span class=""></span>Draft</div>
       @elseif($schedule->status == 1)
-      Assigned to {{$schedule->vessel->name}}
+      <div class=""><span class=""></span>Waiting Vessel</div>
       @elseif($schedule->status == 2)
-      Standby at {{$schedule->origin->name}}
-      @elseif($schedule->status == 3)
-      Loading Start at {{$schedule->origin->name}}
-      @elseif($schedule->status == 4)
-      Loading Complete at {{$schedule->origin->name}}
-      @elseif($schedule->status == 5)
-      Cast Off
-      @elseif($schedule->status == 6)
-      Full Away
-      @elseif($schedule->status == 7)
-      Arrive at {{$schedule->destination->name}}
-      @elseif($schedule->status == 8)
-      Waiting at {{$schedule->destination->name}}
-      @elseif($schedule->status == 9)
-      Unloading Start at {{$schedule->destination->name}}
+      <div class=""><span class=""></span>{{$lastreport->status->name}} {{$lastreport->port_id == null ? '' : 'at ' . $lastreport->port->name}}</div>
       @elseif($schedule->status == 10)
-      Unloading Complete at {{$schedule->destination->name}}
+      <div class=""><span class=""></span>Waiting Confirmation</div>
       @elseif($schedule->status == 11)
-      Complete
+      <div class=""><span class=""></span>Complete</div>
    @endif
-</span>
+
+   @if ($schedule->deviations->where('status', 0)->count() > 0)
+   <div class="">Deviation Alert!</div>
+   @endif
+   @if ($schedule->postpones->where('status', 0)->count() > 0)
+   <div class="">Postpone</div>
+   @endif
+</div>
