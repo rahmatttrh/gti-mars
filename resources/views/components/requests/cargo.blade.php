@@ -3,13 +3,13 @@
       <table class="table table-vcenter card-table">
          <thead>
             <tr>
-               <th>No</th>
-               <th>Desc</th>
+               <th>MTD</th>
+               <th>Descriptive</th>
+               <th>Contract</th>
                <th class="text-center">Qty</th>
                <th class="text-center">Drop</th>
                <th class="text-center">Onboard</th>
-               <th class="">Desc</th>
-               <th class="text-end">Unit</th>
+               {{-- <th class="">Desc</th> --}}
                <th class="text-center">Size (m<sup>2</sup>)</th>
                <th class="text-center">Weight (ton)</th>
                @if ($request->status == 10 && auth()->user()->hasRole('department'))
@@ -41,14 +41,13 @@
                         {{$item->desc}} <br>
                         <small>#{{$item->remark}}Testing</small>
                      </td>
-                     <td class="text-muted text-center">{{$item->qty}}</td>
+                     <td class="text-muted">{{$item->contract}}</td>
+                     <td class="text-muted text-center">{{$item->qty}} {{$item->unit}}</td>
                      <td class="text-muted text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
                      <td class="text-muted text-center">
-                        {{$item->offloading ? $item->offloading->onboard : '-'}} <br>
+                        {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
                        
                      </td>
-                     <td class="text-muted "> # {{$item->offloading->desc ?? '-'}}</td>
-                     <td class="text-muted text-end">{{$item->unit}}</td>
                      <td class="text-muted text-center">{{$item->size}}</td>
                      <td class="text-muted text-center">{{$item->weight}}</td>
                      
@@ -68,13 +67,13 @@
                      @endif
                   </tr>
                   <x-modal.cargo.delete :item="$item" />
-                  <x-modal.cargo.confirm :cargo="$item" />
+                  <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
                @endforeach
                <tr>
                   @if ($request->status >= 10 && auth()->user()->hasRole('department'))
-                     <td colspan="8" class="text-muted text-end">Total</td>
+                     <td colspan="6" class="text-muted text-end">Total</td>
                      @else
-                     <td colspan="7" class="text-muted text-end">Total</td>
+                     <td colspan="6" class="text-muted text-end">Total</td>
                   @endif
                   <td class="text-muted text-center">{{$request->total_size}}</td>
                   <td class="text-muted text-center">{{$request->total_weight}}</td>

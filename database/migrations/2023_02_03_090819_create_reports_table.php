@@ -16,7 +16,8 @@ class CreateReportsTable extends Migration
       Schema::create('reports', function (Blueprint $table) {
          $table->id();
          $table->mediumInteger('schedule_id');
-         $table->mediumInteger('vessel_id');
+         $table->mediumInteger('vessel_id')->nullable();
+         $table->mediumInteger('employee_id')->nullable();
          $table->mediumInteger('status_id');
          $table->mediumInteger('port_id')->nullable();
          // $table->dateTime('assign')->nullable();

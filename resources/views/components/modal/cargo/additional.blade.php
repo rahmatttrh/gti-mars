@@ -8,7 +8,7 @@
          <form action="{{route('request.additional.store')}}" method="POST">
             @csrf
 
-            {{-- <input type="number" name="req" id="req" value="{{$request->id}}" hidden> --}}
+            <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
             <div class="modal-body">
                <div class="form-floating mb-3">
                   <select required name="destination" id="destination" class="form-select">
@@ -30,7 +30,7 @@
                   <label for="activity">Activity</label>
                </div>
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="desc" name="desc">
+                  <input type="text" class="form-control" id="desc" name="desc">
                   <label for="desc">Description</label>
                </div>
 
@@ -40,7 +40,7 @@
                <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
                   Cancel
                </a>
-               <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+               <button type="submit" class="btn btn-primary ms-auto">
                   <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                      <path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" />

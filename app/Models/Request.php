@@ -55,4 +55,15 @@ class Request extends Model
    {
       return $this->belongsTo(Employee::class);
    }
+
+   public function reports()
+   {
+      return $this->hasMany(ReportRequest::class);
+   }
+
+   public function getStatus()
+   {
+      $status = ReportRequest::where('request_id', $this->id)->orderBy('created_at', 'desc')->first();
+      return $status;
+   }
 }

@@ -15,7 +15,7 @@
             @foreach ($reports as $report)
             <dl class="row border-bottom">
                <dd class="col-10"> {{$report->status->name}} {{$report->port_id == null ? '' : 'at ' . $report->port->name}}</dd>
-               <dd class="col-2 text-end"> {{  \Carbon\Carbon::parse($report->created_at)->format('H:i ')}}</dd>
+               <dd class="col-2 text-end"><small> {{  \Carbon\Carbon::parse($report->created_at)->format('H:i ')}}</small></dd>
             </dl>
             @endforeach
             @else

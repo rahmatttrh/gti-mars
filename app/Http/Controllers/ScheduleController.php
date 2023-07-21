@@ -130,7 +130,7 @@ class ScheduleController extends Controller
       $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('destination_id', 'desc')->orderBy('updated_at', 'asc')->get();
       $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
 
-      $statuses = Status::get();
+      $statuses = Status::where('type', 1)->get();
       $ports = Port::get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
@@ -139,14 +139,19 @@ class ScheduleController extends Controller
 
       // $inboxs = ModelsRequest::where('status', '=', 1)->get();
 
-      if (auth()->user()->getDepartment()->name == 'Logistic') {
-         $acts = Activity::where('type_id', 1)->get();
-      } elseif (auth()->user()->getDepartment()->name == 'drilling') {
-         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
-      } else {
+      if (auth()->user()->hasRole('vessel')) {
          $acts = Activity::get();
+      } else {
+         if (auth()->user()->getDepartment()->name == 'Logistic') {
+            $acts = Activity::where('type_id', 1)->get();
+         } elseif (auth()->user()->getDepartment()->name == 'drilling') {
+            $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
+         } else {
+            $acts = Activity::get();
+         }
       }
       $activities = $acts;
+
 
       foreach ($routes as $route) {
          $reqs = ModelsRequest::where('origin_id', '=', $route->port_id)->where('status', '=', 1)->get();
@@ -201,7 +206,7 @@ class ScheduleController extends Controller
          'iddestinations' => $iddestinations,
          'recentRequests' => $recentRequests,
          'lastPostpone' => $lastPostpone,
-         'activities' => $activities
+         'activities' => $acts
          // 'report' => $requests
       ]);
    }

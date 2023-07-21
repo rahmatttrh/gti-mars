@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="addCargoItem" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" id="addCargoItem-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -10,10 +10,21 @@
             
             <input type="number" name="req" id="req" value="{{$request->id}}" hidden>
             <div class="modal-body">
-               <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="no_document" name="no_document" >
-                  <label for="no_document">No Document</label>
+               <div class="row">
+                  <div class="col-md-4">
+                     <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="no_document" name="no_document" >
+                        <label for="no_document">MTD</label>
+                     </div>
+                  </div>
+                  <div class="col-md-8">
+                     <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="contract" name="contract" >
+                        <label for="contract">Contract Name</label>
+                     </div>
+                  </div>
                </div>
+              
                <div class="form-floating mb-3">
                   <input type="text" required class="form-control" id="desc" name="desc" >
                   <label for="desc">Description</label>

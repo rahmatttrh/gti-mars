@@ -2,7 +2,7 @@
    @if ($confirms->count() > 0)
       @foreach ($confirms as $confirm)
          <div class="alert alert-primary" role="alert">
-            You have a Arrival Cargo from {{$confirm->origin->name}}. Click <a href="{{route('request.detail', enkripRambo($confirm->id))}}" class="alert-link">here</a> to see detail.
+            You have a Arrival Cargo from {{$confirm->origin->name}}. Click <a href="{{route('schedule.detail', enkripRambo($confirm->schedule_id))}}" class="alert-link">here</a> to see detail.
          </div>
       @endforeach
    @endif

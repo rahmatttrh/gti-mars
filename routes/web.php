@@ -276,6 +276,10 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
       Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
       Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
    });
+
+   Route::prefix('schedule')->group(function () {
+      Route::get('complete/{schedule:id}', [DepartmentScheduleController::class, 'complete'])->name('schedule.complete');
+   });
 });
 
 Route::group(['middleware' => ['role:logistic|department']], function () {
@@ -308,7 +312,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::get('standby-dest/{schedule:id}', [VesselScheduleController::class, 'standbyDest'])->name('schedule.standby.dest');
       Route::get('unloading/{schedule:id}', [VesselScheduleController::class, 'unloading'])->name('schedule.unloading');
       Route::get('unloading/complete/{schedule:id}', [VesselScheduleController::class, 'unloadingEnd'])->name('schedule.unloading.complete');
-      Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.complete');
+      // Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.complete');
       Route::get('deviation/confirm/{deviation:id}', [VesselDeviationController::class, 'confirm'])->name('schedule.confirm.deviation');
       Route::get('deviation/arrive/{deviation:id}', [VesselDeviationController::class, 'arrive'])->name('schedule.arrive.deviation');
       Route::get('deviation/complete/{deviation:id}', [VesselDeviationController::class, 'complete'])->name('schedule.complete.deviation');

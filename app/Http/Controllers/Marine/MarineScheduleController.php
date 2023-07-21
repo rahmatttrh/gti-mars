@@ -13,6 +13,7 @@ use App\Models\Postpone;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
+use App\Models\ReportRequest;
 use App\Models\Request as ModelsRequest;
 use App\Models\ScheduleRoute;
 use App\Models\Type;
@@ -178,6 +179,12 @@ class MarineScheduleController extends Controller
       foreach ($schedule->requests as $req) {
          $req->update([
             'status' => 3
+         ]);
+
+         ReportRequest::create([
+            'request_id' => $req->id,
+            'status_id' => 1,
+
          ]);
       }
 

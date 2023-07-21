@@ -5,19 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Report extends Model
+class ReportRequest extends Model
 {
    use HasFactory;
    protected $guarded = [];
 
-   public function schedule()
+   public function request()
    {
-      return $this->belongsTo(Schedule::class);
-   }
-
-   public function vessel()
-   {
-      return $this->belongsTo(Vessel::class);
+      return $this->belongsTo(Request::class);
    }
 
    public function status()

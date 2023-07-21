@@ -7,7 +7,7 @@
       {{-- @elseif($request->status == 2)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : Schedule Set</div> --}}
       @elseif($request->status == 3)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>03 : {{$lastreport->status->name}} {{$lastreport->port_id == null ? '' : 'at ' . $lastreport->port->name}}</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>03 : {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}</div>
       {{--@elseif($request->status == 3)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>03 : Assign to {{$request->schedule->vessel->name}}</div>
       @elseif($request->status == 4)
@@ -29,9 +29,15 @@
       @elseif($request->status == 12)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div> --}}
       @elseif($request->status == 10)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>10 : Waitiing Confirmation User</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>10 : Waiting Confirmation User</div>
       @elseif($request->status == 12)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div>
+      @elseif($request->status == 20)
+      <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>20 : Draft</div>
+      @elseif($request->status == 21)
+      <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>21 : Waiting Marine Approval</div>
+      @elseif($request->status == 22)
+      <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>22 : Proccess</div>
       @elseif($request->status == 202)
       <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>202 : Canceling Proccess</div>
    @endif

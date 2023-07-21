@@ -101,7 +101,7 @@
          @endif
          
          <div class="row row-cards">
-            <div class="col-md-9">
+            <div class="col-md-8">
                <div class="card">
                   <div class="card-header border-0">
                      <div class="card-title text-uppercase">{{$monthName}}</div>
@@ -155,31 +155,30 @@
                </div>
             </div>
 
-            <div class="col-md-3">  
-               <div class="card mb-2">
-                  {{-- <div class="card-header">
-                     Department Request
-                  </div> --}}
+            <div class="col-md-4">  
+               {{-- <div class="card mb-2">
                  <div class="card-body">
                    <div id="chart-demo-pie"></div>
                  </div>
-               </div>
-               <div class="card" style="height: calc(16rem + 10px)">
+               </div> --}}
+               <div class="card" style="height: calc(24rem + 10px)">
+                  <div class="card-header">
+                     <div class="badge bg-info">
+                        Recent Update
+                     </div>
+                  </div>
                   <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                      <div class="divide-y">
-                        @if ($scheduleRecents->count() > 0)
+                        {{-- @if ($scheduleRecents->count() > 0)
                            @foreach ($scheduleRecents as $scherecent)
                            <div>
                               <div class="row">
                                  <div class="col">
                                     <div class="text-truncate">
-                                       <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$scherecent" /> 
+                                       <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$scherecent" :lastreport="$schedule->lastreport()" /> 
                                     </div>
                                     <div class="text-muted"><small>{{$scherecent->updated_at->diffForHumans()}}</small></div>
                                  </div>
-                                 {{-- <div class="col-auto align-self-center">
-                                    <div class="badge bg-primary"></div>
-                                 </div> --}}
                               </div>
                            </div>
                            @endforeach
@@ -192,8 +191,20 @@
                                  </div>
                               </div>
                            </div>
-                        @endif
-                        
+                        @endif --}}
+                        @foreach ($reports as $report)
+                           <div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="">
+                                       <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}"><strong>{{$report->vessel->name}}</strong> </a> <br>
+                                       {{$report->status->name}} {{$report->port->name ?? ''}}
+                                    </div>
+                                    <div class="text-muted"><small>{{$report->updated_at->diffForHumans()}}</small></div>
+                                 </div>
+                              </div>
+                           </div>
+                        @endforeach
                        
                      </div>
                   </div>

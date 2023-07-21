@@ -11,6 +11,7 @@ use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestHistory;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -221,15 +222,16 @@ class RequestController extends Controller
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       $passengerItems = PassengerItem::where('request_id', $request->id)->get();
       $schedules = Schedule::where('origin_id', $request->origin_id)->where('status', 0)->get();
+      $routes = ScheduleRoute::where('schedule_id', $request->schedule_id)->get();
 
-      
 
       return view('pages.request.detail', [
          'request' => $request,
          'requestHistories' => $requestHistories,
          'schedules' => $schedules,
          'cargoItems' => $cargoItems,
-         'passengerItems' => $passengerItems
+         'passengerItems' => $passengerItems,
+         'routes' => $routes
       ])->with('i');
    }
 

@@ -34,14 +34,14 @@
                   @endif
 
                   @if (auth()->user()->hasRole('department'))
-                     @if ($request->status == 00)
+                     @if ($request->status == 00 || $request->status == 77)
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#releaseCargoPlan">
                            <!-- Download SVG icon from http://tabler-icons.io/i/send -->
                            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
                            Release
                         </button>
                         @if ($request->type == 1)
-                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem">
+                           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCargoItem-{{$request->id}}">
                               <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                               <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                               Add Cargo
@@ -54,13 +54,11 @@
                            </button>
                         
                         @endif
-
-
                      @elseif($request->status == 10)
-                     <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#additionalCargo">
+                     {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#additionalCargo">
                        
                         Add Additional Cargo
-                     </button>
+                     </button> --}}
                      @endif
                   @endif
 
@@ -143,16 +141,15 @@
                         <div class="col-md-8">
                            <small>{{$request->code}}</small><br>
                            <small> {{$request->department->name}} Department</small>
+                           <h4 class="card-title m-0 ">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</h4>
                            <h4 class="card-title m-0 ">
                               {{$request->activity->name ?? ''}}  {{$request->description}}
                            </h4>
-                           <small>
-                              {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}
-                           , {{$request->origin->name}} to {{$request->destination->name}}
-                           </small>
-                           <hr>
-                           <small >Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}</small><br>
-                           <small >Requested at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                           <h4 class="card-title m-0 ">
+                              {{$request->origin->name}} - {{$request->destination->name}}
+                           </h4>
+                           <br>
+                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}  at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                         </div>
                         <div class="col-md-4">
                            @if ($request->status >= 2 && $request->status != 202)
@@ -192,11 +189,11 @@
                      </div>
                      
                   </div>
-                  <div class="card-footer">
+                  {{-- <div class="card-footer">
                      
-                  </div>
+                  </div> --}}
                </div>
-               <x-requests.cargo :request="$request" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
+               <x-requests.cargo :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
             </div>
 
 

@@ -228,7 +228,7 @@
                <div class="col-md-12">
                   <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
                @if ($requests->count() > 0)
-                  <x-schedule.request :requests="$requests" :schedule="$schedule" />
+                  <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
                @else
                   <div class="card mb-2">
                      <div class="card-body">
@@ -248,7 +248,10 @@
       </div>
    </div>
 
+   @if (auth()->user()->hasRole('department'))
    <x-modal.cargo.additional :schedule="$schedule" :routes="$routes" :activities="$activities"/>
+   @endif
+  
    <x-modal.schedule.accept :schedule="$schedule" />
    <x-modal.schedule.postpone :schedule="$schedule" />
    <x-modal.schedule.delete :schedule="$schedule" />

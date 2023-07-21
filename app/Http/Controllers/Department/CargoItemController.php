@@ -18,9 +18,12 @@ class CargoItemController extends Controller
       $request = ModelsRequest::find($r->req);
 
       CargoItem::create([
+         'type' => 'main',
          'status' => 1,
          'request_id' => $r->req,
          'no_doc' => $r->no_document,
+         'mtd' => $r->no_document,
+         'contract' => $r->contract,
          'desc' => $r->desc,
          'qty' => $r->qty,
          'unit' => $r->unit,
@@ -53,7 +56,7 @@ class CargoItemController extends Controller
    public function offloading(Request $req)
    {
       $req->validate([]);
-
+      // dd('oke');
       $cargoItem = CargoItem::find($req->cargoItem);
       $request = ModelsRequest::find($cargoItem->request_id);
       $schedule = Schedule::find($request->schedule_id);
@@ -69,13 +72,21 @@ class CargoItemController extends Controller
          'qty' => $qty,
          'offloading' => $offloading,
          'onboard' => $onboard,
-         // 'desc' => $req->desc
+         'desc' => $req->desc
       ]);
 
       $cargoItem->update([
          'status' => 2,
          'offloading_id' => $offloading->id,
          // 'onboard' => $onboard
+      ]);
+
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'employee_id' => auth()->user()->getEmployeeId(),
+         'status_id' => 12,
+         'port_id' => auth()->user()->getPort()
       ]);
 
       $con = true;
@@ -86,12 +97,8 @@ class CargoItemController extends Controller
       }
 
       if ($con == true) {
-         // dd('true');
          $request->update([
             'status' => 3
-         ]);
-         $schedule->update([
-            'status' => 2
          ]);
 
          Report::create([
@@ -101,7 +108,6 @@ class CargoItemController extends Controller
             'port_id' => $req->port
          ]);
       } else {
-         // dd('false');
       }
 
       return redirect()->back()->with('success', 'Item successfully confirmed');

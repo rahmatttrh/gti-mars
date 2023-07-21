@@ -7,6 +7,7 @@ use App\Models\Deviation;
 use App\Models\DeviationReport;
 use App\Models\Port;
 use App\Models\Report;
+use App\Models\ReportRequest;
 use App\Models\Schedule;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -39,22 +40,55 @@ class VesselScheduleController extends Controller
          'status' => 2
       ]);
 
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => 2,
+      ]);
+
+      foreach ($schedule->requests as $req) {
+         ReportRequest::create([
+            'request_id' => $req->id,
+            'status_id' => 2,
+         ]);
+      }
+
       return redirect()->back()->with('success', 'This Schedule is yours');
    }
 
    public function updateStatus(Request $req)
    {
       $req->validate([]);
-
+      // dd($req->status);
       $schedule = Schedule::find($req->schedule);
       foreach ($schedule->requests as $request) {
+
+
+
          if ($req->status == 8 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 10
             ]);
+            ReportRequest::create([
+               'request_id' => $request->id,
+               'status_id' => 12,
+               'port_id' => $req->port
+            ]);
          } elseif ($req->status == 10 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 12
+            ]);
+
+            ReportRequest::create([
+               'request_id' => $request->id,
+               'status_id' => 11,
+               'port_id' => $req->port
+            ]);
+         } else {
+            ReportRequest::create([
+               'request_id' => $request->id,
+               'status_id' => $req->status,
+               'port_id' => $req->port
             ]);
          }
       }
@@ -72,7 +106,7 @@ class VesselScheduleController extends Controller
          ]);
       } elseif ($req->status == 8) {
          $schedule->update([
-            'status' => 10
+            'status' => 3
          ]);
       } else {
          $schedule->update([

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Report;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Vessel;
@@ -192,7 +193,7 @@ class HomeController extends Controller
 
          // $requests = ModelsRequest::get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
-         $scheduleRecents = Schedule::orderBy('updated_at', 'desc')->where('status', '>=', 1)->paginate(5);
+         $scheduleRecents = Schedule::orderBy('updated_at', 'desc')->where('status', '>=', 1)->get();
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
@@ -209,6 +210,7 @@ class HomeController extends Controller
          // dd(collect($customQtyRequests)->toJson());
          // dd($scheduleRecents->status);
          // dd($requestLogis->count());
+         $reports = Report::orderBy('created_at', 'desc')->get();
 
          return view('chart', [
             'today' => $today,
@@ -223,7 +225,8 @@ class HomeController extends Controller
             'requestLogistics' => $requestLogistics->count(),
             'requestDrillings' => $requestDrillings->count(),
             'persentage' => $persentage,
-            'scheduleRecents' => $scheduleRecents
+            'scheduleRecents' => $scheduleRecents,
+            'reports' => $reports
          ])->with('i');
       } elseif (auth()->user()->hasRole('department')) {
          $employee = Employee::where('email', auth()->user()->email)->first();

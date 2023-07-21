@@ -74,4 +74,10 @@ class Schedule extends Model
    // {
    //    return $this->belongsTo(Port::class);
    // }
+
+   public function getStatus()
+   {
+      $status = Report::where('schedule_id', $this->id)->orderBy('created_at', 'desc')->first();
+      return $status;
+   }
 }

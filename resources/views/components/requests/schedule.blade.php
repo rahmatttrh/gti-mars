@@ -3,7 +3,7 @@
       <h2 class="accordion-header" id="heading-schedule-{{$schedule->id}}">
          <button class="accordion-button " type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-schedule-{{$schedule->id}}" aria-expanded="true">
-            Schedule
+            {{$schedule->vessel->name ?? 'Empty'}}
          </button>
       </h2>
       <div id="collapse-schedule-{{$schedule->id}}" class="accordion-collapse collapse show"
@@ -11,32 +11,28 @@
          <div class="accordion-body pt-0">
             @if ($schedule)
                <dl class="row">
-                  <dt class="col-3">Boat</dt>
-                  @if (auth()->user()->hasRole('Marine'))
-                  <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a></dd>
-                  @else
-                     @if ($schedule->status > 0)
-                     <dd class="col-9">: <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a></dd>
-                     @else
-                     <dd class="col-9">: {{$schedule->vessel->name}}</dd>
-                     @endif
-                  @endif
+                  
                   
                   <dt class="col-3">Date</dt>
-                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
-                 
-                  
-                  <dt class="col-3">ETD</dt>
-                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd>
-                  {{-- <dt class="col-3">ETA</dt>
-                  <dd class="col-9">: {{\Carbon\Carbon::parse($schedule->eta)->format('H:i')}}</dd> --}}
-                  <small># {{$request->remark}}</small>
-               </dl>
-               <dt class="col-3">Route</dt>
-               <dd class="col-12">{{$schedule->origin->name}}
+                  <dd class="col-9">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
+                  <dt class="col-3">Route</dt>
+                  <dd class="col-9">{{$schedule->origin->name}}
                   @foreach ($schedule->routes as  $route)
                      - {{$route->port->name}} 
                   @endforeach</dd>
+               </dl>
+               <small>
+                  @if (auth()->user()->hasRole('Marine'))
+                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">More detail...</a>
+                  @else
+                     @if ($schedule->status > 0)
+                     <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">More Detail</a>
+                     @else
+                     -
+                     @endif
+                  @endif
+               </small>
+               
                @else
                <small>Not Available</small>
             @endif

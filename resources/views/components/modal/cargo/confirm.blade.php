@@ -19,9 +19,19 @@
                   <div class="col">
                      <div class="form-floating mb-3">
                         <input type="text" required class="form-control" id="offloading" name="offloading" >
-                        <label for="offloading">Offloading</label>
+                        <label for="offloading">Drop</label>
                      </div>
                   </div>
+               </div>
+               <div class="form-floating mb-3">
+                  <select required name="destination" id="destination" class="form-select">
+                     <option  disabled selected>Choose</option>
+                     <option value="{{$schedule->origin_id}}">{{$schedule->origin->name}}</option>  
+                     @foreach ($routes as $route)
+                        <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
+                     @endforeach
+                  </select>
+                  <label for="destination">Destination</label>
                </div>
                <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="desc" name="desc">

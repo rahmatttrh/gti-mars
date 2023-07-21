@@ -47,7 +47,8 @@
                   <thead>
                      <tr>
                         <th class="text-center">No.</th>
-                        <th>Master</th>
+                        <th>Picup Point</th>
+                        <th>BCM</th>
                         <th>Date</th>
                         <th>Activity</th>
                         <th>Route</th>
@@ -59,8 +60,8 @@
                         @foreach ($requests as $request)
                            <tr>
                               <td class="text-center">{{++$i}}</td>
-                              {{-- <td>{{$request->parent->code}}</td> --}}
-                              <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}">{{$request->parent->code}}</a></td>
+                              <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td>
+                              <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
                               <td>{{$request->date}}</td>
                               <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
                               <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
