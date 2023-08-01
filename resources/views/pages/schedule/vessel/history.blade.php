@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    Schedule List
+   History Sailing Order
 @endsection
 @section('content')
    <div class="container-xl">
@@ -13,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  SCHEDULE PLAN &nbsp;  <span class="text-uppercase text-info"> {{$monthName}}</span>
+                  HISTORY SAILING ORDER &nbsp;  <span class="text-uppercase text-info"> {{$monthName}}</span>
                </h2>
             </div>
             <!-- Page title actions -->
@@ -26,40 +26,40 @@
                         Month
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(01))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(01))}}">
                               Januari
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(02))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(02))}}">
                               Februari
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(03))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(03))}}">
                               Maret
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(04))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(04))}}">
                               April
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(05))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(05))}}">
                               Mei
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(06))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(06))}}">
                               Juni
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(07))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(07))}}">
                               Juli
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(8))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(8))}}">
                               Agustus
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(9))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(9))}}">
                               September
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(10))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(10))}}">
                               Oktober
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(11))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(11))}}">
                               November
                            </a>
-                           <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(12))}}">
+                           <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(12))}}">
                               Desember
                            </a>
                         </div>

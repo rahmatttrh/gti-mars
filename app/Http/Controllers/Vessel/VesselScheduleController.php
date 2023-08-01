@@ -18,22 +18,90 @@ use PhpParser\Node\Expr\FuncCall;
 
 class VesselScheduleController extends Controller
 {
-   public function index()
+   public function index($month)
    {
+      $dekripMonth = dekripRambo($month);
+      // $today = Carbon::now();
+      // $month = $today->format('m');
 
-      $today = Carbon::now();
-      $month = $today->format('m');
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 1)->where('status', '!=', 11)->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
 
-      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', 2)->orWhere('status', 3)->orderBy('date', 'asc')->get();
-
-      return view('pages.schedule.index', [
+      return view('pages.schedule.vessel.index', [
          'typeName' => 'by Request',
          'type' => 2,
-         'month' => $month,
-         'monthName' => '',
+         'month' => $monthName,
+         'monthName' => $monthName,
          'schedules' => $schedules,
       ])->with('i');
    }
+
+   public function history($month)
+   {
+      $dekripMonth = dekripRambo($month);
+      // $today = Carbon::now();
+      // $month = $today->format('m');
+
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '=', 11)->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+
+      return view('pages.schedule.vessel.history', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $monthName,
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+      ])->with('i');
+   }
+
    public function accept($id)
    {
       $dekripId = dekripRambo($id);

@@ -301,7 +301,8 @@ Route::group(['middleware' => ['role:drilling|department']], function () {
 
 Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('schedule')->group(function () {
-      Route::get('vessel', [VesselScheduleController::class, 'index'])->name('schedule.vessel');
+      Route::get('vessel/{month}', [VesselScheduleController::class, 'index'])->name('schedule.vessel');
+      Route::get('vessel/history/{month}', [VesselScheduleController::class, 'history'])->name('schedule.vessel.history');
       Route::post('update/status', [VesselScheduleController::class, 'updateStatus'])->name('schedule.update.status');
       Route::get('accept/{schedule:id}', [VesselScheduleController::class, 'accept'])->name('schedule.accept');
 

@@ -217,10 +217,10 @@
                         </span>
                      </a>
                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{route('schedule.vessel')}}" >
+                        <a class="dropdown-item" href="{{route('schedule.vessel', enkripRambo(auth()->user()->getMonth()))}}" >
                            My Schedule
                         </a>
-                        <a class="dropdown-item" href="#" >
+                        <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(auth()->user()->getMonth()))}}" >
                            History
                         </a>
                      </div>
