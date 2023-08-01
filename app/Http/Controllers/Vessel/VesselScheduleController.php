@@ -24,7 +24,7 @@ class VesselScheduleController extends Controller
       $today = Carbon::now();
       $month = $today->format('m');
 
-      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', 2)->orderBy('date', 'asc')->get();
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', 2)->orWhere('status', 3)->orderBy('date', 'asc')->get();
 
       return view('pages.schedule.index', [
          'typeName' => 'by Request',
