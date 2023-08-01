@@ -37,10 +37,22 @@
                      </div>
                   </div>
                   <div class="col-md-9">
-                     <div class="form-floating mb-3">
+                     {{-- <div class="form-floating mb-3">
                         <input type="text"  class="form-control" id="unit" name="unit">
                         <label for="unit">Unit</label>
                         <small class="text-muted">example : Unit/Pallete/..</small>
+                     </div> --}}
+                     <div class="form-floating mb-3">
+                        <select required name="unit" id="unit" class="form-select">
+                           <option value="" selected disabled >Choose</option>
+                           <option value="Container">Container</option>
+                           <option value="Pallet">Pallet</option>
+                           <option value="Box">Box</option>
+                           <option value="Rack">Rack</option>
+                           <option value="Bundle">Bundle</option>
+                           <option value="Trafo">Trafo</option>
+                        </select>
+                        <label for="unit">Destination</label>
                      </div>
                   </div>
                   <div class="col-md-6">
