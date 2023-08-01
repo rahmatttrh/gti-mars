@@ -48,12 +48,12 @@
                            @endif
                         </div>
                      </td>
-                     <td class="text-muted ">
+                     <td class="text-muted  text-nowrap">
                         {{$item->desc}} 
                      </td>
                      {{-- <td class="text-muted ">{{$item->remark ?? '-'}}</td> --}}
-                     <td class="text-muted ">{{$item->contract}}</td>
-                     <td class="text-muted ">{{$item->qty}} {{$item->unit}}</td>
+                     <td class="text-muted">{{$item->contract}}</td>
+                     <td class="text-muted text-truncate" style="max-width: 75px">{{$item->qty}} {{$item->unit}}</td>
                      <td class="text-muted text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
                      {{-- <td class="text-muted text-center">
                         {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
