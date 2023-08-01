@@ -48,12 +48,14 @@
                            <option value="Container">Container</option>
                            <option value="Pallet">Pallet</option>
                            <option value="Box">Box</option>
+                           <option value="Unit">Unit</option>
                            <option value="Rack">Rack</option>
                            <option value="Bundle">Bundle</option>
                            <option value="Lot">Lot</option>
+                           <option value="Piece">Piece</option>
                            <option value="Trafo">Trafo</option>
                         </select>
-                        <label for="unit">Destination</label>
+                        <label for="unit">Unit</label>
                      </div>
                   </div>
                   <div class="col-md-6">
