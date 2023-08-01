@@ -48,7 +48,7 @@
                            @endif
                         </div>
                      </td>
-                     <td class="text-muted  text-nowrap">
+                     <td class="text-muted  ">
                         {{$item->desc}} 
                      </td>
                      {{-- <td class="text-muted ">{{$item->remark ?? '-'}}</td> --}}
