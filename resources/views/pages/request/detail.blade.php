@@ -189,8 +189,13 @@
                      
                   </div>
                </div>
+               @if ($request->type == 2)
+               <x-requests.crew :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
+                   @else
+                   <x-requests.cargo :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
 
-               <x-requests.cargo :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
+               @endif
+               
             </div>
 
 

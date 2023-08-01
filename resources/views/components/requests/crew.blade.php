@@ -4,8 +4,12 @@
          <thead>
             <tr>
                {{-- <th>No.</th> --}}
-               <th>Number</th>
+               
                <th>Name</th>
+               <th>Barcode</th>
+               <th>Department</th>
+               <th>Company</th>
+               <th>Desc</th>
                <th></th>
             </tr>
          </thead>
@@ -13,8 +17,12 @@
             @if ($passengers->count() > 0)
                @foreach ($passengers as $item)
                   <tr>
-                     <td class="text-muted">{{$item->number}}</td>
+                     
                      <td class="text-muted">{{$item->name}}</td>
+                     <td class="text-muted">{{$item->barcode}}</td>
+                     <td class="text-muted">{{$item->department}}</td>
+                     <td class="text-muted">{{$item->company}}</td>
+                     <td class="text-muted">{{$item->desc}}</td>
                      <td class="text-end">
                         @if ($request->status == 0)
                         <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$item->id}}">Delete</a>

@@ -25,8 +25,11 @@ class PassengerItemController extends Controller
       // dd($req->test);
       PassengerItem::create([
          'request_id' => $req->request_id,
-         'number' => $req->number,
-         'name' => $req->name
+         'name' => $req->name,
+         'barcode' => $req->barcode,
+         'department' => $req->department,
+         'company' => $req->company,
+         'desc' => $req->desc
       ]);
       return redirect()->back()->with('success', 'Passenger Item successfully added.');
    }

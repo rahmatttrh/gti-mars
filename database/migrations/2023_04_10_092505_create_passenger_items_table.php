@@ -16,8 +16,11 @@ class CreatePassengerItemsTable extends Migration
       Schema::create('passenger_items', function (Blueprint $table) {
          $table->id();
          $table->integer('request_id');
-         $table->string('number')->nullable();
          $table->string('name')->nullable();
+         $table->string('barcode')->nullable();
+         $table->string('department')->nullable();
+         $table->string('company')->nullable();
+         $table->string('desc')->nullable();
          $table->timestamps();
       });
    }

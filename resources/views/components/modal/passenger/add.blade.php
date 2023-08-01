@@ -11,14 +11,33 @@
             <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
             <div class="modal-body">
                <div class="form-floating mb-3">
-                  <input type="text" required class="form-control" id="number" name="number" >
-                  <label for="number">ID Number</label>
-               </div>
-               <div class="form-floating mb-3">
                   <input type="text" required class="form-control" id="name" name="name" >
                   <label for="name">Name</label>
                </div>
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="barcode" name="barcode" >
+                        <label for="barcode">Barcode</label>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="department" name="department" >
+                        <label for="department">Department</label>
+                     </div>   
+                  </div>
+               </div>
                
+               
+               <div class="form-floating mb-3">
+                  <input type="text" required class="form-control" id="company" name="company" >
+                  <label for="company">Company</label>
+               </div>
+               <div class="form-floating mb-3">
+                  <input type="text" required class="form-control" id="desc" name="desc" >
+                  <label for="desc">Description</label>
+               </div>
             </div>
             
             <div class="modal-footer">
