@@ -3,7 +3,7 @@
       <table class="table table-vcenter card-table">
          <thead>
             <tr>
-               <th>{{$request->department->name}} / {{$request->employee->name ?? ''}}</th>
+               <th>{{$request->bcm ?? '-'}} / {{$request->department->name}} / {{$request->employee->name ?? ''}} </th>
             </tr>
             <tr>
                <th>{{$request->activity->name ?? ''}} - {{$request->description}}</th>
@@ -52,8 +52,8 @@
                         {{$item->desc}} 
                      </td>
                      {{-- <td class="text-muted ">{{$item->remark ?? '-'}}</td> --}}
-                     <td class="text-muted">{{$item->contract}}</td>
-                     <td class="text-muted text-center text-nowrap">{{$item->qty}} {{$item->unit}}</td>
+                     <td class="text-muted ">{{$item->contract}}</td>
+                     <td class="text-muted text-center text-truncate">{{$item->qty}} {{$item->unit}}</td>
                      <td class="text-muted text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
                      {{-- <td class="text-muted text-center">
                         {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}

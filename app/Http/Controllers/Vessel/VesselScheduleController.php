@@ -38,6 +38,7 @@ class VesselScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      $vessel = Vessel::find($schedule->vessel_id);
       $schedule->update([
          'status' => 2
       ]);
@@ -48,6 +49,11 @@ class VesselScheduleController extends Controller
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
          'status_id' => $status->id,
+      ]);
+
+      $vessel->update([
+         'status' => 1,
+         'schedule_id' => $schedule->id
       ]);
 
       foreach ($schedule->requests as $req) {

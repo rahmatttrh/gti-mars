@@ -257,10 +257,10 @@ class MarineScheduleController extends Controller
 
 
 
-      $vessel->update([
-         'status' => 1,
-         'schedule_id' => $schedule->id
-      ]);
+      // $vessel->update([
+      //    'status' => 1,
+      //    'schedule_id' => $schedule->id
+      // ]);
 
       ReportVessel::create([
          'vessel_id' => $schedule->vessel_id,
