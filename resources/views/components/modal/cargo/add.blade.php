@@ -30,13 +30,13 @@
                   <label for="desc">Description</label>
                </div>
                <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                      <div class="form-floating mb-3">
                         <input type="number" required class="form-control" id="qty" name="qty" >
                         <label for="qty">Qty</label>
                      </div>
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-9">
                      <div class="form-floating mb-3">
                         <input type="text"  class="form-control" id="unit" name="unit">
                         <label for="unit">Unit</label>

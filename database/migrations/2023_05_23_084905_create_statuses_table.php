@@ -17,6 +17,7 @@ class CreateStatusesTable extends Migration
          $table->id();
          $table->string('name');
          $table->smallInteger('type')->nullable();
+         $table->string('code');
          $table->timestamps();
       });
    }

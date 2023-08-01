@@ -231,7 +231,9 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
    Route::prefix('schedule')->group(function () {
-      Route::get('plan', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
+      Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
+      Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
+      Route::get('history/{month}', [MarineScheduleController::class, 'history'])->name('schedule.history');
       Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');

@@ -14,8 +14,10 @@ use App\Models\Schedule;
 use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\ReportRequest;
+use App\Models\ReportVessel;
 use App\Models\Request as ModelsRequest;
 use App\Models\ScheduleRoute;
+use App\Models\Status;
 use App\Models\Type;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
@@ -23,51 +25,100 @@ use Illuminate\Support\Facades\Mail;
 
 class MarineScheduleController extends Controller
 {
-   public function plan()
+   public function plan($month)
    {
 
-      $today = Carbon::now();
-      $month = $today->format('m');
+      $dekripMonth = dekripRambo($month);
+      // $today = Carbon::now();
+      // $month = $today->format('m');
 
       if (auth()->user()->hasRole('vessel')) {
-         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->orderBy('date', 'asc')->get();
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '<', 4)->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->whereMonth('created_at', $dekripMonth)->get();
       }
 
       // $vessels = Vessel::get();
       // $ports = Port::get();
 
-      // if ($month == 1) {
-      //    $monthName = 'Januari';
-      // } elseif ($month == 2) {
-      //    $monthName = 'Februari';
-      // } elseif ($month == 3) {
-      //    $monthName = 'Maret';
-      // } elseif ($month == 4) {
-      //    $monthName = 'April';
-      // } elseif ($month == 5) {
-      //    $monthName = 'Mei';
-      // } elseif ($month == 6) {
-      //    $monthName = 'Juni';
-      // } elseif ($month == 7) {
-      //    $monthName = 'Juli';
-      // } elseif ($month == 8) {
-      //    $monthName = 'Agustus';
-      // } elseif ($month == 9) {
-      //    $monthName = 'September';
-      // } elseif ($month == 10) {
-      //    $monthName = 'Oktober';
-      // } elseif ($month == 11) {
-      //    $monthName = 'November';
-      // } elseif ($month == 12) {
-      //    $monthName = 'Desember';
-      // }
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
       return view('pages.schedule.index', [
          'typeName' => 'by Request',
          'type' => 2,
          'month' => $month,
-         'monthName' => '',
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+         // 'vessels' => $vessels,
+         // 'ports' => $ports
+      ])->with('i');
+   }
+
+   public function order($month)
+   {
+
+      $dekripMonth = dekripRambo($month);
+      // $today = Carbon::now();
+      // $month = $today->format('m');
+
+      $schedules = Schedule::orderBy('date', 'asc')->where('status', '>', 0)->where('status', '!=', 11)->whereMonth('created_at', $dekripMonth)->get();
+
+      // $vessels = Vessel::get();
+      // $ports = Port::get();
+
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+      return view('pages.schedule.order', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $monthName,
+         'monthName' => $monthName,
          'schedules' => $schedules,
          // 'vessels' => $vessels,
          // 'ports' => $ports
@@ -173,6 +224,7 @@ class MarineScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $vessel = Vessel::find($schedule->vessel_id);
+      $status = Status::where('code', '01')->first();
 
       $now = Carbon::now();
 
@@ -183,7 +235,7 @@ class MarineScheduleController extends Controller
 
          ReportRequest::create([
             'request_id' => $req->id,
-            'status_id' => 1,
+            'status_id' => $status->id,
 
          ]);
       }
@@ -207,7 +259,15 @@ class MarineScheduleController extends Controller
 
       $vessel->update([
          'status' => 1,
+         'schedule_id' => $schedule->id
       ]);
+
+      ReportVessel::create([
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => 1
+      ]);
+
+
 
       $date = Carbon::parse($schedule->date)->format('d/m/Y');
 
@@ -288,5 +348,53 @@ class MarineScheduleController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Schedule has been Postpone');
+   }
+
+   public function history($month)
+   {
+      $dekripMonth = dekripRambo($month);
+
+      // $today = Carbon::now();
+      // $month = $today->format('m');
+
+      $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 11)->whereMonth('created_at', $dekripMonth)->get();
+
+      // $vessels = Vessel::get();
+      // $ports = Port::get();
+
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+      return view('pages.schedule.history', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $monthName,
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+         // 'vessels' => $vessels,
+         // 'ports' => $ports
+      ])->with('i');
    }
 }

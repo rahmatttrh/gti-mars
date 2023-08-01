@@ -7,18 +7,58 @@
       @endforeach
    @endif
    <div class="row mt--1 row-cards">
-      <div class="col-lg-9">
+      <div class="col-lg-8">
+         @if ($vessel->schedule_id != null)
+         <div class="card mb-3">
+            <div class="card-body">
+               <div class="d-flex align-items-center">
+                  <div class="subheader">Now Sailing Order</div>
+                  <div class="ms-auto lh-1">
+                     <small>Example</small>
+                     {{-- <div class="dropdown">
+                        <a class="dropdown-toggle text-muted" href="#" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">Last 7 days</a>
+                        <div class="dropdown-menu dropdown-menu-end">
+                           <a class="dropdown-item active" href="#">Last 7 days</a>
+                           <a class="dropdown-item" href="#">Last 30 days</a>
+                           <a class="dropdown-item" href="#">Last 3 months</a>
+                        </div>
+                     </div> --}}
+                  </div>
+               </div>
+               
+               <div class="h1 mb-3">
+                  <a href="{{route('schedule.detail', enkripRambo($now->id))}}">
+                  {{$now->origin->name}}
+                              @foreach ($now->routes as  $route)
+                                 - {{$route->port->name}} 
+                              @endforeach
+                           </a>
+               </div>
+               <div class="d-flex mb-2">
+                  <div>{{\Carbon\Carbon::parse($now->date)->format('d/m/Y')}}</div>
+                  
+               </div>
+               {{-- <div class="progress progress-sm">
+                  <div class="progress-bar bg-blue" style="width: 100%" role="progressbar" aria-valuenow="75"
+                     aria-valuemin="0" aria-valuemax="100">
+                  </div>
+               </div> --}}
+            </div>
+         </div>
+         @endif
+         
          <div class="card mb-2">
             <div class="card-header border-0 bg-secondary text-white">
                <div class="card-title">
-                  SCHEDULE VESSEL 
+                  SAILING ORDERS 
                </div>
             </div>
             <div class="card-table table-responsive ">
                <table class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>
-                        <th class="text-center">No.</th>
+                        {{-- <th class="text-center">No.</th> --}}
                         <th>Date</th>
                         <th>Route</th>
                         <th>Activity</th>
@@ -30,7 +70,7 @@
                      @if ($schedules->count() > 0 )
                         @foreach ($schedules as $schedule)
                            <tr>
-                              <td class="text-muted text-center">{{++$i}}</td>
+                              {{-- <td class="text-muted text-center">{{++$i}}</td> --}}
                               <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
                               
                               <td class="text-muted">
@@ -57,27 +97,37 @@
             </div>
          </div>
       </div>
-      <div class="col-md-3">
-         {{-- <div class="card">
-            <div class="card-body">
-               <x-status.vessel :vessel="$vessel" />
+      <div class="col-md-4">
+         <div class="card mb-3" style="height: calc(18rem + 10px)">
+            <div class="card-header">
+               <div class="badge bg-primary">Timeline</div>
             </div>
-         </div> --}}
+            <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+               {{-- <div class="divide-y"> --}}
+                  @if ($reports->count() > 0)
+                     @foreach ($reports as $report)
+                     <dl class="row border-bottom">
+                        
+                        <dd class="col-10"> {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}]</dd>
+                        <dd class="col-2 text-end"><small> {{  \Carbon\Carbon::parse($report->created_at)->format('H:i ')}}</small></dd>
+                     </dl>
+                     @endforeach
+                     @else
+                     <div class="row">
+                        <div class="col">
+                           <small class="text-center text-muted">Empty</small>
+                        </div>
+                     </div>
+                  @endif
+               {{-- </div> --}}
+            </div>
+            {{-- <div class="card-footer">
+               <small>Scroll down to see more</small>
+            </div> --}}
+         </div>
          <div class="card bg-info text-white">
-            <div class="card-body p-2 text-center">
-               <div class="text-end text-green">
-                  <span class="text-white d-inline-flex align-items-center  lh-1">
-                     {{$vessel->name}}
-                     <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon ms-1" width="24" height="24"
-                        viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <polyline points="3 17 9 11 13 15 21 7" />
-                        <polyline points="14 7 21 7 21 14" />
-                     </svg>
-                  </span>
-               </div>
+            <div class="card-body p-4 text-center">
+               
                <div class="h1 m-0">{{$schedules->where('status', 11)->count()}}</div>
                <div class="text-muted mb-3 text-white">Schedule Complete</div>
             </div>

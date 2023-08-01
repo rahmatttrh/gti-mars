@@ -135,16 +135,15 @@
                      {{-- <x-status.request  :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                   </div>
                   <div class="card-body">
-
                      {{-- <h1>{{$request->code}}</h1> --}}
                      <div class="row">
                         <div class="col-md-8">
-                           <small>{{$request->code}}</small><br>
-                           <small> {{$request->department->name}} Department</small>
+                           <small>{{$request->bcm}}</small><br>
+                           {{-- <small> {{$request->department->name}} Department</small> --}}
                            <h4 class="card-title m-0 ">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</h4>
-                           <h4 class="card-title m-0 ">
+                           {{-- <h4 class="card-title m-0 ">
                               {{$request->activity->name ?? ''}}  {{$request->description}}
-                           </h4>
+                           </h4> --}}
                            <h4 class="card-title m-0 ">
                               {{$request->origin->name}} - {{$request->destination->name}}
                            </h4>
@@ -189,10 +188,8 @@
                      </div>
                      
                   </div>
-                  {{-- <div class="card-footer">
-                     
-                  </div> --}}
                </div>
+
                <x-requests.cargo :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
             </div>
 

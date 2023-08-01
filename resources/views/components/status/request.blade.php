@@ -29,7 +29,7 @@
       @elseif($request->status == 12)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div> --}}
       @elseif($request->status == 10)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>10 : Waiting Confirmation User</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>10 : User Confirmation</div>
       @elseif($request->status == 12)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>12 : Complete</div>
       @elseif($request->status == 20)

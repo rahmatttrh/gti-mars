@@ -61,6 +61,13 @@ class Request extends Model
       return $this->hasMany(ReportRequest::class);
    }
 
+   public function deflections()
+   {
+      return $this->hasMany(Deflection::class);
+   }
+
+
+
    public function getStatus()
    {
       $status = ReportRequest::where('request_id', $this->id)->orderBy('created_at', 'desc')->first();

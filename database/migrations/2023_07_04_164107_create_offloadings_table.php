@@ -15,8 +15,11 @@ class CreateOffloadingsTable extends Migration
    {
       Schema::create('offloadings', function (Blueprint $table) {
          $table->id();
-         $table->integer('cargoitem_id');
+         $table->integer('schedule_id');
+         $table->integer('request_id');
+         $table->integer('cargoitem_id')->nullable();
          $table->integer('employee_id');
+         $table->integer('deflection_id')->nullable(); 
          $table->integer('qty');
          $table->integer('offloading');
          $table->integer('onboard');

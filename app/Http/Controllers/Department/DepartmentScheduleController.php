@@ -30,30 +30,40 @@ class DepartmentScheduleController extends Controller
       // menunggu approval dari marine
       if ($draftAdditional == true) {
          $schedule->update([
-            'status' => 4
+            'status' => 2
          ]);
-
-         foreach ($schedule->requests as $req) {
-            if ($req->status == 20) {
-               $req->update([
-                  'status' => 21
-               ]);
-               ReportRequest::create([
-                  'request_id' => $req->id,
-                  'employee_id' => auth()->user()->getEmployeeId(),
-                  'status_id' => 14,
-                  'port_id' => auth()->user()->getPort()
-               ]);
-            }
-         }
 
          Report::create([
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
             'employee_id' => auth()->user()->getEmployeeId(),
-            'status_id' => 14,
+            'status_id' => 16,
             'port_id' => auth()->user()->getPort()
          ]);
+
+         foreach ($schedule->requests as $req) {
+            if ($req->status == 20) {
+               $req->update([
+                  'status' => 3
+               ]);
+
+               ReportRequest::create([
+                  'request_id' => $req->id,
+                  'employee_id' => auth()->user()->getEmployeeId(),
+                  'status_id' => 16,
+                  'port_id' => auth()->user()->getPort()
+               ]);
+            }
+
+            if ($req->destination_id == auth()->user()->getPort()) {
+               ReportRequest::create([
+                  'request_id' => $req->id,
+                  'employee_id' => auth()->user()->getEmployeeId(),
+                  'status_id' => 16,
+                  'port_id' => auth()->user()->getPort()
+               ]);
+            }
+         }
       } else {
          // jika tidak ada additional request akan merubah status schedule ke 2
          // vessel dapat melakukan update schedule
@@ -65,20 +75,20 @@ class DepartmentScheduleController extends Controller
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
             'employee_id' => auth()->user()->getEmployeeId(),
-            'status_id' => 15,
+            'status_id' => 16,
             'port_id' => auth()->user()->getPort()
          ]);
 
-         foreach ($schedule->requests as $req) {
-            if ($req->port == auth()->user()->getPort()) {
-               ReportRequest::create([
-                  'request_id' => $req->id,
-                  'employee_id' => auth()->user()->getEmployeeId(),
-                  'status_id' => 15,
-                  'port_id' => auth()->user()->getPort()
-               ]);
-            }
-         }
+         // foreach ($schedule->requests as $req) {
+         //    if ($req->port == auth()->user()->getPort()) {
+         //       ReportRequest::create([
+         //          'request_id' => $req->id,
+         //          'employee_id' => auth()->user()->getEmployeeId(),
+         //          'status_id' => 16,
+         //          'port_id' => auth()->user()->getPort()
+         //       ]);
+         //    }
+         // }
       }
 
       return redirect()->back()->with('success', 'Schedule successfully completed');

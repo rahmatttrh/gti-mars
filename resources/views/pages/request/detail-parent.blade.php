@@ -104,16 +104,26 @@
                                  </select>
                                  <label for="activity">Activity</label>
                               </div>
-                              
-                              <div class="form-floating mb-3">
-                                 <select required name="destination" id="destination" class="form-select">
-                                    <option value="" selected disabled >Choose Destination</option>
-                                    @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
-                                 </select>
-                                 <label for="destination">Destination</label>
+                              <div class="row">
+                                 <div class="col-md-5">
+                                    <div class="form-floating mb-3">
+                                       <input type="text" class="form-control" id="bcm" name="bcm" >
+                                       <label for="bcm">BCM</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-7">
+                                    <div class="form-floating mb-3">
+                                       <select required name="destination" id="destination" class="form-select">
+                                          <option value="" selected disabled >Choose</option>
+                                          @foreach ($ports as $port)
+                                             <option value="{{$port->id}}">{{$port->name}}</option>
+                                          @endforeach
+                                       </select>
+                                       <label for="destination">Destination</label>
+                                    </div>
+                                 </div>
                               </div>
+                              
                               <div class="form-floating border-bottom mb-3 pb-3">
                                  <input type="text" class="form-control" id="desc" name="desc" >
                                  <label for="desc">Description</label>
@@ -142,6 +152,7 @@
                                  <table  class="table" style="shadow-none">
                                     <thead>
                                        <tr>
+                                          <th>BCM</th>
                                           <th>Activity</th>
                                           <th>Destination</th>
                                           <th>Status</th>
@@ -150,6 +161,7 @@
                                     <tbody>
                                        @foreach ($parent->requests as $request)
                                           <tr>
+                                             <td>{{$request->bcm}}</td>
                                              <td>
                                                 <a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->activity->name}} {{$request->description}}</a>
                                                 </td>

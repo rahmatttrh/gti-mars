@@ -16,6 +16,7 @@ class CreateVesselsTable extends Migration
       Schema::create('vessels', function (Blueprint $table) {
          $table->id();
          $table->smallInteger('status')->nullable();
+         $table->integer('schedule_id')->nullable();
          $table->mediumInteger('port_id')->nullable();
          // $table->string('port')->nullable();
          $table->string('name');

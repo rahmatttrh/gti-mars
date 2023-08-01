@@ -53,7 +53,7 @@ class EmployeeSeeder extends Seeder
       ]);
       DB::table('employees')->insert([
          'department_id' => 2,
-         'port_id' => 6,
+         'port_id' => 3,
          'name' => 'Ari Pratama',
          'email' => 'ari@pertamina.com',
          'ekstensi' => '138',

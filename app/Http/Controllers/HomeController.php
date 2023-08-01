@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Deflection;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Offloading;
 use App\Models\Report;
+use App\Models\ReportVessel;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Vessel;
@@ -79,6 +82,9 @@ class HomeController extends Controller
          $customQtyRequests[] = $schedule->requests()->count();
       }
       // dd($scheduleRecents->status);
+      $reports = Report::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+      $offloadings = Offloading::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+      $deflections = Deflection::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
 
       return view('chart', [
          'monthName' => $monthName,
@@ -92,7 +98,10 @@ class HomeController extends Controller
          'requestLogistics' => $requestLogistics->count(),
          'requestDrillings' => $requestDrillings->count(),
          'persentage' => $persentage,
-         'scheduleRecents' => $scheduleRecents
+         'scheduleRecents' => $scheduleRecents,
+         'reports' => $reports,
+         'offloadings' => $offloadings,
+         'deflections' => $deflections
       ])->with('i');
    }
 
@@ -210,7 +219,9 @@ class HomeController extends Controller
          // dd(collect($customQtyRequests)->toJson());
          // dd($scheduleRecents->status);
          // dd($requestLogis->count());
-         $reports = Report::orderBy('created_at', 'desc')->get();
+         $reports = Report::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+         $offloadings = Offloading::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+         $deflections = Deflection::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
 
          return view('chart', [
             'today' => $today,
@@ -226,7 +237,9 @@ class HomeController extends Controller
             'requestDrillings' => $requestDrillings->count(),
             'persentage' => $persentage,
             'scheduleRecents' => $scheduleRecents,
-            'reports' => $reports
+            'reports' => $reports,
+            'offloadings' => $offloadings,
+            'deflections' => $deflections
          ])->with('i');
       } elseif (auth()->user()->hasRole('department')) {
          $employee = Employee::where('email', auth()->user()->email)->first();
@@ -249,12 +262,16 @@ class HomeController extends Controller
       } elseif (auth()->user()->hasRole('vessel')) {
          $vessel = Vessel::where('email', auth()->user()->email)->first();
          $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->get();
+         $nowSchedule = Schedule::find($vessel->schedule_id);
          $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
+         $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
          return view('home', [
             'today' => $today,
             'vessel' => $vessel,
             'schedules' => $schedules,
-            'recentSchedules' => $recentSchedules
+            'nowSchedule' => $nowSchedule,
+            'recentSchedules' => $recentSchedules,
+            'reports' => $reports
          ])->with('i');
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';

@@ -113,6 +113,7 @@ class DepartmentRequestController extends Controller
       $parent = ParentRequest::create([
          'status' => 0,
          'code' => $code,
+
          'origin_id' => $req->origin,
          'date' => $req->date,
          'employee_id' => $employee->id,
@@ -130,6 +131,7 @@ class DepartmentRequestController extends Controller
       $request = ModelsRequest::create([
          'parent_id' => $parent->id,
          'code' => $code,
+         'bcm' => $req->bcm,
          'type' => $type,
          'class' => 'main',
          'employee_id' => $employee->id,
@@ -199,12 +201,20 @@ class DepartmentRequestController extends Controller
          'status' => 20
       ]);
 
-      ReportRequest::create([
-         'request_id' => $request->id,
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
          'employee_id' => auth()->user()->getEmployeeId(),
-         'status_id' => 13,
+         'status_id' => 14,
          'port_id' => auth()->user()->getPort()
       ]);
+
+      // ReportRequest::create([
+      //    'request_id' => $request->id,
+      //    'employee_id' => auth()->user()->getEmployeeId(),
+      //    'status_id' => 13,
+      //    'port_id' => auth()->user()->getPort()
+      // ]);
 
       return redirect()->back()->with('success', 'Additional Request successfully added');
    }
@@ -238,10 +248,12 @@ class DepartmentRequestController extends Controller
 
       ModelsRequest::create([
          'code' => $code,
+         'bcm' => $req->bcm,
          'type' => $type,
          'parent_id' => $parent->id,
          'employee_id' => $employee->id,
          'status' => 0,
+         'class' => 'main',
          'func' => $department->code,
          'date' => $parent->date,
          'department_id' => $department->id,

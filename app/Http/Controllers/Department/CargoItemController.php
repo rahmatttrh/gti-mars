@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Models\CargoItem;
+use App\Models\Deflection;
 use App\Models\Offloading;
 use App\Models\Report;
+use App\Models\ReportRequest;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
@@ -66,7 +68,11 @@ class CargoItemController extends Controller
 
       $onboard = $qty - $offloading;
 
+
+
       $offloading = Offloading::create([
+         'schedule_id' => $schedule->id,
+         'request_id' => $request->id,
          'cargoitem_id' => $cargoItem->id,
          'employee_id' => auth()->user()->getEmployeeId(),
          'qty' => $qty,
@@ -81,13 +87,31 @@ class CargoItemController extends Controller
          // 'onboard' => $onboard
       ]);
 
-      Report::create([
-         'schedule_id' => $schedule->id,
-         'vessel_id' => $schedule->vessel_id,
-         'employee_id' => auth()->user()->getEmployeeId(),
-         'status_id' => 12,
-         'port_id' => auth()->user()->getPort()
-      ]);
+      if ($req->destination) {
+         $deflection = Deflection::create([
+            'request_id' => $request->id,
+            'cargoitem_id' => $cargoItem->id,
+            'qty' => $onboard,
+            'port_id' => $req->destination,
+            'desc' => $req->desc,
+
+         ]);
+         Report::create([
+            'schedule_id' => $schedule->id,
+            'vessel_id' => $schedule->vessel_id,
+            'employee_id' => auth()->user()->getEmployeeId(),
+            'status_id' => 17,
+            'port_id' => auth()->user()->getPort()
+         ]);
+
+         $offloading->update([
+            'deflection_id' => $deflection->id
+         ]);
+      }
+
+
+
+
 
       $con = true;
       foreach ($request->cargoItems as $item) {
@@ -95,6 +119,8 @@ class CargoItemController extends Controller
             $con = false;
          }
       }
+
+
 
       if ($con == true) {
          $request->update([
@@ -104,10 +130,23 @@ class CargoItemController extends Controller
          Report::create([
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
-            'status_id' => 9,
+            'status_id' => 13,
             'port_id' => $req->port
          ]);
+
+         ReportRequest::create([
+            'request_id' => $request->id,
+            'employee_id' => auth()->user()->getEmployeeId(),
+            'status_id' => 13,
+            'port_id' => auth()->user()->getPort()
+         ]);
       } else {
+         Report::create([
+            'schedule_id' => $schedule->id,
+            'vessel_id' => $schedule->vessel_id,
+            'status_id' => 13,
+            'port_id' => $req->port
+         ]);
       }
 
       return redirect()->back()->with('success', 'Item successfully confirmed');

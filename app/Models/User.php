@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -107,5 +108,11 @@ class User extends Authenticatable
    {
       $employee = Employee::where('email', $this->email)->first();
       return $employee->id;
+   }
+
+   public function getMonth()
+   {
+      $now = Carbon::now();
+      return $now->format('m');
    }
 }

@@ -37,7 +37,13 @@
                            </div>
                         @endif
                         <div class="row">
-                           <div class="col-md-12">
+                           <div class="col-md-4">
+                              <div class="form-floating mb-3">
+                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
+                                 <label for="bcm">BCM</label>
+                              </div>
+                           </div>
+                           <div class="col-md-8">
                               <div class="form-floating mb-3">
                                  <select name="activity" id="activity" class="form-select">
                                     <option value="" selected disabled >Choose Activity</option>

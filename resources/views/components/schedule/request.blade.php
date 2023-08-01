@@ -35,10 +35,10 @@
                      {{-- <dt class="col-2">Date</dt>
                      <dd class="col-10">: {{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</dd> --}}
                      {{-- <dt class="col-12 mb-2"><x-status.request :request="$request" /></dt> --}}
-                     <dd class="col-2">User</dd>
+                     {{-- <dd class="col-2">User</dd>
                      <dd class="col-10">: {{$request->department->name}} / {{$request->employee->name ?? ''}}</dd>
                      <dd class="col-2">Activity</dd>
-                     <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd>
+                     <dd class="col-10">: {{$request->activity->name ?? ''}} - {{$request->description}}</dd> --}}
                      
                   </dl>
 
@@ -48,10 +48,11 @@
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                      Add Cargo
                   </button>
-                  
                   @endif
                   
-
+                  <div class="table-responsive">
+                     
+                  </div>
                   @if ($request->activity->type_id == 1)
                   <x-requests.cargo :request="$request" :routes="$routes" :cargos="$request->cargoItems"  :i="0" />
                   @elseif($request->activity->type_id == 2 || $request->activity->type_id == 4 )

@@ -17,66 +17,84 @@ class StatusSeeder extends Seeder
       DB::table('statuses')->insert([
          'name' => 'Assigned',
          'type' => 1,
+         'code' => '01',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('statuses')->insert([
+         'name' => 'Accepted',
+         'type' => 2,
+         'code' => '02',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Standby',
          'type' => 1,
+         'code' => '03',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Loading Start',
          'type' => 1,
+         'code' => '04',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Loading End',
          'type' => 1,
+         'code' => '05',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Cast Off',
          'type' => 1,
+         'code' => '06',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Fullaway',
          'type' => 1,
+         'code' => '07',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Arrived',
          'type' => 1,
+         'code' => '08',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Waiting',
          'type' => 1,
+         'code' => '09',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Unloading Start',
          'type' => 1,
+         'code' => '10',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Unloading End',
          'type' => 1,
+         'code' => '11',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
          'name' => 'Task Complete',
          'type' => 1,
+         'code' => '12',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -84,6 +102,7 @@ class StatusSeeder extends Seeder
       DB::table('statuses')->insert([
          'name' => 'Confirmation Offloading',
          'type' => 2,
+         'code' => '13',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -91,6 +110,7 @@ class StatusSeeder extends Seeder
       DB::table('statuses')->insert([
          'name' => 'Add Additional Request',
          'type' => 2,
+         'code' => '14',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -98,6 +118,7 @@ class StatusSeeder extends Seeder
       DB::table('statuses')->insert([
          'name' => 'Approval Additional Request',
          'type' => 2,
+         'code' => '15',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -105,6 +126,23 @@ class StatusSeeder extends Seeder
       DB::table('statuses')->insert([
          'name' => 'Confirmation Complete',
          'type' => 2,
+         'code' => '16',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('statuses')->insert([
+         'name' => 'Add Deflection',
+         'type' => 2,
+         'code' => '17',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('statuses')->insert([
+         'name' => 'Add Deviation',
+         'type' => 2,
+         'code' => '18',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

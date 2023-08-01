@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\Deviation;
+use App\Models\Offloading;
 use App\Models\Port;
 use App\Models\Postpone;
 use App\Models\Report;
@@ -178,6 +179,8 @@ class ScheduleController extends Controller
       // dd($report);
       // dd($report->loading);
 
+      $offloadings = Offloading::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
+
       if (auth()->user()->hasRole('marine')) {
          $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
@@ -206,7 +209,8 @@ class ScheduleController extends Controller
          'iddestinations' => $iddestinations,
          'recentRequests' => $recentRequests,
          'lastPostpone' => $lastPostpone,
-         'activities' => $acts
+         'activities' => $acts,
+         'offloadings' => $offloadings
          // 'report' => $requests
       ]);
    }

@@ -16,6 +16,7 @@ class CreateDeflectionsTable extends Migration
       Schema::create('deflections', function (Blueprint $table) {
          $table->id();
          $table->integer('request_id');
+         $table->integer('cargoitem_id')->nullable();
          $table->integer('qty')->nullable();
          $table->integer('port_id');
          $table->string('desc')->nullable();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Vessel;
 use App\Http\Controllers\Controller;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
+use App\Models\Report;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -25,6 +26,13 @@ class VesselDeviationController extends Controller
       $deviationReport = DeviationReport::where('deviation_id', $deviation->id)->first();
       $deviationReport->update([
          'confirm' => $now
+      ]);
+
+      Report::create([
+         'schedule_id' => $deviation->schedule_id,
+         'vessel_id' => $deviation->schedule->vessel_id,
+         'status_id' => 18,
+         'port_id' => $deviation->port_id
       ]);
 
       return redirect()->back()->with('success', 'Deviation successfully confirmed');

@@ -7,5 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class ReportVessel extends Model
 {
-    use HasFactory;
+   use HasFactory;
+   protected $guarded = [];
+
+   public function vessel()
+   {
+      return $this->belongsTo(Vessel::class);
+   }
+
+   public function status()
+   {
+      return $this->belongsTo(Status::class);
+   }
+
+   public function port()
+   {
+      return $this->belongsTo(Port::class);
+   }
 }

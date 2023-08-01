@@ -8,7 +8,9 @@ use App\Models\DeviationReport;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\ReportRequest;
+use App\Models\ReportVessel;
 use App\Models\Schedule;
+use App\Models\Status;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -40,18 +42,25 @@ class VesselScheduleController extends Controller
          'status' => 2
       ]);
 
+      $status = Status::where('code', '02')->first();
+
       Report::create([
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
-         'status_id' => 2,
+         'status_id' => $status->id,
       ]);
 
       foreach ($schedule->requests as $req) {
          ReportRequest::create([
             'request_id' => $req->id,
-            'status_id' => 2,
+            'status_id' => $status->id,
          ]);
       }
+
+      ReportVessel::create([
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => 2
+      ]);
 
       return redirect()->back()->with('success', 'This Schedule is yours');
    }
@@ -61,27 +70,26 @@ class VesselScheduleController extends Controller
       $req->validate([]);
       // dd($req->status);
       $schedule = Schedule::find($req->schedule);
+      $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests as $request) {
 
-
-
-         if ($req->status == 8 && $request->destination_id == $req->port) {
+         if ($req->status == 9 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 10
             ]);
             ReportRequest::create([
                'request_id' => $request->id,
-               'status_id' => 12,
+               'status_id' => 13,
                'port_id' => $req->port
             ]);
-         } elseif ($req->status == 10 && $request->destination_id == $req->port) {
+         } elseif ($req->status == 11 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 12
             ]);
 
             ReportRequest::create([
                'request_id' => $request->id,
-               'status_id' => 11,
+               'status_id' => 12,
                'port_id' => $req->port
             ]);
          } else {
@@ -100,11 +108,23 @@ class VesselScheduleController extends Controller
          'port_id' => $req->port
       ]);
 
-      if ($req->status == 11) {
+      ReportVessel::create([
+         'vessel_id' => $schedule->vessel_id,
+         'port_id' => $req->port,
+         'status_id' => $req->status
+      ]);
+
+
+
+      if ($req->status == 12) {
          $schedule->update([
             'status' => 11
          ]);
-      } elseif ($req->status == 8) {
+         $vessel->update([
+            'status' => 0,
+            'schedule_id' => null
+         ]);
+      } elseif ($req->status == 9) {
          $schedule->update([
             'status' => 3
          ]);
@@ -113,7 +133,6 @@ class VesselScheduleController extends Controller
             'status' => 2
          ]);
       }
-
 
 
 

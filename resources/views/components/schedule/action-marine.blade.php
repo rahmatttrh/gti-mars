@@ -14,7 +14,7 @@
       </button>
       @endif
       
-      @elseif($schedule->status == 2)
+      @elseif($schedule->status == 2 || $schedule->status == 3)
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-add-deviation">
          Add Deviation
       </button>

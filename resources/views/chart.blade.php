@@ -102,7 +102,64 @@
          
          <div class="row row-cards">
             <div class="col-md-8">
-               <div class="card">
+               <div class="row">
+                  <div class="col">
+                     <div class="card" style="height: calc(14rem + 10px)">
+                        <div class="card-header">
+                           <div class="badge bg-info">
+                              Offloading Update
+                           </div>
+                        </div>
+                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                           <div class="divide-y">
+                              @foreach ($offloadings as $offloading)
+                                 <div>
+                                    <div class="row">
+                                       <div class="col">
+                                          <div class="">
+                                             <a href="{{route('schedule.detail', enkripRambo($offloading->request->schedule->id))}}"> {{$offloading->request->schedule->vessel->name}} </a> Dropping  <b> {{$offloading->offloading}} {{$offloading->cargoitem->unit}}  {{$offloading->cargoitem->desc}}</b> of {{$offloading->cargoitem->qty}} {{$offloading->cargoitem->unit}} in the manifest cargo  at {{$offloading->request->destination->name}} <br>
+                                             {{-- {{$offloading->deflection->id}} --}}
+                                             @if ($offloading->deflection)
+                                             Remain <b> {{$offloading->deflection->qty}} {{$offloading->cargoitem->unit}} </b>send to  {{$offloading->deflection->port->name}} {{$offloading->deflection->desc}}
+                                             @endif
+                                             
+                                          </div>
+                                          <div class="text-muted"><small>{{$offloading->updated_at->diffForHumans()}}</small></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              @endforeach
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  {{-- <div class="col">  
+                     <div class="card" style="height: calc(14rem + 10px)">
+                        <div class="card-header">
+                           <div class="badge bg-info">
+                              Deflection
+                           </div>
+                        </div>
+                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                           <div class="divide-y">
+                              @foreach ($deflections as $deflection)
+                                 <div>
+                                    <div class="row">
+                                       <div class="col">
+                                          <div class="">
+                                             <a href="{{route('schedule.detail', enkripRambo($deflection->request->schedule->id))}}">{{$deflection->request->schedule->vessel->name}} </a> Add Deflection {{$deflection->qty}} {{$deflection->cargoitem->unit}} {{$deflection->cargoitem->desc}} send to {{$deflection->port->name}}
+                                          </div>
+                                          <div class="text-muted"><small>{{$deflection->updated_at->diffForHumans()}}</small></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              @endforeach
+                           </div>
+                        </div>
+                     </div>
+                  </div> --}}
+               </div>
+               <div class="card mt-2">
                   <div class="card-header border-0">
                      <div class="card-title text-uppercase">{{$monthName}}</div>
                   </div>
@@ -156,48 +213,20 @@
             </div>
 
             <div class="col-md-4">  
-               {{-- <div class="card mb-2">
-                 <div class="card-body">
-                   <div id="chart-demo-pie"></div>
-                 </div>
-               </div> --}}
-               <div class="card" style="height: calc(24rem + 10px)">
+               <div class="card" style="height: calc(29rem + 10px)">
                   <div class="card-header">
-                     <div class="badge bg-info">
-                        Recent Update
+                     <div class="badge bg-primary">
+                        Vessel Update
                      </div>
                   </div>
                   <div class="card-body card-body-scrollable card-body-scrollable-shadow">
                      <div class="divide-y">
-                        {{-- @if ($scheduleRecents->count() > 0)
-                           @foreach ($scheduleRecents as $scherecent)
-                           <div>
-                              <div class="row">
-                                 <div class="col">
-                                    <div class="text-truncate">
-                                       <strong>{{$scherecent->vessel->name}}</strong> <x-status.schedule-plain :schedule="$scherecent" :lastreport="$schedule->lastreport()" /> 
-                                    </div>
-                                    <div class="text-muted"><small>{{$scherecent->updated_at->diffForHumans()}}</small></div>
-                                 </div>
-                              </div>
-                           </div>
-                           @endforeach
-                           @else
-                           <div>
-                              <div class="row">
-                                 <div class="col text-center">
-                                    
-                                    <div class="text-muted">Empty</div>
-                                 </div>
-                              </div>
-                           </div>
-                        @endif --}}
                         @foreach ($reports as $report)
                            <div>
                               <div class="row">
                                  <div class="col">
                                     <div class="">
-                                       <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}"><strong>{{$report->vessel->name}}</strong> </a> <br>
+                                       <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}">{{$report->vessel->name}} </a> 
                                        {{$report->status->name}} {{$report->port->name ?? ''}}
                                     </div>
                                     <div class="text-muted"><small>{{$report->updated_at->diffForHumans()}}</small></div>
@@ -205,7 +234,6 @@
                               </div>
                            </div>
                         @endforeach
-                       
                      </div>
                   </div>
                </div>

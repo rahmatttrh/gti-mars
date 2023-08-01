@@ -68,7 +68,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <x-notification.deviation :deviations="$deviations" />
-         <div class="row row-deck">
+         <div class="row ">
             <div class="col-md-8">
                <div class="card">
                   <div class="card-header bg-secondary">
@@ -159,7 +159,20 @@
                   </div>
                </div>
                {{-- <hr> --}}
-               
+               <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
+                  @if ($requests->count() > 0)
+                     <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
+                  @else
+                     <div class="card mb-2">
+                        <div class="card-body">
+                           <small class="text-muted">Empty</small>
+                        </div>
+                     </div>
+                  @endif
+
+                  @if ($deviations != null)
+                  <x-schedule.deviation :deviations="$deviations" />
+                  @endif
                
             </div>
             <div class="col-md-4">
@@ -201,47 +214,29 @@
                   </div>
                @endif
                @if ($schedule->status > 0)
-               <x-schedule.report :report="$report" :reports="$reports" />
+                  <x-schedule.report :report="$report" :reports="$reports" />
                @endif
-               
-                  {{-- <div class="card">
-                     <div class="card-header">
-                        Timeline
-                     </div>
-                     <div class="card-body">
-                        @if ($report)
-                           <x-schedule.report :report="$report" :reports="$reports" />
-                           @else
-                           <small class="text-muted">Empty</small>
-                        @endif
-                     </div>
-                  </div> --}}
-               
-               {{-- @if ($deviations != null)
-               <small class="badge badge-primary mb-2 mt-3">Deviation</small><br>
-               <x-schedule.deviation :deviations="$deviations" />
-               @endif --}}
-               
+               <x-schedule.offloading :offloadings="$offloadings" />
             </div>
 
-            <div class="row">
-               <div class="col-md-12">
+            {{-- <div class="row">
+               <div class="col-md-8">
                   <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
-               @if ($requests->count() > 0)
-                  <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
-               @else
-                  <div class="card mb-2">
-                     <div class="card-body">
-                        <small class="text-muted">Empty</small>
+                  @if ($requests->count() > 0)
+                     <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
+                  @else
+                     <div class="card mb-2">
+                        <div class="card-body">
+                           <small class="text-muted">Empty</small>
+                        </div>
                      </div>
-                  </div>
-               @endif
+                  @endif
 
-               @if ($deviations != null)
-               <x-schedule.deviation :deviations="$deviations" />
-               @endif
+                  @if ($deviations != null)
+                  <x-schedule.deviation :deviations="$deviations" />
+                  @endif
                </div>
-            </div>
+            </div> --}}
          </div>
          
          
