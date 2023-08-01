@@ -50,6 +50,7 @@
                            <option value="Box">Box</option>
                            <option value="Rack">Rack</option>
                            <option value="Bundle">Bundle</option>
+                           <option value="Lot">Lot</option>
                            <option value="Trafo">Trafo</option>
                         </select>
                         <label for="unit">Destination</label>
