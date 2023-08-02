@@ -66,76 +66,147 @@
             </div>
             <h4 class="">ACTIVITIES</h4>
             @foreach ($schedule->requests as $req)
-               <div>
-                  @if ($req->status == 12)
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
-                  </svg>
-                  @else
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
-                  </svg>
-                  @endif
-                  
-                  {{$req->activity->name}} {{$req->description}}
+               @if ($req->type == 1)
+                  <div>
+                     @if ($req->status == 12)
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                     </svg>
+                     @else
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                        <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                     </svg>
+                     @endif
+                     
+                     {{$req->activity->name}} {{$req->description}}
 
-               </div>
-               <table class="table table-transparent table-responsive">
-                  <thead>
+                  </div>
+                  <table class="table table-transparent table-responsive">
+                     <thead>
+                        <tr>
+                           {{-- <th class="text-center" style="width: 1%"></th> --}}
+                           
+                           <th>Description</th>
+                           <th>Doc Number</th>
+                           
+                           <th class="text-center" style="width: 1%">Qnt</th>
+                           <th class="text-end" style="width: 1%">Unit</th>
+                           <th class="text-center" style="width: 10%">Size (m<sup>2</sup>)</th>
+                           <th class="text-center" style="width: 10%">Weight (ton)</th>
+                           
+                        </tr>
+                     </thead>
+                     @foreach ($req->cargoItems as $cargo)
                      <tr>
-                        {{-- <th class="text-center" style="width: 1%"></th> --}}
-                        
-                        <th>Description</th>
-                        <th>Doc Number</th>
-                        
-                        <th class="text-center" style="width: 1%">Qnt</th>
-                        <th class="text-end" style="width: 1%">Unit</th>
-                        <th class="text-center" style="width: 10%">Size (m<sup>2</sup>)</th>
-                        <th class="text-center" style="width: 10%">Weight (ton)</th>
-                        
+                        {{-- <td class="text-center">{{++$i}}</td> --}}
+                        <td>
+                           <p class="strong mb-1">{{$cargo->desc}}</p>
+                           <small>{{$cargo->remark}}</small>
+                        </td>
+                        <td>
+                           <p class="strong mb-1">{{$cargo->no_doc}}</p>
+                        </td>
+                        <td class="text-center">
+                           {{$cargo->qty}}
+                        </td>
+                        <td class="text-end">{{$cargo->unit}}</td>
+                        <td class="text-center">
+                           {{$cargo->size}}
+                        </td>
+                        <td class="text-center">
+                           {{$cargo->weight}}
+                        </td>
                      </tr>
-                  </thead>
-                  @foreach ($req->cargoItems as $cargo)
-                  <tr>
-                     {{-- <td class="text-center">{{++$i}}</td> --}}
-                     <td>
-                        <p class="strong mb-1">{{$cargo->desc}}</p>
-                        <small>{{$cargo->remark}}</small>
-                     </td>
-                     <td>
-                        <p class="strong mb-1">{{$cargo->no_doc}}</p>
-                     </td>
-                     <td class="text-center">
-                        {{$cargo->qty}}
-                     </td>
-                     <td class="text-end">{{$cargo->unit}}</td>
-                     <td class="text-center">
-                        {{$cargo->size}}
-                     </td>
-                     <td class="text-center">
-                        {{$cargo->weight}}
-                     </td>
-                  </tr>
-                  @endforeach
-                  <tr>
-                     <td colspan="4" class="text-end strong">Total</td>
-                     <td class="text-center">
-                        {{$req->cargoItems->sum('size')}}
-                     </td>
-                     <td class="text-center">
-                        {{$req->cargoItems->sum('weight')}}
-                     </td>
-                  </tr>
-               </table>
+                     @endforeach
+                     <tr>
+                        <td colspan="4" class="text-end strong">Total</td>
+                        <td class="text-center">
+                           {{$req->cargoItems->sum('size')}}
+                        </td>
+                        <td class="text-center">
+                           {{$req->cargoItems->sum('weight')}}
+                        </td>
+                     </tr>
+                  </table>
+                  @elseif($req->type == 2)
+
+                     <div>
+                        @if ($req->status == 12)
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                           <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                        </svg>
+                        @else
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                           <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                           <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                        </svg>
+                        @endif
+                        
+                        {{$req->activity->name}} {{$req->description}}
+      
+                     </div>
+                     
+                     <small class="badge badge-info mt-3">Depart</small>
+                     <table class="table table-transparent table-responsive">
+                        <thead>
+                           <tr>
+                              <th>Name</th>
+                              <th>Barcode</th>
+                              <th>Department</th>
+                              <th>Company</th>
+                              <th>Desc</th>
+                           </tr>
+                        </thead>
+                        @foreach ($req->passengerItems->where('type', 'Depart') as $item)
+                        <tr>
+                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td>
+                              <p class="strong mb-1">{{$item->name}}</p>
+                           </td>
+                           <td>{{$item->barcode}}</td>
+                           <td>{{$item->department}}</td>
+                           <td>{{$item->company}}</td>
+                           <td>{{$item->desc}}</td>
+                        </tr>
+                        @endforeach
+                        
+                     </table>
+                     <small class="badge bg-danger mt-3">Return</small>
+                     <table class="table table-transparent table-responsive">
+                        <thead>
+                           <tr>
+                              <th>Name</th>
+                              <th>Barcode</th>
+                              <th>Department</th>
+                              <th>Company</th>
+                              <th>Desc</th>
+                           </tr>
+                        </thead>
+                        @foreach ($req->passengerItems->where('type', 'Return') as $item)
+                        <tr>
+                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td>
+                              <p class="strong mb-1">{{$item->name}}</p>
+                           </td>
+                           <td>{{$item->barcode}}</td>
+                           <td>{{$item->department}}</td>
+                           <td>{{$item->company}}</td>
+                           <td>{{$item->desc}}</td>
+                        </tr>
+                        @endforeach
+                        
+                     </table>
+               @endif
             @endforeach
             
-            <table class="table table-transparent table-responsive">
+
+            
+            {{-- <table class="table table-transparent table-responsive">
                <thead>
                   <tr>
-                     {{-- <th class="text-center" style="width: 1%"></th> --}}
-                     
                      <th></th>
                      <th></th>
                      
@@ -155,7 +226,7 @@
                      {{$schedule->total_weight}}
                   </td>
                </tr>
-            </table>
+            </table> --}}
             
             
             <p class="text-muted text-center mt-5">Thank you very much for doing business with us. We look forward to working with

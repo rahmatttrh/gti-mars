@@ -56,7 +56,7 @@
                   @if ($request->activity->type_id == 1)
                   <x-requests.cargo :request="$request" :routes="$routes" :cargos="$request->cargoItems"  :i="0" />
                   @elseif($request->activity->type_id == 2 || $request->activity->type_id == 4 )
-                  <x-requests.crew :request="$request" :passengers="$request->passengerItems" :i="0" />
+                  <x-requests.crew :request="$request" :departs="$request->passengerItems->where('type', 'Depart')"  :returns="$request->passengerItems->where('type', 'Return')" :i="0" />
                   @endif
                      {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                   <div class="mt-2 mb-2">
