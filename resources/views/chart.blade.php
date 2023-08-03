@@ -229,7 +229,7 @@
                                        <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}">{{$report->vessel->name}} </a> 
                                        {{$report->status->name}} {{$report->port->name ?? ''}}
                                     </div>
-                                    <div class="text-muted"><small>{{$report->updated_at->diffForHumans()}}</small></div>
+                                    <div class="text-muted"><small>{{$report->updated_at->format('d-m-y H:i ')}}</small></div>
                                  </div>
                               </div>
                            </div>

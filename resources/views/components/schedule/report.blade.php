@@ -15,8 +15,10 @@
             @foreach ($reports as $report)
             <dl class="row border-bottom">
                
-               <dd class="col-10"> {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}]</dd>
-               <dd class="col-2 text-end"><small> {{  \Carbon\Carbon::parse($report->created_at)->format('H:i ')}}</small></dd>
+               <dd class="col-12"> {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}] <br>
+                  <small> {{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small>
+               </dd>
+               {{-- <dd class="col-2 text-end"><small> {{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small></dd> --}}
             </dl>
             @endforeach
             @else
