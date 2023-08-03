@@ -224,6 +224,8 @@ class RequestController extends Controller
       $schedules = Schedule::where('origin_id', $request->origin_id)->where('status', 0)->get();
       $routes = ScheduleRoute::where('schedule_id', $request->schedule_id)->get();
 
+      $passengerItems = PassengerItem::where('request_id', $request->id)->get();
+
       $departPassengerItems = PassengerItem::where('type', 'Depart')->where('request_id', $request->id)->get();
       $returnPassengerItems = PassengerItem::where('type', 'Return')->where('request_id', $request->id)->get();
 
@@ -234,6 +236,7 @@ class RequestController extends Controller
          'cargoItems' => $cargoItems,
          'departPassengerItems' => $departPassengerItems,
          'returnPassengerItems' => $returnPassengerItems,
+         'passengerItems' => $passengerItems,
          'routes' => $routes
       ])->with('i');
    }
