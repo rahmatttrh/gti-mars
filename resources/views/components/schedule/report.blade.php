@@ -5,7 +5,7 @@
    @endforeach
 </dl> --}}
 
-<div class="card" style="height: calc(11rem + 10px)">
+<div class="card mt-2" style="height: calc(11rem + 10px)">
    <div class="card-header">
       <div class="badge bg-primary">Timeline</div>
    </div>

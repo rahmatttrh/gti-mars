@@ -45,23 +45,47 @@ class MarineRequestController extends Controller
       $weight = $schedule->total_weight + $request->total_weight;
       $size = $schedule->total_size + $request->total_size;
 
+      $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      dd($lastScheduleRoutes->rank);
+
       if ($weight > $vessel->deadweight) {
          return redirect()->back()->with('warning', 'Failed, Total Weight (' . $request->total_weight  .  ' ton) melebihi Deadweight Vessel (' . $schedule->total_weight  . 'ton /' . $vessel->deadweight . ' ton)');
       } elseif ($size > $vessel->deckspace) {
          return redirect()->back()->with('warning', 'Failed, Total Size (' . $request->total_size  .  ') melebihi Deck Space Vessel (' . $schedule->total_size  . ' /' . $vessel->deckspace . ')');
       } else {
 
-         $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
-         if ($route) {
-            // dd('sudah ada');
+         $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+         // dd($scheduleRoutes != null);
+
+         if ($scheduleRoutes->count() > 0) {
+            // dd('ada');
+            $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+            $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
+            if ($route) {
+               // dd('sudah ada');
+            } else {
+               // dd('ok');
+               ScheduleRoute::create([
+                  'schedule_id' => $schedule->id,
+                  'port_id' => $request->destination_id,
+                  'rank' => $lastScheduleRoutes->rank + 1
+               ]);
+            }
          } else {
-            // dd('ok');
-            ScheduleRoute::create([
-               'schedule_id' => $schedule->id,
-               'port_id' => $request->destination_id,
-               'rank' => 1
-            ]);
+            // dd('tidak ada');
+            $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
+            if ($route) {
+               // dd('sudah ada');
+            } else {
+               // dd('ok');
+               ScheduleRoute::create([
+                  'schedule_id' => $schedule->id,
+                  'port_id' => $request->destination_id,
+                  'rank' => 1
+               ]);
+            }
          }
+
 
 
          $request->update([

@@ -133,6 +133,7 @@ class ScheduleController extends Controller
 
       $statuses = Status::where('type', 1)->get();
       $ports = Port::get();
+      $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
@@ -210,7 +211,8 @@ class ScheduleController extends Controller
          'recentRequests' => $recentRequests,
          'lastPostpone' => $lastPostpone,
          'activities' => $acts,
-         'offloadings' => $offloadings
+         'offloadings' => $offloadings,
+         'scheduleRoutes' => $scheduleRoutes
          // 'report' => $requests
       ]);
    }

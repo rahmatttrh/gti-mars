@@ -269,7 +269,7 @@
    <x-modal.schedule.departure :schedule="$schedule" /> --}}
    {{-- <x-modal.schedule.arrived :schedule="$schedule"/> --}}
 
-   <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports"/>
+   <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes"/>
    
 
 @endsection

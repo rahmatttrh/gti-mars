@@ -327,6 +327,11 @@ class MarineScheduleController extends Controller
          $route->delete();
       }
 
+      $schedule->update([
+         'total_size' => null,
+         'total_weight' => null
+      ]);
+
       return redirect()->back()->with('success', 'Schedule Route successfully reseted');
    }
 
