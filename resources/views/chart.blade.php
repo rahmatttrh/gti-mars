@@ -124,7 +124,7 @@
                                              @endif
                                              
                                           </div>
-                                          <div class="text-muted"><small>{{$offloading->updated_at->diffForHumans()}}</small></div>
+                                          <div class="text-muted"><small>{{$offloading->updated_at->format('d-m-y H:i ')}}</small></div>
                                        </div>
                                     </div>
                                  </div>
