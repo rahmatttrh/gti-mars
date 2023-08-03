@@ -157,6 +157,8 @@ class DepartmentRequestController extends Controller
          // 'activity' => 'required',
       ]);
 
+      // dd($req->date);
+
       $date = Carbon::today();
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);

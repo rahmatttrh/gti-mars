@@ -168,7 +168,7 @@
                         <div class="row g-2">
                            <div class="col">
                               <div>{{$totalSchedule}} Schedules</div>
-                              <div>{{$totalRequest}} Activity</div>
+                              <div>{{$totalRequest}} Main Request</div>
                            </div>
                         </div>
                      </div>

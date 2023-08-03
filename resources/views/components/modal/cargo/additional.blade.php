@@ -9,6 +9,7 @@
             @csrf
 
             <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+            {{-- <input type="date" name="date" id="date" value="NOW()" hidden> --}}
             <div class="modal-body">
                <div class="form-floating mb-3">
                   <select required name="destination" id="destination" class="form-select">
