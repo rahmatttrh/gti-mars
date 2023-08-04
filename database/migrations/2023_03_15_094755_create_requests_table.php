@@ -15,6 +15,7 @@ class CreateRequestsTable extends Migration
    {
       Schema::create('requests', function (Blueprint $table) {
          $table->id();
+         $table->integer('rank')->nullable();
          $table->mediumInteger('parent_id')->nullable();
          $table->string('code');
          $table->string('bcm')->nullable();

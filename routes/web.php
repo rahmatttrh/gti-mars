@@ -253,7 +253,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
    });
    Route::prefix('deviation')->group(function () {
-      Route::post('add', [MarineDeviationController::class, 'add'])->name('schedule.add.deviation');
+      Route::post('add', [MarineDeviationController::class, 'store'])->name('schedule.add.deviation');
       Route::get('delete/{deviation:id}', [MarineDeviationController::class, 'delete'])->name('schedule.delete.deviation');
    });
 });

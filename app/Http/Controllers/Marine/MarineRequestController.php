@@ -45,8 +45,8 @@ class MarineRequestController extends Controller
       $weight = $schedule->total_weight + $request->total_weight;
       $size = $schedule->total_size + $request->total_size;
 
-      $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
-      dd($lastScheduleRoutes->rank);
+      // $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      // dd($lastScheduleRoutes->rank);
 
       if ($weight > $vessel->deadweight) {
          return redirect()->back()->with('warning', 'Failed, Total Weight (' . $request->total_weight  .  ' ton) melebihi Deadweight Vessel (' . $schedule->total_weight  . 'ton /' . $vessel->deadweight . ' ton)');
@@ -63,11 +63,18 @@ class MarineRequestController extends Controller
             $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
             if ($route) {
                // dd('sudah ada');
+               $request->update([
+                  'rank' => $route->rank
+               ]);
             } else {
                // dd('ok');
                ScheduleRoute::create([
                   'schedule_id' => $schedule->id,
+                  'request_id' => $request->id,
                   'port_id' => $request->destination_id,
+                  'rank' => $lastScheduleRoutes->rank + 1
+               ]);
+               $request->update([
                   'rank' => $lastScheduleRoutes->rank + 1
                ]);
             }
@@ -80,10 +87,15 @@ class MarineRequestController extends Controller
                // dd('ok');
                ScheduleRoute::create([
                   'schedule_id' => $schedule->id,
+                  'request_id' => $request->id,
                   'port_id' => $request->destination_id,
                   'rank' => 1
                ]);
             }
+
+            $request->update([
+               'rank' => 1
+            ]);
          }
 
 

@@ -5,7 +5,7 @@
    @endforeach
 </dl> --}}
 
-<div class="card mt-2" style="height: calc(25rem + 10px)">
+<div class="card mt-3" style="height: calc(25rem + 10px)">
    <div class="card-header">
       <div class="badge bg-info">Offloading Update</div>
    </div>

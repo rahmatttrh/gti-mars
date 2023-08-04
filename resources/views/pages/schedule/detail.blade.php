@@ -93,15 +93,15 @@
                            
                            <div class="text-muted mt-3"> 
                               @if ($lastPostpone)
-                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/Y')}} Postpone to
+                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/y')}} Postpone to
                               @endif
-                              <b>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</b>
+                              <b>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}} {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</b>
                               @if ($lastPostpone)
                                  <br><small>{{$lastPostpone->reason}}</small>
                               @endif
                            </div>
                            
-                           <div class="text-muted mb-2 mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div>
+                           {{-- <div class="text-muted mb-2 mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div> --}}
                         </div>
                         <div class="col-md-4">
                            <div class="card bg-info text-white ">
@@ -244,9 +244,9 @@
       </div>
    </div>
 
-   @if (auth()->user()->hasRole('department'))
+   {{-- @if (auth()->user()->hasRole('department')) --}}
    <x-modal.cargo.additional :schedule="$schedule" :routes="$routes" :activities="$activities"/>
-   @endif
+   {{-- @endif --}}
   
    <x-modal.schedule.accept :schedule="$schedule" />
    <x-modal.schedule.postpone :schedule="$schedule" />
@@ -269,8 +269,8 @@
    <x-modal.schedule.departure :schedule="$schedule" /> --}}
    {{-- <x-modal.schedule.arrived :schedule="$schedule"/> --}}
 
-   <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes"/>
-   
+   <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
+
 
 @endsection
 

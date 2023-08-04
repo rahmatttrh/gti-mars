@@ -318,7 +318,8 @@ class MarineScheduleController extends Controller
       foreach ($requests as $request) {
          $request->update([
             'status' => 1,
-            'schedule_id' => null
+            'schedule_id' => null,
+            'rank' => null
          ]);
       }
 

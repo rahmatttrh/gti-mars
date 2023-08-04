@@ -22,8 +22,12 @@
                    <span class="ml-4"> &nbsp; &nbsp;{{$request->origin->name}} - {{$request->destination->name}}</span> 
                   @if ($request->class == 'additional')
                   &nbsp;&nbsp;<div class="badge bg-warning">Additional</div>
+                  @elseif($request->class == 'deviation')
+                  &nbsp;&nbsp;<div class="badge bg-warning">Deviation</div>
                   @endif
-                   
+                  <br>
+                  
+                   {{$request->rank}}
                </button>
             </h2>
             <div id="collapse-{{$request->id}}" class="accordion-collapse "
@@ -42,11 +46,18 @@
                      
                   </dl>
 
-                  @if ($request->class == 'additional' && $request->status == 20)
-                  <button class="btn btn-primary btn-sm mb-2" data-bs-toggle="modal" data-bs-target="#addCargoItem-{{$request->id}}">
+                  @if ( $request->status == 20)
+                  <button class="btn btn-primary  mb-2" data-bs-toggle="modal" data-bs-target="#addCargoItem-{{$request->id}}">
                      <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
                      Add Cargo
+                  </button>
+                  @endif
+                  @if ( $request->status == 20 && $request->class == 'deviation')
+                  <button class="btn btn-primary  mb-2" data-bs-toggle="modal" data-bs-target="#modal-send-deviation-{{$request->id}}">
+                     <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
+                     Send
                   </button>
                   @endif
                   
@@ -72,6 +83,7 @@
       </div>
 
       <x-modal.schedule.remove-request :request="$request" />
+      <x-modal.schedule.send-deviation :request="$request" />
       <x-modal.cargo.add :request="$request" />
    @endforeach
 </span>

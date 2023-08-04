@@ -12,12 +12,12 @@
                <div class="row">
                   <div class="col">
                      <div class="form-floating mb-3">
-                        <select required name="port" id="port" class="form-select">
+                        <select required name="from" id="from" class="form-select">
                            @foreach ($routes as $route)
                               <option value="{{$route->port_id}}">{{$route->port->name}}</option>
                            @endforeach
                         </select>
-                        <label for="port">After From</label>
+                        <label for="from">After From</label>
                      </div>
                   </div>
                   <div class="col">
@@ -39,6 +39,15 @@
                   </select>
                   <label for="port">Destination</label>
                </div> --}}
+               <div class="form-floating mb-3">
+                  <select name="activity" required id="activity" class="form-select">
+                     <option value="" selected disabled >Choose Activity</option>
+                     @foreach ($activities as $activity)
+                        <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
+                     @endforeach
+                  </select>
+                  <label for="activity">Activity</label>
+               </div>
                <div class="form-floating mb-3">
                   <input type="text"  class="form-control" id="desc" name="desc">
                   <label for="desc">Description</label>

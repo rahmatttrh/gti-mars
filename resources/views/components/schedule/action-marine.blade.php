@@ -1,4 +1,7 @@
 <span>
+   {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#additionalCargo">
+      Add Additional Cargo
+   </button> --}}
    @if ($schedule->status == 0 )
       @if ($schedule->requests()->count() > 0)
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-send">

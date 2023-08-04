@@ -16,6 +16,7 @@ class CreateScheduleRoutesTable extends Migration
       Schema::create('schedule_routes', function (Blueprint $table) {
          $table->id();
          $table->mediumInteger('schedule_id');
+         $table->integer('request_id');
          $table->mediumInteger('port_id');
          $table->smallInteger('rank');
          $table->timestamps();

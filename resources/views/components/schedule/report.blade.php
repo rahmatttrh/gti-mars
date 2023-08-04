@@ -5,21 +5,28 @@
    @endforeach
 </dl> --}}
 
-<div class="card mt-2" style="height: calc(11rem + 10px)">
+<div class="card" style="height: calc(16rem + 10px)">
    <div class="card-header">
       <div class="badge bg-primary">Timeline</div>
    </div>
    <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-      {{-- <div class="divide-y"> --}}
+      <div class="divide-y">
          @if ($reports->count() > 0)
             @foreach ($reports as $report)
-            <dl class="row border-bottom">
+            {{-- <dl class="row border-bottom">
                
                <dd class="col-12"> {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}] <br>
                   <small> {{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small>
                </dd>
-               {{-- <dd class="col-2 text-end"><small> {{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small></dd> --}}
-            </dl>
+            </dl> --}}
+            <div class="row">
+               <div class="col">
+                  <div class="">
+                     {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}]
+                  </div>
+                  <div class="text-muted"><small>{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small></div>
+               </div>
+            </div>
             @endforeach
             @else
             <div class="row">
@@ -28,7 +35,7 @@
                </div>
             </div>
          @endif
-      {{-- </div> --}}
+      </div>
    </div>
    {{-- <div class="card-footer">
       <small>Scroll down to see more</small>

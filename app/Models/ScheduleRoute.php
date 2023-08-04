@@ -15,6 +15,11 @@ class ScheduleRoute extends Model
       return $this->belongsTo(Schedule::class);
    }
 
+   public function request()
+   {
+      return $this->belongsTo(Request::class);
+   }
+
    public function port()
    {
       return $this->belongsTo(Port::class);

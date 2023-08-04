@@ -128,14 +128,14 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('destination_id', 'desc')->orderBy('updated_at', 'asc')->get();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
       $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
 
       $statuses = Status::where('type', 1)->get();
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
-      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
       // dd($lastPostpone->to);
 
