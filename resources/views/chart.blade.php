@@ -99,6 +99,14 @@
             You have {{$requestRecents->count()}} Request Activity. Click <a href="{{route('request')}}" class="alert-link">here</a> to check.
           </div>
          @endif
+
+         @if ($requestAdditionals->count() > 0)
+            @foreach ($requestAdditionals as $request)
+               <div class="alert alert-primary" role="alert">
+                  You have a Additional Request at Schedule of {{$request->schedule->vessel->name}}. Click <a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}" class="alert-link">here</a> to see detail.
+               </div>
+            @endforeach
+         @endif
          
          <div class="row row-cards">
             <div class="col-md-8">

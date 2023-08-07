@@ -54,21 +54,26 @@ class MarineDeviationController extends Controller
          'origin_id' => $req->from,
          'destination_id' => $req->port,
          'destination_name' => $destination->name,
-         'status' => 20
+         'status' => 2
       ]);
 
 
       $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+
+      // Cek apakah destinasi yg dipilih sudah ada di rute awal
       $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->port)->first();
 
 
       if ($route) {
+         // Jika sudah ada, maka masukan rank yang sudah ada
          // dd('sudah ada');
          $request->update([
             'rank' => $route->rank
          ]);
       } else {
+         // Jika belum ada
 
+         
          $fromScheduleRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->from)->first();
          // dd($fromScheduleRoute->rank);
          $remainScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
@@ -112,6 +117,18 @@ class MarineDeviationController extends Controller
       // ]);
 
       return redirect()->back()->with('success', 'Deviation successfully added to Schedule');
+   }
+
+   public function send($id)
+   {
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $request->update([
+         'status' => 3
+      ]);
+
+      return redirect()->back()->with('success', 'Deviation successfully send to Vessel');
    }
 
    public function storeA(Request $req)

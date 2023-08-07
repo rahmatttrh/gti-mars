@@ -200,7 +200,7 @@ class DepartmentRequestController extends Controller
          'origin_id' => $origin->id,
          'destination_id' => $destination->id,
          'destination_name' => $destination->name,
-         'status' => 20
+         'status' => 2
       ]);
 
       Report::create([

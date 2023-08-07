@@ -128,12 +128,12 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
+
       $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
 
       $statuses = Status::where('type', 1)->get();
       $ports = Port::get();
-      $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
@@ -153,6 +153,14 @@ class ScheduleController extends Controller
          }
       }
       $activities = $acts;
+
+      if (auth()->user()->hasRole('marine')) {
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
+      } elseif (auth()->user()->hasRole('department')) {
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>', 3)->orWhere('class', 'additional')->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
+      } else {
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>', 3)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+      }
 
 
       foreach ($routes as $route) {
@@ -183,9 +191,9 @@ class ScheduleController extends Controller
       $offloadings = Offloading::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
 
       if (auth()->user()->hasRole('marine')) {
-         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
+         $deviations = ModelsRequest::where('class', 'deviation')->where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
       } elseif (auth()->user()->hasRole('vessel')) {
-         $deviations = Deviation::where('schedule_id', $schedule->id)->where('status', '>=', 0)->get();
+         $deviations = ModelsRequest::where('class', 'deviation')->where('schedule_id', $schedule->id)->where('status', '>', 0)->get();
       } else {
          $deviations = null;
       }

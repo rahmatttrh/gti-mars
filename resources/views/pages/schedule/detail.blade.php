@@ -67,7 +67,7 @@
    </div>
    <div class="page-body" >
       <div class="container-xl">
-         <x-notification.deviation :deviations="$deviations" />
+         <x-notification.deviation :deviations="$deviations" :schedule="$schedule" />
          <div class="row ">
             <div class="col-md-8">
                <div class="card">
@@ -163,17 +163,17 @@
                <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
                   @if ($requests->count() > 0)
                      <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
-                  @else
-                     <div class="card mb-2">
-                        <div class="card-body">
-                           <small class="text-muted">Empty</small>
+                     @else
+                        <div class="card mb-2">
+                           <div class="card-body">
+                              <small class="text-muted">Empty</small>
+                           </div>
                         </div>
-                     </div>
                   @endif
-
-                  @if ($deviations != null)
-                  <x-schedule.deviation :deviations="$deviations" />
-                  @endif
+{{-- 
+                  @if ($schedule->requests->where('class', 'deviation') != null)
+                  <x-schedule.deviation :deviations="$schedule->requests->where('class', 'deviation')" />
+                  @endif --}}
                
             </div>
             <div class="col-md-4">
@@ -270,6 +270,7 @@
    {{-- <x-modal.schedule.arrived :schedule="$schedule"/> --}}
 
    <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
+   <x-modal.schedule.add-additional :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
 
 
 @endsection

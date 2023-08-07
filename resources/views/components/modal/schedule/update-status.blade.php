@@ -19,7 +19,12 @@
                            @foreach ($statuses as $status)
                               @if ($status->id == 1)
                                   @else
-                                  <option value="{{$status->id}}">{{$status->name}}</option> 
+                                    @if ($status->code == '09' || $status->code == '11' || $status->code == '12')
+                                       <option value="{{$status->id}}">{{$status->name}} *</option>
+                                       @else
+                                       <option value="{{$status->id}}">{{$status->name}} </option>
+                                       @endif
+                                   
                               @endif
                                
                            @endforeach
@@ -46,6 +51,12 @@
                      </div>
                   </div>
                </div>
+               {{-- <hr> --}}
+               <small>
+                  <span class="text-info">Waiting</span> to Handover sailing order to user on location  <br>
+                  <span class="text-info">Unloading</span> to Finish activity on location <br>
+                  <span class="text-info">Task Complete</span> to Finish all activity in this Sailing Order
+               </small>
                
                
             </div>

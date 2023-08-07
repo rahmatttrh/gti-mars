@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\Department\CargoItemController;
+use App\Http\Controllers\Department\DepartmentAdditionalController;
 use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
@@ -17,6 +18,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\Marine\MarineAdditionalController;
 use App\Http\Controllers\Marine\MarineDeviationController;
 use App\Http\Controllers\Marine\MarineRequestController;
 use App\Http\Controllers\Marine\MarineScheduleController;
@@ -253,7 +255,14 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
    });
    Route::prefix('deviation')->group(function () {
+      Route::get('send/{request:id}', [MarineDeviationController::class, 'send'])->name('schedule.send.deviation');
       Route::post('add', [MarineDeviationController::class, 'store'])->name('schedule.add.deviation');
+      Route::get('delete/{deviation:id}', [MarineDeviationController::class, 'delete'])->name('schedule.delete.deviation');
+   });
+
+   Route::prefix('additional')->group(function () {
+      Route::post('approve', [MarineAdditionalController::class, 'approve'])->name('schedule.approve.additional');
+      Route::post('reject', [MarineAdditionalController::class, 'reject'])->name('schedule.reject.additional');
       Route::get('delete/{deviation:id}', [MarineDeviationController::class, 'delete'])->name('schedule.delete.deviation');
    });
 });
@@ -281,10 +290,12 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
 
    Route::prefix('schedule')->group(function () {
       Route::get('complete/{schedule:id}', [DepartmentScheduleController::class, 'complete'])->name('schedule.complete');
+      Route::post('additional/store', [DepartmentAdditionalController::class, 'store'])->name('schedule.add.additional');
+      Route::get('additional/send/{request:id}', [DepartmentAdditionalController::class, 'send'])->name('schedule.send.additional');
    });
 });
 
-Route::group(['middleware' => ['role:logistic|department']], function () {
+Route::group(['middleware' => ['role:logistic|department|marine']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');

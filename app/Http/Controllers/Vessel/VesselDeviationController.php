@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
 use App\Models\Report;
+use App\Models\ReportRequest;
+use App\Models\Request as ModelsRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -15,24 +17,30 @@ class VesselDeviationController extends Controller
    {
       $dekripId = dekripRambo($id);
 
-      $deviation = Deviation::find($dekripId);
+      $request = ModelsRequest::find($dekripId);
       // dd($deviation);
       $now = Carbon::now();
 
-      $deviation->update([
-         'status' => 1,
+      $request->update([
+         'status' => 4,
       ]);
 
-      $deviationReport = DeviationReport::where('deviation_id', $deviation->id)->first();
-      $deviationReport->update([
-         'confirm' => $now
+      // $deviationReport = DeviationReport::where('deviation_id', $deviation->id)->first();
+      // $deviationReport->update([
+      //    'confirm' => $now
+      // ]);
+
+      ReportRequest::create([
+         'request_id' => $request->id,
+         'status_id' => 2,
+
       ]);
 
       Report::create([
-         'schedule_id' => $deviation->schedule_id,
-         'vessel_id' => $deviation->schedule->vessel_id,
-         'status_id' => 18,
-         'port_id' => $deviation->port_id
+         'schedule_id' => $request->schedule_id,
+         'vessel_id' => $request->schedule->vessel_id,
+         'status_id' => 19,
+         'port_id' => $request->destination_id
       ]);
 
       return redirect()->back()->with('success', 'Deviation successfully confirmed');

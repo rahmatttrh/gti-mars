@@ -66,6 +66,11 @@ class Request extends Model
       return $this->hasMany(Deflection::class);
    }
 
+   public function rejects()
+   {
+      return $this->hasMany(RequestReject::class);
+   }
+
 
 
    public function getStatus()

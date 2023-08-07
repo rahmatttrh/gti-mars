@@ -70,11 +70,13 @@ class HomeController extends Controller
       } else {
          $persentage = 0;
       }
+
+      $requestAdditionals = ModelsRequest::where('class', 'additional')->where('status', 2)->get();
       $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
       $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
       $requestLogistics = ModelsRequest::whereMonth('date', $month)->where('department_id', 2)->get();
       $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
-
+      dd($requestAdditionals);
       $customSchedules = [];
       $customQtyRequests = [];
       foreach ($schedules as $schedule) {
@@ -89,6 +91,7 @@ class HomeController extends Controller
       return view('chart', [
          'monthName' => $monthName,
          'requestRecents' => $requestRecents,
+         'requestAdditionals' => $requestAdditionals,
          'requestProgress' => $requestProgress,
          'schedules' => $schedules,
          'dateSchedules' => collect($customSchedules)->toJson(),
@@ -201,9 +204,12 @@ class HomeController extends Controller
          }
 
          // $requests = ModelsRequest::get();
+         $requestAdditionals = ModelsRequest::where('class', 'additional')->where('status', 5)->get();
          $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
          $scheduleRecents = Schedule::orderBy('updated_at', 'desc')->where('status', '>=', 1)->get();
          $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
+
+         // dd($requestAdditionals);
          $requestUndos = ModelsRequest::where('status', 202)->get();
 
          $requestLogistics = ModelsRequest::where('department_id', 2)->get();
@@ -226,6 +232,7 @@ class HomeController extends Controller
          return view('chart', [
             'today' => $today,
             'monthName' => $monthName,
+            'requestAdditionals' => $requestAdditionals,
             'requestRecents' => $requestRecents,
             'requestProgress' => $requestProgress,
             'schedules' => $schedules,

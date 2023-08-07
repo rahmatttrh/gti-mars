@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Department;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use App\Models\ReportRequest;
+use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -20,8 +21,9 @@ class DepartmentScheduleController extends Controller
 
       // Cek jika ada additional request
       $draftAdditional = false;
-      foreach ($schedule->requests as $req) {
-         if ($req->status == 20) {
+      $additionals = ModelsRequest::where('schedule_id', $schedule->id)->where('class', 'additional')->get();
+      foreach ($additionals  as $req) {
+         if ($req->status == 2) {
             $draftAdditional = true;
          }
       }
@@ -41,10 +43,10 @@ class DepartmentScheduleController extends Controller
             'port_id' => auth()->user()->getPort()
          ]);
 
-         foreach ($schedule->requests as $req) {
-            if ($req->status == 20) {
+         foreach ($additionals  as $req) {
+            if ($req->status == 2) {
                $req->update([
-                  'status' => 3
+                  'status' => 5
                ]);
 
                ReportRequest::create([

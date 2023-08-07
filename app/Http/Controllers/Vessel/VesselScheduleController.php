@@ -111,6 +111,18 @@ class VesselScheduleController extends Controller
          'status' => 2
       ]);
 
+      foreach ($schedule->requests as $req) {
+         $req->update([
+            'status' => 4
+         ]);
+
+         ReportRequest::create([
+            'request_id' => $req->id,
+            'status_id' => 2,
+
+         ]);
+      }
+
       $status = Status::where('code', '02')->first();
 
       Report::create([
@@ -145,7 +157,7 @@ class VesselScheduleController extends Controller
       // dd($req->status);
       $schedule = Schedule::find($req->schedule);
       $vessel = Vessel::find($schedule->vessel_id);
-      foreach ($schedule->requests as $request) {
+      foreach ($schedule->requests->where('status', '!=', 505) as $request) {
 
          if ($req->status == 9 && $request->destination_id == $req->port) {
             $request->update([

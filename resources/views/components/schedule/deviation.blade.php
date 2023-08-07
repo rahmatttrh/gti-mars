@@ -1,6 +1,6 @@
 <div class="">
    @if (auth()->user()->hasRole('marine'))
-      @if ($deviations->where('status', '>=', 0)->count() > 0)       
+      @if ($deviations->where('status', '>=', 20)->count() > 0)       
          @foreach ($deviations as $dev)
             <div class="accordion mb-2 bg-white" id="accordion-deviation_{{$dev->id}} ">
                <div class="accordion-item">
@@ -16,7 +16,7 @@
                         <dl class="row">
                            <dd class="col-12"><x-status.deviation :deviation="$dev" /> </dd>
                            <dt class="col-4">Destination</dt>
-                           <dd class="col-8">: {{$dev->port->name}}</dd>
+                           <dd class="col-8">: {{$dev->destination->name}}</dd>
                            <dt class="col-4">Activity</dt>
                            <dd class="col-8">: {{$dev->desc}}</dd>
                            @if ($dev->report)
@@ -50,8 +50,8 @@
       
       @endif
    @else
-      @if ($deviations->where('status', '>', 0)->count() > 0)       
-         @foreach ($deviations as $dev)
+      @if ($deviations->where('status', '>', 20)->count() > 0)       
+         @foreach ($deviations->where('status', '>', 20) as $dev)
             <div class="accordion mb-2 bg-white" id="accordion-deviation_{{$dev->id}} ">
                <div class="accordion-item">
                   <h2 class="accordion-header" id="heading-deviation-{{$dev->id}}">
