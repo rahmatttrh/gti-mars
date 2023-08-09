@@ -10,6 +10,7 @@ use App\Models\Report;
 use App\Models\ReportVessel;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -193,7 +194,7 @@ class HomeController extends Controller
       } elseif (auth()->user()->hasRole('marine')) {
          $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
-         $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
+         $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
          $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
          $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
          if ($requests->count() > 0) {
@@ -219,12 +220,15 @@ class HomeController extends Controller
          $customQtyRequests = [];
          foreach ($schedules as $schedule) {
             $customSchedules[] = $schedule->date;
-            $customQtyRequests[] = $schedule->requests()->count();
+            $requestsMonth = ModelsRequest::where('date', $schedule->date)->get();
+            $customQtyRequests[] =  $requestsMonth->count();
          }
          // $dateSchedules = collect($geoLocationTeknisi)->toJson()
          // dd(collect($customQtyRequests)->toJson());
          // dd($scheduleRecents->status);
          // dd($requestLogis->count());
+         // dd($customQtyRequests);
+         // dd($customSchedules);
          $reports = Report::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
          $offloadings = Offloading::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
          $deflections = Deflection::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
@@ -270,6 +274,12 @@ class HomeController extends Controller
          $vessel = Vessel::where('email', auth()->user()->email)->first();
          $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->get();
          $nowSchedule = Schedule::find($vessel->schedule_id);
+         if ($nowSchedule) {
+            $routes = ScheduleRoute::where('schedule_id', $nowSchedule->id)->orderBy('rank', 'asc')->get();
+         } else {
+            $routes = null;
+         }
+
          $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
          $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
          return view('home', [
@@ -278,7 +288,8 @@ class HomeController extends Controller
             'schedules' => $schedules,
             'nowSchedule' => $nowSchedule,
             'recentSchedules' => $recentSchedules,
-            'reports' => $reports
+            'reports' => $reports,
+            'routes' => $routes
          ])->with('i');
       } elseif (auth()->user()->hasRole('supplier')) {
          $vessel = '';

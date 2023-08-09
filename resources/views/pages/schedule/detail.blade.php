@@ -70,8 +70,8 @@
          <x-notification.deviation :deviations="$deviations" :schedule="$schedule" />
          <div class="row ">
             <div class="col-md-8">
-               <div class="card">
-                  <div class="card-header bg-secondary">
+               <div class="card mb-3">
+                  <div class="card-header bg-light">
                      <x-status.schedule :schedule="$schedule" :lastreport="$lastreport" />
                   </div>
                   <div class="card-body">
@@ -82,9 +82,14 @@
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
                            </h2>
                            <small>Pick up point from {{$schedule->origin->name}} </small>
-                           <h2> {{$schedule->origin->name}}
+                           <h2> <span class="text-info">{{$schedule->origin->name}}</span>
                               @foreach ($routes as  $route)
-                                 - {{$route->port->name}} 
+                                 @if ($route->request->status == 12)
+                                    <span class="text-info">- {{$route->port->name}} </span>
+                                    @else
+                                    - {{$route->port->name}} 
+                                 @endif
+                                 
                               @endforeach
                            </h2>
                            @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
@@ -95,7 +100,7 @@
                               @if ($lastPostpone)
                                  {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/y')}} Postpone to
                               @endif
-                              <b>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}} {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</b>
+                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}} {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}
                               @if ($lastPostpone)
                                  <br><small>{{$lastPostpone->reason}}</small>
                               @endif
@@ -160,7 +165,7 @@
                </div>
                
                {{-- <hr> --}}
-               <small class="badge badge-primary mb-2 mt-3">Activity</small><br>
+               {{-- <small class="badge badge-primary mb-2 mt-3">Activity</small><br> --}}
                   @if ($requests->count() > 0)
                      <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
                      @else

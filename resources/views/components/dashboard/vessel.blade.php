@@ -29,9 +29,13 @@
                
                <div class="h1 mb-3">
                   <a href="{{route('schedule.detail', enkripRambo($now->id))}}">
-                  {{$now->origin->name}}
-                              @foreach ($now->routes as  $route)
-                                 - {{$route->port->name}} 
+                  <span class="text-info">{{$now->origin->name}}</span>
+                              @foreach ($routes as  $route)
+                              @if ($route->request->status == 12)
+                              <span class="text-info">- {{$route->port->name}} </span>
+                              @else
+                              - {{$route->port->name}} 
+                           @endif
                               @endforeach
                            </a>
                </div>

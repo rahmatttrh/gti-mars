@@ -13,6 +13,7 @@
       <link href="{{asset('css/tabler-payments.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/tabler-vendors.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/demo.min.css')}}" rel="stylesheet"/>
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
       {{-- <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> --}}
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -367,9 +368,11 @@
       <script src="{{asset('js/tabler.min.js')}}"></script>
       <script src="{{asset('js/demo.min.js')}}"></script>
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
       <script>
          $(document).ready(function() {
-            $('#example').DataTable();
+            $('.example').DataTable();
+            $('.select2').select2({});
          });
       </script>
 

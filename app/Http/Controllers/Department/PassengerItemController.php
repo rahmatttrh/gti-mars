@@ -28,13 +28,15 @@ class PassengerItemController extends Controller
    public function store(Request $req)
    {
       // dd($req->test);
+      // dd('store');
       PassengerItem::create([
          'request_id' => $req->request_id,
          'type' => $req->type,
-         'name' => $req->name,
-         'barcode' => $req->barcode,
-         'department' => $req->department,
-         'company' => $req->company,
+         'crew_id' => $req->crew,
+         // 'name' => $req->name,
+         // 'barcode' => $req->barcode,
+         // 'department' => $req->department,
+         // 'company' => $req->company,
          'desc' => $req->desc
       ]);
       return redirect()->back()->with('success', 'Passenger Item successfully added.');

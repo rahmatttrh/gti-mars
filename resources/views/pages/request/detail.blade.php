@@ -190,7 +190,7 @@
                   </div>
                </div>
                @if ($request->type == 2)
-                  <x-requests.crew :request="$request" :routes="$routes" :cargos="$cargoItems" :departs="$departPassengerItems" :returns="$returnPassengerItems" :i="$i" />
+                  <x-requests.crew :request="$request" :crews="$crews" :routes="$routes" :cargos="$cargoItems" :departs="$departPassengerItems" :returns="$returnPassengerItems" :i="$i" />
                    @else
                    <x-requests.cargo :request="$request" :routes="$routes" :cargos="$cargoItems" :passengers="$passengerItems" :i="$i" />
 
@@ -241,6 +241,7 @@
       </div>
    </div>
 
+   <x-modal.crew.add :request="$request" />
    <x-modal.cargo.add :request="$request" />
    {{-- <x-modal.cargo.additional :request="$request" /> --}}
    <x-modal.passenger.add :request="$request" />

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Activity;
 use App\Models\CargoItem;
+use App\Models\Crew;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\PassengerItem;
@@ -220,6 +221,7 @@ class RequestController extends Controller
       $request = ModelsRequest::find($dekripId);
       $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      $crews = Crew::orderBy('name', 'asc')->get();
 
       $schedules = Schedule::where('origin_id', $request->origin_id)->where('status', 0)->get();
       $routes = ScheduleRoute::where('schedule_id', $request->schedule_id)->get();
@@ -237,7 +239,8 @@ class RequestController extends Controller
          'departPassengerItems' => $departPassengerItems,
          'returnPassengerItems' => $returnPassengerItems,
          'passengerItems' => $passengerItems,
-         'routes' => $routes
+         'routes' => $routes,
+         'crews' => $crews
       ])->with('i');
    }
 

@@ -8,13 +8,13 @@
       <div class="page-header d-print-none">
          <div class="row align-items-center">
             <div class="col">
-            <!-- Page pre-title -->
-            <div class="page-pretitle">
-               Overview
-            </div>
-            <h2 class="page-title">
-               User List
-            </h2>
+               <!-- Page pre-title -->
+               <div class="page-pretitle">
+                  Overview
+               </div>
+               <h2 class="page-title">
+                  Crew List
+               </h2>
             </div>
             <!-- Page title actions -->
             {{-- <div class="col-auto ms-auto d-print-none">
@@ -37,11 +37,10 @@
       <div class="container-xl">
          <div class="row">
             <div class="col-md-4">
+               
                <div class="card">
-                  <div class="card-header">
-                     Form Add User
-                  </div>
-                  <form action="{{route('employee.store')}}" method="POST">
+                  <div class="card-header">Form Add Crew</div>
+                  <form action="{{route('crew.store')}}" method="POST">
                      @csrf
                   <div class="card-body">
                      @if ($errors->any())
@@ -53,30 +52,6 @@
                            </ul>
                         </div>
                      @endif
-                     <div class="row">
-                        <div class="col">
-                           <div class="form-floating mb-3">
-                              <select required name="department" id="department" class="form-select">
-                                 <option  disabled selected>Choose</option>
-                                 @foreach ($departments as $department)
-                                    <option  {{old('department') == $department->id ? 'selected' : ''}} value="{{$department->id}}">{{$department->name}}</option>
-                                 @endforeach
-                              </select>
-                              <label for="department">Department</label>
-                           </div>
-                        </div>
-                        <div class="col">
-                           <div class="form-floating mb-3">
-                              <select required name="port" id="port" class="form-select">
-                                 <option  disabled selected>Choose</option>
-                                 @foreach ($ports as $port)
-                                    <option {{old('port') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                 @endforeach
-                              </select>
-                              <label for="port">Location</label>
-                           </div>
-                        </div>
-                     </div>
                      <div class="form-floating mb-3">
                         <input type="text" required class="form-control" id="name" name="name" value="{{old('name')}}" >
                         <label for="name">Name</label>
@@ -84,20 +59,38 @@
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
                      </div>
+                     <div class="row">
+                        <div class="col-md-5">
+                           <div class="form-floating mb-3">
+                              <input type="text" required class="form-control" id="barcode" name="barcode" value="{{old('barcode')}}">
+                              <label for="barcode">Barcode</label>
+                           </div>
+                        </div>
+                        <div class="col-md-7">
+                           <div class="form-floating mb-3">
+                              <input type="text" required class="form-control" id="department" name="department" value="{{old('department')}}">
+                              <label for="department">Department</label>
+                           </div>
+                        </div>
+                     </div>
                      <div class="form-floating mb-3">
-                        <input type="email" required class="form-control" id="email" name="email" value="{{old('email')}}">
-                        <label for="email">Email</label>
-                        @error('email')
+                        <input type="text" required class="form-control" id="company" name="company" value="{{old('company')}}">
+                        <label for="company">Company</label>
+                        @error('company')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
                      </div>
-                     <div class="form-floating mb-3">
-                        <input type="string" required class="form-control" id="ekstensi" name="ekstensi" value="{{old('ekstensi')}}">
-                        <label for="ekstensi">Ekstensi</label>
-                     </div>
+                     {{-- <div class="form-floating mb-3">
+                        <input type="text" required class="form-control" id="desc" name="desc" value="{{old('desc')}}">
+                        <label for="desc">Description</label>
+                        @error('desc')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div> --}}
+                     
                      <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
-                        Save
+                        Add
                      </button>
                   </div>
                   
@@ -107,7 +100,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
                         Save
                      </button> --}}
-                     <small>Hint : after the data is stored, the user will receive a notification email containing instructions to Sign In into system</small>
+                     {{-- <small>Hint : after the data is stored, the user will receive a notification email containing instructions to Sign In into system</small> --}}
                   </div>
 
                </form>
@@ -121,55 +114,43 @@
                            <tr>
                               <th class="text-center">No.</th>
                               <th>Name</th>
+                              <th>Barcode</th>
                               <th>Department</th>
-                              <th>Loc</th>
-                              <th>Email</th>
-                              <th>Ekstensi</th>
+                              <th>Company</th>
+                              {{-- <th>Desc</th> --}}
                            </tr>
                         </thead>
                         <tbody>
-                           @foreach ($employees as $employee)
+                           @foreach ($crews as $crew)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
                                  <td>
-                                    {{-- <div class="dropdown">
-                                       <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                           {{$employee->name}}
-                                       </a>
-                                       <div class="dropdown-menu dropdown-menu-end">
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditPort_{{$port->id}}">
-                                             Edit
-                                          </a>
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalDeletePort_{{$port->id}}">
-                                             Delete
-                                          </a>
-                                       </div>
-                                    </div> --}}
+                                    
                                     <div class="dropdown">
                                        <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                          {{$employee->name}}
+                                          {{$crew->name}}
                                        </a>
                                        <div class="dropdown-menu dropdown-menu-end">
-                                          <a class="dropdown-item" href="{{route('employee.profile', enkripRambo($employee->id))}}">
+                                          {{-- <a class="dropdown-item" href="{{route('employee.profile', enkripRambo($crew->id))}}">
                                              Profile
-                                          </a>
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditEmployee_{{$employee->id}}">
+                                          </a> --}}
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditCrew_{{$crew->id}}">
                                              Edit
                                           </a>
-                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployee_{{$employee->id}}">
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteCrew_{{$crew->id}}">
                                              Delete
                                           </a>
                                        </div>
                                     </div>
                                  </td>
-                                 <td>{{$employee->department->name}}</td>
-                                 <td>{{$employee->port->name}}</td>
-                                 <td>{{$employee->email}}</td>
-                                 <td>{{$employee->ekstensi}}</td>
+                                 <td>{{$crew->barcode}}</td>
+                                 <td>{{$crew->department}}</td>
+                                 <td>{{$crew->company}}</td>
+                                 {{-- <td>{{$crew->desc}}</td> --}}
                               </tr>
 
-                              <x-modal.employee.delete :employee="$employee" />
-                              <x-modal.employee.edit :employee="$employee" :departments="$departments" :ports="$ports" />
+                              <x-modal.crew.delete :crew="$crew" />
+                              <x-modal.crew.edit :crew="$crew" />
                            @endforeach
                            <tr>
                               <td colspan="6" class="p-4"></td>

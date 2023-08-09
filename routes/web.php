@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarrierController;
+use App\Http\Controllers\CrewController;
 use App\Http\Controllers\Department\CargoItemController;
 use App\Http\Controllers\Department\DepartmentAdditionalController;
 use App\Http\Controllers\Department\DepartmentRequestController;
@@ -216,12 +217,21 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('jety/delete/{jetty:id}', [JettyController::class, 'delete'])->name('port.delete.jetty');
    });
 
+   Route::prefix('crew')->group(function () {
+      Route::get('/', [CrewController::class, 'index'])->name('crew');
+      Route::post('store', [CrewController::class, 'store'])->name('crew.store');
+
+      Route::put('update', [CrewController::class, 'update'])->name('crew.update');
+      Route::get('delete/{crew:id}', [CrewController::class, 'delete'])->name('crew.delete');
+   });
+
    Route::prefix('employee')->group(function () {
       Route::get('/', [EmployeeController::class, 'index'])->name('employee');
       Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
       Route::put('update', [EmployeeController::class, 'update'])->name('employee.update');
       Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
+
 
    Route::prefix('dashboard')->group(function () {
       Route::get('table', [HomeController::class, 'dashboardTable'])->name('dashboard.table');
@@ -288,6 +298,8 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
       Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
    });
 
+
+
    Route::prefix('schedule')->group(function () {
       Route::get('complete/{schedule:id}', [DepartmentScheduleController::class, 'complete'])->name('schedule.complete');
       Route::post('additional/store', [DepartmentAdditionalController::class, 'store'])->name('schedule.add.additional');
@@ -307,6 +319,7 @@ Route::group(['middleware' => ['role:drilling|department']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
       Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.item.delete');
+      Route::post('add', [CrewController::class, 'add'])->name('crew.add');
    });
 });
 

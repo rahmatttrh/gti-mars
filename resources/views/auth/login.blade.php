@@ -21,18 +21,21 @@
       <link href="{{asset('css/tabler-vendors.min.css')}}" rel="stylesheet"/>
       <link href="{{asset('css/demo.min.css')}}" rel="stylesheet"/>
    </head>
-   <body  class=" border-top-wide border-primary d-flex flex-column">
-      <div class="page page-center">
+   <body  class=" border-top-wide border-primary d-flex flex-column" >
+      <div class="page page-center" style="background-image: url({{asset('img/bg/rig3.jpg')}});background-repeat: no-repeat;background-size: cover">
          <div class="container-tight ">
-            <div class="text-center mb-3">
-               <div  class=" ">
-                  <img class="mb-4 bg-light p-2 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="80" alt=""> 
-                  <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
-               </div>
-            </div>
+            
             
             <div class="card">
-               
+               {{-- <div class="card-header"> --}}
+                  <div class="text-center ">
+                     <div  class=" ">
+                        <img class=" bg-light p-2 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="80" alt=""> 
+                        <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
+                     </div>
+                  </div>
+               {{-- </div> --}}
+               <div class="card-header"></div>
                <form  method="POST" action="{{ route('login') }}" autocomplete="off">
                   @csrf
                   <div class="card-body">
@@ -80,7 +83,7 @@
                      <button type="submit" class="btn btn-primary w-100">Sign in</button>
                      </div>
                   </div>
-                  <div class="hr-text">GTI</div>
+                  <div class="hr-text">Ekanuri Development</div>
                   
                </form>
             </div>

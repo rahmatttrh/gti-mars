@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateScheduleRoutesTable extends Migration
+class CreateCrewsTable extends Migration
 {
    /**
     * Run the migrations.
@@ -13,12 +13,13 @@ class CreateScheduleRoutesTable extends Migration
     */
    public function up()
    {
-      Schema::create('schedule_routes', function (Blueprint $table) {
+      Schema::create('crews', function (Blueprint $table) {
          $table->id();
-         $table->mediumInteger('schedule_id');
-         $table->integer('request_id');
-         $table->mediumInteger('port_id');
-         $table->smallInteger('rank');
+         $table->string('name');
+         $table->string('barcode');
+         $table->string('department');
+         $table->string('company');
+         $table->string('desc')->nullable();
          $table->smallInteger('status')->nullable();
          $table->timestamps();
       });
@@ -31,6 +32,6 @@ class CreateScheduleRoutesTable extends Migration
     */
    public function down()
    {
-      Schema::dropIfExists('schedule_routes');
+      Schema::dropIfExists('crews');
    }
 }

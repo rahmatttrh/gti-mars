@@ -13,13 +13,14 @@
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>05 : Waiting Marine</div>
       @elseif($request->status == 10)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>10 : User Confirmation</div>
+      @elseif($request->status == 12)
+      <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>Complete</div>
       @elseif($request->status == 202)
       <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>202 : Canceling Proccess</div>
       @elseif($request->status == 505)
       <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>505 : Rejected</div>
    @endif
    @if ($request->status == 505)
-                  <div class="badge bg-light border text-dark">Reason : {{$request->rejects->first()->reason}}</div>
-                     
-                  @endif
+      <div class="badge bg-light border text-dark">Reason : {{$request->rejects->first()->reason}}</div>
+   @endif
 </div>

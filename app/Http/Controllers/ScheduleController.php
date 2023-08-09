@@ -129,7 +129,7 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
 
-      $recentRequests = ModelsRequest::where('origin_id', '=', $schedule->origin_id)->where('status', '=', 1)->get();
+      $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->where('origin_id', '=', $schedule->origin_id)->get();
 
       $statuses = Status::where('type', 1)->get();
       $ports = Port::get();

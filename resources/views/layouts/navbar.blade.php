@@ -97,8 +97,11 @@
                         <a class="dropdown-item" href="{{route('activity')}}" >
                            Activity
                         </a>
+                        <a class="dropdown-item" href="{{route('crew')}}" >
+                           Crew
+                        </a>
                         <a class="dropdown-item" href="{{route('employee')}}" >
-                           Employee
+                           User
                         </a>
                      </div>
                   </li>

@@ -99,7 +99,7 @@
             @elseif(auth()->user()->hasRole('drilling'))
             <x-dashboard.drilling :requests="$requests" :monthname="$monthName"/>
             @elseif(auth()->user()->hasRole('vessel'))
-            <x-dashboard.vessel :schedules="$schedules" :now="$nowSchedule"   :recentschedules="$recentSchedules" :vessel="$vessel" :reports="$reports" i="0"/>
+            <x-dashboard.vessel :schedules="$schedules" :now="$nowSchedule" :routes="$routes"  :recentschedules="$recentSchedules" :vessel="$vessel" :reports="$reports" i="0"/>
 
 
             @elseif(auth()->user()->hasRole('supplier'))
