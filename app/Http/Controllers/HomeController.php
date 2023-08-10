@@ -62,7 +62,7 @@ class HomeController extends Controller
          $monthName = 'Desember';
       }
 
-      $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->orderBy('date', 'asc')->get();
+      $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
       $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->first();
       $requests = ModelsRequest::whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
@@ -77,7 +77,7 @@ class HomeController extends Controller
       $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
       $requestLogistics = ModelsRequest::whereMonth('date', $month)->where('department_id', 2)->get();
       $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
-      dd($requestAdditionals);
+      // dd($requestAdditionals);
       $customSchedules = [];
       $customQtyRequests = [];
       foreach ($schedules as $schedule) {

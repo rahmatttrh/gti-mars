@@ -28,18 +28,85 @@ class MarineScheduleController extends Controller
    public function plan($month)
    {
 
+      $now = Carbon::now();
       $dekripMonth = dekripRambo($month);
       // $today = Carbon::now();
       // $month = $today->format('m');
 
-      if (auth()->user()->hasRole('vessel')) {
-         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
-      } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->whereMonth('created_at', $dekripMonth)->get();
-      }
+
 
       // $vessels = Vessel::get();
       // $ports = Port::get();
+      $regulerSchedules = Schedule::where('type', 1)->whereMonth('date', $dekripMonth)->get();
+      // dd($regulerSchedules);
+      if ($regulerSchedules->count() > 0) {
+         // dd('ada');
+      } else {
+         // dd('ga ada bro');
+         // $dt = Carbon::createFromDate(2023, $dekripMonth);
+         // dd($dt->daysInMonth);
+
+         $yearMonth = $now->format('Y-m');
+         // dd($yearMonth);
+         $start = Carbon::parse($yearMonth)->startOfMonth();
+         $end = Carbon::parse($yearMonth)->endOfMonth();
+
+         $dates = [];
+         while ($start->lte($end)) {
+            $dates[] = $start->copy();
+            $start->addDay();
+         }
+         // dd($dates);
+
+         $mondays = [];
+         $wednesdays = [];
+         // dd($days);
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Monday') {
+               $mondays[] = $date;
+            }
+         }
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Wednesday') {
+               $wednesdays[] = $date;
+            }
+         }
+         // dd($wednesdays);
+
+         foreach ($mondays as $monday) {
+            // dd($day->format('Y-m-d'));
+            Schedule::create([
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => 9,
+               'date' => $monday->format('Y-m-d'),
+               'origin_id' => 16,
+               'etd' => $monday->format('Y-m-d'),
+               'eta' => $monday->format('Y-m-d'),
+            ]);
+         }
+
+         foreach ($wednesdays as $wednesday) {
+            // dd($day->format('Y-m-d'));
+            Schedule::create([
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => 7,
+               'date' => $wednesday->format('Y-m-d'),
+               'origin_id' => 16,
+               'etd' => $wednesday->format('Y-m-d'),
+               'eta' => $wednesday->format('Y-m-d'),
+            ]);
+         }
+      }
+
+      if (auth()->user()->hasRole('vessel')) {
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
+         $requlerSchedules = null;
+      } else {
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->whereMonth('created_at', $dekripMonth)->get();
+         $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('created_at', $dekripMonth)->get();
+      }
 
       if ($dekripMonth == 1) {
          $monthName = 'Januari';
@@ -72,6 +139,7 @@ class MarineScheduleController extends Controller
          'month' => $month,
          'monthName' => $monthName,
          'schedules' => $schedules,
+         'regulerSchedules' => $regulerSchedules
          // 'vessels' => $vessels,
          // 'ports' => $ports
       ])->with('i');
@@ -133,7 +201,9 @@ class MarineScheduleController extends Controller
       return view('pages.schedule.create', [
          'vessels' => $vessels,
          'ports' => $ports,
-         'types' => $types
+         'types' => $types,
+         'date' => null,
+         'from' => null
       ]);
    }
 

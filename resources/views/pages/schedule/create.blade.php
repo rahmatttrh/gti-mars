@@ -59,7 +59,9 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            
+            <div class="card-header">
+               Form Create Schedule Plan
+            </div>
             <form action="{{route('schedule.store')}}" method="POST">
                @csrf
                <div class="card-body">
@@ -79,25 +81,46 @@
                               </div>
                            </div>
                            <div class="col-md-4">
-                              <div class="form-floating mb-3">
-                                 <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
-                                 <label for="date">Date</label>
-                              </div>
+                              @if ($date == null)
+                                 <div class="form-floating mb-3">
+                                    <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
+                                    <label for="date">Date</label>
+                                 </div>
+                                 
+                                 @else
+                                 <div class="form-floating mb-3">
+                                    <input type="date" required value="{{$date}}" class="form-control" id="date" name="date" >
+                                    <label for="date">Date</label>
+                                 </div>
+                              @endif
                            </div>
                         </div>
                         <div class="row">
                            
                            <div class="col-md-8">
-                              <div class="form-floating">
-                                 <select required name="origin" id="origin" class="form-select">
-                                    <option  disabled selected>Choose port</option>
-                                    @foreach ($ports as $port)
-                                       <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
-                                    
-                                 </select>
-                                 <label for="origin">From</label>
-                              </div>
+                              @if ($from == null)
+                                 <div class="form-floating">
+                                    <select required name="origin" id="origin" class="form-select">
+                                       <option  disabled selected>Choose port</option>
+                                       @foreach ($ports as $port)
+                                          <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                       @endforeach
+                                       
+                                    </select>
+                                    <label for="origin">From</label>
+                                 </div>
+                                 @else 
+                                 <div class="form-floating">
+                                    <select required name="origin" id="origin" class="form-select">
+                                       <option  disabled selected>Choose port</option>
+                                       @foreach ($ports as $port)
+                                          <option {{ $from == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                       @endforeach
+                                       
+                                    </select>
+                                    <label for="origin">From</label>
+                                 </div>
+                              @endif
                            </div>
                            {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
@@ -112,10 +135,18 @@
                               </div>
                            </div> --}}
                            <div class="col-md-4">
-                              <div class="form-floating mb-3">
-                                 <input type="datetime-local" value="{{old('departure_estimasi')}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
-                                 <label for="departure_estimasi">ETD</label>
-                              </div>
+                              @if ($date == null)
+                                 <div class="form-floating mb-3">
+                                    <input type="datetime-local" value="{{old('departure_estimasi')}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                    <label for="departure_estimasi">ETD</label>
+                                 </div>
+                                 @else
+                                 <div class="form-floating mb-3">
+                                    <input type="datetime-local" value="{{$date}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                    <label for="departure_estimasi">ETD</label>
+                                 </div>
+                              @endif
+                              
                            </div>
                            {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">

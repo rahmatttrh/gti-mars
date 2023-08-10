@@ -1,4 +1,4 @@
-<div class="modal modal-blur fade" id="modal-select-vessel-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal modal-blur fade" data-bs-backdrop='static' id="modal-select-vessel-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
@@ -43,7 +43,7 @@
                   <label for="remark">Remark (Optional)</label>
                </div>
                <span class="text-muted">
-                  If the vessel option is not available, click <a href="{{route('schedule.create')}}">here</a> to make one
+                  If the vessel option is not available, click <a href="{{route('request.schedule.create', [enkripRambo(\Carbon\Carbon::parse($request->date)->format('Y-m-d')), enkripRambo($request->origin_id)])}}">here</a> to make one
                </span class="text-muted">
             </div>
             

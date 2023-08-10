@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApprovalEmail;
+use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use App\Models\RequestHistory;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
+use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -129,5 +131,26 @@ class MarineRequestController extends Controller
 
          return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Request Activity successfully set on Schedule');
       }
+   }
+
+   public function createSchedule($date, $from)
+   {
+      $dekripDate = dekripRambo($date);
+      $dekripFrom = dekripRambo($from);
+
+      $port = Port::find($dekripFrom);
+
+      // dd($port->name);
+      $vessels = Vessel::get();
+      $ports = Port::get();
+      $types = Type::get();
+      // dd($date);
+      return view('pages.schedule.create', [
+         'vessels' => $vessels,
+         'ports' => $ports,
+         'types' => $types,
+         'date' => $dekripDate,
+         'from' => $dekripFrom
+      ]);
    }
 }

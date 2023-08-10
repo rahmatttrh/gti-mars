@@ -111,36 +111,9 @@
          <div class="row row-cards">
             <div class="col-md-8">
                <div class="row">
-                  <div class="col">
-                     <div class="card" style="height: calc(14rem + 10px)">
-                        <div class="card-header">
-                           <div class="badge bg-info">
-                              Offloading Update
-                           </div>
-                        </div>
-                        <div class="card-body card-body-scrollable card-body-scrollable-shadow">
-                           <div class="divide-y">
-                              @foreach ($offloadings as $offloading)
-                                 <div>
-                                    <div class="row">
-                                       <div class="col">
-                                          <div class="">
-                                             <a href="{{route('schedule.detail', enkripRambo($offloading->request->schedule->id))}}"> {{$offloading->request->schedule->vessel->name}} </a> Dropping  <b> {{$offloading->offloading}} {{$offloading->cargoitem->unit}}  {{$offloading->cargoitem->desc}}</b> of {{$offloading->cargoitem->qty}} {{$offloading->cargoitem->unit}} in the manifest cargo  at {{$offloading->request->destination->name}} <br>
-                                             {{-- {{$offloading->deflection->id}} --}}
-                                             @if ($offloading->deflection)
-                                             Remain <b> {{$offloading->deflection->qty}} {{$offloading->cargoitem->unit}} </b>send to  {{$offloading->deflection->port->name}} {{$offloading->deflection->desc}}
-                                             @endif
-                                             
-                                          </div>
-                                          <div class="text-muted"><small>{{$offloading->updated_at->format('d-m-y H:i ')}}</small></div>
-                                       </div>
-                                    </div>
-                                 </div>
-                              @endforeach
-                           </div>
-                        </div>
-                     </div>
-                  </div>
+                  {{-- <div class="col">
+                     
+                  </div> --}}
                   {{-- <div class="col">  
                      <div class="card" style="height: calc(14rem + 10px)">
                         <div class="card-header">
@@ -200,6 +173,9 @@
                                  <td>
                                     <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
                                        {{$schedule->vessel->name}}
+                                       @if ($schedule->type == 1)
+                                           <div class="badge">R</div>
+                                       @endif
                                     </a>
                                  </td>
                                  <td class="">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
@@ -221,7 +197,7 @@
             </div>
 
             <div class="col-md-4">  
-               <div class="card" style="height: calc(29rem + 10px)">
+               <div class="card mb-3" style="height: calc(24rem + 10px)">
                   <div class="card-header">
                      <div class="badge bg-primary">
                         Vessel Update
@@ -238,6 +214,34 @@
                                        {{$report->status->name}} {{$report->port->name ?? ''}}
                                     </div>
                                     <div class="text-muted"><small>{{$report->updated_at->format('d-m-y H:i ')}}</small></div>
+                                 </div>
+                              </div>
+                           </div>
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+               <div class="card" style="height: calc(22rem + 10px)">
+                  <div class="card-header">
+                     <div class="badge bg-info">
+                        Offloading Update
+                     </div>
+                  </div>
+                  <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                     <div class="divide-y">
+                        @foreach ($offloadings as $offloading)
+                           <div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="">
+                                       <a href="{{route('schedule.detail', enkripRambo($offloading->request->schedule->id))}}"> {{$offloading->request->schedule->vessel->name}} </a> Dropping  <b> {{$offloading->offloading}} {{$offloading->cargoitem->unit}}  {{$offloading->cargoitem->desc}}</b> of {{$offloading->cargoitem->qty}} {{$offloading->cargoitem->unit}} in the manifest cargo  at {{$offloading->request->destination->name}} <br>
+                                       {{-- {{$offloading->deflection->id}} --}}
+                                       @if ($offloading->deflection)
+                                       Remain <b> {{$offloading->deflection->qty}} {{$offloading->cargoitem->unit}} </b>send to  {{$offloading->deflection->port->name}} {{$offloading->deflection->desc}}
+                                       @endif
+                                       
+                                    </div>
+                                    <div class="text-muted"><small>{{$offloading->updated_at->format('d-m-y H:i ')}}</small></div>
                                  </div>
                               </div>
                            </div>

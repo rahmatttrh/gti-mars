@@ -88,7 +88,63 @@
    </div>
    <div class="page-body" >
       <div class="container-xl">
-         <div class="card">
+         <div class="badge bg-cyan">Routine</div>
+         <div class="card mt-2 mb-3 ">
+           {{-- ID Example for display datatable --}}
+            <div class="table-responsive">
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        <th>From</th>
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @if ($regulerSchedules->count() > 0)
+                        @foreach ($regulerSchedules as $schedule)
+                           <tr>
+                              <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                              <td class="text-muted text-truncate">
+                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              </td>
+                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                        
+                              {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                              <td class="text-muted text-truncate">{{$schedule->origin->name}}</td>
+                              
+                              <td class="text-muted text-center">
+                                 {{$schedule->requests()->count()}}
+                              </td>
+                              <td class="text-muted">
+                                 {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                              </td>
+                              <td class="text-muted">
+                                 <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                              </td>
+                              
+                           </tr>
+                           {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                        @endforeach
+                        @else
+                        <tr>
+                           <td colspan="7" class="text-center"><small class="text-muted">Empty</small></td>
+                        </tr>
+                     @endif
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div class="badge bg-info">By Request</div>
+         <div class="card mt-2">
            {{-- ID Example for display datatable --}}
             <div class="table-responsive">
                <table id=""  class="table " >
@@ -97,7 +153,7 @@
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
                         <th>Date</th>
-                        <th>Route</th>
+                        <th>From</th>
                         
                         <th class="text-center">Activity</th>
                         <th>Capacity</th>
@@ -107,16 +163,20 @@
                   </thead>
                   <tbody>
                      @if ($schedules->count() > 0)
+                        @php
+                              $no = 0
+                        @endphp
                         @foreach ($schedules as $schedule)
+                           
                            <tr>
-                              <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                              <td class="text-muted text-center"><small>{{++$no}}</small></td>
                               <td class="text-muted text-truncate">
                                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
                               </td>
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                              <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
+                              <td class="text-muted text-truncate">{{$schedule->origin->name}}</td>
                               
                               <td class="text-muted text-center">
                                  {{$schedule->requests()->count()}}

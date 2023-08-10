@@ -4,7 +4,8 @@
       @elseif($schedule->status == 1)
       <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>01 : Waiting Vessel</div>
       @elseif($schedule->status == 2)
-      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} </div>
+      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}</div> --}}
       @elseif($schedule->status == 3)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>03 : User Confirmation</div>
       @elseif($schedule->status == 4)
@@ -16,10 +17,10 @@
    @endif
   
    @if ($schedule->requests->where('class', 'additional')->where('status', 5)->count() > 0)
-   <div class="badge bg-danger">Additional Alert!</div>
+   <div class="badge bg-danger">Additional</div>
    @endif
    @if ($schedule->requests->where('class', 'deviation')->where('status', 3)->count() > 0)
-   <div class="badge bg-danger">Deviation Alert!</div>
+   <div class="badge bg-danger">Deviation</div>
    @endif
    @if ($schedule->postpones->where('status', 0)->count() > 0)
    <div class="badge bg-warning">Postpone</div>

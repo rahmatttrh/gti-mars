@@ -16,31 +16,31 @@ class ActivitySeeder extends Seeder
    {
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Mobilize material',
+         'name' => 'Mobilize Material',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Backload material',
+         'name' => 'Backload Material',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      // DB::table('activities')->insert([
+      //    'type_id' => 1,
+      //    'name' => 'Mobilisasi next well material',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      DB::table('activities')->insert([
+         'type_id' => 1,
+         'name' => 'Equipment Mobilization',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Mobilisasi next well material',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('activities')->insert([
-         'type_id' => 1,
-         'name' => 'Equipment mobilization',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      DB::table('activities')->insert([
-         'type_id' => 1,
-         'name' => 'Equipment demobilization',
+         'name' => 'Equipment Demobilization',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -52,19 +52,19 @@ class ActivitySeeder extends Seeder
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Backload cargo',
+         'name' => 'Backload Cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Distribute cargo',
+         'name' => 'Distribute Cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       DB::table('activities')->insert([
          'type_id' => 1,
-         'name' => 'Pickup general cargo',
+         'name' => 'Pickup General Cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

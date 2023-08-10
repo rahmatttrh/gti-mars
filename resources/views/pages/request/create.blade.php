@@ -37,21 +37,21 @@
                            </div>
                         @endif
                         <div class="row">
-                           <div class="col-md-4">
-                              <div class="form-floating mb-3">
-                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
-                                 <label for="bcm">BCM</label>
-                              </div>
-                           </div>
                            <div class="col-md-8">
                               <div class="form-floating mb-3">
-                                 <select name="activity" id="activity" class="form-select">
-                                    <option value="" selected disabled >Choose Activity</option>
+                                 <select name="activity" id="activity" required class="form-select">
+                                    <option value="" selected disabled >Choose</option>
                                     @foreach ($activities as $activity)
                                        <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
                                     @endforeach
                                  </select>
-                                 <label for="activity">Activity</label>
+                                 <label for="activity">Activity(*)</label>
+                              </div>
+                           </div>
+                           <div class="col-md-4">
+                              <div class="form-floating mb-3">
+                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
+                                 <label for="bcm">BCM</label>
                               </div>
                            </div>
                            <div class="col-md-12">
@@ -63,7 +63,7 @@
                            <div class="col-md-4">
                               <div class="form-floating">
                                  <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
-                                 <label for="date">Departure Date</label>
+                                 <label for="date">Departure Date(*)</label>
                               </div>
                            </div>
                            <div class="col-md-4">
@@ -74,7 +74,7 @@
                                        <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
-                                 <label for="origin">From</label>
+                                 <label for="origin">From(*)</label>
                               </div>
                            </div>
                            <div class="col-md-4 mb-3">
@@ -85,12 +85,15 @@
                                        <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                     @endforeach
                                  </select>
-                                 <label for="destination">Destination</label>
+                                 <label for="destination">Destination(*)</label>
                               </div>
                            </div>
                         </div>
                         
-                        
+                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                           
+                           Save
+                        </button>
                      </div> 
                      
                      <div class="col-md-4">
@@ -109,10 +112,8 @@
                   </div>
                </div>
                <div class="card-footer">
-                  <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                           
-                     Save
-                  </button>
+                  
+                  (*) Required
                </div>
             </form>
          </div>

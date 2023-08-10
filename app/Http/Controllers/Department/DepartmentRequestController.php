@@ -27,11 +27,11 @@ class DepartmentRequestController extends Controller
    public function create()
    {
       if (auth()->user()->getDepartment()->name == 'Logistic') {
-         $acts = Activity::where('type_id', 1)->get();
+         $acts = Activity::where('type_id', 1)->orderBy('name', 'asc')->get();
       } elseif (auth()->user()->getDepartment()->name == 'drilling') {
-         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->get();
+         $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->orderBy('name', 'asc')->get();
       } else {
-         $acts = Activity::get();
+         $acts = Activity::orderBy('name', 'asc')->get();
       }
       $activities = $acts;
       $types = Type::get();

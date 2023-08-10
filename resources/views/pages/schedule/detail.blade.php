@@ -78,8 +78,11 @@
                      <div class="row">
                         <div class="col-md-8">
                            <small>Vessel</small>
-                           <h2>
-                              {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}}
+                           <h2 class="d-flex align-items-center">
+                              {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
+                              @if ($schedule->type == 1)
+                              &nbsp;<div class="badge">R</div>
+                                 @endif
                            </h2>
                            <small>Pick up point from {{$schedule->origin->name}} </small>
                            <h2> <span class="text-info">{{$schedule->origin->name}}</span>

@@ -121,6 +121,9 @@
                               <td class="text-muted text-center"><small>{{++$i}}</small></td>
                               <td class="text-muted text-truncate">
                                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                                 @if ($schedule->type == 1)
+                                    <div class="badge">R</div>
+                                 @endif
                               </td>
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         

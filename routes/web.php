@@ -240,6 +240,7 @@ Route::group(['middleware' => ['role:marine']], function () {
 
    Route::prefix('request')->group(function () {
       Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
+      Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
    Route::prefix('schedule')->group(function () {
