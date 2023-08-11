@@ -50,7 +50,7 @@
                <table class="table table-vcenter">
                   <thead class="bg-primary">
                      <tr>
-                        <th>Code</th>
+                        <th>BCM</th>
                         <th>Date</th>
                         <th>Activity</th>
                         <th>Route</th>
@@ -65,9 +65,9 @@
                               <a href="{{route('request.detail.parent', enkripRambo($r->parent->id))}}">{{$r->parent->code}}</a>
                            </td> --}}
                            <td class="text-muted">
-                              <a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->code}}</a>
+                              <a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->bcm}}</a>
                            </td>
-                           <td class="text-muted">{{$r->date}}</td>
+                           <td class="text-muted">{{ \Carbon\Carbon::parse($r->date)->format('d/m/Y') }}</td>
                            {{-- <td class="text-muted"><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}
                            <td class="text-muted">{{$r->activity->name ?? ''}} {{$r->description}}</td>
                            <td class="text-muted">{{$r->origin->name}} - {{$r->destination->name}}</td>
@@ -76,7 +76,9 @@
                                  @if ($r->status < 3)
                                     <x-status.request :request="$r" :lastreport="null"/>
                                     @else
-                                    <x-status.request :request="$r" :lastreport="$r->schedule->lastreport()"/>
+                                    {{-- {{$r->schedule_id}} --}}
+                                    {{-- {{$r->id}} --}}
+                                    <x-status.request :request="$r" :lastreport="$r->getStatus()"/>
                                  @endif
                            </td>
                         </tr>

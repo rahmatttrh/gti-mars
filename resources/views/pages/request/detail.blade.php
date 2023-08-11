@@ -148,7 +148,7 @@
                               {{$request->origin->name}} - {{$request->destination->name}}
                            </h4>
                            <br>
-                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}}  at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}} <br> at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                         </div>
                         <div class="col-md-4">
                            @if ($request->status >= 2 && $request->status != 202)

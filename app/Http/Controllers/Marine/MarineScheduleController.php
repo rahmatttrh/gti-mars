@@ -33,7 +33,7 @@ class MarineScheduleController extends Controller
       // $today = Carbon::now();
       // $month = $today->format('m');
 
-
+      // dd($dekripMonth);
 
       // $vessels = Vessel::get();
       // $ports = Port::get();
@@ -46,7 +46,7 @@ class MarineScheduleController extends Controller
          // $dt = Carbon::createFromDate(2023, $dekripMonth);
          // dd($dt->daysInMonth);
 
-         $yearMonth = $now->format('Y-m');
+         $yearMonth = $now->format('Y') . '-' . $dekripMonth;
          // dd($yearMonth);
          $start = Carbon::parse($yearMonth)->startOfMonth();
          $end = Carbon::parse($yearMonth)->endOfMonth();
@@ -105,7 +105,7 @@ class MarineScheduleController extends Controller
          $requlerSchedules = null;
       } else {
          $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->whereMonth('created_at', $dekripMonth)->get();
-         $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('created_at', $dekripMonth)->get();
+         $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
       }
 
       if ($dekripMonth == 1) {

@@ -114,7 +114,7 @@
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
-                                 <input type="text" class="form-control" value="{{$vessel->port}}" name="port" id="port">
+                                 <input type="text" class="form-control" value="{{$vessel->port_id}}" name="port" id="port">
                                  <label for="port">Port of Registry</label>
                               </div>
                            </div>
@@ -126,8 +126,8 @@
                            </div>
                            <div class="col-md-6">
                               <div class="form-floating">
-                                 <input type="text" class="form-control" name="classed_by" id="classed_by" >
-                                 <label for="classed_by">Vessel Classed by</label>
+                                 <input type="text" class="form-control" name="classed_by" id="classed_by" value="{{$vessel->classed_by}}">
+                                 <label for="classed_by" >Vessel Classed by</label>
                               </div>
                            </div>
                         </div>
@@ -135,124 +135,124 @@
                         <div class="row">
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="class_notation" id="class_notation" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="class_notation" id="class_notation" value="{{$vessel->class_notation}}">
                                  <label for="class_notation">Class Notation</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="loa" id="loa" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="loa" id="loa" value="{{$vessel->loa}}" >
                                  <label for="loa">LOA / Length Registered (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="beam" id="beam" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="beam" id="beam" value="{{$vessel->beam}}">
                                  <label for="beam">Beam (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="depth" id="depth" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="depth" id="depth" value="{{$vessel->depth}}">
                                  <label for="depth">Depth (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="maxdraft" id="maxdraft" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="maxdraft" id="maxdraft" value="{{$vessel->maxdraft}}">
                                  <label for="maxdraft">Maximum Draft (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="deadweight" id="deadweight" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="deadweight" id="deadweight" value="{{$vessel->deadweight}}">
                                  <label for="deadweight">Deadweight Tonnage (meter)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="gross" id="gross" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="gross" id="gross" value="{{$vessel->gross}}">
                                  <label for="gross">Gross Tonnage / Net Tonnage (ton)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="deckspace" id="deckspace" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="deckspace" id="deckspace"  value="{{$vessel->deckspace}}">
                                  <label for="deckspace">Clear Deck Space (m2)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="deckstrength" id="deckstrength" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="deckstrength" id="deckstrength" value="{{$vessel->deckstrength}}">
                                  <label for="deckstrength">Deck Strength (t/m2)</label>
                               </div>
                               
                               <div class="form-floating mb-3">
-                                 <input type="number" class="form-control" name="deckcapacity" id="deckcapacity" placeholder="Your vessel limit cargo">
+                                 <input type="number" class="form-control" name="deckcapacity" id="deckcapacity" value="{{$vessel->deckcapacity}}">
                                  <label for="deckcapacity">Deck Cargo Capacity (ton)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="main_engine" id="main_engine" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="main_engine" id="main_engine" value="{{$vessel->main_engine}}">
                                  <label for="main_engine">Main Engine Horsepower and Manufacture</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="no_engine" id="no_engine" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="no_engine" id="no_engine" value="{{$vessel->no_engine}}">
                                  <label for="no_engine">Number of Engines</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="no_main_propeller" id="no_main_propeller" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="no_main_propeller" id="no_main_propeller" value="{{$vessel->no_main_propeller}}">
                                  <label for="no_main_propeller">Number and Type of Main Propellers</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="no_rudder" id="no_rudder" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="no_rudder" id="no_rudder" value="{{$vessel->no_rudder}}">
                                  <label for="no_rudder">Number of Rudders</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="generator_and_manufacture" id="generator_and_manufacture" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="generator_and_manufacture" id="generator_and_manufacture" value="{{$vessel->generator}}">
                                  <label for="generator_and_manufacture">Generator and Manufacturer</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="no_generator" id="no_generator" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="no_generator" id="no_generator" value="{{$vessel->no_generator}}">
                                  <label for="no_generator">Number of Generator</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="generator_detail" id="generator_detail" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="generator_detail" id="generator_detail" value="{{$vessel->generator_detail}}">
                                  <label for="generator_detail">Specified Detail Generator (Kw/Kva/Voltage/Hz)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="kort_nozzle" id="kort_nozzle" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="kort_nozzle" id="kort_nozzle" value="{{$vessel->kort_nozzle}}">
                                  <label for="kort_nozzle">Kort Nozzles Fitted</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="bow_thruster" id="bow_thruster" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="bow_thruster" id="bow_thruster" value="{{$vessel->bow_thruster}}">
                                  <label for="bow_thruster">Bow Thruster Fitted (Number and Type)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="stern_thruster" id="stern_thruster" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="stern_thruster" id="stern_thruster" value="{{$vessel->stern_thruster}}">
                                  <label for="stern_thruster">Stern Thruster Fitted (Number and Type)</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="other_propulsor" id="other_propulsor" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="other_propulsor" id="other_propulsor" value="{{$vessel->other_propulsor}}">
                                  <label for="other_propulsor">Other Propulsors Fitted (Number and Type)</label>
                               </div>
                               <div class="row">
                                  <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                       <input type="text" class="form-control" name="speed_max" id="speed_max" placeholder="Your vessel limit cargo">
+                                       <input type="text" class="form-control" name="speed_max" id="speed_max" value="{{$vessel->speed_max}}">
                                        <label for="speed_max">Speed Maximum</label>
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                       <input type="text" class="form-control" name="speed_eco" id="speed_eco" placeholder="Your vessel limit cargo">
+                                       <input type="text" class="form-control" name="speed_eco" id="speed_eco" value="{{$vessel->speed_eco}}">
                                        <label for="speed_eco">Speed Economical</label>
                                     </div>
                                  </div>
                                  <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                       <input type="text" class="form-control" name="speed_towing" id="speed_towing" placeholder="Your vessel limit cargo">
+                                       <input type="text" class="form-control" name="speed_towing" id="speed_towing" value="{{$vessel->speed_towing}}">
                                        <label for="speed_towing   ">Speed Towing</label>
                                     </div>
                                  </div>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="no_berth" id="no_berth" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="no_berth" id="no_berth" value="{{$vessel->no_berth}}">
                                  <label for="no_berth">No. of Berth or Pax</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="berth_detail" id="berth_detail" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="berth_detail" id="berth_detail" value="{{$vessel->berth_detail}}">
                                  <label for="berth_detail">Berth Detail</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="crane" id="crane" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="crane" id="crane" value="{{$vessel->crane}}">
                                  <label for="crane">Crane</label>
                               </div>
                               <div class="form-floating mb-3">
-                                 <input type="text" class="form-control" name="com_system" id="com_system" placeholder="Your vessel limit cargo">
+                                 <input type="text" class="form-control" name="com_system" id="com_system" value="{{$vessel->com_system}}">
                                  <label for="com_system">Communication System</label>
                               </div>
                               <div class="row">
