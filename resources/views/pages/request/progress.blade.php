@@ -63,7 +63,7 @@
                            </a>
                         </div>
                   </div> --}}
-                  {{-- <div class="dropdown">
+                  <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
                      </button>
@@ -74,7 +74,7 @@
                         </a>
                         
                      </div>
-                  </div> --}}
+                  </div>
                </div>
             </div>
          </div>
@@ -122,7 +122,7 @@
                                        @if ($request->status < 3)
                                           <x-status.request :request="$request" :lastreport="null"/>
                                           @else
-                                          <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                                          <x-status.request :request="$request" :lastreport="$request->getStatus()"/>
                                        @endif
                                     </td>
                                     

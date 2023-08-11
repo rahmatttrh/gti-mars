@@ -20,7 +20,7 @@
             
             <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
-                  <div class="dropdown">
+                  {{-- <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Month
                      </button>
@@ -102,7 +102,7 @@
                            </a>
                         </div>
                      @endif
-                  </div>
+                  </div> --}}
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option
