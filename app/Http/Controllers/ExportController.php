@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class ExportController extends Controller
 {
-   public function schedule($month)
+   public function schedule($status, $month)
    {
 
       $dekripMonth = dekripRambo($month);
@@ -41,7 +41,16 @@ class ExportController extends Controller
       }
 
       $schedules = Schedule::whereMonth('date', $dekripMonth)->get();
-      $requests = ModelsRequest::whereMonth('date', $dekripMonth)->get();
+      if ($status == 'plan') {
+         $requests = ModelsRequest::whereMonth('date', $dekripMonth)->where('status', '=', 2)->get();
+      } elseif ($status == 'order') {
+         $requests = ModelsRequest::whereMonth('date', $dekripMonth)->where('status', '>', 2)->get();
+      } elseif ($status == 'history') {
+         $requests = ModelsRequest::whereMonth('date', $dekripMonth)->where('status', '=', 12)->get();
+      }
+
+
+
       $now = Carbon::now();
       $html = view("pages.pdf.schedule", [
          "schedules" => $schedules,

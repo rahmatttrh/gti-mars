@@ -185,7 +185,7 @@ class MarineScheduleController extends Controller
       return view('pages.schedule.order', [
          'typeName' => 'by Request',
          'type' => 2,
-         'month' => $monthName,
+         'month' => $month,
          'monthName' => $monthName,
          'schedules' => $schedules,
          // 'vessels' => $vessels,
@@ -466,7 +466,7 @@ class MarineScheduleController extends Controller
       return view('pages.schedule.history', [
          'typeName' => 'by Request',
          'type' => 2,
-         'month' => $monthName,
+         'month' => $month,
          'monthName' => $monthName,
          'schedules' => $schedules,
          // 'vessels' => $vessels,

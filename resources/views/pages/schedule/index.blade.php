@@ -75,7 +75,7 @@
                            </a>
                            @endif
                            
-                           <a class="dropdown-item" target="_blank" href="{{route('schedule.print', $month)}}">
+                           <a class="dropdown-item" target="_blank" href="{{route('schedule.print', ['plan',$month])}}">
                               Print Preview 
                            </a>
                         </div>
