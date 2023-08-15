@@ -157,7 +157,7 @@ class ScheduleController extends Controller
       if (auth()->user()->hasRole('marine')) {
          $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
       } elseif (auth()->user()->hasRole('department')) {
-         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>', 3)->orWhere('class', 'additional')->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 3)->orWhere('class', 'additional')->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
       } else {
          $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>', 3)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
       }

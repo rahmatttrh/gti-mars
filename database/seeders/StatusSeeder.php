@@ -146,5 +146,13 @@ class StatusSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+
+      DB::table('statuses')->insert([
+         'name' => 'Confirm Deviation',
+         'type' => 2,
+         'code' => '19',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
    }
 }
