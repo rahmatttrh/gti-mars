@@ -11,7 +11,9 @@ class ExportController extends Controller
 {
    public function schedule($month)
    {
+
       $dekripMonth = dekripRambo($month);
+      // dd($dekripMonth);
       if ($dekripMonth == 1) {
          $monthName = 'Januari';
       } elseif ($dekripMonth == 2) {
@@ -39,10 +41,11 @@ class ExportController extends Controller
       }
 
       $schedules = Schedule::whereMonth('date', $dekripMonth)->get();
-
+      $requests = ModelsRequest::whereMonth('date', $dekripMonth)->get();
       $now = Carbon::now();
       $html = view("pages.pdf.schedule", [
          "schedules" => $schedules,
+         'requests' => $requests,
          'month' => $monthName,
          "now" => $now
       ])->with("i");

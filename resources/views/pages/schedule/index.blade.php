@@ -75,8 +75,8 @@
                            </a>
                            @endif
                            
-                           <a class="dropdown-item" target="_blank" href="{{route('schedule.print', enkripRambo($month))}}">
-                              Print Preview
+                           <a class="dropdown-item" target="_blank" href="{{route('schedule.print', $month)}}">
+                              Print Preview 
                            </a>
                         </div>
                      </div>

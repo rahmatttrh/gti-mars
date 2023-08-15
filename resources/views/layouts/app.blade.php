@@ -204,8 +204,9 @@
                         <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
                         @endif
                         
+                        
+                        <a href="{{route('document')}}" class="dropdown-item">Documents</a>
                         <div class="dropdown-divider"></div>
-                        {{-- <a href="#" class="dropdown-item">Settings</a> --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                         onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">

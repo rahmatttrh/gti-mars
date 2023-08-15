@@ -56,8 +56,39 @@
             
          </thead>
       </table>
-
       <table class="tablesm">
+         <thead>
+            <tr>
+               <th>No</th>
+               <th>Function</th>
+               {{-- <th>Station</th> --}}
+               <th>Activity</th>
+               <th>Location</th>
+               {{-- <th>Req. Boat</th> --}}
+               <th>Boat Assignment</th>
+               <th>Date</th>
+               <th>Status</th>
+            </tr>
+         </thead>
+         <tbody>
+            @foreach ($requests as $req)
+               <tr>
+                  <td style="text-align: center;">{{++$i}}</td>
+                  {{-- <td>{{$req->id}}</td> --}}
+                  <td>{{$req->func}}</td>
+                  <td>{{$req->activity->name}}</td>
+                  <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
+                  {{-- <td>-</td> --}}
+                  <td>{{$req->schedule->vessel->name ?? ''}}</td>
+                  <td>{{\Carbon\Carbon::parse($req->date)->format('d/m/Y')}}</td>
+                  <td>
+                     <x-status.request :request="$req" />
+                  </td>
+               </tr>
+            @endforeach
+         </tbody>
+      </table>
+      {{-- <table class="tablesm">
          <thead>
             <tr>
                <th>No</th>
@@ -82,7 +113,7 @@
                   <td>{{$schedule->req_boat}}</td>
                   <td>
                      @if ($schedule->status == 1)
--
+                     -
                      @else
                      {{$schedule->vessel->name}}
                      @endif
@@ -94,6 +125,6 @@
                </tr>
             @endforeach
          </tbody>
-      </table>
+      </table> --}}
    </body>
 </html>

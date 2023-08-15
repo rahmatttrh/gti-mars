@@ -10,6 +10,7 @@ use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DocController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
@@ -87,6 +88,8 @@ Route::middleware(["auth"])->group(function () {
       Route::put('update', [CarrierController::class, 'update'])->name('carrier.update');
       Route::get('delete/{carrier:id}', [CarrierController::class, 'delete'])->name('carrier.delete');
    });
+
+   Route::get('documents', [DocController::class, 'index'])->name('document');
 
    Route::prefix('schedule')->group(function () {
       Route::get('fixed', [ScheduleController::class, 'fixed'])->name('schedule.fixed');
