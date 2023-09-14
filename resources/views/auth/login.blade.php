@@ -40,7 +40,7 @@
                   @csrf
                   <div class="card-body">
                      <small class="card-title text-center mb-4">Login to your account</small>
-                     @error('email')
+                     @error('username')
                      <div class="alert alert-danger" role="alert">
                         {{ $message }}
                      </div>
@@ -52,8 +52,8 @@
                      </div>
                      @enderror
                      <div class="form-floating mb-3">
-                        <input type="email" value="{{old('email')}}" required class="form-control @error('email') is-invalid @enderror" id="email" name="email" >
-                        <label for="email">Email</label>
+                        <input type="text" value="{{old('username')}}" required class="form-control @error('username') is-invalid @enderror" id="username" name="username" >
+                        <label for="username">Username</label>
                         {{-- @error('email')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror --}}

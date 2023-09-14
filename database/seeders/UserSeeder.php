@@ -16,14 +16,14 @@ class UserSeeder extends Seeder
     */
    public function run()
    {
-      $superuser = User::create([
-         'name' => 'Super User',
-         'email' => 'superuser@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $superuser->assignRole('superuser');
+      // $superuser = User::create([
+      //    'name' => 'Super User',
+      //    'email' => 'superuser@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $superuser->assignRole('superuser');
 
       // $marine = User::create([
       //    'name' => 'Marine',
@@ -36,6 +36,7 @@ class UserSeeder extends Seeder
 
       $msso = User::create([
          'name' => 'Marine',
+         'username' => 'marine',
          'email' => 'marine@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -45,6 +46,7 @@ class UserSeeder extends Seeder
 
       $juan = User::create([
          'name' => 'Ahmad Juantoro',
+         'username' => 'juan',
          'email' => 'juan@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -54,6 +56,7 @@ class UserSeeder extends Seeder
 
       $dareza = User::create([
          'name' => 'Dareza Arvian',
+         'username' => 'dareza',
          'email' => 'dareza@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -63,6 +66,7 @@ class UserSeeder extends Seeder
 
       $fikri = User::create([
          'name' => 'Abdul Fikri',
+         'username' => 'fikri',
          'email' => 'fikri@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -72,6 +76,7 @@ class UserSeeder extends Seeder
 
       $ari = User::create([
          'name' => 'Ari Pratama',
+         'username' => 'ari',
          'email' => 'ari@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -101,6 +106,7 @@ class UserSeeder extends Seeder
 
       $moloko = User::create([
          'name' => 'TRANSKO MOLOKO',
+         'username' => 'moloko',
          'email' => 'moloko@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -110,6 +116,7 @@ class UserSeeder extends Seeder
 
       $baliho = User::create([
          'name' => 'TRANSKO BALIHO',
+         'username' => 'baliho',
          'email' => 'baliho@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -119,6 +126,7 @@ class UserSeeder extends Seeder
 
       $logindo = User::create([
          'name' => 'LOGINDO OVERCOMER',
+         'username' => 'logindo',
          'email' => 'logindo@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -128,6 +136,7 @@ class UserSeeder extends Seeder
 
       $indoliziz = User::create([
          'name' => 'INDOLIZIZ SATU',
+         'username' => 'indoliziz',
          'email' => 'indoliziz@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -137,6 +146,7 @@ class UserSeeder extends Seeder
 
       $peteka = User::create([
          'name' => 'PETEKA 5402',
+         'username' => 'peteka5402',
          'email' => 'peteka5402@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -146,6 +156,7 @@ class UserSeeder extends Seeder
 
       $sigap = User::create([
          'name' => 'SIGAP JAYA',
+         'username' => 'sigapjaya',
          'email' => 'sigap@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -155,6 +166,7 @@ class UserSeeder extends Seeder
 
       $triton = User::create([
          'name' => 'TRITON JAWARA',
+         'username' => 'tritonjawara',
          'email' => 'triton@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -164,6 +176,7 @@ class UserSeeder extends Seeder
 
       $marvela = User::create([
          'name' => 'MARVELA 18',
+         'username' => 'marvela18',
          'email' => 'marvela18@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -173,6 +186,7 @@ class UserSeeder extends Seeder
 
       $elok = User::create([
          'name' => 'ELOK JAYA',
+         'username' => 'elokjaya',
          'email' => 'elok@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -182,6 +196,7 @@ class UserSeeder extends Seeder
 
       $tekun = User::create([
          'name' => 'TEKUN JAYA',
+         'username' => 'tekunjaya',
          'email' => 'tekun@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -191,6 +206,7 @@ class UserSeeder extends Seeder
 
       $giat = User::create([
          'name' => 'GIAT JAYA',
+         'username' => 'giatjaya',
          'email' => 'giat@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -200,6 +216,7 @@ class UserSeeder extends Seeder
 
       $ina1 = User::create([
          'name' => 'INA PERMATA 1',
+         'username' => 'inapermata1',
          'email' => 'ina1@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -209,6 +226,7 @@ class UserSeeder extends Seeder
 
       $encone = User::create([
          'name' => 'ENC ONE',
+         'username' => 'encone',
          'email' => 'encone@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -218,6 +236,7 @@ class UserSeeder extends Seeder
 
       $ina2 = User::create([
          'name' => 'INA PERMATA 2',
+         'username' => 'inapertamina2',
          'email' => 'ina2@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -227,6 +246,7 @@ class UserSeeder extends Seeder
 
       $mega17 = User::create([
          'name' => 'TB. MEGAWATI 17',
+         'username' => 'megawati17',
          'email' => 'mega17@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -236,6 +256,7 @@ class UserSeeder extends Seeder
 
       $patraoffshore = User::create([
          'name' => 'DSV PATRA OFFSHORE',
+         'username' => 'patraoffshore',
          'email' => 'patraoffshore@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -245,6 +266,7 @@ class UserSeeder extends Seeder
 
       $avior = User::create([
          'name' => 'OPS AVIOR',
+         'username' => 'avior',
          'email' => 'avior@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -254,6 +276,7 @@ class UserSeeder extends Seeder
 
       $merlion121 = User::create([
          'name' => 'MERLION 121',
+         'username' => 'merlion121',
          'email' => 'merlion121@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -263,6 +286,7 @@ class UserSeeder extends Seeder
 
       $merlion131 = User::create([
          'name' => 'MERLION 131',
+         'username' => 'merlion131',
          'email' => 'merlion131@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -272,6 +296,7 @@ class UserSeeder extends Seeder
 
       $alpha = User::create([
          'name' => 'ALPHA MARINE',
+         'username' => 'alphamarine',
          'email' => 'alpha@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -281,6 +306,7 @@ class UserSeeder extends Seeder
 
       $sanchai = User::create([
          'name' => 'SANCHAI HARBOUR',
+         'username' => 'sanchaiharbour',
          'email' => 'sanchai@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -290,6 +316,7 @@ class UserSeeder extends Seeder
 
       $prima6 = User::create([
          'name' => 'STK PRIMA 6',
+         'username' => 'prima6',
          'email' => 'prima6@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -299,6 +326,7 @@ class UserSeeder extends Seeder
 
       $ansanus12 = User::create([
          'name' => 'ANSANUS 12',
+         'username' => 'ansanus12',
          'email' => 'ansanus12@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -308,6 +336,7 @@ class UserSeeder extends Seeder
 
       $ivani = User::create([
          'name' => 'MT. IVANI',
+         'username' => 'ivani',
          'email' => 'ivani@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -317,6 +346,7 @@ class UserSeeder extends Seeder
 
       $castmarine3 = User::create([
          'name' => 'CAST MARINE 3',
+         'username' => 'castmarine3',
          'email' => 'castmarine3@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -326,6 +356,7 @@ class UserSeeder extends Seeder
 
       $panmarine6 = User::create([
          'name' => 'PAN MARINE 6',
+         'username' => 'panmarine6',
          'email' => 'panmarine6@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -335,6 +366,7 @@ class UserSeeder extends Seeder
 
       $accelerate = User::create([
          'name' => 'NMS ACCELERATE',
+         'username' => 'accelerate',
          'email' => 'accelerate@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -344,6 +376,7 @@ class UserSeeder extends Seeder
 
       $clarissa68 = User::create([
          'name' => 'CLARISSA 68',
+         'username' => 'clarissa68',
          'email' => 'clarissa68@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -353,6 +386,7 @@ class UserSeeder extends Seeder
 
       $magelang = User::create([
          'name' => 'MAGELANG',
+         'username' => 'magelang',
          'email' => 'magelang@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -362,6 +396,7 @@ class UserSeeder extends Seeder
 
       $clara58 = User::create([
          'name' => 'CLARA 58',
+         'username' => 'clara58',
          'email' => 'clara58@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -371,6 +406,7 @@ class UserSeeder extends Seeder
 
       $accomplish = User::create([
          'name' => 'NMS ACCOMPLISH',
+         'username' => 'accomplish',
          'email' => 'accomplish@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -380,6 +416,7 @@ class UserSeeder extends Seeder
 
       $salatiga = User::create([
          'name' => 'SALATIGA',
+         'username' => 'salatiga',
          'email' => 'salatiga@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -389,6 +426,7 @@ class UserSeeder extends Seeder
 
       $panmarine19 = User::create([
          'name' => 'PAN MARINE 19',
+         'username' => 'panmarine19',
          'email' => 'panmarine19@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
@@ -398,6 +436,7 @@ class UserSeeder extends Seeder
 
       $patramarine = User::create([
          'name' => 'PATRA MARINE',
+         'username' => 'patramarine',
          'email' => 'patramarine@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),

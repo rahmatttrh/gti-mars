@@ -64,7 +64,7 @@
                            </a>
                         </div>
                      </div>
-                     <div class="dropdown">
+                     {{-- <div class="dropdown">
                         <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                         Option
                         </button>
@@ -79,7 +79,7 @@
                               Print Preview
                            </a>
                         </div>
-                     </div>
+                     </div> --}}
                   @endif
                </div>
             </div>

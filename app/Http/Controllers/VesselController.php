@@ -30,7 +30,8 @@ class VesselController extends Controller
    {
       $req->validate([
          'name' => 'required',
-         'email' => 'required|email',
+         'username' => 'required|unique:vessels',
+         'email' => 'required|email|unique:vessels',
          'deadweight' => 'required|numeric',
          'deckspace' => 'required|numeric',
          'type' => 'required',
@@ -41,7 +42,7 @@ class VesselController extends Controller
       Vessel::create([
          'status' => 0,
          'port_id' => null,
-
+         'username' => $req->username,
          'name' => $req->name,
          'email' => $req->email,
          'telp' => $req->telp,
@@ -102,6 +103,7 @@ class VesselController extends Controller
 
       $user = User::create([
          'name' => $req->name,
+         'username' => $req->username,
          'email' => $req->email,
          'password' => Hash::make('12345678')
       ]);
@@ -125,6 +127,7 @@ class VesselController extends Controller
    {
       $req->validate([
          'name' => 'required',
+         'username' => 'required',
          'email' => 'required|email',
          'deadweight' => 'required',
          'deckspace' => 'required'
@@ -134,6 +137,7 @@ class VesselController extends Controller
       $user = User::where('email', $req->email)->first();
       $vessel->update([
          'name' => $req->name,
+         'username' => $req->username,
          'email' => $req->email,
          'telp' => $req->telp,
          'imo' => $req->imo,
@@ -192,6 +196,7 @@ class VesselController extends Controller
 
       $user->update([
          'name' => $req->name,
+         'username' => $req->username,
          'email' => $req->email
       ]);
       return redirect()->back()->with('success', 'Vessel successfuly updated');

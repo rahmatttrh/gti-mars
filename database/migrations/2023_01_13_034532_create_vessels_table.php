@@ -20,6 +20,7 @@ class CreateVesselsTable extends Migration
          $table->mediumInteger('port_id')->nullable();
          // $table->string('port')->nullable();
          $table->string('name');
+         $table->string('username');
          $table->string('email')->nullable();
          $table->string('telp')->nullable();
          $table->string('require')->nullable();

@@ -157,6 +157,7 @@ class RequestController extends Controller
 
    public function store(Request $req)
    {
+      dd('store');
       $department = Department::find($req->department);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();

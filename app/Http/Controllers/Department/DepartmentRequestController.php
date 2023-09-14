@@ -93,14 +93,18 @@ class DepartmentRequestController extends Controller
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       $destination = Port::find($req->destination);
+      $activity = Activity::find($req->activity);
 
-      if ($department->id == 2) {
-         $type = 1;
-      } elseif ($department->id == 3) {
-         $type = 2;
-      } else {
-         $type = 3;
-      }
+      $type = $activity->type->id;
+      // dd($type);
+
+      // if ($department->id == 2) {
+      //    $type = 1;
+      // } elseif ($department->id == 3) {
+      //    $type = 2;
+      // } else {
+      //    $type = 3;
+      // }
 
       $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
 
@@ -143,7 +147,7 @@ class DepartmentRequestController extends Controller
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
          'destination_name' => $destination->name,
-         'status' => 00
+         'status' => 0
       ]);
 
 

@@ -42,20 +42,22 @@
                     <h3 class="card-title">Manual Book</h3>
                   </div>
                   <div class="list-group list-group-flush list-group-hoverable">
+                     @if (auth()->user()->hasRole('marine'))
                      <div class="list-group-item">
                         <div class="row align-items-center">
                            <div class="col-auto">
-                           <a href="#">
-                              <span class="avatar" style="background-image: url({{asset('img/flaticon/book-red.png')}})"></span>
-                           </a>
+                              <a href="#">
+                                 <span class="avatar" style="background-image: url({{asset('img/flaticon/book-red.png')}})"></span>
+                              </a>
                            </div>
                            <div class="col text-truncate">
-                           <span class="text-body d-block">DSP-PHE Level Marine</span>
-                           <small class="d-block text-muted text-truncate mt-n1"><a target="_blank" href="/manual-book/mb-dsp-phe-marine.pdf">Download</a></small>
+                              <span class="text-body d-block">DSP-PHE Level Marine</span>
+                              <small class="d-block text-muted text-truncate mt-n1"><a target="_blank" href="/manual-book/mb-dsp-phe-marine.pdf">Download</a></small>
                            </div>
                            
                         </div>
                      </div>
+
                      <div class="list-group-item">
                         <div class="row align-items-center">
                            <div class="col-auto">
@@ -70,6 +72,7 @@
                            
                         </div>
                      </div>
+
                      <div class="list-group-item">
                         <div class="row align-items-center">
                            <div class="col-auto">
@@ -84,8 +87,39 @@
                            
                         </div>
                      </div>
+                     @elseif(auth()->user()->hasRole('department'))
+                     <div class="list-group-item">
+                        <div class="row align-items-center">
+                           <div class="col-auto">
+                           <a href="#">
+                              <span class="avatar" style="background-image: url({{asset('img/flaticon/book-blue.png')}})"></span>
+                           </a>
+                           </div>
+                           <div class="col text-truncate">
+                           <span class="text-body d-block">DSP-PHE Level User</span>
+                           <small class="d-block text-muted text-truncate mt-n1"><a target="_blank" href="/manual-book/mb-dsp-phe-user.pdf">Download</a></small>
+                           </div>
+                           
+                        </div>
+                     </div>
+                     @elseif(auth()->user()->hasRole('vessel'))
+                     <div class="list-group-item">
+                        <div class="row align-items-center">
+                           <div class="col-auto">
+                           <a href="#">
+                              <span class="avatar" style="background-image: url({{asset('img/flaticon/book-yellow.png')}})"></span>
+                           </a>
+                           </div>
+                           <div class="col text-truncate">
+                           <span class="text-body d-block">DSP-PHE Level Vessel</span>
+                           <small class="d-block text-muted text-truncate mt-n1"><a target="_blank" href="/manual-book/mb-dsp-phe-vessel.pdf">Download</a></small>
+                           </div>
+                           
+                        </div>
+                     </div>
+                     @endif
                   </div>
-                </div>
+               </div>
             </div>
          </div>
          
