@@ -43,12 +43,14 @@
                       <span class="avatar avatar-xl avatar-rounded" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
                     </div>
                     <div class="card-title mb-1">{{$employee->name}}</div>
-                    <div class="text-muted">{{$employee->department->name}}</div>
+                    {{-- <div class="text-muted">{{$employee->department->name ?? '-'}}</div> --}}
                     
                   </div>
                   {{-- <a href="#" class="card-btn">View full profile</a> --}}
                   <div class="card-footer">
                      <dl class="row">
+                        <dt class="col-4">Department</dt>
+                        <dd class="col-8">{{$employee->department->name ?? '-'}}</dd>
                         <dt class="col-4">Location</dt>
                         <dd class="col-8">{{$employee->port->name}}</dd>
                         <dt class="col-4">Email</dt>

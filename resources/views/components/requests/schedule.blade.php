@@ -3,7 +3,7 @@
       <h2 class="accordion-header" id="heading-schedule-{{$schedule->id}}">
          <button class="accordion-button " type="button" data-bs-toggle="collapse"
             data-bs-target="#collapse-schedule-{{$schedule->id}}" aria-expanded="true">
-            {{$schedule->vessel->name ?? 'Empty'}}
+            {{$schedule->vessel->name ?? 'Vessel : Not Available'}}
          </button>
       </h2>
       <div id="collapse-schedule-{{$schedule->id}}" class="accordion-collapse collapse show"
@@ -16,9 +16,9 @@
                   <dt class="col-3">Date</dt>
                   <dd class="col-9">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</dd>
                   <dt class="col-3">Route</dt>
-                  <dd class="col-9">{{$schedule->origin->name}}
+                  <dd class="col-9">
                   @foreach ($schedule->routes as  $route)
-                     - {{$route->port->name}} 
+                     {{$route->port->name}} -
                   @endforeach</dd>
                </dl>
                <small>

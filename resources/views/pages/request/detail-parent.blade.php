@@ -21,7 +21,7 @@
                <div class="btn-list">
                
                   
-                  @if (auth()->user()->hasRole('department'))
+                  {{-- @if (auth()->user()->hasRole('department'))
                      @if ($parent->status == 0)
                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#release-parent-request">
                            <!-- Download SVG icon from http://tabler-icons.io/i/send -->
@@ -29,7 +29,7 @@
                            Release
                         </button>
                      @endif
-                  @endif
+                  @endif --}}
                   <div class="dropdown">
                      <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                      Option

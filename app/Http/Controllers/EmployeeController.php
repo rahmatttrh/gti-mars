@@ -29,7 +29,8 @@ class EmployeeController extends Controller
    public function store(Request $req)
    {
       $req->validate([
-         'email' => 'unique:users',
+         'email' => 'required|unique:users|unique:employees',
+         'username' => 'required|unique:users|unique:employees',
          'department' => 'required',
          'port' => 'required'
       ]);
@@ -37,12 +38,14 @@ class EmployeeController extends Controller
          'department_id' => $req->department,
          'port_id' => $req->port,
          'name' => $req->name,
+         'username' => $req->username,
          'email' => $req->email,
          'ekstensi' => $req->ekstensi
       ]);
 
       $user = User::create([
          'name' => $employee->name,
+         'username' => $req->username,
          'email' => $employee->email,
          'password' => Hash::make('12345678'),
       ]);
@@ -73,7 +76,7 @@ class EmployeeController extends Controller
    public function update(Request $req)
    {
       $employee = Employee::find($req->employee);
-      $user = User::where('email', $employee)->first();
+      $user = User::where('email', $employee->email)->first();
       $employee->update([
          'department_id' => $req->department,
          'port_id' => $req->port,

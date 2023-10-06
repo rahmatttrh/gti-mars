@@ -70,14 +70,21 @@
                         </button>
                         <div class="dropdown-menu dropdown-menu-end">
                            @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('marine'))
-                           <a class="dropdown-item" href="{{route('schedule.create')}}">
+                           {{-- <a class="dropdown-item" href="{{route('schedule.create')}}">
+                              Create
+                           </a> --}}
+                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#schedule-create">
                               Create
                            </a>
                            @endif
                            
-                           <a class="dropdown-item" target="_blank" href="{{route('schedule.print', ['plan',$month])}}">
+                           {{-- <a class="dropdown-item" target="_blank" href="{{route('schedule.print', ['plan',$month])}}">
+                              Print Preview 
+                           </a> --}}
+                           <a class="dropdown-item" target="_blank" href="{{route('document.intermilan', enkripRambo($month))}}">
                               Print Preview 
                            </a>
+                           
                         </div>
                      </div>
                   @endif
@@ -97,9 +104,10 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
+                        <th>Type</th>
                         <th>Day</th>
                         <th>Date</th>
-                        <th>From</th>
+                        {{-- <th>From</th> --}}
                         
                         <th class="text-center">Activity</th>
                         <th>Capacity</th>
@@ -115,14 +123,17 @@
                               <td class="text-muted text-truncate">
                                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
                               </td>
+                              <td class="text-muted">
+                                 {{$schedule->vessel->type ?? '-'}}
+                              </td>
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                              <td class="text-muted text-truncate">{{$schedule->origin->name}}</td>
+                              {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}}</td> --}}
                               
                               <td class="text-muted text-center">
-                                 {{$schedule->requests()->count()}}
+                                 {{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}
                               </td>
                               <td class="text-muted">
                                  {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
@@ -152,8 +163,10 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
+                        <th>Type</th>
+                        <th>Day</th>
                         <th>Date</th>
-                        <th>From</th>
+                        {{-- <th>From</th> --}}
                         
                         <th class="text-center">Activity</th>
                         <th>Capacity</th>
@@ -171,15 +184,19 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$no}}</small></td>
                               <td class="text-muted text-truncate">
-                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not available'}}</a> 
                               </td>
+                              <td class="text-muted">
+                                 {{$schedule->vessel->type ?? '-'}}
+                              </td>
+                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                              <td class="text-muted text-truncate">{{$schedule->origin->name}}</td>
+                              {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}}</td> --}}
                               
                               <td class="text-muted text-center">
-                                 {{$schedule->requests()->count()}}
+                                 {{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}
                               </td>
                               <td class="text-muted">
                                  {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
@@ -202,7 +219,7 @@
          </div>
       </div>
    </div>
-
+   <x-modal.schedule.create :vessels="$vessels" />
    {{-- <x-modal.add-schedule :vessels="$vessels" :ports="$ports" :type="$type" /> --}}
    {{-- <x-modal.select-month /> --}}
 @endsection

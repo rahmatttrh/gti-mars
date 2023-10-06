@@ -17,11 +17,13 @@ class CreateSchedulesTable extends Migration
          $table->id();
          // $table->smallInteger('type_id');
          $table->smallInteger('type');
+         $table->string('by')->nullable();
          $table->smallInteger('status');
          $table->date('date')->nullable();
          $table->mediumInteger('vessel_id')->nullable();
-         $table->mediumInteger('origin_id')->nullable();
-         $table->mediumInteger('destination_id')->nullable();
+         $table->string('vessel_type')->nullable();
+         // $table->mediumInteger('origin_id')->nullable();
+         // $table->mediumInteger('destination_id')->nullable();
          $table->dateTime('etd')->nullable();
          $table->dateTime('eta')->nullable();
          $table->string('remark')->nullable();

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -15,19 +16,18 @@ class ScheduleSeeder extends Seeder
     */
    public function run()
    {
-      $date = new Carbon('23-01-2023');
       $now = Carbon::now();
+      $vessel = Vessel::find(1);
 
       DB::table('schedules')->insert([
          // 'type_id' => 1,
+         'by' => 'marine',
          'type' => 2,
          'status' => 0,
-         'date' => $now,
-         'vessel_id' => 1,
-         'origin_id' => 16,
-         'etd' => $now->addHour(2),
-         'eta' => $now->addHour(6),
-
+         'date' => $now->addDay(1),
+         'vessel_id' => $vessel->id,
+         'vessel_type' => $vessel->type,
+         // 'origin_id' => 16,
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -36,11 +36,8 @@ class ScheduleSeeder extends Seeder
       //    'type' => 2,
       //    'status' => 0,
       //    'date' => $now->addDay(1),
-      //    'vessel_id' => 2,
-      //    'origin_id' => 1,
-      //    'destination_id' => 3,
-      //    'etd' => $now->addDay(1)->addHour(1),
-      //    'eta' => $now->addDay(1)->addHour(4),
+      //    'vessel_id' => 3,
+      //    'origin_id' => 16,
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
       // ]);
@@ -48,12 +45,9 @@ class ScheduleSeeder extends Seeder
       //    // 'type_id' => 2,
       //    'type' => 2,
       //    'status' => 0,
-      //    'date' => $now->addDay(3),
-      //    'vessel_id' => 4,
-      //    'origin_id' => 1,
-      //    'destination_id' => 5,
-      //    'etd' => $now->addDay(3)->addHour(1),
-      //    'eta' => $now->addDay(3)->addHour(5),
+      //    'date' => $now->addDay(2),
+      //    'vessel_id' => 1,
+      //    'origin_id' => 16,
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
       // ]);
@@ -62,11 +56,8 @@ class ScheduleSeeder extends Seeder
       //    'type' => 2,
       //    'status' => 0,
       //    'date' => $now->addDay(1),
-      //    'vessel_id' => 4,
-      //    'origin_id' => 1,
-      //    'destination_id' => 5,
-      //    'etd' => $now->addDay(3)->addHour(1),
-      //    'eta' => $now->addDay(3)->addHour(5),
+      //    'vessel_id' => 17,
+      //    'origin_id' => 16,
       //    'created_at' => NOW(),
       //    'updated_at' => NOW()
       // ]);

@@ -73,7 +73,7 @@ class MarineDeviationController extends Controller
       } else {
          // Jika belum ada
 
-         
+
          $fromScheduleRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->from)->first();
          // dd($fromScheduleRoute->rank);
          $remainScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
@@ -87,7 +87,8 @@ class MarineDeviationController extends Controller
             'schedule_id' => $schedule->id,
             'request_id' => $request->id,
             'port_id' => $req->port,
-            'rank' => $fromScheduleRoute->rank + 1
+            'rank' => $fromScheduleRoute->rank + 1,
+            'status' => 1
          ]);
 
          $remainRequest = ModelsRequest::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();

@@ -3,7 +3,7 @@
      <div class="modal-content">
        <div class="modal-body">
          <div class="modal-title">Are you sure?</div>
-         <div>If you proceed, you will lose Schedule Data of <b>{{$schedule->vessel->name}}</b>.</div>
+         <div>If you proceed, you will lose Schedule Data of <b>{{$schedule->vessel->name ?? '-'}}</b>.</div>
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>

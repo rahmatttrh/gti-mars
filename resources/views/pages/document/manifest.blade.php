@@ -39,9 +39,12 @@
                      <dd class="col-3">Vessel</dd>
                      <dd class="col-9">: {{$schedule->vessel->name}}</dd>
                      <dd class="col-3">Route</dd>
-                     <dd class="col-9">:  {{$schedule->origin->name}}
-                        @foreach ($destinations as  $destination => $dest)
-                           - {{$destination}} 
+                     <dd class="col-9">: 
+                        @foreach ($routes as  $route)
+                           @if ($route->rank > 1)
+                           - 
+                           @endif
+                           {{$route->port->name}} 
                         @endforeach</dd>
                      {{-- <dd class="col-3">ETD</dd>
                      <dd class="col-9">:  {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</dd> --}}
@@ -149,7 +152,7 @@
       
                      </div>
                      
-                     <small class="badge badge-info mt-3">Depart</small>
+                     <small class="badge badge-info mt-4">Depart</small>
                      <table class="table table-transparent table-responsive">
                         <thead>
                            <tr>
@@ -164,11 +167,11 @@
                         <tr>
                            {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td>
-                              <p class="strong mb-1">{{$item->name}}</p>
+                              <p class="strong mb-1">{{$item->crew->name}}</p>
                            </td>
-                           <td>{{$item->barcode}}</td>
-                           <td>{{$item->department}}</td>
-                           <td>{{$item->company}}</td>
+                           <td>{{$item->crew->barcode}}</td>
+                           <td>{{$item->crew->department}}</td>
+                           <td>{{$item->crew->company}}</td>
                            <td>{{$item->desc}}</td>
                         </tr>
                         @endforeach
@@ -189,11 +192,11 @@
                         <tr>
                            {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td>
-                              <p class="strong mb-1">{{$item->name}}</p>
+                              <p class="strong mb-1">{{$item->crew->name}}</p>
                            </td>
-                           <td>{{$item->barcode}}</td>
-                           <td>{{$item->department}}</td>
-                           <td>{{$item->company}}</td>
+                           <td>{{$item->crew->barcode}}</td>
+                           <td>{{$item->crew->department}}</td>
+                           <td>{{$item->crew->company}}</td>
                            <td>{{$item->desc}}</td>
                         </tr>
                         @endforeach

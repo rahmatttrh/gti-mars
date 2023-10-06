@@ -7,7 +7,7 @@
          </div>
          <form action="{{route('schedule.approve.additional')}}" method="POST">
             @csrf
-            {{-- <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden> --}}
+            <input type="number" name="schedule" id="schedule" value="{{$request->schedule->id}}" hidden>
             <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
             <div class="modal-body">
                <div class="row">
@@ -20,7 +20,9 @@
                   <div class="col">
                      <div class="form-floating mb-3">
                         <select required name="from" id="from" class="form-select">
-                           @foreach ($routes as $route)
+                           {{-- <option value="{{$request->schedule->origin_id}}">{{$request->schedule->origin->name}}</option> --}}
+                           @foreach ($fixroutes as $route)
+
                               <option value="{{$route->port_id}}">{{$route->port->name}}</option>
                            @endforeach
                         </select>

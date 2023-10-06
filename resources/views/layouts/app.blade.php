@@ -84,21 +84,7 @@
                               @if (auth()->user()->hasRole('superuser'))
                                  SUPERUSER
                                  @elseif(auth()->user()->hasRole('department'))
-                                 {{auth()->user()->getDepartment()->name}}
-                                 @elseif(auth()->user()->hasRole('logistic'))
-                                 LOGISTIC
-                                 @elseif(auth()->user()->hasRole('drilling'))
-                                 DRILLING
-                                 @elseif(auth()->user()->hasRole('platform'))
-                                 PLATFORM
-                                 @elseif(auth()->user()->hasRole('supplier'))
-                                 SUPPLIER
-                                 @elseif(auth()->user()->hasRole('tenant'))
-                                 TENANT
-                                 @elseif(auth()->user()->hasRole('retail'))
-                                 RETAIL
-                                 @elseif(auth()->user()->hasRole('receiving'))
-                                 RECEIVING
+                                 {{auth()->user()->getDepartment()}}
                                  @elseif(auth()->user()->hasRole('marine'))
                                  MARINE
                                  @elseif(auth()->user()->hasRole('vessel'))
@@ -122,7 +108,7 @@
                         <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
                            <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()->name}}</div>
+                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()}}</div>
                         </div>
                      </a>
                      @elseif(auth()->user()->hasRole('logistic'))
@@ -232,6 +218,7 @@
 
          <div class="page-wrapper" style="min-height: 100vh">
             @yield('content')
+            
             <footer class="footer footer-transparent d-print-none">
                <div class="container-xl">
                   <div class="row text-center align-items-center flex-row-reverse">
@@ -256,6 +243,62 @@
             </footer>
          </div>
       </div>
+
+      @if (session('succedeed'))
+      <div class="modal modal-blur fade" id="succedeed" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+           <div class="modal-content">
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+             <div class="modal-status bg-success"></div>
+             <div class="modal-body text-center py-4">
+               <!-- Download SVG icon from http://tabler-icons.io/i/circle-check -->
+               <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-green icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="9" /><path d="M9 12l2 2l4 -4" /></svg>
+               <h3>Request succedeed</h3>
+               <div class="text-muted">{{ Session::get('succedeed') }}</div>
+             </div>
+             <div class="modal-footer">
+               <div class="w-100">
+                 <div class="row">
+                   <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                       Close
+                     </a></div>
+                   {{-- <div class="col"><a href="#" class="btn btn-success w-100" data-bs-dismiss="modal">
+                       View invoice
+                     </a></div> --}}
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+      </div>
+      @endif
+
+      @if (session('error'))
+      <div class="modal modal-blur fade" id="error" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+               <div class="modal-status bg-danger"></div>
+               <div class="modal-body text-center py-4">
+                  <!-- Download SVG icon from http://tabler-icons.io/i/alert-triangle -->
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon mb-2 text-danger icon-lg" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v2m0 4v.01" /><path d="M5 19h14a2 2 0 0 0 1.84 -2.75l-7.1 -12.25a2 2 0 0 0 -3.5 0l-7.1 12.25a2 2 0 0 0 1.75 2.75" /></svg>
+                  <h3>Failed</h3>
+                  <div class="text-muted">{{ Session::get('error') }}</div>
+               </div>
+               <div class="modal-footer">
+                  <div class="w-100">
+                  <div class="row">
+                     <div class="col"><a href="#" class="btn w-100" data-bs-dismiss="modal">
+                        Close
+                        </a></div>
+                    
+                  </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      @endif
 
       <div class="modal modal-blur fade" id="modal-report" tabindex="-1" role="dialog" aria-hidden="true">
          <div class="modal-dialog modal-lg" role="document">
@@ -378,10 +421,25 @@
       </script>
 
       @stack('chart')
-
+      @stack('get_schedules')
       @stack('ports')
-
       @stack('capacity')
+
+      @if (session('succedeed'))
+         <script>
+            $(document).ready(function() {
+               $('#succedeed').modal('show');
+            });
+         </script>
+      @endif
+
+      @if (session('error'))
+         <script>
+            $(document).ready(function() {
+               $('#error').modal('show');
+            });
+         </script>
+      @endif
 
       @if (session('success'))
          <script>
@@ -392,7 +450,7 @@
                Swal.fire({
                title: 'Success',
                html: '{{ Session::get('success') }}',
-               timer: 2000,
+               timer: 4000,
                timerProgressBar: false,
                didOpen: () => {
                   Swal.showLoading()

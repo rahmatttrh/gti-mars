@@ -94,11 +94,20 @@
    </div>
    <div class="page-body">
       <div class="container-xl">
-         @if ($requestRecents->count() > 0)
-         <div class="alert alert-primary" role="alert">
-            You have {{$requestRecents->count()}} Request Activity. Click <a href="{{route('request')}}" class="alert-link">here</a> to check.
-          </div>
-         @endif
+         @foreach ($schedules as $schedule)
+             @if ($schedule->requests->where('status', 1)->count() > 0)
+             <div class="alert alert-primary" role="alert">
+               You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}} . Click <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="alert-link">here</a> to check.
+             </div>
+             @endif
+         @endforeach
+         {{-- @if ($requestRecents->count() > 0)
+            @foreach ($requestRecents as $rr)
+            <div class="alert alert-primary" role="alert">
+               You have Request Activity. Click <a href="{{route('schedule.detail', enkripRambo($requestRecents->first()->schedule_id))}}" class="alert-link">here</a> to check.
+             </div>
+            @endforeach
+         @endif --}}
 
          @if ($requestAdditionals->count() > 0)
             @foreach ($requestAdditionals as $request)
@@ -162,7 +171,7 @@
                               <th>Vessel</th>
                               <th>Date</th>
                               <th>Activity</th>
-                              <th>From</th>
+                              {{-- <th>From</th> --}}
                               <th>Status</th>
                            </tr>
                         </thead>
@@ -172,7 +181,7 @@
                               <tr>
                                  <td>
                                     <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                                       {{$schedule->vessel->name}}
+                                       {{$schedule->vessel->name ?? '-'}}
                                        @if ($schedule->type == 1)
                                            <div class="badge">R</div>
                                        @endif
@@ -180,7 +189,7 @@
                                  </td>
                                  <td class="">{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                                  <td class=""><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests()->count()}} Activity</a></td>
-                                 <td class="text-nowrap text-muted">{{$schedule->origin->name}} </td>
+                                 {{-- <td class="text-nowrap text-muted">{{$schedule->origin->name}} </td> --}}
                                  <td><x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" /></td>
                               </tr>
                               <x-modal.schedule.request :schedule="$schedule" />

@@ -11,7 +11,7 @@
                
                <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden>
                   <div class="form-floating mb-3">
-                     <select name="type" id="type"  class="form-select">
+                     <select name="type" id="type" required class="form-select">
                         <option value="" selected disabled >Choose Type</option>
                         <option {{ old('type') == $request->type ? 'Depart' : ''}} value="Depart">Depart</option>
                         <option {{ old('type') == $request->type ? 'Return' : ''}} value="Return">Return</option>
@@ -20,7 +20,7 @@
                   </div>
                   <div class="mb-3">
                      <div class="form-label text-muted"><small>Select Crew</small></div>
-                     <select  name="crew" id="crew" class="form-select select2 p-3">
+                     <select  name="crew" id="crew" required class="form-select select2 p-3">
                         <option  disabled selected>Choose</option>
                         @foreach ($crews as $crew)
                            <option  {{old('crew') == $crew->id ? 'selected' : ''}} value="{{$crew->id}}">{{$crew->name}}</option>

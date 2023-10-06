@@ -58,7 +58,7 @@
                         </div>
                         
                         <div class="row">
-                           <div class="col-md-8">
+                           {{-- <div class="col-md-8">
                               <div class="form-floating">
                                  <select required name="origin" id="origin" class="form-select">
                                     <option  disabled selected>Choose port</option>
@@ -69,7 +69,7 @@
                                  </select>
                                  <label for="origin">From</label>
                               </div>
-                           </div>
+                           </div> --}}
                            {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <select required name="destination" id="destination" class="form-select">
@@ -82,12 +82,12 @@
                                  <label for="origin">Destination</label>
                               </div>
                            </div> --}}
-                           <div class="col-md-4">
+                           {{-- <div class="col-md-4">
                               <div class="form-floating mb-3">
                                  <input type="datetime-local" value="{{$schedule->etd}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
                                  <label for="departure_estimasi">Estimasi Keberangkatan</label>
                               </div>
-                           </div>
+                           </div> --}}
                            {{-- <div class="col-md-6">
                               <div class="form-floating mb-3">
                                  <input type="datetime-local" value="{{$schedule->eta}}" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
@@ -96,7 +96,7 @@
                            </div> --}}
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
-                                 <input type="text" required value="{{$schedule->remark}}" class="form-control" id="remark" name="remark" >
+                                 <input type="text"  value="{{$schedule->remark}}" class="form-control" id="remark" name="remark" >
                                  <label for="remark">Remark</label>
                               </div>
                            </div>

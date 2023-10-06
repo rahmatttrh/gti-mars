@@ -16,9 +16,10 @@ class CreateRequestHistoriesTable extends Migration
       Schema::create('request_histories', function (Blueprint $table) {
          $table->id();
          $table->smallInteger('request_id');
+         $table->smallInteger('type_id')->nullable();
+         $table->string('type')->nullable();
          $table->dateTime('date')->nullable();
-         $table->string('reason')->nullable();
-         $table->dateTime('approve')->nullable();
+         $table->string('desc')->nullable();
          $table->timestamps();
       });
    }

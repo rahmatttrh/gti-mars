@@ -224,7 +224,7 @@ class RequestController extends Controller
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       $crews = Crew::orderBy('name', 'asc')->get();
 
-      $schedules = Schedule::where('origin_id', $request->origin_id)->where('status', 0)->get();
+      $schedules = Schedule::where('status', 0)->get();
       $routes = ScheduleRoute::where('schedule_id', $request->schedule_id)->get();
 
       $passengerItems = PassengerItem::where('request_id', $request->id)->get();

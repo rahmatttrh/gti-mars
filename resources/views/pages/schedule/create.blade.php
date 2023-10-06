@@ -58,133 +58,136 @@
    </div>
    <div class="page-body" >
       <div class="container-xl">
-         <div class="card">
-            <div class="card-header">
-               Form Create Schedule Plan
-            </div>
-            <form action="{{route('schedule.store')}}" method="POST">
-               @csrf
-               <div class="card-body">
-                  <div class="row">
-                     <div class="col-md-8">
-                        <x-error :errors="$errors" />
-                        <div class="row">
-                           <div class="col-md-8">
-                              <div class="form-floating mb-3">
-                                 <select  required name="vessel" id="vessel" class="form-select">
-                                    <option  disabled selected>Choose</option>
-                                    @foreach ($vessels as $vessel)
-                                       <option {{ old('vessel') == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}}</option>
-                                    @endforeach
-                                 </select>
-                                 <label for="vessel">Vessel</label>
-                              </div>
-                           </div>
-                           <div class="col-md-4">
-                              @if ($date == null)
-                                 <div class="form-floating mb-3">
-                                    <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
-                                    <label for="date">Date</label>
-                                 </div>
-                                 
-                                 @else
-                                 <div class="form-floating mb-3">
-                                    <input type="date" required value="{{$date}}" class="form-control" id="date" name="date" >
-                                    <label for="date">Date</label>
-                                 </div>
-                              @endif
-                           </div>
-                        </div>
-                        <div class="row">
-                           
-                           <div class="col-md-8">
-                              @if ($from == null)
-                                 <div class="form-floating">
-                                    <select required name="origin" id="origin" class="form-select">
-                                       <option  disabled selected>Choose port</option>
-                                       @foreach ($ports as $port)
-                                          <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                       @endforeach
-                                       
-                                    </select>
-                                    <label for="origin">From</label>
-                                 </div>
-                                 @else 
-                                 <div class="form-floating">
-                                    <select required name="origin" id="origin" class="form-select">
-                                       <option  disabled selected>Choose port</option>
-                                       @foreach ($ports as $port)
-                                          <option {{ $from == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                       @endforeach
-                                       
-                                    </select>
-                                    <label for="origin">From</label>
-                                 </div>
-                              @endif
-                           </div>
-                           {{-- <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <select name="destination" id="destination" class="form-select">
-                                    <option  disabled selected>Choose port</option>
-                                    @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}}</option>
-                                    @endforeach
-                                    
-                                 </select>
-                                 <label for="origin">Destination</label>
-                              </div>
-                           </div> --}}
-                           <div class="col-md-4">
-                              @if ($date == null)
-                                 <div class="form-floating mb-3">
-                                    <input type="datetime-local" value="{{old('departure_estimasi')}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
-                                    <label for="departure_estimasi">ETD</label>
-                                 </div>
-                                 @else
-                                 <div class="form-floating mb-3">
-                                    <input type="datetime-local" value="{{$date}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
-                                    <label for="departure_estimasi">ETD</label>
-                                 </div>
-                              @endif
-                              
-                           </div>
-                           {{-- <div class="col-md-6">
-                              <div class="form-floating mb-3">
-                                 <input type="datetime-local" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
-                                 <label for="arrive_estimasi">Estimasi Kedatangan</label>
-                              </div>
-                           </div> --}}
-                           <div class="col-md-12">
-                              <div class="form-floating">
-                                 <input type="text" class="form-control" id="remark" name="remark" value="{{old('remark')}}" >
-                                 <label for="remark">Remark</label>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     
-                     <div class="col-md-4">
-                        <div class="card">
-                           {{-- <div class="card-header">
-                           <small class="">Info</small>
-                           </div> --}}
-                           <div class="card-body text-center">
-                              <img height="120px" width="auto" src="{{asset('img/draw/calendar.png')}}" alt="">
-                           </div>
-                           <div class="card-footer">
-                              <small class="text-muted">Hint : Vessel schedule can accommodate several activities.</small>
-                           </div>
-                        </div>
-                     </div>
+         <div class="row ">
+            <div class="col-md-5">
+               <div class="card">
+                  <div class="card-header">
+                     Form Create Schedule Plan
                   </div>
+                  <form action="{{route('schedule.store')}}" method="POST">
+                     @csrf
+                     <div class="card-body">
+                        
+                              <x-error :errors="$errors" />
+                              <div class="row">
+                                 <div class="col-md-8">
+                                    <div class="form-floating mb-3">
+                                       <select  required name="vessel" id="vessel" class="form-select">
+                                          <option  disabled selected>Choose</option>
+                                          @foreach ($vessels as $vessel)
+                                             <option {{ old('vessel') == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                          @endforeach
+                                       </select>   
+                                       <label for="vessel">Vessel</label>
+                                    </div>
+                                 </div>
+                                 <div class="col-md-4">
+                                    @if ($date == null)
+                                       <div class="form-floating mb-3">
+                                          <input type="date" required value="{{old('date')}}" class="form-control" id="date" name="date" >
+                                          <label for="date">Date</label>
+                                       </div>
+                                       
+                                       @else
+                                       <div class="form-floating mb-3">
+                                          <input type="date" required value="{{$date}}" class="form-control" id="date" name="date" >
+                                          <label for="date">Date</label>
+                                       </div>
+                                    @endif
+                                 </div>
+                              </div>
+                              <div class="row">
+                                 
+                                 <div class="col-md-8">
+                                    @if ($from == null)
+                                       <div class="form-floating">
+                                          <select required name="origin" id="origin" class="form-select">
+                                             <option  disabled selected>Choose port</option>
+                                             @foreach ($ports as $port)
+                                                <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                             @endforeach
+                                             
+                                          </select>
+                                          <label for="origin">From</label>
+                                       </div>
+                                       @else 
+                                       <div class="form-floating">
+                                          <select required name="origin" id="origin" class="form-select">
+                                             <option  disabled selected>Choose port</option>
+                                             @foreach ($ports as $port)
+                                                <option {{ $from == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                             @endforeach
+                                             
+                                          </select>
+                                          <label for="origin">From</label>
+                                       </div>
+                                    @endif
+                                 </div>
+                                 {{-- <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <select name="destination" id="destination" class="form-select">
+                                          <option  disabled selected>Choose port</option>
+                                          @foreach ($ports as $port)
+                                             <option value="{{$port->id}}">{{$port->name}}</option>
+                                          @endforeach
+                                          
+                                       </select>
+                                       <label for="origin">Destination</label>
+                                    </div>
+                                 </div> --}}
+                                 <div class="col-md-4">
+                                    @if ($date == null)
+                                       <div class="form-floating mb-3">
+                                          <input type="datetime-local" value="{{old('departure_estimasi')}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                          <label for="departure_estimasi">ETD</label>
+                                       </div>
+                                       @else
+                                       <div class="form-floating mb-3">
+                                          <input type="datetime-local" value="{{$date}}" required class="form-control" id="departure_estimasi" name="departure_estimasi" >
+                                          <label for="departure_estimasi">ETD</label>
+                                       </div>
+                                    @endif
+                                    
+                                 </div>
+                                 {{-- <div class="col-md-6">
+                                    <div class="form-floating mb-3">
+                                       <input type="datetime-local" required class="form-control" id="arrive_estimasi" name="arrive_estimasi" >
+                                       <label for="arrive_estimasi">Estimasi Kedatangan</label>
+                                    </div>
+                                 </div> --}}
+                                 <div class="col-md-12">
+                                    <div class="form-floating">
+                                       <input type="text" class="form-control" id="remark" name="remark" value="{{old('remark')}}" >
+                                       <label for="remark">Remark</label>
+                                    </div>
+                                 </div>
+                              </div>
+                           
+                           
+                           {{-- <div class="col-md-4">
+                              <div class="card">
+                                 <div class="card-header">
+                                 <small class="">Info</small>
+                                 </div>
+                                 <div class="card-body text-center">
+                                    <img height="120px" width="auto" src="{{asset('img/draw/calendar.png')}}" alt="">
+                                 </div>
+                                 <div class="card-footer">
+                                    <small class="text-muted">Hint : Vessel schedule can accommodate several activities.</small>
+                                 </div>
+                              </div>
+                           </div> --}}
+                       
+                     </div>
+                     <div class="card-footer">
+                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                           Save
+                        </button>
+                     </div>
+                  </form>
                </div>
-               <div class="card-footer">
-                  <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
-                     Save
-                  </button>
-               </div>
-            </form>
+            </div>
          </div>
        </div>
    </div>

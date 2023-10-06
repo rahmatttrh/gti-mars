@@ -15,7 +15,7 @@ class TypeSeeder extends Seeder
    public function run()
    {
       DB::table('types')->insert([
-         'name' => 'Material Cargo',
+         'name' => 'Cargo',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -27,13 +27,13 @@ class TypeSeeder extends Seeder
       ]);
 
       DB::table('types')->insert([
-         'name' => 'Anchor Towing',
+         'name' => 'Towing',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
       DB::table('types')->insert([
-         'name' => 'Crew Change',
+         'name' => 'Moving',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

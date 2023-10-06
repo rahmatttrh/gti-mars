@@ -21,6 +21,7 @@ class User extends Authenticatable
     */
    protected $fillable = [
       'name',
+      'username',
       'email',
       'password',
    ];
@@ -95,7 +96,12 @@ class User extends Authenticatable
    public function getDepartment()
    {
       $employee = Employee::where('email', $this->email)->first();
-      return $employee->department;
+      if ($employee->department_id) {
+         $department = $employee->department->name;
+      } else {
+         $department = '-';
+      }
+      return $department;
    }
 
    public function getPort()

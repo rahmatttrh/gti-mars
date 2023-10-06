@@ -144,9 +144,9 @@
                         </span>
                      </a>
                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="{{route('schedule.create')}}" >
+                        {{-- <a class="dropdown-item" href="{{route('schedule.create')}}" >
                            Create
-                        </a>
+                        </a> --}}
                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}" >
                            Schedule Plan
                         </a>

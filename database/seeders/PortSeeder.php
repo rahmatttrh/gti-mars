@@ -70,6 +70,31 @@ class PortSeeder extends Seeder
       // ]);
 
       DB::table('ports')->insert([
+         'name' => 'Kalijapat 4',
+         'email' => 'kj4@gmail.com',
+         'type' => 'Port',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('ports')->insert([
+         'name' => 'Kalijapat 5',
+         'email' => 'kj5@gmail.com',
+         'type' => 'Port',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('ports')->insert([
+         'name' => 'Kali Kresek',
+         'email' => 'kalikresek@gmail.com',
+         'type' => 'Port',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+
+      DB::table('ports')->insert([
          'name' => 'COSL 221',
          'email' => 'c221@gmail.com',
          'type' => 'Barge',
@@ -127,7 +152,7 @@ class PortSeeder extends Seeder
 
       DB::table('ports')->insert([
          'name' => 'Onyx',
-         'email' => 'onix@gmail.com',
+         'email' => 'onyx@gmail.com',
          'type' => 'Barge',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -189,29 +214,6 @@ class PortSeeder extends Seeder
          'updated_at' => NOW()
       ]);
 
-      DB::table('ports')->insert([
-         'name' => 'Kalijapat 4',
-         'email' => 'kj4@gmail.com',
-         'type' => 'Port',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('ports')->insert([
-         'name' => 'Kalijapat 5',
-         'email' => 'kj5@gmail.com',
-         'type' => 'Port',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('ports')->insert([
-         'name' => 'Kali Kresek',
-         'email' => 'kalikresek@gmail.com',
-         'type' => 'Port',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
 
 
 

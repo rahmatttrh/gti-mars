@@ -1,0 +1,24 @@
+<?php
+
+namespace Database\Factories;
+
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class CrewFactory extends Factory
+{
+   /**
+    * Define the model's default state.
+    *
+    * @return array
+    */
+   public function definition()
+   {
+      return [
+         'name' => $this->faker->name(),
+         'barcode' => $this->faker->postcode(),
+         'department' => $this->faker->jobTitle(),
+         'company' => $this->faker->company(),
+         'desc' => $this->faker->sentence(),
+      ];
+   }
+}

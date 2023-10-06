@@ -32,12 +32,13 @@
                     
                      @foreach ($schedules as $schedule)
                      
-                        <option value="{{$schedule->id}}">{{$schedule->vessel->name}} - {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</option>  
+                        <option value="{{$schedule->id}}">{{$schedule->vessel->name ?? ''}} - {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</option>  
                      @endforeach
                      
                   </select>
                   <label for="origin">Vessel</label>
                </div>
+               
                <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="remark" name="remark" >
                   <label for="remark">Remark (Optional)</label>

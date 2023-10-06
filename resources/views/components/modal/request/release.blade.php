@@ -4,6 +4,7 @@
        <div class="modal-body">
          <div class="modal-title">Are you sure?</div>
          <div>This All Request Activity will send to Marine</b>.</div>
+         <small>The system will try to find a vessel for you </small>
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>

@@ -2,13 +2,13 @@
    <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">{{$schedule->vessel->name}}</h5>
+            <h5 class="modal-title">{{$schedule->vessel->name ?? '-'}}</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <div class="modal-body">
             <dl class="row border-bottom pb-3">
                <dt class="col-12">{{$schedule->date}}</dt>
-               <dt class="col-12">{{$schedule->origin->name}}</dt>
+               {{-- <dt class="col-12">{{$schedule->origin->name}}</dt> --}}
             </dl>
             @foreach ($schedule->requests as $request)
             <div class="card mb-2 shadow-none">

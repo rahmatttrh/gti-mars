@@ -46,9 +46,13 @@
                            
                         @endif
                         @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                           <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
+                           {{-- <a class="dropdown-item" href="{{route('schedule.edit', enkripRambo($schedule->id))}}">
+                              Edit
+                           </a> --}}
+                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#schedule-edit">
                               Edit
                            </a>
+                           
                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modal-delete-schedule">
                               Delete
                            </a>
@@ -77,29 +81,38 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col-md-8">
-                           <small>Vessel</small>
+                           <small>{{$schedule->vessel->type ?? ''}} Vessel</small>
                            <h2 class="d-flex align-items-center">
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
                               @if ($schedule->type == 1)
                               &nbsp;<div class="badge">R</div>
                                  @endif
                            </h2>
-                           <small>Pick up point from {{$schedule->origin->name}} </small>
-                           <h2> <span class="text-info">{{$schedule->origin->name}}</span>
-                              @foreach ($routes as  $route)
-                                 @if ($route->request->status == 12)
-                                    <span class="text-info">- {{$route->port->name}} </span>
-                                    @else
-                                    - {{$route->port->name}} 
-                                 @endif
+                           {{-- <small>Pick up point from {{$schedule->origin->name}} </small> --}}
+                           {{-- <span class="badge bg-info">s</span> --}}
+                           <div>
+                              <span class="text-primary h3"></span>
+                              @foreach ($fixRoutes as  $route)
                                  
+                                 <a href="#" class="h3" data-bs-toggle="modal" data-bs-target="#reorder-route-{{$route->id}}">
+                                    @if ($route->rank > 1)
+                                        -
+                                    @endif 
+                                    {{$route->port->name}}
+                                 </a>
+                                 
+
+                                 <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes" />
                               @endforeach
-                           </h2>
-                           @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                              <small><a href="#" data-bs-toggle="modal" data-bs-target="#schedule-reset-route">Reset route</a></small>
-                           @endif
+                           </div>
                            
-                           <div class="text-muted mt-3"> 
+
+                           {{-- @if (auth()->user()->hasRole('marine') )
+                              <small><a href="#" data-bs-toggle="modal" data-bs-target="#reset-route">Reset route</a></small>
+                           @endif --}}
+                          
+                           
+                           <div class="text-muted mt-1"> 
                               @if ($lastPostpone)
                                  {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/y')}} Postpone to
                               @endif
@@ -108,6 +121,7 @@
                                  <br><small>{{$lastPostpone->reason}}</small>
                               @endif
                            </div>
+                           <div class="text-muted mt-2">Remark : {{$schedule->remark}}</div>   
                            
                            {{-- <div class="text-muted mb-2 mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div> --}}
                         </div>
@@ -117,7 +131,7 @@
                                  <div class="row mb-3 align-items-center">
                                     <div class="col">
                                        <div class="text-muted text-white">
-                                          <small> Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight}} ton</small>
+                                          <small> Deadweight {{$schedule->total_weight}} / {{$schedule->vessel->deadweight ?? '0'}} ton</small>
                                        </div>
                                        <div class="mt-2">
                                           <div class="row g-2 align-items-center">
@@ -137,7 +151,7 @@
                                  <div class="row mb-3 align-items-center">
                                     <div class="col">
                                       <div class="text-muted text-white">
-                                         <small>  Deckspace {{$schedule->total_size}} / {{$schedule->vessel->deckspace}} (m<sup>2</sup>)</small>
+                                         <small>  Deckspace {{$schedule->total_size}} / {{$schedule->vessel->deckspace ?? '0'}} (m<sup>2</sup>)</small>
                                       </div>
                                       <div class="mt-2">
                                         <div class="row g-2 align-items-center">
@@ -162,7 +176,11 @@
                      
                   </div>
                   <div class="card-footer">
-                     <div class="text-muted"># {{$schedule->remark}}</div>   
+                     @if (auth()->user()->hasRole('marine'))
+                           <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#add-route">Add Route</a></small>
+                              <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#reset-route">Reset Route</a></small>
+                           @endif
+                     
                      
                   </div>
                </div>
@@ -170,7 +188,7 @@
                {{-- <hr> --}}
                {{-- <small class="badge badge-primary mb-2 mt-3">Activity</small><br> --}}
                   @if ($requests->count() > 0)
-                     <x-schedule.request :requests="$requests" :routes="$routes" :schedule="$schedule" />
+                     <x-schedule.request :requests="$requests" :routes="$routes" :fixroutes="$fixRoutes" :schedule="$schedule" />
                      @else
                         <div class="card mb-2">
                            <div class="card-body">
@@ -185,8 +203,8 @@
                
             </div>
             <div class="col-md-4">
-               @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                  <div class="card " style="height: calc(20rem + 10px)">
+               @if (auth()->user()->hasRole('marine') )
+                  <div class="card mb-2" style="height: calc(25rem + 10px)">
                      <div class="card-header">
                         Recent Request Activity
                      </div>
@@ -197,16 +215,20 @@
                                  <div>
                                     <div class="row">
                                        <div class="col">
-                                          <div class="text-truncate">
-                                             <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
-                                             {{$req->activity->name}} {{$req->description}}</a>
+                                          <div class="text-truncate text-muted">
+                                             {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#add-request-{{$req->id}}">
+                                             {{$req->activity->name}} {{$req->description}}</a> --}}
+                                             {{$req->activity->name}} {{$req->description}}
                                           </div>
                                           <div class="text-muted">{{$req->origin->name}} - {{$req->destination->name}}</div>
-                                          <div class="text-muted">{{$req->employee->name}}/{{$req->department->name}}</div>
+                                          <div class="text-muted mb-1"><small> {{$req->employee->name}}/{{$req->department->name}}</small></div>
+                                          <a href="#" data-bs-toggle="modal" class="btn btn-light btn-sm" data-bs-target="#add-request-{{$req->id}}">Approve</a>
+                                          <a href="#" data-bs-toggle="modal" class="btn btn-light btn-sm" data-bs-target="#reject-request-{{$req->id}}">Change</a>
                                        </div>
                                     </div>
                                  </div>
-                                 <x-modal.schedule.add-request :request="$req" :schedule="$schedule" />
+                                 <x-modal.schedule.add-request :request="$req" :schedule="$schedule" :routes="$routes" />
+                                 <x-modal.schedule.reject-request :request="$req" :schedule="$schedule" :routes="$routes" :schedules="$schedules" />
                               @endforeach
                               @else
                               <div class="row">
@@ -259,8 +281,11 @@
    <x-modal.schedule.accept :schedule="$schedule" />
    <x-modal.schedule.postpone :schedule="$schedule" />
    <x-modal.schedule.delete :schedule="$schedule" />
-   <x-modal.schedule.reset :schedule="$schedule" />
-   <x-modal.schedule.update-status :schedule="$schedule" :routes="$routes" :ports="$ports" :iddestinations="$iddestinations" :destinations="$destinations" :statuses="$statuses" />
+   <x-modal.schedule.reset :schedule="$schedule"  />
+   <x-modal.schedule.edit :schedule="$schedule" :vessels="$vessels" />
+   <x-modal.schedule.add-route :schedule="$schedule" :routes="$routes" />
+   
+   <x-modal.schedule.update-status :schedule="$schedule" :fixroutes="$fixRoutes" :ports="$ports" :iddestinations="$iddestinations" :destinations="$destinations" :statuses="$statuses" />
    {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
    <x-modal.schedule.send :schedule="$schedule" />
    {{-- <x-modal.schedule.standby :schedule="$schedule" />

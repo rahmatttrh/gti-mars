@@ -19,6 +19,7 @@ class CreateEmployeesTable extends Migration
          $table->integer('port_id');
          $table->string('code')->nullable();
          $table->string('name');
+         $table->string('username');
          $table->string('email');
          $table->string('ekstensi');
          $table->timestamps();

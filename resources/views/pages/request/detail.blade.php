@@ -141,17 +141,17 @@
                            <small>{{$request->bcm}}</small><br>
                            {{-- <small> {{$request->department->name}} Department</small> --}}
                            <h4 class="card-title m-0 ">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</h4>
-                           {{-- <h4 class="card-title m-0 ">
-                              {{$request->activity->name ?? ''}}  {{$request->description}}
-                           </h4> --}}
+                           <h4 class="card-title m-0 ">
+                               {{$request->description}}
+                           </h4>
                            <h4 class="card-title m-0 ">
                               {{$request->origin->name}} - {{$request->destination->name}}
                            </h4>
                            <br>
-                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}} <br> at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}} <br>  created at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
                         </div>
                         <div class="col-md-4">
-                           @if ($request->status >= 2 && $request->status != 202)
+                           @if ($request->status >= 1 && $request->status != 202)
                               <x-requests.schedule :schedule="$request->schedule" :histories="$requestHistories" :request="$request" />
                            @endif
 
@@ -255,7 +255,8 @@
         <div class="modal-content">
           <div class="modal-body">
             <div class="modal-title">Are you sure?</div>
-            <div>This Request Activity will send to Marine</b>.</div>
+            <div>This Request Activity will send to Marine and s hystem will try to find a vessel for you</div>
+            <small> </small>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>

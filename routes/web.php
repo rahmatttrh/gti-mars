@@ -57,6 +57,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+   Route::prefix("fetch")->group(function () {
+      Route::get("schedule/{value}", [FetchController::class, "fetchSchedules",]);
+   });
+
    Route::get('send-email', [EmailController::class, 'test'])->name('test.email');
 
    Route::prefix('platform')->group(function () {
@@ -179,6 +183,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix('document')->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
+      Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
    });
 
    Route::prefix('employee')->group(function () {
@@ -228,7 +233,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('delete/{crew:id}', [CrewController::class, 'delete'])->name('crew.delete');
    });
 
-   Route::prefix('employee')->group(function () {
+   Route::prefix('user')->group(function () {
       Route::get('/', [EmployeeController::class, 'index'])->name('employee');
       Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
       Route::put('update', [EmployeeController::class, 'update'])->name('employee.update');
@@ -259,6 +264,8 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
       Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
       Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
+      Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
+      Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');

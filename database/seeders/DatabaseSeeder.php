@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Crew;
 use App\Models\PayloadType;
 use Illuminate\Database\Seeder;
 
@@ -37,5 +38,7 @@ class DatabaseSeeder extends Seeder
          StatusSeeder::class
          // VesselStatusSeeder::class
       ]);
+
+      Crew::factory(30)->create();
    }
 }

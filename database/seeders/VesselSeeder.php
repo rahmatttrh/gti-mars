@@ -79,6 +79,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 1,
+         'port_id' => 16,
          'name' => 'TRANSKO MOLOKO',
          'username' => 'moloko',
          'type' => 'AHTS',
@@ -91,6 +92,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 16,
          'name' => 'TRANSKO BALIHO',
          'username' => 'baliho',
          'type' => 'AHTS',
@@ -103,6 +105,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 9,
          'name' => 'LOGINDO OVERCOMER',
          'username' => 'logindo',
          'type' => 'AHTS',
@@ -115,6 +118,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 17,
          'name' => 'INDOLIZIZ SATU',
          'username' => 'indoliziz',
          'type' => 'AHTS',
@@ -127,6 +131,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 17,
          'name' => 'PETEKA 5402',
          'username' => 'peteka5402',
          'type' => 'AHTS',
@@ -139,6 +144,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 15,
          'name' => 'SIGAP JAYA',
          'username' => 'sigapjaya',
          'type' => 'Crew Boat',
@@ -151,6 +157,7 @@ class VesselSeeder extends Seeder
 
       DB::table('vessels')->insert([
          'status' => 0,
+         'port_id' => 6,
          'name' => 'TRITON JAWARA',
          'username' => 'tritonjawara',
          'type' => 'AHTS',

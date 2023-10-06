@@ -45,8 +45,7 @@
                         <th class="text-center">No.</th>
                         <th>Name</th>
                         <th>Type</th>
-                        <th>Owner</th>
-                        <th>Operator</th>
+                        <th>Location</th>
                         <th>Status</th>
                      </tr>
                   </thead>
@@ -56,8 +55,7 @@
                            <td class="text-center">{{++$i}}</td>
                            <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
                            <td>{{$vessel->type}}</td>
-                           <td>{{$vessel->owner}}</td>
-                           <td>{{$vessel->operator}}</td>
+                           <td>{{$vessel->port->name ?? '-'}}</td>
                            <td><x-status.vessel :vessel="$vessel" /></td>
                         </tr>
                      @endforeach

@@ -85,16 +85,31 @@
                         @enderror
                      </div>
                      <div class="form-floating mb-3">
-                        <input type="email" required class="form-control" id="email" name="email" value="{{old('email')}}">
-                        <label for="email">Email</label>
-                        @error('email')
+                        <input type="text" required class="form-control" id="username" name="username" value="{{old('username')}}" >
+                        <label for="username">Username</label>
+                        @error('username')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
                      </div>
-                     <div class="form-floating mb-3">
-                        <input type="string" required class="form-control" id="ekstensi" name="ekstensi" value="{{old('ekstensi')}}">
-                        <label for="ekstensi">Ekstensi</label>
+                     <div class="row">
+                        <div class="col-md-8">
+                           <div class="form-floating mb-3">
+                              <input type="email" required class="form-control" id="email" name="email" value="{{old('email')}}">
+                              <label for="email">Email</label>
+                              @error('email')
+                                 <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                              @enderror
+                           </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="form-floating mb-3">
+                              <input type="string" required class="form-control" id="ekstensi" name="ekstensi" value="{{old('ekstensi')}}">
+                              <label for="ekstensi">Ekstensi</label>
+                           </div>
+                        </div>
                      </div>
+                     
+                     
                      <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
                         Save
@@ -121,14 +136,16 @@
                            <tr>
                               <th class="text-center">No.</th>
                               <th>Name</th>
-                              <th>Department</th>
+                              {{-- <th>Department</th> --}}
                               <th>Loc</th>
-                              <th>Email</th>
+                              {{-- <th>Email</th> --}}
                               <th>Ekstensi</th>
+                              <th>Option</th>
                            </tr>
                         </thead>
                         <tbody>
                            @foreach ($employees as $employee)
+                              @if ($employee->id > 1)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
                                  <td>
@@ -145,7 +162,8 @@
                                           </a>
                                        </div>
                                     </div> --}}
-                                    <div class="dropdown">
+                                    {{$employee->name}}
+                                    {{-- <div class="dropdown">
                                        <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
                                           {{$employee->name}}
                                        </a>
@@ -160,13 +178,33 @@
                                              Delete
                                           </a>
                                        </div>
+                                    </div> --}}
+                                 </td>
+                                 {{-- <td>{{$employee->department->name ?? '-'}}</td> --}}
+                                 <td>{{$employee->port->name}}</td>
+                                 {{-- <td>{{$employee->email}}</td> --}}
+                                 <td>{{$employee->ekstensi}}</td>
+                                 <td>
+                                    <div class="dropdown">
+                                       <a href="#" class="dropdown-toggle btn btn-sm align-text-top" data-bs-toggle="dropdown">
+                                          Option
+                                       </a>
+                                       <div class="dropdown-menu dropdown-menu-end">
+                                          <a class="dropdown-item" href="{{route('employee.profile', enkripRambo($employee->id))}}">
+                                             Profile
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditEmployee_{{$employee->id}}">
+                                             Edit
+                                          </a>
+                                          <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteEmployee_{{$employee->id}}">
+                                             Delete
+                                          </a>
+                                       </div>
                                     </div>
                                  </td>
-                                 <td>{{$employee->department->name}}</td>
-                                 <td>{{$employee->port->name}}</td>
-                                 <td>{{$employee->email}}</td>
-                                 <td>{{$employee->ekstensi}}</td>
                               </tr>
+                              @endif
+                              
 
                               <x-modal.employee.delete :employee="$employee" />
                               <x-modal.employee.edit :employee="$employee" :departments="$departments" :ports="$ports" />

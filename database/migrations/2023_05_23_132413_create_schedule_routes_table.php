@@ -18,7 +18,7 @@ class CreateScheduleRoutesTable extends Migration
          $table->mediumInteger('schedule_id');
          $table->integer('request_id');
          $table->mediumInteger('port_id');
-         $table->smallInteger('rank');
+         $table->smallInteger('rank')->nullable();
          $table->smallInteger('status')->nullable();
          $table->timestamps();
       });

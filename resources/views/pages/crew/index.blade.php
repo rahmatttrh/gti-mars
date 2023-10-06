@@ -36,7 +36,7 @@
    <div class="page-body">
       <div class="container-xl">
          <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                
                <div class="card">
                   <div class="card-header">Form Add Crew</div>
@@ -60,13 +60,13 @@
                         @enderror
                      </div>
                      <div class="row">
-                        <div class="col-md-5">
+                        <div class="col-md-12">
                            <div class="form-floating mb-3">
                               <input type="text" required class="form-control" id="barcode" name="barcode" value="{{old('barcode')}}">
                               <label for="barcode">Barcode</label>
                            </div>
                         </div>
-                        <div class="col-md-7">
+                        <div class="col-md-12">
                            <div class="form-floating mb-3">
                               <input type="text" required class="form-control" id="department" name="department" value="{{old('department')}}">
                               <label for="department">Department</label>
@@ -106,13 +106,31 @@
                </form>
                </div>
             </div>
-            <div class="col-md-8 ">
-               <div class="card">
+            <div class="col-md-9 ">
+               <div class="card">   
+                  <div class="card-header">
+                     <small>Page
+                        {{$crews->currentPage()}}</small>
+                  </div>
+                  {{-- <div class="card-body border-bottom">
+                     <div class="d-flex">
+                        <div class="text-muted text-xs">
+                           <small>Page
+                           {{$crews->currentPage()}}</small>
+                        </div>
+                        <div class="ms-auto text-muted">
+                           Search:
+                           <div class="ms-2 d-inline-block">
+                              <input type="text" id="search" name="search" class="form-control form-control-sm" aria-label="Search invoice">
+                           </div>
+                        </div>
+                     </div>
+                  </div> --}}
                   <div class="table-responsive">
                      <table  class="table " >
                         <thead>
                            <tr>
-                              <th class="text-center">No.</th>
+                              {{-- <th class="text-center">No.</th> --}}
                               <th>Name</th>
                               <th>Barcode</th>
                               <th>Department</th>
@@ -121,9 +139,12 @@
                            </tr>
                         </thead>
                         <tbody>
+                           @php
+                               $no = 0
+                           @endphp
                            @foreach ($crews as $crew)
                               <tr>
-                                 <td class="text-center">{{++$i}}</td>
+                                 {{-- <td class="text-center">{{++$no}}</td> --}}
                                  <td>
                                     
                                     <div class="dropdown">
@@ -152,14 +173,19 @@
                               <x-modal.crew.delete :crew="$crew" />
                               <x-modal.crew.edit :crew="$crew" />
                            @endforeach
-                           <tr>
+                           {{-- <tr>
                               <td colspan="6" class="p-4"></td>
                            </tr>
                            <tr>
                               <td colspan="6" class="p-4"></td>
-                           </tr>
+                           </tr> --}}
                         </tbody>
+                        
                      </table>
+                     
+                  </div>
+                  <div class="card-footer">
+                     {{ $crews->links() }}   
                   </div>
                </div>
             </div>

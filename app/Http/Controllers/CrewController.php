@@ -10,7 +10,7 @@ class CrewController extends Controller
 {
    public function index()
    {
-      $crews = Crew::orderBy('name', 'asc')->get();
+      $crews = Crew::orderBy('name', 'asc')->orderBy('name', 'desc')->simplePaginate(8);
       return view('pages.crew.index', [
          'crews' => $crews
       ])->with('i');

@@ -126,16 +126,22 @@ class ScheduleController extends Controller
 
    public function detail($id)
    {
+      $now = Carbon::now();
+      // dd($now->addDay(1));
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      $schedules = Schedule::get();
+      // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
-      $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->where('origin_id', '=', $schedule->origin_id)->get();
+      $recentRequests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '=', 1)->get();
+
 
       $statuses = Status::where('type', 1)->get();
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
-      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', null)->get();
+      $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
       // dd($lastPostpone->to);
 
@@ -159,16 +165,16 @@ class ScheduleController extends Controller
       } elseif (auth()->user()->hasRole('department')) {
          $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 3)->orWhere('class', 'additional')->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
       } else {
-         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>', 3)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 3)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
       }
 
 
-      foreach ($routes as $route) {
-         $reqs = ModelsRequest::where('origin_id', '=', $route->port_id)->where('status', '=', 1)->get();
-         foreach ($reqs as $req) {
-            $recentRequests[] = $req;
-         }
-      }
+      // foreach ($routes as $route) {
+      //    $reqs = ModelsRequest::where('origin_id', '=', $route->port_id)->where('status', '=', 1)->get();
+      //    foreach ($reqs as $req) {
+      //       $recentRequests[] = $req;
+      //    }
+      // }
 
       // dd($recentRequests->count())
 
@@ -182,7 +188,12 @@ class ScheduleController extends Controller
       // dd($iddestinations);
 
       // $report = Report::where('schedule_id', $schedule->id)->first();
-      $vessel = Vessel::get();
+      if ($schedule->type == 2) {
+         $vessel = Vessel::where('type', 'Crew Boat')->get();
+      } else {
+         $vessel = Vessel::get();
+      }
+
       $report = Report::where('schedule_id', $schedule->id)->first();
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
       // dd($report);
@@ -198,10 +209,17 @@ class ScheduleController extends Controller
          $deviations = null;
       }
 
-      $persenWeight = $schedule->total_weight / $schedule->vessel->deadweight * 100;
-      $persenSize = $schedule->total_size / $schedule->vessel->deckspace * 100;
+      if ($schedule->vessel) {
+         $persenWeight = $schedule->total_weight / $schedule->vessel->deadweight * 100;
+         $persenSize = $schedule->total_size / $schedule->vessel->deckspace * 100;
+      } else {
+         $persenWeight = 0;
+         $persenSize = 0;
+      }
+
       // dd(round($persen));
       return view('pages.schedule.detail', [
+         'schedules' => $schedules,
          'schedule' => $schedule,
          'report' => $report,
          'lastreport' => $lastreport,
@@ -210,6 +228,7 @@ class ScheduleController extends Controller
          'vessels' => $vessel,
          'ports' => $ports,
          'routes' => $routes,
+         'fixRoutes' => $fixRoutes,
          'statuses' => $statuses,
          'deviations' => $deviations,
          'persenWeight' => round($persenWeight),

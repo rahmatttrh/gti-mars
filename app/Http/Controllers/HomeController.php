@@ -118,7 +118,8 @@ class HomeController extends Controller
       $schedules = Schedule::where('type', 2)->whereMonth('date', $month)->get();
       $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->get();
       $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
-
+      // $user = Employee::where('email', auth()->user->email)->first();
+      // dd($user);
       if ($month == 1) {
          $monthName = 'Januari';
       } elseif ($month == 2) {
@@ -146,6 +147,7 @@ class HomeController extends Controller
       }
 
       return view('home', [
+         // 'user' => $user,
          'today' => $today,
          'monthName' => $monthName,
          'requestRecents' => $requestRecents,
@@ -318,10 +320,11 @@ class HomeController extends Controller
       // }
 
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
-
+      $user = Employee::where('email', auth()->user()->email)->first();
 
 
       return view('home', [
+         'user' => $user,
          'today' => $today,
          'requests' => $requests,
          'monthName' => $monthName,

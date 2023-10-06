@@ -41,8 +41,8 @@
                            {{-- @foreach ($ports as $port)
                               <option value="{{$port->id}}">{{$port->name}}</option>  
                            @endforeach --}}
-                           <option value="{{$schedule->origin_id}}">{{$schedule->origin->name}}</option>  
-                           @foreach ($routes as $route)
+                           {{-- <option value="{{$schedule->origin_id}}">{{$schedule->origin->name}}</option>   --}}
+                           @foreach ($fixroutes as $route)
                               <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
                            @endforeach
                            

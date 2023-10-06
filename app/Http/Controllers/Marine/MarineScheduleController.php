@@ -30,6 +30,7 @@ class MarineScheduleController extends Controller
 
       $now = Carbon::now();
       $dekripMonth = dekripRambo($month);
+      // dd($dekripMonth);
       // $today = Carbon::now();
       // $month = $today->format('m');
 
@@ -72,28 +73,32 @@ class MarineScheduleController extends Controller
             }
          }
          // dd($wednesdays);
+         $vessel = Vessel::find(9);
 
          foreach ($mondays as $monday) {
             // dd($day->format('Y-m-d'));
             Schedule::create([
+               'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'vessel_id' => 9,
+               'vessel_id' => $vessel->id,
+               'vessel_type' => $vessel->type,
                'date' => $monday->format('Y-m-d'),
-               'origin_id' => 16,
                'etd' => $monday->format('Y-m-d'),
                'eta' => $monday->format('Y-m-d'),
             ]);
          }
 
+         $vessel = Vessel::find(30);
          foreach ($wednesdays as $wednesday) {
             // dd($day->format('Y-m-d'));
             Schedule::create([
+               'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'vessel_id' => 7,
+               'vessel_id' => $vessel->id,
+               'vessel_type' => $vessel->type,
                'date' => $wednesday->format('Y-m-d'),
-               'origin_id' => 16,
                'etd' => $wednesday->format('Y-m-d'),
                'eta' => $wednesday->format('Y-m-d'),
             ]);
@@ -133,14 +138,16 @@ class MarineScheduleController extends Controller
       } elseif ($dekripMonth == 12) {
          $monthName = 'Desember';
       }
+
+      $vessels = Vessel::get();
       return view('pages.schedule.index', [
          'typeName' => 'by Request',
          'type' => 2,
-         'month' => $month,
+         'month' => $dekripMonth,
          'monthName' => $monthName,
          'schedules' => $schedules,
-         'regulerSchedules' => $regulerSchedules
-         // 'vessels' => $vessels,
+         'regulerSchedules' => $regulerSchedules,
+         'vessels' => $vessels,
          // 'ports' => $ports
       ])->with('i');
    }
@@ -217,21 +224,24 @@ class MarineScheduleController extends Controller
       // dd($req->type);
       $vessel = Vessel::find($req->vessel);
 
-      $schedule = Schedule::create([
-         'type' => 2,
-         'status' => 0,
-         'vessel_id' => $req->vessel,
-         'date' => $req->date,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
-         'etd' => $req->departure_estimasi,
-         'eta' => $req->arrive_estimasi,
-         'remark' => $req->remark
-      ]);
+      $vesselHasSchedule = Schedule::where('date', $req->date)->where('vessel_id', $vessel->id)->first();
+      if ($vesselHasSchedule) {
+         return redirect()->back()->with('error', 'This vessel has already schedule at that day');
+      } else {
+         $schedule = Schedule::create([
+            'by' => 'marine',
+            'type' => 2,
+            'status' => 0,
+            'vessel_id' => $vessel->id,
+            'vessel_type' => $vessel->type,
+            'date' => $req->date,
+            'etd' => $req->departure_estimasi,
+            // 'eta' => $req->arrive_estimasi,
+            'remark' => $req->remark
+         ]);
 
-
-
-      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule successfuly added');
+         return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule successfuly added');
+      }
    }
 
    public function edit($id)
@@ -256,10 +266,7 @@ class MarineScheduleController extends Controller
       $schedule->update([
          'vessel_id' => $req->vessel,
          'date' => $req->date,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
          'etd' => $req->departure_estimasi,
-         'eta' => $req->arrive_estimasi,
          'remark' => $req->remark
       ]);
 
@@ -293,8 +300,17 @@ class MarineScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      if (!$schedule->vessel_id) {
+         return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');
+      }
       $vessel = Vessel::find($schedule->vessel_id);
       $status = Status::where('code', '01')->first();
+      $scheduleRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', null)->first();
+
+      // dd($scheduleRoute);
+      if ($scheduleRoute) {
+         return redirect()->back()->with('warning', 'Route belum selesai di buat');
+      }
 
       $now = Carbon::now();
 
@@ -343,7 +359,7 @@ class MarineScheduleController extends Controller
 
       $body = $date;
       $body .= '<br>';
-      $body .= $schedule->origin->name;
+      // $body .= $schedule->origin->name;
 
       $data = [
          'to' => $schedule->vessel->name,
@@ -379,29 +395,72 @@ class MarineScheduleController extends Controller
       return redirect()->back()->with('success', 'Request Activity successfully removed from list');
    }
 
+   public function addRoute(Request $req)
+   {
+      $scheduleRoute = ScheduleRoute::find($req->destination);
+      $lastScheduleRoute = $scheduleRoute::where('schedule_id', $req->schedule)->where('status', 1)->orderBy('rank', 'desc')->first();
+      // dd($lastScheduleRoute->rank);
+      if ($lastScheduleRoute) {
+         $rank = $lastScheduleRoute->rank + 1;
+      } else {
+         $rank = 1;
+      }
+      $scheduleRoute->update([
+         'status' => 1,
+         'rank' => $rank
+      ]);
+
+      return redirect()->back()->with('success', 'Schedule Route successfully added');
+   }
+
+   public function reorderRoute(Request $req)
+   {
+      $schedule = Schedule::find($req->schedule);
+      $choseRoute = ScheduleRoute::find($req->route);
+      // dd($schedule->vessel->name);
+
+      $after = ScheduleRoute::find($req->after);
+      // dd($after->port->name);
+      $remainRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $after->rank)->where('id', '!=', $choseRoute->id)->get();
+      foreach ($remainRoutes as $rr) {
+         $rr->update([
+            'rank' => $rr->rank + 1
+         ]);
+      }
+
+      $choseRoute->update([
+         'rank' => $after->rank + 1
+      ]);
+
+      return redirect()->back()->with('success', 'Schedule Route successfully updated');
+   }
+
    public function resetRoute($id)
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $requests = ModelsRequest::where('schedule_id', $schedule->id)->get();
 
-      foreach ($requests as $request) {
-         $request->update([
-            'status' => 1,
-            'schedule_id' => null,
+      // foreach ($requests as $request) {
+      //    $request->update([
+      //       'status' => null,
+
+      //       'rank' => null
+      //    ]);
+      // }
+
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+      foreach ($routes as $route) {
+         $route->update([
+            'status' => null,
             'rank' => null
          ]);
       }
 
-      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
-      foreach ($routes as $route) {
-         $route->delete();
-      }
-
-      $schedule->update([
-         'total_size' => null,
-         'total_weight' => null
-      ]);
+      // $schedule->update([
+      //    'total_size' => null,
+      //    'total_weight' => null
+      // ]);
 
       return redirect()->back()->with('success', 'Schedule Route successfully reseted');
    }

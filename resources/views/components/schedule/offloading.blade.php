@@ -13,6 +13,7 @@
       <div class="divide-y">
          @foreach ($offloadings as $offloading)
             <div>
+               <h4>MTD : <b>{{$offloading->cargoitem->mtd}}</b></h4>
                <div class="row">
                   <div class="col">
                      <div class="">
