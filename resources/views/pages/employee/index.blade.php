@@ -191,7 +191,7 @@
                                        </a>
                                        <div class="dropdown-menu dropdown-menu-end">
                                           <a class="dropdown-item" href="{{route('employee.profile', enkripRambo($employee->id))}}">
-                                             Profile
+                                             Detail
                                           </a>
                                           <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalEditEmployee_{{$employee->id}}">
                                              Edit

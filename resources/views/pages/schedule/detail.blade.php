@@ -81,7 +81,7 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col-md-8">
-                           <small>{{$schedule->vessel->type ?? ''}} Vessel</small>
+                           <small>{{$schedule->vessel->type ?? ''}}</small>
                            <h2 class="d-flex align-items-center">
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
                               @if ($schedule->type == 1)

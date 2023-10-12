@@ -141,14 +141,14 @@
                            <small>{{$request->bcm}}</small><br>
                            {{-- <small> {{$request->department->name}} Department</small> --}}
                            <h4 class="card-title m-0 ">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</h4>
-                           <h4 class="card-title m-0 ">
+                           <h1 >
                                {{$request->description}}
-                           </h4>
+                           </h1>
                            <h4 class="card-title m-0 ">
                               {{$request->origin->name}} - {{$request->destination->name}}
                            </h4>
                            <br>
-                           <small class="">Requested by {{$request->employee->name}} / {{$request->employee->ekstensi}} <br>  created at {{\Carbon\Carbon::parse($request->created_at)->format('d/m/Y - H:i')}}</small>
+                           <small class="">Requested by {{$request->employee->name}}  {{$request->employee->ekstensi}}  at {{\Carbon\Carbon::parse($request->created_at)->format('d M Y - H:i')}}</small>
                         </div>
                         <div class="col-md-4">
                            @if ($request->status >= 1 && $request->status != 202)

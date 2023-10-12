@@ -142,7 +142,7 @@
                      <div class="d-flex align-items-center">
                      <div class="subheader ">Complete Request</div>
                      </div>
-                     <div class="h2 ">{{$requests->where('status', 3)->count()}} </div>
+                     <div class="h2 ">{{$requests->where('status', 12)->count()}} </div>
                   </div>
                </div>
             </div>
