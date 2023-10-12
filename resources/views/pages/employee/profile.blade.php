@@ -13,7 +13,7 @@
                   Overview
                </div>
                <h2 class="page-title">
-                  Employee Detail
+                  User Detail
                </h2>
             </div>
             <!-- Page title actions -->
@@ -55,19 +55,24 @@
                         <dd class="col-8">{{$employee->port->name}}</dd>
                         <dt class="col-4">Email</dt>
                         <dd class="col-8">{{$employee->email}}</dd>
+                        <dt class="col-4">Username</dt>
+                        <dd class="col-8">{{$employee->username}}</dd>
                         <dt class="col-4">Extension</dt>
                         <dd class="col-8">{{$employee->ekstensi}}</dd>
                      </dl>
                   </div>
                </div>
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-8">
                <div class="card">
+                  <div class="card-header">
+                     History Request Activity
+                  </div>
                   <div class="table-responsive">
                      <table  class="table " >
                         <thead>
                            <tr>
-                              <th>Code</th>
+                              {{-- <th>Code</th> --}}
                               <th>Date</th>
                               <th>Activity</th>
                               <th>Route</th>
@@ -77,8 +82,8 @@
                         <tbody>
                            @foreach ($requests as $request)
                            <tr>
-                              <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a> </td>
-                              <td>{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</td>
+                              {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a> </td> --}}
+                              <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</a></td>
                               <td>{{$request->activity->name}} {{$request->description}}</td>
                               <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                               <td><x-status.request :request="$request" /></td>

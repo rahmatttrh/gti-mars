@@ -2,7 +2,7 @@
    @if ($recentschedules->count() > 0)
       @foreach ($recentschedules as $recent)
          <div class="alert alert-primary" role="alert">
-            You have a Schedule from {{$recent->origin->name}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
+            You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
          </div>
       @endforeach
    @endif

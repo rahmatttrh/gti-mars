@@ -28,7 +28,7 @@
                      @if ($schedule->status > 0)
                      <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">More Detail</a>
                      @else
-                     -
+                     
                      @endif
                   @endif
                </small>
@@ -36,12 +36,12 @@
                @else
                <small>Not Available</small>
             @endif
-            @if ($histories->count() > 0)
+            {{-- @if ($histories->count() > 0)
             <hr>
                @foreach ($histories as $history)
                   <small>Cancel : {{$history->approve}} [{{$history->reason}}]</small>
                @endforeach
-            @endif
+            @endif --}}
          </div>
       </div>
    </div>

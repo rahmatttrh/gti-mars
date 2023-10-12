@@ -186,7 +186,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
    });
 
-   Route::prefix('employee')->group(function () {
+   Route::prefix('user')->group(function () {
       Route::get('/profile/{employee:id}', [EmployeeController::class, 'profile'])->name('employee.profile');
    });
 
