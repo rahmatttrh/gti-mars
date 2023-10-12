@@ -71,7 +71,7 @@
                   </h1>
                   <div class="navbar-nav flex-row order-md-last">
                      <a href="?theme=dark" class="nav-link px-0 hide-theme-dark me-3" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/moon -->
+                        <!-- Download SVG icon froƒm http://tabler-icons.io/i/moon -->
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
                         </a>
                         <a href="?theme=light" class="nav-link px-0 hide-theme-light me-3" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
@@ -84,7 +84,7 @@
                               @if (auth()->user()->hasRole('superuser'))
                                  SUPERUSER
                                  @elseif(auth()->user()->hasRole('department'))
-                                 {{auth()->user()->getDepartment()}}
+                                 {{auth()->user()->getDepartment()->name}}
                                  @elseif(auth()->user()->hasRole('marine'))
                                  MARINE
                                  @elseif(auth()->user()->hasRole('vessel'))
@@ -108,7 +108,7 @@
                         <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
                         <div class="d-none d-xl-block ps-2">
                            <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()}}</div>
+                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()->name}}</div>
                         </div>
                      </a>
                      @elseif(auth()->user()->hasRole('logistic'))

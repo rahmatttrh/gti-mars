@@ -142,7 +142,7 @@
                            {{-- <small> {{$request->department->name}} Department</small> --}}
                            <h4 class="card-title m-0 ">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</h4>
                            <h4 class="card-title m-0 ">
-                               {{$request->description}}
+                              {{$request->activity->name}} - {{$request->description}}
                            </h4>
                            <h4 class="card-title m-0 ">
                               {{$request->origin->name}} - {{$request->destination->name}}

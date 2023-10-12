@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-   Manifest
+   Preview Manifest
 @endsection
 @section('content')
 <div class="container-xl">

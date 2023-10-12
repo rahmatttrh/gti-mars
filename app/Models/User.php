@@ -96,12 +96,12 @@ class User extends Authenticatable
    public function getDepartment()
    {
       $employee = Employee::where('email', $this->email)->first();
-      if ($employee->department_id) {
-         $department = $employee->department->name;
-      } else {
-         $department = '-';
-      }
-      return $department;
+      // if ($employee->department_id) {
+      //    $department = $employee->department->name;
+      // } else {
+      //    $department = '-';
+      // }
+      return $employee->department;
    }
 
    public function getPort()

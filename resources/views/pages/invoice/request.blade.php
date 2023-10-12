@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-   Request Detail
+   Preview Request Detail
 @endsection
 @section('content')
 <div class="container-xl">
