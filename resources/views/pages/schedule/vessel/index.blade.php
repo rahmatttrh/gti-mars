@@ -97,7 +97,7 @@
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
                         <th>Date</th>
-                        <th>Route</th>
+                        {{-- <th>Route</th> --}}
                         
                         <th class="text-center">Activity</th>
                         <th>Capacity</th>
@@ -116,7 +116,7 @@
                               <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                              <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td>
+                              {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
                               
                               <td class="text-muted text-center">
                                  {{$schedule->requests()->count()}}

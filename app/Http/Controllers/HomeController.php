@@ -64,7 +64,8 @@ class HomeController extends Controller
 
 
 
-      $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
+      $schedules = Schedule::orderBy('date', 'asc')->get();
+      // $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
       $scheduleRecents = Schedule::orderBy('updated_at', 'asc')->where('status', '>=', 1)->first();
       $requests = ModelsRequest::whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();

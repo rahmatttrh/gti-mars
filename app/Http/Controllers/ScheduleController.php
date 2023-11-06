@@ -189,11 +189,13 @@ class ScheduleController extends Controller
       // dd($iddestinations);
 
       // $report = Report::where('schedule_id', $schedule->id)->first();
-      if ($schedule->type == 2) {
-         $vessel = Vessel::where('type', 'Crew Boat')->get();
-      } else {
-         $vessel = Vessel::get();
-      }
+      // if ($schedule->type == 2) {
+      //    $vessel = Vessel::where('type', 'Crew Boat')->get();
+      // } else {
+      //    $vessel = Vessel::get();
+      // }
+
+      $vessel = Vessel::get();
 
       $report = Report::where('schedule_id', $schedule->id)->first();
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();

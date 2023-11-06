@@ -29,13 +29,17 @@
                
                <div class="h1 mb-3">
                   <a href="{{route('schedule.detail', enkripRambo($now->id))}}">
-                  <span class="text-info">{{$now->origin->name}}</span>
+                  {{-- <span class="text-info">{{$now->origin->name}}</span> --}}
                               @foreach ($routes as  $route)
-                              @if ($route->request->status == 12)
+                              @if ($route->rank > 1)
+                                        -
+                                    @endif 
+                                    {{$route->port->name}}
+                              {{-- @if ($route->request->status == 12)
                               <span class="text-info">- {{$route->port->name}} </span>
                               @else
                               - {{$route->port->name}} 
-                           @endif
+                           @endif --}}
                               @endforeach
                            </a>
                </div>
@@ -64,7 +68,7 @@
                      <tr>
                         {{-- <th class="text-center">No.</th> --}}
                         <th>Date</th>
-                        <th>Route</th>
+                        {{-- <th>Route</th> --}}
                         <th>Activity</th>
                         <th>Status</th>
                         {{-- <th></th> --}}
@@ -77,9 +81,9 @@
                               {{-- <td class="text-muted text-center">{{++$i}}</td> --}}
                               <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
                               
-                              <td class="text-muted">
+                              {{-- <td class="text-muted">
                                  From {{$schedule->origin->name}} 
-                              </td>
+                              </td> --}}
                               <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
                               <td>
                                  <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />

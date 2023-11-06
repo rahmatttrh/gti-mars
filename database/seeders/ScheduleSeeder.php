@@ -31,6 +31,32 @@ class ScheduleSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+
+      DB::table('schedules')->insert([
+         // 'type_id' => 1,
+         'by' => 'marine',
+         'type' => 2,
+         'status' => 0,
+         'date' => $now->addDay(1),
+         'vessel_id' => 5,
+         'vessel_type' =>'AHTS',
+         // 'origin_id' => 16,
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('schedules')->insert([
+         // 'type_id' => 1,
+         'by' => 'marine',
+         'type' => 2,
+         'status' => 0,
+         'date' => $now->addDay(1),
+         'vessel_id' => 8,
+         'vessel_type' =>'Supply Vessel',
+         // 'origin_id' => 16,
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
       // DB::table('schedules')->insert([
       //    // 'type_id' => 2,
       //    'type' => 2,

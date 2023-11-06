@@ -221,7 +221,7 @@
                                              {{$req->activity->name}} {{$req->description}}
                                           </div>
                                           <div class="text-muted">{{$req->origin->name}} - {{$req->destination->name}}</div>
-                                          <div class="text-muted mb-1"><small> {{$req->employee->name}}/{{$req->department->name}}</small></div>
+                                          <div class="text-muted mb-1"><small> {{$req->employee->name}}</small></div>
                                           <a href="#" data-bs-toggle="modal" class="btn btn-light btn-sm" data-bs-target="#add-request-{{$req->id}}">Approve</a>
                                           <a href="#" data-bs-toggle="modal" class="btn btn-light btn-sm" data-bs-target="#reject-request-{{$req->id}}">Change</a>
                                        </div>
