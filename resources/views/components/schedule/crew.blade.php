@@ -1,8 +1,6 @@
-<div>
-   <a href="" data-bs-toggle="modal" data-bs-target="#modal-add-cargo" class="mb-3">Add ...</a>
-   
-   @foreach ($requests->where('activity_id', '!=', 2) as $request)
-      <div class="accordion mb-2 mt-2 bg-white" id="accordion-example_{{$request->id}} ">
+<span>
+   @foreach ($requests->where('activity_id', 2) as $request)
+      <div class="accordion mb-2 bg-white" id="accordion-example_{{$request->id}} ">
          <div class="accordion-item">
             <h2 class="accordion-header" id="heading-{{$request->id}}">
                <button class="accordion-button " type="button" data-bs-toggle="collapse"
@@ -28,8 +26,6 @@
                   &nbsp;&nbsp;<div class="badge bg-cyan">Additional</div>
                   @elseif($request->class == 'deviation')
                   &nbsp;&nbsp;<div class="badge bg-green">Deviation</div>
-                  @elseif($request->class == 'addon')
-                  &nbsp;&nbsp;<div class="badge bg-green">Add On</div>
                   @endif
 
                   @if ($request->status == 505)
@@ -65,20 +61,8 @@
                      {{-- <a href="#"  data-bs-toggle="modal" data-bs-target="#addCargoItem-{{$request->id}}">Add Cargo</a> --}}
                      @endif
                   @endif
-
-                  @if (  $request->class == 'addon')
-                     @if ($request->status == 2)
-                     <button class="btn btn-light btn-sm  mb-2" data-bs-toggle="modal" data-bs-target="#addAddonItem-{{$request->id}}">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/plus -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="12" y1="5" x2="12" y2="19" /><line x1="5" y1="12" x2="19" y2="12" /></svg>
-                        Add Item
-                     </button>
-                     {{-- <a href="#"  data-bs-toggle="modal" data-bs-target="#addCargoItem-{{$request->id}}">Add Cargo</a> --}}
-                     @endif
-                  @endif
                  
-                  @if ($request->class == 'deviation' || $request->class == 'addon')
-                     @if ($request->status == 2)
+                  @if ($request->class == 'deviation' && $request->status == 2)
                      <button class="btn btn-light btn-sm  mb-2" data-bs-toggle="modal" data-bs-target="#modal-deviation-send-{{$request->id}}">
                         <<svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-send" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -88,7 +72,6 @@
                         Send
                      </button>
                      {{-- <a href="#"  data-bs-toggle="modal" data-bs-target="#modal-deviation-send-{{$request->id}}">Send</a> --}}
-                     @endif
                   @endif
 
                   @if ($request->class == 'additional' && $request->status == 2)
@@ -176,6 +159,5 @@
       <x-modal.schedule.remove-request :request="$request" />
       <x-modal.schedule.send-deviation :request="$request" />
       <x-modal.cargo.add :request="$request" />
-      <x-modal.schedule.cargo.add-item :request="$request" />
    @endforeach
-</div>
+</span>

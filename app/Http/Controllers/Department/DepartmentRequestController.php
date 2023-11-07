@@ -367,14 +367,16 @@ class DepartmentRequestController extends Controller
       $type = $request->activity->type_id;
       // dd($type);
 
-      if ($type == 2) {
-         // dd('crew');
-         $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->where('vessel_type', 'Crew Boat')->first();
-      } else {
-         // dd('cargo');
-         $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->where('vessel_type', '!=', 'Crew Boat')->first();
-         // dd($routineSchedule->vessel->name);
-      }
+      // if ($type == 2) {
+      //    // dd('crew');
+      //    $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->where('vessel_type', 'Crew Boat')->first();
+      // } else {
+      //    // dd('cargo');
+      //    $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->where('vessel_type', '!=', 'Crew Boat')->first();
+      //    // dd($routineSchedule->vessel->name);
+      // }
+
+      $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
       // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
       if ($routineSchedule) {
          // jika ada schedule rutin
@@ -406,14 +408,17 @@ class DepartmentRequestController extends Controller
       } else {
          // jika tidak ada schedule rutin
          // dd('tidak ada schedule rutin ditanggal tersebut');
-         if ($type == 2) {
+         // if ($type == 2) {
 
-            // dd('crew');
-            $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->where('vessel_type', 'Crew Boat')->first();
-         } else {
-            // dd('cargo');
-            $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->where('vessel_type', '!=', 'Crew Boat')->first();
-         }
+         //    // dd('crew');
+         //    $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->where('vessel_type', 'Crew Boat')->first();
+         // } else {
+         //    // dd('cargo');
+         //    $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->where('vessel_type', '!=', 'Crew Boat')->first();
+         // }
+
+         $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
+
          // $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
          // cek apakah ada schedule by request ditanggal tersebut
          if ($requestSchedule) {

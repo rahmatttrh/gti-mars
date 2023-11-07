@@ -17,17 +17,18 @@ class CreateRequestsTable extends Migration
          $table->id();
          $table->integer('rank')->nullable();
          $table->mediumInteger('parent_id')->nullable();
-         $table->string('code');
+         $table->string('code')->nullable();
          $table->string('bcm')->nullable();
          $table->smallInteger('status');
          $table->smallInteger('type')->nullable();
-         // $table->string('class')->nullable();
+
          $table->smallInteger('schedule_id')->nullable();
-         $table->smallInteger('employee_id');
+         $table->string('by')->nullable();
+         $table->smallInteger('employee_id')->nullable();
          $table->string('class')->nullable();
 
          $table->date('date')->nullable();
-         $table->smallInteger('department_id');
+         $table->smallInteger('department_id')->nullable();
          $table->string('func')->nullable();
          // $table->smallInteger('type_id');
          $table->smallInteger('activity_id')->nullable();

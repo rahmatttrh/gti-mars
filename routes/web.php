@@ -266,6 +266,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
       Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
       Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
+      Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
    });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');

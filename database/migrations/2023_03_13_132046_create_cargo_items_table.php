@@ -18,8 +18,8 @@ class CreateCargoItemsTable extends Migration
          $table->mediumInteger('request_id');
          $table->string('type')->nullable();
          $table->integer('offloading_id')->nullable();
-         $table->string('status');
-         $table->string('no_doc');
+         $table->string('status')->nullable();
+         $table->string('no_doc')->nullable();
          $table->string('mtd')->nullable();
          $table->string('contract')->nullable();
          $table->string('desc');

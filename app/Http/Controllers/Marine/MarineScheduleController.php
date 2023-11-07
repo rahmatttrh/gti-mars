@@ -532,4 +532,101 @@ class MarineScheduleController extends Controller
          // 'ports' => $ports
       ])->with('i');
    }
+
+   public function addCargo(Request $req)
+   {
+      // $req->validate([
+      //    'desc' => 'required'
+      // ]);
+
+      $now = Carbon::today();
+      $schedule = Schedule::find($req->schedule);
+      $lastRequest = ModelsRequest::orderBy("created_at", "desc")->first();
+      
+      $destination = Port::find($req->port);
+      $vessel = Vessel::find($schedule->vessel_id);
+
+      // if (isset($lastRequest)) {
+      //    $code =
+      //       "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($lastRequest->id + 1);
+      // } else {
+      //    $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      // }
+
+      $request = ModelsRequest::create([
+         // 'code' => $code,
+         'employee_id' => 1,
+         'type' => 1,
+         'class' => 'deviation',
+         'schedule_id' => $schedule->id,
+         'date' => $req->date,
+         'description' => $req->desc,
+         'origin_id' => $req->from,
+         'destination_id' => $req->port,
+         'destination_name' => $destination->name,
+         'status' => 2
+      ]);
+
+
+      $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+
+      // Cek apakah destinasi yg dipilih sudah ada di rute awal
+      $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->port)->first();
+
+
+      if ($route) {
+         // Jika sudah ada, maka masukan rank yang sudah ada
+         // dd('sudah ada');
+         $request->update([
+            'rank' => $route->rank
+         ]);
+      } else {
+         // Jika belum ada
+
+
+         $fromScheduleRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->from)->first();
+         // dd($fromScheduleRoute->rank);
+         $remainScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
+         // dd($remainScheduleRoutes);
+         foreach ($remainScheduleRoutes as $route) {
+            $route->update([
+               'rank' => $route->rank + 1
+            ]);
+         }
+         ScheduleRoute::create([
+            'schedule_id' => $schedule->id,
+            'request_id' => $request->id,
+            'port_id' => $req->port,
+            'rank' => $fromScheduleRoute->rank + 1,
+            'status' => 1
+         ]);
+
+         $remainRequest = ModelsRequest::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
+         foreach ($remainRequest as $remreq) {
+            $remreq->update([
+               'rank' => $remreq->rank + 1
+            ]);
+         }
+         $request->update([
+            'rank' => $fromScheduleRoute->rank + 1
+         ]);
+      }
+
+
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'employee_id' => 1,
+         'status_id' => 18,
+         'port_id' => $req->port
+      ]);
+
+
+      // DeviationReport::create([
+      //    'deviation_id' => $deviation->id,
+      //    'assign' => $now
+      // ]);
+
+      return redirect()->back()->with('success', 'Cargo successfully added to vessel');
+   }
 }

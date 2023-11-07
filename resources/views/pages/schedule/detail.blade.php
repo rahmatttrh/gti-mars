@@ -82,12 +82,13 @@
                      <div class="row">
                         <div class="col-md-8">
                            <small>{{$schedule->vessel->type ?? ''}}</small>
-                           <h2 class="d-flex align-items-center">
+                           <h1 class="d-flex align-items-center">
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
                               @if ($schedule->type == 1)
                               &nbsp;<div class="badge">R</div>
                                  @endif
-                           </h2>
+                           </h1>
+                           <h1> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}}</h1>
                            {{-- <small>Pick up point from {{$schedule->origin->name}} </small> --}}
                            {{-- <span class="badge bg-info">s</span> --}}
                            <div>
@@ -177,30 +178,51 @@
                   </div>
                   <div class="card-footer">
                      @if (auth()->user()->hasRole('marine'))
-                           <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#add-route">Add Route</a></small>
-                              <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#reset-route">Reset Route</a></small>
-                           @endif
-                     
-                     
+                        <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#add-route">Add Route</a></small>
+                        <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#reset-route">Reset Route</a></small>
+                     @endif
                   </div>
                </div>
                
                {{-- <hr> --}}
                {{-- <small class="badge badge-primary mb-2 mt-3">Activity</small><br> --}}
-                  @if ($requests->count() > 0)
-                     <x-schedule.request :requests="$requests" :routes="$routes" :fixroutes="$fixRoutes" :schedule="$schedule" />
-                     @else
-                        <div class="card mb-2">
-                           <div class="card-body">
-                              <small class="text-muted">Empty</small>
+               @if ($requests->count() > 0)
+                  <div class="card">
+                     <ul class="nav nav-tabs" data-bs-toggle="tabs">
+                        <li class="nav-item">
+                           <a href="#tabs-home-7" class="nav-link {{$schedule->vessel_type != 'Crew Boat' ? 'active' : ''}}" data-bs-toggle="tab">Cargo</a>
+                        </li>
+                        <li class="nav-item">
+                           <a href="#tabs-profile-7" class="nav-link {{$schedule->vessel_type === 'Crew Boat' ? 'active' : ''}}" data-bs-toggle="tab">Passenger</a>
+                        </li>
+                        <li class="nav-item ms-auto">
+                           <a href="#tabs-settings-7" class="nav-link" title="Settings" data-bs-toggle="tab"><!-- Download SVG icon from http://tabler-icons.io/i/settings -->
+                              <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10.325 4.317c.426 -1.756 2.924 -1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543 -.94 3.31 .826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756 .426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543 -.826 3.31 -2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756 -2.924 1.756 -3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543 .94 -3.31 -.826 -2.37 -2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756 -.426 -1.756 -2.924 0 -3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94 -1.543 .826 -3.31 2.37 -2.37c1 .608 2.296 .07 2.572 -1.065z" /><circle cx="12" cy="12" r="3" /></svg>
+                           </a>
+                        </li>
+                     </ul>
+                     <div class="card-body">
+                        <div class="tab-content">
+                           <div class="tab-pane {{$schedule->vessel_type != 'Crew Boat' ? 'active show' : ''}}" id="tabs-home-7">
+                              <x-schedule.request :requests="$requests" :routes="$routes" :fixroutes="$fixRoutes" :schedule="$schedule" />
+                           </div>
+                           <div class="tab-pane {{$schedule->vessel_type === 'Crew Boat' ? 'active show' : ''}}" id="tabs-profile-7">
+                              <x-schedule.crew :requests="$requests" :routes="$routes" :fixroutes="$fixRoutes" :schedule="$schedule" />
+                           </div>
+                           <div class="tab-pane" id="tabs-settings-7">
+                              <div>Donec ac vitae diam amet vel leo egestas consequat rhoncus in luctus amet, facilisi sit mauris accumsan nibh habitant senectus</div>
                            </div>
                         </div>
-                  @endif
-{{-- 
-                  @if ($schedule->requests->where('class', 'deviation') != null)
-                  <x-schedule.deviation :deviations="$schedule->requests->where('class', 'deviation')" />
-                  @endif --}}
-               
+                     </div>
+                  </div>
+                  
+                  @else
+                  <div class="card mb-2">
+                     <div class="card-body">
+                        <small class="text-muted">Empty</small>
+                     </div>
+                  </div>
+               @endif
             </div>
             <div class="col-md-4">
                @if (auth()->user()->hasRole('marine') )
@@ -304,6 +326,8 @@
 
    <x-modal.schedule.add-deviation :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
    <x-modal.schedule.add-additional :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
+
+   <x-modal.schedule.cargo.add :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" />
 
 
 @endsection
