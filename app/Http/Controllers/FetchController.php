@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jetty;
 use App\Models\Port;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
 use Illuminate\Http\Request;
 
 class FetchController extends Controller
@@ -30,11 +31,11 @@ class FetchController extends Controller
       ]);
    }
 
-   public function fetchSchedule($date, $value)
+   public function fetchScheduleOld($date, $value)
    {
 
       $schedules = Schedule::where('date', $date)->where('jetty_id', $value)->get();
-
+      // dd($schschedulesedu);
       // Masukin ke array
       $result = array();
       // $result[] = '<div class="list-group-item">
@@ -65,11 +66,11 @@ class FetchController extends Controller
    }
 
 
-   public function fetchSchedules($date)
+   public function fetchSchedulesOld2($date, $origin)
    {
 
       $schedules = Schedule::where('date', $date)->get();
-
+      $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin);
       // Masukin ke array
       $result = array();
       // $result[] = '<div class="list-group-item">
@@ -104,6 +105,56 @@ class FetchController extends Controller
          
       </tr>';
       }
+
+      // Kirim balik ke ajax
+      return response()->json([
+         'success' => true,
+         'result' => $result
+
+      ]);
+   }
+
+   public function fetchSchedule($date, $origin)
+   {
+
+      $schedules = Schedule::where('date', $date)->get();
+      $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin)->get();
+      // Masukin ke array
+      $result = array();
+      // $result[] = '<div class="list-group-item">
+      //    <div class="row">
+      //       <div class="col text-truncate">
+      //          <a href="#" class="text-body d-block">09:00 - 10:00</a>
+      //          <div class="text-muted text-truncate mt-n1 text-uppercase">Giat Jaya</div>
+      //       </div>
+      //    </div>
+      // </div>';
+      foreach ($scheduleRoutes as $row) {
+         if ($row->schedule->vessel_id != null) {
+            $vesselName = $row->schedule->vessel->name;
+            $vesselType = $row->schedule->vessel->type;
+            $totalWeight = $row->schedule->total_weight;
+            $vesselDeadweight = $row->schedule->vessel->deadweight;
+            $persen = $totalWeight / $vesselDeadweight * 100;
+         } else {
+            $vesselName = '-';
+            $vesselType = '';
+            $totalWeight = 0;
+            $vesselDeadweight = '0';
+            $persen = '-';
+         }
+         $result[] = '<tr>
+            <td>' . \Carbon\Carbon::parse($row->date)->format('l') . ' <br> 
+               <small> ' . \Carbon\Carbon::parse($row->date)->format('d/m/Y') .' </small>
+            </td>
+            <td>
+               ' . $vesselName  . ' <br>
+               <small> ' . $vesselType . '</small>
+            </td>
+            <td>' . $persen  . ' %</td>
+            
+         </tr>';
+         }
 
       // Kirim balik ke ajax
       return response()->json([

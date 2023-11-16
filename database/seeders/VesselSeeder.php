@@ -491,5 +491,18 @@ class VesselSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+
+      DB::table('vessels')->insert([
+         'status' => 0,
+         'port_id' => 15,
+         'name' => 'TEGAS JAYA',
+         'username' => 'tegasjaya',
+         'type' => 'Crew Boat',
+         'email' => 'tegasjaya@pertamina.com',
+         'deckspace' => 60,
+         'deadweight' => 100,
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
    }
 }

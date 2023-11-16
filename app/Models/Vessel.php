@@ -24,4 +24,9 @@ class Vessel extends Model
    {
       return $this->belongsTo(Port::class);
    }
+
+   public function vesselSchedule()
+   {
+      return $this->hasOne(ScheduleVessel::class);
+   }
 }

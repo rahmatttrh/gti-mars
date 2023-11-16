@@ -14,7 +14,7 @@
             <div class="card mb-2 shadow-none">
                <div class="card-body">
                    <div>{{$request->activity->name ?? ''}} {{$request->description}}</div>
-                  <small class="text-muted">{{$request->department->name}}/{{$request->employee->name ?? ''}}</small>
+                  <small class="text-muted">{{$request->department->name ?? '-'}}/{{$request->employee->name ?? ''}}</small>
                </div>
             </div>
             @endforeach

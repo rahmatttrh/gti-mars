@@ -22,80 +22,80 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-5">
                <div class="card">
                   <form action="{{route('request.store')}}" method="POST">
                      @csrf
                      <div class="card-body">
-                              @if ($errors->any())
-                                 <div class="alert alert-danger text-danger">
-                                    <ul>
-                                          @foreach ($errors->all() as $error)
-                                             <li><small>{{ $error }}</small></li>
-                                          @endforeach
-                                    </ul>
-                                 </div>
-                              @endif
-                              <div class="row">
-                                 <div class="col-md-8">
-                                    <div class="form-floating mb-3">
-                                       <select name="activity" id="activity" required class="form-select">
-                                          <option value="" selected disabled >Choose</option>
-                                          @foreach ($activities as $activity)
-                                             <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
-                                          @endforeach
-                                       </select>
-                                       <label for="activity">Type of Activity(*)</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                    <div class="form-floating">
-                                       <input type="date" required value="{{old('date')}}" class="form-control date" id="date" name="date" >
-                                       <label for="date"> Date(*)</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-4">
-                                    <div class="form-floating mb-3">
-                                       <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
-                                       <label for="bcm">BCM</label>
-                                    </div>
-                                 </div>
-                                 
-                                 
-                                 <div class="col-md-4">
-                                    <div class="form-floating">
-                                       <select required name="origin" id="origin" class="form-select">
-                                          <option  disabled selected>Choose port</option>
-                                          @foreach ($ports as $port)
-                                             <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                          @endforeach
-                                       </select>
-                                       <label for="origin">From(*)</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-4 mb-3">
-                                    <div class="form-floating">
-                                       <select required name="destination" id="destination" class="form-select">
-                                          <option  disabled selected>Choose port</option>
-                                          @foreach ($ports as $port)
-                                             <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
-                                          @endforeach
-                                       </select>
-                                       <label for="destination">Destination(*)</label>
-                                    </div>
-                                 </div>
-                                 <div class="col-md-12">
-                                    <div class="form-floating mb-3">
-                                       <input type="text" value="{{old('desc')}}" class="form-control" id="desc" name="desc" >
-                                       <label for="desc">Description</label>
-                                    </div>
-                                 </div>
+                        @if ($errors->any())
+                           <div class="alert alert-danger text-danger">
+                              <ul>
+                                    @foreach ($errors->all() as $error)
+                                       <li><small>{{ $error }}</small></li>
+                                    @endforeach
+                              </ul>
+                           </div>
+                        @endif
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form-floating mb-3">
+                                 <select name="activity" id="activity" required class="form-select">
+                                    <option value="" selected disabled >Choose</option>
+                                    @foreach ($activities as $activity)
+                                       <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
+                                    @endforeach
+                                 </select>
+                                 <label for="activity">Type of Activity(*)</label>
                               </div>
-                              
-                              <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
-                                 
-                                 Save
-                              </button>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form-floating">
+                                 <input type="date" required value="{{old('date')}}" class="form-control date" id="date" name="date" >
+                                 <label for="date"> Date(*)</label>
+                              </div>
+                           </div>
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
+                                 <label for="bcm">BCM</label>
+                              </div>
+                           </div>
+                           
+                           
+                           <div class="col-md-6">
+                              <div class="form-floating">
+                                 <select required name="origin" id="origin" class="form-select origin">
+                                    <option  disabled selected>Choose port</option>
+                                    @foreach ($ports as $port)
+                                       <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
+                                 </select>
+                                 <label for="origin">From(*)</label>
+                              </div>
+                           </div>
+                           <div class="col-md-6 mb-3">
+                              <div class="form-floating">
+                                 <select required name="destination" id="destination" class="form-select">
+                                    <option  disabled selected>Choose port</option>
+                                    @foreach ($ports as $port)
+                                       <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                                    @endforeach
+                                 </select>
+                                 <label for="destination">Destination(*)</label>
+                              </div>
+                           </div>
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
+                                 <input type="text" value="{{old('desc')}}" class="form-control" id="desc" name="desc" >
+                                 <label for="desc">Description</label>
+                              </div>
+                           </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                           
+                           Save
+                        </button>
                            
                      </div>
                      <div class="card-footer">
@@ -105,7 +105,7 @@
                   </form>
                </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-7">
                <div class="card">
                   <div class="card-header">
                      Available Schedules
@@ -116,7 +116,7 @@
                            <tr>
                               <th>Date</th>
                               <th>Vessel</th>
-                              <th>Type</th>
+                              {{-- <th>Type</th> --}}
                               <th>Space</th>
                            </tr>
                         </thead>
@@ -168,6 +168,40 @@
 @endsection
 
 @push('get_schedules')
+   <script>
+      console.log('get_schedules function');
+   
+      $(document).ready(function() {
+         $('.origin').change(function() {
+            var origin = $(this).val();
+            var date = $('.date').val();
+            var _token = $('meta[name="csrf-token"]').attr('content');
+
+               console.log('origin:' + origin + ' date:' +date);
+
+               $.ajax({
+                  url: "/fetch/schedule/" + date + "/" + origin ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.result').empty()
+                     console.log(result);
+                     $.each(result.result, function(i, index) {
+                        $('.result').html(result.result);
+                     });
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+         })
+      })
+   </script>
+@endpush
+
+@push('get_schedules_old')
    <script>
       console.log('get_schedules function');
    

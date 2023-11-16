@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Crew;
 use App\Models\PayloadType;
+use App\Models\ScheduleVessel;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,7 +23,7 @@ class DatabaseSeeder extends Seeder
          VesselSeeder::class,
          RouteTypeSeeder::class,
          PortSeeder::class,
-         ScheduleSeeder::class,
+         // ScheduleSeeder::class,
          LogisticSeeder::class,
          JettySeeder::class,
          PlatformSeeder::class,
@@ -35,7 +36,8 @@ class DatabaseSeeder extends Seeder
          WoSeeder::class,
          CargoSeeder::class,
          EmployeeSeeder::class,
-         StatusSeeder::class
+         StatusSeeder::class,
+         ScheduleVesselSeeder::class
          // VesselStatusSeeder::class
       ]);
 

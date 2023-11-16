@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use PhpParser\Node\NullableType;
 
 class CreateScheduleRoutesTable extends Migration
 {
@@ -15,11 +16,13 @@ class CreateScheduleRoutesTable extends Migration
    {
       Schema::create('schedule_routes', function (Blueprint $table) {
          $table->id();
+         $table->smallInteger('status')->nullable();
          $table->mediumInteger('schedule_id');
-         $table->integer('request_id');
+         $table->integer('request_id')->nullable();
          $table->mediumInteger('port_id');
          $table->smallInteger('rank')->nullable();
-         $table->smallInteger('status')->nullable();
+         $table->date('date')->nullable();
+         
          $table->timestamps();
       });
    }

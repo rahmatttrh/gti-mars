@@ -82,16 +82,20 @@
                      <div class="row">
                         <div class="col-md-8">
                            <small>{{$schedule->vessel->type ?? ''}}</small>
-                           <h1 class="d-flex align-items-center">
+                           <h1 class="border-bottom mt-3">
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
-                              @if ($schedule->type == 1)
-                              &nbsp;<div class="badge">R</div>
-                                 @endif
                            </h1>
-                           <h1> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}}</h1>
+                           
+                           <h1> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}, {{\Carbon\Carbon::parse($schedule->date)->format('d F Y')}}</h1>
+                           @if ($schedule->type == 1)
+                           &nbsp;<div class="badge bg-info">Routine</div>
+                           @endif
+                           <div class="badge bg-primary">{{$schedule->class}}</div>                              
+
+                           {{-- <h1> </h1> --}}
                            {{-- <small>Pick up point from {{$schedule->origin->name}} </small> --}}
                            {{-- <span class="badge bg-info">s</span> --}}
-                           <div>
+                           {{-- <div>
                               <span class="text-primary h3"></span>
                               @foreach ($fixRoutes as  $route)
                                  
@@ -105,7 +109,7 @@
 
                                  <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes" />
                               @endforeach
-                           </div>
+                           </div> --}}
                            
 
                            {{-- @if (auth()->user()->hasRole('marine') )
@@ -115,14 +119,14 @@
                            
                            <div class="text-muted mt-1"> 
                               @if ($lastPostpone)
-                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/y')}} Postpone to
+                                 {{\Carbon\Carbon::parse($lastPostpone->from)->format('d/m/y')}} Postpone to {{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}} {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}
                               @endif
-                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/y')}} {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}
+                              
                               @if ($lastPostpone)
                                  <br><small>{{$lastPostpone->reason}}</small>
                               @endif
                            </div>
-                           <div class="text-muted mt-2">Remark : {{$schedule->remark}}</div>   
+                           {{-- <div class="text-muted mt-2 mb-3">Remark : {{$schedule->remark}}</div>    --}}
                            
                            {{-- <div class="text-muted mb-2 mt-2">ETD {{\Carbon\Carbon::parse($schedule->etd)->format('H:i')}}</div> --}}
                         </div>
@@ -173,6 +177,68 @@
                               </div>
                            </div>
                         </div>
+                        <div class="col-12">
+                           <div class="table-responsive mt-2">
+                              <table class="table table-vcenter card-table">
+                                 <thead>
+                                    <tr>
+                                       <th colspan="7">ROUTE</th>
+                                    </tr>
+                                 </thead>
+                                 <thead>
+                                    <tr>
+                                       @foreach ($fixRoutes as  $route)
+                                       <th>
+                                          <a href="#" class="" data-bs-toggle="modal" data-bs-target="#reorder-route-{{$route->id}}">
+                                             @if ($route->rank > 1)
+                                       
+                                             @endif 
+                                             {{$route->port->name}}
+                                          </a><br>
+                                          <small>{{\Carbon\Carbon::parse($route->date)->format('l')}}</small>
+                                          <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes" />
+                                       </th>
+                                       @endforeach
+                                       
+                                    </tr>
+                                 </thead>
+                                 
+                              </table>
+                           </div>
+                        </div>
+                        {{-- <div class="col-12">
+                           <div class="table-responsive">
+                              <table class="table table-vcenter card-table">
+                                 <thead>
+                                    <tr>
+                                       <th colspan="7">ETD</th>
+                                    </tr>
+                                 </thead>
+                                 <thead>
+                                    <tr>
+                                       <th>Monday</th>
+                                       <th>Tuesday</th>
+                                       <th>Wednesday</th>
+                                       <th>Thursday</th>
+                                       <th>Friday</th>
+                                       <th>Saturday</th>
+                                       <th>Sunday</th>
+                                    </tr>
+                                 </thead>
+                                 <thead>
+                                    <tr>
+                                       <th>{{$schedule->vessel->vesselSchedule->monday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->tuesday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->wednesday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->thursday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->friday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->saturday->name ?? '-'}}</th>
+                                       <th>{{$schedule->vessel->vesselSchedule->sunday->name ?? '-'}}</th>
+                                    </tr>
+                                 </thead>
+                              </table>
+                           </div>
+                        </div> --}}
                      </div>
                      
                   </div>
@@ -328,6 +394,7 @@
    <x-modal.schedule.add-additional :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" :activities="$activities"/>
 
    <x-modal.schedule.cargo.add :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" />
+   <x-modal.schedule.crew.add :schedule="$schedule" :ports="$ports" :routes="$scheduleRoutes" />
 
 
 @endsection

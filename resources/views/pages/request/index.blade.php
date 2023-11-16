@@ -146,6 +146,7 @@
                               <th class="text-center">FUNC</th>
                               {{-- <th>Code </th> --}}
                               <th>Activity</th>
+                              <th>Schedule</th>
                               <th>Date</th>
                               <th>Route</th>
                               
@@ -164,6 +165,7 @@
                                     
                                     {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
                                     <td><a href="{{route('request.detail', enkripRambo($request->id))}}"> {{$request->activity->name ?? ''}} {{$request->description}}</a></td>
+                                    <td><a href="{{route('schedule.detail', enkripRambo($request->schedule->id))}}">{{$request->schedule->vessel->name}}</a></td>
                                     <td class="text-muted">{{\Carbon\Carbon::parse($request->date)->format('d/m/Y')}}</td>
                                     <td class="text-muted">{{$request->origin->name}} - {{$request->destination->name}}</td>
                                    

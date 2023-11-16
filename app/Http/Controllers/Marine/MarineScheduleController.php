@@ -60,7 +60,13 @@ class MarineScheduleController extends Controller
          // dd($dates);
 
          $mondays = [];
+         $tuesdays = [];
          $wednesdays = [];
+         $thursdays = [];
+         $fridays = [];
+         $saturdays = [];
+         $sundays = [];
+
          // dd($days);
          foreach ($dates as $date) {
             if ($date->format('l') == 'Monday') {
@@ -68,48 +74,211 @@ class MarineScheduleController extends Controller
             }
          }
          foreach ($dates as $date) {
+            if ($date->format('l') == 'Tuesday') {
+               $tuesdays[] = $date;
+            }
+         }
+         foreach ($dates as $date) {
             if ($date->format('l') == 'Wednesday') {
                $wednesdays[] = $date;
             }
          }
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Thursday') {
+               $thursdays[] = $date;
+            }
+         }
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Friday') {
+               $fridays[] = $date;
+            }
+         }
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Saturday') {
+               $saturdays[] = $date;
+            }
+         }
+         foreach ($dates as $date) {
+            if ($date->format('l') == 'Sunday') {
+               $sundays[] = $date;
+            }
+         }
          // dd($wednesdays);
          $vessel = Vessel::find(9);
+         $giat = Vessel::find(11);
+         $elok = Vessel::find(9);
+         $sigap = Vessel ::find(6);
 
          foreach ($mondays as $monday) {
             // dd($day->format('Y-m-d'));
-            Schedule::create([
+            $giatMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'vessel_id' => $vessel->id,
-               'vessel_type' => $vessel->type,
+               'class' => 'First Trip',
+               'vessel_id' => $giat->id,
+               'vessel_type' => $giat->type,
                'date' => $monday->format('Y-m-d'),
                'etd' => $monday->format('Y-m-d'),
                'eta' => $monday->format('Y-m-d'),
             ]);
-         }
+            
+            
 
-         $vessel = Vessel::find(30);
-         foreach ($wednesdays as $wednesday) {
-            // dd($day->format('Y-m-d'));
-            Schedule::create([
+            ScheduleRoute::create([
+               'schedule_id' => $giatMonday->id,
+               'port_id' => 1,
+               'rank' => 1,
+               'status' => 1,
+               'date' => $monday
+            ]);
+            ScheduleRoute::create([
+               'schedule_id' => $giatMonday->id,
+               'port_id' => $giat->vesselSchedule->tuesday_id,
+               'rank' => 2,
+               'status' => 1,
+               'date' => $monday->addDay()
+            ]);
+
+            $elokMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'vessel_id' => $vessel->id,
-               'vessel_type' => $vessel->type,
+               'vessel_id' => $elok->id,
+               'vessel_type' => $elok->type,
+               'date' => $monday->format('Y-m-d'),
+               'etd' => $monday->format('Y-m-d'),
+               'eta' => $monday->format('Y-m-d'),
+            ]);
+
+            
+
+
+         }
+
+         foreach ($tuesdays as $tuesday) {
+            // dd($day->format('Y-m-d'));
+            $sigapTuesday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => $sigap->id,
+               'vessel_type' => $sigap->type,
+               'date' => $tuesday->format('Y-m-d'),
+               'etd' => $tuesday->format('Y-m-d'),
+               'eta' => $tuesday->format('Y-m-d'),
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $sigapTuesday->id,
+               'port_id' => 1,
+               'rank' => 1,
+               'status' => 1
+            ]);
+         }
+
+         // $vessel = Vessel::find(30);
+         foreach ($wednesdays as $wednesday) {
+            // dd($day->format('Y-m-d'));
+            $sigapWednesday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => $sigap->id,
+               'vessel_type' => $sigap->type,
                'date' => $wednesday->format('Y-m-d'),
                'etd' => $wednesday->format('Y-m-d'),
                'eta' => $wednesday->format('Y-m-d'),
             ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $sigapWednesday->id,
+               'port_id' => 1,
+               'rank' => 1,
+               'status' => 1
+            ]);
+
+
+            $elokWednesday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => $elok->id,
+               'vessel_type' => $elok->type,
+               'date' => $wednesday->format('Y-m-d'),
+               'etd' => $wednesday->format('Y-m-d'),
+               'eta' => $wednesday->format('Y-m-d'),
+            ]);
+            ScheduleRoute::create([
+               'schedule_id' => $elokWednesday->id,
+               'port_id' => 1,
+               'rank' => 1,
+               'status' => 1
+            ]);
          }
+
+         foreach ($thursdays as $thursday) {
+            // dd($day->format('Y-m-d'));
+            $sigapThursday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'status' => 0,
+               'vessel_id' => $sigap->id,
+               'vessel_type' => $sigap->type,
+               'date' => $thursday->format('Y-m-d'),
+               'etd' => $thursday->format('Y-m-d'),
+               'eta' => $thursday->format('Y-m-d'),
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $sigapThursday->id,
+               'port_id' => 1,
+               'rank' => 1,
+               'status' => 1
+            ]);
+           
+         }
+
+         foreach ($saturdays as $saturday) {
+            // dd($day->format('Y-m-d'));
+            $giatSaturday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'class' => 'Second Trip',
+               'status' => 0,
+               'vessel_id' => $giat->id,
+               'vessel_type' => $giat->type,
+               'date' => $saturday->format('Y-m-d'),
+               'etd' => $saturday->format('Y-m-d'),
+               'eta' => $saturday->format('Y-m-d'),
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $giatSaturday->id,
+               'port_id' => $giat->vesselSchedule->saturday_id,
+               'rank' => 1,
+               'status' => 1,
+               'date' => $saturday
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $giatSaturday->id,
+               'port_id' => $giat->vesselSchedule->sunday_id,
+               'rank' => 2,
+               'status' => 1,
+               'date' => $saturday->addDay()
+            ]);
+           
+         }
+
+
       }
 
       if (auth()->user()->hasRole('vessel')) {
-         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
+         $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $requlerSchedules = null;
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->whereMonth('created_at', $dekripMonth)->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
       }
 
@@ -557,6 +726,104 @@ class MarineScheduleController extends Controller
          // 'code' => $code,
          'employee_id' => 1,
          'type' => 1,
+         'class' => 'deviation',
+         'schedule_id' => $schedule->id,
+         'date' => $req->date,
+         'description' => $req->desc,
+         'origin_id' => $req->from,
+         'destination_id' => $req->port,
+         'destination_name' => $destination->name,
+         'status' => 2
+      ]);
+
+
+      $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+
+      // Cek apakah destinasi yg dipilih sudah ada di rute awal
+      $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->port)->first();
+
+
+      if ($route) {
+         // Jika sudah ada, maka masukan rank yang sudah ada
+         // dd('sudah ada');
+         $request->update([
+            'rank' => $route->rank
+         ]);
+      } else {
+         // Jika belum ada
+
+
+         $fromScheduleRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $req->from)->first();
+         // dd($fromScheduleRoute->rank);
+         $remainScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
+         // dd($remainScheduleRoutes);
+         foreach ($remainScheduleRoutes as $route) {
+            $route->update([
+               'rank' => $route->rank + 1
+            ]);
+         }
+         ScheduleRoute::create([
+            'schedule_id' => $schedule->id,
+            'request_id' => $request->id,
+            'port_id' => $req->port,
+            'rank' => $fromScheduleRoute->rank + 1,
+            'status' => 1
+         ]);
+
+         $remainRequest = ModelsRequest::where('schedule_id', $schedule->id)->where('rank', '>', $fromScheduleRoute->rank)->get();
+         foreach ($remainRequest as $remreq) {
+            $remreq->update([
+               'rank' => $remreq->rank + 1
+            ]);
+         }
+         $request->update([
+            'rank' => $fromScheduleRoute->rank + 1
+         ]);
+      }
+
+
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'employee_id' => 1,
+         'status_id' => 18,
+         'port_id' => $req->port
+      ]);
+
+
+      // DeviationReport::create([
+      //    'deviation_id' => $deviation->id,
+      //    'assign' => $now
+      // ]);
+
+      return redirect()->back()->with('success', 'Cargo successfully added to vessel');
+   }
+
+
+   public function addCrew(Request $req)
+   {
+      // $req->validate([
+      //    'desc' => 'required'
+      // ]);
+
+      $now = Carbon::today();
+      $schedule = Schedule::find($req->schedule);
+      $lastRequest = ModelsRequest::orderBy("created_at", "desc")->first();
+      
+      $destination = Port::find($req->port);
+      $vessel = Vessel::find($schedule->vessel_id);
+
+      // if (isset($lastRequest)) {
+      //    $code =
+      //       "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($lastRequest->id + 1);
+      // } else {
+      //    $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      // }
+
+      $request = ModelsRequest::create([
+         // 'code' => $code,
+         'employee_id' => 1,
+         'type' => 2,
          'class' => 'deviation',
          'schedule_id' => $schedule->id,
          'date' => $req->date,

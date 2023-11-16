@@ -104,8 +104,9 @@
                      <tr>
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
-                        <th>Type</th>
-                        <th>Day</th>
+                        <th>From</th>
+                        {{-- <th>Type</th> --}}
+                        {{-- <th>Day</th> --}}
                         <th>Date</th>
                         {{-- <th>From</th> --}}
                         
@@ -121,13 +122,20 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$i}}</small></td>
                               <td class="text-muted text-truncate">
-                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> <br>
+                                 <small>{{$schedule->vessel_type}}</small>
                               </td>
                               <td class="text-muted">
-                                 {{$schedule->vessel->type ?? '-'}}
+                                 @if (count($schedule->routes) > 0)
+                                 {{$schedule->routes->where('rank', 1)->first()->port->name}}
+                                 @endif
+                                 
                               </td>
-                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
-                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                              {{-- <td class="text-muted">
+                                 {{$schedule->vessel->type ?? '-'}}
+                              </td> --}}
+                              {{-- <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td> --}}
+                              <td class="text-muted text-truncate">{{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                         
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
                               {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}}</td> --}}

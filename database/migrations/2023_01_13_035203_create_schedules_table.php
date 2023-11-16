@@ -18,6 +18,7 @@ class CreateSchedulesTable extends Migration
          // $table->smallInteger('type_id');
          $table->smallInteger('type');
          $table->string('by')->nullable();
+         $table->string('class')->nullable();
          $table->smallInteger('status');
          $table->date('date')->nullable();
          $table->mediumInteger('vessel_id')->nullable();

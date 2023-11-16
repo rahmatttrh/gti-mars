@@ -58,7 +58,7 @@ Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
    Route::prefix("fetch")->group(function () {
-      Route::get("schedule/{value}", [FetchController::class, "fetchSchedules",]);
+      Route::get("schedule/{date}/{value}", [FetchController::class, "fetchSchedules",]);
    });
 
    Route::get('send-email', [EmailController::class, 'test'])->name('test.email');

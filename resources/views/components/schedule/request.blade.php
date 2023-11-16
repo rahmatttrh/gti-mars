@@ -1,5 +1,8 @@
 <div>
+   @if ($schedule->vessel_type == "Crew Boat")
    <a href="" data-bs-toggle="modal" data-bs-target="#modal-add-cargo" class="mb-3">Add ...</a>
+   @endif
+   
    
    @foreach ($requests->where('activity_id', '!=', 2) as $request)
       <div class="accordion mb-2 mt-2 bg-white" id="accordion-example_{{$request->id}} ">
@@ -151,11 +154,11 @@
                      
                   </div>
                   @if ($request->activity->type_id == 1)
-                  <x-requests.cargo :request="$request" :routes="$routes" :cargos="$request->cargoItems"  :i="0" />
+                     <x-requests.cargo :request="$request" :routes="$routes" :cargos="$request->cargoItems"  :i="0" />
                   @elseif($request->activity->type_id == 2 )
-                  <x-requests.crew :request="$request" :departs="$request->passengerItems->where('type', 'Depart')"  :returns="$request->passengerItems->where('type', 'Return')" :i="0" />
+                     <x-requests.crew :request="$request" :departs="$request->passengerItems->where('type', 'Depart')"  :returns="$request->passengerItems->where('type', 'Return')" :i="0" />
                   @elseif($request->activity->type_id == 3 || $request->activity->type_id == 4)
-                  <x-requests.moving :request="$request" :departs="$request->passengerItems->where('type', 'Depart')"  :returns="$request->passengerItems->where('type', 'Return')" :i="0" />
+                     <x-requests.moving :request="$request" :departs="$request->passengerItems->where('type', 'Depart')"  :returns="$request->passengerItems->where('type', 'Return')" :i="0" />
                   @endif
                      {{-- @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                   <div class="mt-2 mb-2">

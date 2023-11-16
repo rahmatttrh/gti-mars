@@ -1,6 +1,9 @@
 <span>
+   @if ($schedule->vessel_type != "Crew Boat")
+   <a href="" data-bs-toggle="modal" data-bs-target="#modal-add-crew" class="mb-3">Add ...</a>
+   @endif
    @foreach ($requests->where('activity_id', 2) as $request)
-      <div class="accordion mb-2 bg-white" id="accordion-example_{{$request->id}} ">
+      <div class="accordion mb-2 mt-2 bg-white" id="accordion-example_{{$request->id}} ">
          <div class="accordion-item">
             <h2 class="accordion-header" id="heading-{{$request->id}}">
                <button class="accordion-button " type="button" data-bs-toggle="collapse"

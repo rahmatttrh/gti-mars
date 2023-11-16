@@ -96,6 +96,11 @@
                         <table class="table table-vcenter card-table">
                            <thead>
                               <tr>
+                                 <th>{{$request->code}}</th>
+                              </tr>
+                           </thead>
+                           <thead>
+                              <tr>
                                  <th>Name</th>
                                  <th>Barcode</th>
                                  <th>Department</th>
