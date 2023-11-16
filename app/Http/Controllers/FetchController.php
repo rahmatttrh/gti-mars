@@ -114,13 +114,14 @@ class FetchController extends Controller
       ]);
    }
 
-   public function fetchSchedule($date, $origin)
+   public function fetchSchedules($date, $origin)
    {
 
       $schedules = Schedule::where('date', $date)->get();
       $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin)->get();
       // Masukin ke array
       $result = array();
+      $routes = array();
       // $result[] = '<div class="list-group-item">
       //    <div class="row">
       //       <div class="col text-truncate">
@@ -130,6 +131,11 @@ class FetchController extends Controller
       //    </div>
       // </div>';
       foreach ($scheduleRoutes as $row) {
+
+         $schedule = Schedule::find($row->schedule_id);
+         foreach($schedule->routes as $route){
+            $routes[] = $route->port->name;
+         }
          if ($row->schedule->vessel_id != null) {
             $vesselName = $row->schedule->vessel->name;
             $vesselType = $row->schedule->vessel->type;
@@ -152,7 +158,10 @@ class FetchController extends Controller
                <small> ' . $vesselType . '</small>
             </td>
             <td>' . $persen  . ' %</td>
+            <td> ' .
+            print_r($routes)
             
+            . ' </td>
          </tr>';
          }
 
