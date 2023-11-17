@@ -103,6 +103,57 @@
                <table id=""  class="table " >
                   <thead>
                      <tr>
+                        <th colspan="7">Monday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                     @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Monday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Tuesday</th>
+                     </tr>
+                     <tr>
                         <th class="text-center">No.</th>
                         <th>Vessel</th>
                         <th>Day</th>
@@ -116,40 +167,291 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($schedules->count() > 0)
-                        @foreach ($schedules as $schedule)
-                           <tr>
-                              <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                              <td class="text-muted text-truncate">
-                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
-                                 @if ($schedule->type == 1)
-                                    <div class="badge">R</div>
-                                 @endif
-                              </td>
-                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
-                              <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
-                        
-                              {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
-                              {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
-                              
-                              <td class="text-muted text-center">
-                                 {{$schedule->requests()->count()}}
-                              </td>
-                              <td class="text-muted">
-                                 {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
-                              </td>
-                              <td class="text-muted">
-                                 <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                              </td>
-                              
-                           </tr>
-                           {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
-                        @endforeach
-                        @else
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Tuesday')
                         <tr>
-                           <td colspan="7" class="text-center"><small class="text-muted">Empty</small></td>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
                         </tr>
-                     @endif
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Wednesday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        {{-- <th>Route</th> --}}
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Wednesday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Thursday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        {{-- <th>Route</th> --}}
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Thursday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Friday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        {{-- <th>Route</th> --}}
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Friday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Saturday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        {{-- <th>Route</th> --}}
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Saturday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
+                  </tbody>
+               </table>
+               <table id=""  class="table " >
+                  <thead>
+                     <tr>
+                        <th colspan="7">Sunday</th>
+                     </tr>
+                     <tr>
+                        <th class="text-center">No.</th>
+                        <th>Vessel</th>
+                        <th>Day</th>
+                        <th>Date</th>
+                        {{-- <th>Route</th> --}}
+                        
+                        <th class="text-center">Activity</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($schedules as $schedule)
+                        @if (\Carbon\Carbon::parse($schedule->date)->format('l') == 'Sunday')
+                        <tr>
+                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                           <td class="text-muted text-truncate">
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> 
+                              @if ($schedule->type == 1)
+                                 <div class="badge">R</div>
+                              @endif
+                           </td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
+                           <td class="text-muted text-truncate"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
+                     
+                           {{-- <td class="text-muted text-truncate">{{$schedule->origin->name}} - {{$schedule->destination->name}}</td> --}}
+                           {{-- <td class="text-muted text-truncate">From {{$schedule->origin->name}}</td> --}}
+                           
+                           <td class="text-muted text-center">
+                              {{$schedule->requests()->count()}}
+                           </td>
+                           <td class="text-muted">
+                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
+                           </td>
+                           <td class="text-muted">
+                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                           </td>
+                           
+                        </tr>
+                        @endif
+                        {{-- <x-modal.schedule.select-vessel :vessels="$vessels" :schedule="$schedule" /> --}}
+                     @endforeach
                   </tbody>
                </table>
             </div>
