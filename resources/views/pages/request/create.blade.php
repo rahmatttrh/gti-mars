@@ -24,6 +24,9 @@
          <div class="row">
             <div class="col-md-5">
                <div class="card">
+                  <div class="card-header">
+                     Form Create Request
+                  </div>
                   <form action="{{route('request.store')}}" method="POST">
                      @csrf
                      <div class="card-body">
@@ -94,7 +97,7 @@
                         
                         <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
                            
-                           Save
+                           Create
                         </button>
                            
                      </div>
@@ -114,9 +117,12 @@
                      <table class="table table-vcenter card-table table-striped">
                         <thead>
                            <tr>
-                              <th>Date</th>
                               <th>Vessel</th>
+                              <th>Date</th>
+
                               {{-- <th>Type</th> --}}
+
+                              <th>From</th>
                               <th>Space</th>
                            </tr>
                         </thead>

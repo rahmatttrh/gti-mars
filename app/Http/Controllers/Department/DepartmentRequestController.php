@@ -365,6 +365,134 @@ class DepartmentRequestController extends Controller
       $now = Carbon::now();
       $request = ModelsRequest::find($dekripId);
       $type = $request->activity->type_id;
+      
+      $schedules = Schedule::where('date', $request->date)->get();
+      $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
+
+      if($scheduleRoute){
+         // dd('ada routeee');
+         $schedule = Schedule::find($scheduleRoute->schedule_id);
+         $request->update([
+            'status' => 1,
+            'schedule_id' => $schedule->id
+         ]);
+         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
+      } 
+
+      if ($schedules) {
+         foreach($schedules as $schedule){
+            $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
+            if($uncompleteRoute != null ){
+               $schedule = Schedule::find($uncompleteRoute->schedule_id);
+               $request->update([
+                  'status' => 1,
+                  'schedule_id' => $schedule->id
+               ]);
+            }
+         }
+         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+      } else {
+         $schedule = Schedule::create([
+            'by' => 'user',
+            'type' => 2,
+            'status' => 0,
+            'date' => $request->date,
+         ]);
+         $request->update([
+            'status' => 1,
+            'schedule_id' => $schedule->id,
+         ]);
+         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+      }
+
+      
+
+
+      // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
+      // // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
+      // if ($routineSchedule) {
+      //    // jika ada schedule rutin
+      //    // dd('ada schedule rutin di tanggal berikut');
+      //    $vessel = Vessel::find($routineSchedule->vessel_id);
+      //    if ($routineSchedule->status > 1) {
+      //       // dd('schedule sudah jalan');
+      //       $request->update([
+      //          'class' => 'additional',
+      //          'status' => 1,
+      //          'schedule_id' => $routineSchedule->id,
+      //       ]);
+      //    } else {
+      //       // dd('schedule belum jalan');
+      //       $request->update([
+      //          'status' => 1,
+      //          'schedule_id' => $routineSchedule->id,
+      //       ]);
+      //    }
+
+
+
+      //    RequestHistory::create([
+      //       'request_id' => $request->id,
+      //       'date' => $now,
+      //       'type' => 'released'
+      //    ]);
+      //    return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($routineSchedule->date)->format('d/m/Y') . ' by ' . $vessel->name);
+      // } else {
+      //    // jika tidak ada schedule rutin
+      //    // dd('tidak ada schedule rutin ditanggal tersebut');
+        
+
+      //    $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
+
+      //    // $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
+      //    // cek apakah ada schedule by request ditanggal tersebut
+      //    if ($requestSchedule) {
+      //       // jika ada
+      //       // cek deckspace kapal masih tersedia atau tidak
+      //       // dd('ada schedule by requestSchedule di tanggal tersebut');
+      //       $vessel = Vessel::find($requestSchedule->vessel_id);
+      //       if ($vessel) {
+      //          $vesselName = $vessel->name;
+      //       } else {
+      //          $vesselName = '-';
+      //       }
+      //       $request->update([
+      //          'status' => 1,
+      //          'schedule_id' => $requestSchedule->id,
+      //       ]);
+      //       RequestHistory::create([
+      //          'request_id' => $request->id,
+      //          'date' => $now,
+      //          'type' => 'released'
+      //       ]);
+      //       return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($requestSchedule->date)->format('d/m/Y') . ' by ' . $vesselName);
+      //    } else {
+      //       // dd('tidak ada schedule by request di tanggal tersebut');
+      //       // $vessel = Vessel::where('port_id', $request->origin_id)->first();
+      //       $schedule = Schedule::create([
+      //          'by' => 'user',
+      //          'type' => 2,
+      //          'status' => 0,
+      //          'date' => $request->date,
+      //          // 'origin_id' => $request->origin_id,
+      //          // 'destination_id' => $request->destination_id,
+      //       ]);
+      //       $request->update([
+      //          'status' => 1,
+      //          'schedule_id' => $schedule->id,
+      //       ]);
+      //       return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+      //    }
+      // }
+
+   }
+
+   public function releaseOld($id)
+   {
+      $dekripId = dekripRambo($id);
+      $now = Carbon::now();
+      $request = ModelsRequest::find($dekripId);
+      $type = $request->activity->type_id;
       // dd($type);
 
       // if ($type == 2) {

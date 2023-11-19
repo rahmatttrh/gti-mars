@@ -178,7 +178,7 @@
                            </div>
                         </div>
                         <div class="col-12">
-                           <div class="table-responsive mt-2">
+                           <div class="table-responsive mt-3">
                               <table class="table table-vcenter card-table">
                                  <thead>
                                     <tr>
@@ -196,7 +196,7 @@
                                              {{$route->port->name}}
                                           </a><br>
                                           <small>{{\Carbon\Carbon::parse($route->date)->format('l')}}</small>
-                                          <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes" />
+                                          <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes->where('date', $route->date)" />
                                        </th>
                                        @endforeach
                                        
@@ -242,12 +242,12 @@
                      </div>
                      
                   </div>
-                  <div class="card-footer">
+                  {{-- <div class="card-footer">
                      @if (auth()->user()->hasRole('marine'))
                         <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#add-route">Add Route</a></small>
                         <small><a href="#" class="btn btn-light btn-sm" data-bs-toggle="modal" data-bs-target="#reset-route">Reset Route</a></small>
                      @endif
-                  </div>
+                  </div> --}}
                </div>
                
                {{-- <hr> --}}

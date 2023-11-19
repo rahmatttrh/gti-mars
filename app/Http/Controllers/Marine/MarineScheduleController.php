@@ -108,9 +108,34 @@ class MarineScheduleController extends Controller
          $giat = Vessel::find(11);
          $elok = Vessel::find(9);
          $sigap = Vessel ::find(6);
+         $tegas = Vessel::find(35);
 
          foreach ($mondays as $monday) {
             // dd($day->format('Y-m-d'));
+            // $tuesday = $monday->addDays(1);
+            $elokMonday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'status' => 0,
+               'class' => 'Second Trip',
+               'vessel_id' => $elok->id,
+               'vessel_type' => $elok->type,
+               'date' => $monday->format('Y-m-d'),
+               'etd' => $monday->format('Y-m-d'),
+               'eta' => $monday->format('Y-m-d'),
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $elokMonday->id,
+               'port_id' => $giat->vesselSchedule->monday_id,
+               'rank' => 1,
+               'status' => 1,
+               'date' => $monday
+            ]);
+
+            
+
+
             $giatMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
@@ -123,8 +148,7 @@ class MarineScheduleController extends Controller
                'eta' => $monday->format('Y-m-d'),
             ]);
             
-            
-
+   
             ScheduleRoute::create([
                'schedule_id' => $giatMonday->id,
                'port_id' => 1,
@@ -139,17 +163,15 @@ class MarineScheduleController extends Controller
                'status' => 1,
                'date' => $monday->addDay()
             ]);
-
-            $elokMonday = Schedule::create([
-               'by' => 'system',
-               'type' => 1,
-               'status' => 0,
-               'vessel_id' => $elok->id,
-               'vessel_type' => $elok->type,
-               'date' => $monday->format('Y-m-d'),
-               'etd' => $monday->format('Y-m-d'),
-               'eta' => $monday->format('Y-m-d'),
+            ScheduleRoute::create([
+               'schedule_id' => $elokMonday->id,
+               'port_id' => $giat->vesselSchedule->tuesday_id,
+               'rank' => 2,
+               'status' => 1,
+               'date' => $monday
             ]);
+
+            
 
             
 
@@ -158,45 +180,45 @@ class MarineScheduleController extends Controller
 
          foreach ($tuesdays as $tuesday) {
             // dd($day->format('Y-m-d'));
-            $sigapTuesday = Schedule::create([
-               'by' => 'system',
-               'type' => 1,
-               'status' => 0,
-               'vessel_id' => $sigap->id,
-               'vessel_type' => $sigap->type,
-               'date' => $tuesday->format('Y-m-d'),
-               'etd' => $tuesday->format('Y-m-d'),
-               'eta' => $tuesday->format('Y-m-d'),
-            ]);
+            // $sigapTuesday = Schedule::create([
+            //    'by' => 'system',
+            //    'type' => 1,
+            //    'status' => 0,
+            //    'vessel_id' => $sigap->id,
+            //    'vessel_type' => $sigap->type,
+            //    'date' => $tuesday->format('Y-m-d'),
+            //    'etd' => $tuesday->format('Y-m-d'),
+            //    'eta' => $tuesday->format('Y-m-d'),
+            // ]);
 
-            ScheduleRoute::create([
-               'schedule_id' => $sigapTuesday->id,
-               'port_id' => 1,
-               'rank' => 1,
-               'status' => 1
-            ]);
+            // ScheduleRoute::create([
+            //    'schedule_id' => $sigapTuesday->id,
+            //    'port_id' => 1,
+            //    'rank' => 1,
+            //    'status' => 1
+            // ]);
          }
 
          // $vessel = Vessel::find(30);
          foreach ($wednesdays as $wednesday) {
             // dd($day->format('Y-m-d'));
-            $sigapWednesday = Schedule::create([
-               'by' => 'system',
-               'type' => 1,
-               'status' => 0,
-               'vessel_id' => $sigap->id,
-               'vessel_type' => $sigap->type,
-               'date' => $wednesday->format('Y-m-d'),
-               'etd' => $wednesday->format('Y-m-d'),
-               'eta' => $wednesday->format('Y-m-d'),
-            ]);
+            // $sigapWednesday = Schedule::create([
+            //    'by' => 'system',
+            //    'type' => 1,
+            //    'status' => 0,
+            //    'vessel_id' => $sigap->id,
+            //    'vessel_type' => $sigap->type,
+            //    'date' => $wednesday->format('Y-m-d'),
+            //    'etd' => $wednesday->format('Y-m-d'),
+            //    'eta' => $wednesday->format('Y-m-d'),
+            // ]);
 
-            ScheduleRoute::create([
-               'schedule_id' => $sigapWednesday->id,
-               'port_id' => 1,
-               'rank' => 1,
-               'status' => 1
-            ]);
+            // ScheduleRoute::create([
+            //    'schedule_id' => $sigapWednesday->id,
+            //    'port_id' => 1,
+            //    'rank' => 1,
+            //    'status' => 1
+            // ]);
 
 
             $elokWednesday = Schedule::create([
@@ -219,23 +241,23 @@ class MarineScheduleController extends Controller
 
          foreach ($thursdays as $thursday) {
             // dd($day->format('Y-m-d'));
-            $sigapThursday = Schedule::create([
-               'by' => 'system',
-               'type' => 1,
-               'status' => 0,
-               'vessel_id' => $sigap->id,
-               'vessel_type' => $sigap->type,
-               'date' => $thursday->format('Y-m-d'),
-               'etd' => $thursday->format('Y-m-d'),
-               'eta' => $thursday->format('Y-m-d'),
-            ]);
+            // $sigapThursday = Schedule::create([
+            //    'by' => 'system',
+            //    'type' => 1,
+            //    'status' => 0,
+            //    'vessel_id' => $sigap->id,
+            //    'vessel_type' => $sigap->type,
+            //    'date' => $thursday->format('Y-m-d'),
+            //    'etd' => $thursday->format('Y-m-d'),
+            //    'eta' => $thursday->format('Y-m-d'),
+            // ]);
 
-            ScheduleRoute::create([
-               'schedule_id' => $sigapThursday->id,
-               'port_id' => 1,
-               'rank' => 1,
-               'status' => 1
-            ]);
+            // ScheduleRoute::create([
+            //    'schedule_id' => $sigapThursday->id,
+            //    'port_id' => 1,
+            //    'rank' => 1,
+            //    'status' => 1
+            // ]);
            
          }
 
@@ -269,6 +291,101 @@ class MarineScheduleController extends Controller
                'date' => $saturday->addDay()
             ]);
            
+         }
+
+         foreach($sundays as $sunday){
+            $sigapSunday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'class' => 'First Trip',
+               'status' => 0,
+               'vessel_id' => $sigap->id,
+               'vessel_type' => $sigap->type,
+               'date' => $sunday->format('Y-m-d'),
+               'etd' => $sunday->format('Y-m-d'),
+               'eta' => $sunday->format('Y-m-d'),
+            ]);
+            $tegasSunday = Schedule::create([
+               'by' => 'system',
+               'type' => 1,
+               'class' => 'First Trip',
+               'status' => 0,
+               'vessel_id' => $tegas->id,
+               'vessel_type' => $tegas->type,
+               'date' => $sunday->format('Y-m-d'),
+               'etd' => $sunday->format('Y-m-d'),
+               'eta' => $sunday->format('Y-m-d'),
+            ]);
+
+            // Minggu
+            ScheduleRoute::create([
+               'schedule_id' => $sigapSunday->id,
+               'port_id' => $sigap->vesselSchedule->sunday_id,
+               'rank' => 1,
+               'status' => 1,
+               'date' => $sunday
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $tegasSunday->id,
+               'port_id' => $tegas->vesselSchedule->sunday_id,
+               'rank' => 1,
+               'status' => 1,
+               'date' => $sunday
+            ]);
+
+            // selasa
+            ScheduleRoute::create([
+               'schedule_id' => $sigapSunday->id,
+               'port_id' => $sigap->vesselSchedule->tuesday_id,
+               'rank' => 2,
+               'status' => 1,
+               'date' => $sunday->addDays(2)
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $tegasSunday->id,
+               'port_id' => $tegas->vesselSchedule->tuesday_id,
+               'rank' => 2,
+               'status' => 1,
+               'date' => $sunday->addDays(2)
+            ]);
+
+            // Rabu
+            ScheduleRoute::create([
+               'schedule_id' => $sigapSunday->id,
+               'port_id' => $sigap->vesselSchedule->wednesday_id,
+               'rank' => 3,
+               'status' => 1,
+               'date' => $sunday->addDay()
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $tegasSunday->id,
+               'port_id' => $tegas->vesselSchedule->wednesday_id,
+               'rank' => 3,
+               'status' => 1,
+               'date' => $sunday->addDay()
+            ]);
+
+            // Kamis
+            ScheduleRoute::create([
+               'schedule_id' => $sigapSunday->id,
+               'port_id' => $sigap->vesselSchedule->thursday_id,
+               'rank' => 4,
+               'status' => 1,
+               'date' => $sunday->addDay()
+            ]);
+
+            ScheduleRoute::create([
+               'schedule_id' => $tegasSunday->id,
+               'port_id' => $tegas->vesselSchedule->thursday_id,
+               'rank' => 4,
+               'status' => 1,
+               'date' => $sunday->addDay()
+            ]);
+
+
          }
 
 
