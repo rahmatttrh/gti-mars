@@ -203,7 +203,7 @@ Route::delete('/wo/{id}/delete', function ($id) {
     return $respon;
 });
 
-// 1.5 Release WO
+// 1.6 Release WO
 Route::patch('/wo/{id}/release', function (Request $request, $id) {
 
     // $validator = $request->validate([
