@@ -209,7 +209,7 @@ class VesselSeeder extends Seeder
          'name' => 'GIAT JAYA',
          'username' => 'giatjaya',
          'type' => 'Supply Vessel',
-         'email' => 'giat@pertamina.com',
+         'email' => 'giatjaya@pertamina.com',
          'deckspace' => 60,
          'deadweight' => 100,
          'created_at' => NOW(),
