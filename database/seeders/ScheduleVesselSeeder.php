@@ -30,7 +30,9 @@ class ScheduleVesselSeeder extends Seeder
         DB::table('schedule_vessels')->insert([
             'vessel_id' => 9,
             'monday_id' => 1,
-            'tuesday_id' => 1,
+            'tuesday_id' => 12,
+            'wednesday_id' => 1,
+            'thursday_id' => 12,
             'sunday_id' => 12,
             'created_at' => NOW(),
             'updated_at' => NOW()

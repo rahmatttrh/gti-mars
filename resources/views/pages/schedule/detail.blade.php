@@ -82,7 +82,7 @@
                      <div class="row">
                         <div class="col-md-8">
                            <small>{{$schedule->vessel->type ?? ''}}</small>
-                           <h1 class="border-bottom mt-3">
+                           <h1 class="border-bottom pb-2 mt-3">
                               {{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} 
                            </h1>
                            
