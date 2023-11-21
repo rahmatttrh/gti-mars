@@ -17,7 +17,7 @@
 
       {{-- <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> --}}
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-      
+      <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
    </head>
    <body>
       <div class="wrapper" >
@@ -413,6 +413,9 @@
       <script src="{{asset('js/demo.min.js')}}"></script>
       <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+      <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+      <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
       <script>
          $(document).ready(function() {
             $('.example').DataTable();
@@ -424,6 +427,7 @@
       @stack('get_schedules')
       @stack('ports')
       @stack('capacity')
+      @stack('map')
 
       @if (session('succedeed'))
          <script>

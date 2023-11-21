@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "461d59ce40e183510028f637faa92b4f",
+    "content-hash": "ddeebeb1f22cf3935f17b2b7a6e77022",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -61,6 +61,63 @@
                 "source": "https://github.com/asm89/stack-cors/tree/v2.1.1"
             },
             "time": "2022-01-18T09:12:03+00:00"
+        },
+        {
+            "name": "ballen/distical",
+            "version": "3.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/allebb/distical.git",
+                "reference": "480142af8abf9549ecd2bd5387d3fb753ca0bbcd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/allebb/distical/zipball/480142af8abf9549ecd2bd5387d3fb753ca0bbcd",
+                "reference": "480142af8abf9549ecd2bd5387d3fb753ca0bbcd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ballen\\Distical\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ballen",
+                    "email": "ballen@bobbyallen.me",
+                    "homepage": "http://bobbyallen.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A distance (Lat/Long) calculation library for PHP",
+            "homepage": "http://github.com/allebb/distical",
+            "keywords": [
+                "calculator",
+                "distance",
+                "gps",
+                "lat",
+                "latitude",
+                "lng",
+                "long",
+                "longditude",
+                "mapping"
+            ],
+            "support": {
+                "issues": "https://github.com/allebb/distical/issues",
+                "source": "https://github.com/allebb/distical/tree/3.1.0"
+            },
+            "time": "2023-11-08T13:47:33+00:00"
         },
         {
             "name": "barryvdh/laravel-dompdf",

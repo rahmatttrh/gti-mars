@@ -16,6 +16,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
+use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
@@ -213,6 +214,10 @@ Route::middleware(["auth"])->group(function () {
 
 Route::group(['middleware' => ['role:marine']], function () {
    Route::get('chart', [HomeController::class, 'chart'])->name('chart');
+   Route::get('dashboard/map', [HomeController::class, 'map'])->name('dashboard.map');
+
+   Route::get('get-distance', [GeofenceController::class, 'getDistance']);
+
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
       Route::post('store', [PortController::class, 'store'])->name('port.store');

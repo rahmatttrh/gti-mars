@@ -33,6 +33,14 @@ class HomeController extends Controller
     * @return \Illuminate\Contracts\Support\Renderable
     */
 
+   public function map(){
+      // dd('ok?');
+      $schedules = Schedule::orderBy('date', 'asc')->get();
+      return view('map', [
+         'schedules' => $schedules
+      ]);
+   }
+
    public function dashboardChart($month)
    {
 

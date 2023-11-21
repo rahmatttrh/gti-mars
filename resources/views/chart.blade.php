@@ -149,7 +149,7 @@
                      </div>
                   </div> --}}
                </div>
-               <div class="card mt-2">
+               <div class="card ">
                   <div class="card-header border-0">
                      <div class="card-title text-uppercase">{{$monthName}}</div>
                   </div>
