@@ -34,6 +34,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VdrController;
 use App\Http\Controllers\Vessel\VesselDeviationController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
@@ -360,6 +361,14 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::get('deviation/confirm/{deviation:id}', [VesselDeviationController::class, 'confirm'])->name('schedule.confirm.deviation');
       Route::get('deviation/arrive/{deviation:id}', [VesselDeviationController::class, 'arrive'])->name('schedule.arrive.deviation');
       Route::get('deviation/complete/{deviation:id}', [VesselDeviationController::class, 'complete'])->name('schedule.complete.deviation');
+   });
+
+
+   Route::prefix('vdr')->group(function () {
+      Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
+      Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
+      Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+      // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 });
 
