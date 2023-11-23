@@ -88,7 +88,9 @@
                            
                            <h1> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}, {{\Carbon\Carbon::parse($schedule->date)->format('d F Y')}}</h1>
                            @if ($schedule->type == 1)
-                           &nbsp;<div class="badge bg-info">Routine</div>
+                           <div class="badge bg-info">Routine</div>
+                           @else
+                           <div class="badge bg-info">Request</div>
                            @endif
                            <div class="badge bg-primary">{{$schedule->class}}</div>                              
 
@@ -195,7 +197,14 @@
                                              @endif 
                                              {{$route->port->name}}
                                           </a><br>
-                                          <small>{{\Carbon\Carbon::parse($route->date)->format('l')}}</small>
+                                          <small>
+                                             @if ($route->date)
+                                             {{\Carbon\Carbon::parse($route->date)->format('l')}}
+                                             @else
+                                             -
+                                             @endif
+
+                                          </small>
                                           <x-modal.schedule.reorder-route :schedule="$schedule" :route="$route" :fixroutes="$fixRoutes->where('date', $route->date)" />
                                        </th>
                                        @endforeach
@@ -291,6 +300,16 @@
                @endif
             </div>
             <div class="col-md-4">
+               @if ($schedule->vessel->latitude)
+               <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
+               @else
+               <div class="card mb-3">
+                  <div class="card-body text-center py-4">
+                     <small style="text-muted">No GPS Signal</small>
+                  </div>
+               </div>
+               @endif
+               
                @if (auth()->user()->hasRole('marine') )
                   <div class="card mb-2" style="height: calc(25rem + 10px)">
                      <div class="card-header">
@@ -437,4 +456,36 @@
       	})).render();
       });
    </script>
+@endpush
+
+{{-- satellite-streets-v12 --}}
+@push('map')
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoicmFobWF0cmgiLCJhIjoiY2xwNml3MzJ0MjBpNjJscXl6am9mc21sayJ9.BHym8QvhGHWK1QC3qDX4sg';
+   const map = new mapboxgl.Map({
+   container: 'map2', // container ID
+   // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+   style: 'mapbox://styles/mapbox/streets-v12', // style URL
+   center: [{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}], // starting position [lng, lat]
+   zoom: 7.4 // starting zoom
+   });
+   
+   const marker1 = new mapboxgl.Marker()
+   .setLngLat([{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}])
+   .addTo(map);
+
+   map.setStyle('mapbox://styles/mapbox/outdoors-v11')
+   map.addControl(new mapboxgl.NavigationControl())
+
+
+   for (const feature of geojson.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+}
+</script>
+
 @endpush

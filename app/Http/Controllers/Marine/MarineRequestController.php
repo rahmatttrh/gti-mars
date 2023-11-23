@@ -81,6 +81,7 @@ class MarineRequestController extends Controller
                'request_id' => $request->id,
                'port_id' => $request->origin_id,
                'rank' => $lastScheduleRoutesA->rank + 1,
+               'date' => null,
                'status' => 1
             ]);
          }
@@ -113,6 +114,7 @@ class MarineRequestController extends Controller
                'request_id' => $request->id,
                'port_id' => $request->destination_id,
                'rank' => $lastScheduleRoutes->rank + 1,
+               'date' => null,
                'status' => 1
             ]);
             $request->update([
@@ -154,6 +156,7 @@ class MarineRequestController extends Controller
             'date' => $now,
             'type' => 'validated',
             'desc' => $req->desc
+
          ]);
       } elseif ($request->class == 'additional') {
          $request->update([

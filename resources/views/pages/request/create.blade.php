@@ -57,12 +57,7 @@
                                  <label for="date"> Date(*)</label>
                               </div>
                            </div>
-                           <div class="col-md-12">
-                              <div class="form-floating mb-3">
-                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
-                                 <label for="bcm">BCM</label>
-                              </div>
-                           </div>
+                           
                            
                            
                            <div class="col-md-6">
@@ -89,6 +84,12 @@
                            </div>
                            <div class="col-md-12">
                               <div class="form-floating mb-3">
+                                 <input type="text" value="{{old('bcm')}}" class="form-control" id="bcm" name="bcm" >
+                                 <label for="bcm">BCM</label>
+                              </div>
+                           </div>
+                           <div class="col-md-12">
+                              <div class="form-floating mb-3">
                                  <input type="text" value="{{old('desc')}}" class="form-control" id="desc" name="desc" >
                                  <label for="desc">Description</label>
                               </div>
@@ -109,12 +110,31 @@
                </div>
             </div>
             <div class="col-md-7">
-               <div class="card">
+               <div class="card mb-3">
                   <div class="card-header">
-                     Available Schedules
+                     <div class="badge bg-info">Nearest Vessel</div>
                   </div>
                   <div class="table-responsive">
-                     <table class="table table-vcenter card-table table-striped">
+                     <table class="table table-vcenter card-table ">
+                        <thead>
+                           <tr>
+                              <th>Vessel</th>
+
+                           </tr>
+                        </thead>
+                        <tbody id="near" class="near">
+                          
+                         
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+               <div class="card">
+                  <div class="card-header">
+                     <div class="badge bg-info">Available Schedules</div>
+                  </div>
+                  <div class="table-responsive">
+                     <table class="table table-vcenter card-table ">
                         <thead>
                            <tr>
                               <th>Vessel</th>
@@ -179,6 +199,8 @@
    
       $(document).ready(function() {
          $('.origin').change(function() {
+            $('.result').empty()
+            $('.near').empty()
             var origin = $(this).val();
             var date = $('.date').val();
             var _token = $('meta[name="csrf-token"]').attr('content');
@@ -191,10 +213,16 @@
                   dataType: 'json',
 
                   success: function(result) {
-                     $('.result').empty()
-                     console.log(result);
+
+                     console.log('near :' + result.near);
+                     console.log('result :' + result.result);
                      $.each(result.result, function(i, index) {
                         $('.result').html(result.result);
+
+                     });
+                     $.each(result.near, function(i, index) {
+                        
+                        $('.near').html(result.near);
                      });
                   },
                   error: function(error) {

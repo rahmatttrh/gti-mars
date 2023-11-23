@@ -18,11 +18,19 @@ class CreateVesselsTable extends Migration
          $table->smallInteger('status')->nullable();
          $table->integer('schedule_id')->nullable();
          $table->mediumInteger('port_id')->nullable();
+         $table->string('txid')->nullable();
+         $table->string('mmsi')->nullable();
          // $table->string('port')->nullable();
          $table->string('contract_no')->nullable();
          $table->date('contract_start')->nullable();
          $table->date('contract_end')->nullable();
          $table->string('master')->nullable();
+
+         $table->string('latitude')->nullable();
+         $table->string('longitude')->nullable();
+         $table->string('speed')->nullable();
+         $table->string('calcspeed')->nullable();
+         $table->string('heading')->nullable();
 
          $table->string('name');
          $table->string('username');

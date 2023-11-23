@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GeofenceController;
 use App\Mail\ApprovalEmail;
 use App\Mail\NotificationEmail;
 use App\Models\Activity;
@@ -361,14 +362,89 @@ class DepartmentRequestController extends Controller
 
    public function release($id)
    {
+      // dd('oke');
       $dekripId = dekripRambo($id);
       $now = Carbon::now();
       $request = ModelsRequest::find($dekripId);
       $type = $request->activity->type_id;
-      
       $schedules = Schedule::where('date', $request->date)->get();
       $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
 
+      // jika request cargo
+      if ($request->activity_id == 2) {
+         $vessels = Vessel::where('type', 'Crew Boat')->where('latitude', '!=', null)->get();
+         if (!$vessels) {
+            $vessels = Vessel::where('latitude', '!=', null)->get();
+         }
+      } else {
+         $vessels = Vessel::where('type','!=', 'Crew Boat')->where('latitude', '!=', null)->get();
+         if (!$vessels) {
+            $vessels = Vessel::where('latitude', '!=', null)->get();
+         }
+        
+      }
+
+
+      // $nearVessel = null;
+      $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
+      // dd($now->format('Y-m-d'));
+
+      // $nearestVessels = array();
+      if ($reqDate ==  $now->format('Y-m-d')) {
+         // dd('today');
+         foreach($vessels as $vessel){
+            $vesselLat = $vessel->latitude;
+            $vesselLong = $vessel->longitude;
+            $portLat = $request->origin->latitude;
+            $portLong = $request->origin->longitude;
+            $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+            if($distance < 600){
+               $nearestVessel = $vessel;
+            }
+         }
+
+         // dd(count($nearestVessels) > 0);
+         if ($nearestVessel) {
+            // dd('ada kapal terdekat');
+            if ($nearestVessel->schedule_id) {
+               // dd('kapal sudah ada schedule');
+               $request->update([
+                  'status' => 1,
+                  'schedule_id' => $nearestVessel->schedule->id
+               ]);
+               return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+            } else {
+               // dd('kapal blm ada schedule');
+               $schedule = Schedule::create([
+                  'by' => 'system',
+                  'vessel_id' => $nearestVessel->id,
+                  'type' => 2,
+                  'status' => 0,
+                  'date' => $request->date,
+               ]);
+               $nearestVessel->update([
+                  'schedule_id' => $schedule->id
+               ]);
+               ScheduleRoute::create([
+                  'schedule_id' => $schedule->id,
+                  'port_id' => $request->origin_id,
+                  'rank' => 1,
+                  'status' => 1,
+                  'date' => $request->date
+               ]);
+               $request->update([
+                  'status' => 1,
+                  'schedule_id' => $schedule->id,
+               ]);
+               return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+            }
+         }
+      }
+
+      
+
+
+      // dd('end');
       if($scheduleRoute){
          // dd('ada routeee');
          $schedule = Schedule::find($scheduleRoute->schedule_id);

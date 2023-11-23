@@ -8,7 +8,7 @@
        </div>
        <div class="modal-footer">
          <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-         <a href="{{route('request.release.parent', enkripRambo($parent->id))}}" class="btn btn-primary" >Yes, release</a>
+         <a href="{{route('request.release', enkripRambo($request->id))}}" class="btn btn-primary" >Yes, release</a>
          {{-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes, delete all my data</button> --}}
        </div>
      </div>

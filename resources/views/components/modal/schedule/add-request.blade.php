@@ -2,7 +2,7 @@
    <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Approve Requestttt</h5>
+            <h5 class="modal-title">Approve Request</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
          <form action="{{route('request.select.schedule')}}" method="POST">
@@ -38,10 +38,10 @@
                   </select>
                   <label for="from">After From</label>
                </div> --}}
-               <div class="form-floating mb-3">
+               {{-- <div class="form-floating mb-3">
                   <input type="date" class="form-control" required id="date" name="date" min="{{$request->date}}" >
                   <label for="date">Date</label>
-               </div>
+               </div> --}}
                <div class="form-floating mb-3">
                   <input type="text" class="form-control" id="desc" name="desc"  >
                   <label for="desc">Remark (Optional)</label>

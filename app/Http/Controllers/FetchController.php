@@ -6,7 +6,11 @@ use App\Models\Jetty;
 use App\Models\Port;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
+use App\Models\Vessel;
 use Illuminate\Http\Request;
+
+use App\Http\Controllers\GeofenceController;
+use Carbon\Carbon;
 
 class FetchController extends Controller
 {
@@ -117,12 +121,36 @@ class FetchController extends Controller
    public function fetchSchedules($date, $origin)
    {
 
+      $now = Carbon::now();
       $schedules = Schedule::where('date', $date)->get();
       $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin)->get();
 
       // Masukin ke array
       $result = array();
+      $near = array();
       $routes = array();
+
+      $nearestVessels = array();
+      $port = Port::find($origin);
+      $portLat = $port->latitude;
+      $portLong = $port->longitude;
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+
+      // $nearVessel = null;
+      foreach($vessels as $vessel){
+         $vesselLat = $vessel->latitude;
+         $vesselLong = $vessel->longitude;
+         $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+         if($distance < 1000){
+            $nearestVessels[] = $vessel;
+            $nearVessel = $vessel;
+         }
+      }
+
+      // foreach($nearestVessels as $near){
+      //    $tesVes = $near->name;
+      // }
+      // dd($nearestVessels);
       
       foreach ($scheduleRoutes as $row) {
 
@@ -193,14 +221,34 @@ class FetchController extends Controller
             </td>
             <td>' . $persen  . ' %</td>
          
-      </tr>';
+         </tr>';
       }
+
+      
+
+      if ($date == $now->format('Y-m-d')) {
+         $log = 'today';
+         foreach ($nearestVessels as $row) {
+         
+            $near[] = '<tr>
+               <td>
+                  ' . $row->name  . ' <br>
+                  <small> ' . $row->type . '</small>
+               </td>
+            </tr>';
+         }
+      } else {
+         $log = 'not today';
+         $near[] = null;
+      }
+      
 
       // Kirim balik ke ajax
       return response()->json([
          'success' => true,
-         'result' => $result
-
+         'result' => $result,
+         'near' => $near,
+         // 'log' => $near
       ]);
    }
 }
