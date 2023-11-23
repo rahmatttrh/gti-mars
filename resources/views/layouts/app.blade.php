@@ -233,7 +233,7 @@
                      <ul class="list-inline list-inline-dots mb-0">
                         <li class="list-inline-item">
                            Copyright &copy; 2023
-                           <a href="." class="link-secondary">GTI</a>.
+                           <a href="." class="link-secondary">Ekanuri Development</a>.
                            All rights reserved.
                         </li>
                         

@@ -17,6 +17,9 @@ VDR
                 </h2>
             </div>
             <!-- Page title actions -->
+            <div class="col-auto ms-auto d-print-none">
+                <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" class="btn btn-primary">Export PDF</a>
+             </div>
         </div>
     </div>
 </div>

@@ -195,6 +195,7 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('document')->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
       Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
+      Route::get('/vdr/{vdr:id}', [DocumentController::class, 'vdr'])->name('document.vdr');
    });
 
    Route::prefix('user')->group(function () {
