@@ -17,9 +17,10 @@ class CreateVdrsTable extends Migration
             $table->integerIncrements('id');
             $table->unsignedSmallInteger('vessel_id');
             $table->date('date');
-            $table->unsignedSmallInteger('crew_onduty');
-            $table->unsignedSmallInteger('crew_max');
-            $table->char('status', 3);
+            $table->unsignedSmallInteger('crew_onduty')->default(0);
+            $table->unsignedSmallInteger('crew_max')->default(0);
+            $table->string('location_midnight')->nullable();
+            $table->string('status', 3)->default('1');
             $table->string('created_by', 50);
             $table->timestamps();
         });

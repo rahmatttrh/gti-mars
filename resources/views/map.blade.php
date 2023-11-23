@@ -19,7 +19,7 @@
             </h2>
             </div>
             <!-- Page title actions -->
-            <div class="col-auto ms-auto d-print-none">
+            {{-- <div class="col-auto ms-auto d-print-none">
                <div class="btn-list">
                   
                   <div class="dropdown">
@@ -39,7 +39,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+            </div> --}}
          </div>
       </div>
    </div>
@@ -68,7 +68,13 @@
             @endforeach
          @endif
 
-         <div class="card" id="map"  style="width: 100%; height: 70vh"></div>
+         <div class="row">
+            
+            <div class="col-md-12">
+               <div class="card" id="map"  style="width: 100%; height: 70vh"></div>
+            </div>
+         </div>
+         
          
          {{-- <div class="card">
             <div class="card-body" id='map' style="width: 100%; height: 67vh">
@@ -148,7 +154,31 @@
                </div>
             </div>
             <div class="col-md-4 mt-3">
-               <div class="card mb-2" style="height: calc(33rem + 10px)">
+               <div class="card mb-3" style="height: calc(20rem + 10px)">
+                  <div class="card-header">
+                     <div class="badge bg-primary">
+                        Sailing Order Update
+                     </div>
+                  </div>
+                  <div class="card-body card-body-scrollable card-body-scrollable-shadow">
+                     <div class="divide-y">
+                        @foreach ($reports as $report)
+                           <div>
+                              <div class="row">
+                                 <div class="col">
+                                    <div class="">
+                                       <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}">{{$report->vessel->name}} </a> 
+                                       {{$report->status->name}} {{$report->port->name ?? ''}}
+                                    </div>
+                                    <div class="text-muted"><small>{{$report->updated_at->format('d-m-y H:i ')}}</small></div>
+                                 </div>
+                              </div>
+                           </div>
+                        @endforeach
+                     </div>
+                  </div>
+               </div>
+               <div class="card mb-2">
                   <div class="card-header">
                      <div class="badge bg-info">
                         Vessel Update
@@ -159,15 +189,19 @@
                         @foreach ($recentVessels as $vessel)
                            
                               <div class="row">
-                                 <div class="col">
-                                    <a href="" class="">{{$vessel->name}} </a> 
-                                    <div class="mt-1 d-flex">
-
-                                       <x-status.vessel :vessel="$vessel" />
-                                       {{-- <div class="badge bg-light border text-dark">Pabelokan</div> --}}
-                                    </div>
+                                 <div class="col text-truncate">
+                                    <span class="mb-2">{{$vessel->name}}</span>
+                                    <x-status.vessel :vessel="$vessel" class="mt-2" />
                                     {{-- <div class="text-muted"><small>{{$vessel->updated_at->format('d-m-y H:i ')}}</small></div> --}}
                                  </div>
+                                 <div class="col text-end">
+                                    
+                                    <small>Speed : {{round($vessel->speed)}} <br> Heading :  {{$vessel->heading}}</small><br>
+
+                                 </div>
+                                 {{-- <div class="col-md-12">
+                                    <small>{{$vessel->latitude}} , {{$vessel->longitude}}</small>
+                                 </div> --}}
                               </div>
                         @endforeach
                      </div>

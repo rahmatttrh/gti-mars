@@ -370,11 +370,26 @@ class DepartmentRequestController extends Controller
       $schedules = Schedule::where('date', $request->date)->get();
       $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
 
-      $vessels = Vessel::where('latitude', '!=', null)->get();
+      // jika request cargo
+      if ($request->activity_id == 2) {
+         $vessels = Vessel::where('type', 'Crew Boat')->where('latitude', '!=', null)->get();
+         if (!$vessels) {
+            $vessels = Vessel::where('latitude', '!=', null)->get();
+         }
+      } else {
+         $vessels = Vessel::where('type','!=', 'Crew Boat')->where('latitude', '!=', null)->get();
+         if (!$vessels) {
+            $vessels = Vessel::where('latitude', '!=', null)->get();
+         }
+        
+      }
+
 
       // $nearVessel = null;
       $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
       // dd($now->format('Y-m-d'));
+
+      // $nearestVessels = array();
       if ($reqDate ==  $now->format('Y-m-d')) {
          // dd('today');
          foreach($vessels as $vessel){
@@ -388,6 +403,7 @@ class DepartmentRequestController extends Controller
             }
          }
 
+         // dd(count($nearestVessels) > 0);
          if ($nearestVessel) {
             // dd('ada kapal terdekat');
             if ($nearestVessel->schedule_id) {
