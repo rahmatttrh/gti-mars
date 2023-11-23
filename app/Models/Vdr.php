@@ -15,7 +15,5 @@ class Vdr extends Model
         return $this->belongsTo(Vessel::class);
     }
 
-    public function loc(){
-        return $this->belongsTo(Port::class, 'location_midnight');
-    }
+  
 }
