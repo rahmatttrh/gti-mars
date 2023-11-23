@@ -55,7 +55,7 @@
                   {{-- <p class="h3">DETAIL</p> --}}
                   <dl class="row">
                      <dd class="col-4">Location</dd>
-                     <dd class="col-8">: {{$vdr->loc}}</dd>
+                     <dd class="col-8">: {{$vdr->location_midnight}}</dd>
                      <dd class="col-4">Owner</dd>
                      <dd class="col-8">: {{$vdr->vessel->owner}}</dd>
                      <dd class="col-4">Master</dd>
