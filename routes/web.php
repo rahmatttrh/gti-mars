@@ -373,6 +373,9 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
 
+      Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
+
+
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 });

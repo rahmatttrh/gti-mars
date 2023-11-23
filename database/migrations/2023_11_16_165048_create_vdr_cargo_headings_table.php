@@ -15,7 +15,6 @@ class CreateVdrCargoHeadingsTable extends Migration
     {
         Schema::create('vdr_cargo_headings', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->unsignedInteger('vdr_id');
             $table->string('description', 100);
             $table->timestamps();
         });

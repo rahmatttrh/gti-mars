@@ -17,11 +17,11 @@ class CreateVdrCargosTable extends Migration
             $table->id();
             $table->unsignedInteger('vdr_id');
             $table->tinyInteger('heading_id');
-            $table->smallInteger('opening')->nullable();
-            $table->smallInteger('consumption')->nullable();
-            $table->smallInteger('received')->nullable();
-            $table->smallInteger('transferred')->nullable();
-            $table->smallInteger('closing')->nullable();
+            $table->smallInteger('opening')->default(0);
+            $table->smallInteger('consumption')->default(0);
+            $table->smallInteger('received')->default(0);
+            $table->smallInteger('transferred')->default(0);
+            $table->smallInteger('closing')->default(0);
             $table->string('remarks')->nullable();
             $table->string('created_by')->nullable();
             $table->timestamps();

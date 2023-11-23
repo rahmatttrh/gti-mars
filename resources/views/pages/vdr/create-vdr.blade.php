@@ -211,6 +211,7 @@ VDR
             @endif
         </div>
         <div class="col-md-8 ">
+            <!-- Tabel Detail of Daily Operating Activies -->
             <div class="card">
                 <div class="card-header">
                     <div class="row align-items-center">
@@ -477,6 +478,184 @@ VDR
                 </div>
                 @endif
             </div>
+            <!-- End Tabel  -->
+            <!-- Tabel Detail Fuel-->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD
+                            </h2>
+                        </div>
+                        <!-- Page title actions -->
+                        <div class="mr-auto ms-auto d-print-none">
+                            <div class="d-flex">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                        Options
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+
+                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                                            Add Activites
+                                        </a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- End modal -->
+                    </div>
+                </div>
+                @if($vdr)
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr class="text-center align-middle">
+                                <th>TYPE</th>
+                                <th>Opening <br> (ROB from Previous Day)</th>
+                                <th>Consumption <br> (Based on Actual Sounding)</th>
+                                <th>Received</th>
+                                <th>Transferred</th>
+                                <th>Closing</th>
+                                <th>Remarks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($cargos as $cargo)
+                            <tr>
+                                <td> {{$cargo->heading->description}} </td>
+                                <td class="text-right align-middle">{{$cargo->opening}} {{$cargo->heading->unit}} </td>
+                                <td class="text-left align-middle">{{$cargo->consumption}}</td>
+                                <td class="text-left align-middle">{{$cargo->received}}</td>
+                                <td class="text-left align-middle">{{$cargo->transferred}}</td>
+                                <td class="text-left align-middle">{{$cargo->closing}}</td>
+                                <td class="text-left align-middle">{{$cargo->remarks}}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#editCar-{{$cargo->id}}"> Edit </a>
+                                </td>
+                            </tr>
+
+
+                            <!-- Modal Edit -->
+
+                            <div class="modal modal-blur fade" id="editCar-{{$cargo->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+
+                                        <form action="{{route('vdr.update.cargo')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{$cargo->id}}" id="">
+                                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+
+                                                    <h3 class="form-control">{{$cargo->heading->description}}</h3>
+                                                    <div class="form-floating mb-3">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="opening">Opening</label>
+                                                                <input type="text" class="form-control hitung-closing opening" oninput="calculateClosing({{$cargo->id}})" id="opening-{{$cargo->id}}" name="opening" value="{{$cargo->opening}}">
+                                                                @error('opening')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="consumption">Consumption</label>
+                                                                <input type="text" class="form-control hitung-closing consumption" oninput="calculateClosing({{$cargo->id}})" id="consumption-{{$cargo->id}}" name="consumption" value="{{$cargo->consumption}}">
+                                                                @error('consumption')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="received">Received</label>
+                                                                <input type="text" class="form-control hitung-closing received" oninput="calculateClosing({{$cargo->id}})" id="received-{{$cargo->id}}" name="received" value="{{$cargo->received}}">
+                                                                @error('received')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="transferred">Transferred</label>
+                                                                <input type="text" class="form-control hitung-closing transferred" oninput="calculateClosing({{$cargo->id}})" id="transferred-{{$cargo->id}}" name="transferred" value="{{$cargo->transferred}}">
+                                                                @error('transferred')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="closing">Closing</label>
+                                                                <input type="text" class="form-control hitung-closing closing" id="closing" name="closing" value="{{$cargo->closing}}" readonly>
+                                                                @error('closing')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="remarks">Remarks</label>
+                                                                <textarea type="text" class="form-control" id="remarks" name="remarks" value="{{$cargo->remarks}}">{{$cargo->remarks}}</textarea>
+                                                                @error('remarks')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+                            @endforeach
+
+                            <tr>
+                                <td></td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+            </div>
+            <!-- End Table  -->
         </div>
     </div>
 </div>
@@ -670,5 +849,36 @@ VDR
             $(this).val("");
         }
     });
+
+
+    // Fungsi untuk menghitung dan menampilkan nilai di kolom Closing
+    function calculateClosing(id) {
+
+        // Ambil nilai dari masing-masing input
+        var opening = parseInt($("#opening-" + id).val()) || 0;
+        var consumption = parseInt($("#consumption-" + id).val()) || 0;
+        var received = parseInt($("#received-" + id).val()) || 0;
+        var transferred = parseInt($("#transferred-" + id).val()) || 0;
+
+        // Hitung nilai Closing berdasarkan rumus
+        var closing = (opening + received) - (consumption + transferred);
+
+        // Tampilkan hasil perhitungan di kolom Closing
+        $(".closing").val(closing);
+    }
+
+    // Panggil fungsi ketika nilai input berubah
+    // $(".hitung-closing").on("input", function() {
+    //     var cargoId = $(".hitung-closing ").data("id");
+    //     console.log(cargoId);
+    //     calculateClosing();
+    // });
+
+    // function myFunction(id) {
+    //     console.log("Nilai Input: " + inputValue); 
+    // }
+
+    // Panggil fungsi saat halaman dimuat
+    // calculateClosing();
 </script>
 @endpush
