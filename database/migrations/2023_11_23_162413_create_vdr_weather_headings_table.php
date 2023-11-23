@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVdrCargoHeadingsTable extends Migration
+class CreateVdrWeatherHeadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateVdrCargoHeadingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vdr_cargo_headings', function (Blueprint $table) {
+        Schema::create('vdr_weather_headings', function (Blueprint $table) {
             $table->tinyIncrements('id');
+            $table->string('heading', 100);
             $table->string('description', 100);
-            $table->string('unit', 50);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateVdrCargoHeadingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vdr_cargo_headings');
+        Schema::dropIfExists('vdr_weather_headings');
     }
 }

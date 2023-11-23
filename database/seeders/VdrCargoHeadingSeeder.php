@@ -16,63 +16,63 @@ class VdrCargoHeadingSeeder extends Seeder
     {
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'FUEL OIL',
-            'description' => 'Ltrs',
+            'unit' => 'Ltrs',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'FRESH WATER',
-            'description' => 'Ltrs',
+            'unit' => 'Ltrs',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'DRILL WATER',
-            'description' => 'Ltrs',
+            'unit' => 'Ltrs',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'BARITE',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'BENTONITE',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'CEMENT BLENDED',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'CEMENT G',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'BRINE',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
 
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'OTHERS',
-            'description' => 'Cuft',
+            'unit' => 'Cuft',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);

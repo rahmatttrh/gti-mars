@@ -16,12 +16,12 @@ class CreateVdrWeatherTable extends Migration
         Schema::create('vdr_weather', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->unsignedInteger('vdr_id');
-            $table->string('wind');
-            $table->string('sea');
-            $table->string('visibility');
-            $table->time('time_start');
-            $table->time('time_end');
-            $table->string('status', 3);
+            $table->unsignedTinyInteger('heading_id');
+            $table->string('0006');
+            $table->string('0612');
+            $table->string('1218');
+            $table->string('1824');
+            $table->string('status', 3)->default('1');
             $table->timestamps();
         });
     }
