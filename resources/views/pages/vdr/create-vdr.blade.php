@@ -262,6 +262,8 @@ VDR
             </div>
             <!-- End Tabel  -->
 
+
+
         </div>
         <div class="col-md-8 ">
             <!-- Tabel Detail of Daily Operating Activies -->
@@ -691,6 +693,58 @@ VDR
                 @endif
             </div>
             <!-- End Table  -->
+
+            <!-- Tabel HSE-->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                HSSE
+                            </h2>
+                        </div>
+
+
+                        <!-- End modal -->
+                    </div>
+                </div>
+                @if($vdr)
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="text-center">A</th>
+                                <th>HSSE STATISTICS </th>
+                                <th>Previous</th>
+                                <th>Today</th>
+                                <th>Monthly</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($hses as $hse)
+                            <tr>
+                                <td>{{$hse->header->description}}</td>
+                                <td>{{ $hse->t_0006 ?? '-' }}</td>
+                                <td>{{$hse->t_0612 ?? '-' }}</td>
+                                <td>{{$hse->t_1218 ?? '-' }}</td>
+                                <td>{{$hse->t_1824 ?? '-' }}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$hse->id}}"> Edit </a>
+                                </td>
+                            </tr>
+
+                            @endforeach
+
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+            </div>
+            <!-- End Tabel  -->
         </div>
     </div>
 </div>

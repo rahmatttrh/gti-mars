@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Crew;
 use App\Models\PayloadType;
 use App\Models\ScheduleVessel;
+use App\Models\VdrHseHeader;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -40,6 +41,7 @@ class DatabaseSeeder extends Seeder
          ScheduleVesselSeeder::class,
          VdrCargoHeadingSeeder::class,
          VdrWeatherHeadingSeeder::class,
+         VdrHseHeaderSeeder::class,
          // VesselStatusSeeder::class
       ]);
 

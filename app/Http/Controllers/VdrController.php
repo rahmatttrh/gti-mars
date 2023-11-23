@@ -6,6 +6,8 @@ use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrCargoHeading;
+use App\Models\VdrHse;
+use App\Models\VdrHseHeader;
 use App\Models\VdrWeather;
 use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
@@ -35,11 +37,13 @@ class VdrController extends Controller
             $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
             $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
             $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+            $hses = VdrHse::where('vdr_id', $vdr->id)->get();
             // 
         } else {
             $activities = null;
             $cargos = null;
             $weathers = null;
+            $hses = null;
         }
 
 
@@ -50,7 +54,7 @@ class VdrController extends Controller
             'activities' => $activities,
             'cargos' => $cargos,
             'weathers' => $weathers,
-
+            'hses' => $hses,
         ])->with('i');
     }
 
@@ -127,6 +131,25 @@ class VdrController extends Controller
                 }
             }
 
+            $hseHeadings = VdrHseHeader::get();
+
+            foreach ($hseHeadings as $key => $heading) {
+                # code...
+                $vdrHse = VdrHse::where('vdr_id', $vdr->id)
+                    ->where('header_id', $heading->id)
+                    ->first();
+
+                if (!$vdrHse) {
+                    # code...
+                    $createVdrWeather = VdrHse::create([
+                        'vdr_id' => $vdr->id,
+                        'header_id' => $heading->id,
+                        'created_at' => NOW(),
+                        'updated_at' => NOW()
+                    ]);
+                }
+            }
+
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
@@ -165,45 +188,6 @@ class VdrController extends Controller
                 'location_midnight' => $req->location_midnight
             ]);
 
-            $cargoHeadings = VdrCargoHeading::get();
-
-            foreach ($cargoHeadings as $key => $heading) {
-                # code...
-
-                $vdrCargo = VdrCargo::where('vdr_id', $vdr->id)
-                    ->where('heading_id', $heading->id)
-                    ->first();
-
-                if (!$vdrCargo) {
-                    # code...
-                    $createVdrCargo = VdrCargo::create([
-                        'vdr_id' => $vdr->id,
-                        'heading_id' => $heading->id,
-                        'created_by' => $vdr->created_by,
-                        'created_at' => NOW(),
-                        'updated_at' => NOW()
-                    ]);
-                }
-            }
-
-            $wHeadings = VdrWeatherHeading::get();
-
-            foreach ($wHeadings as $key => $heading) {
-                # code...
-                $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
-                    ->where('heading_id', $heading->id)
-                    ->first();
-
-                if (!$vdrWeather) {
-                    # code...
-                    $createVdrWeather = VdrWeather::create([
-                        'vdr_id' => $vdr->id,
-                        'heading_id' => $heading->id,
-                        'created_at' => NOW(),
-                        'updated_at' => NOW()
-                    ]);
-                }
-            }
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();

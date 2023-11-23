@@ -18,7 +18,6 @@ class CreateVdrHseHeadersTable extends Migration
             $table->string('description');
             $table->string('group_header');
             $table->string('io', 1);
-            $table->unsignedBigInteger('vdr_id');
             $table->string('is_header', 1)->default('1');
             $table->tinyInteger('header_id')->nullable();
             $table->string('status', 3)->default('1');
