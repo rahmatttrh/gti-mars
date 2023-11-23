@@ -66,6 +66,31 @@
                   </dl>
                </div>
 
+               <p class="h3 mt-4">WEATHER CONDITION</p>
+               <table class="table table-transparent table-responsive">
+                  <thead>
+                     
+                     <tr>
+                        <th>Wheather/Time</th>
+                        <th>00:00 - 06:00 HRS</th>
+                        <th>06:00 - 12:00 HRS</th>
+                        <th>12:00 - 18:00 HRS</th>
+                        <th>18:00 - 24:00 HRS</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($vdrWheathers as $vdrWheather)
+                     <tr>
+                        <td>{{$vdrWheather->heading->description}}</td>
+                        <td>{{$vdrWheather->t_0006}}</td>
+                        <td>{{$vdrWheather->t_1218}}</td>
+                        <td>{{$vdrWheather->t_1824}}</td>
+                     </tr>
+                     @endforeach
+                  </tbody>
+                  
+               </table>
+
                <p class="h3 mt-4">DETAIL OF DAILY OPERATIONAL ACTIVITY</p>
                <table class="table table-transparent table-responsive">
                   <thead>

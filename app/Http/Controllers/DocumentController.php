@@ -8,6 +8,7 @@ use App\Models\ScheduleRoute;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
+use App\Models\VdrWeather;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -19,11 +20,13 @@ class DocumentController extends Controller
       $vdr = Vdr::find($dekripId);
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
       $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      $vdrWheathers = VdrWeather::where('vdr_id', $vdr->id)->get();
 
       return view('pages.document.vdr', [
          'vdr' => $vdr,
          'vdrActivities' => $vdrActivities,
-         'vdrCargos' => $vdrCargos
+         'vdrCargos' => $vdrCargos,
+         'vdrWheathers' => $vdrWheathers
       ]);
    }
 
