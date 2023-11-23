@@ -42,6 +42,7 @@ use App\Models\ParentRequest;
 use App\Models\Platform;
 use App\Models\Request;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -57,6 +58,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//    Route::group(['middleware' => ['role:marine']], function () {
+//       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
+//    });
+//    Route::group(['middleware' => ['role:department|vessel']], function () {
+//       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//   });
+ 
+   
 
    Route::prefix("fetch")->group(function () {
       Route::get("schedule/{date}/{value}", [FetchController::class, "fetchSchedules",]);
@@ -214,7 +223,7 @@ Route::middleware(["auth"])->group(function () {
 
 Route::group(['middleware' => ['role:marine']], function () {
    Route::get('chart', [HomeController::class, 'chart'])->name('chart');
-   Route::get('dashboard/map', [HomeController::class, 'map'])->name('dashboard.map');
+   // Route::get('dashboard/map', [HomeController::class, 'map'])->name('dashboard.map');
 
    Route::get('get-distance', [GeofenceController::class, 'getDistance']);
 
@@ -249,6 +258,7 @@ Route::group(['middleware' => ['role:marine']], function () {
    Route::prefix('dashboard')->group(function () {
       Route::get('table', [HomeController::class, 'dashboardTable'])->name('dashboard.table');
       Route::get('chart/{month}', [HomeController::class, 'dashboardChart'])->name('dashboard.chart');
+      Route::get('map/{month}', [HomeController::class, 'map'])->name('dashboard.map');
    });
 
    Route::prefix('request')->group(function () {
@@ -305,7 +315,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
       Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
       Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
       Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
-      Route::get('release/{request:id}', [DepartmentRequestController::class, 'release'])->name('request.release');
+      Route::get('release/{id}', [DepartmentRequestController::class, 'release'])->name('request.release');
       Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
 
       Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');

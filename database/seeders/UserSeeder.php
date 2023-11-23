@@ -663,15 +663,15 @@ class UserSeeder extends Seeder
       ]);
       $moloko->assignRole('vessel');
 
-      $baliho = User::create([
-         'name' => 'TRANSKO BALIHO',
-         'username' => 'baliho',
-         'email' => 'baliho@pertamina.com',
+      $balihe = User::create([
+         'name' => 'TRANSKO BALIHE',
+         'username' => 'balihe',
+         'email' => 'balihe@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $baliho->assignRole('vessel');
+      $balihe->assignRole('vessel');
 
       $logindo = User::create([
          'name' => 'LOGINDO OVERCOMER',

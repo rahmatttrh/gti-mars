@@ -18,6 +18,7 @@
       {{-- <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> --}}
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
       <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+      
    </head>
    <body>
       <div class="wrapper" >
@@ -428,6 +429,7 @@
       @stack('ports')
       @stack('capacity')
       @stack('map')
+      @stack('autorefresh')
 
       @if (session('succedeed'))
          <script>
