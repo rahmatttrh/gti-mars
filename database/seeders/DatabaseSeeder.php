@@ -37,7 +37,8 @@ class DatabaseSeeder extends Seeder
          CargoSeeder::class,
          EmployeeSeeder::class,
          StatusSeeder::class,
-         ScheduleVesselSeeder::class
+         ScheduleVesselSeeder::class,
+         VdrCargoHeadingSeeder::class
          // VesselStatusSeeder::class
       ]);
 
