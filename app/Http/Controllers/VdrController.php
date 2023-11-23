@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Vdr;
+use App\Models\VdrActivity;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 
@@ -25,10 +26,19 @@ class VdrController extends Controller
 
         $vdr = Vdr::where('vessel_id', $vessel->id)->where('date', date('Y-m-d'))->first();
 
+        if ($vdr) {
+            # code...
+            $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+        } else {
+            $activities = null;
+        }
+
+
         return view('pages.vdr.create-vdr', [
             'user' => $user,
             'vessel' => $vessel,
-            'vdr' => $vdr
+            'vdr' => $vdr,
+            'activities' => $activities
         ])->with('i');
     }
 
@@ -90,6 +100,107 @@ class VdrController extends Controller
             return redirect()->back()->with('success', 'VDR data successfully updated');
         } else {
             return redirect()->back()->with('warning', 'VDR gagal Diupdate!');
+        }
+    }
+
+    public function storeActivity(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vessel_id' => 'required',
+            'created_by' => 'required',
+            'activity' => 'required',
+            'start' => 'required',
+            'finish' => 'required',
+            'high' => 'required',
+            'normal' => 'required',
+            'slow' => 'required',
+            'manu' => 'required',
+            'idle' => 'required',
+            'tow' => 'required',
+            'ah' => 'required',
+            'sb' => 'required'
+        ]);
+
+        $createVdr = VdrActivity::create([
+            'vdr_id' => $req->id,
+            'created_by' => $req->created_by,
+            'activity' => $req->activity,
+            'start' => $req->start,
+            'finish' => $req->finish,
+            'high' => $req->high,
+            'normal' => $req->normal,
+            'slow' => $req->slow,
+            'manu' => $req->manu,
+            'idle' => $req->idle,
+            'tow' => $req->tow,
+            'ah' => $req->ah,
+            'sb' => $req->sb
+        ]);
+
+        if ($createVdr) {
+            # code...
+            return redirect()->back()->with('success', 'Activity data successfully saved');
+        } else {
+            return redirect()->back()->with('warning', 'Activity gagal Disimpan!');
+        }
+    }
+
+    public function updateActivity(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'activity' => 'required',
+            'start' => 'required',
+            'finish' => 'required',
+            'high' => 'required',
+            'normal' => 'required',
+            'slow' => 'required',
+            'manu' => 'required',
+            'idle' => 'required',
+            'tow' => 'required',
+            'ah' => 'required',
+            'sb' => 'required'
+        ]);
+
+
+
+        $updateVdr = VdrActivity::where('id', $req->id)
+            ->update([
+                'activity' => $req->activity,
+                'start' => $req->start,
+                'finish' => $req->finish,
+                'high' => $req->high,
+                'normal' => $req->normal,
+                'slow' => $req->slow,
+                'manu' => $req->manu,
+                'idle' => $req->idle,
+                'tow' => $req->tow,
+                'ah' => $req->ah,
+                'sb' => $req->sb
+            ]);
+
+        if ($updateVdr) {
+            # code...
+            return redirect()->back()->with('success', 'Activity data successfully updated');
+        } else {
+            return redirect()->back()->with('warning', 'Activity gagal di update!');
+        }
+    }
+
+    public function deleteActivity(Request $req)
+    {
+        $req->validate([
+            'id' => 'required'
+        ]);
+
+        $deleteActivity  = VdrActivity::destroy($req->id);
+
+        if ($deleteActivity) {
+            # code...
+            return redirect()->back()->with('success', 'Activity data successfully deleted');
+        } else {
+            return redirect()->back()->with('warning', 'Activity gagal di delete!');
         }
     }
 }

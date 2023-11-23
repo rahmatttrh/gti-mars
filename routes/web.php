@@ -368,6 +368,11 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+
+      Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
+      Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
+      Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
+
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
 });
