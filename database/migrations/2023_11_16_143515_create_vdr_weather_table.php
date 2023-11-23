@@ -13,14 +13,14 @@ class CreateVdrWeatherTable extends Migration
      */
     public function up()
     {
-        Schema::create('vdr_weather', function (Blueprint $table) {
+        Schema::create('vdr_weathers', function (Blueprint $table) {
             $table->integerIncrements('id');
             $table->unsignedInteger('vdr_id');
             $table->unsignedTinyInteger('heading_id');
-            $table->string('0006');
-            $table->string('0612');
-            $table->string('1218');
-            $table->string('1824');
+            $table->string('t_0006')->nullable();
+            $table->string('t_0612')->nullable();
+            $table->string('t_1218')->nullable();
+            $table->string('t_1824')->nullable();
             $table->string('status', 3)->default('1');
             $table->timestamps();
         });

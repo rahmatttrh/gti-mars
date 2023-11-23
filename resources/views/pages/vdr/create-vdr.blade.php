@@ -209,6 +209,59 @@ VDR
                 </form>
             </div>
             @endif
+
+            <!-- Tabel Weathers-->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                WEATHER CONDITION
+                            </h2>
+                        </div>
+
+
+                        <!-- End modal -->
+                    </div>
+                </div>
+                @if($vdr)
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Weather / Time</th>
+                                <th>00:00 - 06:00 hrs</th>
+                                <th>06:00 - 12:00 hrs</th>
+                                <th>12:00 - 18:00 hrs</th>
+                                <th>18:00 - 24:00 hrs</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($weathers as $weather)
+                            <tr>
+                                <td>{{$weather->heading->description}}</td>
+                                <td>{{ $weather->t_0006 ?? '-' }}</td>
+                                <td>{{$weather->t_0612 ?? '-' }}</td>
+                                <td>{{$weather->t_1218 ?? '-' }}</td>
+                                <td>{{$weather->t_1824 ?? '-' }}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$weather->id}}"> Edit </a>
+                                </td>
+                            </tr>
+
+                            @endforeach
+
+                            <tr>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+            </div>
+            <!-- End Tabel  -->
+
         </div>
         <div class="col-md-8 ">
             <!-- Tabel Detail of Daily Operating Activies -->
@@ -487,24 +540,6 @@ VDR
                             <h2 class="page-title">
                                 SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD
                             </h2>
-                        </div>
-                        <!-- Page title actions -->
-                        <div class="mr-auto ms-auto d-print-none">
-                            <div class="d-flex">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                        Options
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-
-                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAdd">
-                                            Add Activites
-                                        </a>
-
-
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
 

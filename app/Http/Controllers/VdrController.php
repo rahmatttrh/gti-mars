@@ -6,6 +6,8 @@ use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrCargoHeading;
+use App\Models\VdrWeather;
+use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +34,12 @@ class VdrController extends Controller
             # code...
             $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
             $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+            $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+            // 
         } else {
             $activities = null;
             $cargos = null;
+            $weathers = null;
         }
 
 
@@ -44,6 +49,8 @@ class VdrController extends Controller
             'vdr' => $vdr,
             'activities' => $activities,
             'cargos' => $cargos,
+            'weathers' => $weathers,
+
         ])->with('i');
     }
 
@@ -95,6 +102,25 @@ class VdrController extends Controller
                         'vdr_id' => $vdr->id,
                         'heading_id' => $heading->id,
                         'created_by' => $vdr->created_by,
+                        'created_at' => NOW(),
+                        'updated_at' => NOW()
+                    ]);
+                }
+            }
+
+            $wHeadings = VdrWeatherHeading::get();
+
+            foreach ($wHeadings as $key => $heading) {
+                # code...
+                $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
+                    ->where('heading_id', $heading->id)
+                    ->first();
+
+                if (!$vdrWeather) {
+                    # code...
+                    $createVdrWeather = VdrWeather::create([
+                        'vdr_id' => $vdr->id,
+                        'heading_id' => $heading->id,
                         'created_at' => NOW(),
                         'updated_at' => NOW()
                     ]);
@@ -154,6 +180,25 @@ class VdrController extends Controller
                         'vdr_id' => $vdr->id,
                         'heading_id' => $heading->id,
                         'created_by' => $vdr->created_by,
+                        'created_at' => NOW(),
+                        'updated_at' => NOW()
+                    ]);
+                }
+            }
+
+            $wHeadings = VdrWeatherHeading::get();
+
+            foreach ($wHeadings as $key => $heading) {
+                # code...
+                $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
+                    ->where('heading_id', $heading->id)
+                    ->first();
+
+                if (!$vdrWeather) {
+                    # code...
+                    $createVdrWeather = VdrWeather::create([
+                        'vdr_id' => $vdr->id,
+                        'heading_id' => $heading->id,
                         'created_at' => NOW(),
                         'updated_at' => NOW()
                     ]);
