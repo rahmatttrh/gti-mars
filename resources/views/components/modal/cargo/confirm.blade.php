@@ -26,7 +26,7 @@
                <div class="form-floating mb-3">
                   <select required name="destination" id="destination" class="form-select">
                      <option  disabled selected>Choose</option>
-                     <option value="{{$schedule->origin_id}}">{{$schedule->origin->name}}</option>  
+                     {{-- <option value="{{$schedule->origin_id}}">{{$schedule->origin->name}}</option>   --}}
                      @foreach ($routes as $route)
                         <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
                      @endforeach
