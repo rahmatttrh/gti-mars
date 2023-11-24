@@ -140,7 +140,7 @@ class ScheduleController extends Controller
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
-      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', null)->get();
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
       // dd($lastPostpone->to);
