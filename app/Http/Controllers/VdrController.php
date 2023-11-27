@@ -16,6 +16,7 @@ use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Svg\Tag\Rect;
 
 class VdrController extends Controller
 {
@@ -397,6 +398,51 @@ class VdrController extends Controller
             return redirect()->back()->with('success', 'Vdr Cargo data successfully updated');
         } else {
             return redirect()->back()->with('warning', 'Vdr Cargo gagal di update!');
+        }
+    }
+
+
+    public function updateWeather(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vdr_id' => 'required'
+        ]);
+
+
+
+        $datas = $req->id;
+
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($datas as $key => $weatherId) {
+
+                $weather = VdrWeather::find($weatherId);
+
+                $updateWeather = $weather->update([
+                    't_0006' => $req->t_0006[$key],
+                    't_0612' => $req->t_0612[$key],
+                    't_1218' => $req->t_1218[$key],
+                    't_1824' => $req->t_1824[$key]
+                ]);
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'VDR Weather data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
         }
     }
 }

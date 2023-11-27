@@ -240,27 +240,37 @@ VDR
                                 <th>06:00 - 12:00 hrs</th>
                                 <th>12:00 - 18:00 hrs</th>
                                 <th>18:00 - 24:00 hrs</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($weathers as $weather)
-                            <tr>
-                                <td>{{$weather->heading->description}}</td>
-                                <td>{{ $weather->t_0006 ?? '-' }}</td>
-                                <td>{{$weather->t_0612 ?? '-' }}</td>
-                                <td>{{$weather->t_1218 ?? '-' }}</td>
-                                <td>{{$weather->t_1824 ?? '-' }}</td>
-                                <td>
-                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$weather->id}}"> Edit </a>
-                                </td>
-                            </tr>
+                            <form action="{{route('vdr.update.weather')}}" method="post">
+                                @csrf
+                                @method('PUT')
+                                @foreach ($weathers as $weather)
+                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+                                <input type="hidden" name="id[]" value="{{$weather->id}}">
+                                <tr>
+                                    <td>{{$weather->heading->description}}</td>
+                                    <td>
+                                        <input type="text" class="form-control" name="t_0006[]" value="{{ $weather->t_0006  }}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="t_0612[]" value="{{ $weather->t_0612  }}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="t_1218[]" value="{{ $weather->t_1218  }}">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="t_1824[]" value="{{ $weather->t_1824  }}">
+                                    </td>
+                                </tr>
 
-                            @endforeach
-
-                            <tr>
-                                <td></td>
-                            </tr>
+                                @endforeach
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td><button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button></td>
+                                </tr>
+                            </form>
                         </tbody>
                     </table>
                 </div>

@@ -59,14 +59,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//    Route::group(['middleware' => ['role:marine']], function () {
-//       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
-//    });
-//    Route::group(['middleware' => ['role:department|vessel']], function () {
-//       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//   });
- 
-   
+   //    Route::group(['middleware' => ['role:marine']], function () {
+   //       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
+   //    });
+   //    Route::group(['middleware' => ['role:department|vessel']], function () {
+   //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+   //   });
+
+
 
    Route::prefix("fetch")->group(function () {
       Route::get("schedule/{date}/{value}", [FetchController::class, "fetchSchedules",]);
@@ -385,6 +385,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
 
       Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
+      Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
 
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
