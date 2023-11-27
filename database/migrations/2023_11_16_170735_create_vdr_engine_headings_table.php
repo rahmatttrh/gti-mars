@@ -15,7 +15,6 @@ class CreateVdrEngineHeadingsTable extends Migration
     {
         Schema::create('vdr_engine_headings', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->unsignedInteger('vdr_id');
             $table->string('description', 100);
             $table->string('unit', 50);
             $table->timestamps();
