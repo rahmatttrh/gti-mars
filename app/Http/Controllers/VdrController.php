@@ -6,6 +6,8 @@ use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrCargoHeading;
+use App\Models\VdrEngine;
+use App\Models\VdrEngineHeading;
 use App\Models\VdrHse;
 use App\Models\VdrHseHeader;
 use App\Models\VdrWeather;
@@ -144,6 +146,25 @@ class VdrController extends Controller
                     $createVdrWeather = VdrHse::create([
                         'vdr_id' => $vdr->id,
                         'header_id' => $heading->id,
+                        'created_at' => NOW(),
+                        'updated_at' => NOW()
+                    ]);
+                }
+            }
+
+            $engineHeadings = VdrEngineHeading::get();
+
+            foreach ($engineHeadings as $key => $heading) {
+                # code...
+                $vdrEngine = VdrEngine::where('vdr_id', $vdr->id)
+                    ->where('heading_id', $heading->id)
+                    ->first();
+
+                if (!$vdrEngine) {
+                    # code...
+                    $createVdrWeather = VdrEngine::create([
+                        'vdr_id' => $vdr->id,
+                        'heading_id' => $heading->id,
                         'created_at' => NOW(),
                         'updated_at' => NOW()
                     ]);
