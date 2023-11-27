@@ -334,6 +334,52 @@ class VdrController extends Controller
             'vdr_id' => 'required'
         ]);
 
+        $datas = $req->id;
+
+        DB::beginTransaction();
+
+        try {
+
+            foreach ($datas as $key => $cargoId) {
+
+                $cargo = VdrCargo::find($cargoId);
+
+                $closing = ($req->opening[$key] + $req->received[$key]) - ($req->consumption[$key] + $req->transferred[$key]);
+
+                $updateCargo = $cargo->update([
+                    'opening' => $req->opening[$key],
+                    'consumption' => $req->consumption[$key],
+                    'received' => $req->received[$key],
+                    'transferred' => $req->transferred[$key],
+                    'closing' => $closing,
+                    'remarks' => $req->remarks[$key]
+                ]);
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'VDR Cargo data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
+
+    public function updateCargoOld(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vdr_id' => 'required'
+        ]);
+
         $cargo = VdrCargo::find($req->id);
 
 

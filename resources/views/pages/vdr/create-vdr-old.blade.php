@@ -593,51 +593,127 @@ VDR
                                 <th>Transferred</th>
                                 <th>Closing</th>
                                 <th>Remarks</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.cargo')}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                @foreach ($cargos as $cargo)
-                                <tr>
-                                    <!-- <td> -->
-                                    <input type="hidden" name="id[]" value="{{$cargo->id}}">
-                                    <!-- </td> -->
-                                    <td> {{$cargo->heading->description}} </td>
-                                    <td class="text-right align-middle">
-                                        <input type="number" name="opening[]" class="form-control" value="{{$cargo->opening}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="consumption[]" class="form-control" value="{{$cargo->consumption}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="received[]" class="form-control" value="{{$cargo->received}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="transferred[]" class="form-control" value="{{$cargo->transferred}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="text" name="closing[]" readonly class="form-control" value="{{$cargo->closing}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="text" name="remarks[]" class="form-control" value="{{$cargo->remarks}}">
-                                    </td>
-                                </tr>
+                            @foreach ($cargos as $cargo)
+                            <tr>
+                                <td> {{$cargo->heading->description}} </td>
+                                <td class="text-right align-middle">{{$cargo->opening}} {{$cargo->heading->unit}} </td>
+                                <td class="text-left align-middle">{{$cargo->consumption}}</td>
+                                <td class="text-left align-middle">{{$cargo->received}}</td>
+                                <td class="text-left align-middle">{{$cargo->transferred}}</td>
+                                <td class="text-left align-middle">{{$cargo->closing}}</td>
+                                <td class="text-left align-middle">{{$cargo->remarks}}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#editCar-{{$cargo->id}}"> Edit </a>
+                                </td>
+                            </tr>
 
 
+                            <!-- Modal Edit -->
 
-                                @endforeach
+                            <div class="modal modal-blur fade" id="editCar-{{$cargo->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
 
+                                        <form action="{{route('vdr.update.cargo')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{$cargo->id}}" id="">
+                                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
 
-                                <tr>
-                                    <td colspan="6"></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
-                                    </td>
-                                </tr>
-                            </form>
+                                                    <h3 class="form-control">{{$cargo->heading->description}}</h3>
+                                                    <div class="form-floating mb-3">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="opening">Opening</label>
+                                                                <input type="text" class="form-control hitung-closing opening" oninput="calculateClosing({{$cargo->id}})" id="opening-{{$cargo->id}}" name="opening" value="{{$cargo->opening}}">
+                                                                @error('opening')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="consumption">Consumption</label>
+                                                                <input type="text" class="form-control hitung-closing consumption" oninput="calculateClosing({{$cargo->id}})" id="consumption-{{$cargo->id}}" name="consumption" value="{{$cargo->consumption}}">
+                                                                @error('consumption')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="received">Received</label>
+                                                                <input type="text" class="form-control hitung-closing received" oninput="calculateClosing({{$cargo->id}})" id="received-{{$cargo->id}}" name="received" value="{{$cargo->received}}">
+                                                                @error('received')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="transferred">Transferred</label>
+                                                                <input type="text" class="form-control hitung-closing transferred" oninput="calculateClosing({{$cargo->id}})" id="transferred-{{$cargo->id}}" name="transferred" value="{{$cargo->transferred}}">
+                                                                @error('transferred')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="closing">Closing</label>
+                                                                <input type="text" class="form-control hitung-closing closing" id="closing" name="closing" value="{{$cargo->closing}}" readonly>
+                                                                @error('closing')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="remarks">Remarks</label>
+                                                                <textarea type="text" class="form-control" id="remarks" name="remarks" value="{{$cargo->remarks}}">{{$cargo->remarks}}</textarea>
+                                                                @error('remarks')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
