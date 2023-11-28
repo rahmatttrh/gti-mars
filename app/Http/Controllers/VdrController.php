@@ -41,12 +41,14 @@ class VdrController extends Controller
             $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
             $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
             $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+            $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
             // 
         } else {
             $activities = null;
             $cargos = null;
             $weathers = null;
             $hses = null;
+            $engines = null;
         }
 
 
@@ -58,6 +60,7 @@ class VdrController extends Controller
             'cargos' => $cargos,
             'weathers' => $weathers,
             'hses' => $hses,
+            'engines' => $engines,
         ])->with('i');
     }
 
@@ -477,6 +480,55 @@ class VdrController extends Controller
             DB::commit();
 
             return back()->with('success', 'VDR HSE data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
+
+    public function updateEngine(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vdr_id' => 'required'
+        ]);
+
+        $datas = $req->id;
+
+        DB::beginTransaction();
+        // dd($datas);
+        try {
+
+            foreach ($datas as $key => $engineId) {
+
+                $engine = VdrEngine::find($engineId);
+                if ($engine->header_id != '8') {
+                    # code...
+                    $updateEngine = $engine->update([
+                        'm_ref' => $req->m_ref[$key],
+                        'm_port' => $req->m_port[$key],
+                        'm_stbd' => $req->m_stbd[$key],
+                        'm_center' => $req->m_center[$key],
+                        'm_other' => $req->m_other[$key],
+                        'a_ref' => $req->a_ref[$key],
+                        'a_port' => $req->a_port[$key],
+                        'a_stbd' => $req->a_stbd[$key],
+                        'a_other' => $req->a_other[$key]
+                    ]);
+                }
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'VDR Engine data successfully updated.');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
             DB::rollback();

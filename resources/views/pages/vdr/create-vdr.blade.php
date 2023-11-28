@@ -766,26 +766,6 @@ VDR
                                 Vessel Daily Engine Paramater Log
                             </h2>
                         </div>
-                        <!-- Page title actions -->
-                        <div class="mr-auto ms-auto d-print-none">
-                            <div class="d-flex">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                        Options
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-
-                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAdd">
-                                            Add Activites
-                                        </a>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
                         <!-- End modal -->
                     </div>
                 </div>
@@ -801,227 +781,65 @@ VDR
                                 <th colspan="6" class="text-center">Aux. Engines Data</th>
                             </tr>
                             <tr>
-                                <th class="text-center">Ref. Value</th>
+                                <th>Ref. Value</th>
                                 <th>Port</th>
-                                <th>Stbd</th>
                                 <th>Stbd</th>
                                 <th>Center</th>
                                 <th>Other</th>
-                                <th class="text-center">Ref. Value</th>
+                                <th>Ref. Value</th>
                                 <th>Port</th>
                                 <th>Stbd</th>
-                                <th>Stbd</th>
-                                <th>Center</th>
                                 <th>Other</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($activities as $activity)
-                            <tr>
-                                <td>{{substr($activity->start, 0, 5)}}</td>
-                                <td>{{substr($activity->finish, 0, 5)}}</td>
-                                <td>{{floatToTime($activity->high)}}</td>
-                                <td>{{floatToTime($activity->normal)}}</td>
-                                <td>{{floatToTime($activity->slow)}}</td>
-                                <td>{{floatToTime($activity->manu)}}</td>
-                                <td>{{floatToTime($activity->idle)}}</td>
-                                <td>{{floatToTime($activity->Tow)}}</td>
-                                <td>{{floatToTime($activity->ah)}}</td>
-                                <td>{{floatToTime($activity->ab)}}</td>
-                                <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$activity->id}}"> {{$activity->activity}} </a>
-                                </td>
-                                <td>
-                                    <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$activity->id}}"> Delete </a>
-                                </td>
-                            </tr>
+                            <form action="{{route('vdr.update.engine')}}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+                                @foreach ($engines as $key => $engine)
+                                <input type="hidden" name="id[]" value="{{$engine->id}}">
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td class="col-md-3">{{$engine->heading->description}}</td>
+                                    <td>{{$engine->heading->unit}}</td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="m_ref[]" value="{{$engine->m_ref}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="m_port[]" value="{{$engine->m_port}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="m_stbd[]" value="{{$engine->m_stbd}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="m_center[]" value="{{$engine->m_center}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="m_other[]" value="{{$engine->m_other}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="a_ref[]" value="{{$engine->a_ref}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="a_port[]" value="{{$engine->a_port}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="a_stbd[]" value="{{$engine->a_stbd}}">
+                                    </td>
+                                    <td>
+                                        <input class="form-control" type="number" min="0" name="a_other[]" value="{{$engine->a_other}}">
+                                    </td>
+                                </tr>
+                                @endforeach
 
-                            <!-- Modal Delete -->
-
-                            <div class="modal modal-blur fade" id="deleteAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-
-                                        <form action="{{route('vdr.delete.activity')}}" method="POST">
-                                            <div class="modal-body">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="id" value="{{$activity->id}}" id="">
-                                                <div class="card-body">
-                                                    @if ($errors->any())
-                                                    <div class="alert alert-danger text-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                            <li><small>{{ $error }}</small></li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    @endif
-                                                    <h4 class="text-center"> Anda yakin ingin menghapus activity {{$activity->activity}} ?</h4>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- End Modal  -->
-
-
-                            <!-- Modal Edit -->
-
-                            <div class="modal modal-blur fade" id="editAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-
-                                        <form action="{{route('vdr.update.activity')}}" method="POST">
-                                            <div class="modal-body">
-                                                @csrf
-                                                @method('PUT')
-                                                <input type="hidden" name="id" value="{{$activity->id}}" id="">
-                                                <div class="card-body">
-                                                    @if ($errors->any())
-                                                    <div class="alert alert-danger text-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                            <li><small>{{ $error }}</small></li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    @endif
-
-                                                    <div class="form-floating mb-3">
-                                                        <textarea type="text" rows="50" required class="form-control" id="activity" name="activity" value="{{$activity->activity}}">{{$activity->activity}}</textarea>
-                                                        <label for="activity">Activities</label>
-                                                        @error('activity')
-                                                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="row">
-                                                        <label for="email">Time</label>
-                                                        <div class="col-md-6">
-                                                            <div class="form-floating mb-3">
-                                                                <input type="time" required class="form-control jam24" id="start" name="start" value="{{$activity->start}}" value="1">
-                                                                <label for="start">Start</label>
-                                                                @error('start')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form-floating mb-3">
-                                                                <input type="time" required class="form-control jam24" id="finish" name="finish" value="{{$activity->finish}}" value="1">
-                                                                <label for="finish">Finish</label>
-                                                                @error('finish')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form- mb-3">
-                                                                <label for="high">High</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="high" name="high" value="{{$activity->high}}">
-                                                                @error('high')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form- mb-3">
-                                                                <label for="normal">Normal</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="normal" name="normal" value="{{$activity->normal}}">
-                                                                @error('normal')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="slow">Slow</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="slow" name="slow" value="{{$activity->slow}}">
-                                                                @error('slow')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="manu">Manu</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="manu" name="manu" value="{{$activity->manu}}">
-                                                                @error('manu')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="idle">Idle</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="idle" name="idle" value="{{$activity->idle}}">
-                                                                @error('idle')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="tow">Tow</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="tow" name="tow" value="{{$activity->tow}}">
-                                                                @error('tow')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="ah">A/H</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="ah" name="ah" value="{{$activity->ah}}">
-                                                                @error('ah')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="form mb-3">
-                                                                <label for="sb">S/B</label>
-                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="sb" name="sb" value="{{$activity->sb}}">
-                                                                @error('sb')
-                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-success">Update</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- End Modal  -->
-                            @endforeach
-
-                            <tr>
-                                <td></td>
-                            </tr>
-
-
-
+                                <tr>
+                                    <td colspan="11"></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
+                                    </td>
+                                </tr>
+                            </form>
                         </tbody>
                     </table>
                 </div>

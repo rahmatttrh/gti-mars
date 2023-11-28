@@ -9,4 +9,9 @@ class VdrEngine extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function heading()
+    {
+        return $this->belongsTo(VdrEngineHeading::class, 'heading_id');
+    }
 }
