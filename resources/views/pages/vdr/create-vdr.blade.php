@@ -655,6 +655,11 @@ VDR
             </div>
             <!-- End Table  -->
 
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <!-- Tabel HSE-->
             <div class="card mt-3">
                 <div class="card-header">
@@ -675,31 +680,74 @@ VDR
                         <thead>
                             <tr>
                                 <th class="text-center">A</th>
-                                <th>HSSE STATISTICS </th>
+                                <th>HSSE STATISTICS (INPUT)</th>
                                 <th>Previous</th>
                                 <th>Today</th>
                                 <th>Monthly</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($hses as $hse)
-                            <tr>
-                                <td>{{$hse->header->description}}</td>
-                                <td>{{ $hse->t_0006 ?? '-' }}</td>
-                                <td>{{$hse->t_0612 ?? '-' }}</td>
-                                <td>{{$hse->t_1218 ?? '-' }}</td>
-                                <td>{{$hse->t_1824 ?? '-' }}</td>
-                                <td>
-                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$hse->id}}"> Edit </a>
-                                </td>
-                            </tr>
+                            <form action="{{route('vdr.update.hse')}}" method="post">
+                                @csrf
+                                @method('PUT')
 
-                            @endforeach
+                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+                                @php
+                                $groupHeader = 'A';
+                                $no = 1;
+                                @endphp
 
-                            <tr>
-                                <td></td>
-                            </tr>
+                                @foreach ($hses as $hse)
+                                <input type="hidden" name="id[]" value="{{$hse->id}}">
+                                @if($hse->header->group_header != $groupHeader)
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">B</th>
+                                        <th>HSSE STATISTICS (Output)</th>
+                                        <th>Previous</th>
+                                        <th>Today</th>
+                                        <th>Monthly</th>
+                                    </tr>
+                                </thead>
+
+                                @php
+                                $no = 1;
+                                @endphp
+
+                                @endif
+                                <tr>
+                                    <td>{{ $no++}}</td>
+                                    <td>{{$hse->header->description}}</td>
+                                    @if($hse->header_id != 8)
+                                    <td>
+                                        <input type="number" name="previous[]" class="form-control" value="{{$hse->previous}}">
+                                    </td>
+                                    <td>
+                                        <input type="number" name="today[]" class="form-control" value="{{$hse->today}}">
+                                    </td>
+                                    <td>
+                                        <input type="text" name="monthly[]" class="form-control" value="{{$hse->previous + $hse->today}}" readonly>
+                                    </td>
+                                    @else
+                                    <input type="hidden" name="previous[]" class="form-control" value="{{$hse->previous}}">
+                                    <input type="hidden" name="today[]" class="form-control" value="{{$hse->today}}">
+                                    <input type="hidden" name="monthly[]" class="form-control" value="{{$hse->today}}" readonly>
+                                    <td colspan="3"></td>
+                                    @endif
+                                </tr>
+
+                                @php
+                                $groupHeader = $hse->header->group_header
+                                @endphp
+                                @endforeach
+
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
+                                    </td>
+                                </tr>
+                            </form>
                         </tbody>
                     </table>
                 </div>
@@ -707,11 +755,10 @@ VDR
             </div>
             <!-- End Tabel  -->
         </div>
-    </div>
-    <div class="row mt-3">
+
         <div class="col-md-12">
             <!-- Tabel Detail of Daily Operating Activies -->
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -982,6 +1029,8 @@ VDR
             </div>
             <!-- End Tabel  -->
         </div>
+
+
     </div>
 </div>
 </div>

@@ -445,4 +445,47 @@ class VdrController extends Controller
             // return response()->json(['message' => 'Failed to create order'], 500);
         }
     }
+
+    public function updateHse(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vdr_id' => 'required'
+        ]);
+
+        $datas = $req->id;
+
+        DB::beginTransaction();
+        // dd($datas);
+        try {
+
+            foreach ($datas as $key => $hseId) {
+
+                $hse = VdrHse::find($hseId);
+                if ($hse->header_id != '8') {
+                    # code...
+                    $updateHse = $hse->update([
+                        'previous' => $req->previous[$key],
+                        'today' => $req->today[$key],
+                        'status' => '1'
+                    ]);
+                }
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'VDR HSE data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
 }

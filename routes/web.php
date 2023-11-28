@@ -386,6 +386,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
 
       Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
       Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
+      Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
 
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
