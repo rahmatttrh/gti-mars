@@ -363,6 +363,22 @@ class VdrController extends Controller
         }
     }
 
+    public function deleteCrew(Request $req)
+    {
+        $req->validate([
+            'id' => 'required'
+        ]);
+
+        $deleteCrew  = VdrCrew::destroy($req->id);
+
+        if ($deleteCrew) {
+            # code...
+            return redirect()->back()->with('success', 'VDR Crew data successfully deleted');
+        } else {
+            return redirect()->back()->with('warning', 'VDR Crew gagal di delete!');
+        }
+    }
+
     public function updateCargo(Request $req)
     {
         $req->validate([

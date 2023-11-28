@@ -223,6 +223,43 @@ VDR
                             @php
                             $thisC = $crew->is_crew;
                             @endphp
+
+
+                            <!-- Modal Delete -->
+
+                            <div class="modal modal-blur fade" id="deleteAct-{{$crew->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+
+                                        <form action="{{route('vdr.delete.crew')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{$crew->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+                                                    <h4 class="text-center"> Anda yakin ingin menghapus crew <span class="text-danger">{{$crew->name}} </span> ?</h4>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+
                             @endforeach
 
                             @if($crews->count() < 10) @for($i=0; $i <=20 - $crews->count(); $i++ )
