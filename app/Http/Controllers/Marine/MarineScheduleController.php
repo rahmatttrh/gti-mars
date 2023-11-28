@@ -398,7 +398,7 @@ class MarineScheduleController extends Controller
       }
 
       $vessels = Vessel::get();
-      return view('pages.schedule.index', [
+      return view('pages-stisla.marine.schedule.index', [
          'typeName' => 'by Request',
          'type' => 2,
          'month' => $dekripMonth,
@@ -447,7 +447,7 @@ class MarineScheduleController extends Controller
       } elseif ($dekripMonth == 12) {
          $monthName = 'Desember';
       }
-      return view('pages.schedule.order', [
+      return view('pages-stisla.marine.schedule.progress', [
          'typeName' => 'by Request',
          'type' => 2,
          'month' => $month,
@@ -533,6 +533,8 @@ class MarineScheduleController extends Controller
 
    public function delete($id)
    {
+      $now = Carbon::now();
+      $month = $now->format('m');
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $requests = ModelsRequest::where('schedule_id', $schedule->id)->get();
@@ -551,7 +553,7 @@ class MarineScheduleController extends Controller
 
       $schedule->delete();
 
-      return redirect()->route('schedule.plan')->with('success', 'Schedule successfully deleted');
+      return redirect()->route('schedule.plan', enkripRambo($month))->with('success', 'Schedule deleted');
    }
 
    public function send($id)

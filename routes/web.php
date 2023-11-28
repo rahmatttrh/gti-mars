@@ -378,6 +378,8 @@ Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('vdr')->group(function () {
       Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
+
+      Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
 
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');

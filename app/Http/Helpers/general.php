@@ -6,6 +6,11 @@ function formatRupiah($data)
    return $rupiah;
 }
 
+function formatDate($data){
+   $date = \Carbon\Carbon::parse($data)->format('d/m/Y');
+   return $date;
+}
+
 function floatToTime($floatValue)
 {
    // Pisahkan bagian jam dan menit

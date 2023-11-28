@@ -40,7 +40,7 @@ class DepartmentRequestController extends Controller
       $activities = $acts;
       $types = Type::get();
       $ports = Port::get();
-      return view('pages.request.create', [
+      return view('pages-stisla.user.request.create', [
          'activities' => $activities,
          'ports' => $ports,
          'types' => $types
@@ -335,7 +335,7 @@ class DepartmentRequestController extends Controller
 
       $requests = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
       // $parents = ParentRequest::where()
-      return view('pages.request.draft', [
+      return view('pages-stisla.user.request.draft', [
          'requests' => $requests
       ])->with('i');
    }
@@ -350,13 +350,14 @@ class DepartmentRequestController extends Controller
       // $depart = Department::where('email', auth()->user()->email)->first();
 
       $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-
-      return view('pages.request.progress', [
+      $progress = ModelsRequest::where('status', '>', 0)->get();
+      return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,
          'vessels' => $vessels,
          'schedules' => $schedules,
-         'month' => $month
+         'month' => $month,
+         'progress' => $progress
       ])->with('i');
    }
 
@@ -834,13 +835,14 @@ class DepartmentRequestController extends Controller
       // $depart = Department::where('email', auth()->user()->email)->first();
 
       $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '=', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-
-      return view('pages.request.history', [
+      $histories = ModelsRequest::where('status', '=', 12)->get();
+      return view('pages-stisla.user.request.history', [
          'title' => 'Progress',
          'departs' => $departs,
          'vessels' => $vessels,
          'schedules' => $schedules,
-         'month' => $month
+         'month' => $month,
+         'histories' => $histories
       ])->with('i');
    }
 

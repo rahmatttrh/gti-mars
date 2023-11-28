@@ -377,6 +377,8 @@ class HomeController extends Controller
    {
       // dd('ok');
 
+      
+
       if(auth()->user()->hasRole('marine')){
          $this->map();
       }
@@ -490,7 +492,8 @@ class HomeController extends Controller
                         'longitude' => $res->lon,
                         'speed' => $res->speed,
                         'calcspeed' => $res->calcspeed,
-                        'heading' => $res->heading
+                        'heading' => $res->heading,
+                        'last_update' => $res->date
                      ]);
                      
                   }  
@@ -575,7 +578,9 @@ class HomeController extends Controller
          $reports = Report::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
          $vesselReports = ReportVessel::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->take(5)->get();
 
-         return view('map', [
+         $vesselLastUpdates = Vessel::orderBy('last_update', 'desc')->take(5)->get();
+         // dd($vesselLastUpdates);
+         return view('home-stisla', [
             'today' => $today,
             'monthName' => $monthName,
             'requestAdditionals' => $requestAdditionals,
@@ -595,7 +600,8 @@ class HomeController extends Controller
             'offloadings' => $offloadings,
             'deflections' => $deflections,
             'geoJsonVessel' => $this->geoJsonVessel,
-         'recentVessels' => $recentVessels,
+            'recentVessels' => $recentVessels,
+            'vesselLastUpdates' => $vesselLastUpdates
          ])->with('i');
       } elseif (auth()->user()->hasRole('department')) {
          $employee = Employee::where('email', auth()->user()->email)->first();
@@ -664,7 +670,7 @@ class HomeController extends Controller
       $user = Employee::where('email', auth()->user()->email)->first();
 
 
-      return view('home', [
+      return view('home-user', [
          'user' => $user,
          'today' => $today,
          'requests' => $requests,

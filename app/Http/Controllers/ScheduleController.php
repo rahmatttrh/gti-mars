@@ -221,7 +221,7 @@ class ScheduleController extends Controller
       }
 
       // dd(round($persen));
-      return view('pages.schedule.detail', [
+      return view('pages-stisla.schedule.detail', [
          'schedules' => $schedules,
          'schedule' => $schedule,
          'report' => $report,
