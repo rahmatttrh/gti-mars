@@ -6,6 +6,7 @@ use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrCargoHeading;
+use App\Models\VdrCrew;
 use App\Models\VdrEngine;
 use App\Models\VdrEngineHeading;
 use App\Models\VdrHse;
@@ -42,6 +43,7 @@ class VdrController extends Controller
             $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
             $hses = VdrHse::where('vdr_id', $vdr->id)->get();
             $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
+            $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
             // 
         } else {
             $activities = null;
@@ -49,7 +51,9 @@ class VdrController extends Controller
             $weathers = null;
             $hses = null;
             $engines = null;
+            $crews = null;
         }
+
 
 
         return view('pages.vdr.create-vdr', [
@@ -61,6 +65,7 @@ class VdrController extends Controller
             'weathers' => $weathers,
             'hses' => $hses,
             'engines' => $engines,
+            'crews' => $crews
         ])->with('i');
     }
 
@@ -270,6 +275,33 @@ class VdrController extends Controller
             return redirect()->back()->with('success', 'Activity data successfully saved');
         } else {
             return redirect()->back()->with('warning', 'Activity gagal Disimpan!');
+        }
+    }
+
+    public function storeCrew(Request $req)
+    {
+
+        $req->validate([
+            'name' => 'required',
+            'is_crew' => 'required',
+        ]);
+
+
+        $createVdr = VdrCrew::create([
+            'vdr_id' => $req->id,
+            'is_crew' => $req->is_crew,
+            'name' => $req->name,
+            'rank' => $req->rank,
+            'company' => $req->company,
+            'created_at' => NOW(),
+            'updated_at' => NOW()
+        ]);
+
+        if ($createVdr) {
+            # code...
+            return redirect()->back()->with('success', 'Crew / Passenger data successfully saved');
+        } else {
+            return redirect()->back()->with('warning', 'Crew / Passenger gagal Disimpan!');
         }
     }
 

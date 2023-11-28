@@ -384,6 +384,10 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
 
+      // Crew
+      Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
+
+      // 
       Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
       Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
       Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');

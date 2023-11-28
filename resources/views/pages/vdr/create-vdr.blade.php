@@ -137,6 +137,109 @@ VDR
                 </div>
 
             </div>
+
+            <!-- Tabel Detail of Daily Operating Activies -->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                CREW & PASSENGER LIST
+                            </h2>
+                        </div>
+                        <!-- Page title actions -->
+                        <div class="mr-auto ms-auto d-print-none">
+                            <div class="d-flex">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                        Options
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+
+                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAddCrew">
+                                            Add Crew / Passenger
+                                        </a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- End modal -->
+                    </div>
+                </div>
+                @if($vdr)
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th colspan="4" class="text-center">CREW</th>
+                            </tr>
+                            <tr>
+                                <th>No</th>
+                                <th class="col-md-">Name</th>
+                                <th class="text-center">Ranks</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $thisC = 1;
+                            @endphp
+
+                            @foreach ($crews as $key => $crew)
+
+                            @if($thisC != $crew->is_crew)
+                            <thead>
+                                <tr>
+                                    <th colspan="4" class="text-center">PASSENGER</th>
+                                </tr>
+                                <tr>
+                                    <th>No</th>
+                                    <th class="col-md-">Name</th>
+                                    <th class="text-center">Company</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            @endif
+
+
+                            <tr>
+                                <td>{{$key+1}}</td>
+                                <td>{{$crew->name}}</td>
+                                @if($crew->is_crew == '1')
+                                <td class="text-center">{{$crew->rank}}</td>
+                                @else
+                                <td>{{$crew->company}}</td>
+                                @endif
+                                <td>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$crew->id}}"> Edit</a>
+                                    <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$crew->id}}"> Delete </a>
+                                </td>
+                            </tr>
+
+                            @php
+                            $thisC = $crew->is_crew;
+                            @endphp
+                            @endforeach
+
+                            @if($crews->count() < 10) @for($i=0; $i <=20 - $crews->count(); $i++ )
+                                <tr>
+                                    <td colspan="4"></td>
+                                </tr>
+                                @endfor
+                                @endif
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+                @endif
+            </div>
+            <!-- End Tabel  -->
             @else
             <div class="card">
                 <div class="card-header">
@@ -216,8 +319,11 @@ VDR
             </div>
             @endif
 
+
+        </div>
+        <div class="col-md-8 ">
             <!-- Tabel Weathers-->
-            <div class="card mt-3">
+            <div class="card ">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -235,7 +341,7 @@ VDR
                     <table class="table ">
                         <thead>
                             <tr>
-                                <th class="text-center">Weather / Time</th>
+                                <th class="text-center col-md-4">Weather / Time</th>
                                 <th>00:00 - 06:00 hrs</th>
                                 <th>06:00 - 12:00 hrs</th>
                                 <th>12:00 - 18:00 hrs</th>
@@ -277,10 +383,8 @@ VDR
                 @endif
             </div>
             <!-- End Tabel  -->
-        </div>
-        <div class="col-md-8 ">
             <!-- Tabel Detail of Daily Operating Activies -->
-            <div class="card">
+            <div class="card mt-3">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -998,11 +1102,85 @@ VDR
 </div>
 
 <!-- End Modal  -->
+
+<!-- Modal Add Crew -->
+
+<div class="modal modal-blur fade" id="modalAddCrew" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{{route('vdr.store.crew')}}" method="POST">
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+                    <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+                    <input type="hidden" name="created_by" value="{{$user->name}}">
+                    <div class="card-body">
+                        @if ($errors->any())
+                        <div class="alert alert-danger text-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li><small>{{ $error }}</small></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <div class="form-floating mb-3">
+                            <textarea type="text" rows="50" required class="form-control" id="name" name="name" value="{{$vdr->name}}"></textarea>
+                            <label for="name">Name</label>
+                            @error('name')
+                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form mb-3">
+                                    <input type="radio" id="is_crew" value="1" name="is_crew"> Crew
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form mb-3">
+                                    <input type="radio" id="is_crew" value="0" name="is_crew"> Passenger
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3" id="box-rank">
+                            <input type="number" class="form-control" id="rank" name="rank" value="">
+                            <label for="rank">Rank</label>
+                            @error('rank')
+                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+                        <div class="form-floating mb-3" id="box-company">
+                            <input type="text" class="form-control" id="company" name="company" value="">
+                            <label for="company">Company</label>
+                            @error('company')
+                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Modal  -->
 @endif
 @endsection
 
 @push('get_schedules')
 <script>
+    $('#box-rank').hide();
+    $('#box-company').hide();
+
+
     $(".waktu").on("input", function() {
         // Mengambil nilai dari input
         var inputValue = $(this).val();
@@ -1072,5 +1250,20 @@ VDR
 
     // Panggil fungsi saat halaman dimuat
     // calculateClosing();
+    $("input[name='is_crew']").change(function() {
+        if ($(this).is(":checked")) {
+            // Radio button dicentang
+            var selectedValue = $(this).val();
+            console.log("Selected Option: " + selectedValue);
+
+            if (selectedValue == '1') {
+                $('#box-rank').show();
+                $('#box-company').hide();
+            } else {
+                $('#box-rank').hide();
+                $('#box-company').show();
+            }
+        }
+    });
 </script>
 @endpush
