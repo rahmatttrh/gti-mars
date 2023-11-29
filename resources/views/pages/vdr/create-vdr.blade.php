@@ -45,7 +45,7 @@ VDR
                 <div class="card-footer">
                     <dl class="row">
                         <dt class="col-5">Date</dt>
-                        <dd class="col-7">{{$vdr->date}}</dd>
+                        <dd class="col-7">{{dayDate($vdr->date)}}</dd>
                         <dt class="col-5">Vessel</dt>
                         <dd class="col-7">{{$vessel->name}}</dd>
                         <dt class="col-5">Contract No.</dt>
@@ -140,10 +140,10 @@ VDR
 
             <!-- Tabel Detail of Daily Operating Activies -->
             <div class="card mt-3">
-                <div class="card-header">
+                <div class="card-header bg-primary ">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h2 class="page-title">
+                            <h2 class="page-title text-white">
                                 CREW & PASSENGER LIST
                             </h2>
                         </div>
@@ -157,7 +157,13 @@ VDR
                                     <div class="dropdown-menu dropdown-menu-end">
 
                                         <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAddCrew">
-                                            Add Crew / Passenger
+                                            Add
+                                        </a>
+                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalImport">
+                                            Import Data
+                                        </a>
+                                        <a href="{{route('vdr.template.crew')}}" class="card-btn">
+                                            Template Import
                                         </a>
 
 
@@ -1272,6 +1278,48 @@ VDR
                 <div class="modal-footer">
                     <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
                     <button type="submit" class="btn btn-success">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- End Modal  -->
+
+<!-- Modal Add Crew -->
+
+<div class="modal modal-blur fade" id="modalImport" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <form action="{{route('vdr.import.crew')}}" enctype="multipart/form-data" method="POST">
+                <div class="modal-body">
+                    @csrf
+                    <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                    <div class="card-body">
+                        @if ($errors->any())
+                        <div class="alert alert-danger text-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                <li><small>{{ $error }}</small></li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
+
+                        <div class="form-floating mb-3">
+                            <input type="file" accept=".xls, .xlsx" required class="form-control" id="file_upload" name="file_upload">
+                            <label for="file_upload">File Import Crew/Passenger</label>
+                            @error('file_upload')
+                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                            @enderror
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Upload</button>
                 </div>
             </form>
         </div>

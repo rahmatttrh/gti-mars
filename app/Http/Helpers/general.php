@@ -6,8 +6,15 @@ function formatRupiah($data)
    return $rupiah;
 }
 
-function formatDate($data){
+function formatDate($data)
+{
    $date = \Carbon\Carbon::parse($data)->format('d/m/Y');
+   return $date;
+}
+
+function dayDate($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('l ,d/m/Y');
    return $date;
 }
 

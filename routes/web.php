@@ -35,6 +35,7 @@ use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VdrController;
+use App\Http\Controllers\VdrCrewController;
 use App\Http\Controllers\Vessel\VesselDeviationController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
@@ -395,6 +396,9 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
       Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
       Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
+
+      Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
+      Route::post('import/crew', [VdrController::class, 'importCrew'])->name('vdr.import.crew');
 
       // 
       Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');

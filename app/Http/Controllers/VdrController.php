@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CrewVdr;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
@@ -17,6 +18,8 @@ use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 use Svg\Tag\Rect;
 
 class VdrController extends Controller
@@ -195,7 +198,6 @@ class VdrController extends Controller
             DB::commit();
 
             return back()->with('success', 'VDR data successfully saved.');
-            
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
             DB::rollback();
@@ -208,7 +210,8 @@ class VdrController extends Controller
         }
     }
 
-    public function edit($id){
+    public function edit($id)
+    {
         $user = auth()->user();
         // Opsi 1 
         $vessel = Vessel::where('email', $user->email)->first();
@@ -290,7 +293,7 @@ class VdrController extends Controller
         //     'sb' => 'required'
         // ]);
 
-        
+
 
         $createVdr = VdrActivity::create([
             'vdr_id' => $req->id,
@@ -650,6 +653,27 @@ class VdrController extends Controller
             return redirect()->back()->with('success', 'Crew data successfully updated');
         } else {
             return redirect()->back()->with('warning', 'Crew gagal di update!');
+        }
+    }
+
+    public function importCrew(Request $req)
+    {
+
+        $req->validate([
+            'file_upload' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // ProductdStokImport
+        try {
+            Excel::import(new CrewVdr($req->vdr_id), $req->file('file_upload'));
+
+            $count = Session::get('count', 0);
+
+            return back()->with('success', "$count crew berhasil di tambah.", Session::forget('count'));
+        } catch (\Exception $e) {
+            Session::forget('count');
+            // 
+            return back()->with('error', 'Error importing data: ' . $e->getMessage());
         }
     }
 }
