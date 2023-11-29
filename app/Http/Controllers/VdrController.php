@@ -29,6 +29,16 @@ class VdrController extends Controller
         return view('pages.vdr.vdr', [])->with('i');
     }
 
+    public function history()
+    {
+
+        $vdrs = Vdr::orderby('date', 'desc')->get();
+
+        return view('pages.vdr.history-vdr', [
+            'vdrs' => $vdrs
+        ])->with('i');
+    }
+
     public function create()
     {
 

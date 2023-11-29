@@ -383,6 +383,8 @@ Route::group(['middleware' => ['role:vessel']], function () {
 
    Route::prefix('vdr')->group(function () {
       Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
+      Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
+
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
