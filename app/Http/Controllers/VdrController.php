@@ -588,4 +588,30 @@ class VdrController extends Controller
             // return response()->json(['message' => 'Failed to create order'], 500);
         }
     }
+
+
+    public function updateCrew(Request $req)
+    {
+        $req->validate([
+            'name' => 'required',
+            'is_crew' => 'required',
+        ]);
+
+
+
+        $updateVdr = VdrCrew::where('id', $req->id)
+            ->update([
+                'is_crew' => $req->is_crew,
+                'name' => $req->name,
+                'rank' => $req->rank,
+                'company' => $req->company
+            ]);
+
+        if ($updateVdr) {
+            # code...
+            return redirect()->back()->with('success', 'Crew data successfully updated');
+        } else {
+            return redirect()->back()->with('warning', 'Crew gagal di update!');
+        }
+    }
 }

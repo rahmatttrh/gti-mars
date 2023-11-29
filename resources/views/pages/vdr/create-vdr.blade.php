@@ -215,7 +215,7 @@ VDR
                                 <td>{{$crew->company}}</td>
                                 @endif
                                 <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$crew->id}}"> Edit</a>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editCrew-{{$crew->id}}" onclick="visibilityBox('{{$crew->is_crew}}' )"> Edit</a>
                                     <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$crew->id}}"> Delete </a>
                                 </td>
                             </tr>
@@ -252,6 +252,76 @@ VDR
                                                     <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
                                                 </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+
+                            <!-- Modal Edit Crew -->
+
+                            <div class="modal modal-blur fade" id="editCrew-{{$crew->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <form action="{{route('vdr.update.crew')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{$crew->id}}" id="">
+                                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea type="text" rows="50" required class="form-control" id="name" name="name" value="{{$crew->name}}">{{$crew->name}}</textarea>
+                                                        <label for="name">Name</label>
+                                                        @error('name')
+                                                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <input type="radio" id="is_crew" value="1" class="crew" name="is_crew"> Crew
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <input type="radio" id="is_crew" value="0" class="passenger" name="is_crew"> Passenger
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-floating mb-3 box-rank" id="">
+                                                        <input type="number" class="form-control" id="rank" name="rank" value="{{$crew->rank}}">
+                                                        <label for="rank">Rank</label>
+                                                        @error('rank')
+                                                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="form-floating mb-3 box-company" id="">
+                                                        <input type="text" class="form-control" id="company" name="company" value="{{$crew->company}}">
+                                                        <label for="company">Company</label>
+                                                        @error('company')
+                                                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+
+
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                <button type="submit" class="btn btn-success">Update</button>
                                             </div>
                                         </form>
                                     </div>
@@ -1172,23 +1242,23 @@ VDR
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form mb-3">
-                                    <input type="radio" id="is_crew" value="1" name="is_crew"> Crew
+                                    <input type="radio" id="is_crew" value="1" class="crew" name="is_crew"> Crew
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form mb-3">
-                                    <input type="radio" id="is_crew" value="0" name="is_crew"> Passenger
+                                    <input type="radio" id="is_crew" value="0" class="passenger" name="is_crew"> Passenger
                                 </div>
                             </div>
                         </div>
-                        <div class="form-floating mb-3" id="box-rank">
+                        <div class="form-floating mb-3 box-rank" id="">
                             <input type="number" class="form-control" id="rank" name="rank" value="">
                             <label for="rank">Rank</label>
                             @error('rank')
                             <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                             @enderror
                         </div>
-                        <div class="form-floating mb-3" id="box-company">
+                        <div class="form-floating mb-3 box-company" id="">
                             <input type="text" class="form-control" id="company" name="company" value="">
                             <label for="company">Company</label>
                             @error('company')
@@ -1214,8 +1284,8 @@ VDR
 
 @push('get_schedules')
 <script>
-    $('#box-rank').hide();
-    $('#box-company').hide();
+    $('.box-rank').hide();
+    $('.box-company').hide();
 
 
     $(".waktu").on("input", function() {
@@ -1293,14 +1363,31 @@ VDR
             var selectedValue = $(this).val();
             console.log("Selected Option: " + selectedValue);
 
-            if (selectedValue == '1') {
-                $('#box-rank').show();
-                $('#box-company').hide();
-            } else {
-                $('#box-rank').hide();
-                $('#box-company').show();
-            }
+            visibilityBox(selectedValue);
+            // if (selectedValue == '1') {
+            //     $('#box-rank').show();
+            //     $('#box-company').hide();
+            // } else {
+            //     $('#box-rank').hide();
+            //     $('#box-company').show();
+            // }
         }
     });
+
+    function visibilityBox(value) {
+        if (value == '1') {
+            $('.box-rank').show();
+            $('.box-company').hide();
+
+            $(".crew").prop("checked", true);
+            $(".passenger").prop("checked", false);
+        } else {
+            $('.box-rank').hide();
+            $('.box-company').show();
+
+            $(".crew").prop("checked", false);
+            $(".passenger").prop("checked", true);
+        }
+    }
 </script>
 @endpush
