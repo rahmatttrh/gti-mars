@@ -222,6 +222,7 @@ class RequestController extends Controller
       $request = ModelsRequest::find($dekripId);
       $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      $passengerItems = PassengerItem::where('request_id', $request->id)->get();
 
       $getBcm = CargoItem::where('request_id', $request->id)->first();
       if ( $getBcm) {
@@ -239,7 +240,7 @@ class RequestController extends Controller
       $schedules = Schedule::where('status', 0)->get();
       $routes = ScheduleRoute::where('schedule_id', $request->schedule_id)->get();
 
-      $passengerItems = PassengerItem::where('request_id', $request->id)->get();
+      
 
       $departPassengerItems = PassengerItem::where('type', 'Depart')->where('request_id', $request->id)->get();
       $returnPassengerItems = PassengerItem::where('type', 'Return')->where('request_id', $request->id)->get();

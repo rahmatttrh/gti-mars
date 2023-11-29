@@ -19,6 +19,7 @@ class CreateCargoItemsTable extends Migration
          $table->string('type')->nullable();
          $table->integer('offloading_id')->nullable();
          $table->string('status')->nullable();
+         $table->string('bcm')->nullable();
          $table->string('no_doc')->nullable();
          $table->string('mtd')->nullable();
          $table->string('contract')->nullable();

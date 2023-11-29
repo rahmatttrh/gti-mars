@@ -14,4 +14,10 @@ class PassengerItem extends Model
    {
       return $this->belongsTo(Crew::class);
    }
+
+   public function request()
+   {
+      return $this->belongsTo(Request::class);
+   }
+
 }

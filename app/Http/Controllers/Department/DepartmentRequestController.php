@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Department;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\GeofenceController;
 use App\Imports\CargoItemImport;
+use App\Imports\PassengerItemImport;
 use App\Imports\RequestImport;
 use App\Mail\ApprovalEmail;
 use App\Mail\NotificationEmail;
@@ -61,6 +62,7 @@ class DepartmentRequestController extends Controller
       $department = Department::find($employee->department->id);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      
       if ($department->id == 2) {
          $type = 1;
       } elseif ($department->id == 3) {
@@ -81,6 +83,7 @@ class DepartmentRequestController extends Controller
       $request = ModelsRequest::create([
          'code' => $code,
          'type' => $type,
+         'class' => 'main',
          'employee_id' => $employee->id,
          'department_id' => $department->id,
          'func' => $department->code,
@@ -112,9 +115,13 @@ class DepartmentRequestController extends Controller
          ]);
 
          return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
+      } else if ($req->activity == 1) {
+         Excel::import(new CargoItemImport($request->id), $req->file('file'));
+      } else if($req->activity == 2) {
+         Excel::import(new PassengerItemImport($request->id), $req->file('file-passenger'));
       }
 
-      Excel::import(new CargoItemImport($request->id), $req->file('file'));
+      
 
       return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
    }
@@ -485,7 +492,7 @@ class DepartmentRequestController extends Controller
                   'status' => 1,
                   'schedule_id' => $nearestVessel->schedule->id
                ]);
-               return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
             } else {
                // dd('kapal blm ada schedule');
                $schedule = Schedule::create([
@@ -509,7 +516,7 @@ class DepartmentRequestController extends Controller
                   'status' => 1,
                   'schedule_id' => $schedule->id,
                ]);
-               return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
             }
          }
       }
@@ -525,7 +532,7 @@ class DepartmentRequestController extends Controller
             'status' => 1,
             'schedule_id' => $schedule->id
          ]);
-         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
       } 
 
       if ($schedules) {
@@ -539,7 +546,7 @@ class DepartmentRequestController extends Controller
                ]);
             }
          }
-         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
       } else {
          $schedule = Schedule::create([
             'by' => 'user',
@@ -551,7 +558,7 @@ class DepartmentRequestController extends Controller
             'status' => 1,
             'schedule_id' => $schedule->id,
          ]);
-         return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
       }
 
       
@@ -585,7 +592,7 @@ class DepartmentRequestController extends Controller
       //       'date' => $now,
       //       'type' => 'released'
       //    ]);
-      //    return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($routineSchedule->date)->format('d/m/Y') . ' by ' . $vessel->name);
+      //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($routineSchedule->date)->format('d/m/Y') . ' by ' . $vessel->name);
       // } else {
       //    // jika tidak ada schedule rutin
       //    // dd('tidak ada schedule rutin ditanggal tersebut');

@@ -17,7 +17,7 @@ class CreatePassengerItemsTable extends Migration
          $table->id();
          $table->integer('request_id');
          $table->string('type')->nullable();
-         $table->integer('crew_id');
+         $table->integer('crew_id')->nullable();
          $table->string('name')->nullable();
          $table->string('barcode')->nullable();
          $table->string('department')->nullable();

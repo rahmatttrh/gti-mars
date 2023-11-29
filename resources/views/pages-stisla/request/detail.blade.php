@@ -19,7 +19,7 @@
       </p> --}}
 
       <div class="row">
-        @if ($request->activity_id != 3)
+        @if ($request->activity_id != 3 && $request->status == 0)
           <div class="col-8">
           @else
           <div class="col-12">
@@ -66,14 +66,14 @@
               <div class="summary">
                 <div class="summary-info">
                   <h4>{{$request->origin->name}} -  {{$request->destination->name}}</h4>
-                  <div class="text-muted">{{$request->activity->name}}</div>
+                  <div class="text-muted">{{$request->activity->name}} : {{$request->activity_id}}</div>
                   <div class="d-block mt-2">                              
                     <small> Request by {{$request->employee->name}}  {{$request->employee->ekstensi}}</small>
                   </div>
                 </div>
                 <hr>
                 
-                @if ($request->actvity_id == 1)
+                @if ($request->activity_id == 1)
                   <div class="card shadow-none border">
                     <div class="card-header">
                       <h4>Manifest</h4>
@@ -105,18 +105,7 @@
                                 <tr>
                                     <td class=" text-truncate">
                                       <div class="dropdown">
-                                          @if ($request->status ==0)
-                                            <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                                {{$item->mtd}}
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">
-                                                  Delete
-                                                </a>
-                                            </div>
-                                            @else
-                                            {{$item->mtd}} 
-                                          @endif
+                                        {{$item->mtd}}
                                       </div>
                                     </td>
                                     <td class=" text-truncate ">
@@ -171,6 +160,55 @@
                       </div>
                     </div>
                   </div>
+                  @elseif($request->activity_id == 2)
+                  <div class="card shadow-none border">
+                    <div class="card-header">
+                      <h4>Manifest</h4>
+                      {{-- {{$request->cargoItems->sum('weight')}} --}}
+                    </div>
+                    <div class="card-body p-3">
+                      <div class="table-responsive">
+                        <table class="table table-sm">
+                          <thead>
+                            <tr>
+                                <th>Type</th>
+                               <th>Name</th>
+                               <th>Barcode</th>
+                               <th>Department</th>
+                               <th>Company</th>
+                               <th>Desc</th>
+                               {{-- <th></th> --}}
+                            </tr>
+                         </thead>
+                         <tbody>
+                            @if ($passengerItems->count() > 0)
+                               @foreach ($passengerItems as $passenger)
+                                  <tr>
+                                     <td>{{$passenger->type}}</td>
+                                     <td >{{$passenger->name}}</td>
+                                     <td >{{$passenger->barcode}}</td>
+                                     <td >{{$passenger->department}}</td>
+                                     <td >{{$passenger->company}}</td>
+                                     <td >{{$passenger->desc}}</td>
+                                     {{-- <td class="text-end">
+                                        @if ($request->status == 0)
+                                        <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
+                                        @endif
+                                     </td> --}}
+                                  </tr>
+                                  <x-modal.passenger.delete :item="$passenger" />
+                               @endforeach
+                
+                               @else
+                               <tr>
+                                  <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                               </tr>
+                            @endif
+                         </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
                   @elseif($request->activity_id == 3)
                   <div class="summary-item">
                     <h6>Barge </h6>
@@ -196,7 +234,7 @@
           </div>
         </div>
 
-        @if ($request->activity_id == 1)
+        @if ($request->activity_id == 1 && $request->status == 0)
           <div class="col-md-4">
             <div class="card shadow-none border">
               <div class="card-header">Form Add Cargo</div>
@@ -248,5 +286,29 @@
       
     </div>
   </section>
+
+
+
+
+
+  <div class="modal fade" id="request-release" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirm Request Release</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Release this request to Fleet Control?
+        </div>
+        <div class="modal-footer bg-whitesmoke">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <a href="{{route('request.release', enkripRambo($request->id))}}" class="btn btn-primary">Release</a>
+        </div>
+      </div>
+    </div>
+  </div>
     
 @endsection

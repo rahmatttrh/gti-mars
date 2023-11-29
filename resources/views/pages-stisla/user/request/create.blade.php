@@ -32,7 +32,7 @@
                 <div class="card border" >
                     <form action="{{route('request.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="card-header">
+                        <div class="card-header bg-primary text-white">
                             <h4>Form Add Request Activity</h4>
                         </div>
                         <div class="card-body">
@@ -94,18 +94,12 @@
                             
                             <div class="form-row file-crew">
                                 <div class="form-group col-md-12">
-                                    <label for="file">File Departure Crew</label>
-                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
+                                    <label for="file-passenger">File Crew/Passenger</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file-passenger" name="file-passenger" >
                                     <a class="file-crew mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template ...</a>
                                 </div>
                             </div>
-                            <div class="form-row file-crew">
-                                <div class="form-group col-md-12">
-                                    <label for="file">File Return Crew</label>
-                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
-                                    <a class="file-crew mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template ...</a>
-                                </div>
-                            </div>
+                
 
                             <div class="form-row barge">
                                 <div class="form-group col-md-6">

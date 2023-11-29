@@ -46,7 +46,7 @@ class MarineRequestController extends Controller
       // dd('ok');
       $request = ModelsRequest::find($req->request_id);
       $schedule = Schedule::find($req->schedule);
-
+      // dd($schedule->id);
       if (!$schedule->vessel_id) {
          // dd('ok');
          return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');
@@ -175,7 +175,7 @@ class MarineRequestController extends Controller
             'request_id' => $request->id,
             'status_id' => 15,
          ]);
-      }
+      } 
 
       if ($request->activity_id ==3) {
          $request->update([
@@ -207,7 +207,7 @@ class MarineRequestController extends Controller
       // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
 
 
-         
+      // dd('ok');
       return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');
    }
 
