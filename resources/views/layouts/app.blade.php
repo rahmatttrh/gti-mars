@@ -456,7 +456,7 @@
                Swal.fire({
                title: 'Success',
                html: '{{ Session::get('success') }}',
-               timer: 4000,
+               timer: 1000,
                timerProgressBar: false,
                didOpen: () => {
                   Swal.showLoading()
