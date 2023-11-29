@@ -288,7 +288,41 @@
                     </div>
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                    <div class="table-responsive mt-3">
+                      <table class="table">
+                        <thead>
+                          
+                          <tr>
+                            <th>Type</th>
+                            <th>Route</th>
+                            <th>Name</th>
+                            <th>Barcode</th>
+                            <th>Department</th>
+                            <th>Company</th>
+                            <th>Desc</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($schedule->requests()->where('activity_id', 2)->get() as $requests)
+                            {{-- <tr>
+                              <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
+                            </tr> --}}
+                            @foreach ($requests->passengerItems as $passenger)
+                              <tr>
+                                <td>{{$passenger->type}}</td>
+                                <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td>
+                                <td>{{$passenger->name}}</td>
+                                <td>{{$passenger->barcode}}</td>
+                                <td class="text-truncate">{{$passenger->department}}</td>
+                                <td class="text-truncate">{{$passenger->company}}</td>
+                                <td>{{$passenger->desc}}</td>
+                              </tr>
+                          @endforeach
+                          @endforeach
+                          
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                   
                 </div>
@@ -623,7 +657,7 @@
         </div>
       </div> --}}
 
-      <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-app-{{$req->id}}" aria-hidden="true">
+      <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog"  aria-hidden="true">
         <div class="modal-dialog" role="document">
           <form action="{{route('request.select.schedule')}}" method="POST">
             @csrf
@@ -656,6 +690,7 @@
             @csrf
             @method('PUT')
             <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
+            {{-- <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden> --}}
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title" id="req-change-{{$req->id}}">Confirm Change</h5>
@@ -669,7 +704,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-12">
                     {{-- <label for="inputState">State</label> --}}
-                    <select id="inputState" class="form-control">
+                    <select id="schedule" name="schedule" class="form-control">
                       {{-- <option selected>Choose...</option>
                       <option>...</option> --}}
                       @foreach ($schedules as $schedule)

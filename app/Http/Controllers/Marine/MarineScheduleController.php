@@ -367,7 +367,7 @@ class MarineScheduleController extends Controller
          $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $requlerSchedules = null;
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->where('class' ,'!=', 'Moving' )->orderBy('vessel_type', 'asc')->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->where('class' ,'=', null )->orderBy('vessel_type', 'asc')->get();
          $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
       }
 
