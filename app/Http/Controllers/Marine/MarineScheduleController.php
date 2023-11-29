@@ -367,7 +367,7 @@ class MarineScheduleController extends Controller
          $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $requlerSchedules = null;
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->where('class' ,'!=', 'Moving' )->orderBy('vessel_type', 'asc')->get();
          $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
       }
 
@@ -398,6 +398,8 @@ class MarineScheduleController extends Controller
       }
 
       $vessels = Vessel::get();
+      $movingSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('class', 'Moving')->get();
+
       return view('pages-stisla.marine.schedule.index', [
          'typeName' => 'by Request',
          'type' => 2,
@@ -405,10 +407,13 @@ class MarineScheduleController extends Controller
          'monthName' => $monthName,
          'schedules' => $schedules,
          'regulerSchedules' => $regulerSchedules,
+         'movingSchedules' => $movingSchedules,
          'vessels' => $vessels,
          // 'ports' => $ports
       ])->with('i');
    }
+
+
 
    public function order($month)
    {
@@ -986,5 +991,16 @@ class MarineScheduleController extends Controller
       // ]);
 
       return redirect()->back()->with('success', 'Cargo successfully added to vessel');
+   }
+
+
+   public function selectVessel(Request $req)
+   {
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'status' => 1,
+         'vessel_id' => $req->vessel
+      ]);
+      return redirect()->back()->with('success', 'Vessel selected.');
    }
 }

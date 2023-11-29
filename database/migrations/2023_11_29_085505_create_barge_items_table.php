@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVdrEngineHeadingsTable extends Migration
+class CreateBargeItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateVdrEngineHeadingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('vdr_engine_headings', function (Blueprint $table) {
-            $table->tinyIncrements('id');
-            $table->string('description', 100);
-            $table->string('unit', 50);
+        Schema::create('barge_items', function (Blueprint $table) {
+            $table->id();
+            $table->integer('status');
+            $table->integer('request_id');
+            $table->integer('barge_id');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateVdrEngineHeadingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vdr_engine_headings');
+        Schema::dropIfExists('barge_items');
     }
 }

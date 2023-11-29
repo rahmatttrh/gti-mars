@@ -30,8 +30,8 @@
                {{-- <div class="card-header"> --}}
                   <div class="text-center ">
                      <div  class=" ">
-                        <img class=" bg-light p-2 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="80" alt=""> 
-                        <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1>
+                        <img class="border shadow-sm mt-4 mb-4 bg-light py-2 px-4 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="45" alt=""> 
+                        <h1 class="ml-2" style="font-weight: 900">PHE OSES MARINE <span class="text-primary">OPS</span></h1>
                      </div>
                   </div>
                {{-- </div> --}}
@@ -39,7 +39,7 @@
                <form  method="POST" action="{{ route('login') }}" autocomplete="off">
                   @csrf
                   <div class="card-body">
-                     <small class="card-title text-center mb-4">Login to your account</small>
+                     <small class="card-title text-center mb-2">Login to your account</small>
                      @error('username')
                      <div class="alert alert-danger" role="alert">
                         {{ $message }}
@@ -80,7 +80,7 @@
 
                      
                      <div class="form-footer">
-                     <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                     <button type="submit" class="btn btn-primary w-100 py-3">Sign in</button>
                      </div>
                   </div>
                   <div class="hr-text">Ekanuri Development</div>

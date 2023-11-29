@@ -59,14 +59,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//    Route::group(['middleware' => ['role:marine']], function () {
-//       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
-//    });
-//    Route::group(['middleware' => ['role:department|vessel']], function () {
-//       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-//   });
- 
-   
+   //    Route::group(['middleware' => ['role:marine']], function () {
+   //       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
+   //    });
+   //    Route::group(['middleware' => ['role:department|vessel']], function () {
+   //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+   //   });
+
+   Route::prefix("dsp")->group(function () {
+      Route::get("marine-dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
+      Route::get("vessel-dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+      Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
 
    Route::prefix("fetch")->group(function () {
       Route::get("schedule/{date}/{value}", [FetchController::class, "fetchSchedules",]);
@@ -114,6 +118,7 @@ Route::middleware(["auth"])->group(function () {
 
       Route::get('marine/request', [MarineController::class, 'scheduleRequest'])->name('schedule.request.marine');
       Route::put('marine/select/vessel', [MarineController::class, 'scheduleSelectVessel'])->name('schedule.select.vessel');
+      Route::put('select/vessel/marine', [MarineScheduleController::class, 'selectVessel'])->name('schedule.select.vessel2');
 
       Route::get('vessel/request/{vessel:id}', [VesselController::class, 'schedule'])->name('schedule.request.vessel');
       Route::get('vessel/month/{month}', [VesselController::class, 'scheduleMonth'])->name('schedule.month.request.vessel');
@@ -310,7 +315,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
    Route::prefix('department/request')->group(function () {
       Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
       Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
-      Route::post('store', [DepartmentRequestController::class, 'store'])->name('request.store');
+      Route::post('store', [DepartmentRequestController::class, 'storeImport'])->name('request.store');
       Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
       Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
 
@@ -386,7 +391,15 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
 
+      // Crew
+      Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
+      Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
+
+      // 
       Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
+      Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
+      Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
+      Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
 
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');

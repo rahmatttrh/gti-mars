@@ -7,7 +7,7 @@
     <div class="section-header">
       <h1 class="section-title">Schedule Progress {{$monthName}}</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Schedule Progress</div>
       </div>
     </div>

@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class VdrEngineHeading extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 }

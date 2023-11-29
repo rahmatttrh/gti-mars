@@ -7,7 +7,14 @@
     <div class="section-header">
       <h1 class="section-title">Detail Sailing Order</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="/">Dashboard</a></div>
+        @if (auth()->user()->hasRole('marine'))
+          <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
+          @elseif(auth()->user()->hasRole('vessel'))
+          <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
+          @elseif(auth()->user()->hasRole('user'))
+          <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
+        @endif
+        
         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
         <div class="breadcrumb-item active">Schedule Detail</div>
       </div>
@@ -51,7 +58,7 @@
               </div>
             @endif
             
-         </div>
+          </div>
         </div>
           
           <hr>
@@ -136,167 +143,196 @@
               
             </div>
           </div>
-          <div class="card">
-            <div class="card-header">
-              <h4>Manifest </h4>
-            </div>
-            <div class="card-body">
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item">
-                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Passenger</a>
-                </li>
+
+          @if ($schedule->class != 'Moving')
+            <div class="card">
+              <div class="card-header">
+                <h4>Manifest </h4>
+              </div>
+              <div class="card-body">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Passenger</a>
+                  </li>
+                  
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div id="accordion">
+                      @foreach ($requests->where('activity_id', '!=', 2) as $request)
+                      <div class="accordion">
+                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-{{$request->id}}" aria-expanded="false">
+                          <h4 class="py-2">{{$request->origin->name}} - {{$request->destination->name}}</h4>
+                        </div>
+                        <div class="accordion-body collapse" id="panel-body-{{$request->id}}" data-parent="#accordion">
+                          <br>
+                          <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                            {{-- <hr> --}}
+                          <div class="table-responsive mt-3">
+                            <table class="table table-sm">
+                              <thead>
                 
-              </ul>
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  <div id="accordion">
-                    @foreach ($requests->where('activity_id', '!=', 2) as $request)
-                    <div class="accordion">
-                      <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-{{$request->id}}" aria-expanded="false">
-                        <h4 class="py-2">{{$request->origin->name}} - {{$request->destination->name}}</h4>
-                      </div>
-                      <div class="accordion-body collapse" id="panel-body-{{$request->id}}" data-parent="#accordion">
-                        <br>
-                        <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                          {{-- <hr> --}}
-                        <div class="table-responsive mt-3">
-                          <table class="table table-sm">
-                            <thead>
-              
-                              <tr>
-                                
-                                <th scope="col">MTD</th>
-                                <th scope="col">Desc</th>
-                                <th scope="col">Contract</th>
-                                <th scope="col">QTY</th>
-                                <th>Drop</th>
-                                <th>Size</th>
-                                <th>Weight</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              @if ($request->cargoItems->count() > 0)
-                              @foreach ($request->cargoItems as $item)   
-                                 <tr>
-                                    <td class="text-muted">
-                                       <div class="dropdown">
-                                          @if ($request->status ==0)
-                                             <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                                {{$item->no_doc}}
-                                             </a>
-                                             <div class="dropdown-menu dropdown-menu-end">
-                                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">
-                                                   Delete
-                                                </a>
-                                             </div>
-                                             @else
-                                             {{$item->no_doc}} 
-                                          @endif
-                                       </div>
-                                    </td>
-                                    <td class="text-muted  ">
-                                       {{$item->desc}} 
-                                    </td>
-                                    {{-- <td class="text-muted ">{{$item->remark ?? '-'}}</td> --}}
-                                    <td class="text-muted">{{$item->contract}}</td>
-                                    <td class="text-muted text-center text-truncate" style="max-width: 75px">{{$item->qty}} {{$item->unit}}</td>
-                                    <td class="text-muted text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                                    {{-- <td class="text-muted text-center">
-                                       {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
-                                    
-                                    </td> --}}
-                                    <td class="text-muted text-center">{{$item->size}}</td>
-                                    <td class="text-muted text-center">{{$item->weight}}</td>
-                                    
-                                    {{-- <td>
-                                       @if ($request->status == 0)
-                                       <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
-                                       @endif
-                                    </td> --}}
-                                    @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                                       <td>
-                                          @if ($item->status == 1)
-                                             <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                             <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
-                                             @else
-                                             -
-                                          @endif
-                                       </td>
-                                    @endif
-                                 </tr>
-                                 <x-modal.cargo.delete :item="$item" />
-                                 
-                              @endforeach
-                              <tr>
-                                 @if ($request->status >= 10 && auth()->user()->hasRole('department'))
-                                    <td colspan="5" class="text-muted text-end">Total</td>
-                                    @else
-                                    <td colspan="5" class="text-muted text-end">Total</td>
-                                 @endif
-                                 <td class="text-muted text-center">{{$request->total_size}}</td>
-                                 <td class="text-muted text-center">{{$request->total_weight}}</td>
-                              </tr>
-                              @else
-                              <tr>
-                                 <td colspan="9" style="text-align: center"><small>Empty</small></td>
-                              </tr>
-                           @endif
-                            </tbody>
-                          </table>
+                                <tr>
+                                  
+                                  <th scope="col">MTD</th>
+                                  <th scope="col">Desc</th>
+                                  <th scope="col">Contract</th>
+                                  <th scope="col">QTY</th>
+                                  <th>Drop</th>
+                                  <th>Size</th>
+                                  <th>Weight</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                @if ($request->cargoItems->count() > 0)
+                                @foreach ($request->cargoItems as $item)   
+                                  <tr>
+                                      <td class="text-muted">
+                                        <div class="dropdown">
+                                            @if ($request->status ==0)
+                                              <a href="#" class="dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                                  {{$item->no_doc}}
+                                              </a>
+                                              <div class="dropdown-menu dropdown-menu-end">
+                                                  <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">
+                                                    Delete
+                                                  </a>
+                                              </div>
+                                              @else
+                                              {{$item->no_doc}} 
+                                            @endif
+                                        </div>
+                                      </td>
+                                      <td class="text-muted  ">
+                                        {{$item->desc}} 
+                                      </td>
+                                      {{-- <td class="text-muted ">{{$item->remark ?? '-'}}</td> --}}
+                                      <td class="text-muted">{{$item->contract}}</td>
+                                      <td class="text-muted text-center text-truncate" style="max-width: 75px">{{$item->qty}} {{$item->unit}}</td>
+                                      <td class="text-muted text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                                      {{-- <td class="text-muted text-center">
+                                        {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
+                                      
+                                      </td> --}}
+                                      <td class="text-muted text-center">{{$item->size}}</td>
+                                      <td class="text-muted text-center">{{$item->weight}}</td>
+                                      
+                                      {{-- <td>
+                                        @if ($request->status == 0)
+                                        <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                        @endif
+                                      </td> --}}
+                                      @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                        <td>
+                                            @if ($item->status == 1)
+                                              <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                              <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
+                                              @else
+                                              -
+                                            @endif
+                                        </td>
+                                      @endif
+                                  </tr>
+                                  <x-modal.cargo.delete :item="$item" />
+                                  
+                                @endforeach
+                                <tr>
+                                  @if ($request->status >= 10 && auth()->user()->hasRole('department'))
+                                      <td colspan="5" class="text-muted text-end">Total</td>
+                                      @else
+                                      <td colspan="5" class="text-muted text-end">Total</td>
+                                  @endif
+                                  <td class="text-muted text-center">{{$request->total_size}}</td>
+                                  <td class="text-muted text-center">{{$request->total_weight}}</td>
+                                </tr>
+                                @else
+                                <tr>
+                                  <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                                </tr>
+                            @endif
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
+                      @endforeach
+                      {{-- <div class="accordion">
+                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-2">
+                          <h4>Panel 2</h4>
+                        </div>
+                        <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion">
+                          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                      </div>
+                      <div class="accordion">
+                        <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3">
+                          <h4>Panel 3</h4>
+                        </div>
+                        <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
+                          <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                          quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                          consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                          cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                          proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        </div>
+                      </div> --}}
                     </div>
-                    @endforeach
-                    {{-- <div class="accordion">
-                      <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-2">
-                        <h4>Panel 2</h4>
-                      </div>
-                      <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion">
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                      </div>
-                    </div>
-                    <div class="accordion">
-                      <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3">
-                        <h4>Panel 3</h4>
-                      </div>
-                      <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
-                        <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                      </div>
-                    </div> --}}
                   </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                  </div>
+                  
                 </div>
-                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                  Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
-                </div>
-                
               </div>
             </div>
-          </div>
+            @else 
+            <div class="card">
+              <div class="card-body">
+                <div class="summary-item">
+                  <h6>Barge </h6>
+                  <ul class="list-unstyled list-unstyled-border">
+                    
+                    <li class="media">
+                      <a href="#">
+                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                      </a>
+                      <div class="media-body">
+                        {{-- <div class="media-right">$405</div> --}}
+                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->bargeItem->barge->name}}</a></div>
+                        <div class="text-muted text-small">Moving</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+          @endif
+          
           
         </div>
         <div class="col-md-4">
-          @if ($schedule->vessel->latitude)
-            <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
-            @else
-            <div class="card mb-3">
-              <div class="card-body text-center py-4">
-                  <small style="text-muted">No GPS Signal</small>
+          @if ($schedule->vessel)
+            @if ($schedule->vessel->latitude)
+              <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
+              @else
+              <div class="card mb-3">
+                <div class="card-body text-center py-4">
+                    <small style="text-muted">No GPS Signal</small>
+                </div>
               </div>
-            </div>
+            @endif
           @endif
+          
           <div class="card">
             <div class="card-header">
               <h4>Recent Request</h4>
@@ -420,6 +456,7 @@
 
 
   {{-- Modal Send Schedule --}}
+  @if ($schedule->vessel)
   <div class="modal fade" id="schedule-send" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -439,6 +476,7 @@
       </div>
     </div>
   </div>
+  @endif
 
   {{-- Modal Accept Schedule --}}
   <div class="modal fade" id="schedule-accept" tabindex="-1" role="dialog" aria-hidden="true">
@@ -522,143 +560,187 @@
     </div>
   </div>
 
-  
 
-  {{-- Modal Approve & Change Request Activity --}}
-  @foreach ($recentRequests as $req)
-    {{-- <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-app-{{$req->id}}" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+  {{-- Modal Select Vessel --}}
+  <div class="modal fade" id="schedule-select-vessel" tabindex="7" role="dialog"  aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <form action="{{route('schedule.select.vessel2')}}" method="POST">
+        @csrf
+        @method('PUT')
+        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="req-app-{{$req->id}}">Confirm Approve</h5>
+            <h5 class="modal-title">Select Vessel</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            Add {{$req->activity->name}} {{$req->description}} to {{$schedule->vessel->name}} ?
+            <hr>
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                <label for="vessel">Vessel</label>
+                <select id="vessel" class="form-control" name="vessel" id="vessel">
+                  <option selected>Choose...</option>
+                  @foreach ($vessels as $vessel)
+                    <option  value="{{$vessel->id}}">{{$vessel->name }}</option>
+                  @endforeach
+                </select>
+              </div>
+            </div>
+            
           </div>
           <div class="modal-footer bg-whitesmoke">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Approve</button>
+            <button type="submit" class="btn btn-primary">Save</button>
           </div>
         </div>
-      </div>
-    </div> --}}
+      </form>
+    </div>
+ </div>
+  
 
-    <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-app-{{$req->id}}" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <form action="{{route('request.select.schedule')}}" method="POST">
-          @csrf
-          @method('PUT')
-          <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+  {{-- Modal Approve & Change Request Activity --}}
+  @if ($schedule->vessel)
+    @foreach ($recentRequests as $req)
+      {{-- <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-app-{{$req->id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="req-app-{{$req->id}}">Confirm Approveeee</h5>
+              <h5 class="modal-title" id="req-app-{{$req->id}}">Confirm Approve</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
               Add {{$req->activity->name}} {{$req->description}} to {{$schedule->vessel->name}} ?
-              
             </div>
             <div class="modal-footer bg-whitesmoke">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Approve</button>
+              <button type="button" class="btn btn-primary">Approve</button>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      </div> --}}
 
-    <div class="modal fade" id="req-change-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-change-{{$req->id}}" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <form action="{{route('request.select.schedule')}}" method="POST">
-          @csrf
-          @method('PUT')
-          <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="req-change-{{$req->id}}">Confirm Change</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              Change {{$req->activity->name}} {{$req->description}} to  ...
-              <hr>
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  {{-- <label for="inputState">State</label> --}}
-                  <select id="inputState" class="form-control">
-                    {{-- <option selected>Choose...</option>
-                    <option>...</option> --}}
-                    @foreach ($schedules as $schedule)
-                      <option  value="{{$schedule->id}}"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} - {{$schedule->vessel->name ?? 'Not Available'}}</option>
-                    @endforeach
-                  </select>
-                </div>
+      <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-app-{{$req->id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form action="{{route('request.select.schedule')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
+            <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="req-app-{{$req->id}}">Confirm Approveeee</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
               </div>
-              
+              <div class="modal-body">
+                Add {{$req->activity->name}} {{$req->description}} to {{$schedule->vessel->name ?? '-'}} ?
+                
+              </div>
+              <div class="modal-footer bg-whitesmoke">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Approve</button>
+              </div>
             </div>
-            <div class="modal-footer bg-whitesmoke">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-    </div>
-  @endforeach
+
+      <div class="modal fade" id="req-change-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-change-{{$req->id}}" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <form action="{{route('request.select.schedule')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="req-change-{{$req->id}}">Confirm Change</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                Change {{$req->activity->name}} {{$req->description}} to  ...
+                <hr>
+                <div class="form-row">
+                  <div class="form-group col-md-12">
+                    {{-- <label for="inputState">State</label> --}}
+                    <select id="inputState" class="form-control">
+                      {{-- <option selected>Choose...</option>
+                      <option>...</option> --}}
+                      @foreach ($schedules as $schedule)
+                        <option  value="{{$schedule->id}}"> {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}} - {{$schedule->vessel->name ?? 'Not Available'}}</option>
+                      @endforeach
+                    </select>
+                  </div>
+                </div>
+                
+              </div>
+              <div class="modal-footer bg-whitesmoke">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    @endforeach
+  @endif
+  
   
     
 @endsection
 
 
 
+@if ($schedule->vessel)
+    
 
 @push('map')
 <script>
-  $("#modal-4").fireModal({
-  footerClass: 'bg-whitesmoke',
-  body: 'Add the <code>bg-whitesmoke</code> class to the <code>footerClass</code> option.',
-  buttons: [
-    {
-      text: 'No Action!',
-      class: 'btn btn-primary btn-shadow',
-      handler: function(modal) {
+    $("#modal-4").fireModal({
+    footerClass: 'bg-whitesmoke',
+    body: 'Add the <code>bg-whitesmoke</code> class to the <code>footerClass</code> option.',
+    buttons: [
+      {
+        text: 'No Action!',
+        class: 'btn btn-primary btn-shadow',
+        handler: function(modal) {
+        }
       }
-    }
-  ]
-});
+    ]
+  });
 
-	mapboxgl.accessToken = 'pk.eyJ1IjoicmFobWF0cmgiLCJhIjoiY2xwNml3MzJ0MjBpNjJscXl6am9mc21sayJ9.BHym8QvhGHWK1QC3qDX4sg';
-   const map = new mapboxgl.Map({
-   container: 'map2', // container ID
-   // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-   style: 'mapbox://styles/mapbox/streets-v12', // style URL
-   center: [{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}], // starting position [lng, lat]
-   zoom: 7.4 // starting zoom
-   });
-   
-   const marker1 = new mapboxgl.Marker()
-   .setLngLat([{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}])
-   .addTo(map);
+    mapboxgl.accessToken = 'pk.eyJ1IjoicmFobWF0cmgiLCJhIjoiY2xwNml3MzJ0MjBpNjJscXl6am9mc21sayJ9.BHym8QvhGHWK1QC3qDX4sg';
+    const map = new mapboxgl.Map({
+    container: 'map2', // container ID
+    // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
+    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+    center: [{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}], // starting position [lng, lat]
+    zoom: 7.4 // starting zoom
+    });
+    
+    const marker1 = new mapboxgl.Marker()
+    .setLngLat([{!! $schedule->vessel->longitude !!}, {!! $schedule->vessel->latitude !!}])
+    .addTo(map);
 
-   map.setStyle('mapbox://styles/mapbox/outdoors-v11')
-   map.addControl(new mapboxgl.NavigationControl())
+    map.setStyle('mapbox://styles/mapbox/outdoors-v11')
+    map.addControl(new mapboxgl.NavigationControl())
 
 
-   for (const feature of geojson.features) {
-  // create a HTML element for each feature
-  const el = document.createElement('div');
-  el.className = 'marker';
+    for (const feature of geojson.features) {
+    // create a HTML element for each feature
+    const el = document.createElement('div');
+    el.className = 'marker';
 
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
-}
-</script>
+    // make a marker for each feature and add to the map
+    new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
+  }
+  </script>
 
 @endpush
+@endif

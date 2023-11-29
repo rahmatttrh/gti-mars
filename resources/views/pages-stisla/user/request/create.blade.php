@@ -7,7 +7,7 @@
     <div class="section-header">
       <h1 class="section-title">Request Create</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Request Create</div>
       </div>
     </div>
@@ -29,8 +29,8 @@
                     </ul>
                 </div>
                 @endif --}}
-                <div class="card">
-                    <form action="{{route('request.store')}}" method="POST">
+                <div class="card border" >
+                    <form action="{{route('request.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="card-header">
                             <h4>Form Add Request Activity</h4>
@@ -39,7 +39,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>Type</label>
-                                    <select class="custom-select" id="activity" name="activity">
+                                    <select style="background-color: lightgrey" class="custom-select" id="activity" name="activity">
                                         <option  disabled selected>Choose one</option>
                                         @foreach ($activities as $activity)
                                             <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
@@ -48,14 +48,14 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="date">Date</label>
-                                    <input type="date" class="form-control date origin" id="date" name="date" >
+                                    <input style="background-color: lightgrey" type="date" class="form-control date origin input" id="date" name="date" >
                                 </div>
                                 
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label>From</label>
-                                    <select class="custom-select origin" id="origin" name="origin">
+                                    <select style="background-color: lightgrey" class="custom-select origin" id="origin" name="origin">
                                         <option  disabled selected>Choose one</option>
                                         @foreach ($ports as $port)
                                             <option {{ old('origin') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
@@ -64,7 +64,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label>Destination</label>
-                                    <select class="custom-select" id="destination" name="destination">
+                                    <select style="background-color: lightgrey" class="custom-select" id="destination" name="destination">
                                         <option  disabled selected>Choose one</option>
                                         @foreach ($ports as $port)
                                             <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
@@ -72,7 +72,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-row">
+                            {{-- <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label for="bcm">BCM (*optional)</label>
                                     <input type="text" value="{{old('bcm')}}" class="form-control " id="bcm" name="bcm" >
@@ -81,8 +81,43 @@
                                     <label for="desc">Description</label>
                                     <input type="text" value="{{old('desc')}}" class="form-control " id="desc" name="desc" >
                                 </div>
+                            </div> --}}
+                            <hr>
+                            <div class="form-row file-cargo">
+                                <div class="form-group col-md-12">
+                                    <label for="file">File Cargo</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
+                                    <a class="file-cargo mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template here ...</a>
+                                </div>
                             </div>
                             
+                            
+                            <div class="form-row file-crew">
+                                <div class="form-group col-md-12">
+                                    <label for="file">File Departure Crew</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
+                                    <a class="file-crew mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template ...</a>
+                                </div>
+                            </div>
+                            <div class="form-row file-crew">
+                                <div class="form-group col-md-12">
+                                    <label for="file">File Return Crew</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
+                                    <a class="file-crew mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template ...</a>
+                                </div>
+                            </div>
+
+                            <div class="form-row barge">
+                                <div class="form-group col-md-6">
+                                    <label>Barge</label>
+                                    <select style="background-color: lightgrey" class="custom-select" id="barge" name="barge">
+                                        <option  disabled selected>Choose one</option>
+                                        @foreach ($barges as $barge)
+                                            <option {{ old('barge') == $barge->id ? 'selected' : ''}} value="{{$barge->id}}">{{$barge->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-footer bg-whitesmoke">
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -141,45 +176,71 @@
 
 
 @push('get_schedules')
-   <script>
-      console.log('get_schedules function');
-   
-      $(document).ready(function() {
-         $('.origin').change(function() {
-            $('.result').empty()
-            $('.near').empty()
-            var origin = $('#origin').val();
-            var date = $('#date').val();
-            var _token = $('meta[name="csrf-token"]').attr('content');
+    <script>
+        console.log('get_schedules function');
+        $(".file-cargo").hide();
+        $(".file-crew").hide();
+        $(".barge").hide();
+        $('#activity').change(function() {
+            var activity = $(this).val();
+            console.log(activity)
+            if(activity == 1){
+                $(".file-cargo").show();
+                $(".file-crew").hide();
+                $(".barge").hide();
+            } else if(activity == 2){
+                $(".barge").hide();
+                $(".file-cargo").hide();
+                $(".file-crew").show();
+            } else if(activity == 3){
+                $(".file-cargo").hide();
+                $(".file-crew").hide();
+                $(".barge").show();
+            }else {
+                $(".file-cargo").hide();
+                $(".file-crew").hide();
+                $(".barge").hide();
+            }
+        })
 
-               console.log('origin:' + origin + ' date:' +date);
 
-               $.ajax({
-                  url: "/fetch/schedule/" + date + "/" + origin ,
-                  method: "GET",
-                  dataType: 'json',
+        $(document).ready(function() {
+            
+            $('.origin').change(function() {
+                $('.result').empty()
+                $('.near').empty()
+                var origin = $('#origin').val();
+                var date = $('#date').val();
+                var _token = $('meta[name="csrf-token"]').attr('content');
 
-                  success: function(result) {
+                console.log('origin:' + origin + ' date:' +date);
 
-                     console.log('near :' + result.near);
-                     console.log('result :' + result.result);
-                     $.each(result.result, function(i, index) {
-                        $('.result').html(result.result);
+                $.ajax({
+                    url: "/fetch/schedule/" + date + "/" + origin ,
+                    method: "GET",
+                    dataType: 'json',
 
-                     });
-                     $.each(result.near, function(i, index) {
-                        
-                        $('.near').html(result.near);
-                     });
-                  },
-                  error: function(error) {
-                     console.log(error)
-                  }
+                    success: function(result) {
 
-               })
-         })
+                        console.log('near :' + result.near);
+                        console.log('result :' + result.result);
+                        $.each(result.result, function(i, index) {
+                            $('.result').html(result.result);
 
-         
-      })
-   </script>
+                        });
+                        $.each(result.near, function(i, index) {
+                            
+                            $('.near').html(result.near);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error)
+                    }
+
+                })
+            })
+
+            
+        })
+    </script>
 @endpush

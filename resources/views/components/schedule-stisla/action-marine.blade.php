@@ -1,41 +1,19 @@
 <span>
-   {{-- <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#additionalCargo">
-      Add Additional Cargo
-   </button> --}}
-   @if ($schedule->status == 0 )
+   @if (!$schedule->vessel)
+      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#schedule-select-vessel">
+         Select Vessel
+      </button>
+      @else
+      @if ($schedule->status == 0 )
       {{-- @if ($schedule->requests()->count() > 0) --}}
       <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#schedule-send">
          Send to vessel
       </button>
-      {{-- <div class="btn-group">
-         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#schedule-send">Send to vessel</button>
-         <button type="button" class="btn btn-primary btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-           <span class="sr-only">Toggle Dropdown</span>
-         </button>
-         <div class="dropdown-menu">
-           <a class="dropdown-item" href="#">Postpone</a>
-           <a class="dropdown-item" href="#">Edit</a>
-           <a class="dropdown-item" href="#">Delete</a>
-           <div class="dropdown-divider"></div>
-           <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a>
-         </div>
-      </div> --}}
-      {{-- @else
-      <button class="btn btn-muted" disabled>
-         <!-- Download SVG icon from http://tabler-icons.io/i/send -->
-         <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="10" y1="14" x2="21" y2="3" /><path d="M21 3l-6.5 18a0.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a0.55 .55 0 0 1 0 -1l18 -6.5" /></svg>
-         Send
-      </button>
-      @endif --}}
+      
       
       @elseif($schedule->status == 2 || $schedule->status == 3)
       <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#schedule-add-deviation">
-         {{-- <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path>
-            <path d="M9 12l6 0"></path>
-            <path d="M12 9l0 6"></path>
-         </svg> --}}
+        
          Add Deviation
       </button>
       @elseif($schedule->status == 11)
@@ -47,4 +25,11 @@
          Done
       </button>
    @endif
+   @endif
+
+
+
+
+   
+   
 </span>

@@ -137,146 +137,6 @@ VDR
                 </div>
 
             </div>
-
-            <!-- Tabel Detail of Daily Operating Activies -->
-            <div class="card mt-3">
-                <div class="card-header">
-                    <div class="row align-items-center">
-                        <div class="col">
-                            <h2 class="page-title">
-                                CREW & PASSENGER LIST
-                            </h2>
-                        </div>
-                        <!-- Page title actions -->
-                        <div class="mr-auto ms-auto d-print-none">
-                            <div class="d-flex">
-                                <div class="dropdown">
-                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
-                                        Options
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-
-                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAddCrew">
-                                            Add Crew / Passenger
-                                        </a>
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <!-- End modal -->
-                    </div>
-                </div>
-                @if($vdr)
-                <div class="table-responsive">
-                    <table class="table ">
-                        <thead>
-                            <tr>
-                                <th colspan="4" class="text-center">CREW</th>
-                            </tr>
-                            <tr>
-                                <th>No</th>
-                                <th class="col-md-">Name</th>
-                                <th class="text-center">Ranks</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @php
-                            $thisC = 1;
-                            @endphp
-
-                            @foreach ($crews as $key => $crew)
-
-                            @if($thisC != $crew->is_crew)
-                            <thead>
-                                <tr>
-                                    <th colspan="4" class="text-center">PASSENGER</th>
-                                </tr>
-                                <tr>
-                                    <th>No</th>
-                                    <th class="col-md-">Name</th>
-                                    <th class="text-center">Company</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            @endif
-
-
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$crew->name}}</td>
-                                @if($crew->is_crew == '1')
-                                <td class="text-center">{{$crew->rank}}</td>
-                                @else
-                                <td>{{$crew->company}}</td>
-                                @endif
-                                <td>
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$crew->id}}"> Edit</a>
-                                    <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$crew->id}}"> Delete </a>
-                                </td>
-                            </tr>
-
-                            @php
-                            $thisC = $crew->is_crew;
-                            @endphp
-
-
-                            <!-- Modal Delete -->
-
-                            <div class="modal modal-blur fade" id="deleteAct-{{$crew->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-
-                                        <form action="{{route('vdr.delete.crew')}}" method="POST">
-                                            <div class="modal-body">
-                                                @csrf
-                                                @method('DELETE')
-                                                <input type="hidden" name="id" value="{{$crew->id}}" id="">
-                                                <div class="card-body">
-                                                    @if ($errors->any())
-                                                    <div class="alert alert-danger text-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                            <li><small>{{ $error }}</small></li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                    @endif
-                                                    <h4 class="text-center"> Anda yakin ingin menghapus crew <span class="text-danger">{{$crew->name}} </span> ?</h4>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                                                    <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- End Modal  -->
-
-                            @endforeach
-
-                            @if($crews->count() < 10) @for($i=0; $i <=20 - $crews->count(); $i++ )
-                                <tr>
-                                    <td colspan="4"></td>
-                                </tr>
-                                @endfor
-                                @endif
-
-
-
-                        </tbody>
-                    </table>
-                </div>
-                @endif
-            </div>
-            <!-- End Tabel  -->
             @else
             <div class="card">
                 <div class="card-header">
@@ -356,11 +216,8 @@ VDR
             </div>
             @endif
 
-
-        </div>
-        <div class="col-md-8 ">
             <!-- Tabel Weathers-->
-            <div class="card ">
+            <div class="card mt-3">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -378,50 +235,42 @@ VDR
                     <table class="table ">
                         <thead>
                             <tr>
-                                <th class="text-center col-md-4">Weather / Time</th>
+                                <th class="text-center">Weather / Time</th>
                                 <th>00:00 - 06:00 hrs</th>
                                 <th>06:00 - 12:00 hrs</th>
                                 <th>12:00 - 18:00 hrs</th>
                                 <th>18:00 - 24:00 hrs</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.weather')}}" method="post">
-                                @csrf
-                                @method('PUT')
-                                @foreach ($weathers as $weather)
-                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                <input type="hidden" name="id[]" value="{{$weather->id}}">
-                                <tr>
-                                    <td>{{$weather->heading->description}}</td>
-                                    <td>
-                                        <input type="text" class="form-control" name="t_0006[]" value="{{ $weather->t_0006  }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" name="t_0612[]" value="{{ $weather->t_0612  }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" name="t_1218[]" value="{{ $weather->t_1218  }}">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" name="t_1824[]" value="{{ $weather->t_1824  }}">
-                                    </td>
-                                </tr>
+                            @foreach ($weathers as $weather)
+                            <tr>
+                                <td>{{$weather->heading->description}}</td>
+                                <td>{{ $weather->t_0006 ?? '-' }}</td>
+                                <td>{{$weather->t_0612 ?? '-' }}</td>
+                                <td>{{$weather->t_1218 ?? '-' }}</td>
+                                <td>{{$weather->t_1824 ?? '-' }}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$weather->id}}"> Edit </a>
+                                </td>
+                            </tr>
 
-                                @endforeach
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td><button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button></td>
-                                </tr>
-                            </form>
+                            @endforeach
+
+                            <tr>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
                 @endif
             </div>
             <!-- End Tabel  -->
+        </div>
+        <div class="col-md-8 ">
             <!-- Tabel Detail of Daily Operating Activies -->
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -744,51 +593,127 @@ VDR
                                 <th>Transferred</th>
                                 <th>Closing</th>
                                 <th>Remarks</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.cargo')}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                @foreach ($cargos as $cargo)
-                                <tr>
-                                    <!-- <td> -->
-                                    <input type="hidden" name="id[]" value="{{$cargo->id}}">
-                                    <!-- </td> -->
-                                    <td> {{$cargo->heading->description}} </td>
-                                    <td class="text-right align-middle">
-                                        <input type="number" name="opening[]" class="form-control" value="{{$cargo->opening}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="consumption[]" class="form-control" value="{{$cargo->consumption}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="received[]" class="form-control" value="{{$cargo->received}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="number" name="transferred[]" class="form-control" value="{{$cargo->transferred}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="text" name="closing[]" readonly class="form-control" value="{{$cargo->closing}}">
-                                    </td>
-                                    <td class="text-left align-middle">
-                                        <input type="text" name="remarks[]" class="form-control" value="{{$cargo->remarks}}">
-                                    </td>
-                                </tr>
+                            @foreach ($cargos as $cargo)
+                            <tr>
+                                <td> {{$cargo->heading->description}} </td>
+                                <td class="text-right align-middle">{{$cargo->opening}} {{$cargo->heading->unit}} </td>
+                                <td class="text-left align-middle">{{$cargo->consumption}}</td>
+                                <td class="text-left align-middle">{{$cargo->received}}</td>
+                                <td class="text-left align-middle">{{$cargo->transferred}}</td>
+                                <td class="text-left align-middle">{{$cargo->closing}}</td>
+                                <td class="text-left align-middle">{{$cargo->remarks}}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#editCar-{{$cargo->id}}"> Edit </a>
+                                </td>
+                            </tr>
 
 
+                            <!-- Modal Edit -->
 
-                                @endforeach
+                            <div class="modal modal-blur fade" id="editCar-{{$cargo->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
 
+                                        <form action="{{route('vdr.update.cargo')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{$cargo->id}}" id="">
+                                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
 
-                                <tr>
-                                    <td colspan="6"></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
-                                    </td>
-                                </tr>
-                            </form>
+                                                    <h3 class="form-control">{{$cargo->heading->description}}</h3>
+                                                    <div class="form-floating mb-3">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="opening">Opening</label>
+                                                                <input type="text" class="form-control hitung-closing opening" oninput="calculateClosing({{$cargo->id}})" id="opening-{{$cargo->id}}" name="opening" value="{{$cargo->opening}}">
+                                                                @error('opening')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="consumption">Consumption</label>
+                                                                <input type="text" class="form-control hitung-closing consumption" oninput="calculateClosing({{$cargo->id}})" id="consumption-{{$cargo->id}}" name="consumption" value="{{$cargo->consumption}}">
+                                                                @error('consumption')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="received">Received</label>
+                                                                <input type="text" class="form-control hitung-closing received" oninput="calculateClosing({{$cargo->id}})" id="received-{{$cargo->id}}" name="received" value="{{$cargo->received}}">
+                                                                @error('received')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="transferred">Transferred</label>
+                                                                <input type="text" class="form-control hitung-closing transferred" oninput="calculateClosing({{$cargo->id}})" id="transferred-{{$cargo->id}}" name="transferred" value="{{$cargo->transferred}}">
+                                                                @error('transferred')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="closing">Closing</label>
+                                                                <input type="text" class="form-control hitung-closing closing" id="closing" name="closing" value="{{$cargo->closing}}" readonly>
+                                                                @error('closing')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <div class="form- mb-3">
+                                                                <label for="remarks">Remarks</label>
+                                                                <textarea type="text" class="form-control" id="remarks" name="remarks" value="{{$cargo->remarks}}">{{$cargo->remarks}}</textarea>
+                                                                @error('remarks')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>
@@ -796,11 +721,6 @@ VDR
             </div>
             <!-- End Table  -->
 
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
             <!-- Tabel HSE-->
             <div class="card mt-3">
                 <div class="card-header">
@@ -821,74 +741,31 @@ VDR
                         <thead>
                             <tr>
                                 <th class="text-center">A</th>
-                                <th>HSSE STATISTICS (INPUT)</th>
+                                <th>HSSE STATISTICS </th>
                                 <th>Previous</th>
                                 <th>Today</th>
                                 <th>Monthly</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.hse')}}" method="post">
-                                @csrf
-                                @method('PUT')
+                            @foreach ($hses as $hse)
+                            <tr>
+                                <td>{{$hse->header->description}}</td>
+                                <td>{{ $hse->t_0006 ?? '-' }}</td>
+                                <td>{{$hse->t_0612 ?? '-' }}</td>
+                                <td>{{$hse->t_1218 ?? '-' }}</td>
+                                <td>{{$hse->t_1824 ?? '-' }}</td>
+                                <td>
+                                    <a href="#" class="text-success" data-bs-toggle="modal" data-bs-target="#edutWeat{{$hse->id}}"> Edit </a>
+                                </td>
+                            </tr>
 
-                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                @php
-                                $groupHeader = 'A';
-                                $no = 1;
-                                @endphp
+                            @endforeach
 
-                                @foreach ($hses as $hse)
-                                <input type="hidden" name="id[]" value="{{$hse->id}}">
-                                @if($hse->header->group_header != $groupHeader)
-                                <thead>
-                                    <tr>
-                                        <th class="text-center">B</th>
-                                        <th>HSSE STATISTICS (Output)</th>
-                                        <th>Previous</th>
-                                        <th>Today</th>
-                                        <th>Monthly</th>
-                                    </tr>
-                                </thead>
-
-                                @php
-                                $no = 1;
-                                @endphp
-
-                                @endif
-                                <tr>
-                                    <td>{{ $no++}}</td>
-                                    <td>{{$hse->header->description}}</td>
-                                    @if($hse->header_id != 8)
-                                    <td>
-                                        <input type="number" name="previous[]" class="form-control" value="{{$hse->previous}}">
-                                    </td>
-                                    <td>
-                                        <input type="number" name="today[]" class="form-control" value="{{$hse->today}}">
-                                    </td>
-                                    <td>
-                                        <input type="text" name="monthly[]" class="form-control" value="{{$hse->previous + $hse->today}}" readonly>
-                                    </td>
-                                    @else
-                                    <input type="hidden" name="previous[]" class="form-control" value="{{$hse->previous}}">
-                                    <input type="hidden" name="today[]" class="form-control" value="{{$hse->today}}">
-                                    <input type="hidden" name="monthly[]" class="form-control" value="{{$hse->today}}" readonly>
-                                    <td colspan="3"></td>
-                                    @endif
-                                </tr>
-
-                                @php
-                                $groupHeader = $hse->header->group_header
-                                @endphp
-                                @endforeach
-
-                                <tr>
-                                    <td colspan="4"></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
-                                    </td>
-                                </tr>
-                            </form>
+                            <tr>
+                                <td></td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -896,10 +773,11 @@ VDR
             </div>
             <!-- End Tabel  -->
         </div>
-
+    </div>
+    <div class="row mt-3">
         <div class="col-md-12">
             <!-- Tabel Detail of Daily Operating Activies -->
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -907,6 +785,26 @@ VDR
                                 Vessel Daily Engine Paramater Log
                             </h2>
                         </div>
+                        <!-- Page title actions -->
+                        <div class="mr-auto ms-auto d-print-none">
+                            <div class="d-flex">
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle align-text-top" data-bs-toggle="dropdown">
+                                        Options
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+
+                                        <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                                            Add Activites
+                                        </a>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <!-- End modal -->
                     </div>
                 </div>
@@ -922,65 +820,227 @@ VDR
                                 <th colspan="6" class="text-center">Aux. Engines Data</th>
                             </tr>
                             <tr>
-                                <th>Ref. Value</th>
+                                <th class="text-center">Ref. Value</th>
                                 <th>Port</th>
+                                <th>Stbd</th>
                                 <th>Stbd</th>
                                 <th>Center</th>
                                 <th>Other</th>
-                                <th>Ref. Value</th>
+                                <th class="text-center">Ref. Value</th>
                                 <th>Port</th>
                                 <th>Stbd</th>
+                                <th>Stbd</th>
+                                <th>Center</th>
                                 <th>Other</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.engine')}}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                @foreach ($engines as $key => $engine)
-                                <input type="hidden" name="id[]" value="{{$engine->id}}">
-                                <tr>
-                                    <td>{{$key+1}}</td>
-                                    <td class="col-md-3">{{$engine->heading->description}}</td>
-                                    <td>{{$engine->heading->unit}}</td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="m_ref[]" value="{{$engine->m_ref}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="m_port[]" value="{{$engine->m_port}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="m_stbd[]" value="{{$engine->m_stbd}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="m_center[]" value="{{$engine->m_center}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="m_other[]" value="{{$engine->m_other}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="a_ref[]" value="{{$engine->a_ref}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="a_port[]" value="{{$engine->a_port}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="a_stbd[]" value="{{$engine->a_stbd}}">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="number" min="0" name="a_other[]" value="{{$engine->a_other}}">
-                                    </td>
-                                </tr>
-                                @endforeach
+                            @foreach ($activities as $activity)
+                            <tr>
+                                <td>{{substr($activity->start, 0, 5)}}</td>
+                                <td>{{substr($activity->finish, 0, 5)}}</td>
+                                <td>{{floatToTime($activity->high)}}</td>
+                                <td>{{floatToTime($activity->normal)}}</td>
+                                <td>{{floatToTime($activity->slow)}}</td>
+                                <td>{{floatToTime($activity->manu)}}</td>
+                                <td>{{floatToTime($activity->idle)}}</td>
+                                <td>{{floatToTime($activity->Tow)}}</td>
+                                <td>{{floatToTime($activity->ah)}}</td>
+                                <td>{{floatToTime($activity->ab)}}</td>
+                                <td>
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$activity->id}}"> {{$activity->activity}} </a>
+                                </td>
+                                <td>
+                                    <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$activity->id}}"> Delete </a>
+                                </td>
+                            </tr>
 
-                                <tr>
-                                    <td colspan="11"></td>
-                                    <td>
-                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
-                                    </td>
-                                </tr>
-                            </form>
+                            <!-- Modal Delete -->
+
+                            <div class="modal modal-blur fade" id="deleteAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+
+                                        <form action="{{route('vdr.delete.activity')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" name="id" value="{{$activity->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+                                                    <h4 class="text-center"> Anda yakin ingin menghapus activity {{$activity->activity}} ?</h4>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+
+
+                            <!-- Modal Edit -->
+
+                            <div class="modal modal-blur fade" id="editAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+
+                                        <form action="{{route('vdr.update.activity')}}" method="POST">
+                                            <div class="modal-body">
+                                                @csrf
+                                                @method('PUT')
+                                                <input type="hidden" name="id" value="{{$activity->id}}" id="">
+                                                <div class="card-body">
+                                                    @if ($errors->any())
+                                                    <div class="alert alert-danger text-danger">
+                                                        <ul>
+                                                            @foreach ($errors->all() as $error)
+                                                            <li><small>{{ $error }}</small></li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
+                                                    @endif
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea type="text" rows="50" required class="form-control" id="activity" name="activity" value="{{$activity->activity}}">{{$activity->activity}}</textarea>
+                                                        <label for="activity">Activities</label>
+                                                        @error('activity')
+                                                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="row">
+                                                        <label for="email">Time</label>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="time" required class="form-control jam24" id="start" name="start" value="{{$activity->start}}" value="1">
+                                                                <label for="start">Start</label>
+                                                                @error('start')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form-floating mb-3">
+                                                                <input type="time" required class="form-control jam24" id="finish" name="finish" value="{{$activity->finish}}" value="1">
+                                                                <label for="finish">Finish</label>
+                                                                @error('finish')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="high">High</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="high" name="high" value="{{$activity->high}}">
+                                                                @error('high')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form- mb-3">
+                                                                <label for="normal">Normal</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="normal" name="normal" value="{{$activity->normal}}">
+                                                                @error('normal')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="slow">Slow</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="slow" name="slow" value="{{$activity->slow}}">
+                                                                @error('slow')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="manu">Manu</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="manu" name="manu" value="{{$activity->manu}}">
+                                                                @error('manu')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="idle">Idle</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="idle" name="idle" value="{{$activity->idle}}">
+                                                                @error('idle')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="tow">Tow</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="tow" name="tow" value="{{$activity->tow}}">
+                                                                @error('tow')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="ah">A/H</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="ah" name="ah" value="{{$activity->ah}}">
+                                                                @error('ah')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <div class="form mb-3">
+                                                                <label for="sb">S/B</label>
+                                                                <input type="text" placeholder="HH.mm" class="form-control waktu" id="sb" name="sb" value="{{$activity->sb}}">
+                                                                @error('sb')
+                                                                <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- End Modal  -->
+                            @endforeach
+
+                            <tr>
+                                <td></td>
+                            </tr>
+
+
+
                         </tbody>
                     </table>
                 </div>
@@ -988,8 +1048,6 @@ VDR
             </div>
             <!-- End Tabel  -->
         </div>
-
-
     </div>
 </div>
 </div>
@@ -1139,85 +1197,11 @@ VDR
 </div>
 
 <!-- End Modal  -->
-
-<!-- Modal Add Crew -->
-
-<div class="modal modal-blur fade" id="modalAddCrew" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <form action="{{route('vdr.store.crew')}}" method="POST">
-                <div class="modal-body">
-                    @csrf
-                    <input type="hidden" name="id" value="{{$vdr->id}}" id="">
-                    <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
-                    <input type="hidden" name="created_by" value="{{$user->name}}">
-                    <div class="card-body">
-                        @if ($errors->any())
-                        <div class="alert alert-danger text-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li><small>{{ $error }}</small></li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-
-                        <div class="form-floating mb-3">
-                            <textarea type="text" rows="50" required class="form-control" id="name" name="name" value="{{$vdr->name}}"></textarea>
-                            <label for="name">Name</label>
-                            @error('name')
-                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form mb-3">
-                                    <input type="radio" id="is_crew" value="1" name="is_crew"> Crew
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form mb-3">
-                                    <input type="radio" id="is_crew" value="0" name="is_crew"> Passenger
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-floating mb-3" id="box-rank">
-                            <input type="number" class="form-control" id="rank" name="rank" value="">
-                            <label for="rank">Rank</label>
-                            @error('rank')
-                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-                        <div class="form-floating mb-3" id="box-company">
-                            <input type="text" class="form-control" id="company" name="company" value="">
-                            <label for="company">Company</label>
-                            @error('company')
-                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                            @enderror
-                        </div>
-
-
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-success">Add</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- End Modal  -->
 @endif
 @endsection
 
 @push('get_schedules')
 <script>
-    $('#box-rank').hide();
-    $('#box-company').hide();
-
-
     $(".waktu").on("input", function() {
         // Mengambil nilai dari input
         var inputValue = $(this).val();
@@ -1287,20 +1271,5 @@ VDR
 
     // Panggil fungsi saat halaman dimuat
     // calculateClosing();
-    $("input[name='is_crew']").change(function() {
-        if ($(this).is(":checked")) {
-            // Radio button dicentang
-            var selectedValue = $(this).val();
-            console.log("Selected Option: " + selectedValue);
-
-            if (selectedValue == '1') {
-                $('#box-rank').show();
-                $('#box-company').hide();
-            } else {
-                $('#box-rank').hide();
-                $('#box-company').show();
-            }
-        }
-    });
 </script>
 @endpush

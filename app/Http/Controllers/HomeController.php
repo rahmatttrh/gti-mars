@@ -377,7 +377,7 @@ class HomeController extends Controller
    {
       // dd('ok');
 
-      
+      return view('main');
 
       if(auth()->user()->hasRole('marine')){
          $this->map();
@@ -669,6 +669,340 @@ class HomeController extends Controller
       $schedulesFix = Schedule::where('type', 1)->where('status', '>', 1)->whereMonth('date', $month)->get();
       $user = Employee::where('email', auth()->user()->email)->first();
 
+
+      return view('home-user', [
+         'user' => $user,
+         'today' => $today,
+         'requests' => $requests,
+         'monthName' => $monthName,
+         'vessel' => $vessel,
+         'vessels' => $vessels,
+         // 'vessel3' => $vessel3,
+         'schedules' => $schedules,
+         'confirms' => $confirms
+         // 'schedulesFix' => $schedulesFix
+      ])->with('i');
+   }
+
+
+
+   public function dspMarine(){
+      if(auth()->user()->hasRole('marine')){
+         $this->map();
+      }
+      $today = Carbon::now();
+      $month = $today->format('m');
+
+      $vessels = Vessel::get();
+      $vessel3 = Vessel::paginate('3');
+      // dd($today->format('m'));
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+      $vessels = Vessel::where('status', '>', 1)->get();
+         $vessel = '';
+         $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
+         $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
+         $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
+         if ($requests->count() > 0) {
+            $persentage = ($completeRequests->count() / $requests->count()) * 100;
+            // dd($requests->count());
+         } else {
+            $persentage = 0;
+         }
+
+         // $requests = ModelsRequest::get();
+         $requestAdditionals = ModelsRequest::where('class', 'additional')->where('status', 5)->get();
+         $requestRecents = ModelsRequest::where('status', 1)->orWhere('status', 202)->paginate(5);
+         $scheduleRecents = Schedule::orderBy('updated_at', 'desc')->where('status', '>=', 1)->get();
+         $requestProgress = ModelsRequest::where('status', '>', 1)->where('status', '!=', 202)->get();
+
+         // dd($requestAdditionals);
+         $requestUndos = ModelsRequest::where('status', 202)->get();
+
+         $requestLogistics = ModelsRequest::where('department_id', 2)->get();
+         $requestDrillings = ModelsRequest::whereMonth('date', $month)->where('department_id', 3)->get();
+
+         $customSchedules = [];
+         $customQtyRequests = [];
+         foreach ($schedules as $schedule) {
+            $customSchedules[] = $schedule->date;
+            $requestsMonth = ModelsRequest::where('date', $schedule->date)->get();
+            $customQtyRequests[] =  $requestsMonth->count();
+         }
+        
+
+         $offloadings = Offloading::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+         $deflections = Deflection::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+
+
+         $this->loadLocVessel();
+         $schedules = Schedule::orderBy('date', 'asc')->get();
+         $allVessels = Vessel::get();
+         
+         $vessels = Vessel::where('latitude', '!=', null)->get();
+         $ports = Port::where('latitude', '!=', null)->get();
+         // $elok = Vessel::where('imo', '9543483')->first();
+         // dd($elok->name);
+         
+         $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+         $token = '73ob73y64nt3n63MP4tk4l1';
+         $response = Http::withHeaders([
+            'Authorization' => 'Bearer '. $token,
+         ])->post($url , [
+         ]);
+      
+         $responseBody = json_decode($response->getBody());
+         // dd($responseBody->data);
+
+         foreach($responseBody->data as $res){
+            // dd($vessel->IMO);
+            // if ($res->name == 'WINNER') {
+            //    dd($res->name);
+            // }
+            if ($res->MMSI) {
+               $vessel = Vessel::where('mmsi', $res->MMSI)->first();
+               $barge = Port::where('mmsi', $res->MMSI)->first();
+
+               if ($vessel) {
+                  if ($vessel->latitude != $res->lat) {
+                     $vessel->update([
+                        'latitude' => $res->lat,
+                        'longitude' => $res->lon,
+                        'speed' => $res->speed,
+                        'calcspeed' => $res->calcspeed,
+                        'heading' => $res->heading,
+                        'last_update' => $res->date
+                     ]);
+                     
+                  }  
+               }
+
+               if ($barge) {
+                  $barge->update([
+                     'latitude' => $res->lat,
+                     'longitude' => $res->lon
+                  ]);
+               }
+
+
+               
+            }
+            
+         }
+
+         // $acc = Vessel::find(27);
+         // $kj4 = Port::find(1);
+         // $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
+         // dd($acc->name . ' ke ' . $kj4->name . ': ' .$tesDis);
+         // dd(count($ports));
+         
+         foreach($vessels as $vessel){
+            $vesselLat = $vessel->latitude;
+            $vesselLong = $vessel->longitude;
+
+            if ($vessel->speed > 0) {
+               $vessel->update([
+                  'status' => 2,
+                  'port_id' => null
+               ]);
+            } else {
+               foreach($ports as $port){
+                  $portLat = $port->latitude;
+                  $portLong = $port->longitude;
+                  $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+                  // dd($vessel->name . ' ke ' . $port->name . ': ' .$distance);
+                  if ($distance < 300 ) {
+                     $vessel->update([
+                        'status' => 9,
+                        'port_id' => $port->id
+                     ]);
+                     
+                     if ($vessel->schedule_id && $vessel->schedule->status > 1) {
+                        $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
+                        // dd($curentReport);
+                        if ($curentReport->status_id == 8 && $curentReport->port_id == $port->id) {
+                           
+                        } else {
+                           Report::create([
+                              'schedule_id' => $vessel->schedule_id,
+                              'vessel_id' => $vessel->id,
+                              // arrived
+                              'status_id' => 8, 
+                              'port_id' => $port->id
+                           ]);
+                        }
+                        
+                     }
+                     // ReportVessel::create([
+                     //    'vessel_id' => $vessel->id,
+                     //    'port_id' => $port->id,
+                     //    'status_id' => 3
+                     // ]);
+                  }  
+                  // else {
+                  //    $vessel->update([
+                  //       'status' => 3,
+                  //       'port_id' => null
+                  //    ]);
+                  // }
+                  
+               
+               }
+            }
+            
+         }
+
+         $recentVessels = Vessel::where('longitude', '!=', null)->orderBy('port_id', 'desc')->orderBy('updated_at', 'desc')->get();
+         $reports = Report::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->get();
+         $vesselReports = ReportVessel::orderBy('created_at', 'desc')->whereMonth('created_at', $month)->take(5)->get();
+
+         $vesselLastUpdates = Vessel::orderBy('last_update', 'desc')->take(5)->get();
+         // dd($vesselLastUpdates);
+         return view('home-stisla', [
+            'today' => $today,
+            'monthName' => $monthName,
+            'requestAdditionals' => $requestAdditionals,
+            'requestRecents' => $requestRecents,
+            'requestProgress' => $requestProgress,
+            'schedules' => $schedules,
+            'dateSchedules' => collect($customSchedules)->toJson(),
+            'qtyRequests' => collect($customQtyRequests)->toJson(),
+            'totalSchedule' => $schedules->count(),
+            'totalRequest' => $requests->count(),
+            'requestLogistics' => $requestLogistics->count(),
+            'requestDrillings' => $requestDrillings->count(),
+            'persentage' => $persentage,
+            'scheduleRecents' => $scheduleRecents,
+            'reports' => $reports,
+            'vesselReport'=> $vesselReports,
+            'offloadings' => $offloadings,
+            'deflections' => $deflections,
+            'geoJsonVessel' => $this->geoJsonVessel,
+            'recentVessels' => $recentVessels,
+            'vesselLastUpdates' => $vesselLastUpdates
+         ])->with('i');
+   }
+
+   public function dspVessel(){
+
+      $today = Carbon::now();
+      $month = $today->format('m');
+
+      $vessels = Vessel::get();
+      $vessel3 = Vessel::paginate('3');
+      // dd($today->format('m'));
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+      $vessel = Vessel::where('email', auth()->user()->email)->first();
+      $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->get();
+      $nowSchedule = Schedule::find($vessel->schedule_id);
+      if ($nowSchedule) {
+         $routes = ScheduleRoute::where('schedule_id', $nowSchedule->id)->orderBy('rank', 'asc')->get();
+      } else {
+         $routes = null;
+      }
+
+      $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
+      $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
+      return view('home', [
+         'today' => $today,
+         'vessel' => $vessel,
+         'schedules' => $schedules,
+         'nowSchedule' => $nowSchedule,
+         'recentSchedules' => $recentSchedules,
+         'reports' => $reports,
+         'routes' => $routes
+      ])->with('i');
+   }
+
+   public function dspUser(){
+      $today = Carbon::now();
+      $month = $today->format('m');
+
+      $vessels = Vessel::get();
+      $vessel3 = Vessel::paginate('3');
+      // dd($today->format('m'));
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+      $user = Employee::where('email', auth()->user()->email)->first();
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $vessel = '';
+      $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      $confirms = ModelsRequest::where('destination_id', auth()->user()->getPort())->where('status', 10)->get();
+      // dd($confirms);
+      $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
 
       return view('home-user', [
          'user' => $user,

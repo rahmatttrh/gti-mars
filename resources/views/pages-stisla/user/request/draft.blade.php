@@ -7,7 +7,7 @@
     <div class="section-header">
       <h1 class="section-title">Request Draft</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="/">Dashboard</a></div>
+        <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Request Draft</div>
       </div>
     </div>
@@ -46,7 +46,7 @@
                                  <td class="text-center">{{++$i}}</td>
                                  <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
                                  {{-- <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td> --}}
-                                 <td> {{$request->parent->origin->name}}</td>
+                                 <td> {{$request->origin->name}}</td>
                                  
                                  <td>{{$request->date}}</td>
                                  <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>

@@ -177,6 +177,14 @@ class MarineRequestController extends Controller
          ]);
       }
 
+      if ($request->activity_id ==3) {
+         $request->update([
+            'status' => 02,
+            'schedule_id' => $req->schedule,
+            'remark' => $req->remark
+         ]);
+      }
+
 
 
       $schedule->update([

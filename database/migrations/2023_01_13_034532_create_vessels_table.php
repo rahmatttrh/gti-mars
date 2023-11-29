@@ -31,7 +31,7 @@ class CreateVesselsTable extends Migration
          $table->string('speed')->nullable();
          $table->string('calcspeed')->nullable();
          $table->string('heading')->nullable();
-         $table->date('last_update')->nullable();
+         $table->string('last_update')->nullable();
 
          $table->string('name');
          $table->string('username');
