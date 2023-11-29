@@ -35,8 +35,8 @@ class CargoItemController extends Controller
       ]);
 
       $request->update([
-         'total_size' => $request->total_size + $r->size,
-         'total_weight' => $request->total_weight + $r->weight
+         'total_size' => $request->cargoItems->sum('size'),
+         'total_weight' => $request->cargoItems->sum('weight')
       ]);
       return redirect()->back()->with('success', 'Cargo Item successfully added.');
    }

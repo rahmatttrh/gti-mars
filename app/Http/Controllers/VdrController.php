@@ -67,6 +67,16 @@ class VdrController extends Controller
             'engines' => $engines,
             'crews' => $crews
         ])->with('i');
+
+        // return view('pages.vdr.create-vdr', [
+        //     'user' => $user,
+        //     'vessel' => $vessel,
+        //     'vdr' => $vdr,
+        //     'activities' => $activities,
+        //     'cargos' => $cargos,
+        //     'weathers' => $weathers,
+        //     'hses' => $hses,
+        // ])->with('i');
     }
 
 
@@ -185,6 +195,7 @@ class VdrController extends Controller
             DB::commit();
 
             return back()->with('success', 'VDR data successfully saved.');
+            
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
             DB::rollback();
@@ -195,6 +206,29 @@ class VdrController extends Controller
             // Handle atau laporkan kesalahan
             // return response()->json(['message' => 'Failed to create order'], 500);
         }
+    }
+
+    public function edit($id){
+        $user = auth()->user();
+        // Opsi 1 
+        $vessel = Vessel::where('email', $user->email)->first();
+
+        $dekripId = dekripRambo($id);
+        $vdr = Vdr::find($dekripId);
+        $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+        $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+        $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+        $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+
+        return view('pages-stisla.vessel.vdr.edit', [
+            'user' => $user,
+            'vessel' => $vessel,
+            'vdr' => $vdr,
+            'activities' => $activities,
+            'cargos' => $cargos,
+            'weathers' => $weathers,
+            'hses' => $hses,
+        ]);
     }
 
     public function update(Request $req)
@@ -237,22 +271,26 @@ class VdrController extends Controller
 
     public function storeActivity(Request $req)
     {
-        $req->validate([
-            'id' => 'required',
-            'vessel_id' => 'required',
-            'created_by' => 'required',
-            'activity' => 'required',
-            'start' => 'required',
-            'finish' => 'required',
-            'high' => 'required',
-            'normal' => 'required',
-            'slow' => 'required',
-            'manu' => 'required',
-            'idle' => 'required',
-            'tow' => 'required',
-            'ah' => 'required',
-            'sb' => 'required'
-        ]);
+
+        // dd($req);
+        // $req->validate([
+        //     'id' => 'required',
+        //     'vessel_id' => 'required',
+        //     'created_by' => 'required',
+        //     'activity' => 'required',
+        //     'start' => 'required',
+        //     'finish' => 'required',
+        //     'high' => 'required',
+        //     'normal' => 'required',
+        //     'slow' => 'required',
+        //     'manu' => 'required',
+        //     'idle' => 'required',
+        //     'tow' => 'required',
+        //     'ah' => 'required',
+        //     'sb' => 'required'
+        // ]);
+
+        
 
         $createVdr = VdrActivity::create([
             'vdr_id' => $req->id,

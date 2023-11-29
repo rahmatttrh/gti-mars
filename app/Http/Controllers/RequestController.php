@@ -222,6 +222,18 @@ class RequestController extends Controller
       $request = ModelsRequest::find($dekripId);
       $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+
+      $getBcm = CargoItem::where('request_id', $request->id)->first();
+      if ( $getBcm) {
+         $request->update([
+            'bcm' => $getBcm->bcm
+         ]);
+      }
+
+      $request->update([
+         'total_weight' => $request->cargoItems->sum('weight'),
+         'total_size' => $request->cargoItems->sum('size')
+      ]);
       $crews = Crew::orderBy('name', 'asc')->get();
 
       $schedules = Schedule::where('status', 0)->get();
@@ -232,7 +244,7 @@ class RequestController extends Controller
       $departPassengerItems = PassengerItem::where('type', 'Depart')->where('request_id', $request->id)->get();
       $returnPassengerItems = PassengerItem::where('type', 'Return')->where('request_id', $request->id)->get();
 
-      return view('pages.request.detail', [
+      return view('pages-stisla.request.detail', [
          'request' => $request,
          'requestHistories' => $requestHistories,
          'schedules' => $schedules,

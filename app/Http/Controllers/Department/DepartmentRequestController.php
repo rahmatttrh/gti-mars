@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\GeofenceController;
+use App\Imports\CargoItemImport;
+use App\Imports\RequestImport;
 use App\Mail\ApprovalEmail;
 use App\Mail\NotificationEmail;
 use App\Models\Activity;
+use App\Models\BargeItem;
 use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Department;
@@ -22,8 +25,10 @@ use App\Models\ScheduleRoute;
 use App\Models\Type;
 use App\Models\Vessel;
 use Carbon\Carbon;
+use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentRequestController extends Controller
 {
@@ -36,15 +41,82 @@ class DepartmentRequestController extends Controller
       // } else {
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
-      $acts = Activity::orderBy('name', 'asc')->get();
+      $acts = Activity::get();
       $activities = $acts;
       $types = Type::get();
       $ports = Port::get();
-      return view('pages.request.create', [
+      $barges = Port::where('type', 'Barge')->get();
+      
+      return view('pages-stisla.user.request.create', [
          'activities' => $activities,
          'ports' => $ports,
+         'barges' => $barges,
          'types' => $types
       ]);
+   }
+
+   public function storeImport(Request $req){
+      // dd('ok');
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $department = Department::find($employee->department->id);
+      $now = Carbon::today();
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      if ($department->id == 2) {
+         $type = 1;
+      } elseif ($department->id == 3) {
+         $type = 2;
+      } else {
+         $type = 3;
+      }
+
+      if (isset($request)) {
+         $code =
+            "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+
+
+      $request = ModelsRequest::create([
+         'code' => $code,
+         'type' => $type,
+         'employee_id' => $employee->id,
+         'department_id' => $department->id,
+         'func' => $department->code,
+         'activity_id' => $req->activity,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'status' => 00
+      ]);
+
+      if ($req->activity == 3) {
+         $schedule = Schedule::create([
+            'by' => 'user',
+            'class' => 'Moving',
+            'type' => 3,
+            'status' => 0,
+            'date' => $request->date,
+         ]);
+
+         $request->update([
+            'schedule_id' => $schedule->id,
+            'status' => 1
+         ]);
+
+         BargeItem::create([
+            'status' => 1,
+            'request_id' => $request->id,
+            'barge_id' => $req->barge
+         ]);
+
+         return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
+      }
+
+      Excel::import(new CargoItemImport($request->id), $req->file('file'));
+
+      return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
    }
 
    public function save(Request $req)
@@ -335,7 +407,7 @@ class DepartmentRequestController extends Controller
 
       $requests = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
       // $parents = ParentRequest::where()
-      return view('pages.request.draft', [
+      return view('pages-stisla.user.request.draft', [
          'requests' => $requests
       ])->with('i');
    }
@@ -350,13 +422,14 @@ class DepartmentRequestController extends Controller
       // $depart = Department::where('email', auth()->user()->email)->first();
 
       $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-
-      return view('pages.request.progress', [
+      $progress = ModelsRequest::where('status', '>', 0)->get();
+      return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,
          'vessels' => $vessels,
          'schedules' => $schedules,
-         'month' => $month
+         'month' => $month,
+         'progress' => $progress
       ])->with('i');
    }
 
@@ -834,13 +907,14 @@ class DepartmentRequestController extends Controller
       // $depart = Department::where('email', auth()->user()->email)->first();
 
       $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '=', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-
-      return view('pages.request.history', [
+      $histories = ModelsRequest::where('status', '=', 12)->get();
+      return view('pages-stisla.user.request.history', [
          'title' => 'Progress',
          'departs' => $departs,
          'vessels' => $vessels,
          'schedules' => $schedules,
-         'month' => $month
+         'month' => $month,
+         'histories' => $histories
       ])->with('i');
    }
 

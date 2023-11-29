@@ -13,7 +13,7 @@
                <div class="row">
                   <div class="col-md-4">
                      <div class="form-floating mb-3">
-                        <input type="text" required class="form-control" id="no_document" name="no_document" >
+                        <input type="text" class="form-control" id="no_document" name="no_document" >
                         <label for="no_document">MTD</label>
                      </div>
                   </div>

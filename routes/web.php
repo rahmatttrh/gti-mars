@@ -66,7 +66,11 @@ Route::middleware(["auth"])->group(function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
 
-
+   Route::prefix("dsp")->group(function () {
+      Route::get("marine-dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
+      Route::get("vessel-dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+      Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
 
    Route::prefix("fetch")->group(function () {
       Route::get("schedule/{date}/{value}", [FetchController::class, "fetchSchedules",]);
@@ -114,6 +118,7 @@ Route::middleware(["auth"])->group(function () {
 
       Route::get('marine/request', [MarineController::class, 'scheduleRequest'])->name('schedule.request.marine');
       Route::put('marine/select/vessel', [MarineController::class, 'scheduleSelectVessel'])->name('schedule.select.vessel');
+      Route::put('select/vessel/marine', [MarineScheduleController::class, 'selectVessel'])->name('schedule.select.vessel2');
 
       Route::get('vessel/request/{vessel:id}', [VesselController::class, 'schedule'])->name('schedule.request.vessel');
       Route::get('vessel/month/{month}', [VesselController::class, 'scheduleMonth'])->name('schedule.month.request.vessel');
@@ -310,7 +315,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
    Route::prefix('department/request')->group(function () {
       Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
       Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
-      Route::post('store', [DepartmentRequestController::class, 'store'])->name('request.store');
+      Route::post('store', [DepartmentRequestController::class, 'storeImport'])->name('request.store');
       Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
       Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
 
@@ -378,6 +383,8 @@ Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('vdr')->group(function () {
       Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
+
+      Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
 
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
