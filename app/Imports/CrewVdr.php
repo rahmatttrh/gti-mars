@@ -28,7 +28,7 @@ class CrewVdr implements ToModel
         // 2 = rank
         // 3 = Company
 
-        if ($row[0] == 'crew' || $row[0] == 'passanger') {
+        if ($row[0] == 'crew' || $row[0] == 'passenger') {
             # code...
             if ($row[0] == 'crew') {
                 # code...

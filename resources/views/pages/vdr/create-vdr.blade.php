@@ -162,7 +162,7 @@ VDR
                                         <a href="#" class="card-btn" data-bs-toggle="modal" data-bs-target="#modalImport">
                                             Import Data
                                         </a>
-                                        <a href="{{route('vdr.template.crew')}}" class="card-btn">
+                                        <a href="/template/template-passenger-vdr.xlsx" class="card-btn">
                                             Template Import
                                         </a>
 
