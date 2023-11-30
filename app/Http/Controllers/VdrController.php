@@ -93,6 +93,44 @@ class VdrController extends Controller
     }
 
 
+    public function show($id)
+    {
+
+        $vdr = Vdr::find($id);
+
+        # code...
+        $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+        $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+        $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+        $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+        $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
+        $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
+
+
+
+        return view('pages.vdr.show-vdr', [
+            'vessel' => $vdr->vessel,
+            'vdr' => $vdr,
+            'activities' => $activities,
+            'cargos' => $cargos,
+            'weathers' => $weathers,
+            'hses' => $hses,
+            'engines' => $engines,
+            'crews' => $crews
+        ])->with('i');
+
+        // return view('pages.vdr.create-vdr', [
+        //     'user' => $user,
+        //     'vessel' => $vessel,
+        //     'vdr' => $vdr,
+        //     'activities' => $activities,
+        //     'cargos' => $cargos,
+        //     'weathers' => $weathers,
+        //     'hses' => $hses,
+        // ])->with('i');
+    }
+
+
     public function store(Request $req)
     {
         $req->validate([

@@ -41,7 +41,10 @@ History Sailing Order
                         @foreach($vdrs as $vdr)
                         <tr>
                             <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                            <td>{{vdrId($vdr->id)}}</td>
+                            <td>
+                                <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a>
+
+                            </td>
                             <td>{{$vdr->vessel->name}}</td>
                             <td>{{dayDate($vdr->date)}}</td>
                             <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
