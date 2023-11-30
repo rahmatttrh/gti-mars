@@ -220,6 +220,7 @@ class RequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
+      $activity = Activity::find($request->activity_id);
       $requestHistories = RequestHistory::where('request_id', $request->id)->get();
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
       $passengerItems = PassengerItem::where('request_id', $request->id)->get();
@@ -244,9 +245,10 @@ class RequestController extends Controller
 
       $departPassengerItems = PassengerItem::where('type', 'Depart')->where('request_id', $request->id)->get();
       $returnPassengerItems = PassengerItem::where('type', 'Return')->where('request_id', $request->id)->get();
-
+      // dd($request->activity_id);
       return view('pages-stisla.request.detail', [
          'request' => $request,
+         'activity' => $activity,
          'requestHistories' => $requestHistories,
          'schedules' => $schedules,
          'cargoItems' => $cargoItems,

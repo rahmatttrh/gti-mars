@@ -45,12 +45,13 @@ class MarineRequestController extends Controller
       // dd($req->request_id);
       // dd('ok');
       $request = ModelsRequest::find($req->request_id);
-      $schedule = Schedule::find($req->schedule);
+      $schedule = Schedule::find($request->schedule_id);
       // dd($schedule->id);
       if (!$schedule->vessel_id) {
          // dd('ok');
          return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');
       }
+
 
       $vessel = Vessel::find($schedule->vessel_id);
       $weight = $schedule->total_weight + $request->total_weight;
@@ -72,11 +73,11 @@ class MarineRequestController extends Controller
       // dd($scheduleRoutes != null);
 
       if ($scheduleRoutes->count() > 0) {
-         // dd('ada');
+         // dd('ada schedule route');
          $lastScheduleRoutesA = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
          $routeFrom = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->first();
          if (!$routeFrom) {
-            // dd('from tidak ada');
+            // dd('from tidak ada di route');
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,
@@ -102,10 +103,10 @@ class MarineRequestController extends Controller
          $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
          $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
 
-
          if ($route) {
-            // dd('sudah ada');
+            // dd('from rute sudah ada');
             $request->update([
+               'schedule_id' => $schedule->id,
                'rank' => $route->rank
             ]);
          } else {
@@ -149,7 +150,7 @@ class MarineRequestController extends Controller
       if ($request->class == 'main') {
          $request->update([
             'status' => 02,
-            'schedule_id' => $req->schedule,
+            // 'schedule_id' => $req->schedule,
             'remark' => $req->remark
          ]);
          RequestHistory::create([
@@ -180,7 +181,7 @@ class MarineRequestController extends Controller
       if ($request->activity_id ==3) {
          $request->update([
             'status' => 02,
-            'schedule_id' => $req->schedule,
+            'schedule_id' => $schedule->id,
             'remark' => $req->remark
          ]);
       }

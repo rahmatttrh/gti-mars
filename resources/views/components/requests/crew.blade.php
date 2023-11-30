@@ -114,10 +114,10 @@
                                  @foreach ($departs as $item)
                                     <tr>
                                        
-                                       <td class="text-muted">{{$item->crew->name}}</td>
-                                       <td class="text-muted">{{$item->crew->barcode}}</td>
-                                       <td class="text-muted">{{$item->crew->department}}</td>
-                                       <td class="text-muted">{{$item->crew->company}}</td>
+                                       <td class="text-muted">{{$item->name}}</td>
+                                       <td class="text-muted">{{$item->barcode}}</td>
+                                       <td class="text-muted">{{$item->department}}</td>
+                                       <td class="text-muted">{{$item->company}}</td>
                                        <td class="text-muted">{{$item->desc}}</td>
                                        <td class="text-end">
                                           @if ($request->status == 0)
@@ -158,10 +158,10 @@
                                  @foreach ($returns as $item)
                                     <tr>
                                        
-                                       <td class="text-muted">{{$item->crew->name}}</td>
-                                       <td class="text-muted">{{$item->crew->barcode}}</td>
-                                       <td class="text-muted">{{$item->crew->department}}</td>
-                                       <td class="text-muted">{{$item->crew->company}}</td>
+                                       <td class="text-muted">{{$item->name}}</td>
+                                       <td class="text-muted">{{$item->barcode}}</td>
+                                       <td class="text-muted">{{$item->department}}</td>
+                                       <td class="text-muted">{{$item->company}}</td>
                                        <td class="text-muted">{{$item->desc}}</td>
                                        <td class="text-end">
                                           @if ($request->status == 0)

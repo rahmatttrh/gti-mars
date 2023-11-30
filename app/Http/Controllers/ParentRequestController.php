@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Mail\ApprovalEmail;
 use App\Models\Activity;
 use App\Models\ParentRequest;
@@ -26,14 +27,11 @@ class ParentRequestController extends Controller
       // $requests = ModelsRequest::where('parent_id', $parent->id)->first();
       // dd($requests->parent->code);
       // dd($parent->requests);
-      return view('pages.request.detail-parent', [
+      return view('pages-stisla.request.parent', [
          'parent' => $parent,
          'activities' => $activities,
          'ports' => $ports
-         // 'requestHistories' => $requestHistories,
-         // 'schedules' => $schedules,
-         // 'cargoItems' => $cargoItems,
-         // 'passengerItems' => $passengerItems
+         
       ])->with('i');
    }
 
@@ -64,30 +62,31 @@ class ParentRequestController extends Controller
       $parent = ParentRequest::find($dekripId);
 
       foreach ($parent->requests as $request) {
-         $request->update([
-            'status' => 01
-         ]);
+         (new DepartmentRequestController)->release(enkripRambo($request->id));
+         // $request->update([
+         //    'status' => 01
+         // ]);
 
-         $activityName = $request->activity->name . ' ' . $request->description;
+         // $activityName = $request->activity->name . ' ' . $request->description;
 
-         $data = [
-            'to' => 'Marine Department',
-            'from' => $request->department->name . ' Department',
-            'subject' => 'Request Activity Approval',
-            'request' => $request,
-            'body' => $activityName,
-            'cargos' => $request->cargoItems,
-            'link' => route('request.detail', enkripRambo($request->id))
-         ];
+         // $data = [
+         //    'to' => 'Marine Department',
+         //    'from' => $request->department->name . ' Department',
+         //    'subject' => 'Request Activity Approval',
+         //    'request' => $request,
+         //    'body' => $activityName,
+         //    'cargos' => $request->cargoItems,
+         //    'link' => route('request.detail', enkripRambo($request->id))
+         // ];
 
          // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
          // Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
          // return redirect()->back()->with('success', 'Email has sent');
       }
 
-      $parent->update([
-         'status' => 01
-      ]);
+      // $parent->update([
+      //    'status' => 01
+      // ]);
 
 
 

@@ -8,7 +8,7 @@
       <h1 class="section-title">Request Detail</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-        <div class="breadcrumb-item active">Request Detail</div>
+        <div class="breadcrumb-item active">Request Detail </div>
       </div>
     </div>
 
@@ -17,11 +17,16 @@
       <p class="section-lead">
         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
       </p> --}}
-
+      {{-- {{$request->activity_id}} --}}
       <div class="row">
-        @if ($request->activity_id != 3 && $request->status == 0)
+        @if ($activity->id == 1 )
+          @if ($request->status == 0)
           <div class="col-8">
-          @else
+            @else
+            <div class="col-12">
+          @endif
+          
+          @elseif($activity->id == 3 || $activity->id == 2)
           <div class="col-12">
         @endif
         
@@ -29,7 +34,7 @@
               <x-request-stisla.action-user :request="$request" />
           @endif
           <div class="btn-group ml-2">
-            <a href="{{route('invoice.request', enkripRambo($request->id))}}" class="btn btn-light border btn-lg">Preview PDF</a>
+            {{-- <a href="{{route('invoice.request', enkripRambo($request->id))}}" class="btn btn-light border btn-lg">Preview PDF</a> --}}
            
             @if (auth()->user()->hasRole('department') )
               <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
@@ -40,7 +45,7 @@
                 {{-- <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a> --}}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#request-delete">
-                    Delete
+                    
                 </a>
                 @endif
                 
@@ -53,6 +58,7 @@
           <hr>
           <div class="card">
             <div class="card-header">
+              {{-- {{$activity->id}} --}}
               <h4>{{formatDate($request->date)}}</h4>
               <div class="card-header-action">
                 @if ($request->status < 3)
@@ -66,22 +72,22 @@
               <div class="summary">
                 <div class="summary-info">
                   <h4>{{$request->origin->name}} -  {{$request->destination->name}}</h4>
-                  <div class="text-muted">{{$request->activity->name}} : {{$request->activity_id}}</div>
+                  <div class="text-muted">{{$activity->name}} </div>
                   <div class="d-block mt-2">                              
                     <small> Request by {{$request->employee->name}}  {{$request->employee->ekstensi}}</small>
                   </div>
                 </div>
                 <hr>
                 
-                @if ($request->activity_id == 1)
+                @if ($activity->id == 1)
                   <div class="card shadow-none border">
                     <div class="card-header">
-                      <h4>Manifest</h4>
+                      <h4>Manifest {{$activity->id}}</h4>
                       {{-- {{$request->cargoItems->sum('weight')}} --}}
                     </div>
                     <div class="card-body p-3">
                       <div class="table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-striped" id="table-4">
                           <thead>
                             <tr>
                               <th>MTD</th>
@@ -160,15 +166,15 @@
                       </div>
                     </div>
                   </div>
-                  @elseif($request->activity_id == 2)
+                  @elseif($activity->id == 2)
                   <div class="card shadow-none border">
                     <div class="card-header">
-                      <h4>Manifest</h4>
+                      <h4>Manifest {{$passengerItems->count()}} Crew</h4>
                       {{-- {{$request->cargoItems->sum('weight')}} --}}
                     </div>
                     <div class="card-body p-3">
                       <div class="table-responsive">
-                        <table class="table table-sm">
+                        <table class="table table-striped" id="table-5">
                           <thead>
                             <tr>
                                 <th>Type</th>

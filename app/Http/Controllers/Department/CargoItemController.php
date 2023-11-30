@@ -60,6 +60,7 @@ class CargoItemController extends Controller
       $req->validate([]);
       // dd('oke');
       $cargoItem = CargoItem::find($req->cargoItem);
+      // dd($cargoItem->id);
       $request = ModelsRequest::find($cargoItem->request_id);
       $schedule = Schedule::find($request->schedule_id);
 
@@ -115,7 +116,7 @@ class CargoItemController extends Controller
 
       $con = true;
       foreach ($request->cargoItems as $item) {
-         if ($item->status == 1) {
+         if ($item->status == 0) {
             $con = false;
          }
       }

@@ -46,10 +46,10 @@
                                  <td class="text-center">{{++$i}}</td>
                                  <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
                                  {{-- <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td> --}}
-                                 <td> {{$request->parent->origin->name}}</td>
+                                 <td> {{$request->parent->origin->name ?? $request->origin->name}}</td>
                                  
                                  {{-- <td>{{$request->date}}</td> --}}
-                                 <td><a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name}}</a></td>
+                                 <td><a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name ?? $request->schedule->date}}</a></td>
                                  <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
                                  <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
                                  <td>

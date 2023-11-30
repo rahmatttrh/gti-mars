@@ -220,7 +220,11 @@ class VesselScheduleController extends Controller
          ]);
       }
 
-
+      if ($req->port) {
+         $vessel->update([
+            'port_id' => $req->port
+         ]);
+      }
 
 
       return redirect()->back()->with('success', "Schedule Status successfully updated");

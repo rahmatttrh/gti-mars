@@ -182,7 +182,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('progress/print/{month}', [ExportController::class, 'requestProgress'])->name('request.print.progress');
 
 
-
+      Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('parent.release');
 
       Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
    });

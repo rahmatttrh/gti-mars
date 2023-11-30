@@ -52,7 +52,7 @@
                                 </div>
                                 
                             </div>
-                            <div class="form-row">
+                            <div class="form-row port">
                                 <div class="form-group col-md-6">
                                     <label>From</label>
                                     <select style="background-color: lightgrey" class="custom-select origin" id="origin" name="origin">
@@ -62,15 +62,42 @@
                                         @endforeach
                                     </select>
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-6 destination">
                                     <label>Destination</label>
-                                    <select style="background-color: lightgrey" class="custom-select" id="destination" name="destination">
+                                    <select style="background-color: lightgrey" class="custom-select " id="destination" name="destination">
                                         <option  disabled selected>Choose one</option>
                                         @foreach ($ports as $port)
                                             <option {{ old('destination') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
+                                <div class="form-group col-md-12 file-cargo">
+                                    <label for="file-cargo">File Excel Cargo</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control mb-2" id="file-cargo" name="file-cargo" >
+                                    <a class="file-cargo mt-3" href="{{asset('template/dsp-template-cargo.xlsx')}}">Download Template ...</a>
+                                </div>
+                            </div>
+
+                            <div class="form-row platform">
+                                <div class="form-group col-md-6">
+                                    <label>From Platform</label>
+                                    <select style="background-color: lightgrey" class="custom-select origin" id="origin" name="origin">
+                                        <option  disabled selected>Choose one</option>
+                                        @foreach ($platforms as $platform)
+                                            <option {{ old('origin') == $platform->id ? 'selected' : ''}} value="{{$platform->id}}">{{$platform->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6 destination">
+                                    <label>Destination Platform</label>
+                                    <select style="background-color: lightgrey" class="custom-select " id="destination" name="destination">
+                                        <option  disabled selected>Choose one</option>
+                                        @foreach ($platforms as $platform)
+                                            <option {{ old('destination') == $platform->id ? 'selected' : ''}} value="{{$platform->id}}">{{$platform->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
                             </div>
                             {{-- <div class="form-row">
                                 <div class="form-group col-md-4">
@@ -82,27 +109,21 @@
                                     <input type="text" value="{{old('desc')}}" class="form-control " id="desc" name="desc" >
                                 </div>
                             </div> --}}
-                            <hr>
-                            <div class="form-row file-cargo">
-                                <div class="form-group col-md-12">
-                                    <label for="file">File Cargo</label>
-                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file" name="file" >
-                                    <a class="file-cargo mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template here ...</a>
-                                </div>
-                            </div>
+                            {{-- <hr> --}}
+                            
                             
                             
                             <div class="form-row file-crew">
                                 <div class="form-group col-md-12">
-                                    <label for="file-passenger">File Crew/Passenger</label>
-                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control " id="file-passenger" name="file-passenger" >
-                                    <a class="file-crew mt-2" href="{{asset('template/Template Document Cargo.xlsx')}}">Download Template ...</a>
+                                    <label for="file-passenger">File Excel Crew</label>
+                                    <input type="file" style="background-color: lightgrey" value="{{old('file')}}" class="form-control mb-2" id="file-passenger" name="file-passenger" >
+                                    <a class="file-crew mt-3" href="{{asset('template/dsp-template-cre.xlsx')}}">Download Template ...</a>
                                 </div>
                             </div>
                 
 
                             <div class="form-row barge">
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-12">
                                     <label>Barge</label>
                                     <select style="background-color: lightgrey" class="custom-select" id="barge" name="barge">
                                         <option  disabled selected>Choose one</option>
@@ -175,6 +196,7 @@
         $(".file-cargo").hide();
         $(".file-crew").hide();
         $(".barge").hide();
+        $(".platform").hide();
         $('#activity').change(function() {
             var activity = $(this).val();
             console.log(activity)
@@ -182,18 +204,26 @@
                 $(".file-cargo").show();
                 $(".file-crew").hide();
                 $(".barge").hide();
+                $(".destination").hide();
             } else if(activity == 2){
                 $(".barge").hide();
                 $(".file-cargo").hide();
                 $(".file-crew").show();
+                $(".destination").show();
+                $(".platform").hide();
+                $(".port").show();
             } else if(activity == 3){
                 $(".file-cargo").hide();
                 $(".file-crew").hide();
                 $(".barge").show();
+                $(".destination").show();
+                $(".platform").show();
+                $(".port").hide();
             }else {
                 $(".file-cargo").hide();
                 $(".file-crew").hide();
                 $(".barge").hide();
+                $(".destination").show();
             }
         })
 
