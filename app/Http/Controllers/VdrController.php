@@ -32,7 +32,12 @@ class VdrController extends Controller
     public function history()
     {
 
-        $vdrs = Vdr::orderby('date', 'desc')->get();
+        $user = auth()->user();
+
+        // Opsi 1 
+        $vessel = Vessel::where('email', $user->email)->first();
+
+        $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
 
         return view('pages.vdr.history-vdr', [
             'vdrs' => $vdrs
