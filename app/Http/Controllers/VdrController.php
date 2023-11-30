@@ -29,6 +29,21 @@ class VdrController extends Controller
         return view('pages.vdr.vdr', [])->with('i');
     }
 
+    public function history()
+    {
+
+        $user = auth()->user();
+
+        // Opsi 1 
+        $vessel = Vessel::where('email', $user->email)->first();
+
+        $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
+
+        return view('pages.vdr.history-vdr', [
+            'vdrs' => $vdrs
+        ])->with('i');
+    }
+
     public function create()
     {
 
@@ -62,6 +77,44 @@ class VdrController extends Controller
         return view('pages.vdr.create-vdr', [
             'user' => $user,
             'vessel' => $vessel,
+            'vdr' => $vdr,
+            'activities' => $activities,
+            'cargos' => $cargos,
+            'weathers' => $weathers,
+            'hses' => $hses,
+            'engines' => $engines,
+            'crews' => $crews
+        ])->with('i');
+
+        // return view('pages.vdr.create-vdr', [
+        //     'user' => $user,
+        //     'vessel' => $vessel,
+        //     'vdr' => $vdr,
+        //     'activities' => $activities,
+        //     'cargos' => $cargos,
+        //     'weathers' => $weathers,
+        //     'hses' => $hses,
+        // ])->with('i');
+    }
+
+
+    public function show($id)
+    {
+
+        $vdr = Vdr::find($id);
+
+        # code...
+        $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+        $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+        $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+        $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+        $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
+        $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
+
+
+
+        return view('pages.vdr.show-vdr', [
+            'vessel' => $vdr->vessel,
             'vdr' => $vdr,
             'activities' => $activities,
             'cargos' => $cargos,

@@ -286,7 +286,7 @@
                      <a class="dropdown-item" href="{{route('vdr.create')}}">
                         Create
                      </a>
-                     <a class="dropdown-item" href="{{route('schedule.vessel.history', enkripRambo(auth()->user()->getMonth()))}}">
+                     <a class="dropdown-item" href="{{route('vdr.history')}}">
                         History
                      </a>
                   </div>

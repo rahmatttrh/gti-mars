@@ -18,6 +18,7 @@ function dayDate($data)
    return $date;
 }
 
+
 function floatToTime($floatValue)
 {
    // Pisahkan bagian jam dan menit
@@ -51,4 +52,19 @@ function enkripRambo($data)
 function dekripRambo($data)
 {
    return base64_decode(base64_decode(base64_decode($data)));
+}
+
+
+function vdrId($id)
+{
+   // Menambahkan awalan "VDR#"
+   $awalan = "VDR#";
+
+   // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+   $idPadded = sprintf("%05d", $id);
+
+   // Menggabungkan awalan dan $idPadded
+   $hasil = $awalan . $idPadded;
+
+   return $hasil;
 }
