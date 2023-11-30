@@ -44,6 +44,21 @@ class VdrController extends Controller
         ])->with('i');
     }
 
+    public function chart()
+    {
+
+        $user = auth()->user();
+
+        // Opsi 1 
+        $vessel = Vessel::where('email', $user->email)->first();
+
+        $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
+
+        return view('pages.vdr.chart-vdr', [
+            'vdrs' => $vdrs
+        ])->with('i');
+    }
+
     public function create()
     {
 

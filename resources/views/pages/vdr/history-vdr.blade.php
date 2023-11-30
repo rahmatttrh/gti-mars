@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-History Sailing Order
+History VDR
 @endsection
 @section('content')
 <div class="container-xl">

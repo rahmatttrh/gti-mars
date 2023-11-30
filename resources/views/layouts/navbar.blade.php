@@ -289,6 +289,9 @@
                      <a class="dropdown-item" href="{{route('vdr.history')}}">
                         History
                      </a>
+                     <a class="dropdown-item" href="{{route('vdr.chart')}}">
+                        Chart
+                     </a>
                   </div>
                </li>
                @elseif(auth()->user()->hasRole('drilling'))
