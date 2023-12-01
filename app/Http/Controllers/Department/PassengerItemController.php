@@ -45,8 +45,22 @@ class PassengerItemController extends Controller
    public function delete($id)
    {
       $dekripId = dekripRambo($id);
-      $cargoItem = PassengerItem::find($dekripId);
-      $cargoItem->delete();
-      return redirect()->back()->with('success', 'Item successfully deleted');
+      $passenger = PassengerItem::find($dekripId);
+      $passenger->delete();
+      return redirect()->back()->with('success', 'Passenger deleted');
+   }
+
+   public function update(Request $req){
+      $passenger = PassengerItem::find($req->passenger);
+      $passenger->update([
+         'type' => $req->type,
+         'name' => $req->name,
+         'barcode' => $req->barcode,
+         'department' => $req->department,
+         'company' => $req->company,
+         'desc' => $req->desc
+      ]);
+
+      return redirect()->back()->with('success', 'Passenger Updated');
    }
 }

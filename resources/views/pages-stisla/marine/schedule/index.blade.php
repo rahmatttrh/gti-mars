@@ -82,7 +82,7 @@
                       <tbody>     
                         @foreach ($schedules as $schedule)
                             <tr>
-                                <td>
+                                <td class="text-center">
                                 {{++$i}}
                                 </td>
                                 <td>
@@ -129,11 +129,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                  <h4>Moving, Lifting .. Request</h4>
+                  <h4>Moving Request</h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-1">
+                    <table class="table table-striped" id="table-7">
                       <thead>                                 
                         <tr>
                           <th class="text-center">
@@ -149,7 +149,7 @@
                       <tbody>     
                         @foreach ($movingSchedules as $schedule)
                             <tr>
-                                <td>
+                                <td class="text-center">
                                 {{++$i}}
                                 </td>
                                 <td>
@@ -193,7 +193,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped" id="table-8">
                   <thead>                                 
                     <tr>
                       <th class="text-center">
@@ -210,7 +210,7 @@
                   <tbody>     
                     @foreach ($regulerSchedules as $schedule)
                         <tr>
-                            <td>
+                            <td class="text-center">
                             {{++$i}}
                             </td>
                             <td>

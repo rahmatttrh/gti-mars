@@ -66,3 +66,18 @@ $("#table-5").dataTable({
 $("#table-6").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
 });
+$("#table-7").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});
+
+$("#table-8").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});
+
+$("#table-9").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});
+
+$("#table-10").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});

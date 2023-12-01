@@ -21,7 +21,7 @@
       <div class="row">
         @if ($activity->id == 1 )
           @if ($request->status == 0)
-          <div class="col-8">
+            <div class="col-8">
             @else
             <div class="col-12">
           @endif
@@ -31,29 +31,22 @@
         @endif
         
           @if (auth()->user()->hasRole('department'))
-              <x-request-stisla.action-user :request="$request" />
+            <x-request-stisla.action-user :request="$request" />
           @endif
           <div class="btn-group ml-2">
-            {{-- <a href="{{route('invoice.request', enkripRambo($request->id))}}" class="btn btn-light border btn-lg">Preview PDF</a> --}}
-           
             @if (auth()->user()->hasRole('department') )
               <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
                 <span class="sr-only">Toggle Dropdown</span>
               </button>
               <div class="dropdown-menu">
                 @if ($request->status == 00)
-                {{-- <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a> --}}
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#request-delete">
                     
                 </a>
                 @endif
-                
-                {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-delete">Delete</a> --}}
-                {{-- <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a> --}}
               </div>
             @endif
-            
           </div>
           <hr>
           <div class="card">
@@ -144,7 +137,7 @@
                                       </td>
                                     @endif
                                 </tr>
-                                <x-modal.cargo.delete :item="$item" />
+                                {{-- <x-modal.cargo.delete :item="$item" /> --}}
                                 
                               @endforeach
                                 <tr>
@@ -202,7 +195,7 @@
                                         @endif
                                      </td> --}}
                                   </tr>
-                                  <x-modal.passenger.delete :item="$passenger" />
+                                  {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
                                @endforeach
                 
                                @else

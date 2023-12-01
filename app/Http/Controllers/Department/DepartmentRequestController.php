@@ -42,19 +42,52 @@ class DepartmentRequestController extends Controller
       // } else {
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $now = Carbon::now();
       $acts = Activity::get();
       $activities = $acts;
       $types = Type::get();
       $ports = Port::where('type', '!=', 'platform')->get();
       $platforms = Port::where('type', 'platform')->get();
       $barges = Port::where('type', 'Barge')->get();
+
+      // $schedules = Schedule::where('date', '>=', $now)->get();
+      // dd($schedules);
+      $scheduleRoutes = ScheduleRoute::where('date', '>=', $now)->where('port_id', $employee->port_id)->get();
+      $schedules = array();
+      // dd($scheduleRoutes);
+      foreach ($scheduleRoutes as $row) {
+
+         $schedule = Schedule::find($row->schedule_id);
+         $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
+
+         if ($row->schedule->vessel_id != null) {
+            $vesselName = $row->schedule->vessel->name;
+            $vesselType = $row->schedule->vessel->type;
+            $totalWeight = $row->schedule->total_weight;
+            $vesselDeadweight = $row->schedule->vessel->deadweight;
+            $persen = $totalWeight / $vesselDeadweight * 100;
+         } else {
+            $vesselName = '-';
+            $vesselType = '';
+            $totalWeight = 0;
+            $vesselDeadweight = '0';
+            $persen = '-';
+         }
+
+         $schedules[] = $schedule;
+      }
+
+      // dd($schedules);
       
       return view('pages-stisla.user.request.create', [
          'activities' => $activities,
          'ports' => $ports,
          'platforms' => $platforms,
          'barges' => $barges,
-         'types' => $types
+         'types' => $types,
+         'schedules' => $schedules,
+         'scheduleRoutes' => $scheduleRoutes
       ]);
    }
 
@@ -141,21 +174,21 @@ class DepartmentRequestController extends Controller
          Excel::import(new CargoItemImport($parent->id), $req->file('file-cargo'));
          return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
       } else if($req->activity == 2) {
-         $request = ModelsRequest::create([
-         'code' => $code,
-         'type' => $type,
-         'class' => 'main',
-         'employee_id' => $employee->id,
-         'department_id' => $department->id,
-         'func' => $department->code,
-         'activity_id' => $req->activity,
-         'date' => $req->date,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
-         'status' => 00
-      ]);
-         Excel::import(new PassengerItemImport($request->id), $req->file('file-passenger'));
-         return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully saved');
+      //    $request = ModelsRequest::create([
+      //    'code' => $code,
+      //    'type' => $type,
+      //    'class' => 'main',
+      //    'employee_id' => $employee->id,
+      //    'department_id' => $department->id,
+      //    'func' => $department->code,
+      //    'activity_id' => $req->activity,
+      //    'date' => $req->date,
+      //    'origin_id' => $req->origin,
+      //    'destination_id' => $req->destination,
+      //    'status' => 00
+      // ]);
+         Excel::import(new PassengerItemImport($parent->id, $req->destination), $req->file('file-passenger'));
+         return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
       }
 
       

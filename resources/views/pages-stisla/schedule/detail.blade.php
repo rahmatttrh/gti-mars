@@ -33,7 +33,7 @@
             @if (auth()->user()->hasRole('marine'))
                 @if ($recentRequests->count() > 0)
                   <div class="col-md-9">
-                    oke
+                    
                   @else
                   
                   <div class="col-md-12">
@@ -257,53 +257,49 @@
                       </table>
                     </div>
                     <hr>
-
                     <div class="table-responsive">
-                      
-                        <table class="table table-striped card-table">
-                          <thead>
-                              <tr>
-                                <th colspan="7" class="text-info">Deflection</th>
-                              </tr>
-                              <tr>
-                                <th>MTD</th>
-                                <th>Descriptive</th>
-                                <th>Destination</th>
-                                <th class="text-center">Qty</th>
+                      <table class="table table-striped card-table">
+                        <thead>
+                            <tr>
+                              <th colspan="7" class="text-info">Deflection</th>
+                            </tr>
+                            <tr>
+                              <th>MTD</th>
+                              <th>Descriptive</th>
+                              <th>Destination</th>
+                              <th class="text-center">Qty</th>
+                              
+                              <th class="">Desc</th>
+                              {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
+                              <th class="text-center">Weight (ton)</th> --}}
+                            </tr>
+                        </thead>
+                        <tbody>
+                          @foreach ($requests->where('activity_id', '!=', 2) as $request)
+                            @if ($request->class == 'main' && $request->deflections->count() > 0)
+                              @foreach ($request->deflections as $deflection)
+                                <tr>
+                                    <td class="">{{$deflection->cargoitem->mtd}}</td>
+                                    
+                                    <td class="  text-nowrap">
+                                      {{$deflection->cargoitem->desc}}
+                                    </td>
+                                    <td class="">{{$deflection->port->name}}</td>
+                                    <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
+                                    <td class="  text-nowrap">
+                                      {{$deflection->desc}} 
+                                    </td>
+                                    {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
+                                    <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
+                                    
                                 
-                                <th class="">Desc</th>
-                                {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
-                                <th class="text-center">Weight (ton)</th> --}}
-                              </tr>
-                          </thead>
-                          <tbody>
-                            @foreach ($requests->where('activity_id', '!=', 2) as $request)
-                              @if ($request->class == 'main' && $request->deflections->count() > 0)
-                                @foreach ($request->deflections as $deflection)
-                                  <tr>
-                                      <td class="">{{$deflection->cargoitem->mtd}}</td>
-                                      
-                                      <td class="  text-nowrap">
-                                        {{$deflection->cargoitem->desc}}
-                                      </td>
-                                      <td class="">{{$deflection->port->name}}</td>
-                                      <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
-                                      <td class="  text-nowrap">
-                                        {{$deflection->desc}} 
-                                      </td>
-                                      {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
-                                      <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
-                                      
-                                  
-                                  </tr>
-                                @endforeach
-                              @endif
-                            @endforeach
-                          </tbody>
-                        </table>
-                        
+                                </tr>
+                              @endforeach
+                            @endif
+                          @endforeach
+                        </tbody>
+                      </table>
                     </div>
-                    
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive ">
@@ -368,72 +364,71 @@
                 </div>
               </div>
             </div>
-            
           @endif
           
           
         </div>
         @if (auth()->user()->hasRole('marine'))
           @if ($recentRequests->count() > 0)
-          <div class="col-md-3">
-            <div class="card" >
-              <div class="card-header">
-                <h4>Recent Request</h4>
-              </div>
-              <div class="card-body ">
-                <div class="summary " >
-                  @if ($recentRequests->count() > 0)
-                    @foreach ($recentRequests as $req)
-                    @if ($req->activity_id != 3)
-                        
-                  
-                    {{-- <div class="card">
-                      <div class="card-body"> --}}
-                        <div class="summary-item">
-                          {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
-                          <ul class="list-unstyled list-unstyled-border">
-                            <li class="media">
-                              {{-- <a href="#">
-                                <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
-                              </a> --}}
-                              <div class="media-body">
-                                <div class="media-right text-right">
-                                  {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
-                                  <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve {{$req->id}}</small></a><br>
-                                  <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
-                                  {{-- <button type="button" class="btn btn-primary" >
-                                    Launch demo modal
-                                  </button> --}}
-                                  
+            <div class="col-md-3">
+              <div class="card" >
+                <div class="card-header">
+                  <h4>Recent Request</h4>
+                </div>
+                <div class="card-body ">
+                  <div class="summary " >
+                    @if ($recentRequests->count() > 0)
+                      @foreach ($recentRequests as $req)
+                      @if ($req->activity_id != 3)
+                          
+                    
+                      {{-- <div class="card">
+                        <div class="card-body"> --}}
+                          <div class="summary-item">
+                            {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
+                            <ul class="list-unstyled list-unstyled-border">
+                              <li class="media">
+                                {{-- <a href="#">
+                                  <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
+                                </a> --}}
+                                <div class="media-body">
+                                  <div class="media-right text-right">
+                                    {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
+                                    <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve</small></a><br>
+                                    <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
+                                    {{-- <button type="button" class="btn btn-primary" >
+                                      Launch demo modal
+                                    </button> --}}
+                                    
+                                  </div>
+                                  <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
+                                  <div class="text-muted text-small"> <a href="#">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> by {{$req->employee->name}}</div>
                                 </div>
-                                <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
-                                <div class="text-muted text-small"> <a href="#">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> by {{$req->employee->name}}</div>
-                              </div>
-                            </li>
-                            
-                          </ul>
-                        </div>
-                      {{-- </div>
-                    </div> --}}
-                        <hr>
-                        
-                        @endif
-                    @endforeach
-                    @else
-                    <div class="row">
-                        <div class="col">
-                          <small class="text-center text-muted">Empty</small>
-                        </div>
-                    </div>
-                  @endif
+                              </li>
+                              
+                            </ul>
+                          </div>
+                        {{-- </div>
+                      </div> --}}
+                          <hr>
+                          
+                          @endif
+                      @endforeach
+                      @else
+                      <div class="row">
+                          <div class="col">
+                            <small class="text-center text-muted">Empty</small>
+                          </div>
+                      </div>
+                    @endif
+                  </div>
                 </div>
               </div>
+
+              {{-- Activity --}}
+
+              
             </div>
-
-            {{-- Activity --}}
-
-            
-          </div>
           @endif
         @endif
 
@@ -677,7 +672,6 @@
   
 
   {{-- Modal Approve & Change Request Activity --}}
-  
   @foreach ($recentRequests as $req)
     
 
@@ -687,7 +681,7 @@
           @csrf
           @method('PUT')
           <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          {{-- <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden> --}}
+          <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" ">Confirm Approve </h5>
@@ -710,14 +704,14 @@
 
     <div class="modal fade" id="req-change-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-change-{{$req->id}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <form action="{{route('request.select.schedule')}}" method="POST">
+        <form action="{{route('request.change.schedule')}}" method="POST">
           @csrf
           @method('PUT')
           <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
           {{-- <input type="number" name="request_id" id="request_id" value="{{$request->id}}" hidden> --}}
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="req-change-{{$req->id}}">Confirm Change</h5>
+              <h5 class="modal-title" id="req-change-{{$req->id}}">Change Confirmation</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>

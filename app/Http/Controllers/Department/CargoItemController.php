@@ -55,6 +55,20 @@ class CargoItemController extends Controller
       return redirect()->back()->with('success', 'Item successfully deleted');
    }
 
+   public function update(Request $req){
+      $cargo = CargoItem::find($req->cargo);
+      $cargo->update([
+         'mtd' => $req->mtd,
+         'desc' => $req->desc,
+         'contract' => $req->contract,
+         'qty' => $req->qty,
+         'unit' => $req->unit,
+         'weight' => $req->weight
+      ]);
+
+      return redirect()->back()->with('success', 'Cargo Updated');
+   }
+
    public function offloading(Request $req)
    {
       $req->validate([]);

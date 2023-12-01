@@ -45,7 +45,7 @@ class MarineRequestController extends Controller
       // dd($req->request_id);
       // dd('ok');
       $request = ModelsRequest::find($req->request_id);
-      $schedule = Schedule::find($request->schedule_id);
+      $schedule = Schedule::find($req->schedule);
       // dd($schedule->id);
       if (!$schedule->vessel_id) {
          // dd('ok');
@@ -150,7 +150,7 @@ class MarineRequestController extends Controller
       if ($request->class == 'main') {
          $request->update([
             'status' => 02,
-            // 'schedule_id' => $req->schedule,
+            'schedule_id' => $req->schedule,
             'remark' => $req->remark
          ]);
          RequestHistory::create([
@@ -209,7 +209,7 @@ class MarineRequestController extends Controller
 
 
       // dd('ok');
-      return redirect()->back()->with('success', 'Request Activity successfully set on Schedule');
+      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Request Activity set on this schedule');
    }
 
    public function rejectSchedule(Request $req)

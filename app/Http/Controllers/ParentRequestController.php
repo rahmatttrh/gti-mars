@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Department\DepartmentRequestController;
+use App\Imports\CargoItemImport;
+use App\Imports\PassengerItemImport;
 use App\Mail\ApprovalEmail;
 use App\Models\Activity;
 use App\Models\ParentRequest;
@@ -10,6 +12,7 @@ use App\Models\Port;
 use App\Models\Request as ModelsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ParentRequestController extends Controller
 {
@@ -60,7 +63,7 @@ class ParentRequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $parent = ParentRequest::find($dekripId);
-
+      // dd($parent->id);
       foreach ($parent->requests as $request) {
          (new DepartmentRequestController)->release(enkripRambo($request->id));
          // $request->update([
@@ -92,5 +95,23 @@ class ParentRequestController extends Controller
 
 
       return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
+   }
+
+   public function addCargo(Request $req){
+      // dd('add cargo');
+      $parent = ParentRequest::find($req->parent);
+      // dd($parent->id);
+      Excel::import(new CargoItemImport($parent->id), $req->file('file-cargo'));
+
+      return redirect()->back()->with('success', 'Cargo item added');
+   }
+
+   public function addCrew(Request $req){
+      // dd('add crew');
+      $parent = ParentRequest::find($req->parent);
+      // dd($parent->id);
+      Excel::import(new PassengerItemImport($parent->id, $req->destination), $req->file('file-crew'));
+
+      return redirect()->back()->with('success', 'Crew item added');
    }
 }
