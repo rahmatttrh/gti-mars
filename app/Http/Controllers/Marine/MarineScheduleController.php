@@ -680,9 +680,10 @@ class MarineScheduleController extends Controller
 
    public function reorderRoute(Request $req)
    {
-      $schedule = Schedule::find($req->schedule);
+      
       $choseRoute = ScheduleRoute::find($req->route);
-      // dd($schedule->vessel->name);
+      $schedule = Schedule::find($choseRoute->schedule_id);
+      // dd($choseRoute->port->name);
 
       $after = ScheduleRoute::find($req->after);
       // dd($after->port->name);
@@ -998,7 +999,7 @@ class MarineScheduleController extends Controller
    {
       $schedule = Schedule::find($req->schedule);
       $schedule->update([
-         'status' => 1,
+         // 'status' => 1,
          'vessel_id' => $req->vessel
       ]);
       return redirect()->back()->with('success', 'Vessel selected.');

@@ -40,7 +40,7 @@
           <li>
             <a href="index.html" class="navbar-brand sidebar-gone-hide ml-3">
           
-              OSES MARINE OPS
+              OSES MARINE OPS IS
             {{-- <small>Lorem ipsum dolor sit amet consectetur.</small>   --}}
             </a>
           </li>
@@ -370,7 +370,7 @@
                 <div class="hero text-white hero-bg-image hero-bg-parallax" style="background-image: url('{{asset('img/bg/rig3.jpg')}}');">
                   <div class="hero-inner">
                     <h2>Welcome, {{auth()->user()->name}}!</h2>
-                    <p class="lead">This is OSES Marine OPS Home Page.</p>
+                    <p class="lead">This is home page of OSES MARINE OPERATION INFORMATION SYSTEM App</p>
                     {{-- <div class="row">
                       <div class="col-md-4">
                         
@@ -381,18 +381,13 @@
                 <hr>
                 <div class="card">
                   <div class="card-header">
-                    <h4>Example Card</h4>
+                    <h4>OSES MARINE OPERATION INFORMATION SYSTEM</h4>
                   </div>
                   <div class="card-body">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>The purpose of the Marine Operation Information System is to assess and improve Marine assurance, technical and operational to the managing safe work procedures to assure marine work activities are completed without incident and poor reliability. These activities include Digital Smart Port, Vessel Daily Report, Preventive maintenance System, Contractor Safety Management System, Service performance Report, Leadership Engagement, Leadership Safeguard Verification, General Inspection. , Fuel Monitoring System. The Marine Operation Team conduct field engagements and written assessments to evaluate knowledge and conformance to safe work procedures. During the field engagement, the team uses a protocol specific to the safe work procedure being observed that is aligned with IMO and industry standards, regulations, and managing safe work procedures. Results of the assessments are shared immediately with the employee or contractor. If an assessment identifies significant opportunities for improvement, the Marine Operation Team will conduct a follow up observation with the employee of contractor to validate the coaching was effective. On a routine basis, the data from the assessments is gathered and analyzed to identify systemic gaps and remedial actions for improvement. </p>
                   </div>
                   <div class="card-footer bg-whitesmoke">
-                    This is card footer
+                    Development
                   </div>
                 </div>
               </div>

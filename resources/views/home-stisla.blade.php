@@ -69,9 +69,9 @@
           
         </div>
         <div class="card bg-danger shadow">
-          {{-- <div class="card-header">
-            <small class="badge badge-light">Location Updates</small>
-          </div> --}}
+          <div class="card-header">
+            <small class="badge badge-light">Vessel Coordinate</small>
+          </div>
           <div class="card-body">
             <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
               {{-- <ol class="carousel-indicators">

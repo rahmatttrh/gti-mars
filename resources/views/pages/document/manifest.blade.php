@@ -69,8 +69,8 @@
             </div>
             <h4 class="">ACTIVITIES</h4>
             @foreach ($schedule->requests as $req)
-               @if ($req->type == 1)
-                  <div>
+               @if ($req->activity_id == 1)
+                  <div class="mb-2">
                      @if ($req->status == 12)
                      <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -83,10 +83,10 @@
                      </svg>
                      @endif
                      
-                     {{$req->activity->name}} {{$req->description}}
+                     {{$req->activity->name}} {{$req->origin->name}} - {{$req->destination->name}}
 
                   </div>
-                  <table class="table table-transparent table-responsive">
+                  <table class="table table-transparent table-responsive  mb-4">
                      <thead>
                         <tr>
                            {{-- <th class="text-center" style="width: 1%"></th> --}}
@@ -133,9 +133,10 @@
                         </td>
                      </tr>
                   </table>
-                  @elseif($req->type == 2)
+                  <hr>
+                  @elseif($req->activity_id == 2)
 
-                     <div>
+                     <div class="mt-4">
                         @if ($req->status == 12)
                         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -148,14 +149,15 @@
                         </svg>
                         @endif
                         
-                        {{$req->activity->name}} {{$req->description}}
+                        {{$req->activity->name}} {{$req->origin->name}} - {{$req->destination->name}}
       
                      </div>
                      
-                     <small class="badge badge-info mt-4">Depart</small>
-                     <table class="table table-transparent table-responsive">
+                     {{-- <small class="badge badge-info mt-4">Depart</small> --}}
+                     <table class="table table-transparent table-responsive mt-2">
                         <thead>
                            <tr>
+                              <th>Type</th>
                               <th>Name</th>
                               <th>Barcode</th>
                               <th>Department</th>
@@ -165,19 +167,19 @@
                         </thead>
                         @foreach ($req->passengerItems->where('type', 'Depart') as $item)
                         <tr>
-                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td>{{$item->type}}</td>
                            <td>
-                              <p class="strong mb-1">{{$item->crew->name}}</p>
+                              <p class="strong mb-1">{{$item->name}}</p>
                            </td>
-                           <td>{{$item->crew->barcode}}</td>
-                           <td>{{$item->crew->department}}</td>
-                           <td>{{$item->crew->company}}</td>
+                           <td>{{$item->barcode}}</td>
+                           <td>{{$item->department}}</td>
+                           <td>{{$item->company}}</td>
                            <td>{{$item->desc}}</td>
                         </tr>
                         @endforeach
                         
                      </table>
-                     <small class="badge bg-danger mt-3">Return</small>
+                     {{-- <small class="badge bg-danger mt-3">Return</small>
                      <table class="table table-transparent table-responsive">
                         <thead>
                            <tr>
@@ -190,18 +192,17 @@
                         </thead>
                         @foreach ($req->passengerItems->where('type', 'Return') as $item)
                         <tr>
-                           {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td>
-                              <p class="strong mb-1">{{$item->crew->name}}</p>
+                              <p class="strong mb-1">{{$item->name}}</p>
                            </td>
-                           <td>{{$item->crew->barcode}}</td>
-                           <td>{{$item->crew->department}}</td>
-                           <td>{{$item->crew->company}}</td>
+                           <td>{{$item->barcode}}</td>
+                           <td>{{$item->department}}</td>
+                           <td>{{$item->company}}</td>
                            <td>{{$item->desc}}</td>
                         </tr>
                         @endforeach
                         
-                     </table>
+                     </table> --}}
                @endif
             @endforeach
             

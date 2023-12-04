@@ -31,6 +31,7 @@
                   <div class="text-center ">
                      <div  class=" ">
                         <img class="border shadow-sm mt-4 mb-4 bg-light py-2 px-4 rounded" src="{{asset('img/logo/phe-oses.png')}}" height="45" alt=""> 
+                        {{-- <h1 class="ml-2" style="font-weight: 900">DIGITAL SMART <span class="text-primary">PORT</span></h1> --}}
                         <h1 class="ml-2" style="font-weight: 900">PHE OSES MARINE <span class="text-primary">OPS</span></h1>
                      </div>
                   </div>
@@ -52,14 +53,14 @@
                      </div>
                      @enderror
                      <div class="form-floating mb-3">
-                        <input type="text" value="{{old('username')}}" required class="form-control @error('username') is-invalid @enderror" id="username" name="username" >
+                        <input type="text" value="{{old('username')}}" required placeholder="Enter your username ..." class="form-control @error('username') is-invalid @enderror" id="username" name="username" >
                         <label for="username">Username</label>
                         {{-- @error('email')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror --}}
                      </div>
                      <div class="form-floating mb-3">
-                        <input type="password" required class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
+                        <input type="password" required placeholder="Enter your password ..." class="form-control @error('password') is-invalid @enderror" id="password" name="password" >
                         <label for="password">Password</label>
                         {{-- @error('password')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>

@@ -16,7 +16,7 @@ class CreateParentRequestsTable extends Migration
       Schema::create('parent_requests', function (Blueprint $table) {
          $table->id();
          // $table->mediumInteger('parent_id');
-         // $table->mediumInteger('request_id');
+         $table->mediumInteger('activity_id');
          $table->smallInteger('status');
          $table->string('code');
          $table->mediumInteger('origin_id');

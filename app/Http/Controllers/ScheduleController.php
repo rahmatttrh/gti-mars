@@ -131,6 +131,7 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $schedules = Schedule::get();
+      
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
       $recentRequests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '=', 1)->get();
@@ -221,30 +222,58 @@ class ScheduleController extends Controller
       }
 
       // dd(round($persen));
-      return view('pages-stisla.schedule.detail', [
-         'schedules' => $schedules,
-         'schedule' => $schedule,
-         'report' => $report,
-         'lastreport' => $lastreport,
-         'reports' => $reports,
-         'requests' => $requests,
-         'vessels' => $vessel,
-         'ports' => $ports,
-         'routes' => $routes,
-         'fixRoutes' => $fixRoutes,
-         'statuses' => $statuses,
-         'deviations' => $deviations,
-         'persenWeight' => round($persenWeight),
-         'persenSize' => round($persenSize),
-         'destinations' => $destinations,
-         'iddestinations' => $iddestinations,
-         'recentRequests' => $recentRequests,
-         'lastPostpone' => $lastPostpone,
-         'activities' => $acts,
-         'offloadings' => $offloadings,
-         'scheduleRoutes' => $scheduleRoutes
-         // 'report' => $requests
-      ]);
+      if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
+         return view('pages-stisla.schedule.detail', [
+            'schedules' => $schedules,
+            'schedule' => $schedule,
+            'report' => $report,
+            'lastreport' => $lastreport,
+            'reports' => $reports,
+            'requests' => $requests,
+            'vessels' => $vessel,
+            'ports' => $ports,
+            'routes' => $routes,
+            'fixRoutes' => $fixRoutes,
+            'statuses' => $statuses,
+            'deviations' => $deviations,
+            'persenWeight' => round($persenWeight),
+            'persenSize' => round($persenSize),
+            'destinations' => $destinations,
+            'iddestinations' => $iddestinations,
+            'recentRequests' => $recentRequests,
+            'lastPostpone' => $lastPostpone,
+            'activities' => $acts,
+            'offloadings' => $offloadings,
+            'scheduleRoutes' => $scheduleRoutes
+            // 'report' => $requests
+         ]);
+      } else {
+         return view('pages-stisla.schedule.detail', [
+            'schedules' => $schedules,
+            'schedule' => $schedule,
+            'report' => $report,
+            'lastreport' => $lastreport,
+            'reports' => $reports,
+            'requests' => $requests,
+            'vessels' => $vessel,
+            'ports' => $ports,
+            'routes' => $routes,
+            'fixRoutes' => $fixRoutes,
+            'statuses' => $statuses,
+            'deviations' => $deviations,
+            'persenWeight' => round($persenWeight),
+            'persenSize' => round($persenSize),
+            'destinations' => $destinations,
+            'iddestinations' => $iddestinations,
+            'recentRequests' => $recentRequests,
+            'lastPostpone' => $lastPostpone,
+            'activities' => $acts,
+            'offloadings' => $offloadings,
+            'scheduleRoutes' => $scheduleRoutes
+            // 'report' => $requests
+         ]);
+      }
+      
    }
 
    public function timeline($id)

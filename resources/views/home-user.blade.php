@@ -5,7 +5,7 @@
 @section('content')
   <section class="section">
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-md-3">
         <div class="card  profile-widget">
           <div class="profile-widget-header">                     
             <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle profile-widget-picture">
@@ -27,10 +27,10 @@
                 Loc
                 <span class="badge badge-primary badge-pill">{{$user->port->name}}</span>
               </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
                 Dept
                 <span class="badge badge-primary badge-pill">{{$user->department->name}}</span>
-              </li>
+              </li> --}}
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 Email
                 <span class="badge badge-primary badge-pill">{{$user->email}}</span>
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-9">
         <div class="row">
       
           <div class=" col-md-6 col-sm-12">
@@ -82,6 +82,13 @@
             </div>
           </div>
         </div>
+        @if ($confirms->count() > 0)
+          @foreach ($confirms as $confirm)
+            <div class="alert alert-primary" role="alert">
+                You have a Arrival Cargo from {{$confirm->origin->name}}. Click <a href="{{route('schedule.detail', enkripRambo($confirm->schedule_id))}}" class="alert-link">here</a> to see detail.
+            </div>
+          @endforeach
+        @endif
         <div class="card">
           <div class="card-header">
             <h4>Request Activity</h4>

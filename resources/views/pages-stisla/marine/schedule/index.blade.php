@@ -13,15 +13,55 @@
     </div>
 
     <div class="section-body">
-      {{-- <h2 class="section-title">Schedule Plan</h2>
-      <p class="section-lead">
-        We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-      </p> --}}
-      <div class="row">
+      <div class="dropdown d-inline mr-2 m">
+        <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Select Month
+        </button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(01))}}">
+            Januari
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(02))}}">
+              Februari
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(03))}}">
+              Maret
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(04))}}">
+              April
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(05))}}">
+              Mei
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(06))}}">
+              Juni
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(07))}}">
+              Juli
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(8))}}">
+              Agustus
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(9))}}">
+              September
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(10))}}">
+              Oktober
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(11))}}">
+              November
+          </a>
+          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(12))}}">
+              Desember
+          </a>
+        </div>
+      </div>
+      <div class="row mt-3">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                   <h4>Based on Request</h4>
+                  
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -42,12 +82,12 @@
                       <tbody>     
                         @foreach ($schedules as $schedule)
                             <tr>
-                                <td>
+                                <td class="text-center">
                                 {{++$i}}
                                 </td>
                                 <td>
                                     <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Empty'}}</a> <br>
-                                    <small>{{$schedule->vessel_type ?? '-'}}</small>
+                                    <small>{{$schedule->vessel->type ?? '-'}}</small>
                                 </td>
                                 <td>
                                     @if (count($schedule->routes) > 0)
@@ -89,11 +129,11 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                  <h4>Moving, Lifting .. Request</h4>
+                  <h4>Moving Request</h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-1">
+                    <table class="table table-striped" id="table-7">
                       <thead>                                 
                         <tr>
                           <th class="text-center">
@@ -109,7 +149,7 @@
                       <tbody>     
                         @foreach ($movingSchedules as $schedule)
                             <tr>
-                                <td>
+                                <td class="text-center">
                                 {{++$i}}
                                 </td>
                                 <td>
@@ -153,7 +193,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped" id="table-8">
                   <thead>                                 
                     <tr>
                       <th class="text-center">
@@ -170,7 +210,7 @@
                   <tbody>     
                     @foreach ($regulerSchedules as $schedule)
                         <tr>
-                            <td>
+                            <td class="text-center">
                             {{++$i}}
                             </td>
                             <td>

@@ -247,7 +247,97 @@ class PortSeeder extends Seeder
 
 
 
+      DB::table('ports')->insert([
+         'code' => 'AIDA-A',
+         'name' => 'AIDA-A',
+         'email' => 'aidaa@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'ARYANI-A',
+         'name' => 'ARYANI-A',
+         'email' => 'aryania@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
 
+      DB::table('ports')->insert([
+         'code' => 'CHESSY-A',
+         'name' => 'CHESSY-A',
+         'email' => 'chessya@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('ports')->insert([
+         'code' => 'INDRI-A',
+         'name' => 'INDRI-A',
+         'email' => 'indria@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'INTAN-A',
+         'name' => 'INTAN-A',
+         'email' => 'intana@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('ports')->insert([
+         'code' => 'INTAN-B',
+         'name' => 'INTAN-B',
+         'email' => 'intanb@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'INTAN-BPC',
+         'name' => 'INTAN-BPC',
+         'email' => 'intanbpc@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'LIDYA-A',
+         'name' => 'LIDYA-A',
+         'email' => 'lidyaa@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'NE.INTAN-AC',
+         'name' => 'NE.INTAN-AC',
+         'email' => 'neintanac@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'VITA-A',
+         'name' => 'VITA-A',
+         'email' => 'vitaa@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('ports')->insert([
+         'code' => 'WIDURI-A',
+         'name' => 'WIDURI-A',
+         'email' => 'widuria@gmail.com',
+         'type' => 'platform',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
 
 
 

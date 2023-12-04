@@ -182,9 +182,16 @@ Route::middleware(["auth"])->group(function () {
       Route::get('progress/print/{month}', [ExportController::class, 'requestProgress'])->name('request.print.progress');
 
 
+      Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('parent.release');
 
+      
 
       Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
+   });
+
+   Route::prefix('parent')->group(function () {
+      Route::post('add/cargo', [ParentRequestController::class, 'addCargo'])->name('parent.add.cargo');
+      Route::post('add/crew', [ParentRequestController::class, 'addCrew'])->name('parent.add.crew');
    });
 
    Route::prefix('activity')->group(function () {
@@ -271,6 +278,7 @@ Route::group(['middleware' => ['role:marine']], function () {
 
    Route::prefix('request')->group(function () {
       Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
+      Route::put('change/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.change.schedule');
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
@@ -345,7 +353,8 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
 Route::group(['middleware' => ['role:logistic|department|marine']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
-      Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.item.delete');
+      Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.delete');
+      Route::put('update', [CargoItemController::class, 'update'])->name('cargo.update');
       Route::post('offloading', [CargoItemController::class, 'offloading'])->name('cargo.item.offloading');
    });
 });
@@ -353,7 +362,8 @@ Route::group(['middleware' => ['role:logistic|department|marine']], function () 
 Route::group(['middleware' => ['role:drilling|department']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
-      Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.item.delete');
+      Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.delete');
+      Route::put('update', [PassengerItemController::class, 'update'])->name('passenger.update');
       Route::post('add', [CrewController::class, 'add'])->name('crew.add');
    });
 });

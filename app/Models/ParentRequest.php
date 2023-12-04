@@ -34,4 +34,8 @@ class ParentRequest extends Model
    {
       return $this->belongsTo(Department::class);
    }
+
+   public function activity(){
+      return $this->belongsTo(Activity::class);
+   }
 }

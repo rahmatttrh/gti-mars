@@ -32,7 +32,6 @@
                            <th class="text-center">No.</th>
                            <th>ID</th>
                            <th>Picup Point</th>
-                           
                            <th>Date</th>
                            <th>Activity</th>
                            <th>Route</th>
@@ -46,7 +45,9 @@
                                  <td class="text-center">{{++$i}}</td>
                                  <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
                                  {{-- <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td> --}}
-                                 <td> {{$request->origin->name}}</td>
+                                 <td>
+                                  <a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}">{{$request->origin->name}}</a>
+                                 </td>
                                  
                                  <td>{{$request->date}}</td>
                                  <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>

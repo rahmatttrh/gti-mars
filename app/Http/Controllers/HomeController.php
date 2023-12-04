@@ -851,7 +851,7 @@ class HomeController extends Controller
                               'schedule_id' => $vessel->schedule_id,
                               'vessel_id' => $vessel->id,
                               // arrived
-                              'status_id' => 8, 
+                              'status_id' => 9, 
                               'port_id' => $port->id
                            ]);
                         }

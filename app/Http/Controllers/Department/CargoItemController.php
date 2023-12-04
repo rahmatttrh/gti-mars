@@ -55,11 +55,26 @@ class CargoItemController extends Controller
       return redirect()->back()->with('success', 'Item successfully deleted');
    }
 
+   public function update(Request $req){
+      $cargo = CargoItem::find($req->cargo);
+      $cargo->update([
+         'mtd' => $req->mtd,
+         'desc' => $req->desc,
+         'contract' => $req->contract,
+         'qty' => $req->qty,
+         'unit' => $req->unit,
+         'weight' => $req->weight
+      ]);
+
+      return redirect()->back()->with('success', 'Cargo Updated');
+   }
+
    public function offloading(Request $req)
    {
       $req->validate([]);
       // dd('oke');
       $cargoItem = CargoItem::find($req->cargoItem);
+      // dd($cargoItem->id);
       $request = ModelsRequest::find($cargoItem->request_id);
       $schedule = Schedule::find($request->schedule_id);
 
@@ -115,7 +130,7 @@ class CargoItemController extends Controller
 
       $con = true;
       foreach ($request->cargoItems as $item) {
-         if ($item->status == 1) {
+         if ($item->status == 0) {
             $con = false;
          }
       }
