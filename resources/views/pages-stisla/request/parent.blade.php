@@ -145,7 +145,27 @@
                         <button class="btn btn-primary btn-lg">Report Status</button> --}}
                     </form>
                   </div> 
-                  
+                  @elseif($parent->status == 201)
+                  <div class="col">
+                    
+                    <form class="" action="{{route('parent.change.vessel')}}" method="POST">
+                        @csrf
+                        <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
+                        <div class="form-group">
+                          <label for="schedule">Change vessel?</label>
+                          <div class="input-group">
+                              <select class="form-control" name="schedule" id="schedule">
+                                    @foreach ($scheduleRoutes as $sche)
+                                    <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
+                                    @endforeach
+                              </select>
+                            <div class="input-group-append">
+                              <button class="btn btn-primary px-4" type="submit">Submit</button>
+                            </div>
+                          </div>
+                        </div>
+                    </form>
+                  </div> 
                 @endif
                 
               </div>
@@ -172,6 +192,7 @@
                     <table class="table table-striped" id="table-1">
                       <thead>
                         <tr>
+                          <th>Status</th>
                           <th>MTD</th>
                           <th>Destination</th>
                           <th>Descriptive</th>
@@ -193,6 +214,7 @@
                         </tr> --}}
                           @foreach ($request->cargoItems as $item)
                               <tr>
+                                <td><x-status-stisla.request :request="$item->request" /></td>
                                 <td class=" text-truncate">
                                   <div class="dropdown">
                                     {{$item->mtd}}
@@ -250,6 +272,7 @@
                     <table class="table table-striped" id="table-5">
                       <thead>
                         <tr>
+                          <th>Status</th>
                             <th>Type</th>
                             <th>Route</th>
                            <th>Name</th>
@@ -265,7 +288,7 @@
                       @foreach ($parent->requests as $request)
                         @foreach ($request->passengerItems as $passenger)
                           <tr>
-
+                            <td><x-status-stisla.request :request="$passenger->request" /></td>
                               <td>{{$passenger->type}}</td>
                               <td> {{$passenger->request->destination->name}}</td>
                               <td >{{$passenger->name}}</td>

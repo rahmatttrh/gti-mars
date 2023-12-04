@@ -1,11 +1,11 @@
 <div>
    @if ($request->status == 0)
-      <button type="button" class="btn btn-light btn-icon icon-left">
+      {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Draft
-      </button>
-      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span>00 : Draft</div> --}}
+      </button> --}}
+      <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span><small>00 : Draft</small></div>
       @elseif($request->status == 1)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>01 : Validasi Fleet Control</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>01 : Validasi Fleet Control</small></div>
       @elseif($request->status == 2)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>02 : Schedule on Set</div>
       @elseif($request->status == 3)

@@ -521,25 +521,29 @@ class DepartmentRequestController extends Controller
       $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
 
       // jika request cargo
-      if ($request->activity_id == 2) {
-         $vessels = Vessel::where('type', 'Crew Boat')->where('latitude', '!=', null)->get();
-         if (!$vessels) {
-            $vessels = Vessel::where('latitude', '!=', null)->get();
-         }
-      } else {
-         $vessels = Vessel::where('type','!=', 'Crew Boat')->where('latitude', '!=', null)->get();
-         if (!$vessels) {
-            $vessels = Vessel::where('latitude', '!=', null)->get();
-         }
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+      // if (!$vessels) {
+      //    $vessels = Vessel::where('latitude', '!=', null)->get();
+      // }
+      // if ($request->activity_id == 2) {
+      //    $vessels = Vessel::where('type', 'Crew Boat')->where('latitude', '!=', null)->get();
+      //    if (!$vessels) {
+      //       $vessels = Vessel::where('latitude', '!=', null)->get();
+      //    }
+      // } else {
+      //    $vessels = Vessel::where('type','!=', 'Crew Boat')->where('latitude', '!=', null)->get();
+      //    if (!$vessels) {
+      //       $vessels = Vessel::where('latitude', '!=', null)->get();
+      //    }
         
-      }
+      // }
 
 
-      // $nearVessel = null;
+      $nearestVessel = null;
       $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
       // dd($now->format('Y-m-d'));
 
-      // $nearestVessels = array();
+      $nearestVessels = array();
       if ($reqDate ==  $now->format('Y-m-d')) {
          // dd('today');
          foreach($vessels as $vessel){
@@ -559,7 +563,7 @@ class DepartmentRequestController extends Controller
             if ($nearestVessel->schedule_id) {
                // dd('kapal sudah ada schedule');
                $request->update([
-                  'status' => 1,
+                  // 'status' => 1,
                   'schedule_id' => $nearestVessel->schedule->id
                ]);
                return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
@@ -583,7 +587,7 @@ class DepartmentRequestController extends Controller
                   'date' => $request->date
                ]);
                $request->update([
-                  'status' => 1,
+                  // 'status' => 1,
                   'schedule_id' => $schedule->id,
                ]);
                return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
@@ -599,7 +603,7 @@ class DepartmentRequestController extends Controller
          // dd('ada routeee');
          $schedule = Schedule::find($scheduleRoute->schedule_id);
          $request->update([
-            'status' => 1,
+            // 'status' => 1,
             'schedule_id' => $schedule->id
          ]);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
@@ -611,7 +615,7 @@ class DepartmentRequestController extends Controller
             if($uncompleteRoute != null ){
                $schedule = Schedule::find($uncompleteRoute->schedule_id);
                $request->update([
-                  'status' => 1,
+                  // 'status' => 1,
                   'schedule_id' => $schedule->id
                ]);
             }
@@ -625,7 +629,7 @@ class DepartmentRequestController extends Controller
             'date' => $request->date,
          ]);
          $request->update([
-            'status' => 1,
+            // 'status' => 1,
             'schedule_id' => $schedule->id,
          ]);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));

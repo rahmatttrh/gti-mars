@@ -33,6 +33,9 @@ use App\Http\Controllers\PortController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\SurveillanceCargoController;
+use App\Http\Controllers\SurveillanceController;
+use App\Http\Controllers\SurveillanceCrewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VdrController;
 use App\Http\Controllers\VdrCrewController;
@@ -44,6 +47,7 @@ use App\Models\ParentRequest;
 use App\Models\Platform;
 use App\Models\Request;
 use App\Models\Schedule;
+use App\Models\Surveillance;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -71,6 +75,15 @@ Route::middleware(["auth"])->group(function () {
       Route::get("marine-dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
       Route::get("vessel-dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
       Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
+
+   Route::prefix("surveillance")->group(function () {
+      Route::get("create", [SurveillanceController::class, "create",])->name('surveillance.create');
+      Route::get("detail/{vessel:id}", [SurveillanceController::class, "detail",])->name('surveillance.detail');
+      Route::post("cargo/store", [SurveillanceCargoController::class, "store",])->name('surveillance.cargo.store');
+      Route::get("cargo/send/{id}", [SurveillanceCargoController::class, "send",])->name('surveillance.cargo.send');
+
+      Route::post("crew/store", [SurveillanceCrewController::class, "store",])->name('surveillance.crew.store');
    });
 
    Route::prefix("fetch")->group(function () {
@@ -183,6 +196,7 @@ Route::middleware(["auth"])->group(function () {
 
 
       Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('parent.release');
+      Route::post('parent/change/vessel', [ParentRequestController::class, 'change'])->name('parent.change.vessel');
 
       
 

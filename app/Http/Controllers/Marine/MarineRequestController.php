@@ -46,7 +46,7 @@ class MarineRequestController extends Controller
       // dd('ok');
       $request = ModelsRequest::find($req->request_id);
       $schedule = Schedule::find($req->schedule);
-      // dd($schedule->id);
+      // dd($req->schedule);
       if (!$schedule->vessel_id) {
          // dd('ok');
          return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');

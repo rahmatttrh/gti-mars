@@ -5,10 +5,10 @@
          <i class="fas fa-edit"></i>Draft 
       </button>
       @elseif($schedule->status == 1)
-      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>01 : Waiting Vessel</div> --}}
-      <button type="button" class="btn btn-light btn-icon icon-left">
+      <div class="badge badge-warning border">01 : Waiting Vessel</div>
+      {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Waiting Vessel 
-      </button>
+      </button> --}}
       @elseif($schedule->status == 2)
       {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} </div> --}}
       {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}</div> --}}

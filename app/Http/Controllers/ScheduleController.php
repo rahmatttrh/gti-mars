@@ -212,6 +212,22 @@ class ScheduleController extends Controller
       } else {
          $deviations = null;
       }
+      // dd($schedule->requests->sum('weight'));
+      foreach($schedule->requests as $request){
+         // dd($request->cargoItems->sum('weight'));
+         $request->update([
+            'total_weight' => $request->cargoItems->sum('weight')
+         ]);
+         // foreach($request->cargoItems as $item){
+         //    dd($item->weight);
+         // }
+      }
+
+      $schedule->update([
+         'total_weight' => $schedule->requests->where('status', '>', 1)->sum('total_weight')
+      ]);
+
+      // dd($schedule->vessel->deadweight);
 
       if ($schedule->vessel) {
          $persenWeight = $schedule->total_weight / $schedule->vessel->deadweight * 100;
@@ -221,7 +237,9 @@ class ScheduleController extends Controller
          $persenSize = 0;
       }
 
-      // dd(round($persen));
+      
+
+      // dd(round($persenWeight));
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,

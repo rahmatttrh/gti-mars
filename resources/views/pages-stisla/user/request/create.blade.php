@@ -210,11 +210,11 @@
                     </thead>
                     <tbody>
                         
-                        @foreach ($scheduleRoutes as $item)
+                        {{-- @foreach ($scheduleRoutes as $item)
                             <tr>
                                 <td></td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
 
 
 
@@ -222,13 +222,13 @@
 
 
 
-                        {{-- @foreach($scheduleRoutes as $route)
+                        @foreach($scheduleRoutes as $route)
                             <tr>
                                 <td>{{$route->port->name}}</td>
                                 <td>{{formatDateName($route->date)}}</td>
                                 <td>{{$route->schedule->vessel->name}}</td>
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                         {{-- @foreach ($schedules as $schedule)
 
                             <tr>

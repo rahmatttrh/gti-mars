@@ -93,6 +93,25 @@
         @endif
         <div class="card">
           <div class="card-header">
+            <h4>Surveillance Activity</h4>
+          </div>
+          <div class="card-body">
+            <div class="card shadow-none card-statistic-2">
+              
+              <div class="card-icon shadow-primary bg-primary">
+                <i class="fas fa-rocket"></i>
+              </div>
+              <div class="card-wrap">
+                <div class="card-header">
+                  <h4>Progress Request</h4>
+                </div>
+                <div class="card-body">12/12/23</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
             <h4>Request Activity</h4>
           </div>
           <div class="card-body">
@@ -138,7 +157,7 @@
               </table>
             </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
     

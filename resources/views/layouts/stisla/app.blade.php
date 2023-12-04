@@ -441,6 +441,15 @@
                     <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
                   </ul>
                 </li>
+                <li class="dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Surveillance Activity</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{route('surveillance.create')}}">Create</a></li> 
+                    <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
+                    <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
+                    <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
+                  </ul>
+                </li>
                 
                 
               </ul>

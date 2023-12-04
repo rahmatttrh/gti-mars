@@ -16,7 +16,7 @@
         @endif
         
         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
-        <div class="breadcrumb-item active">Schedule Detail</div>
+        <div class="breadcrumb-item active">Schedule Detail {{$recentRequests->count()}}</div>
       </div>
     </div>
 
@@ -107,7 +107,7 @@
                             @if ($route->rank > 1)
                       
                             @endif 
-                            {{$route->port->name}} <b>/&nbsp;&nbsp;</b>
+                            {{$route->port->name}} <b>&nbsp;&nbsp;</b>
                           </a>
                           @else
                           @if ($route->rank > 1)
@@ -203,7 +203,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach ($requests->where('activity_id', '!=', 2) as $request)
+                          @foreach ($requests->where('activity_id', 1) as $request)
                             @foreach ($request->cargoItems as $item)
                                 <tr>
                                   <td class=" text-truncate">
@@ -317,7 +317,7 @@
                           </tr>
                         </thead>
                         <tbody>
-                          @foreach ($schedule->requests()->where('activity_id', 2)->get() as $requests)
+                          @foreach ($requests->where('activity_id', 2) as $requests)
                             {{-- <tr>
                               <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
                             </tr> --}}
@@ -379,7 +379,7 @@
                   <div class="summary " >
                     @if ($recentRequests->count() > 0)
                       @foreach ($recentRequests as $req)
-                      @if ($req->activity_id != 3)
+                      {{-- @if ($req->activity_id != 3) --}}
                           
                     
                       {{-- <div class="card">
@@ -412,7 +412,7 @@
                       </div> --}}
                           <hr>
                           
-                          @endif
+                          {{-- @endif --}}
                       @endforeach
                       @else
                       <div class="row">
@@ -681,7 +681,7 @@
           @csrf
           @method('PUT')
           <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+          <input type="number" name="schedule" id="schedule" value="{{$req->schedule->id}}" hidden>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" ">Confirm Approve </h5>

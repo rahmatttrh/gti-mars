@@ -24,6 +24,7 @@ class ParentRequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $parent = ParentRequest::find($dekripId);
+      $now = Carbon::now();
 
       if ($parent->status == 202) {
          $scheduleRoutes = ScheduleRoute::where('date', $parent->date)->where('port_id', $parent->origin_id)->get();
@@ -40,11 +41,39 @@ class ParentRequestController extends Controller
       // $requests = ModelsRequest::where('parent_id', $parent->id)->first();
       // dd($requests->parent->code);
       // dd($parent->requests);
+
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+      $scheduleRoutes = ScheduleRoute::where('port_id', $parent->origin_id)->where('date', $parent->date)->get();
+      // foreach($scheduleRoutes as $sche){
+      //    dd($sche->schedule->vessel->name);
+      // }
+
+      // $nearestVessels = array();
+      // if ($parent->date ==  $now->format('Y-m-d')) {
+      //    // dd('today');
+      //    foreach($vessels as $vessel){
+      //       $vesselLat = $vessel->latitude;
+      //       $vesselLong = $vessel->longitude;
+      //       $portLat = $parent->origin->latitude;
+      //       $portLong = $parent->origin->longitude;
+      //       $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+            
+      //       if($distance < 1800){
+      //          // dd($vessel->name);
+      //          $nearestVessels[] = $vessel;
+      //       }
+      //    }
+      // }
+      // foreach($nearestVessels as $ves){
+      //    dd($ves->name);
+      // }
+      // dd($nearestVessels);
       return view('pages-stisla.request.parent', [
          'parent' => $parent,
          'activities' => $activities,
          'ports' => $ports,
-         'scheduleRoutes' => $scheduleRoutes
+         'scheduleRoutes' => $scheduleRoutes,
+         'vessels' => $vessels
          
       ])->with('i');
    }
@@ -188,8 +217,27 @@ class ParentRequestController extends Controller
 
 
 
-      return redirect()->back()->with('success', 'Request Activity successfully send to marine');
+      return redirect()->back()->with('success', 'You got a vessel!, do you wanna change?');
       // return redirect()->route('request.progress')->with('success', 'Request Activity successfully send to marine');
+   }
+
+   public function change(Request $req){
+      // dd($req->parent);
+      $parent = ParentRequest::find($req->parent);
+      // dd($parent->origin->name);
+
+      foreach($parent->requests as $request){
+         $request->update([
+            'status' => 1,
+            'schedule_id' => $req->schedule
+         ]);
+      }
+
+      $parent->update([
+         'status' => 1
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity sent to Fleet Control');
    }
 
    public function releaseOld($id)
