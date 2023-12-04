@@ -12,6 +12,8 @@ use App\Models\VdrEngine;
 use App\Models\VdrEngineHeading;
 use App\Models\VdrHse;
 use App\Models\VdrHseHeader;
+use App\Models\VdrOperating;
+use App\Models\VdrOperatingHeader;
 use App\Models\VdrWeather;
 use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
@@ -72,6 +74,7 @@ class VdrController extends Controller
         if ($vdr) {
             # code...
             $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+            $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
             $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
             $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
             $hses = VdrHse::where('vdr_id', $vdr->id)->get();
@@ -85,6 +88,7 @@ class VdrController extends Controller
             $hses = null;
             $engines = null;
             $crews = null;
+            $operatings = null;
         }
 
 
@@ -94,6 +98,7 @@ class VdrController extends Controller
             'vessel' => $vessel,
             'vdr' => $vdr,
             'activities' => $activities,
+            'operatings' => $operatings,
             'cargos' => $cargos,
             'weathers' => $weathers,
             'hses' => $hses,
@@ -252,7 +257,26 @@ class VdrController extends Controller
 
                 if (!$vdrEngine) {
                     # code...
-                    $createVdrWeather = VdrEngine::create([
+                    $createVdrEngine = VdrEngine::create([
+                        'vdr_id' => $vdr->id,
+                        'heading_id' => $heading->id,
+                        'created_at' => NOW(),
+                        'updated_at' => NOW()
+                    ]);
+                }
+            }
+
+            $operatingHeadings = VdrOperatingHeader::get();
+
+            foreach ($operatingHeadings as $key => $heading) {
+                # code...
+                $vdrOperating = VdrOperating::where('vdr_id', $vdr->id)
+                    ->where('heading_id', $heading->id)
+                    ->first();
+
+                if (!$vdrOperating) {
+                    # code...
+                    $createVdrOperating = VdrOperating::create([
                         'vdr_id' => $vdr->id,
                         'heading_id' => $heading->id,
                         'created_at' => NOW(),
@@ -363,27 +387,61 @@ class VdrController extends Controller
 
 
 
-        $createVdr = VdrActivity::create([
-            'vdr_id' => $req->id,
-            'created_by' => $req->created_by,
-            'activity' => $req->activity,
-            'start' => $req->start,
-            'finish' => $req->finish,
-            'high' => $req->high,
-            'normal' => $req->normal,
-            'slow' => $req->slow,
-            'manu' => $req->manu,
-            'idle' => $req->idle,
-            'tow' => $req->tow,
-            'ah' => $req->ah,
-            'sb' => $req->sb
-        ]);
+        DB::beginTransaction();
+        // dd($datas);
+        try {
 
-        if ($createVdr) {
-            # code...
-            return redirect()->back()->with('success', 'Activity data successfully saved');
-        } else {
-            return redirect()->back()->with('warning', 'Activity gagal Disimpan!');
+
+            $createVdr = VdrActivity::create([
+                'vdr_id' => $req->id,
+                'created_by' => $req->created_by,
+                'activity' => $req->activity,
+                'start' => $req->start,
+                'finish' => $req->finish,
+                'high' => $req->high,
+                'normal' => $req->normal,
+                'slow' => $req->slow,
+                'manu' => $req->manu,
+                'idle' => $req->idle,
+                'tow' => $req->tow,
+                'ah' => $req->ah,
+                'sb' => $req->sb
+            ]);
+
+
+            $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
+                ->where('vdr_id', $req->vdr_id)
+                ->first();
+
+            $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+
+            foreach ($operatings as $operating) {
+                // dd($operating->heading->field);
+                $field = $operating->heading->field;
+
+                $totalWaktu = $totalOperating->$field;
+
+                dd($totalWaktu);
+
+                $updateOperating = $operating->update([
+                    'time' => floatval($totalWaktu)
+                ]);
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'Activity data successfully saved.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
         }
     }
 
@@ -432,27 +490,56 @@ class VdrController extends Controller
         ]);
 
 
+        DB::beginTransaction();
+        // dd($datas);
+        try {
 
-        $updateVdr = VdrActivity::where('id', $req->id)
-            ->update([
-                'activity' => $req->activity,
-                'start' => $req->start,
-                'finish' => $req->finish,
-                'high' => $req->high,
-                'normal' => $req->normal,
-                'slow' => $req->slow,
-                'manu' => $req->manu,
-                'idle' => $req->idle,
-                'tow' => $req->tow,
-                'ah' => $req->ah,
-                'sb' => $req->sb
-            ]);
 
-        if ($updateVdr) {
-            # code...
-            return redirect()->back()->with('success', 'Activity data successfully updated');
-        } else {
-            return redirect()->back()->with('warning', 'Activity gagal di update!');
+            $updateVdr = VdrActivity::where('id', $req->id)
+                ->update([
+                    'activity' => $req->activity,
+                    'start' => $req->start,
+                    'finish' => $req->finish,
+                    'high' => $req->high,
+                    'normal' => $req->normal,
+                    'slow' => $req->slow,
+                    'manu' => $req->manu,
+                    'idle' => $req->idle,
+                    'tow' => $req->tow,
+                    'ah' => $req->ah,
+                    'sb' => $req->sb
+                ]);
+
+            $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
+                ->where('vdr_id', $req->vdr_id)
+                ->first();
+
+            $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+            foreach ($operatings as $operating) {
+                // dd($operating->heading->field);
+                $field = $operating->heading->field;
+
+                $totalWaktu = $totalOperating->$field;
+
+                $updateOperating = $operating->update([
+                    'time' => floatval($totalWaktu)
+                ]);
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'Activity data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
         }
     }
 

@@ -629,6 +629,7 @@ VDR
                                             <div class="modal-body">
                                                 @csrf
                                                 @method('PUT')
+                                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
                                                 <input type="hidden" name="id" value="{{$activity->id}}" id="">
                                                 <div class="card-body">
                                                     @if ($errors->any())
@@ -794,6 +795,82 @@ VDR
                 @endif
             </div>
             <!-- End Tabel  -->
+            @if($vdr)
+            <!-- Tabel Detail Fuel-->
+            <div class="card mt-3">
+                <div class="card-header">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h2 class="page-title">
+                                SUMMARY OF DAILY OPERATING DATA
+                            </h2>
+                        </div>
+
+
+                        <!-- End modal -->
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table ">
+                        <thead>
+                            <tr class="text-center align-middle">
+                                <th>Operating Mode</th>
+                                <th>Total Time <br> (hh:mm)</th>
+                                <th>Min. Speed as Contract (Knots) <br> </th>
+                                <th>Contractual Fuel Cons. Remuneration Figures</th>
+                                <th>Daily Fuel Cons. by Remuneration Figure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <form action="{{route('vdr.update.cargo')}}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+                                @foreach ($operatings as $operating)
+                                <tr>
+                                    <!-- <td> -->
+                                    <input type="hidden" name="id[]" value="{{$operating->id}}">
+                                    <!-- </td> -->
+                                    <td> {{$operating->heading->description}} </td>
+                                    <td class="text-left align-middle">
+                                        <input type="text" name="time[]" readonly class="form-control" value="{{$operating->time}}">
+                                    </td>
+                                    <td class="text-right align-middle">
+                                        @if($operating->heading->speed == '1')
+                                        <input type="number" name="speed[]" class="form-control" value="{{$operating->speed}}">
+                                        @endif
+                                    </td>
+                                    <td class="text-left align-middle">
+                                        @if($operating->heading->contractual == '1')
+                                        <input type="number" name="contractual_fuel[]" class="form-control" value="{{$operating->contractual_fuel}}">
+                                        @endif
+                                    </td>
+                                    <td class="text-left align-middle">
+                                        @if($operating->heading->daily == '1')
+                                        <input type="text" readonly name="daily[]" class="form-control" value="{{$operating->daily}}">
+                                        @endif
+                                    </td>
+                                </tr>
+
+
+
+                                @endforeach
+
+
+                                <tr>
+                                    <td colspan="4"></td>
+                                    <td>
+                                        <button type="submit" class="btn btn-success"> <i class="fa fa-save"></i> Save</button>
+                                    </td>
+                                </tr>
+                            </form>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- End Table  -->
+            @endif
+
             <!-- Tabel Detail Fuel-->
             <div class="card mt-3">
                 <div class="card-header">
@@ -1080,6 +1157,7 @@ VDR
             <form action="{{route('vdr.store.activity')}}" method="POST">
                 <div class="modal-body">
                     @csrf
+                    <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
                     <input type="hidden" name="id" value="{{$vdr->id}}" id="">
                     <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
                     <input type="hidden" name="created_by" value="{{$user->name}}">

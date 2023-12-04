@@ -17,10 +17,10 @@ class CreateVdrOperatingsTable extends Migration
             $table->id();
             $table->unsignedInteger('vdr_id');
             $table->tinyInteger('heading_id');
-            $table->time('time')->default(0);
+            $table->decimal('time', 4, 2)->default(0.00);
             $table->decimal('speed', 4, 2)->nullable();
             $table->smallInteger('contractual_fuel')->nullable();
-            $table->smallInteger('daily_fuel')->nullable();
+            $table->decimal('daily', 5, 2)->nullable();
             $table->timestamps();
         });
     }
