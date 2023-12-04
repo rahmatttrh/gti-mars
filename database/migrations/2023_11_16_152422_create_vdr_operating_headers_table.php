@@ -15,9 +15,12 @@ class CreateVdrOperatingHeadersTable extends Migration
     {
         Schema::create('vdr_operating_headers', function (Blueprint $table) {
             $table->tinyIncrements('id');
-            $table->unsignedInteger('vdr_id');
             $table->string('description', 100);
-            $table->string('unit', 50);
+            $table->string('unit', 50)->nullable();
+            $table->string('field', 50)->nullable();
+            $table->string('speed', 1)->default(0);
+            $table->string('contractual', 1)->default(1);
+            $table->string('daily', 1)->default(1);
             $table->timestamps();
         });
     }

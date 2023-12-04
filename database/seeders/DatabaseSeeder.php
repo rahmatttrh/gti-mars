@@ -43,6 +43,7 @@ class DatabaseSeeder extends Seeder
          VdrWeatherHeadingSeeder::class,
          VdrHseHeaderSeeder::class,
          VdrEngineHeadingSeeder::class,
+         VdrOperatingHeaderSeeder::class,
          // VesselStatusSeeder::class
       ]);
 
