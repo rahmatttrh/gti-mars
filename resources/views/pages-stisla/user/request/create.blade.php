@@ -15,10 +15,10 @@
     <div class="section-body">
         <ul class="nav nav-pills" id="myTab3" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">Create Request</a>
+              <a class="nav-link active bg-primary text-light" id="home-tab3" data-toggle="tab" href="#home3" role="tab" aria-controls="home" aria-selected="true">Create Request</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">Marine Schedule Plan</a>
+              <a class="nav-link bg-primary text-light ml-2" id="profile-tab3" data-toggle="tab" href="#profile3" role="tab" aria-controls="profile" aria-selected="false">Marine Schedule Plan</a>
             </li>
         </ul>
         <div class="tab-content" id="myTabContent2">
@@ -34,13 +34,22 @@
                             </ul>
                         </div>
                         @endif --}}
+                        @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        @foreach ($errors->all() as $err)
+                                            {{$err}}
+                                        @endforeach
+                                    </div>
+                                @endif
                         <div class="card border" >
                             <form action="{{route('request.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
+                                
                                 <div class="card-header bg-primary text-white">
                                     <h4>Form Add Request Activity</h4>
                                 </div>
                                 <div class="card-body">
+                                    
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Type</label>
@@ -200,13 +209,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($scheduleRoutes as $route)
+                        
+                        @foreach ($scheduleRoutes as $item)
+                            <tr>
+                                <td></td>
+                            </tr>
+                        @endforeach
+
+
+
+
+
+
+
+                        {{-- @foreach($scheduleRoutes as $route)
                             <tr>
                                 <td>{{$route->port->name}}</td>
                                 <td>{{formatDateName($route->date)}}</td>
                                 <td>{{$route->schedule->vessel->name}}</td>
                             </tr>
-                        @endforeach
+                        @endforeach --}}
                         {{-- @foreach ($schedules as $schedule)
 
                             <tr>

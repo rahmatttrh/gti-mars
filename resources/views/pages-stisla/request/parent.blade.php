@@ -98,53 +98,54 @@
                   </div>
                 </div>
                 @if ($parent->status == 0)
-                <div class="col">
-                  <form action="{{route('parent.add.cargo')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
-                    <div class="form-group">
-                       <div class="input-group">
-                          <input type="file" class="form-control" name="file-cargo" id="file-cargo">
+                  <div class="col">
+                    <form action="{{route('parent.add.cargo')}}" method="POST" enctype="multipart/form-data">
+                      @csrf
+                      <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
+                      <div class="form-group">
+                        <div class="input-group">
+                            <input type="file" class="form-control" name="file-cargo" id="file-cargo">
+                            
+                          <div class="input-group-append">
+                            <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
+                          </div>
+                        </div>
+                      </div>
+                      {{-- <div class="form-row">
+                        <div class="form-group col-md-12">
+                          <label for="status">Vessel</label>
                           
-                         <div class="input-group-append">
-                           <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
-                         </div>
-                       </div>
-                    </div>
-                    {{-- <div class="form-row">
-                       <div class="form-group col-md-12">
-                         <label for="status">Vessel</label>
-                         
-                       </div>
-                    </div>
-                    <button class="btn btn-primary btn-lg">Report Status</button> --}}
-                 </form>
-                 <form class="" action="{{route('parent.add.crew')}}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
-                    <div class="form-group">
-                       <div class="input-group">
-                          <input type="file" class="form-control" name="file-crew" id="file-crew">
-                          <select class="form-control" name="destination" id="destination">
-                             <option selected disabled>Destination...</option>
-                                @foreach ($ports as $port)
-                                <option value="{{$port->id}}">{{$port->name}} *</option>
-                                @endforeach
-                          </select>
-                         <div class="input-group-append">
-                           <button class="btn btn-primary px-4" type="submit">Add Crew</button>
-                         </div>
-                       </div>
-                    </div>
-                    {{-- <div class="form-row">
-                       <div class="form-group col-md-12">
-                         <label for="status">Vessel</label>
-                         
-                       </div>
-                    </div>
-                    <button class="btn btn-primary btn-lg">Report Status</button> --}}
-                 </form>
-                </div> 
+                        </div>
+                      </div>
+                      <button class="btn btn-primary btn-lg">Report Status</button> --}}
+                    </form>
+                    <form class="" action="{{route('parent.add.crew')}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
+                        <div class="form-group">
+                          <div class="input-group">
+                              <input type="file" class="form-control" name="file-crew" id="file-crew">
+                              <select class="form-control" name="destination" id="destination">
+                                <option selected disabled>Destination...</option>
+                                    @foreach ($ports as $port)
+                                    <option value="{{$port->id}}">{{$port->name}} *</option>
+                                    @endforeach
+                              </select>
+                            <div class="input-group-append">
+                              <button class="btn btn-primary px-4" type="submit">Add Crew</button>
+                            </div>
+                          </div>
+                        </div>
+                        {{-- <div class="form-row">
+                          <div class="form-group col-md-12">
+                            <label for="status">Vessel</label>
+                            
+                          </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg">Report Status</button> --}}
+                    </form>
+                  </div> 
+                  
                 @endif
                 
               </div>
@@ -218,25 +219,25 @@
                                   @endif
                                 </td> --}}
                                 @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                <td>
-                                  <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
-                                  </div>
-                                </td>
-                                  @endif
-                                @if ($request->status == 10 && auth()->user()->hasRole('department'))
                                   <td>
-                                      @if ($item->status == 1)
-                                        <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                        <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
-                                        @else
-                                        -
-                                      @endif
+                                    <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
+                                      <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
+                                    </div>
                                   </td>
-                                  
-                                  
+                                  @elseif($request->status == 10 && auth()->user()->hasRole('department'))
+                                  <td>
+                                    @if ($item->status == 1)
+                                      <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                      <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
+                                      @else
+                                      -
+                                    @endif
+                                </td>
+                                @else
+                                <td>-</td>
                                 @endif
+                               
                             </tr>
                           @endforeach
                         @endforeach

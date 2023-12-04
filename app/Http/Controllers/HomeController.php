@@ -952,7 +952,7 @@ class HomeController extends Controller
 
       $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
       $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
-      return view('home-vessel', [
+      return view('home', [
          'today' => $today,
          'vessel' => $vessel,
          'schedules' => $schedules,

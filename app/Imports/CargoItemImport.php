@@ -11,8 +11,9 @@ use App\Models\Request;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class CargoItemImport implements ToModel, WithHeadingRow
+class CargoItemImport implements ToModel, WithHeadingRow, WithValidation
 {
     /**
     * @param array $row
@@ -236,5 +237,12 @@ class CargoItemImport implements ToModel, WithHeadingRow
         // ]);
 
         
+    }
+
+    public function rules(): array
+    {
+        return [
+            'bcm' => 'required'
+        ];
     }
 }
