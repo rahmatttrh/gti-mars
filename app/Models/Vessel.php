@@ -33,4 +33,8 @@ class Vessel extends Model
    public function schedule(){
       return $this->belongsTo(Schedule::class);
    }
+
+   public function surveillances(){
+      return $this->hasMany(Surveillance::class);
+   }
 }

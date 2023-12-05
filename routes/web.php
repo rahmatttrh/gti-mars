@@ -79,7 +79,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix("surveillance")->group(function () {
       Route::get("create", [SurveillanceController::class, "create",])->name('surveillance.create');
-      Route::get("detail/{vessel:id}", [SurveillanceController::class, "detail",])->name('surveillance.detail');
+      Route::get("detail/{id}", [SurveillanceController::class, "detail",])->name('surveillance.detail');
       Route::post("cargo/store", [SurveillanceCargoController::class, "store",])->name('surveillance.cargo.store');
       Route::get("cargo/send/{id}", [SurveillanceCargoController::class, "send",])->name('surveillance.cargo.send');
 

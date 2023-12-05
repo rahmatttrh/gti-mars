@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\GeofenceController;
+use App\Models\Surveillance;
 
 class HomeController extends Controller
 {
@@ -952,10 +953,12 @@ class HomeController extends Controller
 
       $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
       $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
+      $surveillances = Surveillance::where('vessel_id', $vessel->id)->get();
       return view('home-vessel', [
          'today' => $today,
          'vessel' => $vessel,
          'schedules' => $schedules,
+         'surveillances' => $surveillances,
          'nowSchedule' => $nowSchedule,
          'recentSchedules' => $recentSchedules,
          'reports' => $reports,

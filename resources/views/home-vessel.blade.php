@@ -97,16 +97,16 @@
           </div>
           <div class="card-body">
             <div class="card shadow-none card-statistic-2">
-              
-              <div class="card-icon shadow-primary bg-primary">
-                <i class="fas fa-rocket"></i>
-              </div>
+              @foreach ($surveillances as $surv)
+             
               <div class="card-wrap">
-                <div class="card-header">
+                {{-- <div class="card-header">
                   <h4>Progress Request</h4>
-                </div>
-                <div class="card-body">12/12/23</div>
+                </div> --}}
+                <div class="card-body"><a href="{{route('surveillance.detail', enkripRambo($surv->id))}}">{{formatDate($surv->date)}} - {{$surv->vessel->name}}</a> </div>
               </div>
+              <hr>
+              @endforeach
             </div>
           </div>
         </div>

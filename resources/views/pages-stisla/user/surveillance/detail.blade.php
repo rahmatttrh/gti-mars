@@ -13,14 +13,50 @@
     </div>
 
     <div class="section-body">
-      <h2 class="section-title">Detail Surveillance Activity</h2>
+      {{-- <h2 class="section-title">Detail Surveillance Activity</h2> --}}
             {{-- <p class="section-lead">Select vessel.</p> --}}
 
       <div class="row">
-        <div class="col-md-12">
+        @if (auth()->user()->hasRole('vessel'))
+            <div class="col-md-4">
+              <div class="card border">
+                <div class="card-body">
+                  <form action="">
+                    <div class="form-row">
+                      <div class="form-group col-md-6">
+                        <label>Status</label>
+                        <select style="background-color: lightgrey" class="custom-select" id="status" name="status">
+                            <option  disabled selected>Choose one</option>
+                            @foreach ($statuses as $status)
+                                <option {{ old('status') == $status->id ? 'selected' : ''}} value="{{$status->id}}">{{$status->name}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                      <div class="form-group col-md-6">
+                        <label>Location</label>
+                        <select style="background-color: lightgrey" class="custom-select" id="destination" name="destination">
+                            <option  disabled selected>Choose one</option>
+                            @foreach ($ports as $port)
+                                <option {{ old('port') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                            @endforeach
+                        </select>
+                      </div>
+                    </div>
+                    <button class="btn btn-primary btn-block">Submit</button>
+                  </form>
+                </div>
+                <div class="card-footer bg-whitesmoke">
+                  <a href="" class="btn btn-success btn-block">Complete</a>
+                </div>
+              </div>
+              
+              
+            </div>
+        @endif
+        <div class="col">
           <div class="pricing pricing-highlight border">
             <div class="pricing-title">
-              Intan-B
+              {{$surveillance->port->name ?? '-'}}
             </div>
             <div class="pricing-padding">
               <div class="pricing-price">
@@ -37,6 +73,7 @@
               <h4>Cargo</h4>
               {{-- {{$request->cargoItems->sum('weight')}} --}}
             </div>
+            @if (auth()->user()->hasRole('department'))
             <div class="card-body">
               <form action="{{route('surveillance.cargo.store')}}" method="POST">
                 @csrf
@@ -78,6 +115,8 @@
                 
               </form>
             </div>
+            @endif
+            
             <div class="card-body p-3">
               <div class="table-responsive">
                 <table class="table table-striped" id="table-4">
@@ -107,14 +146,15 @@
                         <td class="text-center">{{$cargo->weight}}</td>
                         <td class="text-center"><x-status-stisla.surveillance-cargo :cargo="$cargo" /> </td>
                         <td>
-                          @if ($cargo->status == 0 && $cargo->origin_id == auth()->user()->getPort() )
-                          <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
-                            <a href="{{route('surveillance.cargo.send', enkripRambo($cargo->id))}}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="klik untuk mengirim data ke Vessel"><i class="fa fa-check"></i></a>
-                            <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                          </div>
+                          @if (auth()->user()->hasRole('deparmtent'))
+                            @if ($cargo->status == 0 && $cargo->origin_id == auth()->user()->getPort() )
+                            <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                              <button type="button" class="btn btn-primary"><i class="fa fa-edit"></i></button>
+                              <a href="{{route('surveillance.cargo.send', enkripRambo($cargo->id))}}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="klik untuk mengirim data ke Vessel"><i class="fa fa-check"></i></a>
+                              <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+                            </div>
+                            @endif
                           @endif
-                          
                         </td>
                       </tr>
                     @endforeach
@@ -129,6 +169,7 @@
               <h4>Passenger</h4>
               {{-- {{$request->cargoItems->sum('weight')}} --}}
             </div>
+            @if (auth()->user()->hasRole('department'))
             <div class="card-body">
               <form action="">
                 <div class="form-row">
@@ -172,6 +213,7 @@
                 
               </form>
             </div>
+            @endif
             <div class="card-body p-3">
               <div class="table-responsive">
                 <table class="table table-striped" id="table-4">

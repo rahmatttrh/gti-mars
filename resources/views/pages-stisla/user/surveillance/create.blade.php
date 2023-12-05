@@ -17,26 +17,29 @@
             <p class="section-lead">Select vessel for today activity.</p>
 
             <div class="row">
-              <div class="col-md-6">
-                <div class="pricing pricing-highlight border">
-                  <div class="pricing-title">
-                    Intan-B
-                  </div>
-                  <div class="pricing-padding">
-                    
-                    <div class="pricing-price">
-                      <div>{{$avior->name}}</div>
-                      <div>{{$avior->type}}</div>
+                @foreach ($todaySurveillances as $surv)
+                <div class="col-md-6">
+                    <div class="pricing pricing-highlight border">
+                      <div class="pricing-title">
+                        Intan-B
+                      </div>
+                      <div class="pricing-padding">
+                        
+                        <div class="pricing-price">
+                          <div>{{$surv->vessel->name}}</div>
+                          <div>{{formatDate($surv->date)}}</div>
+                        </div>
+                        
+    
+                      </div>
+                      <div class="pricing-cta">
+                        <a href="{{route('surveillance.detail', enkripRambo($surv->id))}}">Choose <i class="fas fa-arrow-right"></i></a>
+                      </div>
                     </div>
-                    
-
-                  </div>
-                  <div class="pricing-cta">
-                    <a href="{{route('surveillance.detail', enkripRambo($avior->id))}}">Choose <i class="fas fa-arrow-right"></i></a>
-                  </div>
                 </div>
-              </div>
-              <div class="col-md-6">
+                @endforeach
+              
+              {{-- <div class="col-md-6">
                 <div class="pricing pricing-highlight border">
                   <div class="pricing-title">
                     Aida-A
@@ -46,34 +49,12 @@
                       <div>{{$marvela->name}}</div>
                       <div>{{$marvela->type}}</div>
                     </div>
-                    {{-- <div class="pricing-details">
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">5 user agent</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">Core features</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">10GB storage</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">10 Custom domain</div>
-                      </div>
-                      <div class="pricing-item">
-                        <div class="pricing-item-icon"><i class="fas fa-check"></i></div>
-                        <div class="pricing-item-label">24/7 Support</div>
-                      </div>
-                    </div> --}}
                   </div>
                   <div class="pricing-cta">
                     <a href="#">Choose <i class="fas fa-arrow-right"></i></a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
             </div>
             <hr>
             <div class="row">
@@ -91,8 +72,9 @@
                                     </div>
                                     <div class="form-group col-md-8">
                                         <label>Vessel</label>
-                                        <select style="background-color: lightgrey" class="custom-select" id="activity" name="activity">
-                                            <option  disabled selected>Choose one</option>
+                                        <select style="background-color: lightgrey" class="custom-select" id="vessel" name="vessel">
+                                            <option  value="17" >OPS AVIOR</option>
+                                            <option  value="8" >MARVELA 08</option>
                                             {{-- @foreach ($activities as $activity)
                                                 <option {{ old('activity') == $activity->id ? 'selected' : ''}} value="{{$activity->id}}">{{$activity->name}}</option>
                                             @endforeach --}}
