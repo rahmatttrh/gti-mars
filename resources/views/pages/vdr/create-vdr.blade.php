@@ -761,30 +761,16 @@ VDR
                                 </div>
                             </div>
 
-                            @php
-                            $totalHigh += $activity->high;
-
-                            $totalNormal += $activity->normal;
-                            $totalSlow += $activity->slow;
-                            $totalManu += $activity->manu;
-                            $totalIdle += $activity->idle;
-                            $totalTow += $activity->tow;
-                            $totalAh += $activity->ah;
-                            $totalAb += $activity->sb;
-                            @endphp
                             <!-- End Modal  -->
                             @endforeach
 
                             <tr>
                                 <td colspan="2" class="text-center">Total</td>
-                                <td>{{floatToTime($totalHigh)}}</td>
-                                <td>{{floatToTime($totalNormal)}}</td>
-                                <td>{{floatToTime($totalSlow)}}</td>
-                                <td>{{floatToTime($totalManu)}}</td>
-                                <td>{{floatToTime($totalIdle)}}</td>
-                                <td>{{floatToTime($totalTow)}}</td>
-                                <td>{{floatToTime($totalAh)}}</td>
-                                <td>{{floatToTime($totalAb)}}</td>
+                                @foreach ($operatings as $operating)
+                                @if($operating->heading->field)
+                                <td>{{floatToTime($operating->time)}}</td>
+                                @endif
+                                @endforeach
                             </tr>
 
 

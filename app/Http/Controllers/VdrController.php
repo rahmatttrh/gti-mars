@@ -364,6 +364,40 @@ class VdrController extends Controller
         }
     }
 
+    public function hitungTime($cumValue, $currentValue)
+    {
+        // Pisahkan bagian jam dan menit
+        $cumMinutes =  fmod($cumValue, 1) * 100;
+        $thisMinutes =  fmod($currentValue, 1) * 100;
+        $totalMinutes = $cumMinutes + $thisMinutes;
+
+        if ($totalMinutes > 59) {
+
+            $hours = floor($currentValue);
+
+            # code...
+            if ($totalMinutes == 60) {
+                # code...
+                $sisaMinutes = 0;
+                $tambahHours = 1;
+            } else {
+                $sisaMinutes = $totalMinutes - 60;
+                $tambahHours = 1;
+            }
+
+            $penambahanJam = $hours + $tambahHours + ($sisaMinutes / 100);
+
+            $result = $penambahanJam + floor($cumValue);
+            // $penambahan
+
+        } else {
+
+            $result = $cumValue + $currentValue;
+        }
+
+        return $result;
+    }
+
     public function storeActivity(Request $req)
     {
 
@@ -408,26 +442,68 @@ class VdrController extends Controller
                 'sb' => $req->sb
             ]);
 
+            $high = 0;
+            $normal = 0;
+            $slow = 0;
+            $manu = 0;
+            $idle = 0;
+            $tow = 0;
+            $ah = 0;
+            $sb = 0;
 
-            $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
-                ->where('vdr_id', $req->vdr_id)
-                ->first();
+            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+
+            foreach ($activities as $key => $activity) {
+
+                $high = $this->hitungTime($high, $activity->high);
+
+                $normal = $this->hitungTime($normal, $activity->normal);
+
+                $slow = $this->hitungTime($slow, $activity->slow);
+
+                $manu = $this->hitungTime($manu, $activity->manu);
+
+                $idle = $this->hitungTime($idle, $activity->idle);
+
+                $tow = $this->hitungTime($tow, $activity->tow);
+
+                $ah = $this->hitungTime($ah, $activity->ah);
+
+                $sb = $this->hitungTime($sb, $activity->sb);
+            }
+
+            $totalMode = array(
+                'high'   => $high,
+                'normal' => $normal,
+                'slow'   => $slow,
+                'manu'   => $manu,
+                'idle'   => $idle,
+                'tow'    => $tow,
+                'ah'     => $ah,
+                'sb'     => $sb
+            );
+
+            // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
+            //     ->where('vdr_id', $req->vdr_id)
+            //     ->first();
 
             $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
 
+
             foreach ($operatings as $operating) {
-                // dd($operating->heading->field);
+
                 $field = $operating->heading->field;
 
-                $totalWaktu = $totalOperating->$field;
 
-                dd($totalWaktu);
+                if ($field) {
+                    # code...
+                    $totalWaktu = $totalMode[$field];
 
-                $updateOperating = $operating->update([
-                    'time' => floatval($totalWaktu)
-                ]);
+                    $updateOperating = $operating->update([
+                        'time' => floatval($totalWaktu)
+                    ]);
+                }
             }
-
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
@@ -510,21 +586,67 @@ class VdrController extends Controller
                     'sb' => $req->sb
                 ]);
 
-            $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
-                ->where('vdr_id', $req->vdr_id)
-                ->first();
+            $high = 0;
+            $normal = 0;
+            $slow = 0;
+            $manu = 0;
+            $idle = 0;
+            $tow = 0;
+            $ah = 0;
+            $sb = 0;
+
+            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+
+            foreach ($activities as $key => $activity) {
+
+                $high = $this->hitungTime($high, $activity->high);
+
+                $normal = $this->hitungTime($normal, $activity->normal);
+
+                $slow = $this->hitungTime($slow, $activity->slow);
+
+                $manu = $this->hitungTime($manu, $activity->manu);
+
+                $idle = $this->hitungTime($idle, $activity->idle);
+
+                $tow = $this->hitungTime($tow, $activity->tow);
+
+                $ah = $this->hitungTime($ah, $activity->ah);
+
+                $sb = $this->hitungTime($sb, $activity->sb);
+            }
+
+            $totalMode = array(
+                'high'   => $high,
+                'normal' => $normal,
+                'slow'   => $slow,
+                'manu'   => $manu,
+                'idle'   => $idle,
+                'tow'    => $tow,
+                'ah'     => $ah,
+                'sb'     => $sb
+            );
+
+            // dd($totalMode);
 
             $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+
+
             foreach ($operatings as $operating) {
-                // dd($operating->heading->field);
+
                 $field = $operating->heading->field;
 
-                $totalWaktu = $totalOperating->$field;
 
-                $updateOperating = $operating->update([
-                    'time' => floatval($totalWaktu)
-                ]);
+                if ($field) {
+                    # code...
+                    $totalWaktu = $totalMode[$field];
+
+                    $updateOperating = $operating->update([
+                        'time' => floatval($totalWaktu)
+                    ]);
+                }
             }
+
 
 
             // Jika semuanya berhasil, kita commit transaksi

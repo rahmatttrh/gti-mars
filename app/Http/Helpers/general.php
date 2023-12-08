@@ -31,10 +31,12 @@ function floatToTime($floatValue)
    $minutes =  fmod($floatValue, 1) * 100;
    // $minutes =  substr($minutes, 2);
 
-   $hours = floor($floatValue);
+   // Menambahkan angka 0 di depan jika hanya satu digit
+   $hours = sprintf('%02d', floor($floatValue));
 
    // Format waktu dengan angka nol di depan jika diperlukan
-   $formattedTime = sprintf('%02d:%02d', $hours, $minutes);
+   // $formattedTime = sprintf('%02d:%02d', $hours, $minutes);
+   $formattedTime = $hours . ':' . $minutes;
 
    return $formattedTime;
 }
