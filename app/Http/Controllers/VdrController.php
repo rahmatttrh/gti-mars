@@ -80,6 +80,8 @@ class VdrController extends Controller
             $hses = VdrHse::where('vdr_id', $vdr->id)->get();
             $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
             $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
+            $totalJam = VdrOperating::where('vdr_id', $vdr->id)->sum('time');
+            $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
             // 
         } else {
             $activities = null;
@@ -89,6 +91,7 @@ class VdrController extends Controller
             $engines = null;
             $crews = null;
             $operatings = null;
+            $totalJam = null;
         }
 
 
@@ -103,18 +106,10 @@ class VdrController extends Controller
             'weathers' => $weathers,
             'hses' => $hses,
             'engines' => $engines,
-            'crews' => $crews
+            'crews' => $crews,
+            'totalJam' => $totalJam,
+            'totalDaily' => $totalDaily
         ])->with('i');
-
-        // return view('pages.vdr.create-vdr', [
-        //     'user' => $user,
-        //     'vessel' => $vessel,
-        //     'vdr' => $vdr,
-        //     'activities' => $activities,
-        //     'cargos' => $cargos,
-        //     'weathers' => $weathers,
-        //     'hses' => $hses,
-        // ])->with('i');
     }
 
 
@@ -505,6 +500,9 @@ class VdrController extends Controller
                 }
             }
 
+            // Hitung Operating Data
+            $this->hitungOperatingData($req->vdr_id);
+
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
 
@@ -627,7 +625,9 @@ class VdrController extends Controller
                 'sb'     => $sb
             );
 
-            // dd($totalMode);
+            // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
+            //     ->where('vdr_id', $req->vdr_id)
+            //     ->first();
 
             $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
 
@@ -648,6 +648,8 @@ class VdrController extends Controller
             }
 
 
+            // Hitung Operating Data
+            $this->hitungOperatingData($req->vdr_id);
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
@@ -662,6 +664,31 @@ class VdrController extends Controller
             return back()->with('warning', 'Failed, Data gagal di Update!');
             // Handle atau laporkan kesalahan
             // return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
+
+    public function hitungOperatingData($vdrId)
+    {
+
+        // get Operating Data 
+
+        $operatings = VdrOperating::where('vdr_id', $vdrId)->get();
+
+        foreach ($operatings as $key => $operating) {
+
+            $bulat = floor($operating->time);
+
+            $desimal = $operating->time - $bulat;
+
+            $a = $bulat * $operating->contractual_fuel;
+
+            $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+
+            $daily = round($a + $b);
+
+            $operatingUpdate = $operating->update([
+                'daily' => $daily
+            ]);
         }
     }
 
@@ -888,6 +915,54 @@ class VdrController extends Controller
                         'a_other' => $req->a_other[$key]
                     ]);
                 }
+            }
+
+
+            // Jika semuanya berhasil, kita commit transaksi
+            DB::commit();
+
+            return back()->with('success', 'VDR Engine data successfully updated.');
+        } catch (\Exception $e) {
+            // Jika terjadi kesalahan, kita rollback transaksi
+            DB::rollback();
+            Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+            return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+
+            return back()->with('warning', 'Failed, Data gagal di Update!');
+            // Handle atau laporkan kesalahan
+            // return response()->json(['message' => 'Failed to create order'], 500);
+        }
+    }
+
+    public function updateOperating(Request $req)
+    {
+        $req->validate([
+            'id' => 'required',
+            'vdr_id' => 'required'
+        ]);
+
+
+        $datas = $req->id;
+
+        DB::beginTransaction();
+        // dd($datas);
+        try {
+
+            foreach ($datas as $key => $operatingId) {
+
+                $operating = VdrOperating::find($operatingId);
+
+
+                // if ($operating->heading->field != null) {
+
+                # code...
+                $updateOperating = $operating->update([
+                    'speed' => $req->speed[$key],
+                    'contractual_fuel' => $req->contractual_fuel[$key],
+                    'daily' => $req->daily[$key]
+                ]);
+                // echo $updateOperating;
+                // }
             }
 
 

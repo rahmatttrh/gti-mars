@@ -800,7 +800,7 @@ VDR
                     <table class="table ">
                         <thead>
                             <tr class="text-center align-middle">
-                                <th>Operating Mode</th>
+                                <th class="col-md-4">Operating Mode</th>
                                 <th>Total Time <br> (hh:mm)</th>
                                 <th>Min. Speed as Contract (Knots) <br> </th>
                                 <th>Contractual Fuel Cons. Remuneration Figures</th>
@@ -808,12 +808,12 @@ VDR
                             </tr>
                         </thead>
                         <tbody>
-                            <form action="{{route('vdr.update.cargo')}}" method="POST">
+                            <form action="{{route('vdr.update.operating')}}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
                                 @foreach ($operatings as $operating)
-                                <tr>
+                                <tr id="baris-{{$operating->id}}">
                                     <!-- <td> -->
                                     <input type="hidden" name="id[]" value="{{$operating->id}}">
                                     <!-- </td> -->
@@ -824,24 +824,49 @@ VDR
                                     <td class="text-right align-middle">
                                         @if($operating->heading->speed == '1')
                                         <input type="number" name="speed[]" class="form-control" value="{{$operating->speed}}">
+                                        @else
+                                        <input type="hidden" name="speed[]" class="form-control" value="{{$operating->speed}}">
                                         @endif
                                     </td>
+
                                     <td class="text-left align-middle">
                                         @if($operating->heading->contractual == '1')
-                                        <input type="number" name="contractual_fuel[]" class="form-control" value="{{$operating->contractual_fuel}}">
+                                        <div class="input-group mb-3">
+                                            <input type="number" name="contractual_fuel[]" class="form-control" value="{{$operating->contractual_fuel}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">L/H</span>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <input type="hidden" name="contractual_fuel[]" class="form-control" value="{{$operating->contractual_fuel}}">
                                         @endif
                                     </td>
                                     <td class="text-left align-middle">
+
+
                                         @if($operating->heading->daily == '1')
-                                        <input type="text" readonly name="daily[]" class="form-control" value="{{$operating->daily}}">
+                                        <div class="input-group mb-3">
+                                            <input type="text" readonly name="daily[]" class="form-control" value="{{round($operating->daily)}}">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text" id="basic-addon2">Ltrs</span>
+                                            </div>
+                                        </div>
+                                        @else
+                                        <input type="hidden" readonly name="daily[]" class="form-control" value="{{$operating->daily}}">
                                         @endif
                                     </td>
                                 </tr>
-
-
-
                                 @endforeach
-
+                                <tr>
+                                    <th>Total Daily</th>
+                                    <th>
+                                        {{$totalJam}}
+                                    </th>
+                                    <th colspan="2"></th>
+                                    <th>
+                                        {{round($totalDaily)}} Ltrs
+                                    </th>
+                                </tr>
 
                                 <tr>
                                     <td colspan="4"></td>
@@ -1501,5 +1526,34 @@ VDR
             $(".passenger").prop("checked", true);
         }
     }
+
+
+    // Perhitungan Operating Mode
+    // Tangkap perubahan pada input time[] dan contractual_fuel[]
+    $('input[name^="time[]"], input[name^="contractual_fuel[]"]').on('input', function() {
+        // Dapatkan ID baris
+        var rowId = $(this).closest('tr').attr('id');
+
+        // Dapatkan nilai dari input time[]
+        var timeValue = parseFloat($('input[name="time[]"]', '#' + rowId).val()) || 0;
+
+        let bulat = Math.floor(timeValue);
+
+        let desimal = timeValue - bulat;
+
+
+        console.log((desimal * 100) / 60);
+
+        // Dapatkan nilai dari input contractual_fuel[]
+        var contractualFuelValue = parseFloat($('input[name="contractual_fuel[]"]', '#' + rowId).val()) || 0;
+
+        let a = bulat * contractualFuelValue;
+        let b = ((desimal * 100) / 60) * contractualFuelValue;
+        // Hitung hasil perkalian
+        var result = Math.round(a + b);
+
+        // Set hasil perkalian ke input daily[]
+        $('input[name="daily[]"]', '#' + rowId).val(result);
+    });
 </script>
 @endpush
