@@ -75,7 +75,7 @@ class VdrOperatingHeaderSeeder extends Seeder
 
         DB::table('vdr_operating_headers')->insert([
             'description' => 'Maintenance',
-            'contractual' => '1',
+            'contractual' => '0',
             'daily' => '1',
             'created_at' => NOW(),
             'updated_at' => NOW()
@@ -83,7 +83,7 @@ class VdrOperatingHeaderSeeder extends Seeder
 
         DB::table('vdr_operating_headers')->insert([
             'description' => 'Down Time',
-            'contractual' => '1',
+            'contractual' => '0',
             'daily' => '1',
             'created_at' => NOW(),
             'updated_at' => NOW()

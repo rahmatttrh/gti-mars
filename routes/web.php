@@ -201,7 +201,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('parent.release');
       Route::post('parent/change/vessel', [ParentRequestController::class, 'change'])->name('parent.change.vessel');
 
-      
+
 
       Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
    });
@@ -412,9 +412,9 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
-      
+
       Route::get('detail/{id}', [VdrController::class, 'show'])->name('vdr.show');
-      
+
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
@@ -438,6 +438,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
       Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
 
+      Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
    });
