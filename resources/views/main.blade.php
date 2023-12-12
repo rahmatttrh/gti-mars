@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Marine OPS - Home Page</title>
+  <title>PORT - Home Page</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -28,7 +28,7 @@
 <body class="layout-3">
   <div id="app">
     <div class="main-wrapper container">
-      <div class="navbar-bg bg-primary"></div>
+      <div class="navbar-bg" style="background-color: #0b4e99"></div>
       <nav class="navbar navbar-expand-lg main-navbar">
         <ul class="navbar-nav mr-3">
           
@@ -40,7 +40,7 @@
           <li>
             <a href="index.html" class="navbar-brand sidebar-gone-hide ml-3">
           
-              OSES MARINE OPS IS
+             PORT
             {{-- <small>Lorem ipsum dolor sit amet consectetur.</small>   --}}
             </a>
           </li>
@@ -284,24 +284,24 @@
         </ul>
       </nav>
 
-      <nav class="navbar navbar-secondary navbar-expand-lg">
+      <nav class="navbar navbar-secondary navbar-expand-lg border">
         <div class="container">
           @if (auth()->user()->hasRole('marine'))
             <ul class="navbar-nav">
               <li class="nav-item ">
-                <a href="{{route('dsp.marine')}}" class="nav-link">
+                <a href="{{route('dsp.marine')}}" class="mr-2 btn btn-primary">
                   {{-- <i class="far fa-heart"></i> --}}
                   <span>Digital Smart Port</span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="#" class="nav-link">
+                <a href="#" class="mr-2 btn btn-primary">
                   {{-- <i class="fa fa-document"></i> --}}
                   <span>Vessel Daily Report</span>
                 </a>
               </li>
               <li class="nav-item ">
-                <a href="#" class="nav-link">
+                <a href="#" class=" btn btn-primary">
                   {{-- <i class="far fa-heart"></i> --}}
                   <span>AIMS</span>
                 </a>
@@ -379,24 +379,12 @@
                   </div>
                 </div>
                 <hr>
-                <div class="card">
-                  <div class="card-header">
-                    <h4>OSES MARINE OPERATION INFORMATION SYSTEM</h4>
-                  </div>
-                  <div class="card-body">
-                    <p>The purpose of the Marine Operation Information System is to assess and improve Marine assurance, technical and operational to the managing safe work procedures to assure marine work activities are completed without incident and poor reliability. These activities include Digital Smart Port, Vessel Daily Report, Preventive maintenance System, Contractor Safety Management System, Service performance Report, Leadership Engagement, Leadership Safeguard Verification, General Inspection. , Fuel Monitoring System. The Marine Operation Team conduct field engagements and written assessments to evaluate knowledge and conformance to safe work procedures. During the field engagement, the team uses a protocol specific to the safe work procedure being observed that is aligned with IMO and industry standards, regulations, and managing safe work procedures. Results of the assessments are shared immediately with the employee or contractor. If an assessment identifies significant opportunities for improvement, the Marine Operation Team will conduct a follow up observation with the employee of contractor to validate the coaching was effective. On a routine basis, the data from the assessments is gathered and analyzed to identify systemic gaps and remedial actions for improvement. </p>
-                  </div>
-                  <div class="card-footer bg-whitesmoke">
-                    Development
-                  </div>
-                </div>
+                
               </div>
               <div class="col-md-5">
-                <div class="card border">
-                  <div class="card-header">
-                    <h4>About this app</h4>
-                  </div>
-                  <div class="card-body">
+                {{-- <div class="card border">
+                  
+                  <div class="card-body"> --}}
                     <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                       <ol class="carousel-indicators">
                         <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
@@ -404,25 +392,25 @@
                         <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
                       </ol>
                       <div class="carousel-inner">
-                        <div class="carousel-item active">
-                          <img class="d-block w-100" src="{{asset('img/bg/port.jpg')}}" alt="First slide">
+                        <div class="carousel-item active" style="max-height: 250px">
+                          <img class="d-block w-100 rounded"  src="{{asset('img/bg/port.jpg')}}" alt="First slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.5);">
                             <h5>DSP - PHE</h5>
                             <p>Digital Smart Port PHE adalah sistem yang digunakan untuk mengelola Request Activity dan Schedule Vessel.</p>
                           </div>
                         </div>
-                        <div class="carousel-item">
-                          <img class="d-block w-100" src="{{asset('img/bg/barge.jpg')}}" alt="Second slide">
+                        <div class="carousel-item" style="max-height: 250px">
+                          <img class="d-block w-100 rounded" src="{{asset('img/bg/barge.jpg')}}" alt="Second slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.7);">
                             <h5>VDR</h5>
                             <p>- Under Development -</p>
                           </div>
                         </div>
-                        <div class="carousel-item">
-                          <img class="d-block w-100" src="{{asset('img/bg/rig.jpg')}}" alt="Third slide">
+                        <div class="carousel-item" style="max-height: 250px">
+                          <img class="d-block w-100 rounded" src="{{asset('img/bg/rig.jpg')}}" alt="Third slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.7);">
                             <h5>AIMS</h5>
-                            <p>- Coming soon -</p>
+                            <p>- Under Development -</p>
                           </div>
                         </div>
                       </div>
@@ -435,11 +423,26 @@
                         <span class="sr-only">Next</span>
                       </a>
                     </div>
+                  {{-- </div>
+                </div> --}}
+              </div>
+            </div>
+            <hr>
+            <div class="row ">
+              <div class="col">
+                <div class="card border">
+                  <div class="card-header">
+                    <h3 style="color: black">PERTAMINA OSES REPORTING TECHNOLOGY</h3>
+                  </div>
+                  <div class="card-body">
+                    <p>The purpose of the Marine Operation Information System is to assess and improve Marine assurance, technical and operational to the managing safe work procedures to assure marine work activities are completed without incident and poor reliability. These activities include Digital Smart Port, Vessel Daily Report, Preventive maintenance System, Contractor Safety Management System, Service performance Report, Leadership Engagement, Leadership Safeguard Verification, General Inspection. , Fuel Monitoring System. The Marine Operation Team conduct field engagements and written assessments to evaluate knowledge and conformance to safe work procedures. During the field engagement, the team uses a protocol specific to the safe work procedure being observed that is aligned with IMO and industry standards, regulations, and managing safe work procedures. Results of the assessments are shared immediately with the employee or contractor. If an assessment identifies significant opportunities for improvement, the Marine Operation Team will conduct a follow up observation with the employee of contractor to validate the coaching was effective. On a routine basis, the data from the assessments is gathered and analyzed to identify systemic gaps and remedial actions for improvement. </p>
+                  </div>
+                  <div class="card-footer bg-whitesmoke">
+                    Development
                   </div>
                 </div>
               </div>
             </div>
-            
             
           </div>
         </section>

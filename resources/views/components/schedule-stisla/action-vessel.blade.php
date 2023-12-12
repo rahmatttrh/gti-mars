@@ -33,7 +33,7 @@
                 <button class="btn btn-primary px-4" type="submit">Add Report</button>
               </div>
             </div>
-          </div>
+         </div>
          {{-- <div class="form-row">
             <div class="form-group col-md-12">
               <label for="status">Vessel</label>

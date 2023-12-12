@@ -7,6 +7,7 @@ use App\Models\Report;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vessel;
+use App\Models\VesselHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class VesselController extends Controller
    public function index()
    {
       $vessels = Vessel::get();
-      return view('pages.vessel.index', [
+      return view('pages-stisla.master-data.vessel', [
          'vessels' => $vessels
       ])->with('i');
    }
@@ -329,5 +330,42 @@ class VesselController extends Controller
          'vessels' => $vessels,
          'ports' => $ports
       ])->with('i');
+   }
+
+   public function onhire($id){
+      dd('ok');
+      $dekripId = dekripRambo($id);
+      $vessel = Vessel::find($dekripId);
+      $today = Carbon::today();
+      
+      VesselHistory::create([
+         'vessel_id' => $vessel->id,
+         'onhire' => $today
+      ]);
+
+      $vessel->update([
+         'status' => 1
+      ]);
+
+      
+
+      return redirect()->back()->with('success', 'Vessel set On Hire');
+   }
+
+   public function offhire($id){
+      $dekripId = dekripRambo($id);
+      $vessel = Vessel::find($dekripId);
+      $today = Carbon::today();
+      $vesselHistory = VesselHistory::where('vessel_id', $vessel->id)->first();
+      $vesselHistory->update([
+         'offhire' => $today
+      ]);
+          
+      $vessel->update([
+         'status' => 0
+      ]);
+
+      
+      return redirect()->back()->with('success', 'Vessel set Off Hire');
    }
 }

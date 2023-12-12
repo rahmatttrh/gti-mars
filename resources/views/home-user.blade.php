@@ -5,7 +5,7 @@
 @section('content')
   <section class="section">
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <div class="card  profile-widget">
           <div class="profile-widget-header">                     
             <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle profile-widget-picture">
@@ -24,7 +24,7 @@
           <div class="profile-widget-description">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Loc
+                
                 <span class="badge badge-primary badge-pill">{{$user->port->name}}</span>
               </li>
               {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -32,15 +32,15 @@
                 <span class="badge badge-primary badge-pill">{{$user->department->name}}</span>
               </li> --}}
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Email
+                
                 <span class="badge badge-primary badge-pill">{{$user->email}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Username
+                
                 <span class="badge badge-primary badge-pill">{{$user->username}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Ext
+                
                 <span class="badge badge-primary badge-pill">{{$user->ekstensi}}</span>
               </li>
             </ul>
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-9">
+      <div class="col-md-8">
         <div class="row">
       
           <div class=" col-md-6 col-sm-12">

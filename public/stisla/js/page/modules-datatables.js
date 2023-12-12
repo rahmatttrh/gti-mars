@@ -81,3 +81,11 @@ $("#table-9").dataTable({
 $("#table-10").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
 });
+
+$("#table-11").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});
+
+$("#table-12").dataTable({
+    columnDefs: [{ sortable: false, targets: [2, 3] }],
+});

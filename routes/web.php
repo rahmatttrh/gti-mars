@@ -70,6 +70,10 @@ Route::middleware(["auth"])->group(function () {
    //    Route::group(['middleware' => ['role:department|vessel']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
+   Route::prefix('user')->group(function () {
+      Route::get('index', [UserController::class, 'index'])->name('user');
+      Route::put('ubah', [UserController::class, 'update'])->name('user.rubah');
+   });
 
    Route::prefix("dsp")->group(function () {
       Route::get("marine-dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
@@ -146,6 +150,8 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('vessel')->group(function () {
       Route::get('detail/{vessel:id}', [VesselController::class, 'detail'])->name('vessel.detail');
       Route::get('history/{vessel:id}/{month}', [VesselController::class, 'history'])->name('vessel.history');
+      Route::get('onhire/{id}', [VesselController::class, 'onhire'])->name('vessel.onhire');
+      Route::get('offhire/{id}', [VesselController::class, 'offhire'])->name('vessel.offhire');
    });
    // Route::prefix('port')->group(function () {
    //    Route::get('index', [PortController::class, 'index'])->name('port');
@@ -175,10 +181,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('check-dummy', [CargoController::class, 'checkDummy'])->name('cargo.check.dummy');
       Route::get('detail', [CargoController::class, 'detail'])->name('cargo.detail');
    });
-   Route::prefix('user')->group(function () {
-      Route::get('index', [UserController::class, 'index'])->name('user');
-      Route::put('update', [UserController::class, 'update'])->name('user.update');
-   });
+   
    Route::prefix('request')->group(function () {
       Route::get('/', [RequestController::class, 'index'])->name('request');
       Route::get('month/{month}', [RequestController::class, 'month'])->name('request.month');

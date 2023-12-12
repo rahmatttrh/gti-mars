@@ -45,10 +45,11 @@
 
 
 
-<body class="sidebar-mini">
+<body class="">
+  {{-- <body class="sidebar-mini"> --}}
   <div id="app ">
     <div class="main-wrapper main-wrapper-1 ">
-      <div class="navbar-bg bg-danger"></div>
+      <div class="navbar-bg " style="background-color: #0b4e99"></div>
       
       @if (auth()->user()->hasRole('marine'))
       <nav class="navbar navbar-expand-lg main-navbar">
@@ -63,11 +64,25 @@
               </div>
             </li>
             {{-- <li>
-                <div class="bg-white py-1 px-4 rounded ml-2">
-                <a href=""><i class="fa fa-home"></i></a>
-                  
-                </div>
-              </li> --}}
+              <a href="/" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Home Page">
+                <b>HOME</b>
+              </a>
+            </li>
+            <li>
+              <a href="{{route('dsp.marine')}}" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">
+                <b>DSP</b>
+              </a>
+            </li>
+            <li>
+              <a href="#" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">
+                <b>VDR</b>
+              </a>
+            </li> 
+            <li>
+              <a href="#" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Under Development">
+                <b>AIMS</b>
+              </a>
+            </li>--}}
             {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
@@ -75,7 +90,7 @@
         </form>
         <ul class="navbar-nav navbar-right">
         
-          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
+          <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{$notif == 'true'  ? 'beep' : ''}}"><i class="far fa-bell"></i></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
               {{-- <div class="dropdown-header">Notifications
                 <div class="float-right">
@@ -83,11 +98,9 @@
                 </div>
               </div> --}}
               <div class="dropdown-list-content dropdown-list-icons">
-                @foreach ($schedules as $schedule)
+                @foreach ($allSchedules as $schedule)
                   @if ($schedule->requests->where('status', 1)->count() > 0)
-                  {{-- <div class="alert alert-primary" role="alert">
-                    You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}} . Click <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="alert-link">here</a> to check.
-                  </div> --}}
+                 
                   <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="dropdown-item dropdown-item-unread">
                     <div class="dropdown-item-icon bg-primary text-white">
                       <i class="fas fa-code"></i>
@@ -385,8 +398,8 @@
                 <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>Master Data</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('activity')}}">Activity</a></li>
-                    <li><a class="nav-link" href="{{route('crew')}}">Crew</a></li>
+                    {{-- <li><a class="nav-link" href="{{route('activity')}}">Activity</a></li>
+                    <li><a class="nav-link" href="{{route('crew')}}">Crew</a></li> --}}
                     <li><a class="nav-link" href="{{route('port')}}">Port</a></li>
                     <li><a class="nav-link" href="{{route('user')}}">User</a></li>
                     <li><a class="nav-link" href="{{route('vessel')}}">Vessel</a></li>
@@ -403,19 +416,15 @@
                 <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Schedule</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}">Schedule Plan</a></li>
-                    <li><a class="nav-link" href="{{route('schedule.order', enkripRambo(auth()->user()->getMonth()))}}">Sailing Order</a></li>
+                    <li><a class="nav-link" href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}">Plan</a></li>
+                    <li><a class="nav-link" href="{{route('schedule.order', enkripRambo(auth()->user()->getMonth()))}}">Progress</a></li>
                     <li><a class="nav-link" href="forms-validation.html">History</a></li>
                 </ul>
                 </li>
                 
             </ul>
 
-            <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                <a href="https://getstisla.com/docs" class="btn btn-success btn-lg btn-block btn-icon-split">
-                <i class="fas fa-rocket"></i> Documentation
-                </a>
-            </div>        </aside>
+          </aside>
         </div>
         @elseif(auth()->user()->hasRole('department'))
         <div class="main-sidebar sidebar-style-2 ">
@@ -454,11 +463,8 @@
                 
               </ul>
     
-              <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                <a href="https://getstisla.com/docs" class="btn btn-success btn-lg btn-block btn-icon-split">
-                  <i class="fas fa-rocket"></i> Documentation
-                </a>
-              </div>        </aside>
+                  
+            </aside>
         </div>
         @elseif(auth()->user()->hasRole('vessel'))
         <div class="main-sidebar sidebar-style-2 ">
@@ -475,6 +481,7 @@
                 {{-- <li class="menu-header">Dashboard</li> --}}
                 
                 <li class="menu-header">Menu</li>
+                <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li>
                 {{-- <li class="dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
                   <ul class="dropdown-menu">
@@ -488,11 +495,12 @@
                 
               </ul>
     
-              <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+              {{-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
                 <a href="https://getstisla.com/docs" class="btn btn-success btn-lg btn-block btn-icon-split">
                   <i class="fas fa-rocket"></i> Documentation
                 </a>
-              </div>        </aside>
+              </div>         --}}
+            </aside>
         </div>
       @endif
       
@@ -552,8 +560,9 @@
   {{-- MYJS --}}
   @stack('map')
   @stack('get_schedules')
+  @stack('autorefresh')
 
-  <script>
+  {{-- <script>
     $(document).ready(function () {
     var body = $('body');
     $(".main-sidebar .sidebar-menu > li").each(function() {
@@ -572,7 +581,7 @@
     });
 });
 
-  </script>
+  </script> --}}
 
 
     @if (session('success'))

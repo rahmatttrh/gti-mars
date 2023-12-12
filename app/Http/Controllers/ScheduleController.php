@@ -130,11 +130,12 @@ class ScheduleController extends Controller
       // dd($now->addDay(1));
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $schedules = Schedule::get();
+      $schedules = Schedule::orderBy('date', 'asc')->get();
+      $ahtsVessels = Vessel::where('type', 'AHTS')->get();
       
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
-      $recentRequests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '=', 1)->get();
+      $recentRequests = ModelsRequest::where('status', '=', 1)->get();
 
 
       $statuses = Status::where('type', 1)->get();
@@ -249,6 +250,7 @@ class ScheduleController extends Controller
             'reports' => $reports,
             'requests' => $requests,
             'vessels' => $vessel,
+            'ahtsVessels' => $ahtsVessels,
             'ports' => $ports,
             'routes' => $routes,
             'fixRoutes' => $fixRoutes,
@@ -267,6 +269,7 @@ class ScheduleController extends Controller
          ]);
       } else {
          return view('pages-stisla.schedule.detail', [
+            'ahtsVessels' => $ahtsVessels,
             'schedules' => $schedules,
             'schedule' => $schedule,
             'report' => $report,

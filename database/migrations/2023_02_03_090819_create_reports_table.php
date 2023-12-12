@@ -20,6 +20,11 @@ class CreateReportsTable extends Migration
          $table->mediumInteger('employee_id')->nullable();
          $table->mediumInteger('status_id');
          $table->mediumInteger('port_id')->nullable();
+         $table->mediumInteger('destination_id')->nullable();
+         $table->string('anchor')->nullable();
+         $table->string('desc')->nullable();
+         $table->dateTime('eta')->nullable();
+         $table->string('foto')->nullable();
          // $table->dateTime('assign')->nullable();
          // $table->dateTime('standby')->nullable();
          // $table->dateTime('loading_start')->nullable();

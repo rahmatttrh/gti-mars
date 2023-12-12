@@ -5,7 +5,7 @@
             <h5 class="modal-title">Edit User</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
          </div>
-         <form action="{{route('user.update')}}" method="POST">
+         <form action="{{route('user.rubah')}}" method="POST">
             @method('PUT')
             @csrf
             <input type="number" name="user" id="user" value="{{$user->id}}" hidden>

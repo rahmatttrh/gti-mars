@@ -56,6 +56,10 @@
           </a>
         </div>
       </div>
+      <a href="{{route('schedule.create')}}" class="btn btn-primary btn-lg">
+        <i class="fa fa-plus"></i>
+        Create
+      </a>
       <div class="row mt-3">
         <div class="col-12">
             <div class="card">
@@ -65,14 +69,14 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-1">
+                    <table class="table table-striped table-sm" id="table-1">
                       <thead>                                 
                         <tr>
                           <th class="text-center">
                             #
                           </th>
                           <th>Vessel</th>
-                          <th>From</th>
+                          <th>Route</th>
                           <th>Activity</th>
                           <th>Date</th>
                           <th>Capacity</th>
@@ -90,9 +94,12 @@
                                     <small>{{$schedule->vessel->type ?? '-'}}</small>
                                 </td>
                                 <td>
-                                    @if (count($schedule->routes) > 0)
+                                  @foreach ($schedule->routes as $route)
+                                      {{$route->port->name}} - 
+                                  @endforeach
+                                    {{-- @if (count($schedule->routes) > 0)
                                     {{$schedule->routes->where('rank', 1)->first()->port->name}}
-                                    @endif
+                                    @endif --}}
                                 </td>
                                 <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
                                 <td>
@@ -133,7 +140,7 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-7">
+                    <table class="table table-striped table-sm" id="table-7">
                       <thead>                                 
                         <tr>
                           <th class="text-center">
@@ -193,7 +200,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-8">
+                <table class="table table-striped table-sm" id="table-8">
                   <thead>                                 
                     <tr>
                       <th class="text-center">
@@ -218,9 +225,12 @@
                                 <small>{{$schedule->vessel_type}}</small>
                             </td>
                             <td>
-                                @if (count($schedule->routes) > 0)
+                              @foreach ($schedule->routes as $route)
+                                      {{$route->port->name}} - 
+                                  @endforeach
+                                {{-- @if (count($schedule->routes) > 0)
                                 {{$schedule->routes->where('rank', 1)->first()->port->name}}
-                                @endif
+                                @endif --}}
                             </td>
                             <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
                             <td>

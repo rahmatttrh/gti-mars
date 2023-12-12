@@ -367,7 +367,7 @@ class MarineScheduleController extends Controller
          $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $requlerSchedules = null;
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->where('class' ,'=', null )->orderBy('vessel_type', 'asc')->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->orderBy('vessel_type', 'asc')->get();
          $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
       }
 
@@ -465,11 +465,13 @@ class MarineScheduleController extends Controller
 
    public function create()
    {
-      $vessels = Vessel::get();
+      $vessels = Vessel::where('status', 1)->get();
+      $offhireVessels = Vessel::where('status', 0)->get();
       $ports = Port::get();
       $types = Type::get();
-      return view('pages.schedule.create', [
+      return view('pages-stisla.marine.schedule.create', [
          'vessels' => $vessels,
+         'offhireVessels' => $offhireVessels,
          'ports' => $ports,
          'types' => $types,
          'date' => null,
@@ -481,8 +483,9 @@ class MarineScheduleController extends Controller
    {
       $req->validate([
          'vessel' => 'required',
-         'origin_id' => 'different:destination_id',
-         'destination_id' => 'different:origin_id'
+         'date' => 'required'
+         // 'origin_id' => 'different:destination_id',
+         // 'destination_id' => 'different:origin_id'
       ]);
       // dd($req->type);
       $vessel = Vessel::find($req->vessel);
@@ -493,12 +496,13 @@ class MarineScheduleController extends Controller
       } else {
          $schedule = Schedule::create([
             'by' => 'marine',
+            'class' => 'First Trip',
             'type' => 2,
             'status' => 0,
             'vessel_id' => $vessel->id,
             'vessel_type' => $vessel->type,
             'date' => $req->date,
-            'etd' => $req->departure_estimasi,
+            // 'etd' => $req->departure_estimasi,
             // 'eta' => $req->arrive_estimasi,
             'remark' => $req->remark
          ]);

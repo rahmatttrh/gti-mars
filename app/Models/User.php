@@ -110,6 +110,12 @@ class User extends Authenticatable
       return $employee->port_id;
    }
 
+   public function getPortName()
+   {
+      $employee = Employee::where('email', $this->email)->first();
+      return $employee->port->name;
+   }
+
    public function getEmployeeId()
    {
       $employee = Employee::where('email', $this->email)->first();

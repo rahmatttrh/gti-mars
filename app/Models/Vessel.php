@@ -37,4 +37,8 @@ class Vessel extends Model
    public function surveillances(){
       return $this->hasMany(Surveillance::class);
    }
+
+   public function histories(){
+      return $this->hasMany(VesselHistory::class);
+   }
 }

@@ -14,7 +14,7 @@ class UserController extends Controller
    {
       $users = User::orderBy('created_at', 'desc')->get();
       $usersTotal = User::get();
-      return view('pages.user.index', [
+      return view('pages-stisla.master-data.user', [
          'totalUser' => count($usersTotal),
          'users' => $users
       ])->with('i');

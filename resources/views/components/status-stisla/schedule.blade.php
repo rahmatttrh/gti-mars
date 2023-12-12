@@ -1,9 +1,10 @@
 <div>
    @if ($schedule->status == 0)
-      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-yellow me-1"></span>00 : Draft</div> --}}
-      <button type="button" class="btn btn-light btn-icon icon-left">
+   <small>Draft</small>
+      {{-- <div class="badge badge-light border"><small>00 : Draft</small></div> --}}
+      {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Draft 
-      </button>
+      </button> --}}
       @elseif($schedule->status == 1)
       <div class="badge badge-warning border">01 : Waiting Vessel</div>
       {{-- <button type="button" class="btn btn-light btn-icon icon-left">

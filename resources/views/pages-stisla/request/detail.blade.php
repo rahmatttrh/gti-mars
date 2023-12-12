@@ -80,7 +80,7 @@
                     </div>
                     <div class="card-body p-3">
                       <div class="table-responsive">
-                        <table class="table table-striped" id="table-4">
+                        <table class="table table-striped table-sm" id="table-4">
                           <thead>
                             <tr>
                               <th>MTD</th>
@@ -167,7 +167,7 @@
                     </div>
                     <div class="card-body p-3">
                       <div class="table-responsive">
-                        <table class="table table-striped" id="table-5">
+                        <table class="table table-striped table-sm" id="table-5">
                           <thead>
                             <tr>
                                 <th>Type</th>

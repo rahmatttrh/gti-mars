@@ -57,7 +57,7 @@
               
             </div>
           </div>
-          <div class="card-icon bg-success">
+          <div class="card-icon bg-primary">
             <i class="fas fa-archive"></i>
           </div>
           <div class="card-wrap">
@@ -68,9 +68,9 @@
           </div>
           
         </div>
-        <div class="card bg-danger shadow">
+        <div class="card bg-info shadow">
           <div class="card-header">
-            <small class="badge badge-light">Vessel Coordinate</small>
+            <small class="badge badge-primary">Vessel Coordinate</small>
           </div>
           <div class="card-body">
             <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
@@ -262,26 +262,24 @@
       </div> --}}
       
       <div class="col-md-9">
-        <div id="map" class="card" style="height: 85vh; width:auto; border-radius: 15px;background-size: cover;
+        <div id="map" class="card" style="height: 45vh; width:auto; border-radius: 15px;background-size: cover;
 
         ">
         </div>
         <div class="card">
-          <div class="card-header">
+          {{-- <div class="card-header">
             <h4>Schedules</h4>
-          </div>
+          </div> --}}
           <div class="card-body">
             <div class="table-responsive">
-              <table class="table table-striped" id="table-1">
+              <table class="table table-striped table-sm" id="table-12">
                 <thead>                                 
                   <tr>
                     <th class="text-center">
                       #
                     </th>
-                    <th>Day</th>
-                    <th>Date</th>
                     <th>Vessel</th>
-                    <th>Type</th>
+                    <th>Route</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -289,20 +287,26 @@
                   @foreach ($schedules as $schedule)
                     <tr>
                       <td>
-                        {{++$i}}
+                        <small>{{++$i}}</small> 
                       </td>
-                      <td>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</td>
-                      <td>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</td>
                       <td>
                         <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                            {{$schedule->vessel->name ?? '-'}}
-                            {{-- @if ($schedule->type == 1)
-                              <div class="badge">R</div>
-                            @endif --}}
+                        {{$schedule->vessel->name ?? '-'}}
                         </a>
                       </td>
-                      <td>{{$schedule->vessel_type}}</td>
-                      <td><x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" /></td>
+                      <td class="d-flex">
+                        @foreach ($schedule->routes as $route)
+                          <div class="mr-2">{{$route->port->name}} <br>
+                            <small>{{formatDate($route->date)}}</small>
+                          </div> 
+                        @endforeach
+                      </td>
+                      {{-- <td><small>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</small></td> --}}
+                      
+                      <td>
+                        {{-- <div class="badge badge-info"><small>Draft</small></div> --}}
+                        <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                      </td>
                     </tr>
                   @endforeach                            
                   
@@ -312,21 +316,17 @@
           </div>
         </div>
       </div>
-
-    </div>
-    
-
-    <div class="row mt-3">
-      <div class="col-8">
-        
-      </div>
-      <div class="col-md-4">
-        
-      </div>
     </div>
   </section>
 @endsection
 
+@push('autorefresh')
+<script type="text/javascript">
+   window.setTimeout( function() {
+       window.location.reload();
+   }, 300000);
+</script>
+@endpush
 @push('map')
 <script>
   mapboxgl.accessToken = 'pk.eyJ1IjoicmFobWF0cmgiLCJhIjoiY2xwNml3MzJ0MjBpNjJscXl6am9mc21sayJ9.BHym8QvhGHWK1QC3qDX4sg';
@@ -495,5 +495,4 @@
   new mapboxgl.Marker(el).setLngLat(feature.geometry.coordinates).addTo(map);
 }
 </script>
-    
 @endpush

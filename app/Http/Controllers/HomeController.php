@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\GeofenceController;
 use App\Models\Surveillance;
+use App\Models\VesselHistory;
 
 class HomeController extends Controller
 {
@@ -210,7 +211,7 @@ class HomeController extends Controller
             // dd($vessel->name . ' ke ' . $port->name . ': ' .$distance);
             if ($distance < 300 ) {
                $vessel->update([
-                  'status' => 9,
+                  
                   'port_id' => $port->id
                ]);
 
@@ -525,7 +526,7 @@ class HomeController extends Controller
 
             if ($vessel->speed > 0) {
                $vessel->update([
-                  'status' => 2,
+                  // 'status' => 2,
                   'port_id' => null
                ]);
             } else {
@@ -536,7 +537,7 @@ class HomeController extends Controller
                   // dd($vessel->name . ' ke ' . $port->name . ': ' .$distance);
                   if ($distance < 300 ) {
                      $vessel->update([
-                        'status' => 9,
+                        // 'status' => 9,
                         'port_id' => $port->id
                      ]);
                      
@@ -695,6 +696,17 @@ class HomeController extends Controller
       $month = $today->format('m');
 
       $vessels = Vessel::get();
+      foreach($vessels as $vessel){
+         $vessel->update([
+            'status' => 1
+         ]);
+
+         VesselHistory::create([
+            'vessel_id' => $vessel->id,
+            'onhire' => $today
+         ]);
+      }
+
       $vessel3 = Vessel::paginate('3');
       // dd($today->format('m'));
 
@@ -725,7 +737,7 @@ class HomeController extends Controller
       }
       $vessels = Vessel::where('status', '>', 1)->get();
          $vessel = '';
-         $schedules = Schedule::whereMonth('date', $month)->orderBy('date', 'asc')->get();
+         $schedules = Schedule::where('date', '>=', $today)->orderBy('date', 'asc')->get();
          $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
          $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
          if ($requests->count() > 0) {
@@ -761,7 +773,7 @@ class HomeController extends Controller
 
 
          $this->loadLocVessel();
-         $schedules = Schedule::orderBy('date', 'asc')->get();
+         $schedules = Schedule::where('date', '>=', $today)->orderBy('date', 'asc')->get();
          $allVessels = Vessel::get();
          
          $vessels = Vessel::where('latitude', '!=', null)->get();
@@ -827,7 +839,7 @@ class HomeController extends Controller
 
             if ($vessel->speed > 0) {
                $vessel->update([
-                  'status' => 2,
+                  // 'status' => 2,
                   'port_id' => null
                ]);
             } else {
@@ -838,7 +850,7 @@ class HomeController extends Controller
                   // dd($vessel->name . ' ke ' . $port->name . ': ' .$distance);
                   if ($distance < 300 ) {
                      $vessel->update([
-                        'status' => 9,
+                        // 'status' => 9,
                         'port_id' => $port->id
                      ]);
                      

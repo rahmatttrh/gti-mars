@@ -189,7 +189,7 @@
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-1">
+                    <table class="table table-striped table-sm" id="table-1">
                       <thead>
                         <tr>
                           <th>Status</th>
@@ -269,7 +269,7 @@
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <div class="table-responsive">
-                    <table class="table table-striped" id="table-5">
+                    <table class="table table-striped table-sm" id="table-5">
                       <thead>
                         <tr>
                           <th>Status</th>

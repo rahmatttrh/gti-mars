@@ -16,7 +16,7 @@
         @endif
         
         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
-        <div class="breadcrumb-item active">Schedule Detail {{$recentRequests->count()}}</div>
+        <div class="breadcrumb-item active">Schedule Detail</div>
       </div>
     </div>
 
@@ -32,7 +32,7 @@
             @else
             @if (auth()->user()->hasRole('marine'))
                 @if ($recentRequests->count() > 0)
-                  <div class="col-md-9">
+                  <div class="col-md-8">
                     
                   @else
                   
@@ -85,7 +85,9 @@
               {{-- <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" /> --}}
               <div class="row">
                 <div class="col-md-8">
-                  <h4 class="">{{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} </h4>
+                    <x-status-stisla.vessel :vessel="$schedule->vessel" />
+                    <h4 class="mt-1">{{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} </h4> 
+                  
                   {{-- <small>{{$schedule->vessel->type ?? 'Vessel Not Avalaible'}} </small> --}}
                   <h3> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}, {{\Carbon\Carbon::parse($schedule->date)->format('d F Y')}}</h1>
                   {{-- @if ($schedule->type == 1)
@@ -165,6 +167,76 @@
             </div>
           </div>
           
+          
+          
+          
+        </div>
+        @if (auth()->user()->hasRole('marine'))
+          @if ($recentRequests->count() > 0)
+            <div class="col-md-4">
+              
+              <div class="card" >
+                {{-- <div class="card-header">
+                  <h4>Recent Request</h4>
+                </div> --}}
+                <div class="card-body " >
+                  <div class="summary overflow-auto" style="height: 350px; overflow-y: scroll">
+                    @if ($recentRequests->count() > 0)
+                      @foreach ($recentRequests as $req)
+                      {{-- @if ($req->activity_id != 3) --}}
+                          
+                    
+                      {{-- <div class="card">
+                        <div class="card-body"> --}}
+                          <div class="summary-item">
+                            {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
+                            <ul class="list-unstyled list-unstyled-border">
+                              <li class="media">
+                                {{-- <a href="#">
+                                  <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
+                                </a> --}}
+                                <div class="media-body">
+                                  <div class="media-right text-right">
+                                    {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
+                                    <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve</small></a><br>
+                                    <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
+                                    {{-- <button type="button" class="btn btn-primary" >
+                                      Launch demo modal
+                                    </button> --}}
+                                    
+                                  </div>
+                                  <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
+                                  <div class="text-muted text-small"> <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> {{$req->schedule->vessel->name ?? ''}} <br> by {{$req->employee->name}}</div>
+                                </div>
+                              </li>
+                              
+                            </ul>
+                          </div>
+                        {{-- </div>
+                      </div> --}}
+                          <hr>
+                          
+                          {{-- @endif --}}
+                      @endforeach
+                      @else
+                      <div class="row">
+                          <div class="col">
+                            <small class="text-center text-muted">Empty</small>
+                          </div>
+                      </div>
+                    @endif
+                  </div>
+                </div>
+              </div>
+
+              {{-- Activity --}}
+
+              
+            </div>
+          @endif
+        @endif
+
+        <div class="col-md-12">
           @if ($schedule->class != 'Moving')
             <div class="card">
               <div class="card-header">
@@ -183,7 +255,7 @@
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="table-responsive">
-                      <table class="table table-striped " id="table-1">
+                      <table class="table table-striped table-sm" id="table-1">
                         <thead>
                           <tr>
                             <th>MTD</th>
@@ -258,7 +330,7 @@
                     </div>
                     <hr>
                     <div class="table-responsive">
-                      <table class="table table-striped card-table">
+                      <table class="table table-striped table-sm card-table">
                         <thead>
                             <tr>
                               <th colspan="7" class="text-info">Deflection</th>
@@ -303,7 +375,7 @@
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive ">
-                      <table class="table table-striped table-1" id="table-3">
+                      <table class="table table-striped table-1 table-sm" id="table-3">
                         <thead>
                           
                           <tr>
@@ -365,72 +437,7 @@
               </div>
             </div>
           @endif
-          
-          
         </div>
-        @if (auth()->user()->hasRole('marine'))
-          @if ($recentRequests->count() > 0)
-            <div class="col-md-3">
-              <div class="card" >
-                <div class="card-header">
-                  <h4>Recent Request</h4>
-                </div>
-                <div class="card-body ">
-                  <div class="summary " >
-                    @if ($recentRequests->count() > 0)
-                      @foreach ($recentRequests as $req)
-                      {{-- @if ($req->activity_id != 3) --}}
-                          
-                    
-                      {{-- <div class="card">
-                        <div class="card-body"> --}}
-                          <div class="summary-item">
-                            {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
-                            <ul class="list-unstyled list-unstyled-border">
-                              <li class="media">
-                                {{-- <a href="#">
-                                  <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
-                                </a> --}}
-                                <div class="media-body">
-                                  <div class="media-right text-right">
-                                    {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
-                                    <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve</small></a><br>
-                                    <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
-                                    {{-- <button type="button" class="btn btn-primary" >
-                                      Launch demo modal
-                                    </button> --}}
-                                    
-                                  </div>
-                                  <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
-                                  <div class="text-muted text-small"> <a href="#">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> by {{$req->employee->name}}</div>
-                                </div>
-                              </li>
-                              
-                            </ul>
-                          </div>
-                        {{-- </div>
-                      </div> --}}
-                          <hr>
-                          
-                          {{-- @endif --}}
-                      @endforeach
-                      @else
-                      <div class="row">
-                          <div class="col">
-                            <small class="text-center text-muted">Empty</small>
-                          </div>
-                      </div>
-                    @endif
-                  </div>
-                </div>
-              </div>
-
-              {{-- Activity --}}
-
-              
-            </div>
-          @endif
-        @endif
 
         <div class="col-md-12">
           <div class="badge badge-info">
@@ -614,7 +621,7 @@
                 <label for="vessel">Vessel</label>
                 <select id="vessel" class="form-control" name="vessel" id="vessel">
                   <option selected>Choose...</option>
-                  @foreach ($vessels as $vessel)
+                  @foreach ($ahtsVessels as $vessel)
                     <option  value="{{$vessel->id}}">{{$vessel->name }}</option>
                   @endforeach
                 </select>
@@ -672,6 +679,9 @@
   
 
   {{-- Modal Approve & Change Request Activity --}}
+  @php
+      $thisSchedule = $schedule
+  @endphp
   @foreach ($recentRequests as $req)
     
 
@@ -681,7 +691,7 @@
           @csrf
           @method('PUT')
           <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          <input type="number" name="schedule" id="schedule" value="{{$req->schedule->id}}" hidden>
+          <input type="number" name="schedule" id="schedule" value="{{$thisSchedule->id}}" hidden>
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" ">Confirm Approve </h5>
@@ -690,7 +700,7 @@
               </button>
             </div>
             <div class="modal-body">
-              Add {{$req->activity->name}} {{$req->description}} {{$req->id}} to {{$req->schedule->vessel->name ?? '-'}} ?
+              Add {{$req->activity->name}} {{$req->description}} {{$req->origin->name}} - {{$req->destination->name}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
               
             </div>
             <div class="modal-footer bg-whitesmoke">
@@ -704,7 +714,7 @@
 
     <div class="modal fade" id="req-change-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-change-{{$req->id}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
-        <form action="{{route('request.change.schedule')}}" method="POST">
+        <form action="{{route('request.change.schedule')}}" method="POST" onsubmit="setTimeout(function(){window.location.reload();},10);" target="_blank">
           @csrf
           @method('PUT')
           <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
