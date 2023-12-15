@@ -17,6 +17,7 @@ class CreateVdrCargoHeadingsTable extends Migration
             $table->tinyIncrements('id');
             $table->string('description', 100);
             $table->string('unit', 50);
+            $table->string('is_consumption', 1)->default('0');
             $table->timestamps();
         });
     }
