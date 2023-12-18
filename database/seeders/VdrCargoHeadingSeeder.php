@@ -17,6 +17,7 @@ class VdrCargoHeadingSeeder extends Seeder
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'FUEL OIL',
             'unit' => 'Ltrs',
+            'is_consumption' => '1',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);
@@ -24,6 +25,7 @@ class VdrCargoHeadingSeeder extends Seeder
         DB::table('vdr_cargo_headings')->insert([
             'description' => 'FRESH WATER',
             'unit' => 'Ltrs',
+            'is_consumption' => '1',
             'created_at' => NOW(),
             'updated_at' => NOW()
         ]);

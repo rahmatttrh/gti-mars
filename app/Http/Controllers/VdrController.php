@@ -17,6 +17,7 @@ use App\Models\VdrOperatingHeader;
 use App\Models\VdrWeather;
 use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -56,8 +57,25 @@ class VdrController extends Controller
 
         $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
 
+        // $fuels = VdrCargo::where('heading_id', '1')->get();
+        $result = VdrCargo::join('vdrs', 'vdr_cargos.vdr_id', '=', 'vdrs.id')
+            ->where('vdrs.vessel_id', $vessel->id)
+            ->where('vdr_cargos.heading_id', '1')
+            ->select('vdrs.date as tanggal', 'vdr_cargos.consumption as value')
+            ->get();
+
+        $startDate = date('Y-m-01');
+        $endDate = date('Y-m-t');
+
+        $vdrCargoModel = new VdrCargo();
+        $result = $vdrCargoModel->getDataForDateRange($vessel->id, $startDate, $endDate);
+
+
+        $fuels = json_encode($result);
+
         return view('pages.vdr.chart-vdr', [
-            'vdrs' => $vdrs
+            'vdrs' => $vdrs,
+            'fuels' => $fuels
         ])->with('i');
     }
 
@@ -71,29 +89,16 @@ class VdrController extends Controller
 
         $vdr = Vdr::where('vessel_id', $vessel->id)->where('date', date('Y-m-d'))->first();
 
-        if ($vdr) {
-            # code...
-            $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
-            $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
-            $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
-            $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
-            $hses = VdrHse::where('vdr_id', $vdr->id)->get();
-            $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
-            $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
-            $totalJam = VdrOperating::where('vdr_id', $vdr->id)->sum('time');
-            $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
-            // 
-        } else {
-            $activities = null;
-            $cargos = null;
-            $weathers = null;
-            $hses = null;
-            $engines = null;
-            $crews = null;
-            $operatings = null;
-            $totalJam = null;
-            $totalDaily = null;
-        }
+        $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
+        $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
+        $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
+        $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
+        $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
+        $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
+        $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
+        $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+        $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+
 
 
 

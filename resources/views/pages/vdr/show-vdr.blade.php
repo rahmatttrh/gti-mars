@@ -444,7 +444,9 @@ VDR
                                         <input readonly type="number" name="opening[]" class="form-control" value="{{$cargo->opening}}">
                                     </td>
                                     <td class="text-left align-middle">
+                                        @if($cargo->heading->is_consumption == '1')
                                         <input readonly type="number" name="consumption[]" class="form-control" value="{{$cargo->consumption}}">
+                                        @endif
                                     </td>
                                     <td class="text-left align-middle">
                                         <input readonly type="number" name="received[]" class="form-control" value="{{$cargo->received}}">
