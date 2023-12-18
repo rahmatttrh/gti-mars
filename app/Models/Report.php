@@ -30,6 +30,11 @@ class Report extends Model
       return $this->belongsTo(Port::class);
    }
 
+   public function destination()
+   {
+      return $this->belongsTo(Port::class);
+   }
+
    public function employee()
    {
       return $this->belongsTo(Employee::class);

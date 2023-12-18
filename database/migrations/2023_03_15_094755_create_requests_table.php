@@ -25,13 +25,16 @@ class CreateRequestsTable extends Migration
          $table->smallInteger('schedule_id')->nullable();
          $table->string('by')->nullable();
          $table->smallInteger('employee_id')->nullable();
+         $table->smallInteger('user_id')->nullable();
          $table->string('class')->nullable();
 
          $table->date('date')->nullable();
          $table->smallInteger('department_id')->nullable();
          $table->string('func')->nullable();
+         $table->string('desc')->nullable();
          // $table->smallInteger('type_id');
          $table->smallInteger('activity_id')->nullable();
+         $table->integer('qty')->nullable();
          $table->string('description')->nullable();
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();

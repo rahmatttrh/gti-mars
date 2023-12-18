@@ -15,6 +15,7 @@ use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\FuelItem;
 use App\Models\ParentRequest;
 use App\Models\Port;
 use App\Models\Report;
@@ -25,6 +26,7 @@ use App\Models\Schedule;
 use App\Models\ScheduleRoute;
 use App\Models\Type;
 use App\Models\Vessel;
+use App\Models\WaterItem;
 use Carbon\Carbon;
 use GuzzleHttp\Psr7\Request as Psr7Request;
 use Illuminate\Http\Request;
@@ -79,7 +81,7 @@ class DepartmentRequestController extends Controller
       }
 
       // dd($schedules);
-      
+
       return view('pages-stisla.user.request.create', [
          'activities' => $activities,
          'ports' => $ports,
@@ -91,39 +93,46 @@ class DepartmentRequestController extends Controller
       ]);
    }
 
-   public function storeImport(Request $req){
+   public function storeImport(Request $req)
+   {
       // dd('ok');
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       $date = Carbon::today();
       // dd($req->file('file-cargo'));
-      $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
-
-      if (isset($parentLast)) {
-         $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
-      } else {
-         $code = "PR/"  . $date->format("dmy") . '/' . 1;
-      }
-
-      $parent = ParentRequest::create([
-         'status' => 0,
-         'code' => $code,
-         'origin_id' => $req->origin,
-         'date' => $req->date,
-         'employee_id' => $employee->id,
-         'department_id' => $department->id,
-         'activity_id' => $req->activity
-      ]);
       
-      if ($department->id == 2) {
-         $type = 1;
-      } elseif ($department->id == 3) {
-         $type = 2;
-      } else {
-         $type = 3;
+      
+      if ($req->activity == 1 || $req->activity == 2) {
+         $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
+
+         if (isset($parentLast)) {
+            $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
+         } else {
+            $code = "PR/"  . $date->format("dmy") . '/' . 1;
+         }
+
+         $parent = ParentRequest::create([
+            'status' => 0,
+            'code' => $code,
+            'origin_id' => $req->origin,
+            'date' => $req->date,
+            'employee_id' => $employee->id,
+            'department_id' => $department->id,
+            'activity_id' => $req->activity
+         ]);
       }
+      
+
+      // if ($department->id == 2) {
+      //    $type = 1;
+      // } elseif ($department->id == 3) {
+      //    $type = 2;
+      // } else {
+      //    $type = 3;
+      // }
 
       if (isset($request)) {
          $code =
@@ -132,14 +141,27 @@ class DepartmentRequestController extends Controller
          $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
       }
 
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+      }
 
 
-      
 
-      if ($req->activity == 3) {
+
+
+      if ($req->activity == 1) {
+         Excel::import(new CargoItemImport($parent->id), $req->file('file-cargo'));
+         return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
+      } else if ($req->activity == 2) {
+         Excel::import(new PassengerItemImport($parent->id, $req->destination), $req->file('file-passenger'));
+         return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
+      } else if ($req->activity == 3) {
          $request = ModelsRequest::create([
             'code' => $code,
-            'type' => $type,
+            'type' => 2,
             'class' => 'main',
             'employee_id' => $employee->id,
             'department_id' => $department->id,
@@ -151,9 +173,10 @@ class DepartmentRequestController extends Controller
             'status' => 00
          ]);
          $schedule = Schedule::create([
+            'code' => $scheduleCode,
             'by' => 'user',
             'class' => 'Moving',
-            'type' => 3,
+            'type' => 2,
             'status' => 0,
             'date' => $req->date,
          ]);
@@ -170,30 +193,105 @@ class DepartmentRequestController extends Controller
          ]);
 
          return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
-      } else if ($req->activity == 1) {
-         Excel::import(new CargoItemImport($parent->id), $req->file('file-cargo'));
-         return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
-      } else if($req->activity == 2) {
-      //    $request = ModelsRequest::create([
-      //    'code' => $code,
-      //    'type' => $type,
-      //    'class' => 'main',
-      //    'employee_id' => $employee->id,
-      //    'department_id' => $department->id,
-      //    'func' => $department->code,
-      //    'activity_id' => $req->activity,
-      //    'date' => $req->date,
-      //    'origin_id' => $req->origin,
-      //    'destination_id' => $req->destination,
-      //    'status' => 00
-      // ]);
-         Excel::import(new PassengerItemImport($parent->id, $req->destination), $req->file('file-passenger'));
-         return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
+      } else if ($req->activity == 4) {
+         $request = ModelsRequest::create([
+            'code' => $code,
+            'type' => 2,
+            'class' => 'main',
+            'employee_id' => $employee->id,
+            'department_id' => $department->id,
+            'func' => $department->code,
+            'activity_id' => $req->activity,
+            'date' => $req->date,
+            'origin_id' => $req->origin,
+            'destination_id' => $req->destination,
+            'desc' => $req->desc,
+            'status' => 00
+         ]);
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'class' => 'Lifting',
+            'type' => 2,
+            'status' => 0,
+            'date' => $req->date,
+         ]);
+
+         $request->update([
+            'schedule_id' => $schedule->id,
+            'status' => 1
+         ]);
+
+
+
+         return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
+      } else if ($req->activity == 5) {
+         $request = ModelsRequest::create([
+            'code' => $code,
+            'type' => 2,
+            'user_id' => auth()->user()->id,
+            'func' => $department->code,
+            'activity_id' => $req->activity,
+            'date' => $req->date,
+            'desc' => $req->desc,
+            'status' => 00
+         ]);
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'class' => 'Fuel Oil',
+            'type' => 2,
+            'status' => 0,
+            'date' => $req->date,
+         ]);
+
+         FuelItem::create([
+            'request_id' => $request->id,
+            'qty' => $req->qty
+         ]);
+
+         $request->update([
+            'schedule_id' => $schedule->id,
+            'status' => 1
+         ]);
+
+
+
+         return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
+      } else if ($req->activity == 6) {
+         $request = ModelsRequest::create([
+            'code' => $code,
+            'type' => 2,
+            'user_id' => auth()->user()->id,
+            'func' => $department->code,
+            'activity_id' => $req->activity,
+            'date' => $req->date,
+            'desc' => $req->desc,
+            'status' => 00
+         ]);
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'class' => 'Flush Water',
+            'type' => 2,
+            'status' => 0,
+            'date' => $req->date,
+         ]);
+
+         WaterItem::create([
+            'request_id' => $request->id,
+            'qty' => $req->qty
+         ]);
+
+         $request->update([
+            'schedule_id' => $schedule->id,
+            'status' => 1
+         ]);
+
+
+
+         return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
       }
-
-      
-
-      
    }
 
    public function save(Request $req)
@@ -245,7 +343,6 @@ class DepartmentRequestController extends Controller
       ]);
       $date = Carbon::today();
 
-
       $employee = Employee::where('email', auth()->user()->email)->first();
       $department = Department::find($employee->department->id);
       $now = Carbon::today();
@@ -255,34 +352,25 @@ class DepartmentRequestController extends Controller
 
       $type = $activity->type->id;
 
-      // dd($type);
+      if ($activity->id == 1 || $activity->id == 2) {
+         $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
 
-      // if ($department->id == 2) {
-      //    $type = 1;
-      // } elseif ($department->id == 3) {
-      //    $type = 2;
-      // } else {
-      //    $type = 3;
-      // }
+         if (isset($parentLast)) {
+            $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
+         } else {
+            $code = "PR/"  . $date->format("dmy") . '/' . 1;
+         }
 
-      $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
+         $parent = ParentRequest::create([
+            'status' => 0,
+            'code' => $code,
 
-      if (isset($parentLast)) {
-         $code = "PR/"  . $date->format("dmy") . '/' . ($parentLast->id + 1);
-      } else {
-         $code = "PR/"  . $date->format("dmy") . '/' . 1;
+            'origin_id' => $req->origin,
+            'date' => $req->date,
+            'employee_id' => $employee->id,
+            'department_id' => $department->id,
+         ]);
       }
-
-      $parent = ParentRequest::create([
-         'status' => 0,
-         'code' => $code,
-
-         'origin_id' => $req->origin,
-         'date' => $req->date,
-         'employee_id' => $employee->id,
-         'department_id' => $department->id,
-      ]);
-
 
       if (isset($request)) {
          $code =
@@ -518,6 +606,13 @@ class DepartmentRequestController extends Controller
       $request = ModelsRequest::find($dekripId);
       $type = $request->activity->type_id;
       $schedules = Schedule::where('date', $request->date)->get();
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO/"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO/"   . '/' . $now->format("dmy") . '/' . 1;
+      }
       $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
 
       // jika request cargo
@@ -535,7 +630,7 @@ class DepartmentRequestController extends Controller
       //    if (!$vessels) {
       //       $vessels = Vessel::where('latitude', '!=', null)->get();
       //    }
-        
+
       // }
 
 
@@ -546,13 +641,13 @@ class DepartmentRequestController extends Controller
       $nearestVessels = array();
       if ($reqDate ==  $now->format('Y-m-d')) {
          // dd('today');
-         foreach($vessels as $vessel){
+         foreach ($vessels as $vessel) {
             $vesselLat = $vessel->latitude;
             $vesselLong = $vessel->longitude;
             $portLat = $request->origin->latitude;
             $portLong = $request->origin->longitude;
             $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-            if($distance < 600){
+            if ($distance < 600) {
                $nearestVessel = $vessel;
             }
          }
@@ -570,6 +665,8 @@ class DepartmentRequestController extends Controller
             } else {
                // dd('kapal blm ada schedule');
                $schedule = Schedule::create([
+                  'code' => $scheduleCode,
+                  'class' => 'Cargo/Crew',
                   'by' => 'system',
                   'vessel_id' => $nearestVessel->id,
                   'type' => 2,
@@ -595,11 +692,11 @@ class DepartmentRequestController extends Controller
          }
       }
 
-      
+
 
 
       // dd('end');
-      if($scheduleRoute){
+      if ($scheduleRoute) {
          // dd('ada routeee');
          $schedule = Schedule::find($scheduleRoute->schedule_id);
          $request->update([
@@ -607,12 +704,12 @@ class DepartmentRequestController extends Controller
             'schedule_id' => $schedule->id
          ]);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
-      } 
+      }
 
       if ($schedules) {
-         foreach($schedules as $schedule){
+         foreach ($schedules as $schedule) {
             $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
-            if($uncompleteRoute != null ){
+            if ($uncompleteRoute != null) {
                $schedule = Schedule::find($uncompleteRoute->schedule_id);
                $request->update([
                   // 'status' => 1,
@@ -623,6 +720,8 @@ class DepartmentRequestController extends Controller
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
       } else {
          $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'class' => 'Cargo/Crew',
             'by' => 'user',
             'type' => 2,
             'status' => 0,
@@ -635,7 +734,7 @@ class DepartmentRequestController extends Controller
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
       }
 
-      
+
 
 
       // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
@@ -670,7 +769,7 @@ class DepartmentRequestController extends Controller
       // } else {
       //    // jika tidak ada schedule rutin
       //    // dd('tidak ada schedule rutin ditanggal tersebut');
-        
+
 
       //    $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
 

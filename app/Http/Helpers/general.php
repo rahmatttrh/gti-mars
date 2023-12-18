@@ -14,7 +14,13 @@ function formatDate($data)
 
 function formatDateName($data)
 {
-   $date = \Carbon\Carbon::parse($data)->format('l, d F Y');
+   $date = \Carbon\Carbon::parse($data)->format('d F Y');
+   return $date;
+}
+
+function formatDateTime($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('l, d F Y h:m');
    return $date;
 }
 

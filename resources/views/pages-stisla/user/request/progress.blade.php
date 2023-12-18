@@ -30,13 +30,12 @@
                     <thead>
                         <tr>
                            <th class="text-center">No.</th>
-                           <th>ID</th>
-                           <th>Picup Point</th>
-                           
-                           <th>Vessel</th>
-                           <th>Activity</th>
+                           <th>Class</th>
                            <th>Route</th>
+                           <th>Vessel</th>
+                           <th>Date</th>
                            <th>Status</th>
+                           <th></th>
                         </tr>
                      </thead>
                      <tbody>
@@ -44,14 +43,23 @@
                            @foreach ($progress as $request)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
-                                 <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td>
-                                 {{-- <td> {{$request->parent->origin->name ?? $request->origin->name}}</td> --}}
-                                 
-                                 {{-- <td>{{$request->date}}</td> --}}
-                                 <td><a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name ?? $request->schedule->date}}</a></td>
-                                 <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
-                                 <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
+                                 <td>{{$request->activity->name}}</td>
+                                 <td>
+                                  {{-- @if ($request->parent_id)
+                                  <a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a>
+                                  @else --}}
+                                  {{-- {{$request->origin->name}} to {{$request->destination->name}} --}}
+                                  {{-- @endif --}}
+                                  @if ($request->activity_id < 5)
+                                  {{$request->origin->name}} to {{$request->destination->name}}
+                                  @else
+                                  -
+                                  @endif
+                                  
+                                </td>
+                                 {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
+                                 <td><a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name ?? 'Empty'}}</a></td>
+                                 <td>{{formatDate($request->date)}}</td>
                                  <td>
                                     {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                                        @if ($request->status < 3)
@@ -59,6 +67,9 @@
                                           @else
                                           <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
                                        @endif
+                                 </td>
+                                 <td>
+                                  <a href="{{route('request.detail', enkripRambo($request->id))}}" class="btn btn-sm btn-primary">Detail</a>
                                  </td>
                               </tr>
                            @endforeach

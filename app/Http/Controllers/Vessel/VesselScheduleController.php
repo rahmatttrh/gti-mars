@@ -155,6 +155,25 @@ class VesselScheduleController extends Controller
    {
       $req->validate([]);
       // dd($req->status);
+      if ($req->status == 9) {
+         $req->validate([
+            'foto' => 'required|image|mimes:jpg,jpeg,png|max:5120'
+         ]);
+      }
+
+      if ($req->status == 6) {
+         $req->validate([
+            'eta' => 'required',
+            'destination' => 'required'
+         ]);
+      }
+
+      if ($req->status > 24 && $req->status < 29) {
+         $req->validate([
+            'anchor' => 'required',
+         ]);
+      }
+     
       $schedule = Schedule::find($req->schedule);
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests->where('status', '!=', 505) as $request) {
@@ -191,7 +210,11 @@ class VesselScheduleController extends Controller
          'schedule_id' => $req->schedule,
          'vessel_id' => $schedule->vessel_id,
          'status_id' => $req->status,
-         'port_id' => $req->port
+         'anchor' => $req->anchor,
+         'port_id' => $req->port,
+         'destination_id' => $req->destination,
+         'eta' => $req->eta,
+         'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : ''
       ]);
 
       ReportVessel::create([

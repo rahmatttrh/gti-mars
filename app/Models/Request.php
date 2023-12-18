@@ -60,6 +60,11 @@ class Request extends Model
       return $this->belongsTo(Employee::class);
    }
 
+   public function user()
+   {
+      return $this->belongsTo(User::class);
+   }
+
    public function reports()
    {
       return $this->hasMany(ReportRequest::class);
@@ -73,6 +78,14 @@ class Request extends Model
    public function rejects()
    {
       return $this->hasMany(RequestReject::class);
+   }
+
+   public function fuel(){
+      return $this->hasOne(FuelItem::class);
+   }
+
+   public function water(){
+      return $this->hasOne(WaterItem::class);
    }
 
 

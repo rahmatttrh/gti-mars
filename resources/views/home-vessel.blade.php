@@ -24,11 +24,11 @@
           <div class="profile-widget-description">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Type
+              
                 <span class="badge badge-primary badge-pill">{{$vessel->type}}</span>
               </li>
               <li class="list-group-item d-flex justify-content-between align-items-center">
-                Email
+              
                 <span class="badge badge-primary badge-pill">{{$vessel->email}}</span>
               </li>
               

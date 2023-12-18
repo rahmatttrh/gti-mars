@@ -21,16 +21,13 @@
               </div> --}}
             </div>
           </div>
-          <div class="profile-widget-description">
+          {{-- <div class="profile-widget-description">
             <ul class="list-group">
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 
-                <span class="badge badge-primary badge-pill">{{$user->port->name}}</span>
+                <span class="badge badge-primary badge-pill">{{$user->port->name ?? ''}}</span>
               </li>
-              {{-- <li class="list-group-item d-flex justify-content-between align-items-center">
-                Dept
-                <span class="badge badge-primary badge-pill">{{$user->department->name}}</span>
-              </li> --}}
+              
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 
                 <span class="badge badge-primary badge-pill">{{$user->email}}</span>
@@ -44,10 +41,8 @@
                 <span class="badge badge-primary badge-pill">{{$user->ekstensi}}</span>
               </li>
             </ul>
-          </div>
-          <div class="card-footer text-center">
-            
-          </div>
+          </div> --}}
+          
         </div>
       </div>
       <div class="col-md-8">
@@ -82,6 +77,9 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="col-md-12">
         @if ($confirms->count() > 0)
           @foreach ($confirms as $confirm)
             <div class="alert alert-primary" role="alert">
@@ -99,12 +97,12 @@
                 <thead>                                 
                   <tr>
                     <th>#</th>
-                    {{-- <th>BCM</th> --}}
-                    <th>Date</th>
-                    <th>Vessel</th>
-                    <th>Activity</th>
+                    <th>Class</th>
                     <th>Route</th>
+                    <th>Vessel</th>
+                    <th>Date</th>
                     <th>Status</th>
+                    <th></th>
                  </tr>
                 </thead>
                 <tbody>     
@@ -112,14 +110,14 @@
                     @foreach ($requests as $r)
                     <tr>
                       <td>{{++$i}}</td>
-                        {{-- <td >
-                          <a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->bcm}}</a>
-                        </td> --}}
-                        <td ><a href="{{route('request.detail', enkripRambo($r->id))}}">{{ \Carbon\Carbon::parse($r->date)->format('d/m/Y') }}</a> </td>
-                        <td>{{$r->schedule->vessel->name ?? '-'}}</td>
+                      <td >{{$r->activity->name ?? ''}} {{$r->description}}</td>
+                      <td >{{$r->origin->name}} - {{$r->destination->name}}</td>
+                      <td><a href="{{route('schedule.detail', enkripRambo($r->schedule_id))}}">{{$r->schedule->vessel->name ?? '-'}}</a></td>
+                      <td>{{formatDate($r->date)}}</td>
+                        
                         {{-- <td ><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}
-                        <td >{{$r->activity->name ?? ''}} {{$r->description}}</td>
-                        <td >{{$r->origin->name}} - {{$r->destination->name}}</td>
+                        
+              
                         <td>
                           {{-- <x-status.request :request="$r" :lastreport="$r->schedule->lastreport()" /> --}}
                               @if ($r->status < 3)
@@ -129,6 +127,9 @@
                                 {{-- {{$r->id}} --}}
                                 <x-status-stisla.request :request="$r" :lastreport="$r->getStatus()"/>
                               @endif
+                        </td>
+                        <td>
+                          <a href="{{route('request.detail', enkripRambo($r->id))}}" class="btn btn-sm btn-primary">Detail</a>
                         </td>
                     </tr>
                     @endforeach
@@ -141,7 +142,7 @@
               </table>
             </div>
           </div>
-      </div>
+        </div>
       </div>
     </div>
     

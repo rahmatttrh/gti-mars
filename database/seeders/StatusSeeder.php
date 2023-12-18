@@ -78,14 +78,14 @@ class StatusSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      DB::table('statuses')->insert([
-         'name' => 'Waiting',
-         'class' => 'Cargo',
-         'type' => 1,
-         'code' => '09',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('statuses')->insert([
+      //    'name' => 'Waiting',
+      //    'class' => 'Cargo',
+      //    'type' => 1,
+      //    'code' => '09',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
       DB::table('statuses')->insert([
          'name' => 'Anchored at Secure Area',
          'class' => 'Cargo',
@@ -193,7 +193,31 @@ class StatusSeeder extends Seeder
 
 
       DB::table('statuses')->insert([
+         'name' => 'Start Job',
+         'class' => 'Moving',
+         'type' => 1,
+         'code' => '20',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('statuses')->insert([
          'name' => 'Arrived',
+         'class' => 'Moving',
+         'type' => 1,
+         'code' => '20',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('statuses')->insert([
+         'name' => 'Assist Hose SBM',
+         'class' => 'Moving',
+         'type' => 1,
+         'code' => '20',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('statuses')->insert([
+         'name' => 'Static Tow Tanker',
          'class' => 'Moving',
          'type' => 1,
          'code' => '20',

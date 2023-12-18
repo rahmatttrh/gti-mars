@@ -31,6 +31,7 @@ use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\PortController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ReportSurveillanceController;
 use App\Http\Controllers\RequestController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SurveillanceCargoController;
@@ -81,13 +82,32 @@ Route::middleware(["auth"])->group(function () {
       Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
    });
 
+   Route::prefix("vdr")->group(function () {
+      Route::get("marine/dashboard", [HomeController::class, "vdrMarine",])->name('vdr.marine');
+      Route::get("marine/table", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
+      Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
+      // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
+
    Route::prefix("surveillance")->group(function () {
+      Route::get("marine", [SurveillanceController::class, "marine",])->name('surveillance.marine');
+
       Route::get("create", [SurveillanceController::class, "create",])->name('surveillance.create');
       Route::get("detail/{id}", [SurveillanceController::class, "detail",])->name('surveillance.detail');
       Route::post("cargo/store", [SurveillanceCargoController::class, "store",])->name('surveillance.cargo.store');
       Route::get("cargo/send/{id}", [SurveillanceCargoController::class, "send",])->name('surveillance.cargo.send');
+      Route::get("cargo/drop/{id}", [SurveillanceCargoController::class, "drop",])->name('surveillance.cargo.drop');
 
       Route::post("crew/store", [SurveillanceCrewController::class, "store",])->name('surveillance.crew.store');
+      Route::get("today", [SurveillanceController::class, "today",])->name('surveillance.today');
+      Route::get("complete/{id}", [SurveillanceController::class, "complete",])->name('surveillance.complete');
+
+      Route::get("history/vessel", [SurveillanceController::class, "historyVessel",])->name('surveillance.history.vessel');
+      Route::get("history/user", [SurveillanceController::class, "historyUser",])->name('surveillance.history.user');
+
+      Route::prefix("report")->group(function () {
+         Route::post("store", [ReportSurveillanceController::class, "store",])->name('surveillance.report.store');
+      });
    });
 
    Route::prefix("fetch")->group(function () {
@@ -133,6 +153,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('create-old', [ScheduleController::class, 'createOld'])->name('schedule.create.old');
 
       Route::get('detail/{schedule:id}', [ScheduleController::class, 'detail'])->name('schedule.detail');
+      Route::get('timeline/{id}', [ScheduleController::class, 'timeline'])->name('schedule.timeline');
 
       Route::get('marine/request', [MarineController::class, 'scheduleRequest'])->name('schedule.request.marine');
       Route::put('marine/select/vessel', [MarineController::class, 'scheduleSelectVessel'])->name('schedule.select.vessel');
@@ -181,7 +202,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('check-dummy', [CargoController::class, 'checkDummy'])->name('cargo.check.dummy');
       Route::get('detail', [CargoController::class, 'detail'])->name('cargo.detail');
    });
-   
+
    Route::prefix('request')->group(function () {
       Route::get('/', [RequestController::class, 'index'])->name('request');
       Route::get('month/{month}', [RequestController::class, 'month'])->name('request.month');
@@ -300,6 +321,8 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
    Route::prefix('schedule')->group(function () {
+      
+      Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
       Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
       Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
       Route::get('history/{month}', [MarineScheduleController::class, 'history'])->name('schedule.history');

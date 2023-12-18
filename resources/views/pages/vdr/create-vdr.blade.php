@@ -9,11 +9,11 @@ VDR
         <div class="row align-items-center">
             <div class="col">
                 <!-- Page pre-title -->
-                <div class="page-pretitle">
+                {{-- <div class="page-pretitle">
                     Create
-                </div>
+                </div> --}}
                 <h2 class="page-title">
-                    Vessel Daily Report
+                    Form Create Vessel Daily Report
                 </h2>
             </div>
             <!-- Page title actions -->
@@ -356,7 +356,7 @@ VDR
             @else
             <div class="card">
                 <div class="card-header">
-                    Form Create VDR
+                    {{-- Form Create VDR --}}
                 </div>
                 <form action="{{route('vdr.store')}}" method="POST">
                     @csrf

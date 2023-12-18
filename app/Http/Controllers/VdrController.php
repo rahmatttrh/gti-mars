@@ -92,6 +92,7 @@ class VdrController extends Controller
             $crews = null;
             $operatings = null;
             $totalJam = null;
+            $totalDaily = null;
         }
 
 

@@ -132,13 +132,20 @@ class ScheduleController extends Controller
       $schedule = Schedule::find($dekripId);
       $schedules = Schedule::orderBy('date', 'asc')->get();
       $ahtsVessels = Vessel::where('type', 'AHTS')->get();
-      
+
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
-      $recentRequests = ModelsRequest::where('status', '=', 1)->get();
+      $recentRequests = ModelsRequest::where('status', '=', 1)->where('activity_id', 1)->orWhere('activity_id', 2)->get();
 
 
-      $statuses = Status::where('type', 1)->get();
+      if ($schedule->type == 3) {
+         // dd('moving');
+         $statuses = Status::where('class', 'moving')->where('type', 1)->get();
+      } else {
+         // dd('cargo/crew');
+         $statuses = Status::where('class', 'cargo')->where('type', 1)->get();
+      }
+
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
@@ -214,7 +221,7 @@ class ScheduleController extends Controller
          $deviations = null;
       }
       // dd($schedule->requests->sum('weight'));
-      foreach($schedule->requests as $request){
+      foreach ($schedule->requests as $request) {
          // dd($request->cargoItems->sum('weight'));
          $request->update([
             'total_weight' => $request->cargoItems->sum('weight')
@@ -238,7 +245,7 @@ class ScheduleController extends Controller
          $persenSize = 0;
       }
 
-      
+
 
       // dd(round($persenWeight));
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
@@ -294,16 +301,17 @@ class ScheduleController extends Controller
             // 'report' => $requests
          ]);
       }
-      
    }
 
    public function timeline($id)
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
 
-      return view('pages.schedule.timeline', [
-         'schedule' => $schedule
+      return view('pages-stisla.schedule.timeline', [
+         'schedule' => $schedule,
+         'reports' => $reports
       ]);
    }
 }

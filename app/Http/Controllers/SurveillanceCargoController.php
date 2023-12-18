@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
+use App\Models\Port;
 use App\Models\Surveillance;
 use App\Models\SurveillanceCargo;
 use Illuminate\Http\Request;
@@ -11,14 +12,16 @@ class SurveillanceCargoController extends Controller
 {
     public function store(Request $req){
         $surveillance = Surveillance::find($req->surveillance);
-        $employee = Employee::where('email', auth()->user()->email)->first();
+        // $employee = Employee::where('email', auth()->user()->email)->first();
+        $port = Port::where('email', auth()->user()->email)->first();
 
         SurveillanceCargo::create([
             'status' => 0,
             'surveillance_id' => $surveillance->id,
-            'employee_id' => $employee->id,
+            // 'employee_id' => $employee->id,
+            'user_id' => auth()->user()->id,
             // 'date' => $surveillance->date,
-            'origin_id' => $employee->port_id,
+            'origin_id' => $port->id,
             'destination_id' => $req->destination,
             'desc' => $req->desc,
             'qty' => $req->qty,
@@ -36,6 +39,16 @@ class SurveillanceCargoController extends Controller
             'status' => 1
         ]);
         return redirect()->back()->with('success', 'Cargo Sent.');
+
+    }
+
+    public function drop($id){
+        $dekripId = dekripRambo($id);
+        $surveillanceCargo = SurveillanceCargo::find($dekripId);
+        $surveillanceCargo->update([
+            'status' => 2
+        ]);
+        return redirect()->back()->with('success', 'Cargo Dropped.');
 
     }
 }

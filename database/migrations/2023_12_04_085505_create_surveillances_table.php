@@ -16,11 +16,12 @@ class CreateSurveillancesTable extends Migration
         Schema::create('surveillances', function (Blueprint $table) {
             $table->id();
             $table->integer('status')->nullable();
+            $table->string('region')->nullable();
             $table->integer('port_id')->nullable();
             $table->integer('vessel_id')->nullable();
             $table->date('date')->nullable();
-            $table->integer('total_weight')->nullable();
-            $table->integer('total_size')->nullable();
+            $table->decimal('total_weight')->nullable();
+            $table->decimal('total_size')->nullable();
             $table->timestamps();
         });
     }

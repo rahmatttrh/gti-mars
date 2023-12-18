@@ -11,10 +11,10 @@
       @elseif($request->status == 3)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>03 : Waiting Vessel</div>
       @elseif($request->status == 4)
-      <button type="button" class="btn btn-info btn-icon icon-left">
+      {{-- <button type="button" class="btn btn-info btn-icon icon-left">
          <i class="fas fa-edit"></i>{{$request->getStatus()->status->name}} 
-      </button>
-      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>04 : {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}</div> --}}
+      </button> --}}
+      <div class="badge badge-info ">04 : {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}</div>
       @elseif($request->status == 5)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>05 : Validasi Fleet Control</div>
       @elseif($request->status == 10)

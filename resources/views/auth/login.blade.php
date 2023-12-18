@@ -47,8 +47,8 @@
                   <div class="col-lg-6">
                      <div class="p-5">
                         <div class="text-center">
-                           <h1 class="font-weight-bold"><i>POR<span class="text-primary">T</span></i></h1>
-                           <h5>Pertamina OSES Reporting Technology</h5>
+                           <h1 class="font-weight-bold"><i>POIN<span class="text-primary">T</span></i></h1>
+                           <h5>Pertamina OSES Integrated Technology</h5>
                         </div>
                         <hr>
                         <form class="user" method="POST" action="{{ route('login') }}">

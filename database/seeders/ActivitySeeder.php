@@ -63,10 +63,30 @@ class ActivitySeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      
+
+      DB::table('activities')->insert([
+         'type_id' => 3,
+         'name' => 'Moving',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
       DB::table('activities')->insert([
          'type_id' => 4,
-         'name' => 'Moving',
+         'name' => 'Lifting',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('activities')->insert([
+         'type_id' => 5,
+         'name' => 'Fuel Oil',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('activities')->insert([
+         'type_id' => 6,
+         'name' => 'Flush Water',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

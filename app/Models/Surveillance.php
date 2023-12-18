@@ -26,4 +26,8 @@ class Surveillance extends Model
     public function crews(){
         return $this->hasMany(SurveillanceCrew::class);
     }
+
+    public function reports(){
+        return $this->hasMany(ReportSurveillance::class);
+    }
 }

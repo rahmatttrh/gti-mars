@@ -32,6 +32,7 @@
                       <th class="text-center">
                         #
                       </th>
+                      <th>Class</th>
                       <th>Vessel</th>
                       <th>From</th>
                       <th>Activity</th>
@@ -43,12 +44,13 @@
                   <tbody>     
                     @foreach ($schedules as $schedule)
                         <tr>
-                            <td>
+                            <td class="text-center">
                             {{++$i}}
                             </td>
+                            <td>{{$schedule->class}}</td>
                             <td>
                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name}}</a> <br>
-                                <small>{{$schedule->vessel->vessel_type}} Supply</small>
+                                {{-- <small>{{$schedule->vessel->vessel_type}} Supply</small> --}}
                             </td>
                             <td>
                                 @if (count($schedule->routes) > 0)
@@ -57,7 +59,7 @@
                             </td>
                             <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
                             <td>
-                                {{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br>
+                                {{-- {{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br> --}}
                                 {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
                             </td>
                             <td>

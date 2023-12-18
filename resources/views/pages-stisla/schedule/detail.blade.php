@@ -31,6 +31,7 @@
           <div class="col-md-12">
             @else
             @if (auth()->user()->hasRole('marine'))
+              @if ($schedule->class == 'Cargo/Crew')
                 @if ($recentRequests->count() > 0)
                   <div class="col-md-8">
                     
@@ -38,6 +39,10 @@
                   
                   <div class="col-md-12">
                 @endif
+                @else
+                <div class="col-md-12">
+              @endif
+                
             @endif
         @endif
         
@@ -56,6 +61,7 @@
 
             <div class="btn-group ml-2 mb-4">
               <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Preview PDF</a>
+              <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Timeline</a>
             
               @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
                 <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
@@ -78,14 +84,18 @@
           <div class="card">
             <div class="card-header ">
              
+              @if ($schedule->vessel)
+              <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
+              @endif
               
               <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
+              
             </div>
             <div class="card-body">
               {{-- <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" /> --}}
               <div class="row">
                 <div class="col-md-8">
-                    <x-status-stisla.vessel :vessel="$schedule->vessel" />
+                    
                     <h4 class="mt-1">{{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} </h4> 
                   
                   {{-- <small>{{$schedule->vessel->type ?? 'Vessel Not Avalaible'}} </small> --}}
@@ -163,6 +173,9 @@
               </div>
             </div>
             <div class="card-footer bg-whitesmoke">
+               @if ($schedule->class == 'Fuel Oil' || $schedule->class == 'Flush Water')
+               <x-request-stisla.detail-other :request="$schedule->requests()->first()" />
+               @endif
               
             </div>
           </div>
@@ -172,6 +185,9 @@
           
         </div>
         @if (auth()->user()->hasRole('marine'))
+          @if ($schedule->class == 'Cargo/Crew')
+              
+          
           @if ($recentRequests->count() > 0)
             <div class="col-md-4">
               
@@ -234,10 +250,11 @@
               
             </div>
           @endif
+          @endif
         @endif
 
         <div class="col-md-12">
-          @if ($schedule->class != 'Moving')
+          @if ($schedule->class == 'Cargo/Crew')
             <div class="card">
               <div class="card-header">
                 <h4>Manifest </h4>
@@ -255,7 +272,7 @@
                 <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="table-responsive">
-                      <table class="table table-striped table-sm" id="table-1">
+                      <table class="table table-striped " id="table-1">
                         <thead>
                           <tr>
                             <th>MTD</th>
@@ -330,7 +347,7 @@
                     </div>
                     <hr>
                     <div class="table-responsive">
-                      <table class="table table-striped table-sm card-table">
+                      <table class="table table-striped  card-table">
                         <thead>
                             <tr>
                               <th colspan="7" class="text-info">Deflection</th>
@@ -375,7 +392,7 @@
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     <div class="table-responsive ">
-                      <table class="table table-striped table-1 table-sm" id="table-3">
+                      <table class="table table-striped table-1 " id="table-3">
                         <thead>
                           
                           <tr>
@@ -415,7 +432,7 @@
                 </div>
               </div>
             </div>
-            @else 
+            @elseif($schedule->class == 'Moving')
             <div class="card">
               <div class="card-body">
                 <div class="summary-item">
@@ -436,59 +453,31 @@
                 </div>
               </div>
             </div>
+            @elseif($schedule->class == 'Lifting')
+            <div class="card">
+              <div class="card-body">
+                <div class="summary-item">
+                  <h6>Tanker </h6>
+                  <ul class="list-unstyled list-unstyled-border">
+                    
+                    <li class="media">
+                      <a href="#">
+                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                      </a>
+                      <div class="media-body">
+                        {{-- <div class="media-right">$405</div> --}}
+                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->desc}}</a></div>
+                        <div class="text-muted text-small">Lifting</div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           @endif
         </div>
 
-        <div class="col-md-12">
-          <div class="badge badge-info">
-            Timeline Activity
-          </div>
-          <hr>
-          <div class="activities">
-            @if ($reports->count() > 0)
-              @foreach ($reports as $report)
-              <div class="activity">
-                <div class="activity-icon bg-primary text-white shadow-primary">
-                  <i class="fas fa-comment-alt"></i>
-                </div>
-                <div class="activity-detail">
-                  <div class="mb-2">
-                    <span class="text-job text-primary">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</span>
-                    <span class="bullet"></span>
-                    {{-- <a class="text-job" href="#">View</a> --}}
-                    {{-- <div class="float-right dropdown">
-                      <a href="#" data-toggle="dropdown"><i class="fas fa-ellipsis-h"></i></a>
-                      <div class="dropdown-menu">
-                        <div class="dropdown-title">Options</div>
-                        <a href="#" class="dropdown-item has-icon"><i class="fas fa-eye"></i> View</a>
-                        <a href="#" class="dropdown-item has-icon"><i class="fas fa-list"></i> Detail</a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item has-icon text-danger" data-confirm="Wait, wait, wait...|This action can't be undone. Want to take risks?" data-confirm-text-yes="Yes, IDC"><i class="fas fa-trash-alt"></i> Archive</a>
-                      </div>
-                    </div> --}}
-                  </div>
-                  <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}}.</p>
-                </div>
-              </div>
-                {{-- <div class="row">
-                  <div class="col">
-                      <div class="">
-                        {{$report->status->name}} [{{$report->port_id == null ? '' :  $report->port->name}}]
-                      </div>
-                      <div class="text-muted"><small>{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</small></div>
-                  </div>
-                </div> --}}
-                @endforeach
-                @else
-                <div class="row">
-                  <div class="col">
-                      <small class="text-center text-muted">Empty</small>
-                  </div>
-                </div>
-            @endif
-            
-          </div>
-        </div>
+        
       </div>
     </div>
   </section>
@@ -877,10 +866,73 @@
       </div>
     </div>
   </div>
+
+  {{-- Evidance Report --}}
+  @if ($reports->count() > 0)
+    @foreach ($reports as $report)
+    <div class="modal fade" id="report-evidance-{{$report->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Report Evidance</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="{{asset('storage/' .$report->foto)}}" class="img-fluid" alt="Responsive image">
+            {{-- <img width="100vh" src="" alt=""> --}}
+            {{-- {{$report->foto}} --}}
+          </div>
+          <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+  @endif
+  
+  
     
 @endsection
 
+@push('report')
+   <script>
 
+      $(document).ready(function() {
+         console.log('report function');
+         $('#foto').hide();
+         $('.eta').hide();
+         $('.anchor').hide();
+
+         $('.status').change(function() {
+            console.log('okeee');
+            var status = $(this).val();
+            if (status == 10) {
+              $('#foto').show();
+              $('.eta').hide();
+              $('.anchor').hide();
+            } else if(status == 6) {
+              $('#foto').hide();
+              $('.anchor').hide();
+              $('.eta').show();
+            } else if (status > 24 && status <29) {
+              $('#foto').hide();
+              $('.anchor').show();
+              $('.eta').hide();
+            } else {
+              $('#foto').hide();
+              $('.eta').hide();
+              $('.anchor').hide();
+            }
+         })
+
+         
+      })
+   </script>
+@endpush
 
 @if ($schedule->vessel)
     
@@ -929,3 +981,5 @@
 
 @endpush
 @endif
+
+

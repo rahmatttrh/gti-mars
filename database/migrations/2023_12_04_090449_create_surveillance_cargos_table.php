@@ -18,6 +18,7 @@ class CreateSurveillanceCargosTable extends Migration
             $table->integer('status')->nullable();
             $table->integer('surveillance_id');
             $table->integer('employee_id')->nullable();
+            $table->integer('user_id')->nullable();
             $table->date('date')->nullable();
             $table->integer('origin_id')->nullable();
             $table->integer('destination_id')->nullable();
@@ -25,8 +26,8 @@ class CreateSurveillanceCargosTable extends Migration
             $table->string('desc')->nullable();
             $table->integer('qty')->nullable();
             $table->string('unit')->nullable();
-            $table->integer('weight')->nullable();
-            $table->integer('size')->nullable();
+            $table->decimal('weight')->nullable();
+            $table->decimal('size')->nullable();
             $table->timestamps();
         });
     }

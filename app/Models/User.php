@@ -113,7 +113,12 @@ class User extends Authenticatable
    public function getPortName()
    {
       $employee = Employee::where('email', $this->email)->first();
-      return $employee->port->name;
+      if ($employee) {
+         return $employee->port->name;
+      } else {
+         $port = Port::where('email', $this->email)->first();
+         return $port->name;
+      }
    }
 
    public function getEmployeeId()
@@ -126,5 +131,19 @@ class User extends Authenticatable
    {
       $now = Carbon::now();
       return $now->format('m');
+   }
+
+   public function isPlatform()
+   {
+      $port = Port::where('email', $this->email)->first();
+      if ($port) {
+         if ($port->type == 'platform') {
+            return true;
+         } else {
+            return false;
+         }
+      } else {
+         return false;
+      }
    }
 }

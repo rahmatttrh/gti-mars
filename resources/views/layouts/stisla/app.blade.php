@@ -45,47 +45,44 @@
 
 
 
-<body class="">
-  {{-- <body class="sidebar-mini"> --}}
+{{-- <body class=""> --}}
+  <body class="sidebar-mini">
   <div id="app ">
     <div class="main-wrapper main-wrapper-1 ">
       <div class="navbar-bg " style="background-color: #0b4e99"></div>
       
       @if (auth()->user()->hasRole('marine'))
       <nav class="navbar navbar-expand-lg main-navbar">
+        
         <form class="form-inline mr-auto">
           <ul class="navbar-nav mr-3">
             <li>
                 <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a>
             </li>
             <li>
+              <a href="/">
               <div class="bg-white py-1 px-3 rounded">
                 <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
               </div>
-            </li>
-            {{-- <li>
-              <a href="/" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Home Page">
-                <b>HOME</b>
-              </a>
+            </a>
             </li>
             <li>
-              <a href="{{route('dsp.marine')}}" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">
-                <b>DSP</b>
-              </a>
+              <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4">DSP</a>
             </li>
             <li>
-              <a href="#" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">
-                <b>VDR</b>
-              </a>
-            </li> 
+              <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg">VDR</a>
+            </li>
             <li>
-              <a href="#" style="text-decoration: none" class="bg-white py-1 px-4 rounded ml-2" data-toggle="tooltip" data-placement="bottom" title="Under Development">
-                <b>AIMS</b>
-              </a>
-            </li>--}}
-            {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
+              <a href="" class="nav-link nav-link-lg">AIMS</a>
+            </li>
+            
+
+            
+            
             <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
           </ul>
+
+          
           
         </form>
         <ul class="navbar-nav navbar-right">
@@ -384,13 +381,12 @@
       {{-- Siedbar --}}
       @if (auth()->user()->hasRole('marine'))
         <div class="main-sidebar sidebar-style-2 ">
-            <aside id="sidebar-wrapper">
+          <aside id="sidebar-wrapper">
             <div class="sidebar-brand">
-                <a href="{{route('dsp.marine')}}" class="fw-bold">DIGITAL SMART PORT </a>
-            
+              <a href="{{route('dsp.marine')}}" class="fw-bold">DIGITAL SMART PORT </a>
             </div>
             <div class="sidebar-brand sidebar-brand-sm">
-                <a href="{{route('dsp.marine')}}">DSP</a>
+              <a href="{{route('dsp.marine')}}">DSP</a>
             </div>
             <hr>
             <ul class="sidebar-menu">
@@ -414,13 +410,15 @@
                 </ul>
                 </li>
                 <li class="dropdown">
-                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Schedule</span></a>
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Sailing Order</span></a>
                 <ul class="dropdown-menu">
+                  <li><a class="nav-link" href="{{route('schedule.inbox')}}">Inbox</a></li>
                     <li><a class="nav-link" href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}">Plan</a></li>
                     <li><a class="nav-link" href="{{route('schedule.order', enkripRambo(auth()->user()->getMonth()))}}">Progress</a></li>
                     <li><a class="nav-link" href="forms-validation.html">History</a></li>
                 </ul>
                 </li>
+                <li><a class="nav-link" href="{{route('surveillance.marine')}}"><i class="fas fa-pencil-ruler"></i> <span> Surveillance Activity</span></a></li>
                 
             </ul>
 
@@ -450,15 +448,17 @@
                     <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
                   </ul>
                 </li>
+
+                @if (auth()->user()->isPlatform() == true)
                 <li class="dropdown">
                   <a href="#" class="nav-link has-dropdown"><i class="fas fa-infinity"></i> <span>Surveillance Activity</span></a>
                   <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('surveillance.create')}}">Create</a></li> 
-                    <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                    <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                    <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
+                    <li><a class="nav-link" href="{{route('surveillance.create')}}">Today</a></li> 
+                    <li><a class="nav-link" href="{{route('surveillance.history.user')}}">History</a></li> 
                   </ul>
                 </li>
+                @endif
+                
                 
                 
               </ul>
@@ -481,16 +481,31 @@
                 {{-- <li class="menu-header">Dashboard</li> --}}
                 
                 <li class="menu-header">Menu</li>
-                <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li>
-                {{-- <li class="dropdown">
-                  <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
+                {{-- <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li> --}}
+
+                <li class="dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>VDR</span></a>
                   <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{route('request.create')}}">Create</a></li> 
-                    <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                    <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                    <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
+                    <li><a class="nav-link" href="{{route('vdr.create')}}">Create</a></li> 
+                    <li><a class="nav-link" href="{{route('request.draft')}}">History</a></li>   
                   </ul>
-                </li> --}}
+                </li>
+
+                <li class="dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Schedules</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{route('request.create')}}">Progress</a></li> 
+                    <li><a class="nav-link" href="{{route('request.draft')}}">History</a></li>   
+                  </ul>
+                </li>
+
+                <li class="dropdown">
+                  <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Surveillance</span></a>
+                  <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{route('surveillance.today')}}">Today</a></li> 
+                    <li><a class="nav-link" href="{{route('surveillance.history.vessel')}}">History</a></li>   
+                  </ul>
+                </li>
                 
                 
               </ul>
@@ -561,8 +576,9 @@
   @stack('map')
   @stack('get_schedules')
   @stack('autorefresh')
+  @stack('report')
 
-  {{-- <script>
+  <script>
     $(document).ready(function () {
     var body = $('body');
     $(".main-sidebar .sidebar-menu > li").each(function() {
@@ -581,7 +597,7 @@
     });
 });
 
-  </script> --}}
+  </script>
 
 
     @if (session('success'))
@@ -622,6 +638,7 @@
         @endforeach     
     @endif
 
+    
   
 </body>
 </html>

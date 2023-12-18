@@ -25,6 +25,17 @@ use Illuminate\Support\Facades\Mail;
 
 class MarineScheduleController extends Controller
 {
+   public function inbox()
+   {
+      $cargoSchedules = Schedule::where('type', 2)->where('class', 'Cargo/Crew')->where('status', 0)->get();
+      $movingSchedules = Schedule::where('type', 2)->where('class', '!=', 'Cargo/Crew')->where('status', 0)->get();
+
+      return view('pages-stisla.marine.schedule.inbox', [
+         'cargoSchedules' => $cargoSchedules,
+         'movingSchedules' => $movingSchedules
+      ])->with('i');
+   }
+
    public function plan($month)
    {
 
@@ -107,7 +118,7 @@ class MarineScheduleController extends Controller
          $vessel = Vessel::find(9);
          $giat = Vessel::find(11);
          $elok = Vessel::find(9);
-         $sigap = Vessel ::find(6);
+         $sigap = Vessel::find(6);
          $tegas = Vessel::find(35);
 
          foreach ($mondays as $monday) {
@@ -117,7 +128,7 @@ class MarineScheduleController extends Controller
                'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'class' => 'Second Trip',
+               'class' => 'Cargo/Crew',
                'vessel_id' => $elok->id,
                'vessel_type' => $elok->type,
                'date' => $monday->format('Y-m-d'),
@@ -133,20 +144,20 @@ class MarineScheduleController extends Controller
                'date' => $monday
             ]);
 
-            
+
             $giatMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'class' => 'First Trip',
+               'class' => 'Cargo/Crew',
                'vessel_id' => $giat->id,
                'vessel_type' => $giat->type,
                'date' => $monday->format('Y-m-d'),
                'etd' => $monday->format('Y-m-d'),
                'eta' => $monday->format('Y-m-d'),
             ]);
-            
-   
+
+
             ScheduleRoute::create([
                'schedule_id' => $giatMonday->id,
                'port_id' => 1,
@@ -168,20 +179,13 @@ class MarineScheduleController extends Controller
                'status' => 1,
                'date' => $monday
             ]);
-
-            
-
-            
-
-
          }
 
          foreach ($tuesdays as $tuesday) {
-           
          }
 
          foreach ($wednesdays as $wednesday) {
-            
+
 
 
             $elokWednesday = Schedule::create([
@@ -190,7 +194,7 @@ class MarineScheduleController extends Controller
                'status' => 0,
                'vessel_id' => $elok->id,
                'vessel_type' => $elok->type,
-               'class' => 'First Trip',
+               'class' => 'Cargo/Crew',
                'date' => $wednesday->format('Y-m-d'),
                'etd' => $wednesday->format('Y-m-d'),
                'eta' => $wednesday->format('Y-m-d'),
@@ -230,7 +234,7 @@ class MarineScheduleController extends Controller
             //    'rank' => 1,
             //    'status' => 1
             // ]);
-           
+
          }
 
          foreach ($saturdays as $saturday) {
@@ -238,7 +242,7 @@ class MarineScheduleController extends Controller
             $giatSaturday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'Second Trip',
+               'class' => 'Cargo/Crew',
                'status' => 0,
                'vessel_id' => $giat->id,
                'vessel_type' => $giat->type,
@@ -262,14 +266,13 @@ class MarineScheduleController extends Controller
                'status' => 1,
                'date' => $saturday->addDay()
             ]);
-           
          }
 
-         foreach($sundays as $sunday){
+         foreach ($sundays as $sunday) {
             $sigapSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'First Trip',
+               'class' => 'Cargo/Crew',
                'status' => 0,
                'vessel_id' => $sigap->id,
                'vessel_type' => $sigap->type,
@@ -280,7 +283,7 @@ class MarineScheduleController extends Controller
             $tegasSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'First Trip',
+               'class' => 'Cargo/Crew',
                'status' => 0,
                'vessel_id' => $tegas->id,
                'vessel_type' => $tegas->type,
@@ -356,11 +359,7 @@ class MarineScheduleController extends Controller
                'status' => 1,
                'date' => $sunday->addDay()
             ]);
-
-
          }
-
-
       }
 
       if (auth()->user()->hasRole('vessel')) {
@@ -496,7 +495,7 @@ class MarineScheduleController extends Controller
       } else {
          $schedule = Schedule::create([
             'by' => 'marine',
-            'class' => 'First Trip',
+            'class' => 'Cargo/Crew',
             'type' => 2,
             'status' => 0,
             'vessel_id' => $vessel->id,
@@ -684,7 +683,7 @@ class MarineScheduleController extends Controller
 
    public function reorderRoute(Request $req)
    {
-      
+
       $choseRoute = ScheduleRoute::find($req->route);
       $schedule = Schedule::find($choseRoute->schedule_id);
       // dd($choseRoute->port->name);
@@ -812,7 +811,7 @@ class MarineScheduleController extends Controller
       $now = Carbon::today();
       $schedule = Schedule::find($req->schedule);
       $lastRequest = ModelsRequest::orderBy("created_at", "desc")->first();
-      
+
       $destination = Port::find($req->port);
       $vessel = Vessel::find($schedule->vessel_id);
 
@@ -910,7 +909,7 @@ class MarineScheduleController extends Controller
       $now = Carbon::today();
       $schedule = Schedule::find($req->schedule);
       $lastRequest = ModelsRequest::orderBy("created_at", "desc")->first();
-      
+
       $destination = Port::find($req->port);
       $vessel = Vessel::find($schedule->vessel_id);
 

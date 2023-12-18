@@ -1,7 +1,7 @@
 <div>
    @if ($schedule->status == 0)
-   <small>Draft</small>
-      {{-- <div class="badge badge-light border"><small>00 : Draft</small></div> --}}
+   {{-- <small>Draft</small> --}}
+      <div class="badge badge-light border"><small>Draft</small></div>
       {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Draft 
       </button> --}}
@@ -11,11 +11,11 @@
          <i class="fas fa-edit"></i>Waiting Vessel 
       </button> --}}
       @elseif($schedule->status == 2)
-      {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} </div> --}}
+      <div class="badge badge-primary "><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} </div>
       {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}</div> --}}
-      <button type="button" class="btn btn-primary btn-icon icon-left">
+      {{-- <button type="button" class="btn btn-primary btn-icon icon-left">
          <i class="fas fa-user"></i>{{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}
-      </button>
+      </button> --}}
       @elseif($schedule->status == 3)
       <button type="button" class="btn btn-danger btn-icon icon-left">
          <i class="fas fa-user"></i>User Confirmation 

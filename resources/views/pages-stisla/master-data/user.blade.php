@@ -72,7 +72,10 @@
                             {{-- <a href="{{route('vessel.detail', enkripRambo($user->id))}}">{{$user->name}}</a>  --}}
                             {{$user->name}}
                           </td>
-                          <td>{{$user->getPortName()}}</td>
+                          <td>
+                            {{$user->getPortName() ?? ''}}
+                            
+                          </td>
                           
                           <td>{{$user->username}}</td>
                           <td>{{$user->email}}</td>

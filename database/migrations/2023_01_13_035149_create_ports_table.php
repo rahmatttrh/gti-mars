@@ -19,6 +19,7 @@ class CreatePortsTable extends Migration
          $table->string('name');
          $table->string('email');
          $table->string('type');
+         $table->string('region')->nullable();
          $table->string('txid')->nullable();
          $table->string('imo')->nullable();
          $table->string('mmsi')->nullable();

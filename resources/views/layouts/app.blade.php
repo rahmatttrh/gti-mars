@@ -6,7 +6,7 @@
    <meta charset="utf-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-   <title>DSP PHE - @yield('title')</title>
+   <title>VDR- @yield('title')</title>
    <link rel="icon" href="{{asset('img/logo/harbour.png')}}" type="image/x-icon" />
    <!-- CSS files -->
    <link href="{{asset('css/tabler.min.css')}}" rel="stylesheet" />
@@ -47,47 +47,73 @@
                   <span class="navbar-toggler-icon"></span>
                </button>
                {{-- navbar-brand-autodark  --}}
-               <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
-                  <a href="/" class="d-flex align-items-center">
-                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
-                     <img src="{{asset('img/logo/phe-oses.png')}}" alt="DSP-PHE" class="navbar-brand-image">
-                     {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
-
-                     @elseif(auth()->user()->hasRole('platform'))
-                     @if (auth()->user()->getLogo())
-                     <img src="{{asset('storage/' . auth()->user()->getLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     @else
-                     <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+               <div class="d-flex align-items-center">
+                  <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
+                     @if (auth()->user()->hasRole('marine'))
+                        <a href="{{route('vdr.marine')}}" class="d-flex align-items-center">
+                           <img src="{{asset('img/logo/phe-oses.png')}}" alt="DSP-PHE" class="navbar-brand-image">
+                           {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">VESSEL DAILY <span class="text-primary">REPORT</span></div> --}}
+                        </a>
+                        
+                        @elseif(auth()->user()->hasRole('vessel'))
+                        <a href="{{route('vdr.create')}}" class="d-flex align-items-center">
+                           <img src="{{asset('img/logo/phe-oses.png')}}" alt="DSP-PHE" class="navbar-brand-image">
+                           {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">VESSEL DAILY <span class="text-primary">REPORT</span></div> --}}
+                        </a>
                      @endif
+                     {{-- <a href="/" class="d-flex align-items-center">
+                        @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
+                        <img src="{{asset('img/logo/phe-oses.png')}}" alt="DSP-PHE" class="navbar-brand-image">
+                         <div class="ml-4" style="margin-left: 10px; font-weight: 900">VESSEL DAILY <span class="text-primary">REPORT</span></div>
+   
+                        @elseif(auth()->user()->hasRole('platform'))
+                        @if (auth()->user()->getLogo())
+                        <img src="{{asset('storage/' . auth()->user()->getLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @else
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @endif
+   
+                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getSystem()}} <span class="text-primary">SYSTEM</span></div>
+                        @elseif(auth()->user()->hasRole('retail'))
+                        @if (auth()->user()->getPartyLogo())
+                        <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @else
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @endif
+                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}} <span class="text-primary">SYSTEM</span></div>
+                        @elseif(auth()->user()->hasRole('supplier'))
+                        @if (auth()->user()->getPartyLogo())
+                        <img src="{{asset('storage/' . auth()->user()->getPartyLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @else
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @endif
+                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}} <span class="text-primary">SYSTEM</span></div>
+   
+                        @elseif(auth()->user()->hasRole('receiving'))
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div>
+                        @elseif(auth()->user()->hasRole('marine'))
+                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div>
+                        @endif
+   
+   
+                     </a> --}}
+                  </h1>
 
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getSystem()}} <span class="text-primary">SYSTEM</span></div>
-                     @elseif(auth()->user()->hasRole('retail'))
-                     {{-- <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image"> --}}
-                     @if (auth()->user()->getPartyLogo())
-                     <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     @else
-                     <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     @endif
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}} <span class="text-primary">SYSTEM</span></div>
-                     @elseif(auth()->user()->hasRole('supplier'))
-                     @if (auth()->user()->getPartyLogo())
-                     <img src="{{asset('storage/' . auth()->user()->getPartyLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     @else
-                     <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     @endif
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}} <span class="text-primary">SYSTEM</span></div>
-
-                     @elseif(auth()->user()->hasRole('receiving'))
-                     <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div>
-                     @elseif(auth()->user()->hasRole('marine'))
-                     <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                     <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div>
-                     @endif
-
-
-                  </a>
-               </h1>
+                  @if (auth()->user()->hasRole('marine'))
+                     <a href="{{route('dsp.marine')}}" class="mx-2">DSP</a>
+                     <a href="{{route('vdr.marine')}}" class="mx-2"><b>VDR</b></a>
+                     <a href="" class="mx-2">AIMS</a>
+                     @elseif (auth()->user()->hasRole('vessel'))
+                     <a href="{{route('dsp.vessel')}}" class="mx-2">DSP</a>
+                     <a href="{{route('vdr.create')}}" class="mx-2"><b>VDR</b></a>
+                     <a href="" class="mx-2">AIMS</a>
+                  @endif
+                  
+               </div>
+               
+              
                <div class="navbar-nav flex-row order-md-last">
                   <a href="?theme=dark" class="nav-link px-0 hide-theme-dark me-3" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
                      <!-- Download SVG icon froƒm http://tabler-icons.io/i/moon -->
@@ -104,7 +130,7 @@
                         <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
                      </svg>
                   </a>
-                  <div class="nav-item d-none d-md-flex me-3">
+                  {{-- <div class="nav-item d-none d-md-flex me-3">
                      <div class="btn-list">
                         <div class="btn">
                            @if (auth()->user()->hasRole('superuser'))
@@ -118,7 +144,7 @@
                            @endif
                         </div>
                      </div>
-                  </div>
+                  </div> --}}
 
                   <div class="nav-item dropdown">
                      @if (auth()->user()->hasRole('superuser'))
@@ -204,7 +230,7 @@
                      @endif
 
                      <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        @if (auth()->user()->hasRole('superuser'))
+                        {{-- @if (auth()->user()->hasRole('superuser'))
                         <a href="{{route('user')}}" class="dropdown-item">User Management</a>
                         @elseif(auth()->user()->hasRole('platform'))
                         <a href="{{route('platform.detail', enkripRambo(auth()->user()->getPlatformId()))}}" class="dropdown-item">Profile & account</a>
@@ -214,10 +240,11 @@
                         @elseif(auth()->user()->hasRole('vessel'))
                         <a href="{{route('vessel.detail', enkripRambo(auth()->user()->getVesselId()))}}" class="dropdown-item">Profile & account</a>
                         <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
-                        @endif
+                        @endif --}}
 
 
-                        <a href="{{route('document')}}" class="dropdown-item">Documents</a>
+                        {{-- <a href="{{route('document')}}" class="dropdown-item">Documents</a> --}}
+                        <a href="/" class="dropdown-item">Back to Home Page</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                        document.getElementById('logout-form').submit();">
