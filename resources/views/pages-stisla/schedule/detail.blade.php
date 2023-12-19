@@ -4,483 +4,506 @@
 @endsection
 @section('content')
 <section class="section">
-    <div class="section-header">
+   <div class="section-header">
       <h1 class="section-title">Detail Sailing Order</h1>
       <div class="section-header-breadcrumb">
-        @if (auth()->user()->hasRole('marine'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
-          @elseif(auth()->user()->hasRole('vessel'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
-          @elseif(auth()->user()->hasRole('user'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-        @endif
-        
-        {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
-        <div class="breadcrumb-item active">Schedule Detail</div>
+         @if (auth()->user()->hasRole('marine'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
+            @elseif(auth()->user()->hasRole('vessel'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
+            @elseif(auth()->user()->hasRole('user'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
+         @endif
+         
+         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
+         <div class="breadcrumb-item active">Schedule Detail</div>
       </div>
-    </div>
+   </div>
 
-    <div class="section-body">
-      {{-- <h2 class="section-title">Schedule Plan</h2>
-      <p class="section-lead">
-        We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-      </p> --}}
+   <div class="section-body">
+   {{-- <h2 class="section-title">Schedule Plan</h2>
+   <p class="section-lead">
+      We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
+   </p> --}}
 
-      <div class="row">
-        @if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department'))
-          <div class="col-md-12">
-            @else
-            @if (auth()->user()->hasRole('marine'))
-              @if ($schedule->class == 'Cargo/Crew')
-                @if ($recentRequests->count() > 0)
-                  <div class="col-md-8">
-                    
-                  @else
+   <div class="row">
+      @if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department'))
+         <div class="col-md-12">
+         @else
+         @if (auth()->user()->hasRole('marine'))
+            @if ($schedule->class == 'Cargo/Crew')
+               @if ($recentRequests->count() > 0)
+               <div class="col-md-8">
                   
-                  <div class="col-md-12">
-                @endif
-                @else
-                <div class="col-md-12">
-              @endif
-                
+               @else
+               
+               <div class="col-md-12">
+               @endif
+               @else
+               <div class="col-md-12">
             @endif
-        @endif
-        
-          <div class="d-flex">
-            @if (auth()->user()->hasRole('marine'))
-                <x-schedule-stisla.action-marine :schedule="$schedule" />
-            @endif
+               
+         @endif
+      @endif
+      
+         <div class="d-flex">
+         @if (auth()->user()->hasRole('marine'))
+               <x-schedule-stisla.action-marine :schedule="$schedule" />
+         @endif
 
-            @if (auth()->user()->hasRole('vessel'))
-                <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixRoutes" />
-            @endif
+         @if (auth()->user()->hasRole('vessel'))
+               <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixRoutes" />
+         @endif
 
-            @if (auth()->user()->hasRole('department'))
-                <x-schedule-stisla.action-department :schedule="$schedule" />
-            @endif
+         @if (auth()->user()->hasRole('department'))
+               <x-schedule-stisla.action-department :schedule="$schedule" />
+         @endif
 
-            <div class="btn-group ml-2 mb-4">
-              <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Preview PDF</a>
-              <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Timeline</a>
+         <div class="btn-group ml-2 mb-4">
+            <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Preview PDF</a>
+            <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}" class="btn btn-light border btn-lg">Timeline</a>
+         
+            @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
+               <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+               <span class="sr-only">Toggle Dropdown</span>
+               </button>
+               <div class="dropdown-menu">
+               <a class="dropdown-item" href="#">Postpone</a>
+               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-edit">Edit</a>
+               
+               <div class="dropdown-divider"></div>
+               <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-delete">Delete</a>
+               {{-- <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a> --}}
+               </div>
+            @endif
             
-              @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu">
-                  <a class="dropdown-item" href="#">Postpone</a>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-edit">Edit</a>
+         </div>
+         </div>
+         
+         {{-- <hr> --}}
+         <div class="card">
+         <div class="card-header ">
+            
+            @if ($schedule->vessel)
+            <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
+            @endif
+            
+            <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
+            
+         </div>
+         <div class="card-body">
+            {{-- <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" /> --}}
+            <div class="row">
+               <div class="col-md-8">
                   
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-delete">Delete</a>
-                  {{-- <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a> --}}
-                </div>
-              @endif
-              
-            </div>
-          </div>
-          
-          {{-- <hr> --}}
-          <div class="card">
-            <div class="card-header ">
-             
-              @if ($schedule->vessel)
-              <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
-              @endif
-              
-              <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
-              
-            </div>
-            <div class="card-body">
-              {{-- <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" /> --}}
-              <div class="row">
-                <div class="col-md-8">
-                    
-                    <h4 class="mt-1">{{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} </h4> 
-                  
-                  {{-- <small>{{$schedule->vessel->type ?? 'Vessel Not Avalaible'}} </small> --}}
-                  <h3> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}, {{\Carbon\Carbon::parse($schedule->date)->format('d F Y')}}</h1>
-                  {{-- @if ($schedule->type == 1)
-                  <div class="badge badge-pill badge-primary">Routine</div>
-                  @else
-                  <div class="badge badge-pill badge-warning">Request</div>
-                  @endif --}}
-                  {{-- <div class="badge badge-pill badge-info">{{$schedule->class}}</div>   --}}
-                  <hr>
-                  <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                      {{-- <li class="breadcrumb-item">
-                        <a href="#"><i class="fas fa-tachometer-alt"></i></a>
-                      </li> --}}
-                      @foreach ($fixRoutes as  $route)
+                  <h4 class="mt-1">{{$schedule->vessel->name ?? 'Vessel Not Avalaible'}} </h4> 
+               
+               {{-- <small>{{$schedule->vessel->type ?? 'Vessel Not Avalaible'}} </small> --}}
+               <h3> {{\Carbon\Carbon::parse($schedule->date)->format('l')}}, {{\Carbon\Carbon::parse($schedule->date)->format('d F Y')}}</h1>
+               <hr>
+               <nav aria-label="breadcrumb">
+                  <ol class="breadcrumb">
+                     {{-- <li class="breadcrumb-item">
+                     <a href="#"><i class="fas fa-tachometer-alt"></i></a>
+                     </li> --}}
+                     @if ($schedule->class == 'Cargo/Crew')
+                     @foreach ($fixRoutes as  $route)
                         <li class="breadcrumb-item">
-                          @if (auth()->user()->hasRole('marine'))
-                          <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
-                            @if ($route->rank > 1)
-                      
-                            @endif 
-                            {{$route->port->name}} <b>&nbsp;&nbsp;</b>
-                          </a>
-                          @else
-                          @if ($route->rank > 1)
-                      
-                            @endif 
-                            {{$route->port->name}} <b>/&nbsp;&nbsp;</b>
-                          @endif
-                          <br>
-                          <small>
-                            @if ($route->date)
-                            {{\Carbon\Carbon::parse($route->date)->format('l')}}
-                            @else
-                            -
-                            @endif
-                          </small>
+                           @if (auth()->user()->hasRole('marine'))
+                           <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
+                           @if ($route->rank > 1)
+                     
+                           @endif 
+                           {{$route->port->name}} <b>&nbsp;&nbsp;</b>
+                           </a>
+                           @else
+                           @if ($route->rank > 1)
+                     
+                           @endif 
+                           {{$route->port->name}} <b>/&nbsp;&nbsp;</b>
+                           @endif
+                           <br>
+                           <small>
+                           @if ($route->date)
+                           {{\Carbon\Carbon::parse($route->date)->format('l')}}
+                           @else
+                           -
+                           @endif
+                           </small>
                         </li>
                         
-                      
-                      @endforeach
                      
-                      
-                      {{-- <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Library</a></li>
-                      <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i> Data</li> --}}
-                    </ol>
-                  </nav>
-                </div>
-                <div class="col-md-4">
-                  <div class="card shadow-none border">
-                    {{-- <div class="card-header">
-                      <h4>Referral URL</h4>
-                    </div> --}}
-                    <div class="card-body">
-                      <div class="mb-4">
-                        <div class="text-small float-right font-weight-bold text-muted">{{$persenSize}}%</div>
-                        <div class="font-weight-bold mb-1">Deckspace</div>
-                        <div class="progress" data-height="4">
-                          <div class="progress-bar" role="progressbar" data-width="{{$persenSize}}%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>                          
-                      </div>
-    
-                      <div class="mb-4">
-                        <div class="text-small float-right font-weight-bold text-muted">{{$persenWeight}}%</div>
-                        <div class="font-weight-bold mb-1">Deadweight</div>
-                        <div class="progress" data-height="4">
-                          <div class="progress-bar" role="progressbar" data-width="{{$persenWeight}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer bg-whitesmoke">
-               @if ($schedule->class == 'Fuel Oil' || $schedule->class == 'Flush Water')
-               <x-request-stisla.detail-other :request="$schedule->requests()->first()" />
-               @endif
-              
-            </div>
-          </div>
-          
-          
-          
-          
-        </div>
-        @if (auth()->user()->hasRole('marine'))
-          @if ($schedule->class == 'Cargo/Crew')
-              
-          
-          @if ($recentRequests->count() > 0)
-            <div class="col-md-4">
-              
-              <div class="card" >
-                {{-- <div class="card-header">
-                  <h4>Recent Request</h4>
-                </div> --}}
-                <div class="card-body " >
-                  <div class="summary overflow-auto" style="height: 350px; overflow-y: scroll">
-                    @if ($recentRequests->count() > 0)
-                      @foreach ($recentRequests as $req)
-                      {{-- @if ($req->activity_id != 3) --}}
-                          
-                    
-                      {{-- <div class="card">
-                        <div class="card-body"> --}}
-                          <div class="summary-item">
-                            {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
-                            <ul class="list-unstyled list-unstyled-border">
-                              <li class="media">
-                                {{-- <a href="#">
-                                  <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
-                                </a> --}}
-                                <div class="media-body">
-                                  <div class="media-right text-right">
-                                    {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
-                                    <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve</small></a><br>
-                                    <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
-                                    {{-- <button type="button" class="btn btn-primary" >
-                                      Launch demo modal
-                                    </button> --}}
-                                    
-                                  </div>
-                                  <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
-                                  <div class="text-muted text-small"> <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> {{$req->schedule->vessel->name ?? ''}} <br> by {{$req->employee->name}}</div>
-                                </div>
-                              </li>
-                              
-                            </ul>
-                          </div>
-                        {{-- </div>
-                      </div> --}}
-                          <hr>
-                          
-                          {{-- @endif --}}
-                      @endforeach
-                      @else
-                      <div class="row">
-                          <div class="col">
-                            <small class="text-center text-muted">Empty</small>
-                          </div>
-                      </div>
-                    @endif
-                  </div>
-                </div>
-              </div>
-
-              {{-- Activity --}}
-
-              
-            </div>
-          @endif
-          @endif
-        @endif
-
-        <div class="col-md-12">
-          @if ($schedule->class == 'Cargo/Crew')
-            <div class="card">
-              <div class="card-header">
-                <h4>Manifest </h4>
-              </div>
-              <div class="card-body">
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
-                  </li>
-                  
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <div class="table-responsive">
-                      <table class="table table-striped " id="table-1">
-                        <thead>
-                          <tr>
-                            <th>MTD</th>
-                            <th>Destination</th>
-                            <th>Descriptive</th>
-                            <th>Contract</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-center">Weight</th>
-                            <th class="text-center">Drop</th>
-                            <th class="text-center">Size (m<sup>2</sup>)</th>
-                            
-                            @if ( auth()->user()->hasRole('department'))
-                              <th>Action</th>
-                              @else
-                              <th>-</th>
-                            @endif
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($requests->where('activity_id', 1) as $request)
-                            @foreach ($request->cargoItems as $item)
-                                <tr>
-                                  <td class=" text-truncate">
-                                    <div class="dropdown">
-                                      {{$item->mtd}}
+                     @endforeach
+                     @else
+                        @if (auth()->user()->hasRole('marine'))
+                           {{-- <form action="{{route('schedule.jetty.update')}}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+                              <div class="form-group">
+                                 <div class="input-group">
+                                    <select class="form-control" name="jetty" id="jetty">
+                                       <option selected disabled>Choose one...</option>
+                                       <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option> 
+                                       <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}} value="Jetty 2">Jetty 2</option>  
+                                       <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}} value="Jetty 3">Jetty 3</option>  
+                                       <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}} value="Jetty 4">Jetty 4</option>   
+                                    </select>
+                                    <div class="input-group-append">
+                                       <button class="btn btn-primary px-4" type="submit">Change</button>
                                     </div>
-                                  </td>
-                                  <td>{{$item->request->destination->name}}</td>
-                                  <td class=" text-truncate ">
-                                    {{$item->desc}} 
-                                  </td>
-                                  <td class=" text-truncate">{{$item->contract}}</td>
-                                  <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                                  <td class=" text-center">{{$item->weight}}</td>
-                                  <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                                  <td class=" text-center">{{$item->size}}</td>
+                                 </div>
+                              </div>
+                           </form> --}}
+                           <p>{{$schedule->remark}}</p>
+                        @else
+                           <p>{{$schedule->remark}}</p>
+                        @endif
+
+                     @endif
+                     
+                  
+                     
+                     {{-- <li class="breadcrumb-item"><a href="#"><i class="far fa-file"></i> Library</a></li>
+                     <li class="breadcrumb-item active" aria-current="page"><i class="fas fa-list"></i> Data</li> --}}
+                  </ol>
+               </nav>
+               </div>
+               <div class="col-md-4">
+               <div class="card shadow-none border">
+                  {{-- <div class="card-header">
+                     <h4>Referral URL</h4>
+                  </div> --}}
+                  <div class="card-body">
+                     <div class="mb-4">
+                     <div class="text-small float-right font-weight-bold text-muted">{{$persenSize}}%</div>
+                     <div class="font-weight-bold mb-1">Deckspace</div>
+                     <div class="progress" data-height="4">
+                        <div class="progress-bar" role="progressbar" data-width="{{$persenSize}}%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                     </div>                          
+                     </div>
+   
+                     <div class="mb-4">
+                     <div class="text-small float-right font-weight-bold text-muted">{{$persenWeight}}%</div>
+                     <div class="font-weight-bold mb-1">Deadweight</div>
+                     <div class="progress" data-height="4">
+                        <div class="progress-bar" role="progressbar" data-width="{{$persenWeight}}%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                     </div>
+                     </div>
+                  </div>
+               </div>
+               </div>
+            </div>
+         </div>
+         <div class="card-footer bg-whitesmoke">
+            @if ($schedule->class == 'Fuel Oil' || $schedule->class == 'Flush Water')
+            <x-request-stisla.detail-other :request="$schedule->requests()->first()" />
+            @endif
+            
+         </div>
+         </div>
+         
+         
+         
+         
+      </div>
+      @if (auth()->user()->hasRole('marine'))
+         @if ($schedule->class == 'Cargo/Crew')
+            
+         
+         @if ($recentRequests->count() > 0)
+         <div class="col-md-4">
+            
+            <div class="card" >
+               {{-- <div class="card-header">
+               <h4>Recent Request</h4>
+               </div> --}}
+               <div class="card-body " >
+               <div class="summary overflow-auto" style="height: 350px; overflow-y: scroll">
+                  @if ($recentRequests->count() > 0)
+                     @foreach ($recentRequests as $req)
+                     {{-- @if ($req->activity_id != 3) --}}
+                        
+                  
+                     {{-- <div class="card">
+                     <div class="card-body"> --}}
+                        <div class="summary-item">
+                           {{-- <h6>Item List <span class="text-muted">(3 Items)</span></h6> --}}
+                           <ul class="list-unstyled list-unstyled-border">
+                           <li class="media">
+                              {{-- <a href="#">
+                                 <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-2-50.png')}}" alt="product">
+                              </a> --}}
+                              <div class="media-body">
+                                 <div class="media-right text-right">
+                                 {{-- <button class="btn btn-primary" id="modal-4">Footer Background</button> --}}
+                                 <a class="" href="#" data-toggle="modal" data-target="#req-app-{{$req->id}}"><small>Approve</small></a><br>
+                                 <a href="#" data-toggle="modal" data-target="#req-change-{{$req->id}}"><small>Change</small></a>
+                                 {{-- <button type="button" class="btn btn-primary" >
+                                    Launch demo modal
+                                 </button> --}}
                                  
-                                  @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                                    <td>
-                                        @if ($item->status == 0)
-                                          <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                          {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
-                                          @else
-                                          -
-                                        @endif
-                                        
-                                      {{-- <form action="">
-                                        <div class="form-group">
-                                          <div class="input-group">
-                                             <input type="number" class="form-control" name="drop" id="drop">
-                                             <select class="form-control" name="port" id="port">
-                                                <option selected>Port...</option>
-                                                @foreach ($routes as $route)
-                                                   <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
-                                                @endforeach
-                                             </select>
-                                            <div class="input-group-append">
-                                              <button class="btn btn-primary" type="submit">OK</button>
-                                            </div>
+                                 </div>
+                                 <div class="media-title"><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->description}}</a></div>
+                                 <div class="text-muted text-small"> <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->origin->name}} - {{$req->destination->name}}</a> <br> {{$req->schedule->vessel->name ?? ''}} <br> by {{$req->employee->name}}</div>
+                              </div>
+                           </li>
+                           
+                           </ul>
+                        </div>
+                     {{-- </div>
+                     </div> --}}
+                        <hr>
+                        
+                        {{-- @endif --}}
+                     @endforeach
+                     @else
+                     <div class="row">
+                        <div class="col">
+                           <small class="text-center text-muted">Empty</small>
+                        </div>
+                     </div>
+                  @endif
+               </div>
+               </div>
+            </div>
+
+            {{-- Activity --}}
+
+            
+         </div>
+         @endif
+         @endif
+      @endif
+
+      <div class="col-md-12">
+         @if ($schedule->class == 'Cargo/Crew')
+         <div class="card">
+            <div class="card-header">
+               <h4>Manifest </h4>
+            </div>
+            <div class="card-body">
+               <ul class="nav nav-tabs" id="myTab" role="tablist">
+               <li class="nav-item">
+                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
+               </li>
+               
+               </ul>
+               <div class="tab-content" id="myTabContent">
+               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                  <div class="table-responsive">
+                     <table class="table table-striped " id="table-1">
+                     <thead>
+                        <tr>
+                           <th>MTD</th>
+                           <th>Destination</th>
+                           <th>Descriptive</th>
+                           <th>Contract</th>
+                           <th class="text-center">Qty</th>
+                           <th class="text-center">Weight</th>
+                           <th class="text-center">Drop</th>
+                           <th class="text-center">Size (m<sup>2</sup>)</th>
+                           
+                           @if ( auth()->user()->hasRole('department'))
+                           <th>Action</th>
+                           @else
+                           <th>-</th>
+                           @endif
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($requests->where('activity_id', 1) as $request)
+                           @foreach ($request->cargoItems as $item)
+                              <tr>
+                                 <td class=" text-truncate">
+                                 <div class="dropdown">
+                                    {{$item->mtd}}
+                                 </div>
+                                 </td>
+                                 <td>{{$item->request->destination->name}}</td>
+                                 <td class=" text-truncate ">
+                                 {{$item->desc}} 
+                                 </td>
+                                 <td class=" text-truncate">{{$item->contract}}</td>
+                                 <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                                 <td class=" text-center">{{$item->weight}}</td>
+                                 <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                                 <td class=" text-center">{{$item->size}}</td>
+                              
+                                 @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                 <td>
+                                       @if ($item->status == 0)
+                                       <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                       {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
+                                       @else
+                                       -
+                                       @endif
+                                       
+                                    {{-- <form action="">
+                                       <div class="form-group">
+                                       <div class="input-group">
+                                          <input type="number" class="form-control" name="drop" id="drop">
+                                          <select class="form-control" name="port" id="port">
+                                             <option selected>Port...</option>
+                                             @foreach ($routes as $route)
+                                                <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
+                                             @endforeach
+                                          </select>
+                                          <div class="input-group-append">
+                                             <button class="btn btn-primary" type="submit">OK</button>
                                           </div>
                                        </div>
-                                      </form> --}}
-                                    </td>
-                                    @else
-                                    <td>0</td>
-                                  @endif
-                              </tr>
-                            @endforeach
-                          @endforeach
-                        </tbody>
-                      </table>
-                    </div>
-                    <hr>
-                    <div class="table-responsive">
-                      <table class="table table-striped  card-table">
-                        <thead>
-                            <tr>
-                              <th colspan="7" class="text-info">Deflection</th>
-                            </tr>
-                            <tr>
-                              <th>MTD</th>
-                              <th>Descriptive</th>
-                              <th>Destination</th>
-                              <th class="text-center">Qty</th>
-                              
-                              <th class="">Desc</th>
-                              {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
-                              <th class="text-center">Weight (ton)</th> --}}
-                            </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($requests->where('activity_id', '!=', 2) as $request)
-                            @if ($request->class == 'main' && $request->deflections->count() > 0)
-                              @foreach ($request->deflections as $deflection)
-                                <tr>
-                                    <td class="">{{$deflection->cargoitem->mtd}}</td>
-                                    
-                                    <td class="  text-nowrap">
-                                      {{$deflection->cargoitem->desc}}
-                                    </td>
-                                    <td class="">{{$deflection->port->name}}</td>
-                                    <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
-                                    <td class="  text-nowrap">
-                                      {{$deflection->desc}} 
-                                    </td>
-                                    {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
-                                    <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
-                                    
-                                
-                                </tr>
-                              @endforeach
-                            @endif
-                          @endforeach
-                        </tbody>
-                      </table>
-                    </div>
+                                    </div>
+                                    </form> --}}
+                                 </td>
+                                 @else
+                                 <td>0</td>
+                                 @endif
+                           </tr>
+                           @endforeach
+                        @endforeach
+                     </tbody>
+                     </table>
                   </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <div class="table-responsive ">
-                      <table class="table table-striped table-1 " id="table-3">
-                        <thead>
-                          
-                          <tr>
-                            <th>Type</th>
-                            <th>Route</th>
-                            <th>Name</th>
-                            <th>Barcode</th>
-                            <th>Department</th>
-                            <th>Company</th>
-                            <th>Desc</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          @foreach ($requests->where('activity_id', 2) as $requests)
-                            {{-- <tr>
-                              <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
-                            </tr> --}}
-                            @foreach ($requests->passengerItems as $passenger)
+                  <hr>
+                  <div class="table-responsive">
+                     <table class="table table-striped  card-table">
+                     <thead>
+                           <tr>
+                           <th colspan="7" class="text-info">Deflection</th>
+                           </tr>
+                           <tr>
+                           <th>MTD</th>
+                           <th>Descriptive</th>
+                           <th>Destination</th>
+                           <th class="text-center">Qty</th>
+                           
+                           <th class="">Desc</th>
+                           {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
+                           <th class="text-center">Weight (ton)</th> --}}
+                           </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($requests->where('activity_id', '!=', 2) as $request)
+                           @if ($request->class == 'main' && $request->deflections->count() > 0)
+                           @foreach ($request->deflections as $deflection)
                               <tr>
-                                <td>{{$passenger->type}}</td>
-                                <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td>
-                                <td>{{$passenger->name}}</td>
-                                <td>{{$passenger->barcode}}</td>
-                                <td class="text-truncate">{{$passenger->department}}</td>
-                                <td class="text-truncate">{{$passenger->company}}</td>
-                                <td>{{$passenger->desc}}</td>
-                               
+                                 <td class="">{{$deflection->cargoitem->mtd}}</td>
+                                 
+                                 <td class="  text-nowrap">
+                                    {{$deflection->cargoitem->desc}}
+                                 </td>
+                                 <td class="">{{$deflection->port->name}}</td>
+                                 <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
+                                 <td class="  text-nowrap">
+                                    {{$deflection->desc}} 
+                                 </td>
+                                 {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
+                                 <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
+                                 
+                              
                               </tr>
-                          @endforeach
-                          @endforeach
-                          
-                        </tbody>
-                      </table>
-                    </div>
+                           @endforeach
+                           @endif
+                        @endforeach
+                     </tbody>
+                     </table>
                   </div>
+               </div>
+               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <div class="table-responsive ">
+                     <table class="table table-striped table-1 " id="table-3">
+                     <thead>
+                        
+                        <tr>
+                           <th>Type</th>
+                           <th>Route</th>
+                           <th>Name</th>
+                           <th>Barcode</th>
+                           <th>Department</th>
+                           <th>Company</th>
+                           <th>Desc</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($requests->where('activity_id', 2) as $requests)
+                           {{-- <tr>
+                           <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
+                           </tr> --}}
+                           @foreach ($requests->passengerItems as $passenger)
+                           <tr>
+                              <td>{{$passenger->type}}</td>
+                              <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td>
+                              <td>{{$passenger->name}}</td>
+                              <td>{{$passenger->barcode}}</td>
+                              <td class="text-truncate">{{$passenger->department}}</td>
+                              <td class="text-truncate">{{$passenger->company}}</td>
+                              <td>{{$passenger->desc}}</td>
+                              
+                           </tr>
+                        @endforeach
+                        @endforeach
+                        
+                     </tbody>
+                     </table>
+                  </div>
+               </div>
+               
+               </div>
+            </div>
+         </div>
+         @elseif($schedule->class == 'Moving')
+         <div class="card">
+            <div class="card-body">
+               <div class="summary-item">
+               <h6>Barge </h6>
+               <ul class="list-unstyled list-unstyled-border">
                   
-                </div>
-              </div>
+                  <li class="media">
+                     <a href="#">
+                     <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                     </a>
+                     <div class="media-body">
+                     {{-- <div class="media-right">$405</div> --}}
+                     <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->bargeItem->barge->name}}</a></div>
+                     <div class="text-muted text-small">Moving</div>
+                     </div>
+                  </li>
+               </ul>
+               </div>
             </div>
-            @elseif($schedule->class == 'Moving')
-            <div class="card">
-              <div class="card-body">
-                <div class="summary-item">
-                  <h6>Barge </h6>
-                  <ul class="list-unstyled list-unstyled-border">
-                    
-                    <li class="media">
-                      <a href="#">
-                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                      </a>
-                      <div class="media-body">
-                        {{-- <div class="media-right">$405</div> --}}
-                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->bargeItem->barge->name}}</a></div>
-                        <div class="text-muted text-small">Moving</div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+         </div>
+         @elseif($schedule->class == 'Lifting')
+         <div class="card">
+            <div class="card-body">
+               <div class="summary-item">
+               <h6>Tanker </h6>
+               <ul class="list-unstyled list-unstyled-border">
+                  
+                  <li class="media">
+                     <a href="#">
+                     <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                     </a>
+                     <div class="media-body">
+                     {{-- <div class="media-right">$405</div> --}}
+                     <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->desc}}</a></div>
+                     <div class="text-muted text-small">Lifting</div>
+                     </div>
+                  </li>
+               </ul>
+               </div>
             </div>
-            @elseif($schedule->class == 'Lifting')
-            <div class="card">
-              <div class="card-body">
-                <div class="summary-item">
-                  <h6>Tanker </h6>
-                  <ul class="list-unstyled list-unstyled-border">
-                    
-                    <li class="media">
-                      <a href="#">
-                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                      </a>
-                      <div class="media-body">
-                        {{-- <div class="media-right">$405</div> --}}
-                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->desc}}</a></div>
-                        <div class="text-muted text-small">Lifting</div>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          @endif
-        </div>
-
-        
+         </div>
+         @endif
       </div>
-    </div>
-  </section>
+
+      
+   </div>
+   </div>
+</section>
 
 
   {{-- Modal Send Schedule --}}
@@ -910,7 +933,7 @@
          $('.status').change(function() {
             console.log('okeee');
             var status = $(this).val();
-            if (status == 10) {
+            if (status == 9) {
               $('#foto').show();
               $('.eta').hide();
               $('.anchor').hide();

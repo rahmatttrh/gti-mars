@@ -78,14 +78,7 @@ class StatusSeeder extends Seeder
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      // DB::table('statuses')->insert([
-      //    'name' => 'Waiting',
-      //    'class' => 'Cargo',
-      //    'type' => 1,
-      //    'code' => '09',
-      //    'created_at' => NOW(),
-      //    'updated_at' => NOW()
-      // ]);
+      
       DB::table('statuses')->insert([
          'name' => 'Anchored at Secure Area',
          'class' => 'Cargo',
@@ -95,7 +88,7 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'Unloading Start',
+         'name' => 'Waiting',
          'class' => 'Cargo',
          'type' => 1,
          'code' => '10',
@@ -103,7 +96,7 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'Unloading End',
+         'name' => 'Unloading Start',
          'class' => 'Cargo',
          'type' => 1,
          'code' => '11',
@@ -111,10 +104,18 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'Task Complete',
+         'name' => 'Unloading End',
          'class' => 'Cargo',
          'type' => 1,
          'code' => '12',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      DB::table('statuses')->insert([
+         'name' => 'Task Complete',
+         'class' => 'Cargo',
+         'type' => 1,
+         'code' => '13',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -123,7 +124,7 @@ class StatusSeeder extends Seeder
          'name' => 'Confirmation Offloading',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '13',
+         'code' => '14',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -132,7 +133,7 @@ class StatusSeeder extends Seeder
          'name' => 'Add Additional Request',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '14',
+         'code' => '15',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -141,7 +142,7 @@ class StatusSeeder extends Seeder
          'name' => 'Approval Additional Request',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '15',
+         'code' => '16',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -150,7 +151,7 @@ class StatusSeeder extends Seeder
          'name' => 'Confirmation Complete',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '16',
+         'code' => '17',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -159,7 +160,7 @@ class StatusSeeder extends Seeder
          'name' => 'Add Deflection',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '17',
+         'code' => '18',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -168,15 +169,6 @@ class StatusSeeder extends Seeder
          'name' => 'Add Deviation',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '18',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-
-      DB::table('statuses')->insert([
-         'name' => 'Confirm Deviation',
-         'class' => 'Cargo',
-         'type' => 2,
          'code' => '19',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -186,7 +178,16 @@ class StatusSeeder extends Seeder
          'name' => 'Confirm Deviation',
          'class' => 'Cargo',
          'type' => 2,
-         'code' => '19',
+         'code' => '20',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('statuses')->insert([
+         'name' => 'Confirm Deviation',
+         'class' => 'Cargo',
+         'type' => 2,
+         'code' => '21',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

@@ -138,12 +138,12 @@ class ScheduleController extends Controller
       $recentRequests = ModelsRequest::where('status', '=', 1)->where('activity_id', 1)->orWhere('activity_id', 2)->get();
 
 
-      if ($schedule->type == 3) {
+      if ($schedule->class == 'Cargo/Crew') {
          // dd('moving');
-         $statuses = Status::where('class', 'moving')->where('type', 1)->get();
+         $statuses = Status::where('class', 'cargo')->where('type', 1)->get();
       } else {
          // dd('cargo/crew');
-         $statuses = Status::where('class', 'cargo')->where('type', 1)->get();
+         $statuses = Status::where('class', 'moving')->where('type', 1)->get();
       }
 
       $ports = Port::get();

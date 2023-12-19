@@ -16,7 +16,7 @@
                      @if ($status->id == 1)
                      @else
                         @if ($status->code == '09' || $status->code == '11' || $status->code == '12')
-                           <option value="{{$status->id}}">{{$status->name}} *</option>
+                           <option value="{{$status->id}}">{{$status->name}}</option>
                            @else
                            <option value="{{$status->id}}">{{$status->name}} </option>
                         @endif

@@ -178,7 +178,7 @@ class VesselScheduleController extends Controller
       $vessel = Vessel::find($schedule->vessel_id);
       foreach ($schedule->requests->where('status', '!=', 505) as $request) {
 
-         if ($req->status == 9 && $request->destination_id == $req->port) {
+         if ($req->status == 10 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 10
             ]);
@@ -187,7 +187,7 @@ class VesselScheduleController extends Controller
                'status_id' => 13,
                'port_id' => $req->port
             ]);
-         } elseif ($req->status == 11 && $request->destination_id == $req->port) {
+         } elseif ($req->status == 12 && $request->destination_id == $req->port) {
             $request->update([
                'status' => 12
             ]);

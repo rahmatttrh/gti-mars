@@ -308,14 +308,14 @@
                      </span>
                   </a>
                </li>
-               {{-- <li class="nav-item {{request()->is('/') ? 'active' : ''}}">
+               <li class="nav-item {{request()->is('/') ? 'active' : ''}}">
                   <a class="nav-link" href="{{route('vdr.chart')}}" >
                      
                      <span class="nav-link-title">
                         Chart
                      </span>
                   </a>
-               </li> --}}
+               </li>
 
                {{-- <li class="nav-item dropdown {{request()->is('schedule/index') ? 'active' : ''}}">
                   <a class="nav-link dropdown-toggle" href="#navbar-extra" data-bs-toggle="dropdown" data-bs-auto-close="outside" role="button" aria-expanded="false">

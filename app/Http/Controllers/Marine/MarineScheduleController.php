@@ -539,6 +539,15 @@ class MarineScheduleController extends Controller
       return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule has successfully updated');
    }
 
+   public function jettyUpdate(Request $req){
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'remark' => $req->jetty
+      ]);
+
+      return redirect()->back()->with('success', 'Jetty updated');
+   }
+
    public function delete($id)
    {
       $now = Carbon::now();

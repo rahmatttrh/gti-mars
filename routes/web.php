@@ -41,6 +41,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\VdrController;
 use App\Http\Controllers\VdrCrewController;
 use App\Http\Controllers\Vessel\VesselDeviationController;
+use App\Http\Controllers\Vessel\VesselRequestController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
 use App\Models\Activity;
@@ -330,6 +331,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
       Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
+      Route::put('jetty/update', [MarineScheduleController::class, 'jettyUpdate'])->name('schedule.jetty.update');
       Route::get('delete/{schedule:id}', [MarineScheduleController::class, 'delete'])->name('schedule.delete');
       Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
       Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
@@ -357,6 +359,13 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::post('approve', [MarineAdditionalController::class, 'approve'])->name('schedule.approve.additional');
       Route::post('reject', [MarineAdditionalController::class, 'reject'])->name('schedule.reject.additional');
       Route::get('delete/{deviation:id}', [MarineDeviationController::class, 'delete'])->name('schedule.delete.deviation');
+   });
+});
+
+Route::group(['middleware' => ['role:vessel']], function () {
+   Route::prefix('vessel/request')->group(function () {
+      Route::get('create', [VesselRequestController::class, 'create'])->name('request.vessel.create');
+      Route::post('store', [VesselRequestController::class, 'store'])->name('request.vessel.store');
    });
 });
 

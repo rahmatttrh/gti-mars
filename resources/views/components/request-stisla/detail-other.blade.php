@@ -3,7 +3,9 @@
      <div class="row">
        <div class="col-lg-12">
          <div class="invoice-title">
-           <h2>{{$request->activity->name}}</h2>
+           <h2>{{$request->activity->name}} for
+            {{$request->user->name ?? ''}} {{$request->employee->name ?? ''}}
+            </h2>
            <div class="invoice-number">Order #{{$request->id}}</div>
          </div>
          <hr>

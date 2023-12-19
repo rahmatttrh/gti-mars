@@ -18,7 +18,7 @@
         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
       </p> --}}
       {{-- {{$request->activity_id}} --}}
-      @if ($activity->id > 2)
+      @if ($activity->id > 3)
          <x-request-stisla.detail-other :request="$request" />
          @else
          <div class="row">
@@ -71,7 +71,7 @@
                         <h4>{{$activity->name}}</h4>
                         <div class="text-muted"> </div>
                         <div class="d-block mt-2">                              
-                        <small> Request by {{$request->user->name}} </small>
+                        <small> Request by {{$request->user->name ?? '-'}} {{$request->employee->name ?? '-'}} </small>
                         </div>
                      </div>
                         @else
