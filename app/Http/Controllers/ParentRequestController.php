@@ -114,101 +114,12 @@ class ParentRequestController extends Controller
       $vessels = Vessel::where('latitude', '!=', null)->get();
       // dd($now->format('Y-m-d'));
 
-      // $nearestVessels = array();
-      // if ($reqDate ==  $now->format('Y-m-d')) {
-      //    foreach($todaySchedules as $today){
-
-      //    }
-      // }
-      // if ($reqDate ==  $now->format('Y-m-d')) {
-      //    // dd('today');
-      //    foreach($vessels as $vessel){
-      //       $vesselLat = $vessel->latitude;
-      //       $vesselLong = $vessel->longitude;
-      //       $portLat = $parent->origin->latitude;
-      //       $portLong = $request->origin->longitude;
-      //       $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-      //       if($distance < 600){
-      //          $nearestVessel = $vessel;
-      //       }
-      //    }
-
-      //    if ($nearestVessel) {
-      //       if ($nearestVessel->schedule_id) {
-      //          // dd('kapal sudah ada schedule');
-      //          $request->update([
-      //             'status' => 1,
-      //             'schedule_id' => $nearestVessel->schedule->id
-      //          ]);
-      //          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
-      //       } else {
-      //          // dd('kapal blm ada schedule');
-      //          $schedule = Schedule::create([
-      //             'by' => 'system',
-      //             'vessel_id' => $nearestVessel->id,
-      //             'type' => 2,
-      //             'status' => 0,
-      //             'date' => $request->date,
-      //          ]);
-      //          $nearestVessel->update([
-      //             'schedule_id' => $schedule->id
-      //          ]);
-      //          ScheduleRoute::create([
-      //             'schedule_id' => $schedule->id,
-      //             'port_id' => $request->origin_id,
-      //             'rank' => 1,
-      //             'status' => 1,
-      //             'date' => $request->date
-      //          ]);
-      //          $request->update([
-      //             'status' => 1,
-      //             'schedule_id' => $schedule->id,
-      //          ]);
-      //          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
-      //       }
-      //    }
-
-
-
-      // }
-
-
-
-      // if (count($scheduleRoutes) > 0) {
-      //    $schedule = Schedule::find($scheduleRoute->schedule_id);
-      // } else {
-      //    $schedule = Schedule::create([
-      //       'by' => 'system',
-      //       'vessel_id' => $nearestVessel->id,
-      //       'type' => 2,
-      //       'status' => 0,
-      //       'date' => $parent->date,
-      //    ]);
-      // }
+      
 
 
       foreach ($parent->requests as $request) {
          (new DepartmentRequestController)->release(enkripRambo($request->id));
 
-         // $request->update([
-         //    'status' => 01
-         // ]);
-
-         // $activityName = $request->activity->name . ' ' . $request->description;
-
-         // $data = [
-         //    'to' => 'Marine Department',
-         //    'from' => $request->department->name . ' Department',
-         //    'subject' => 'Request Activity Approval',
-         //    'request' => $request,
-         //    'body' => $activityName,
-         //    'cargos' => $request->cargoItems,
-         //    'link' => route('request.detail', enkripRambo($request->id))
-         // ];
-
-         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
-         // Mail::to("rahmattrust@gmail.com")->send(new ApprovalEmail($data));
-         // return redirect()->back()->with('success', 'Email has sent');
       }
 
       $parent->update([

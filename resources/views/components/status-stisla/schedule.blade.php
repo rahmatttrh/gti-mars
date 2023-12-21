@@ -23,8 +23,10 @@
       <div class="badge badge-primary "><span class="badge bg-primary me-1"></span><small>User Confirmation</small></div>
       @elseif($schedule->status == 4)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>04 : Approval Additional Request</div>
+      @elseif($schedule->status == 101)
+      <div class="badge badge-info"><span class="badge bg-info me-1"></span><small>Validasi FM</small></div>
       @elseif($schedule->status == 11)
-      <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span><small>Complete</small></div>
+      <div class="badge badge-success"><span class="badge bg-success me-1"></span><small>Complete</small></div>
       {{-- @elseif($schedule->status == 303)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>303 : Postpone</div> --}}
    @endif

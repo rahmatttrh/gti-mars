@@ -36,7 +36,7 @@
              @if (auth()->user()->hasRole('department'))
                <x-request-stisla.action-user :request="$request" />
              @endif
-             {{-- <div class="btn-group ml-2">
+             <div class="btn-group ml-2">
                @if (auth()->user()->hasRole('department') )
                  <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
                    <span class="sr-only">Toggle Dropdown</span>
@@ -45,15 +45,16 @@
                    @if ($request->status == 00)
                    <div class="dropdown-divider"></div>
                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#request-delete">
-                       Delete
+                       
                    </a>
                    @endif
                  </div>
                @endif
-             </div> --}}
-             {{-- <hr> --}}
-             <div class="card border">
-               {{-- <div class="card-header">
+             </div>
+             <hr>
+             <div class="card">
+               <div class="card-header">
+                 {{-- {{$activity->id}} --}}
                  <h4>{{formatDate($request->date)}}</h4>
                  <div class="card-header-action">
                    @if ($request->status < 3)
@@ -62,37 +63,10 @@
                      <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
                    @endif
                  </div>
-               </div> --}}
-               <div class="card-body ">
-                  <div class="d-flex justify-content-between">
-                     <div>
-                     @if ($activity->id > 2)
-                        <h5>{{$activity->name}}</h5>
-                        <div class=""> {{$request->origin->name}} to  {{$request->destination->name}}</div>
-                        {{-- <div class="d-block mt-2">                               --}}
-                        <small> Request by {{$request->user->name ?? '-'}} {{$request->employee->name ?? '-'}} </small>
-                        {{-- </div> --}}
-                        @else
-                           <h5>{{$activity->name}} Activity</h5>
-                           <div>{{$request->origin->name}} to  {{$request->destination->name}}</div>
-                                                        
-                           <small> Request by {{$request->employee->name}}  {{$request->employee->ekstensi}}</small>
-                           
-                     @endif
-                     </div>
-                     <div class="text-center">
-                        
-                        @if ($request->status < 3)
-                           <x-status-stisla.request :request="$request" :lastreport="null"/>
-                           @else
-                           <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                        @endif
-                        
-                        <small>{{formatDate($request->date)}}</small>
-                     </div>
-                  </div>
+               </div>
+               <div class="card-body">
                   <div class="summary">
-                     {{-- @if ($activity->id > 2)
+                     @if ($activity->id > 2)
                      <div class="summary-info">
                         <h4>{{$activity->name}}</h4>
                         <div class="text-muted"> </div>
@@ -108,18 +82,19 @@
                            <small> Request by {{$request->employee->name}}  {{$request->employee->ekstensi}}</small>
                            </div>
                         </div>
-                     @endif --}}
+                     @endif
                      
                      <hr>
                      
                      @if ($activity->id == 1)
                         <div class="card shadow-none border">
-                        {{-- <div class="card-header">
+                        <div class="card-header">
                            <h4>Manifest </h4>
-                        </div> --}}
+                           {{-- {{$request->cargoItems->sum('weight')}} --}}
+                        </div>
                         <div class="card-body p-3">
                            <div class="table-responsive">
-                              <table class="table table-striped table-sm" id="table-4">
+                              <table class="table table-striped " id="table-4">
                               <thead>
                                  <tr>
                                     <th>MTD</th>

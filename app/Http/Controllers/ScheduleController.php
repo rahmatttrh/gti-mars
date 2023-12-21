@@ -135,7 +135,7 @@ class ScheduleController extends Controller
 
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
-      $recentRequests = ModelsRequest::where('status', '=', 1)->where('activity_id', 1)->orWhere('activity_id', 2)->get();
+      $recentRequests = ModelsRequest::where('status', '=', 1)->where('activity_id', '<', 3)->get();
 
 
       if ($schedule->class == 'Cargo/Crew') {
@@ -149,8 +149,10 @@ class ScheduleController extends Controller
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
+      $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
+      // dd($fixRoutes);
       $lastPostpone = Postpone::where('schedule_id', $schedule->id)->orderBy('updated_at', 'desc')->first();
       // dd($lastPostpone->to);
 
@@ -206,7 +208,7 @@ class ScheduleController extends Controller
 
       $vessel = Vessel::get();
 
-      $report = Report::where('schedule_id', $schedule->id)->first();
+      // $report = Report::where('schedule_id', $schedule->id)->first();
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
       // dd($report);
       // dd($report->loading);

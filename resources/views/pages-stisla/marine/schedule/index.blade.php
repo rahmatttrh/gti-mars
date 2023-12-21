@@ -14,7 +14,7 @@
 
     <div class="section-body">
       <div class="dropdown d-inline mr-2 m">
-        <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Select Month
         </button>
         <div class="dropdown-menu">
@@ -56,7 +56,7 @@
           </a>
         </div>
       </div>
-      <a href="{{route('schedule.create')}}" class="btn btn-primary btn-lg">
+      <a href="{{route('schedule.create')}}" class="btn btn-primary btn-sm">
         <i class="fa fa-plus"></i>
         Create
       </a>
@@ -69,7 +69,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped " id="table-8">
+                <table class="table table-striped table-sm" id="table-8">
                   <thead>                                 
                     <tr>
                       <th class="text-center">

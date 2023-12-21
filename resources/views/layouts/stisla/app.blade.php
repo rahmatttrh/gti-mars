@@ -487,7 +487,7 @@
                   <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
                   <ul class="dropdown-menu">
                     <li><a class="nav-link" href="{{route('request.vessel.create')}}">Create</a></li> 
-                    <li><a class="nav-link" href="{{route('request.draft')}}">Progress</a></li>   
+                    <li><a class="nav-link" href="{{route('request.vessel.index')}}">Progress</a></li>   
                   </ul>
                 </li>
 
@@ -578,26 +578,28 @@
   @stack('autorefresh')
   @stack('report')
 
-  <script>
-    $(document).ready(function () {
-    var body = $('body');
-    $(".main-sidebar .sidebar-menu > li").each(function() {
-        let me = $(this);
+   <script>
+      $(document).ready(function () {
+         var body = $('body');
+         $(".main-sidebar .sidebar-menu > li").each(function() {
+            let me = $(this);
 
-        if(me.find('> .dropdown-menu').length) {
-        me.find('> .dropdown-menu').hide();
-        me.find('> .dropdown-menu').prepend('<li class="dropdown-title pt-3">'+ me.find('> a').text() +'</li>');
-        }else{
-        me.find('> a').attr('data-toggle', 'tooltip');
-        me.find('> a').attr('data-original-title', me.find('> a').text());
-        $("[data-toggle='tooltip']").tooltip({
-            placement: 'right'
-        });
-        }
-    });
-});
+            if(me.find('> .dropdown-menu').length) {
+            me.find('> .dropdown-menu').hide();
+            me.find('> .dropdown-menu').prepend('<li class="dropdown-title pt-3">'+ me.find('> a').text() +'</li>');
+            }else{
+            me.find('> a').attr('data-toggle', 'tooltip');
+            me.find('> a').attr('data-original-title', me.find('> a').text());
+            $("[data-toggle='tooltip']").tooltip({
+                  placement: 'right'
+            });
+            }
+         });
 
-  </script>
+        
+      });
+
+   </script>
 
 
     @if (session('success'))

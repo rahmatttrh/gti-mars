@@ -366,7 +366,15 @@ Route::group(['middleware' => ['role:vessel']], function () {
    Route::prefix('vessel/request')->group(function () {
       Route::get('create', [VesselRequestController::class, 'create'])->name('request.vessel.create');
       Route::post('store', [VesselRequestController::class, 'store'])->name('request.vessel.store');
+      Route::get('index', [VesselRequestController::class, 'index'])->name('request.vessel.index');
    });
+
+   Route::prefix('vessel/schedule')->group(function () {
+      Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+      
+   });
+
+   
 });
 
 Route::group(['middleware' => ['role:logistic|drilling|department']], function () {
@@ -394,6 +402,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
 
    Route::prefix('schedule')->group(function () {
       Route::get('complete/{schedule:id}', [DepartmentScheduleController::class, 'complete'])->name('schedule.complete');
+      // Route::get('vessel/complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
       Route::post('additional/store', [DepartmentAdditionalController::class, 'store'])->name('schedule.add.additional');
       Route::get('additional/send/{request:id}', [DepartmentAdditionalController::class, 'send'])->name('schedule.send.additional');
    });

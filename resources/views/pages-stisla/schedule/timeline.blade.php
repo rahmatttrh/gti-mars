@@ -45,8 +45,8 @@
                  <span class="bullet"></span>
                
                </div>
-               <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}}.</p>
-               @if ($report->status_id == 10)
+               <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}} {{$report->anchor ?? ''}}</p>
+               @if ($report->status_id == 9)
                    <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
                @endif
 
@@ -54,7 +54,7 @@
                    <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
                @endif
 
-               @if ($report->status_id > 24 && $report->status_id < 29)
+               @if ($report->status_id > 27 && $report->status_id < 32)
                    <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
                @endif
              </div>
@@ -72,9 +72,31 @@
        </div>
     </div>
   </section>
-
-
-  
+  @if ($reports->count() > 0)
+    @foreach ($reports as $report)
+    <div class="modal fade" id="report-evidance-{{$report->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title">Evidance Anchored at Secure Area</span>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img src="{{asset('storage/' .$report->foto)}}" class="img-fluid" alt="Responsive image">
+            {{-- <img width="100vh" src="" alt=""> --}}
+            {{-- {{$report->foto}} --}}
+          </div>
+          <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    @endforeach
+  @endif
     
 @endsection
 

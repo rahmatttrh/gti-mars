@@ -1,6 +1,6 @@
-<span>
+<span >
    @if ($schedule->status == 1 )
-      <button class="btn btn-primary btn-lg mb-4" data-toggle="modal" data-target="#schedule-accept">
+      <button class="btn btn-primary btn-block " data-toggle="modal" data-target="#schedule-accept">
          Accept
       </button>
       @elseif($schedule->status == 2 || $schedule->status == 10)
@@ -10,7 +10,7 @@
          <div class="form-group">
             <div class="input-group">
                <select class="form-control status" name="status" id="status">
-                  <option selected disabled>Activity...</option>
+                  <option selected disabled>Activity</option>
                   @foreach ($statuses as $status)
                   {{-- <option value="{{$status->id}}">{{$status->name}} </option> --}}
                      @if ($status->id == 1)
@@ -23,20 +23,24 @@
                     @endif
                  @endforeach
                </select>
+               @if ($schedule->class == 'Cargo/Crew')
                <select class="form-control" name="port" id="port">
-                  <option selected disabled>At...</option>
+                  <option selected disabled>Location</option>
                   @foreach ($fixroutes as $route)
                      <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
                   @endforeach
                </select>
+               @endif
+               
                <input type="file" class="form-control foto" name="foto" id="foto">
-               <input type="datetime-local" class="form-control eta" name="eta" id="eta">
+               
                <select class="form-control eta" name="destination" id="destination">
                   <option selected disabled>Destination...</option>
                   @foreach ($fixroutes as $route)
                      <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
                   @endforeach
                </select>
+               <input type="datetime-local" class="form-control eta" name="eta" id="eta">
                <select class="form-control anchor" name="anchor" id="anchor">
                   <option selected disabled>Anchor...</option>
                   <option value="1">1</option> 
@@ -49,7 +53,7 @@
                   <option value="8">8</option>   
                </select>
               <div class="input-group-append">
-                <button class="btn btn-primary px-4" type="submit">Add Report</button>
+                <button class="btn btn-primary  px-4" type="submit">Add Report</button>
                 
               </div>
               

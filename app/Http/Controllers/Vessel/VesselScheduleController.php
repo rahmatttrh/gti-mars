@@ -179,6 +179,7 @@ class VesselScheduleController extends Controller
       foreach ($schedule->requests->where('status', '!=', 505) as $request) {
 
          if ($req->status == 10 && $request->destination_id == $req->port) {
+            // dd('confirm');
             $request->update([
                'status' => 10
             ]);
@@ -188,6 +189,7 @@ class VesselScheduleController extends Controller
                'port_id' => $req->port
             ]);
          } elseif ($req->status == 12 && $request->destination_id == $req->port) {
+            // dd('complete');
             $request->update([
                'status' => 12
             ]);
@@ -198,6 +200,8 @@ class VesselScheduleController extends Controller
                'port_id' => $req->port
             ]);
          } else {
+            // dd($req->status);
+            // dd('other');
             ReportRequest::create([
                'request_id' => $request->id,
                'status_id' => $req->status,
@@ -233,7 +237,7 @@ class VesselScheduleController extends Controller
             'status' => 0,
             'schedule_id' => null
          ]);
-      } elseif ($req->status == 9) {
+      } elseif ($req->status == 10) {
          $schedule->update([
             'status' => 3
          ]);
@@ -252,6 +256,39 @@ class VesselScheduleController extends Controller
 
       return redirect()->back()->with('success', "Schedule Status successfully updated");
    }
+
+
+   public function complete($id){
+      // dd('ok');
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      $vessel = Vessel::find($schedule->vessel_id);
+      $vessel->update([
+         'schedule_id' => null
+      ]);
+
+      $schedule->update([
+         'status' => 11
+      ]);
+
+      foreach ($schedule->requests as $req) {
+         $req->update([
+            'status' => 12
+         ]);
+      }
+
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => 13
+      ]);
+
+      return redirect()->back()->with('success', 'Sailing Order completed');
+   }
+
+
+
+
 
    public function standby($id)
    {
@@ -488,7 +525,7 @@ class VesselScheduleController extends Controller
       return redirect()->back()->with('success', 'Report successfully saved');
    }
 
-   public function complete($id)
+   public function completeold($id)
    {
       $now = Carbon::now();
       $dekripId = dekripRambo($id);

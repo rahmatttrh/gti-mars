@@ -3,165 +3,143 @@
     Dashboard
 @endsection
 @section('content')
-  <section class="section">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="card  profile-widget">
-          <div class="profile-widget-header">                     
-            <img alt="image" src="{{asset('img/vessel/cargo-ship.png')}}" class="rounded-circle profile-widget-picture bg-info">
-            <div class="profile-widget-items">
-              
-              <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Name</div>
-                <div class="h3"><b>{{$vessel->name}}</b></div>
-              </div>
-              {{-- <div class="profile-widget-item">
-                <div class="profile-widget-item-label">Following</div>
-                <div class="profile-widget-item-value">2,1K</div>
-              </div> --}}
+   <section class="section">
+      <div class="row">
+         <div class="col-md-3">
+            <div class="card card-statistic-2">  
+               <div class="card-icon shadow-primary bg-primary">
+               <i class="fas fa-ship"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  <h4>Vessel Name</h4>
+               </div>
+               <div class="card-body">{{$vessel->name}}</div>
+               </div>
             </div>
-          </div>
-          <div class="profile-widget-description">
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-              
-                <span class="badge badge-primary badge-pill">{{$vessel->type}}</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-              
-                <span class="badge badge-primary badge-pill">{{$vessel->email}}</span>
-              </li>
-              
-              
-            </ul>
-          </div>
-            
-          <div class="card-footer text-center">
-            
-          </div>
-
-          
-        </div>
-        @if ($vessel->latitude)
-          <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
-          @else
-          <div class="card mb-3">
-            <div class="card-body text-center py-4">
-                <small style="text-muted">No GPS Signal</small>
+            <div class="card border">
+               <div class="card-body">
+                  <small>Progress Schedule</small><br>
+                  <b>{{count($schedules->where('status', '>', 1)->where('status', '!=', 11))}}</b>
+                  <hr>
+                  <small>Complete Schedule</small><br>
+                  <b>{{count($schedules->where('status', 11))}}</b>
+               </div>
             </div>
-          </div>
-        @endif
-      </div>
-      <div class="col-md-8">
-        <div class="row">
-      
-          <div class=" col-md-6 col-sm-12">
-            <div class="card card-statistic-2">
-              
-              <div class="card-icon shadow-primary bg-primary">
-                <i class="fas fa-rocket"></i>
-              </div>
-              <div class="card-wrap">
-                <div class="card-header">
-                  <h4>Progress Request</h4>
-                </div>
-                <div class="card-body"> </div>
-              </div>
-            </div>
-          </div>
-          <div class=" col-md-6 col-sm-12">
-            <div class="card card-statistic-2">
-              
-              <div class="card-icon shadow-success bg-success">
-                <i class="fas fa-check"></i>
-              </div>
-              <div class="card-wrap">
-                <div class="card-header">
-                  <h4>Complete Request</h4>
-                </div>
-                <div class="card-body"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        @if ($recentSchedules->count() > 0)
-            @foreach ($recentSchedules as $recent)
-              <div class="alert alert-info" role="alert">
-                  You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
-              </div>
-            @endforeach
-        @endif
-        <div class="card">
-          <div class="card-header">
-            <h4>Surveillance Activity</h4>
-          </div>
-          <div class="card-body">
-            <div class="card shadow-none card-statistic-2">
-              @foreach ($surveillances as $surv)
-             
-              <div class="card-wrap">
-                {{-- <div class="card-header">
-                  <h4>Progress Request</h4>
-                </div> --}}
-                <div class="card-body"><a href="{{route('surveillance.detail', enkripRambo($surv->id))}}">{{formatDate($surv->date)}} - {{$surv->vessel->name}}</a> </div>
-              </div>
-              <hr>
-              @endforeach
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h4>Request Activity</h4>
-          </div>
-          <div class="card-body">
-            <div class="table-responsive">
-              <table class="table table-striped" id="table-6">
-                <thead >
-                  <tr>
-                     {{-- <th class="text-center">No.</th> --}}
-                     <th>Date</th>
-                     {{-- <th>Route</th> --}}
-                     <th>Activity</th>
-                     <th>Status</th>
-                     {{-- <th></th> --}}
-                  </tr>
-               </thead>
-               <tbody>
-                  @if ($schedules->count() > 0 )
-                     @foreach ($schedules as $schedule)
-                        <tr>
-                           {{-- <td class="text-muted text-center">{{++$i}}</td> --}}
-                           <td><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</a></td>
-                           
-                           {{-- <td class="text-muted">
-                              From {{$schedule->origin->name}} 
-                           </td> --}}
-                           <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td>
-                           <td>
-                              <x-status.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                              {{-- @if ($schedule->deviations->where('status', 0)->count() == 0)
-                              <div class="badge bg-danger">Deviation Alert</div>
-                              @endif --}}
-                           </td>
-                        </tr>
-                        <x-modal.schedule.request :schedule="$schedule" />
-                     @endforeach
-                     @else
-                     <tr>
-                        <td colspan="5" class="text-center text-muted"><small>Empty</small></td>
-                     </tr>
-                  @endif
+         
+            @if ($vessel->latitude)
+               <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
+               @else
+               <div class="card mb-3">
+                  <div class="card-body text-center py-4">
+                     <small style="text-muted">No GPS Signal</small>
+                  </div>
+               </div>
+            @endif
+         </div>
+         <div class="col-md-9">
+         
+            @if ($recentSchedules->count() > 0)
+               @foreach ($recentSchedules as $recent)
+               <div class="alert alert-warning" role="alert">
+                     You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
+               </div>
+               @endforeach
+            @endif
+            <div class="card">
+               <div class="card-body">
+                  <span>Ongoing Schedule</span> <br>
                   
-               </tbody>
-              </table>
+                  @foreach ($schedules as $sche)
+                     @if ($sche->status != 11)
+                     <a href="{{route('schedule.detail', enkripRambo($sche->id))}}"><b>{{$sche->code}} - {{formatDate($sche->date)}} </b></a>
+                     @else
+                     <small>Empty</small>
+                     @endif
+                     
+                  @endforeach
+               </div>
             </div>
-          </div>
-        </div>
+            @if (count($surveillances) > 0)
+            <div class="card">
+               <div class="card-header">
+                  <h4>Surveillance Activity</h4>
+               </div>
+               <div class="card-body">
+                  <div class="card shadow-none card-statistic-2">
+                  @foreach ($surveillances as $surv)
+                  
+                  <div class="card-wrap">
+                     {{-- <div class="card-header">
+                        <h4>Progress Request</h4>
+                     </div> --}}
+                     <div class="card-body"><a href="{{route('surveillance.detail', enkripRambo($surv->id))}}">{{formatDate($surv->date)}} - {{$surv->vessel->name}}</a> </div>
+                  </div>
+                  <hr>
+                  @endforeach
+                  </div>
+               </div>
+            </div>
+            @endif
+            
+            <div class="card">
+               <div class="card-header">
+                  <h4>Sailing Order</h4>
+               </div>
+               <div class="card-body">
+                  <div class="table-responsive">
+                  <table class="table table-striped table-sm" id="table-6">
+                     <thead >
+                        <tr>
+                           <th class="text-center">No</th>
+                           <th>ID</th>
+                           <th>Date</th>
+                           <th>Type</th>
+                           {{-- <th>Activity</th> --}}
+                           <th>Status</th>
+                           <th></th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @if ($schedules->count() > 0 )
+                           @foreach ($schedules as $schedule)
+                              <tr>
+                                 <td class="text-center">{{++$i}}</td>
+                                 <td >{{$schedule->code}}</td>
+                                 <td>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</td>
+                                 
+                                 {{-- <td class="text-muted">
+                                    From {{$schedule->origin->name}} 
+                                 </td> --}}
+                                 <td>{{$schedule->class}}</td>
+                                 {{-- <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td> --}}
+                                 <td>
+                                    <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                                    {{-- @if ($schedule->deviations->where('status', 0)->count() == 0)
+                                    <div class="badge bg-danger">Deviation Alert</div>
+                                    @endif --}}
+                                 </td>
+                                 <td>
+                                    <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                                 </td>
+                              </tr>
+                              <x-modal.schedule.request :schedule="$schedule" />
+                           @endforeach
+                           @else
+                           <tr>
+                              <td colspan="5" class="text-center text-muted"><small>Empty</small></td>
+                           </tr>
+                        @endif
+                        
+                     </tbody>
+                  </table>
+                  </div>
+               </div>
+            </div>
+         </div>
       </div>
-    </div>
-    
-  </section>
+      
+   </section>
 @endsection
 
 

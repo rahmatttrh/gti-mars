@@ -226,6 +226,12 @@ class DepartmentRequestController extends Controller
 
          return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
       } else if ($req->activity == 5) {
+         // dd('ok');
+         if (auth()->user()->hasRole('vessel')) {
+            $vessel = Vessel::where('email', auth()->user()->email)->first();
+         } else {
+            $vessel = null;
+         }
          $request = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
@@ -239,9 +245,10 @@ class DepartmentRequestController extends Controller
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'by' => 'user',
+            'vessel_id' => $vessel->id,
             'class' => 'Fuel Oil',
             'type' => 2,
-            'status' => 0,
+            'status' => 101,
             'date' => $req->date,
          ]);
 
@@ -252,13 +259,18 @@ class DepartmentRequestController extends Controller
 
          $request->update([
             'schedule_id' => $schedule->id,
-            'status' => 1
+            'status' => 101
          ]);
 
 
 
          return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
       } else if ($req->activity == 6) {
+         if (auth()->user()->hasRole('vessel')) {
+            $vessel = Vessel::where('email', auth()->user()->email)->first();
+         } else {
+            $vessel = null;
+         }
          $request = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
@@ -271,6 +283,7 @@ class DepartmentRequestController extends Controller
          ]);
          $schedule = Schedule::create([
             'code' => $scheduleCode,
+            'vessel_id' => $vessel->id,
             'by' => 'user',
             'class' => 'Flush Water',
             'type' => 2,
@@ -706,7 +719,9 @@ class DepartmentRequestController extends Controller
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
       }
 
-      if ($schedules) {
+      if (count($schedules) > 0) {
+         // dd($schedules);
+         // dd('ada schedule');
          foreach ($schedules as $schedule) {
             $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
             if ($uncompleteRoute != null) {
@@ -715,10 +730,12 @@ class DepartmentRequestController extends Controller
                   // 'status' => 1,
                   'schedule_id' => $schedule->id
                ]);
+               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
             }
          }
-         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+         
       } else {
+         // dd('tidak ada schedule');
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'class' => 'Cargo/Crew',
@@ -731,88 +748,9 @@ class DepartmentRequestController extends Controller
             // 'status' => 1,
             'schedule_id' => $schedule->id,
          ]);
+         // dd($request->schedule_id);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
       }
-
-
-
-
-      // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
-      // // $routineSchedule = Schedule::where('type', 1)->where('date', $request->date)->first();
-      // if ($routineSchedule) {
-      //    // jika ada schedule rutin
-      //    // dd('ada schedule rutin di tanggal berikut');
-      //    $vessel = Vessel::find($routineSchedule->vessel_id);
-      //    if ($routineSchedule->status > 1) {
-      //       // dd('schedule sudah jalan');
-      //       $request->update([
-      //          'class' => 'additional',
-      //          'status' => 1,
-      //          'schedule_id' => $routineSchedule->id,
-      //       ]);
-      //    } else {
-      //       // dd('schedule belum jalan');
-      //       $request->update([
-      //          'status' => 1,
-      //          'schedule_id' => $routineSchedule->id,
-      //       ]);
-      //    }
-
-
-
-      //    RequestHistory::create([
-      //       'request_id' => $request->id,
-      //       'date' => $now,
-      //       'type' => 'released'
-      //    ]);
-      //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($routineSchedule->date)->format('d/m/Y') . ' by ' . $vessel->name);
-      // } else {
-      //    // jika tidak ada schedule rutin
-      //    // dd('tidak ada schedule rutin ditanggal tersebut');
-
-
-      //    $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
-
-      //    // $requestSchedule = Schedule::where('type', 2)->where('date', $request->date)->first();
-      //    // cek apakah ada schedule by request ditanggal tersebut
-      //    if ($requestSchedule) {
-      //       // jika ada
-      //       // cek deckspace kapal masih tersedia atau tidak
-      //       // dd('ada schedule by requestSchedule di tanggal tersebut');
-      //       $vessel = Vessel::find($requestSchedule->vessel_id);
-      //       if ($vessel) {
-      //          $vesselName = $vessel->name;
-      //       } else {
-      //          $vesselName = '-';
-      //       }
-      //       $request->update([
-      //          'status' => 1,
-      //          'schedule_id' => $requestSchedule->id,
-      //       ]);
-      //       RequestHistory::create([
-      //          'request_id' => $request->id,
-      //          'date' => $now,
-      //          'type' => 'released'
-      //       ]);
-      //       return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($requestSchedule->date)->format('d/m/Y') . ' by ' . $vesselName);
-      //    } else {
-      //       // dd('tidak ada schedule by request di tanggal tersebut');
-      //       // $vessel = Vessel::where('port_id', $request->origin_id)->first();
-      //       $schedule = Schedule::create([
-      //          'by' => 'user',
-      //          'type' => 2,
-      //          'status' => 0,
-      //          'date' => $request->date,
-      //          // 'origin_id' => $request->origin_id,
-      //          // 'destination_id' => $request->destination_id,
-      //       ]);
-      //       $request->update([
-      //          'status' => 1,
-      //          'schedule_id' => $schedule->id,
-      //       ]);
-      //       return redirect()->back()->with('succedeed', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
-      //    }
-      // }
 
    }
 

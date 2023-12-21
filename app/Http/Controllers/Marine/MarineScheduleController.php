@@ -124,8 +124,16 @@ class MarineScheduleController extends Controller
          foreach ($mondays as $monday) {
             // dd($day->format('Y-m-d'));
             // $tuesday = $monday->addDays(1);
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
             $elokMonday = Schedule::create([
                'by' => 'system',
+               // 'code' => $scheduleCode,
                'type' => 1,
                'status' => 0,
                'class' => 'Cargo/Crew',
@@ -134,6 +142,10 @@ class MarineScheduleController extends Controller
                'date' => $monday->format('Y-m-d'),
                'etd' => $monday->format('Y-m-d'),
                'eta' => $monday->format('Y-m-d'),
+            ]);
+            $elokCode = "SO"  . '/' . $now->format("dmy") . '/' . $elokMonday->id;
+            $elokMonday->update([
+               'code' => $elokCode
             ]);
 
             ScheduleRoute::create([
@@ -145,6 +157,13 @@ class MarineScheduleController extends Controller
             ]);
 
 
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
             $giatMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
@@ -155,6 +174,10 @@ class MarineScheduleController extends Controller
                'date' => $monday->format('Y-m-d'),
                'etd' => $monday->format('Y-m-d'),
                'eta' => $monday->format('Y-m-d'),
+            ]);
+            $giatCode = "SO"  . '/' . $now->format("dmy") . '/' . $giatMonday->id;
+            $giatMonday->update([
+               'code' => $giatCode
             ]);
 
 
@@ -185,8 +208,13 @@ class MarineScheduleController extends Controller
          }
 
          foreach ($wednesdays as $wednesday) {
-
-
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
 
             $elokWednesday = Schedule::create([
                'by' => 'system',
@@ -199,6 +227,12 @@ class MarineScheduleController extends Controller
                'etd' => $wednesday->format('Y-m-d'),
                'eta' => $wednesday->format('Y-m-d'),
             ]);
+            $elokWCode = "SO"  . '/' . $now->format("dmy") . '/' . $elokWednesday->id;
+            $elokWednesday->update([
+               'code' => $elokWCode
+            ]);
+            
+
             ScheduleRoute::create([
                'schedule_id' => $elokWednesday->id,
                'port_id' => $elok->vesselSchedule->wednesday_id,
@@ -239,6 +273,13 @@ class MarineScheduleController extends Controller
 
          foreach ($saturdays as $saturday) {
             // dd($day->format('Y-m-d'));
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
             $giatSaturday = Schedule::create([
                'by' => 'system',
                'type' => 1,
@@ -249,6 +290,10 @@ class MarineScheduleController extends Controller
                'date' => $saturday->format('Y-m-d'),
                'etd' => $saturday->format('Y-m-d'),
                'eta' => $saturday->format('Y-m-d'),
+            ]);
+            $giatSCode = "SO"  . '/' . $now->format("dmy") . '/' . $giatSaturday->id;
+            $giatSaturday->update([
+               'code' => $giatSCode
             ]);
 
             ScheduleRoute::create([
@@ -269,6 +314,13 @@ class MarineScheduleController extends Controller
          }
 
          foreach ($sundays as $sunday) {
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
             $sigapSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
@@ -280,6 +332,18 @@ class MarineScheduleController extends Controller
                'etd' => $sunday->format('Y-m-d'),
                'eta' => $sunday->format('Y-m-d'),
             ]);
+            $sigapCode = "SO"  . '/' . $now->format("dmy") . '/' . $sigapSunday->id;
+            $sigapSunday->update([
+               'code' => $sigapCode
+            ]);
+
+            $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+            if (isset($lastSchedule)) {
+               $scheduleCode =
+                  "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            } else {
+               $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+            }
             $tegasSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
@@ -290,6 +354,10 @@ class MarineScheduleController extends Controller
                'date' => $sunday->format('Y-m-d'),
                'etd' => $sunday->format('Y-m-d'),
                'eta' => $sunday->format('Y-m-d'),
+            ]);
+            $tegasCode = "SO"  . '/' . $now->format("dmy") . '/' . $tegasSunday->id;
+            $tegasSunday->update([
+               'code' => $tegasCode
             ]);
 
             // Minggu

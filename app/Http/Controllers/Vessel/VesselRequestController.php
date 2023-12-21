@@ -13,9 +13,18 @@ use Illuminate\Http\Request;
 
 class VesselRequestController extends Controller
 {
+   public function index(){
+      $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
+      return view('pages-stisla.vessel.request.index', [
+         'requests' => $requests
+      ])->with('i');
+   }
+
    public function create(){
       return view('pages-stisla.vessel.request.create');
    }
+
+   
 
    public function store(Request $req){
 
@@ -48,6 +57,15 @@ class VesselRequestController extends Controller
       } elseif($req->activity == 6){
          $class = 'Flush Water';
       }
+
+      if (auth()->user()->hasRole('vessel')) {
+         $vessel = Vessel::where('email', auth()->user()->email)->first();
+         $vesselId = $vessel->id;
+         $user = 'Vessel';
+      } else {
+         $vesselId = null;
+         $user = 'Barge';
+      }
       
       $request = ModelsRequest::create([
          'code' => $code,
@@ -57,15 +75,17 @@ class VesselRequestController extends Controller
          'activity_id' => $req->activity,
          'date' => $req->date,
          'desc' => $req->desc,
-         'status' => 00
+         'qty' => $req->qty,
+         'status' => 101
       ]);
       $schedule = Schedule::create([
          'code' => $scheduleCode,
-         'by' => 'vessel',
+         'by' => $user,
+         'vessel_id' => $vesselId,
          'class' => $class,
          'type' => 2,
          'vessel_id' => $vessel->id,
-         'status' => 0,
+         'status' => 101,
          'date' => $req->date,
       ]);
 
@@ -83,7 +103,7 @@ class VesselRequestController extends Controller
 
       $request->update([
          'schedule_id' => $schedule->id,
-         'status' => 1
+         'status' => 101
       ]);
 
 

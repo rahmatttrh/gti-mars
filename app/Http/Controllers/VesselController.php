@@ -333,7 +333,7 @@ class VesselController extends Controller
    }
 
    public function onhire($id){
-      dd('ok');
+      // dd('ok');
       $dekripId = dekripRambo($id);
       $vessel = Vessel::find($dekripId);
       $today = Carbon::today();

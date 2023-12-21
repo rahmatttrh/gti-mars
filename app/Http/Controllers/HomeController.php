@@ -999,6 +999,7 @@ class HomeController extends Controller
 
       $empl = Employee::where('email', auth()->user()->email)->first();
       if ($empl) {
+         // dd('ok');
          $user = Employee::where('email', auth()->user()->email)->first();
          $confirms = ModelsRequest::where('destination_id', auth()->user()->getPort())->where('status', 10)->get();
          $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
@@ -1009,7 +1010,7 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
       }
 
-      // dd($confirms);
+      // dd(auth()->user()->getPort());
 
 
       return view('home-user', [

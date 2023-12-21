@@ -39,7 +39,7 @@ class DepartmentScheduleController extends Controller
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
             'employee_id' => auth()->user()->getEmployeeId(),
-            'status_id' => 16,
+            'status_id' => 17,
             'port_id' => auth()->user()->getPort()
          ]);
 
@@ -52,7 +52,7 @@ class DepartmentScheduleController extends Controller
                ReportRequest::create([
                   'request_id' => $req->id,
                   'employee_id' => auth()->user()->getEmployeeId(),
-                  'status_id' => 16,
+                  'status_id' => 17,
                   'port_id' => auth()->user()->getPort()
                ]);
             }
@@ -61,7 +61,7 @@ class DepartmentScheduleController extends Controller
                ReportRequest::create([
                   'request_id' => $req->id,
                   'employee_id' => auth()->user()->getEmployeeId(),
-                  'status_id' => 16,
+                  'status_id' => 17,
                   'port_id' => auth()->user()->getPort()
                ]);
             }
@@ -77,7 +77,7 @@ class DepartmentScheduleController extends Controller
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
             'employee_id' => auth()->user()->getEmployeeId(),
-            'status_id' => 16,
+            'status_id' => 17,
             'port_id' => auth()->user()->getPort()
          ]);
 

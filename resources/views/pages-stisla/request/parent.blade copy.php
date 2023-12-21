@@ -64,12 +64,21 @@
                   </div>
                </div> --}}
                <div class="card-body">
-                  
+                  {{{{$parent->activity->name}}}} <br>
+                  From <b>{{$parent->origin->name}}</b><br>
+                  <small> Request by {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
                   <div class="row">
                      <div class="col">
-                        {{$parent->activity->name}} <br>
-                        From <b>{{$parent->origin->name}}</b><br>
-                        <small> Request by {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
+                     <div class="summary">
+
+                        <div class="summary-info">
+                           <h4>Pickup Point from <b>{{$parent->origin->name}}</b> </h4>
+                           <div class="text-muted">{{$parent->activity->name}} </div>
+                           <div class="d-block mt-2">                              
+                           <small> Request by {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
+                           </div>
+                        </div>
+                     </div>
                      </div>
                      @if ($parent->status == 0)
                      <div class="col">
@@ -77,13 +86,13 @@
                            @csrf
                            <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
                            <div class="form-group">
-                              <div class="input-group">
-                                    <input type="file" class="form-control" name="file-cargo" id="file-cargo">
-                                    
-                                 <div class="input-group-append">
-                                    <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
-                                 </div>
+                           <div class="input-group">
+                                 <input type="file" class="form-control" name="file-cargo" id="file-cargo">
+                                 
+                              <div class="input-group-append">
+                                 <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
                               </div>
+                           </div>
                            </div>
                            {{-- <div class="form-row">
                            <div class="form-group col-md-12">
@@ -143,12 +152,14 @@
                      @endif
                      
                   </div>
+                  
+                     <hr>
                </div>
             </div>
             <div class="card">
-            {{-- <div class="card-header">
+            <div class="card-header">
                {{count($parent->requests)}} Destination
-            </div> --}}
+            </div>
             <div class="card-body">
                <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
