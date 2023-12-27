@@ -45,6 +45,11 @@ class User extends Authenticatable
       'email_verified_at' => 'datetime',
    ];
 
+   public function employee(){
+      $employee = Employee::where('email', $this->email)->first();
+      return $employee;
+   }
+
    public function getVesselId()
    {
       $vessel = Vessel::where('email', auth()->user()->email)->first();
@@ -114,10 +119,12 @@ class User extends Authenticatable
    {
       $employee = Employee::where('email', $this->email)->first();
       if ($employee) {
+         // return 'Employee';
          return $employee->port->name;
       } else {
-         $port = Port::where('email', $this->email)->first();
-         return $port->name;
+         return 'Platform';
+         // $port = Port::where('email', $this->email)->first();
+         // return $port->name;
       }
    }
 

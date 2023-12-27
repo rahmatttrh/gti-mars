@@ -153,7 +153,9 @@ class VesselScheduleController extends Controller
 
    public function updateStatus(Request $req)
    {
-      $req->validate([]);
+      $req->validate([
+         'status' => 'required'
+      ]);
       // dd($req->status);
       if ($req->status == 9) {
          $req->validate([
@@ -168,7 +170,7 @@ class VesselScheduleController extends Controller
          ]);
       }
 
-      if ($req->status > 24 && $req->status < 29) {
+      if ($req->status > 27 && $req->status < 32) {
          $req->validate([
             'anchor' => 'required',
          ]);
@@ -262,6 +264,7 @@ class VesselScheduleController extends Controller
       // dd('ok');
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
+      // dd($schedule->vessel->name);
       $vessel = Vessel::find($schedule->vessel_id);
       $vessel->update([
          'schedule_id' => null
@@ -270,6 +273,8 @@ class VesselScheduleController extends Controller
       $schedule->update([
          'status' => 11
       ]);
+
+      // dd($schedule->status);
 
       foreach ($schedule->requests as $req) {
          $req->update([

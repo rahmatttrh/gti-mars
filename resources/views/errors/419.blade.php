@@ -1,43 +1,87 @@
-{{-- @extends('errors::minimal')
-
-@section('title', __('Page Expired'))
-@section('code', '419')
-@section('message', __('Page Expired')) --}}
-
+<!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="utf-8"/>
-      <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-      <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
-      <title>DSP PHE - 419</title>
-      <!-- CSS files -->
-      <link href="{{asset('css/tabler.min.css')}}" rel="stylesheet"/>
-      <link href="{{asset('css/tabler-flags.min.css')}}" rel="stylesheet"/>
-      <link href="{{asset('css/tabler-payments.min.css')}}" rel="stylesheet"/>
-      <link href="{{asset('css/tabler-vendors.min.css')}}" rel="stylesheet"/>
-   </head>
-   <body  class=" border-top-wide border-primary d-flex flex-column">
-      <div class="page page-center">
-         <div class="container-tight py-4">
-            <div class="empty">
-               <div class="empty-header">419</div>
-               <p class="empty-title">Page Expired</p>
-               <p class="empty-subtitle text-muted">
-                  Sorry, your session has expired
-               </p>
-               <div class="empty-action">
-                  <a href="/" class="btn btn-primary">
-                  <!-- Download SVG icon from http://tabler-icons.io/i/arrow-left -->
-                  <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><line x1="5" y1="12" x2="19" y2="12" /><line x1="5" y1="12" x2="11" y2="18" /><line x1="5" y1="12" x2="11" y2="6" /></svg>
-                  Login
-                  </a>
-               </div>
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>DSP - 403</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
+
+  <!-- CSS Libraries -->
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
+<!-- Start GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-94034622-3');
+</script>
+<!-- /END GA --></head>
+
+<body>
+  <div id="app">
+    <section class="section">
+      <div class="container mt-5">
+        <div class="page-error">
+          <div class="page-inner">
+            <h1>419</h1>
+            <div class="page-description">
+            	Sorry, your session has expired.
             </div>
-         </div>
+            <div class="page-search">
+              {{-- <form>              	
+                <div class="form-group floating-addon floating-addon-not-append">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">                          
+                        <i class="fas fa-search"></i>
+                      </div>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                      <button class="btn btn-primary btn-lg">
+                        Search
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </form> --}}
+              <div class="mt-3">
+                  {{-- <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button> --}}
+                <a href="/" class="btn btn-primary btn-lg">take me back</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="simple-footer mt-5">
+          Copyright &copy; 2023 DSP-PHE | Ekanuri Development
+        </div>
       </div>
-      <!-- Libs JS -->
-      <!-- Tabler Core -->
-      <script src="{{asset('js/tabler.min.js')}}"></script>
-         <script src="{{asset('js/demo.min.js')}}"></script>
-   </body>
+    </section>
+  </div>
+
+  <!-- General JS Scripts -->
+  <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/popper.js')}}"></script>
+  <script src="{{asset('stisla/modules/tooltip.js')}}"></script>
+  <script src="{{asset('stisla/modules/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/moment.min.js')}}"></script>
+  <script src="{{asset('stisla/js/stisla.js')}}"></script>
+  
+  <!-- JS Libraies -->
+
+  <!-- Page Specific JS File -->
+  
+  <!-- Template JS File -->
+  <script src="{{asset('stisla/js/scripts.js')}}"></script>
+  <script src="{{asset('stisla/js/custom.js')}}"></script>
+</body>
 </html>

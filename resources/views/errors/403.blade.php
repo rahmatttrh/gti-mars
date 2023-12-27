@@ -33,7 +33,7 @@
           <div class="page-inner">
             <h1>403</h1>
             <div class="page-description">
-            	Sorry, you don't have permission to access this page.
+            	Sorry, your session has expired.
             </div>
             <div class="page-search">
               {{-- <form>              	
@@ -54,8 +54,8 @@
                 </div>
               </form> --}}
               <div class="mt-3">
-                  <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button>
-                {{-- <a href="/" class="btn btn-primary btn-lg">take me back</a> --}}
+                  {{-- <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button> --}}
+                <a href="/" class="btn btn-primary btn-lg">Login</a>
               </div>
             </div>
           </div>

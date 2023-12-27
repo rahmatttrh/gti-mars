@@ -12,11 +12,10 @@ class PortController extends Controller
 {
    public function index()
    {
-      $ports = Port::get();
+      $ports = Port::orderBy('updated_at', 'desc')->get();
 
-      return view('pages.port.index', [
+      return view('pages-stisla.master-data.port', [
          'ports' => $ports,
-
       ])->with('i');
    }
 
@@ -26,12 +25,13 @@ class PortController extends Controller
          'email' => 'unique:ports'
       ]);
 
-      $employee = Port::create([
+      $Port = Port::create([
          'name' => $req->name,
          'email' => $req->email,
          'type' => $req->type,
-         'latitude' => $req->latitude,
-         'longitude' => $req->longitude
+         'region' => $req->region
+         // 'latitude' => $req->latitude,
+         // 'longitude' => $req->longitude
       ]);
 
       // $user = User::create([
@@ -43,7 +43,19 @@ class PortController extends Controller
 
       // $user->assignRole('port');
 
-      return redirect()->back()->with('success', 'Port successfully added');
+      return redirect()->back()->with('success', 'Port saved.');
+   }
+
+   public function edit($id)
+   {
+      $dekripId = dekripRambo($id);
+      $port = Port::find($dekripId);
+      $ports = Port::orderBy('updated_at', 'desc')->get();
+
+      return view('pages-stisla.master-data.port-edit', [
+         'port' => $port,
+         'ports' => $ports
+      ])->with('i');
    }
 
    public function update(Request $req)
@@ -53,11 +65,14 @@ class PortController extends Controller
       $port = Port::find($req->port);
       $port->update([
          'name' => $req->name,
-         'latitude' => $req->latitude,
-         'longitude' => $req->longitude
+         'email' => $req->email,
+         'type' => $req->type,
+         'region' => $req->region
+         // 'latitude' => $req->latitude,
+         // 'longitude' => $req->longitude
       ]);
 
-      return redirect()->back()->with('success', 'Port successfully updated');
+      return redirect()->route('port')->with('success', 'Port successfully updated');
    }
 
    public function detail($id)

@@ -1027,6 +1027,19 @@ class HomeController extends Controller
       ])->with('i');
    }
 
+   public function dspFm(){
+      $user = User::find(auth()->user()->id);
+      $requests = ModelsRequest::where('activity_id', 5)->where('status','>', 0)->orderBy('status', 'desc')->get();
+      $schedules = Schedule::where('class', 'Fuel Oil')->orderBy('updated_at', 'desc')->get();
+      $progressSchedules = Schedule::where('status', '>=', 0)->where('status', '!=', 101)->where('class', 'Fuel Oil')->get();
+      return view('home-fm', [
+         'user' => $user,
+         'requests' => $requests,
+         'schedules' => $schedules,
+         'progressSchedules' => $progressSchedules
+      ])->with('i');
+   }
+
 
    public function vdrMarine()
    {

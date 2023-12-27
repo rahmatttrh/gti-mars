@@ -12,13 +12,27 @@
                </div>
                <div class="card-wrap">
                   <div class="card-header">
-                     <h4>Name</h4>
+                     <small>Name</small>
+                     <h4 class="text-dark">{{$user->name}}</h4>
                   </div>
-                  <div class="card-body">{{$user->name}} </div>
+                  {{-- <div class="card-body">{{$user->name}} </div> --}}
                </div>
             </div>
+
+           
+               <div class="card border">
+                  <div class="card-body">
+                     {{-- <small>Name</small> --}}
+                     <small >{{$user->port->type}} - {{$user->port->region ?? ''}}</small><br>
+                     <b class="text-dark">{{$user->port->name}}</b>
+                     
+                  </div>
+                  {{-- <div class="card-body">{{$user->name}} </div> --}}
+               </div>
+
             <div class="card border">
                <div class="card-body">
+                  
                   <small>Progress Request</small><br>
                   <b>{{$requests->where('status', '>', 0)->count()}} </b>
                   <hr>
@@ -85,7 +99,7 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="5" style="text-align: center"><small>Empty</small></td>
+                              <td colspan="7" style="text-align: center"><small>Empty</small></td>
                            </tr>
                         @endif
                      </tbody>

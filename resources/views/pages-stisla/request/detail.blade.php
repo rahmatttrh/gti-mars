@@ -18,7 +18,7 @@
         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
       </p> --}}
       {{-- {{$request->activity_id}} --}}
-      @if ($activity->id > 3)
+      @if ($activity->id > 4)
          <x-request-stisla.detail-other :request="$request" />
          @else
          <div class="row">
@@ -114,173 +114,185 @@
                      
                      @if ($activity->id == 1)
                         <div class="card shadow-none border">
-                        {{-- <div class="card-header">
-                           <h4>Manifest </h4>
-                        </div> --}}
-                        <div class="card-body p-3">
-                           <div class="table-responsive">
-                              <table class="table table-striped table-sm" id="table-4">
-                              <thead>
-                                 <tr>
-                                    <th>MTD</th>
-                                    <th>Descriptive</th>
-                                    {{-- <th>Remark</th> --}}
-                                    <th>Contract</th>
-                                    <th class="text-center">Qty</th>
-                                    <th class="text-center">Drop</th>
-                                    {{-- <th class="text-center">Onboard</th> --}}
-                                    {{-- <th class="">Desc</th> --}}
-                                    <th class="text-center">Size (m<sup>2</sup>)</th>
-                                    <th class="text-center">Weight (ton)</th>
-                                    @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                                    <th>Action</th>
-                                    @endif
-                              </tr>
-                              </thead>
-                              <tbody>
-                                 @if ($cargoItems->count() > 0)
-                                    @foreach ($cargoItems as $item)   
+                           {{-- <div class="card-header">
+                              <h4>Manifest </h4>
+                           </div> --}}
+                           <div class="card-body p-3">
+                              <div class="table-responsive">
+                                 <table class="table table-striped table-sm" id="table-4">
+                                 <thead>
                                     <tr>
-                                          <td class=" text-truncate">
-                                          <div class="dropdown">
-                                             {{$item->mtd}}
-                                          </div>
-                                          </td>
-                                          <td class=" text-truncate ">
-                                          {{$item->desc}} 
-                                          </td>
-                                          {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
-                                          <td class=" text-truncate">{{$item->contract}}</td>
-                                          <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                                          <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                                          {{-- <td class=" text-center">
-                                          {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
-                                          
-                                          </td> --}}
-                                          <td class=" text-center">{{$item->size}}</td>
-                                          <td class=" text-center">{{$item->weight}}</td>
-                                          
-                                          {{-- <td>
-                                          @if ($request->status == 0)
-                                          <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
-                                          @endif
-                                          </td> --}}
-                                          @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                                          <td>
-                                                @if ($item->status == 1)
-                                                <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                                <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
-                                                @else
-                                                -
-                                                @endif
-                                          </td>
-                                          @endif
-                                    </tr>
-                                    {{-- <x-modal.cargo.delete :item="$item" /> --}}
-                                    
-                                    @endforeach
-                                    <tr>
-                                       @if ($request->status >= 10 && auth()->user()->hasRole('department'))
-                                          <td colspan="5" class="text-muted text-end">Total</td>
-                                          @else
-                                          <td colspan="5" class="text-muted text-end">Total</td>
+                                       <th>MTD</th>
+                                       <th>Descriptive</th>
+                                       {{-- <th>Remark</th> --}}
+                                       <th>Contract</th>
+                                       <th class="text-center">Qty</th>
+                                       <th class="text-center">Drop</th>
+                                       {{-- <th class="text-center">Onboard</th> --}}
+                                       {{-- <th class="">Desc</th> --}}
+                                       <th class="text-center">Size (m<sup>2</sup>)</th>
+                                       <th class="text-center">Weight (ton)</th>
+                                       @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                       <th>Action</th>
                                        @endif
-                                       <td class="text-muted text-center">{{$request->total_size}}</td>
-                                       <td class="text-muted text-center">{{$request->total_weight}}</td>
-                                    </tr>
-                                    @else
-                                    <tr>
-                                       <td colspan="9" style="text-align: center"><small>Empty</small></td>
-                                    </tr>
-                                 @endif
-                              </tbody>
-                              </table>
+                                 </tr>
+                                 </thead>
+                                 <tbody>
+                                    @if ($cargoItems->count() > 0)
+                                       @foreach ($cargoItems as $item)   
+                                       <tr>
+                                             <td class=" text-truncate">
+                                             <div class="dropdown">
+                                                {{$item->mtd}}
+                                             </div>
+                                             </td>
+                                             <td class=" text-truncate ">
+                                             {{$item->desc}} 
+                                             </td>
+                                             {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
+                                             <td class=" text-truncate">{{$item->contract}}</td>
+                                             <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                                             <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                                             {{-- <td class=" text-center">
+                                             {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
+                                             
+                                             </td> --}}
+                                             <td class=" text-center">{{$item->size}}</td>
+                                             <td class=" text-center">{{$item->weight}}</td>
+                                             
+                                             {{-- <td>
+                                             @if ($request->status == 0)
+                                             <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                             @endif
+                                             </td> --}}
+                                             @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                             <td>
+                                                   @if ($item->status == 1)
+                                                   <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                                   <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
+                                                   @else
+                                                   -
+                                                   @endif
+                                             </td>
+                                             @endif
+                                       </tr>
+                                       {{-- <x-modal.cargo.delete :item="$item" /> --}}
+                                       
+                                       @endforeach
+                                       <tr>
+                                          @if ($request->status >= 10 && auth()->user()->hasRole('department'))
+                                             <td colspan="5" class="text-muted text-end">Total</td>
+                                             @else
+                                             <td colspan="5" class="text-muted text-end">Total</td>
+                                          @endif
+                                          <td class="text-muted text-center">{{$request->total_size}}</td>
+                                          <td class="text-muted text-center">{{$request->total_weight}}</td>
+                                       </tr>
+                                       @else
+                                       <tr>
+                                          <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                                       </tr>
+                                    @endif
+                                 </tbody>
+                                 </table>
+                              </div>
                            </div>
-                        </div>
                         </div>
                         @elseif($activity->id == 2)
                         <div class="card shadow-none border">
-                        <div class="card-header">
-                           <h4>Manifest {{$passengerItems->count()}} Crew</h4>
-                           {{-- {{$request->cargoItems->sum('weight')}} --}}
-                        </div>
-                        <div class="card-body p-3">
-                           <div class="table-responsive">
-                              <table class="table table-striped " id="table-5">
-                              <thead>
-                                 <tr>
-                                    <th>Type</th>
-                                    <th>Name</th>
-                                    <th>Barcode</th>
-                                    <th>Department</th>
-                                    <th>Company</th>
-                                    <th>Desc</th>
-                                    {{-- <th></th> --}}
-                                 </tr>
-                              </thead>
-                              <tbody>
-                                 @if ($passengerItems->count() > 0)
-                                    @foreach ($passengerItems as $passenger)
-                                       <tr>
-                                          <td>{{$passenger->type}}</td>
-                                          <td >{{$passenger->name}}</td>
-                                          <td >{{$passenger->barcode}}</td>
-                                          <td >{{$passenger->department}}</td>
-                                          <td >{{$passenger->company}}</td>
-                                          <td >{{$passenger->desc}}</td>
-                                          {{-- <td class="text-end">
-                                             @if ($request->status == 0)
-                                             <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
-                                             @endif
-                                          </td> --}}
-                                       </tr>
-                                       {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
-                                    @endforeach
-                     
-                                    @else
+                           <div class="card-header">
+                              <h4>Manifest {{$passengerItems->count()}} Crew</h4>
+                              {{-- {{$request->cargoItems->sum('weight')}} --}}
+                           </div>
+                           <div class="card-body p-3">
+                              <div class="table-responsive">
+                                 <table class="table table-striped " id="table-5">
+                                 <thead>
                                     <tr>
-                                       <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                                       <th>Type</th>
+                                       <th>Name</th>
+                                       <th>Barcode</th>
+                                       <th>Department</th>
+                                       <th>Company</th>
+                                       <th>Desc</th>
+                                       {{-- <th></th> --}}
                                     </tr>
-                                 @endif
-                              </tbody>
-                              </table>
+                                 </thead>
+                                 <tbody>
+                                    @if ($passengerItems->count() > 0)
+                                       @foreach ($passengerItems as $passenger)
+                                          <tr>
+                                             <td>{{$passenger->type}}</td>
+                                             <td >{{$passenger->name}}</td>
+                                             <td >{{$passenger->barcode}}</td>
+                                             <td >{{$passenger->department}}</td>
+                                             <td >{{$passenger->company}}</td>
+                                             <td >{{$passenger->desc}}</td>
+                                             {{-- <td class="text-end">
+                                                @if ($request->status == 0)
+                                                <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
+                                                @endif
+                                             </td> --}}
+                                          </tr>
+                                          {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
+                                       @endforeach
+                        
+                                       @else
+                                       <tr>
+                                          <td colspan="9" style="text-align: center"><small>Empty</small></td>
+                                       </tr>
+                                    @endif
+                                 </tbody>
+                                 </table>
+                              </div>
                            </div>
                         </div>
-                        </div>
                         @elseif($request->activity_id == 3)
-                        <div class="summary-item">
-                        <h6>Barge </h6>
-                        <ul class="list-unstyled list-unstyled-border">
-                           
-                           <li class="media">
-                              <a href="#">
-                              <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                              </a>
-                              <div class="media-body">
-                              {{-- <div class="media-right">$405</div> --}}
-                              <div class="media-title h2"><a href="#">{{$request->bargeItem->barge->name}}</a></div>
-                              <div class="text-muted text-small">Moving</div>
-                              </div>
-                           </li>
-                        </ul>
+                        <div class="d-flex align-items-center">
+                           <img width="50" src="{{asset('img/flaticon/barge.png')}}" alt="" class="img-thumbnail mr-4">
+                           <b>{{$request->bargeItem->barge->name}}</b>
                         </div>
+                        {{-- <div class="row justify-content-center">
+                           <div class="col-md-1">
+                              <img src="{{asset('img/flaticon/barge.png')}}" alt="" class="img-thumbnail">
+                           </div>
+                           <div class="col-md-11">
+                              
+                           </div>
+                        </div> --}}
+                        {{-- <div class="summary-item">
+                           <h6>Barge </h6>
+                           <ul class="list-unstyled list-unstyled-border">
+                              <li class="media">
+                                 <a href="#">
+                                    <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                                 </a>
+                                 <div class="media-body">
+                                    <div class="media-title h2"><a href="#">{{$request->bargeItem->barge->name}}</a></div>
+                                 </div>
+                              </li>
+                           </ul>
+                        </div> --}}
                         @elseif($request->activity_id == 4)
-                        <div class="summary-item">
-                        <h6>Tanker </h6>
-                        <ul class="list-unstyled list-unstyled-border">
-                           
-                           <li class="media">
-                              <a href="#">
-                              <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                              </a>
-                              <div class="media-body">
-                              {{-- <div class="media-right">$405</div> --}}
-                              <div class="media-title h2"><a href="#">{{$request->desc}}</a></div>
-                              <div class="text-muted text-small">Lifting</div>
-                              </div>
-                           </li>
-                        </ul>
+                        <div class="d-flex align-items-center">
+                           <img width="50" src="{{asset('img/flaticon/ship.png')}}" alt="" class="img-thumbnail mr-4">
+                           <b>{{$request->desc}}</b>
                         </div>
+                        {{-- <div class="summary-item">
+                           <h6>Tanker </h6>
+                           <ul class="list-unstyled list-unstyled-border">
+                              
+                              <li class="media">
+                                 <a href="#">
+                                 <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                                 </a>
+                                 <div class="media-body">
+                                 <div class="media-title h2"><a href="#">{{$request->desc}}</a></div>
+                                 <div class="text-muted text-small">Lifting</div>
+                                 </div>
+                              </li>
+                           </ul>
+                        </div> --}}
                      @endif
                      
                      

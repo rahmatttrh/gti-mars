@@ -16,6 +16,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
+use App\Http\Controllers\FuelController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
@@ -74,13 +75,25 @@ Route::middleware(["auth"])->group(function () {
    //   });
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
-      Route::put('ubah', [UserController::class, 'update'])->name('user.rubah');
+      Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+      Route::put('update', [UserController::class, 'update'])->name('user.update');
+      Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+   });
+
+   Route::prefix('fuel')->group(function () {
+      Route::put('approve', [FuelController::class, 'approve'])->name('fuel.approve');
    });
 
    Route::prefix("dsp")->group(function () {
-      Route::get("marine-dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
-      Route::get("vessel-dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+      Route::get("marine/dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
+      Route::get("vessel/dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
       Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
+
+   Route::prefix("dsp")->group(function () {
+      Route::get("fm/dashboard", [HomeController::class, "dspFm",])->name('dsp.fm');
+      // Route::get("vessel-dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+      // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
    });
 
    Route::prefix("vdr")->group(function () {
@@ -284,6 +297,7 @@ Route::group(['middleware' => ['role:marine']], function () {
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
       Route::post('store', [PortController::class, 'store'])->name('port.store');
+      Route::get('edit/{id}', [PortController::class, 'edit'])->name('port.edit');
       Route::put('update', [PortController::class, 'update'])->name('port.update');
       Route::get('detail/{port:id}', [PortController::class, 'detail'])->name('port.detail');
       Route::get('delete/{port:id}', [PortController::class, 'delete'])->name('port.delete');
@@ -301,12 +315,12 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('delete/{crew:id}', [CrewController::class, 'delete'])->name('crew.delete');
    });
 
-   Route::prefix('user')->group(function () {
-      Route::get('/', [EmployeeController::class, 'index'])->name('employee');
-      Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
-      Route::put('update', [EmployeeController::class, 'update'])->name('employee.update');
-      Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
-   });
+   // Route::prefix('user')->group(function () {
+   //    Route::get('/', [EmployeeController::class, 'index'])->name('employee');
+   //    Route::post('store', [EmployeeController::class, 'store'])->name('employee.store');
+   //    Route::put('update', [EmployeeController::class, 'update'])->name('employee.update');
+   //    Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+   // });
 
 
    Route::prefix('dashboard')->group(function () {
@@ -326,7 +340,7 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
       Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
       Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
-      Route::get('history/{month}', [MarineScheduleController::class, 'history'])->name('schedule.history');
+      Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
       Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
       Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
       Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');

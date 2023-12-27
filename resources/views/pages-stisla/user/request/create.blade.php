@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-row port">
                            <div class="form-group col-md-6">
-                              <label>From</label>
+                              <label>Origin/From</label>
                               <select class="custom-select origin" id="origin" style="background-color: lightgrey" name="origin">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($ports as $port)
@@ -90,7 +90,7 @@
                         <div class="form-row file-crew">
                            <div class="form-group col-md-12">
                               <label for="file-passenger">File Excel Crew</label>
-                              <input class="form-control mb-2" id="file-passenger" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-passenger">
+                              <input class="form-control mb-1" id="file-passenger" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-passenger">
                               <a class="file-crew mt-3" href="{{ asset('template/dsp-template-cre.xlsx') }}">Download Template ...</a>
                            </div>
                         </div>
@@ -98,7 +98,7 @@
                         <div class="form-row qty">
                            <div class="form-group col-md-12">
                               <label for="qty">Quantity (KL)</label>
-                              <input class="form-control mb-2" id="qty" type="text" style="background-color: lightgrey" value="{{ old('qty') }}" name="qty">
+                              <input class="form-control mb-1" id="qty" type="text" style="background-color: lightgrey" value="{{ old('qty') }}" name="qty">
                            </div>
                         </div>
 
@@ -116,12 +116,14 @@
                         <div class="form-row">
                            <div class="form-group col-md-12">
                               <label for="desc">Description</label>
-                              <input class="form-control mb-2" id="desc" type="text" style="background-color:lightgrey" value="{{ old('desc') }}" name="desc">
+                              <input class="form-control " id="desc" type="text" style="background-color:lightgrey" value="{{ old('desc') }}" name="desc">
                            </div>
                         </div>
+                        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
                      </div>
+                     
                      <div class="card-footer bg-whitesmoke">
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        
                      </div>
                   </form>
                </div>

@@ -46,7 +46,7 @@
                </div>
                @endforeach
             @endif
-            <div class="card">
+            {{-- <div class="card">
                <div class="card-body">
                   <span>Ongoing Schedule</span> <br>
                   
@@ -59,7 +59,7 @@
                      
                   @endforeach
                </div>
-            </div>
+            </div> --}}
             @if (count($surveillances) > 0)
             <div class="card">
                <div class="card-header">

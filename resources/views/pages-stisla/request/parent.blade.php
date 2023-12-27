@@ -129,9 +129,12 @@
                               <label for="schedule">Change vessel?</label>
                               <div class="input-group">
                                  <select class="form-control" name="schedule" id="schedule">
-                                       @foreach ($scheduleRoutes as $sche)
+                                    @foreach ($vessels as $vessel)
+                                    <option {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$svessel->name}}  {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? '- Selected' : ''}}</option>
+                                    @endforeach
+                                       {{-- @foreach ($scheduleRoutes as $sche)
                                        <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
-                                       @endforeach
+                                       @endforeach --}}
                                  </select>
                                  <div class="input-group-append">
                                  <button class="btn btn-primary px-4" type="submit">Submit</button>

@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
    <div class="section-header">
-      <h1 class="section-title">Detail Sailing Order</h1>
+      <h1 class="section-title">Detail Sailing Order {{$schedule->code}}</h1>
       <div class="section-header-breadcrumb">
          @if (auth()->user()->hasRole('marine'))
             <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
@@ -36,10 +36,10 @@
                <x-schedule-stisla.action-vessel :schedule="$schedule" />
                <div class="mb-2"></div>
             @endif
-            @if (auth()->user()->hasRole('vessel') && $schedule->status > 1 && $schedule->status < 11 )
-               <a href="" class="btn btn-sm btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
-               <div class="mb-2"></div>
-            @endif
+            {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1 && $schedule->status < 11 )
+               <a href="" class="btn  btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
+               <div class="mb-3"></div>
+            @endif --}}
             <div class="card border">
                <div class="card-header">
                   @if ($schedule->vessel)
@@ -48,8 +48,9 @@
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
                </div>
                <div class="card-body">
-                  <h5><b>{{$schedule->vessel->name ?? 'Empty'}}</b></h5>
-                  <span>{{formatDate($schedule->date)}}</span> <br>
+                  <span>{{$schedule->code}}</span>
+                  <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
+                  <span>{{formatDateName($schedule->date)}}</span> <br>
                   @if ($schedule->class == 'Cargo/Crew')
                      <span>
                         @if ($schedule->class == 'Cargo/Crew')
@@ -116,7 +117,11 @@
                   <br>
                   <small>Deadweight {{$persenWeight}}%</small>
                   <br>
-                  <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a>
+                  <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
+                  @if ($schedule->status == 0)
+                  <a href="{{route('schedule.delete', enkripRambo($schedule->id))}}"><small>Delete</small></a>
+                  @endif
+                  
                   {{-- <hr> --}}
                   {{-- <div class="row">
                      <div class="col"><a href="{{route('document.manifest', enkripRambo($schedule->id))}}" class=" ">Preview PDF</a></div>
@@ -168,22 +173,24 @@
             {{-- <hr> --}}
 
             
-            @if (auth()->user()->hasRole('marine'))
-               @if ($recentRequests->count() > 0)
-               {{-- <x-schedule-stisla.incoming :recents="$recentRequests" /> --}}
-               <div id="accordion">
-                  <div class="accordion">
-                    <div class="accordion-header bg-warning" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
-                      <h4>Incoming Request <i class="fa fa-exclamation"></i></h4>
-                    </div>
-                    <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
-                     <x-schedule-stisla.incoming :recents="$recentRequests" />
-                    </div>
-                  </div>
+            @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
+               @if ($schedule->class == 'Cargo/Crew')
+                  @if ($recentRequests->count() > 0)
+                     {{-- <x-schedule-stisla.incoming :recents="$recentRequests" /> --}}
+                     <div id="accordion">
+                        <div class="accordion">
+                        <div class="accordion-header bg-warning" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
+                           <h4>Incoming Request <i class="fa fa-exclamation"></i></h4>
+                        </div>
+                        <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
+                           <x-schedule-stisla.incoming :recents="$recentRequests" />
+                        </div>
+                        </div>
+                     </div>
                   
-                </div>
-               
+                  @endif
                @endif
+               
             @endif
 
             @if ($schedule->class == 'Cargo/Crew')
@@ -364,26 +371,24 @@
                </div>
             </div>
             @elseif($schedule->class == 'Moving')
-            <div class="card">
+            
+            <div class="card border">
+               <div class="card-header">
+                  <b>Moving Barge</b>
+               </div>
                <div class="card-body">
-                  <div class="summary-item">
-                  <h6>Barge </h6>
-                  <ul class="list-unstyled list-unstyled-border">
-                     
-                     <li class="media">
-                        <a href="#">
-                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                        </a>
-                        <div class="media-body">
-                        {{-- <div class="media-right">$405</div> --}}
-                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->bargeItem->barge->name}}</a></div>
-                        <div class="text-muted text-small">Moving</div>
-                        </div>
-                     </li>
-                  </ul>
+                  <div class="d-flex align-items-center">
+                     <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
+                     <div>
+                        <h5>{{$schedule->requests()->first()->bargeItem->barge->name}}</h5>
+                        <span>{{$schedule->requests()->first()->code}}</span>
+                     </div>
                   </div>
+                  <br>
+                  Requested by {{$schedule->requests()->first()->user->name}}
                </div>
             </div>
+            
             @elseif($schedule->class == 'Lifting')
             <div class="card">
                <div class="card-body">
@@ -405,12 +410,65 @@
                   </div>
                </div>
             </div>
+            @elseif($schedule->class == 'Fuel Oil')
+            {{-- <div class="card">
+               <div class="card-body">
+                  <div class="summary-item">
+                  <h6>Fuel Oil </h6>
+                  <ul class="list-unstyled list-unstyled-border">
+                     
+                     <li class="media">
+                        <a href="#">
+                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
+                        </a>
+                        <div class="media-body">
+                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->qty}} KL</a></div>
+                        </div>
+                     </li>
+                  </ul>
+                  </div>
+               </div>
+            </div> --}}
+            <div class="card border">
+               <div class="card-header">
+                  <b>Fuel Oil</b>
+               </div>
+               <div class="card-body">
+                  <div class="d-flex align-items-center">
+                     <img width="70" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
+                     <div>
+                        <h5>{{$schedule->requests()->first()->qty}}</h5>
+                        <span>KL</span>
+                     </div>
+                  </div>
+                  <br>
+                  Requested by {{$schedule->requests()->first()->user->name}}
+               </div>
+            </div>
             @endif
          </div>
       </div>
    </div>
 </section>
-
+   <div class="modal fade" id="schedule-vessel-complete" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Confirm Complete</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               Complete this Sailing Order? 
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('schedule.vessel.complete', enkripRambo($schedule->id))}}" class="btn btn-success">Complete</a>
+            </div>
+         </div>
+      </div>
+   </div>
 
   {{-- Modal Send Schedule --}}
   @if ($schedule->vessel)
@@ -539,7 +597,7 @@
                 <label for="vessel">Vessel</label>
                 <select id="vessel" class="form-control" name="vessel" id="vessel">
                   <option selected>Choose...</option>
-                  @foreach ($ahtsVessels as $vessel)
+                  @foreach ($vessels as $vessel)
                     <option  value="{{$vessel->id}}">{{$vessel->name }}</option>
                   @endforeach
                 </select>
@@ -824,25 +882,7 @@
     @endforeach
   @endif
   
-  <div class="modal fade" id="schedule-vessel-complete" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">Confirm Complete</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               Complete this Sailing Order?
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <a href="{{route('schedule.vessel.complete', enkripRambo($schedule->id))}}" class="btn btn-success">Complete</a>
-            </div>
-         </div>
-      </div>
-   </div>
+  
     
 @endsection
 

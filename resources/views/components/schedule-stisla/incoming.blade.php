@@ -25,8 +25,8 @@
                         <td>{{$req->schedule->vessel->name ?? '-'}}</td>
                         <td>
                            <div class="btn-group btn-sm">
-                              <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
-                              <a href="#" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change</a>
+                              <a href="#" class="btn btn-sm btn-light" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
+                              <a href="#" class="btn btn-sm btn-light" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change</a>
                               <a href="{{route('request.detail', enkripRambo($req->id))}}" class="btn btn-sm btn-primary">Detail</a>
                            </div>
                         </td>

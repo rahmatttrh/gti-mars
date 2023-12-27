@@ -76,6 +76,8 @@ $("#table-7").dataTable({
 
 $("#table-8").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
+    pageLength : 5,
+   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
 });
 
 $("#table-9").dataTable({
@@ -92,4 +94,10 @@ $("#table-11").dataTable({
 
 $("#table-12").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
+});
+
+$("#table-13").dataTable({
+   columnDefs: [{ sortable: false, targets: [2, 3] }],
+   pageLength : 5,
+   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
 });

@@ -35,6 +35,7 @@ class CreateRequestsTable extends Migration
          // $table->smallInteger('type_id');
          $table->smallInteger('activity_id')->nullable();
          $table->integer('qty')->nullable();
+         $table->integer('qty_approve')->nullable();
          $table->string('description')->nullable();
          $table->smallInteger('origin_id')->nullable();
          $table->smallInteger('destination_id')->nullable();

@@ -131,7 +131,7 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $schedules = Schedule::orderBy('date', 'asc')->get();
-      $ahtsVessels = Vessel::where('type', 'AHTS')->get();
+      // $ahtsVessels = Vessel::where('type', 'AHTS')->get();
 
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
@@ -140,9 +140,16 @@ class ScheduleController extends Controller
 
       if ($schedule->class == 'Cargo/Crew') {
          // dd('moving');
+         $vessels = Vessel::get();
          $statuses = Status::where('class', 'cargo')->where('type', 1)->get();
-      } else {
+      } 
+      // elseif($schedule->class == 'Fuel Oil' || $schedule->class == 'Fresh Water' ) {
+      //    // dd('cargo/crew');
+      //    $statuses = Status::where('type', 1)->get();
+      // } 
+      else {
          // dd('cargo/crew');
+         $vessels = Vessel::where('type', 'AHTS')->get();
          $statuses = Status::where('class', 'moving')->where('type', 1)->get();
       }
 
@@ -206,7 +213,7 @@ class ScheduleController extends Controller
       //    $vessel = Vessel::get();
       // }
 
-      $vessel = Vessel::get();
+      
 
       // $report = Report::where('schedule_id', $schedule->id)->first();
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
@@ -258,8 +265,8 @@ class ScheduleController extends Controller
             'lastreport' => $lastreport,
             'reports' => $reports,
             'requests' => $requests,
-            'vessels' => $vessel,
-            'ahtsVessels' => $ahtsVessels,
+            'vessels' => $vessels,
+            // 'ahtsVessels' => $ahtsVessels,
             'ports' => $ports,
             'routes' => $routes,
             'fixRoutes' => $fixRoutes,
@@ -278,14 +285,14 @@ class ScheduleController extends Controller
          ]);
       } else {
          return view('pages-stisla.schedule.detail', [
-            'ahtsVessels' => $ahtsVessels,
+            // 'ahtsVessels' => $ahtsVessels,
             'schedules' => $schedules,
             'schedule' => $schedule,
             'report' => $report,
             'lastreport' => $lastreport,
             'reports' => $reports,
             'requests' => $requests,
-            'vessels' => $vessel,
+            'vessels' => $vessels,
             'ports' => $ports,
             'routes' => $routes,
             'fixRoutes' => $fixRoutes,

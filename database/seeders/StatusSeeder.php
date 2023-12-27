@@ -234,7 +234,7 @@ class StatusSeeder extends Seeder
          'updated_at' => NOW()
       ]);
       DB::table('statuses')->insert([
-         'name' => 'PCSM',
+         'name' => 'PJSM',
          'class' => 'Moving',
          'type' => 1,
          'code' => '20',

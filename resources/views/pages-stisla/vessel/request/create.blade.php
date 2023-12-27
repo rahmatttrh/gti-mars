@@ -55,10 +55,11 @@
                               <input class="form-control mb-2" id="desc" type="text" style="background-color:lightgrey" value="{{ old('desc') }}" name="desc">
                            </div>
                         </div>
-                     </div>
-                     <div class="card-footer bg-whitesmoke">
                         <button class="btn btn-primary" type="submit">Submit</button>
                      </div>
+                     {{-- <div class="card-footer bg-whitesmoke">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                     </div> --}}
                   </form>
                </div>
             </div>      

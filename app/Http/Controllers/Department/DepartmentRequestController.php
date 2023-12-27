@@ -44,7 +44,14 @@ class DepartmentRequestController extends Controller
       // } else {
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
+      
       $employee = Employee::where('email', auth()->user()->email)->first();
+      if ($employee) {
+         $portId = $employee->port_id;
+      } else {
+         $port = Port::where('email', auth()->user()->email)->first();
+         $portId = $port->id;
+      }
       $now = Carbon::now();
       $acts = Activity::get();
       $activities = $acts;
@@ -55,7 +62,7 @@ class DepartmentRequestController extends Controller
 
       // $schedules = Schedule::where('date', '>=', $now)->get();
       // dd($schedules);
-      $scheduleRoutes = ScheduleRoute::where('date', '>=', $now)->where('port_id', $employee->port_id)->get();
+      $scheduleRoutes = ScheduleRoute::where('date', '>=', $now)->where('port_id', $portId)->get();
       $schedules = array();
       // dd($scheduleRoutes);
       foreach ($scheduleRoutes as $row) {
@@ -95,9 +102,26 @@ class DepartmentRequestController extends Controller
 
    public function storeImport(Request $req)
    {
+      if ($req->activity == 1) {
+         $req->validate([
+            'origin' => 'required',
+            'file-cargo' => 'required'
+         ]);
+      }
       // dd('ok');
       $employee = Employee::where('email', auth()->user()->email)->first();
-      $department = Department::find($employee->department->id);
+      if ($employee) {
+         $department = Department::find($employee->department->id);
+      } else {
+         $department = null;
+      }
+
+      if (auth()->user()->hasRole('vessel')) {
+         $level = 'V';
+      } else if(auth()->user()->hasRole('department')){
+         $level = 'U';
+      }
+      
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
@@ -119,6 +143,7 @@ class DepartmentRequestController extends Controller
             'code' => $code,
             'origin_id' => $req->origin,
             'date' => $req->date,
+            'user_id' => auth()->user()->id,
             'employee_id' => $employee->id,
             'department_id' => $department->id,
             'activity_id' => $req->activity
@@ -136,9 +161,9 @@ class DepartmentRequestController extends Controller
 
       if (isset($request)) {
          $code =
-            "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+            "R/" . $level . '/' . $now->format("dmy") . '/' . ($request->id + 1);
       } else {
-         $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
+         $code = "R/"  . $level . '/' . $now->format("dmy") . '/' . 1;
       }
 
       if (isset($lastSchedule)) {
@@ -163,6 +188,7 @@ class DepartmentRequestController extends Controller
             'code' => $code,
             'type' => 2,
             'class' => 'main',
+            'user_id' => auth()->user()->id,
             'employee_id' => $employee->id,
             'department_id' => $department->id,
             'func' => $department->code,
@@ -229,14 +255,15 @@ class DepartmentRequestController extends Controller
          // dd('ok');
          if (auth()->user()->hasRole('vessel')) {
             $vessel = Vessel::where('email', auth()->user()->email)->first();
+            $vesselId = $vessel->id;
          } else {
-            $vessel = null;
+            $vesselId = null;
          }
          $request = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
             'user_id' => auth()->user()->id,
-            'func' => $department->code,
+            'func' => $level,
             'activity_id' => $req->activity,
             'date' => $req->date,
             'desc' => $req->desc,
@@ -245,7 +272,7 @@ class DepartmentRequestController extends Controller
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'by' => 'user',
-            'vessel_id' => $vessel->id,
+            'vessel_id' => $vesselId,
             'class' => 'Fuel Oil',
             'type' => 2,
             'status' => 101,
@@ -268,14 +295,15 @@ class DepartmentRequestController extends Controller
       } else if ($req->activity == 6) {
          if (auth()->user()->hasRole('vessel')) {
             $vessel = Vessel::where('email', auth()->user()->email)->first();
+            $vesselId = $vessel->id;
          } else {
-            $vessel = null;
+            $vesselId = null;
          }
          $request = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
             'user_id' => auth()->user()->id,
-            'func' => $department->code,
+            'func' => $level,
             'activity_id' => $req->activity,
             'date' => $req->date,
             'desc' => $req->desc,
@@ -283,11 +311,11 @@ class DepartmentRequestController extends Controller
          ]);
          $schedule = Schedule::create([
             'code' => $scheduleCode,
-            'vessel_id' => $vessel->id,
+            'vessel_id' => $vesselId,
             'by' => 'user',
             'class' => 'Flush Water',
             'type' => 2,
-            'status' => 0,
+            'status' => 101,
             'date' => $req->date,
          ]);
 
@@ -593,14 +621,21 @@ class DepartmentRequestController extends Controller
    public function progress()
    {
       $employee = Employee::where('email', auth()->user()->email)->first();
+      
       $today = Carbon::now();
       $month = $today->format('m');
       $vessels = Vessel::get();
       $schedules = Schedule::get();
       // $depart = Department::where('email', auth()->user()->email)->first();
-
-      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-      $progress = ModelsRequest::where('status', '>', 0)->get();
+      if ($employee) {
+         $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
+         $progress = ModelsRequest::where('status', '>', 0)->where('employee_id', $employee->id)->get();
+      } else {
+         $departs = ModelsRequest::where('user_id', auth()->user()->id)->get();
+         $progress = ModelsRequest::where('status', '>', 0)->where('user_id', auth()->user()->id)->get();
+      }
+      // $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
+      
       return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,
@@ -622,7 +657,7 @@ class DepartmentRequestController extends Controller
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       if (isset($lastSchedule)) {
          $scheduleCode =
-            "SO/"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
       } else {
          $scheduleCode = "SO/"   . '/' . $now->format("dmy") . '/' . 1;
       }

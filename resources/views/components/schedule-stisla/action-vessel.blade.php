@@ -9,7 +9,7 @@
          <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
          <div class="form-group">
             <div class="input-group">
-               <select class="form-control status" name="status" id="status">
+               <select class="form-control status" required name="status" id="status">
                   <option selected disabled>Activity</option>
                   @foreach ($statuses as $status)
                   {{-- <option value="{{$status->id}}">{{$status->name}} </option> --}}
@@ -54,7 +54,9 @@
                </select>
               <div class="input-group-append">
                 <button class="btn btn-primary  px-4" type="submit">Add Report</button>
-                
+                @if ($schedule->status > 1 && $schedule->status < 11 )
+                <span class="btn btn-info  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
+                @endif
               </div>
               
             </div>
@@ -64,8 +66,4 @@
       </form>
       
    @endif
-
-
-
-   
 </span>

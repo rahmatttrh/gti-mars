@@ -42,7 +42,8 @@ class ParentRequestController extends Controller
       // dd($requests->parent->code);
       // dd($parent->requests);
 
-      $vessels = Vessel::where('latitude', '!=', null)->get();
+      // $vessels = Vessel::where('latitude', '!=', null)->get();
+      $vessels = Vessel::where('port_id', $parent->origin_id)->get();
       $scheduleRoutes = ScheduleRoute::where('port_id', $parent->origin_id)->where('date', $parent->date)->get();
       // foreach($scheduleRoutes as $sche){
       //    dd($sche->schedule->vessel->name);

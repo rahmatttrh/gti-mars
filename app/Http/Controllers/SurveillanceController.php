@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Port;
 use App\Models\ReportSurveillance;
 use App\Models\Status;
@@ -23,7 +24,8 @@ class SurveillanceController extends Controller
 
     public function create(){
         $today = Carbon::today();
-        $port = Port::where('email', auth()->user()->email)->first();
+        $employee = Employee::where('email', auth()->user()->email)->first();
+        $port = Port::find($employee->port_id);
 
         if ($port->region == 'NBU') {
             $region = 'NBU';

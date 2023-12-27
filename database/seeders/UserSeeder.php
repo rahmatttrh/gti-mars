@@ -44,6 +44,16 @@ class UserSeeder extends Seeder
       ]);
       $msso->assignRole('marine');
 
+      $admin_fm = User::create([
+         'name' => 'Admin FM',
+         'username' => 'fm',
+         'email' => 'fm@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $admin_fm->assignRole('fm');
+
 
       // USER KJ
       $yoyo = User::create([
@@ -764,7 +774,7 @@ class UserSeeder extends Seeder
 
       // USER PLATFORM NBU
       $aidaa = User::create([
-         'name' => 'AIDA-A',
+         'name' => 'Admin AIDA-A',
          'username' => 'aidaa',
          'email' => 'aidaa@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -774,7 +784,7 @@ class UserSeeder extends Seeder
       $aidaa->assignRole('department');
 
       $aryania = User::create([
-         'name' => 'ARYANI-A',
+         'name' => 'Admin ARYANI-A',
          'username' => 'aryania',
          'email' => 'aryania@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -784,7 +794,7 @@ class UserSeeder extends Seeder
       $aryania->assignRole('department');
 
       $chessya = User::create([
-         'name' => 'CHESSY-A',
+         'name' => 'Admin CHESSY-A',
          'username' => 'chessya',
          'email' => 'chessya@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -794,7 +804,7 @@ class UserSeeder extends Seeder
       $chessya->assignRole('department');
 
       $indria = User::create([
-         'name' => 'INDRI-A',
+         'name' => 'Admin INDRI-A',
          'username' => 'indria',
          'email' => 'indria@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -806,7 +816,7 @@ class UserSeeder extends Seeder
 
       // USER PLATFORM CBU
       $faridaa = User::create([
-         'name' => 'FARIDA-A',
+         'name' => 'Admin FARIDA-A',
          'username' => 'faridaa',
          'email' => 'faridaa@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -816,7 +826,7 @@ class UserSeeder extends Seeder
       $faridaa->assignRole('department');
 
       $faridab = User::create([
-         'name' => 'FARIDA-B',
+         'name' => 'Admin FARIDA-B',
          'username' => 'faridab',
          'email' => 'faridab@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -826,7 +836,7 @@ class UserSeeder extends Seeder
       $faridab->assignRole('department');
 
       $krisnaa = User::create([
-         'name' => 'KRISNA-A',
+         'name' => 'Admin KRISNA-A',
          'username' => 'krisnaa',
          'email' => 'krisnaa@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -836,7 +846,7 @@ class UserSeeder extends Seeder
       $krisnaa->assignRole('department');
 
       $krisnab = User::create([
-         'name' => 'KRISNA-B',
+         'name' => 'Admin KRISNA-B',
          'username' => 'krisnab',
          'email' => 'krisnab@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -848,7 +858,7 @@ class UserSeeder extends Seeder
 
       // USER PLATFORM SBU
       $cintaa = User::create([
-         'name' => 'CINTA-A',
+         'name' => 'Admin CINTA-A',
          'username' => 'cintaa',
          'email' => 'cintaa@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -858,7 +868,7 @@ class UserSeeder extends Seeder
       $cintaa->assignRole('department');
 
       $cintab = User::create([
-         'name' => 'CINTA-B',
+         'name' => 'Admin CINTA-B',
          'username' => 'cintab',
          'email' => 'cintab@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -868,7 +878,7 @@ class UserSeeder extends Seeder
       $cintab->assignRole('department');
 
       $pabelokan = User::create([
-         'name' => 'PABELOKAN ISLAND',
+         'name' => 'Admin PABELOKAN ISLAND',
          'username' => 'pabelokan',
          'email' => 'pabelokan@pertamina.com',
          'password' => Hash::make('12345678'),
@@ -878,7 +888,7 @@ class UserSeeder extends Seeder
       $pabelokan->assignRole('department');
 
       $ramaa = User::create([
-         'name' => 'RAMA-A',
+         'name' => 'Admin RAMA-A',
          'username' => 'ramaa',
          'email' => 'ramaa@pertamina.com',
          'password' => Hash::make('12345678'),

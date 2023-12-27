@@ -831,48 +831,48 @@ class MarineScheduleController extends Controller
       return redirect()->back()->with('success', 'Schedule has been Postpone');
    }
 
-   public function history($month)
+   public function history()
    {
-      $dekripMonth = dekripRambo($month);
+      // $dekripMonth = dekripRambo($month);
 
       // $today = Carbon::now();
       // $month = $today->format('m');
 
-      $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 11)->whereMonth('created_at', $dekripMonth)->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 11)->get();
 
       // $vessels = Vessel::get();
       // $ports = Port::get();
 
-      if ($dekripMonth == 1) {
-         $monthName = 'Januari';
-      } elseif ($dekripMonth == 2) {
-         $monthName = 'Februari';
-      } elseif ($dekripMonth == 3) {
-         $monthName = 'Maret';
-      } elseif ($dekripMonth == 4) {
-         $monthName = 'April';
-      } elseif ($dekripMonth == 5) {
-         $monthName = 'Mei';
-      } elseif ($dekripMonth == 6) {
-         $monthName = 'Juni';
-      } elseif ($dekripMonth == 7) {
-         $monthName = 'Juli';
-      } elseif ($dekripMonth == 8) {
-         $monthName = 'Agustus';
-      } elseif ($dekripMonth == 9) {
-         $monthName = 'September';
-      } elseif ($dekripMonth == 10) {
-         $monthName = 'Oktober';
-      } elseif ($dekripMonth == 11) {
-         $monthName = 'November';
-      } elseif ($dekripMonth == 12) {
-         $monthName = 'Desember';
-      }
-      return view('pages.schedule.history', [
-         'typeName' => 'by Request',
-         'type' => 2,
-         'month' => $month,
-         'monthName' => $monthName,
+      // if ($dekripMonth == 1) {
+      //    $monthName = 'Januari';
+      // } elseif ($dekripMonth == 2) {
+      //    $monthName = 'Februari';
+      // } elseif ($dekripMonth == 3) {
+      //    $monthName = 'Maret';
+      // } elseif ($dekripMonth == 4) {
+      //    $monthName = 'April';
+      // } elseif ($dekripMonth == 5) {
+      //    $monthName = 'Mei';
+      // } elseif ($dekripMonth == 6) {
+      //    $monthName = 'Juni';
+      // } elseif ($dekripMonth == 7) {
+      //    $monthName = 'Juli';
+      // } elseif ($dekripMonth == 8) {
+      //    $monthName = 'Agustus';
+      // } elseif ($dekripMonth == 9) {
+      //    $monthName = 'September';
+      // } elseif ($dekripMonth == 10) {
+      //    $monthName = 'Oktober';
+      // } elseif ($dekripMonth == 11) {
+      //    $monthName = 'November';
+      // } elseif ($dekripMonth == 12) {
+      //    $monthName = 'Desember';
+      // }
+      return view('pages-stisla.marine.schedule.history', [
+         // 'typeName' => 'by Request',
+         // 'type' => 2,
+         // 'month' => $month,
+         // 'monthName' => $monthName,
          'schedules' => $schedules,
          // 'vessels' => $vessels,
          // 'ports' => $ports

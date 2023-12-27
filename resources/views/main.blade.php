@@ -45,19 +45,25 @@
             <ul class="navbar-nav">
               <li class="nav-item "><a href="{{route('dsp.marine')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
               <li class="nav-item"><a href="{{route('vdr.marine')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">AIMS</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a></li>
             </ul>
             @elseif (auth()->user()->hasRole('vessel'))
             <ul class="navbar-nav">
-              <li class="nav-item "><a href="{{route('dsp.vessel')}}" class=" nav-link">DSP</a></li>
-              <li class="nav-item"><a href="{{route('vdr.create')}}" class="nav-link">VDR</a></li>
-              <li class="nav-item"><a href="#" class="nav-link">AIMS</a></li>
+              <li class="nav-item "><a href="{{route('dsp.vessel')}}" class=" nav-link" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
+              <li class="nav-item"><a href="{{route('vdr.create')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a></li>
+            </ul>
+            @elseif (auth()->user()->hasRole('fm'))
+            <ul class="navbar-nav">
+              <li class="nav-item "><a href="{{route('dsp.fm')}}" class=" nav-link" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a></li>
             </ul>
             @elseif (auth()->user()->hasRole('department'))
             <ul class="navbar-nav">
-              <li class="nav-item "><a href="{{route('dsp.user')}}" class=" nav-link">DSP</a></li>
-              {{-- <li class="nav-item"><a href="{{route('vdr.create')}}" class="btn btn-light shadow-none mr-2">VDR</a></li>
-              <li class="nav-item"><a href="#" class="btn btn-light shadow-none">AIMS</a></li> --}}
+              <li class="nav-item "><a href="{{route('dsp.user')}}" class=" nav-link" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+              <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a></li>
             </ul>
           @endif
           
@@ -99,25 +105,6 @@
             <li class="nav-item active">
               <a href="#" class="nav-link"><i class="fa fa-home"></i><span>Home Page</span></a>
             </li>
-            {{-- <li class="nav-item dropdown">
-              <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="far fa-clone"></i><span>Multiple Dropdown</span></a>
-              <ul class="dropdown-menu">
-                <li class="nav-item"><a href="#" class="nav-link">Not Dropdown Link</a></li>
-                <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Hover Me</a>
-                  <ul class="dropdown-menu">
-                    <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                    <li class="nav-item dropdown"><a href="#" class="nav-link has-dropdown">Link 2</a>
-                      <ul class="dropdown-menu">
-                        <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                        <li class="nav-item"><a href="#" class="nav-link">Link</a></li>
-                      </ul>
-                    </li>
-                    <li class="nav-item"><a href="#" class="nav-link">Link 3</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li> --}}
           </ul>
         </div>
       </nav>
@@ -144,10 +131,10 @@
                         
                       </div>
                     </div> --}}
+                    {{-- <br><br><br><br> --}}
                   </div>
                 </div>
-                <hr>
-                
+              
               </div>
               <div class="col-md-5">
                 {{-- <div class="card border">
@@ -160,21 +147,21 @@
                         <li data-target="#carouselExampleIndicators2" data-slide-to="2"></li>
                       </ol>
                       <div class="carousel-inner">
-                        <div class="carousel-item active" style="max-height: 250px">
+                        <div class="carousel-item active" style="max-height: 180px">
                           <img class="d-block w-100 rounded"  src="{{asset('img/bg/port.jpg')}}" alt="First slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.5);">
                             <h5>DSP - PHE</h5>
-                            <p>Digital Smart Port PHE adalah sistem yang digunakan untuk mengelola Request Activity dan Schedule Vessel.</p>
+                            <p>Digital Smart Port PHE </p>
                           </div>
                         </div>
-                        <div class="carousel-item" style="max-height: 250px">
+                        <div class="carousel-item" style="max-height: 180px">
                           <img class="d-block w-100 rounded" src="{{asset('img/bg/barge.jpg')}}" alt="Second slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.7);">
                             <h5>VDR</h5>
                             <p>- Under Development -</p>
                           </div>
                         </div>
-                        <div class="carousel-item" style="max-height: 250px">
+                        <div class="carousel-item" style="max-height: 180px">
                           <img class="d-block w-100 rounded" src="{{asset('img/bg/rig.jpg')}}" alt="Third slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.7);">
                             <h5>AIMS</h5>
@@ -195,8 +182,8 @@
                 </div> --}}
               </div>
             </div>
-            <hr>
-            <div class="row ">
+            {{-- <hr> --}}
+            <div class="row mt-3">
               <div class="col">
                 <div class="card border">
                   <div class="card-header">

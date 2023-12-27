@@ -12,7 +12,7 @@
                </div>
                <div class="card-wrap">
                   <div class="card-header">
-                  <h4>Total Schedules</h4>
+                  <h4><a href="#schedule" data-toggle="tooltip" data-placement="bottom" title="See All Schedule">Total Schedules</a></h4>
                   </div>
                   <div class="card-body">{{count($schedules)}}</div>
                </div>
@@ -40,87 +40,29 @@
                
                
             </div>
-            <div class="card border shadow-sm">
-               <div class="card-header">
-                  <small class="badge badge-primary">Schedule Update</small>
-               </div>
+            <div class="card border">
                <div class="card-body">
-                  {{-- <small class="badge badge-primary mb-2">Schedule Update</small> --}}
-                  {{-- <hr> --}}
-                  <div class="activities" style="height: 250px; overflow-y: scroll">
                   @if ($reports->count() > 0)
-                     @foreach ($reports as $report)
-                     <div class="activity">
-                        {{-- <div class="activity-icon bg-primary text-white shadow-primary">
-                        <i class="fas fa-comment-alt"></i>
-                        </div> --}}
-                        <div class="activity-detail border shadow-none">
-                        <div class="mb-2">
-                           <span class="text-job text-primary">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</span>
-                           <span class="bullet"></span>
-                        
-                        </div>
-                        <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}}.</p>
-                        @if ($report->status_id == 10)
-                              <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
+                  <small>LAST UPDATE</small>
+                  <hr>
+                     <small>{{  \Carbon\Carbon::parse($reports->first()->created_at)->format('d-m-y H:i ')}}</small><span class="bullet"></span><br>
+                     <span>{{$reports->first()->vessel->name}} {{$reports->first()->status->name}}  {{$reports->first()->port_id == null ? '' :  'at ' .$reports->first()->port->name}}</span> <br>
+                     @if ($reports->first()->status_id == 10)
+                              <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$reports->first()->id}}">Foto</a>
                         @endif
       
-                        @if ($report->status_id == 6)
-                              <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
+                        @if ($reports->first()->status_id == 6)
+                              <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($reports->first()->eta)}} at {{$reports->first()->destination->name}}</span>
                         @endif
       
-                        @if ($report->status_id > 24 && $report->status_id < 29)
-                              <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
+                        @if ($reports->first()->status_id > 24 && $reports->first()->status_id < 29)
+                              <span class="btn btn-primary btn-sm shadow-none">Anchor {{$reports->first()->anchor}}</span>
                         @endif
-                        </div>
-                     </div>
-                     
-                        @endforeach
-                        @else
-                        <div class="row">
-                        <div class="col">
-                              <small class="text-center text-muted">Empty</small>
-                        </div>
-                        </div>
+                     @else
+                     <small>Timeline Empty</small>
                   @endif
                   
-                  </div>
-                  {{-- <div class="tickets-list" style="height: 250px; overflow-y: scroll">
-                  @foreach ($reports as $report)
-                     <a href="{{route('schedule.detail', enkripRambo($report->schedule_id))}}" class="ticket-item">
-                        <div class="ticket-title">
-                        <h4>{{$report->vessel->name}} {{$report->status->name}}</h4>
-                        </div>
-                        <div class="ticket-info">
-                        <div>{{$report->port->name ?? 'Offshore'}}</div>
-                        <div class="bullet"></div>
-                        <div class="text-primary">{{$report->updated_at->format('d-m-y H:i ')}}</div>
-                        </div>
-                     </a>
-                     
-                  @endforeach
-                  
-                  <a
-                     href="features-tickets.html"
-                     class="ticket-item ticket-more"
-                  >
-                     View All <i class="fas fa-chevron-right"></i>
-                  </a>
-                  </div> --}}
-               </div>
-            </div>
-         </div>
-         
-         
-         <div class="col-md-8">
-         <div id="map" class="card" style="height: 62vh; width:auto; border-radius: 15px;background-size: cover;"></div>
-         <div class="row">
-            <div class="col-md-12">
-               <div class="card border shadow-sm">
-               {{-- <div class="card-header">
-                  <small class="badge badge-primary">Vessel Coordinate</small>
-               </div> --}}
-               <div class="card-body">
+                  {{-- <hr>
                   <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
                   
                      <div class="carousel-inner">
@@ -133,13 +75,42 @@
                         @endphp
                         <div class="carousel-item {{$no == 1 ? 'active' : '' }} text-center">
                            <h4>{{$vessel->name}}</h4>
-                           {{-- <small>Standby Pabelokan</small><br> --}}
                            <small>[{{$vessel->latitude}}, {{$vessel->longitude}}]</small><br>
                            <small>Heading {{$vessel->heading}}</small><br>
                            
                            <small>Last Update at {{$vessel->last_update}}</small>
-                           {{-- <hr> --}}
-                           {{-- <img class="d-block w-100" src="assets/img/news/img01.jpg" alt="First slide"> --}}
+                        </div>
+                     @endforeach
+                     
+                     </div>
+                     <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Previous</span>
+                     </a>
+                     <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Next</span>
+                     </a>
+                  </div> --}}
+                  
+               </div>
+               <div class="card-footer bg-whitesmoke">
+                  <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                  
+                     <div class="carousel-inner">
+                     @php
+                           $no = 0
+                     @endphp
+                     @foreach ($vesselLastUpdates as $vessel)
+                        @php
+                           ++$no
+                        @endphp
+                        <div class="carousel-item {{$no == 1 ? 'active' : '' }} text-center">
+                           <h4>{{$vessel->name}}</h4>
+                           <small>[{{$vessel->latitude}}, {{$vessel->longitude}}]</small><br>
+                           <small>Heading {{$vessel->heading}}</small><br>
+                           
+                           <small>Last Update at {{$vessel->last_update}}</small>
                         </div>
                      @endforeach
                      
@@ -154,22 +125,90 @@
                      </a>
                   </div>
                </div>
-               {{-- <div class="card-footer">
-                  <small>Recent Update</small>
-               </div> --}}
+            </div>
+            {{-- <div class="card border shadow-sm">
+               <div class="card-body">
+                  <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                  
+                     <div class="carousel-inner">
+                     @php
+                           $no = 0
+                     @endphp
+                     @foreach ($vesselLastUpdates as $vessel)
+                        @php
+                           ++$no
+                        @endphp
+                        <div class="carousel-item {{$no == 1 ? 'active' : '' }} text-center">
+                           <h4>{{$vessel->name}}</h4>
+                           <small>[{{$vessel->latitude}}, {{$vessel->longitude}}]</small><br>
+                           <small>Heading {{$vessel->heading}}</small><br>
+                           
+                           <small>Last Update at {{$vessel->last_update}}</small>
+                        </div>
+                     @endforeach
+                     
+                     </div>
+                     <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Previous</span>
+                     </a>
+                     <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button" data-slide="next">
+                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                     <span class="sr-only">Next</span>
+                     </a>
+                  </div>
                </div>
-            </div>
-            <div class="col-md-5">
-               
-            </div>
+            </div> --}}
+            
          </div>
+         
+         
+         <div class="col-md-8">
+            <div id="map" class="card" style="height: 72vh; width:auto; border-radius: 15px;background-size: cover;"></div>
+            {{-- <div class="row">
+               <div class="col-md-12">
+                  <div class="card border shadow-sm">
+                     <div class="card-body">
+                        <div id="carouselExampleIndicators3" class="carousel slide" data-ride="carousel">
+                        
+                           <div class="carousel-inner">
+                           @php
+                                 $no = 0
+                           @endphp
+                           @foreach ($vesselLastUpdates as $vessel)
+                              @php
+                                 ++$no
+                              @endphp
+                              <div class="carousel-item {{$no == 1 ? 'active' : '' }} text-center">
+                                 <h4>{{$vessel->name}}</h4>
+                                 <small>[{{$vessel->latitude}}, {{$vessel->longitude}}]</small><br>
+                                 <small>Heading {{$vessel->heading}}</small><br>
+                                 
+                                 <small>Last Update at {{$vessel->last_update}}</small>
+                              </div>
+                           @endforeach
+                           
+                           </div>
+                           <a class="carousel-control-prev" href="#carouselExampleIndicators3" role="button" data-slide="prev">
+                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Previous</span>
+                           </a>
+                           <a class="carousel-control-next" href="#carouselExampleIndicators3" role="button" data-slide="next">
+                           <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                           <span class="sr-only">Next</span>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div> --}}
          </div>
       </div>
 
       
       <div class="row">
          <div class="col-md-12">
-         <div class="card">
+         <div class="card" id="schedule">
             {{-- <div class="card-header">
                <small class="badge badge-primary">Schedules</small>
             </div> --}}
@@ -182,11 +221,12 @@
                         #
                      </th>
 
-                     <th>Vessel</th>
+                     <th>ID</th>
                      <th>Date</th>
                      <th>Activity</th>
-                     <th>Route</th>
+                     <th>Desc</th>
                      <th>Status</th>
+                     <th></th>
                      </tr>
                   </thead>
                   <tbody>     
@@ -196,10 +236,11 @@
                            <small>{{++$i}}</small> 
                         </td>
                         <td>
-                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                           {{$schedule->vessel->name ?? '-'}} <br>
-                           <small>{{$schedule->vessel->type ?? '-'}}</small>
-                           </a>
+                           <span>{{$schedule->code}}</span><br>
+                           <span>{{$schedule->vessel->name ?? '-'}} </span>
+                           {{-- <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
+                           {{$schedule->vessel->name ?? '-'}} 
+                           </a> --}}
                         </td>
                         <td>{{formatDateName($schedule->date)}}</td>
                         <td>
@@ -213,18 +254,41 @@
                            @endif --}}
                            
                         </td>
-                        <td class="d-flex">
-                           @foreach ($schedule->routes as $route)
-                           <div class="mr-2">{{$route->port->name}} <br>
-                              <small>{{formatDate($route->date)}}</small>
-                           </div> 
-                           @endforeach
-                        </td>
+                        @if ($schedule->class == 'Cargo/Crew')
+                           <td class="d-flex">
+                              @foreach ($schedule->routes as $route)
+                              <div class="mr-2">{{$route->port->name}} 
+                                 {{-- <br>
+                                 <small>{{formatDate($route->date)}}</small> --}}
+                              </div> 
+                              @endforeach
+                           </td>
+                           @elseif($schedule->class == 'Moving')
+                           <td>
+                               {{$schedule->requests->first()->bargeItem->barge->name}} <br>
+                              <span>
+                                 Request by {{$schedule->requests->first()->user->name}}
+                              </span>
+                           </td>
+                           @elseif(($schedule->class == 'Fuel Oil'))
+                           <td>
+                              {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
+                              <span>
+                                 Request by {{$schedule->requests->first()->user->name}}
+                              </span>
+                           </td>
+                        @endif
+                        
                         {{-- <td><small>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</small></td> --}}
                         
                         <td>
                            {{-- <div class="badge badge-info"><small>Draft</small></div> --}}
                            <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                        </td>
+                        
+                        
+                        <td>
+                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
                         </td>
                      </tr>
                      @endforeach                            

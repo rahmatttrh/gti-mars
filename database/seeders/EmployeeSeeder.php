@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +16,7 @@ class EmployeeSeeder extends Seeder
    public function run()
    {
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 1,
          'port_id' => 1,
          'name' => 'Marine',
@@ -27,6 +29,7 @@ class EmployeeSeeder extends Seeder
 
       // USER KJ
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 1,
          'name' => 'Yoyo',
@@ -38,6 +41,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 1,
          'name' => 'Dimaz',
@@ -49,6 +53,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 1,
          'name' => 'Dicky',
@@ -62,6 +67,7 @@ class EmployeeSeeder extends Seeder
 
       // USER PABELOKAN
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Andi',
@@ -73,6 +79,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Aan',
@@ -84,6 +91,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Said',
@@ -95,6 +103,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Tommy',
@@ -106,6 +115,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Sukma Yogi',
@@ -117,6 +127,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Giat',
@@ -128,6 +139,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Nuzila',
@@ -139,6 +151,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
          'name' => 'Arief',
@@ -152,6 +165,7 @@ class EmployeeSeeder extends Seeder
 
       // USER COSL221
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 4,
          'name' => 'COSL 221',
@@ -165,6 +179,7 @@ class EmployeeSeeder extends Seeder
 
       // USER COSL222
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 5,
          'name' => 'Abdillah Muchsin',
@@ -178,6 +193,7 @@ class EmployeeSeeder extends Seeder
 
       // USER COSL223
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 6,
          'name' => 'COSL 223',
@@ -191,6 +207,7 @@ class EmployeeSeeder extends Seeder
 
       // USER COSL225
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 7,
          'name' => 'Felix',
@@ -202,6 +219,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 7,
          'name' => 'Adam Faizal',
@@ -213,6 +231,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 7,
          'name' => 'Bayu Iqbal Tawakal',
@@ -226,6 +245,7 @@ class EmployeeSeeder extends Seeder
 
       // USER ONYX
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 11,
          'name' => 'Mahmud',
@@ -237,6 +257,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 11,
          'name' => 'Umar',
@@ -250,6 +271,7 @@ class EmployeeSeeder extends Seeder
 
       // USER WINNER
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 8,
          'name' => 'Lulu Luana Setiadi',
@@ -263,6 +285,7 @@ class EmployeeSeeder extends Seeder
 
       // USER BAYU CAKRAWALA
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 10,
          'name' => 'Bayu Cakrawala',
@@ -276,6 +299,7 @@ class EmployeeSeeder extends Seeder
 
       // USER SUPERIOR
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 18,
          'name' => 'Wahyu',
@@ -287,6 +311,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 18,
          'name' => 'Syawal',
@@ -298,6 +323,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 18,
          'name' => 'Jemmy Pentury',
@@ -309,6 +335,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 18,
          'name' => 'Saut Situmorang',
@@ -322,6 +349,7 @@ class EmployeeSeeder extends Seeder
 
       // USER SHIP114
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 16,
          'name' => 'Khamsani',
@@ -335,6 +363,7 @@ class EmployeeSeeder extends Seeder
 
       // USER FALCON
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 9,
          'name' => 'Slamet',
@@ -348,6 +377,7 @@ class EmployeeSeeder extends Seeder
 
       // USER TANJUNG LESUNG
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 13,
          'name' => 'Chlorid Latifoso',
@@ -359,6 +389,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 13,
          'name' => 'Rachmat Hidayat',
@@ -370,6 +401,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 13,
          'name' => 'Juhri hasibuan',
@@ -383,6 +415,7 @@ class EmployeeSeeder extends Seeder
 
       // USER FEDERAL
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 17,
          'name' => 'Poniman',
@@ -394,6 +427,7 @@ class EmployeeSeeder extends Seeder
       ]);
 
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 17,
          'name' => 'Gunawan Wibisono',
@@ -407,6 +441,7 @@ class EmployeeSeeder extends Seeder
 
       // USER HYSY 902
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 14,
          'name' => 'HYSY 902',
@@ -420,6 +455,7 @@ class EmployeeSeeder extends Seeder
 
       // USER LISA
       DB::table('employees')->insert([
+         'status' => 1,
          'department_id' => 2,
          'port_id' => 15,
          'name' => 'Lisa',
@@ -432,8 +468,180 @@ class EmployeeSeeder extends Seeder
 
 
 
+      // User Platform NBU
+      Employee::create([
+         'status' => 1,
+         'port_id' => 19,
+         'name' => 'Admin AIDA-A',
+         'username' => 'aidaa',
+         'email' => 'aidaa@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      Employee::create([
+         'status' => 1,
+         'port_id' => 20,
+         'name' => 'Admin ARYANI-A',
+         'username' => 'aryania',
+         'email' => 'aryania@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      Employee::create([
+         'status' => 1,
+         'port_id' => 21,
+         'name' => 'Admin CHESSY-A',
+         'username' => 'chessya',
+         'email' => 'chessya@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      Employee::create([
+         'status' => 1,
+         'port_id' => 22,
+         'name' => 'Admin INDRI-A',
+         'username' => 'indria',
+         'email' => 'indria@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      // Employee::create([
+      //    'port_id' => 23,
+      //    'name' => 'Admin INTAN-A',
+      //    'username' => 'intana',
+      //    'email' => 'intana@pertamina.com',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // Employee::create([
+      //    'port_id' => 24,
+      //    'name' => 'Admin INTAN-AC',
+      //    'username' => 'intanac',
+      //    'email' => 'intanac@pertamina.com',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // Employee::create([
+      //    'port_id' => 25,
+      //    'name' => 'Admin INTAN-B',
+      //    'username' => 'intanb',
+      //    'email' => 'intanb@pertamina.com',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // Employee::create([
+      //    'port_id' => 25,
+      //    'name' => 'Admin INTAN-BPC',
+      //    'username' => 'intanbpc',
+      //    'email' => 'intanbpc@pertamina.com',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // User Platform NBU
+      Employee::create([
+         'status' => 1,
+         'port_id' => 44,
+         'name' => 'Admin FARIDA-A',
+         'username' => 'faridaa',
+         'email' => 'faridaa@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 45,
+         'name' => 'Admin FARIDA-B',
+         'username' => 'faridab',
+         'email' => 'faridab@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 50,
+         'name' => 'Admin KRISNA-A',
+         'username' => 'krisnaa',
+         'email' => 'krisnaa@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 51,
+         'name' => 'Admin KRISNA-B',
+         'username' => 'krisnaab',
+         'email' => 'krisnab@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+
+      // User Platform NBU
+      Employee::create([
+         'status' => 1,
+         'port_id' => 73,
+         'name' => 'Admin CINTA-A',
+         'username' => 'cintaa',
+         'email' => 'cintaa@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 74,
+         'name' => 'Admin CINTA-B',
+         'username' => 'cintab',
+         'email' => 'cintab@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 92,
+         'name' => 'Admin PABELOKAN ISLAND',
+         'username' => 'pabelokan',
+         'email' => 'pabelokan@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      Employee::create([
+         'status' => 1,
+         'port_id' => 93,
+         'name' => 'Admin RAMA-A',
+         'username' => 'ramaa',
+         'email' => 'ramaa@pertamina.com',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+
+
       // DB::table('employees')->insert([
-      //    'department_id' => 2,
+      //    department_id' => 2,
       //    'port_id' => 1,
       //    'name' => 'Kalijapat 4',
       //    'email' => 'kj4@pertamina.com',
@@ -444,7 +652,7 @@ class EmployeeSeeder extends Seeder
       // ]);
 
       // DB::table('employees')->insert([
-      //    'department_id' => 2,
+      //    department_id' => 2,
       //    'port_id' => 2,
       //    'name' => 'Kalijapat 5',
       //    'email' => 'kj5@pertamina.com',

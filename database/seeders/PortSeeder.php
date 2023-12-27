@@ -253,7 +253,7 @@ class PortSeeder extends Seeder
          'code' => 'AIDA-A',
          'name' => 'AIDA-A',
          'email' => 'aidaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -262,7 +262,7 @@ class PortSeeder extends Seeder
          'code' => 'ARYANI-A',
          'name' => 'ARYANI-A',
          'email' => 'aryania@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -272,7 +272,7 @@ class PortSeeder extends Seeder
          'code' => 'CHESSY-A',
          'name' => 'CHESSY-A',
          'email' => 'chessya@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -282,7 +282,7 @@ class PortSeeder extends Seeder
          'code' => 'INDRI-A',
          'name' => 'INDRI-A',
          'email' => 'indria@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -291,7 +291,7 @@ class PortSeeder extends Seeder
          'code' => 'INTAN-A',
          'name' => 'INTAN-A',
          'email' => 'intana@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -301,7 +301,7 @@ class PortSeeder extends Seeder
          'code' => 'INTAN-AC',
          'name' => 'INTAN-AC (B.MONOPOD)',
          'email' => 'intanac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -311,7 +311,7 @@ class PortSeeder extends Seeder
          'code' => 'INTAN-B',
          'name' => 'INTAN-B',
          'email' => 'intanb@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -320,7 +320,7 @@ class PortSeeder extends Seeder
          'code' => 'INTAN-BPC',
          'name' => 'INTAN-BPC',
          'email' => 'intanbpc@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -329,7 +329,7 @@ class PortSeeder extends Seeder
          'code' => 'LIDYA-A',
          'name' => 'LIDYA-A',
          'email' => 'lidyaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -338,7 +338,7 @@ class PortSeeder extends Seeder
          'code' => 'NE.INTAN-A',
          'name' => 'NE.INTAN-A',
          'email' => 'neintana@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -347,7 +347,7 @@ class PortSeeder extends Seeder
          'code' => 'NE.INTAN-AC',
          'name' => 'NE.INTAN-AC (MONOPOD)',
          'email' => 'neintanac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -356,7 +356,7 @@ class PortSeeder extends Seeder
          'code' => 'VITA-A',
          'name' => 'VITA-A (MONPOPOD)',
          'email' => 'vitaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'region' => 'NBU',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -366,7 +366,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-A',
          'region' => 'NBU',
          'email' => 'widuria@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -375,7 +375,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-B',
          'region' => 'NBU',
          'email' => 'widurib@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -384,7 +384,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-C',
          'region' => 'NBU',
          'email' => 'widuric@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -393,7 +393,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-DC',
          'region' => 'NBU',
          'email' => 'widuridc@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -402,7 +402,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-E',
          'region' => 'NBU',
          'email' => 'widurie@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -411,7 +411,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-F (MONOPOD)',
          'region' => 'NBU',
          'email' => 'widuria@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -420,7 +420,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-G (MONOPOD)',
          'region' => 'NBU',
          'email' => 'widurig@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -429,7 +429,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-H (MONOPOD)',
          'region' => 'NBU',
          'email' => 'widurih@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -438,7 +438,7 @@ class PortSeeder extends Seeder
          'name' => 'WIDURI-P',
          'region' => 'NBU',
          'email' => 'widurip@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -447,7 +447,7 @@ class PortSeeder extends Seeder
          'name' => 'WINDRI-A (MONOPOD)',
          'region' => 'NBU',
          'email' => 'windria@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -460,7 +460,7 @@ class PortSeeder extends Seeder
          'name' => 'ATTI-A (MONOPOD)',
          'region' => 'CBU',
          'email' => 'attia@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -469,7 +469,7 @@ class PortSeeder extends Seeder
          'name' => 'BANUWATI-A',
          'region' => 'CBU',
          'email' => 'banuwatia@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -478,7 +478,7 @@ class PortSeeder extends Seeder
          'name' => 'BANUWATI-K ',
          'region' => 'CBU',
          'email' => 'banuwatik@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -487,7 +487,7 @@ class PortSeeder extends Seeder
          'name' => 'FARIDA-A ',
          'region' => 'CBU',
          'email' => 'faridaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -496,7 +496,7 @@ class PortSeeder extends Seeder
          'name' => 'FARIDA-B ',
          'region' => 'CBU',
          'email' => 'faridab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -505,7 +505,7 @@ class PortSeeder extends Seeder
          'name' => 'FARIDA-C ',
          'region' => 'CBU',
          'email' => 'faridac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -514,7 +514,7 @@ class PortSeeder extends Seeder
          'name' => 'KARMILA-A ',
          'region' => 'CBU',
          'email' => 'karmilaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -523,7 +523,7 @@ class PortSeeder extends Seeder
          'name' => 'KARTINI-A (MONOPOD)',
          'region' => 'CBU',
          'email' => 'kartinia@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -532,7 +532,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-10 (TRIPOD)',
          'region' => 'CBU',
          'email' => 'krisna10@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -541,7 +541,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-A ',
          'region' => 'CBU',
          'email' => 'krisnaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -550,7 +550,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-B ',
          'region' => 'CBU',
          'email' => 'krisnab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -559,7 +559,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-C ',
          'region' => 'CBU',
          'email' => 'krisnac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -568,7 +568,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-D ',
          'region' => 'CBU',
          'email' => 'krisnad@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -577,7 +577,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-E ',
          'region' => 'CBU',
          'email' => 'krisnae@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -586,7 +586,7 @@ class PortSeeder extends Seeder
          'name' => 'KRISNA-P ',
          'region' => 'CBU',
          'email' => 'krisnap@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -595,7 +595,7 @@ class PortSeeder extends Seeder
          'name' => 'MILA-A ',
          'region' => 'CBU',
          'email' => 'milaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -604,7 +604,7 @@ class PortSeeder extends Seeder
          'name' => 'Z.ZELDA-A (MONOPOD)',
          'region' => 'CBU',
          'email' => 'zzeldaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -613,7 +613,7 @@ class PortSeeder extends Seeder
          'name' => 'SUNDARI-A ',
          'region' => 'CBU',
          'email' => 'sundaria@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -622,7 +622,7 @@ class PortSeeder extends Seeder
          'name' => 'SUNDARI-B ',
          'region' => 'CBU',
          'email' => 'sundarib@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -631,7 +631,7 @@ class PortSeeder extends Seeder
          'name' => 'THERESIA-A (MONOPOD)',
          'region' => 'CBU',
          'email' => 'theresiaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -640,7 +640,7 @@ class PortSeeder extends Seeder
          'name' => 'TITI-A ',
          'region' => 'CBU',
          'email' => 'titia@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -649,7 +649,7 @@ class PortSeeder extends Seeder
          'name' => 'YANI-A ',
          'region' => 'CBU',
          'email' => 'yania@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -658,7 +658,7 @@ class PortSeeder extends Seeder
          'name' => 'YVONNE-A ',
          'region' => 'CBU',
          'email' => 'yvonnea@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -667,7 +667,7 @@ class PortSeeder extends Seeder
          'name' => 'YVONNE-B ',
          'region' => 'CBU',
          'email' => 'yvonneb@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -676,7 +676,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-A ',
          'region' => 'CBU',
          'email' => 'zeldaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -685,7 +685,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-B ',
          'region' => 'CBU',
          'email' => 'zeldab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -694,7 +694,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-C ',
          'region' => 'CBU',
          'email' => 'zeldac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -703,7 +703,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-D ',
          'region' => 'CBU',
          'email' => 'zeldad@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -712,7 +712,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-E ',
          'region' => 'CBU',
          'email' => 'zeldae@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -721,7 +721,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-F (MONOPOD)',
          'region' => 'CBU',
          'email' => 'zeldaf@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -730,7 +730,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-P ',
          'region' => 'CBU',
          'email' => 'zeldap@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -739,7 +739,7 @@ class PortSeeder extends Seeder
          'name' => 'ZELDA-PC ',
          'region' => 'CBU',
          'email' => 'zeldapc@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -752,7 +752,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-A ',
          'region' => 'SBU',
          'email' => 'cintaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -761,7 +761,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-B ',
          'region' => 'SBU',
          'email' => 'cintab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -770,7 +770,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-C ',
          'region' => 'SBU',
          'email' => 'cintac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -779,7 +779,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-D ',
          'region' => 'SBU',
          'email' => 'cintad@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -788,7 +788,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-E ',
          'region' => 'SBU',
          'email' => 'cintae@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -797,7 +797,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-F ',
          'region' => 'SBU',
          'email' => 'cintaf@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -806,7 +806,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-G ',
          'region' => 'SBU',
          'email' => 'cintag@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -815,7 +815,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-H ',
          'region' => 'SBU',
          'email' => 'cintah@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -824,7 +824,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-P ',
          'region' => 'SBU',
          'email' => 'cintap@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -833,7 +833,7 @@ class PortSeeder extends Seeder
          'name' => 'CINTA-P1 ',
          'region' => 'SBU',
          'email' => 'cintap1@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -842,7 +842,7 @@ class PortSeeder extends Seeder
          'name' => 'DUMA-A (JACKET ONLY)',
          'region' => 'SBU',
          'email' => 'dumaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -851,7 +851,7 @@ class PortSeeder extends Seeder
          'name' => 'E.RAMA-A (MONOPOD)',
          'region' => 'SBU',
          'email' => 'eramaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -860,7 +860,7 @@ class PortSeeder extends Seeder
          'name' => 'GITA-A ',
          'region' => 'SBU',
          'email' => 'gitaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -869,7 +869,7 @@ class PortSeeder extends Seeder
          'name' => 'KITTY-4 (CAISSON)',
          'region' => 'SBU',
          'email' => 'kitty4@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -878,7 +878,7 @@ class PortSeeder extends Seeder
          'name' => 'KITTY-A ',
          'region' => 'SBU',
          'email' => 'kittya@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -887,7 +887,7 @@ class PortSeeder extends Seeder
          'name' => 'LITA-A (MONOPOD)',
          'region' => 'SBU',
          'email' => 'litaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -896,7 +896,7 @@ class PortSeeder extends Seeder
          'name' => 'N.WANDA-A (MONOPOD)',
          'region' => 'SBU',
          'email' => 'nwandaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -905,7 +905,7 @@ class PortSeeder extends Seeder
          'name' => 'N.WANDA-B (MONOPOD)',
          'region' => 'SBU',
          'email' => 'nwandab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -914,7 +914,7 @@ class PortSeeder extends Seeder
          'name' => 'NORA-A',
          'region' => 'SBU',
          'email' => 'noraa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -923,7 +923,7 @@ class PortSeeder extends Seeder
          'name' => 'PABELOKAN ISLAND',
          'region' => 'SBU',
          'email' => 'pabelokan@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -932,7 +932,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-A ',
          'region' => 'SBU',
          'email' => 'ramaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -941,7 +941,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-B ',
          'region' => 'SBU',
          'email' => 'ramab@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -950,7 +950,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-C ',
          'region' => 'SBU',
          'email' => 'ramac@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -959,7 +959,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-D ',
          'region' => 'SBU',
          'email' => 'ramad@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -968,7 +968,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-E ',
          'region' => 'SBU',
          'email' => 'ramae@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -977,7 +977,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-F ',
          'region' => 'SBU',
          'email' => 'ramaf@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -986,7 +986,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-G ',
          'region' => 'SBU',
          'email' => 'ramag@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -995,7 +995,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-H ',
          'region' => 'SBU',
          'email' => 'ramah@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1004,7 +1004,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-I ',
          'region' => 'SBU',
          'email' => 'ramai@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1013,7 +1013,7 @@ class PortSeeder extends Seeder
          'name' => 'RAMA-P ',
          'region' => 'SBU',
          'email' => 'ramap@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1022,7 +1022,7 @@ class PortSeeder extends Seeder
          'name' => 'RETNO-A (JACKET ONLY)',
          'region' => 'SBU',
          'email' => 'retnoa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1031,7 +1031,7 @@ class PortSeeder extends Seeder
          'name' => 'SELATAN-A (JACKET ONLY)',
          'region' => 'SBU',
          'email' => 'selatana@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1040,7 +1040,7 @@ class PortSeeder extends Seeder
          'name' => 'SELATAN-B (JACKET ONLY)',
          'region' => 'SBU',
          'email' => 'selatanb@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1049,7 +1049,7 @@ class PortSeeder extends Seeder
          'name' => 'SELATAN-C (JACKET ONLY)',
          'region' => 'SBU',
          'email' => 'selatanc@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1058,7 +1058,7 @@ class PortSeeder extends Seeder
          'name' => 'SURATMI-A',
          'region' => 'SBU',
          'email' => 'suratmia@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1067,7 +1067,7 @@ class PortSeeder extends Seeder
          'name' => 'SW.WANDA-A (MONOPOD)',
          'region' => 'SBU',
          'email' => 'swwandaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
@@ -1076,7 +1076,7 @@ class PortSeeder extends Seeder
          'name' => 'WANDA-A',
          'region' => 'SBU',
          'email' => 'wandaa@pertamina.com',
-         'type' => 'platform',
+         'type' => 'Platform',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
