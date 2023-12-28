@@ -24,6 +24,10 @@ class CreateVesselsTable extends Migration
          $table->string('contract_no')->nullable();
          $table->date('contract_start')->nullable();
          $table->date('contract_end')->nullable();
+         $table->string('name');
+         $table->string('username');
+         $table->string('email')->nullable();
+         $table->string('telp')->nullable();
          $table->string('master')->nullable();
 
          $table->string('latitude')->nullable();
@@ -33,10 +37,7 @@ class CreateVesselsTable extends Migration
          $table->string('heading')->nullable();
          $table->string('last_update')->nullable();
 
-         $table->string('name');
-         $table->string('username');
-         $table->string('email')->nullable();
-         $table->string('telp')->nullable();
+         
          $table->string('require')->nullable();
          $table->string('imo')->nullable();
          $table->string('type')->nullable();

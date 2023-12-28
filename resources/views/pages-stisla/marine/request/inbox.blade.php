@@ -1,14 +1,14 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Request Progress
+    Incoming Request 
 @endsection
 @section('content')
 <section class="section">
     <div class="section-header">
-      <h1 class="section-title">Request Progress</h1>
+      <h1 class="section-title">Incoming Request</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-        <div class="breadcrumb-item active">Request Progress</div>
+        <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
+        <div class="breadcrumb-item active">Incoming Request</div>
       </div>
     </div>
 
@@ -26,11 +26,10 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped table-sm" id="table-1">
+                <table class="table table-striped" id="table-1">
                     <thead>
                         <tr>
                            <th class="text-center">No.</th>
-                           <th>ID</th>
                            <th>Class</th>
                            <th>Route</th>
                            <th>Vessel</th>
@@ -40,11 +39,10 @@
                         </tr>
                      </thead>
                      <tbody>
-                        @if ($progress->count() > 0)
-                           @foreach ($progress as $request)
+                        @if ($requests->count() > 0)
+                           @foreach ($requests as $request)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td>{{$request->code}}</td>
                                  <td>{{$request->activity->name}}</td>
                                  <td>
                                   {{-- @if ($request->parent_id)
@@ -77,7 +75,7 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="6" style="text-align: center"><small>Emtpy</small></td>
+                              <td colspan="7" style="text-align: center"><small>Emtpy</small></td>
                            </tr>
                         @endif
                         

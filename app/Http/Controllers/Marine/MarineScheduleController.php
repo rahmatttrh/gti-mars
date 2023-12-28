@@ -119,7 +119,7 @@ class MarineScheduleController extends Controller
          $giat = Vessel::find(11);
          $elok = Vessel::find(9);
          $sigap = Vessel::find(6);
-         $tegas = Vessel::find(35);
+         $tegas = Vessel::find(36);
 
          foreach ($mondays as $monday) {
             // dd($day->format('Y-m-d'));

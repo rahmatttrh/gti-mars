@@ -240,7 +240,8 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-      Route::get('progress-marine', [RequestController::class, 'progressMarine'])->name('request.progress.marine');
+      Route::get('progress/marine', [MarineRequestController::class, 'progress'])->name('request.progress.marine');
+      Route::get('inbox/marine', [MarineRequestController::class, 'inbox'])->name('request.inbox.marine');
    });
 
    Route::prefix('parent')->group(function () {

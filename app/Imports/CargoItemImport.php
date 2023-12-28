@@ -36,7 +36,9 @@ class CargoItemImport implements ToModel, WithHeadingRow, WithValidation
         // dd($parent->id);
         $employee = Employee::where('email', auth()->user()->email)->first();
         $department = Department::find($employee->department->id);
-        $request = Request::orderBy("created_at", "desc")->first();
+        $request = Request::orderBy("id", "desc")->first();
+        $requests = Request::get();
+      //   dd($request->code);
         $now = Carbon::today();
 
         if ($department->id == 2) {
@@ -48,9 +50,12 @@ class CargoItemImport implements ToModel, WithHeadingRow, WithValidation
         }
 
         if (isset($request)) {
+         // dd('ada : ' . $request->id);
             $code =
                "R/" . $department->code . '/' . $now->format("dmy") . '/' . ($request->id + 1);
         } else {
+            
+            // dd($request->id);
             $code = "R/"  . $department->code . '/' . $now->format("dmy") . '/' . 1;
         }
         // $req->update([

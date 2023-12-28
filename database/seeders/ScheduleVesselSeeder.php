@@ -51,7 +51,7 @@ class ScheduleVesselSeeder extends Seeder
 
         // Tegas jaya
         DB::table('schedule_vessels')->insert([
-            'vessel_id' => 35,
+            'vessel_id' => 36,
             'sunday_id' => 1,
             'tuesday_id' => 13,
             'wednesday_id' => 12,
