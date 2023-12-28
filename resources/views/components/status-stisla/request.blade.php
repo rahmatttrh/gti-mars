@@ -7,9 +7,9 @@
       @elseif($request->status == 1)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>01 : Validasi Fleet Control</small></div>
       @elseif($request->status == 2)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>02 : Schedule on Set</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>02 : Schedule on Set</small></div>
       @elseif($request->status == 3)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>03 : Waiting Vessel</small></div>
+      <div class="badge badge-warning "><span class="badge bg-info me-1"></span><small>03 : Waiting Vessel</small></div>
       @elseif($request->status == 4)
       {{-- <button type="button" class="btn btn-info btn-icon icon-left">
          <i class="fas fa-edit"></i>{{$request->getStatus()->status->name}} 
@@ -18,7 +18,7 @@
       @elseif($request->status == 5)
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>05 : Validasi Fleet Control</div>
       @elseif($request->status == 10)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>10 : User Confirmation</div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>10 : User Confirmation</small></div>
       @elseif($request->status == 12)
       <div class="badge badge-success"><small>Complete</small></div>
       @elseif($request->status == 101)

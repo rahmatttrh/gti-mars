@@ -61,7 +61,8 @@
                      <thead>                                 
                         <tr>
                            <th>#</th>
-                           <th>Class</th>
+                           <th>ID</th>
+                           {{-- <th>Class</th> --}}
                            <th>Route</th>
                            <th>Vessel</th>
                            <th>Date</th>
@@ -74,7 +75,12 @@
                            @foreach ($requests as $r)
                            <tr>
                            <td>{{++$i}}</td>
-                           <td >{{$r->activity->name ?? ''}} {{$r->description}}</td>
+                           <td>
+                              {{$r->code}} 
+                              <br>
+                              <small>{{$r->activity->name ?? ''}} {{$r->description}}</small>
+                           </td>
+                           {{-- <td ></td> --}}
                            <td >{{$r->origin->name}} - {{$r->destination->name}}</td>
                            <td><a href="{{route('schedule.detail', enkripRambo($r->schedule_id))}}">{{$r->schedule->vessel->name ?? '-'}}</a></td>
                            <td>{{formatDate($r->date)}}</td>

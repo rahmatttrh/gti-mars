@@ -60,44 +60,23 @@ class VesselScheduleController extends Controller
       ])->with('i');
    }
 
-   public function history($month)
+   public function progress()
    {
-      $dekripMonth = dekripRambo($month);
-      // $today = Carbon::now();
-      // $month = $today->format('m');
+     
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 0)->where('status', '<=', 11)->orderBy('date', 'asc')->get();
+      return view('pages-stisla.vessel.schedule.progress', [
+         
+         'schedules' => $schedules,
+      ])->with('i');
+   }
+   public function history()
+   {
+     
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '=', 11)->orderBy('date', 'asc')->get();
+      
 
-      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '=', 11)->whereMonth('created_at', $dekripMonth)->orderBy('date', 'asc')->get();
-      if ($dekripMonth == 1) {
-         $monthName = 'Januari';
-      } elseif ($dekripMonth == 2) {
-         $monthName = 'Februari';
-      } elseif ($dekripMonth == 3) {
-         $monthName = 'Maret';
-      } elseif ($dekripMonth == 4) {
-         $monthName = 'April';
-      } elseif ($dekripMonth == 5) {
-         $monthName = 'Mei';
-      } elseif ($dekripMonth == 6) {
-         $monthName = 'Juni';
-      } elseif ($dekripMonth == 7) {
-         $monthName = 'Juli';
-      } elseif ($dekripMonth == 8) {
-         $monthName = 'Agustus';
-      } elseif ($dekripMonth == 9) {
-         $monthName = 'September';
-      } elseif ($dekripMonth == 10) {
-         $monthName = 'Oktober';
-      } elseif ($dekripMonth == 11) {
-         $monthName = 'November';
-      } elseif ($dekripMonth == 12) {
-         $monthName = 'Desember';
-      }
-
-      return view('pages.schedule.vessel.history', [
-         'typeName' => 'by Request',
-         'type' => 2,
-         'month' => $monthName,
-         'monthName' => $monthName,
+      return view('pages-stisla.vessel.schedule.history', [
+         
          'schedules' => $schedules,
       ])->with('i');
    }

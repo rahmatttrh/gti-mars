@@ -221,9 +221,9 @@
                   <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
                   <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
                   <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-title">Logged in 5 min ago</div>
-                  <a href="/" class="dropdown-item has-icon">
-                     <i class="fa fa-home"></i> Back to Home Page
+                  {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
+                  <a href="{{route('user.detail', enkripRambo(auth()->user()->id))}}" class="dropdown-item has-icon">
+                     <i class="fa fa-home"></i> My Profile
                   </a>
                   {{-- <a href="features-activities.html" class="dropdown-item has-icon">
                      <i class="fas fa-bolt"></i> Activities
@@ -282,9 +282,9 @@
                   <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
                   <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
                   <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-title">Logged in 5 min ago</div>
-                  {{-- <a href="/" class="dropdown-item has-icon">
-                     <i class="fa fa-home"></i> Back to Home Page
+                  {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
+                  {{-- <a href="{{route('user.detail', enkripRambo(auth()->user()->id))}}" class="dropdown-item has-icon">
+                     <i class="fa fa-home"></i> My Profile
                   </a> --}}
                   
                   <div class="dropdown-divider"></div>
@@ -418,7 +418,8 @@
                         <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
                         <ul class="dropdown-menu">
                            <li><a class="nav-link" href="{{route('request.inbox.marine')}}">Inbox</a></li>                
-                           <li><a class="nav-link beep beep-sidebar" href="{{route('request.progress.marine')}}">Progress</a></li>      
+                           <li><a class="nav-link" href="{{route('request.progress.marine')}}">Progress</a></li>  
+                           <li><a class="nav-link" href="{{route('request.history.marine')}}">History</a></li>     
                         </ul>
                      </li>
                      <li class="dropdown">
@@ -532,8 +533,8 @@
                      <li class="dropdown">
                         <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Schedules</span></a>
                         <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.create')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('request.draft')}}">History</a></li>   
+                        <li><a class="nav-link" href="{{route('schedule.progress.vessel')}}">Progress</a></li> 
+                        <li><a class="nav-link" href="{{route('schedule.history.vessel')}}">History</a></li>   
                         </ul>
                      </li>
 

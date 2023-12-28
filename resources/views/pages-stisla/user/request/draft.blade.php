@@ -26,7 +26,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped table-sm" id="table-1">
                     <thead>
                         <tr>
                            <th class="text-center">No.</th>
@@ -64,7 +64,7 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="6" style="text-align: center"><small>Emtpy</small></td>
+                              <td colspan="7" style="text-align: center"><small>Emtpy</small></td>
                            </tr>
                         @endif
                         

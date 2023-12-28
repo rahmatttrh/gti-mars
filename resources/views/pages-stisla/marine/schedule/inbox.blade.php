@@ -22,12 +22,13 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped table-sm" id="table-1">
                   <thead>                                 
                     <tr>
                       <th class="text-center">
                         #
                       </th>
+                      <th>ID</th>
                       <th>Vessel</th>
                       <th>Route</th>
                       <th>Activity</th>
@@ -43,6 +44,11 @@
                             {{++$i}}
                             </td>
                             <td>
+                              {{$schedule->code}}
+                              <br>
+                              <small>{{$schedule->class}}</small>
+                           </td>
+                            <td>
                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Empty'}}</a> <br>
                                 <small>{{$schedule->vessel->type ?? '-'}}</small>
                             </td>
@@ -56,8 +62,10 @@
                             </td>
                             <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
                             <td>
-                                {{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br> 
+                                 
                                 {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
+                                <br>
+                                <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small>
                             </td>
                             <td>
                                 {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
@@ -79,7 +87,7 @@
             </div>
               <div class="card-body">
                 <div class="table-responsive">
-                  <table class="table table-striped" id="table-1">
+                  <table class="table table-striped table-sm" id="table-1">
                     <thead>                                 
                       <tr>
                         <th class="text-center">

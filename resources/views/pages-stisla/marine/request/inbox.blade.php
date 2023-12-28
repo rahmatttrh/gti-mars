@@ -26,10 +26,11 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped" id="table-1">
+                <table class="table table-striped table-sm" id="table-1">
                     <thead>
                         <tr>
                            <th class="text-center">No.</th>
+                           <th>ID</th>
                            <th>Class</th>
                            <th>Route</th>
                            <th>Vessel</th>
@@ -43,6 +44,7 @@
                            @foreach ($requests as $request)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
+                                 <td>{{$request->code}}</td>
                                  <td>{{$request->activity->name}}</td>
                                  <td>
                                   {{-- @if ($request->parent_id)
@@ -75,7 +77,7 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="7" style="text-align: center"><small>Emtpy</small></td>
+                              <td colspan="8" style="text-align: center"><small>Emtpy</small></td>
                            </tr>
                         @endif
                         

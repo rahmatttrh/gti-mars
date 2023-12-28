@@ -242,6 +242,7 @@ Route::middleware(["auth"])->group(function () {
 
       Route::get('progress/marine', [MarineRequestController::class, 'progress'])->name('request.progress.marine');
       Route::get('inbox/marine', [MarineRequestController::class, 'inbox'])->name('request.inbox.marine');
+      Route::get('history/marine', [MarineRequestController::class, 'history'])->name('request.history.marine');
    });
 
    Route::prefix('parent')->group(function () {
@@ -387,8 +388,10 @@ Route::group(['middleware' => ['role:vessel']], function () {
    });
 
    Route::prefix('vessel/schedule')->group(function () {
-      Route::get('complete/{schedule:id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
-      
+      Route::get('progress', [VesselScheduleController::class, 'progress'])->name('schedule.progress.vessel');
+      Route::get('history', [VesselScheduleController::class, 'history'])->name('schedule.history.vessel');
+
+      Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
    });
 
    

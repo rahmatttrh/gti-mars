@@ -222,8 +222,8 @@
                      </th>
 
                      <th>ID</th>
+                     <th>Vessel</th>
                      <th>Date</th>
-                     <th>Activity</th>
                      <th>Desc</th>
                      <th>Status</th>
                      <th></th>
@@ -237,23 +237,22 @@
                         </td>
                         <td>
                            <span>{{$schedule->code}}</span><br>
-                           <span>{{$schedule->vessel->name ?? '-'}} </span>
+                           <small>{{$schedule->class}}</small>
+                           
                            {{-- <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
                            {{$schedule->vessel->name ?? '-'}} 
                            </a> --}}
                         </td>
-                        <td>{{formatDateName($schedule->date)}}</td>
                         <td>
-                           {{$schedule->class}}
-                           {{-- @if ($schedule->type == 1)
-                              Cargo/Crew
-                              @elseif($schedule->type == 2)
-                              Moving
-                              @elseif($schedule->type == 3)
-                              Lifting
-                           @endif --}}
-                           
+                           <span>{{$schedule->vessel->name ?? '-'}} </span> <br>
+                           <small>{{$schedule->vessel->type ?? '-'}}</small>
                         </td>
+                        <td>
+                           {{formatDateName($schedule->date)}}
+                           <br>
+                                <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small>
+                        </td>
+                        
                         @if ($schedule->class == 'Cargo/Crew')
                            <td class="d-flex">
                               @foreach ($schedule->routes as $route)

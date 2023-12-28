@@ -26,24 +26,38 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function progress()
-   {
-      $today = Carbon::now();
-      $month = $today->format('m');
-      $requests = ModelsRequest::get();
-      $vessels = Vessel::get();
-      $schedules = Schedule::get();
-
-      $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '>', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
-
-      return view('pages.request.progress', [
-         'title' => 'Progress',
-         'departs' => $departs,
-         'vessels' => $vessels,
-         'schedules' => $schedules,
-         'month' => $month
+   public function progress(){
+      $requests = ModelsRequest::where('status', '>', 1)->where('status', '<=', 12)->get();
+      return view('pages-stisla.marine.request.progress', [
+         'requests' => $requests
       ])->with('i');
    }
+
+   public function history(){
+      $requests = ModelsRequest::where('status', '=', 12)->get();
+      return view('pages-stisla.marine.request.history', [
+         'requests' => $requests
+      ])->with('i');
+   }
+
+   // public function progress()
+   // {
+   //    $today = Carbon::now();
+   //    $month = $today->format('m');
+   //    $requests = ModelsRequest::get();
+   //    $vessels = Vessel::get();
+   //    $schedules = Schedule::get();
+
+   //    $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('status', '>', 1)->orderBy('department_id', 'desc')->get()->groupBy('func');
+
+   //    return view('pages.request.progress', [
+   //       'title' => 'Progress',
+   //       'departs' => $departs,
+   //       'vessels' => $vessels,
+   //       'schedules' => $schedules,
+   //       'month' => $month
+   //    ])->with('i');
+   // }
    public function undoApprove(Request $req)
    {
       $now = Carbon::now();
