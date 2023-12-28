@@ -23,6 +23,7 @@ use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
 use App\Models\VesselHistory;
+use Throwable;
 
 class HomeController extends Controller
 {
@@ -156,7 +157,8 @@ class HomeController extends Controller
       // $elok = Vessel::where('imo', '9543483')->first();
       // dd($elok->name);
 
-      $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+      try {
+         $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
       $token = '73ob73y64nt3n63MP4tk4l1';
       $response = Http::withHeaders([
          'Authorization' => 'Bearer ' . $token,
@@ -192,6 +194,12 @@ class HomeController extends Controller
             }
          }
       }
+      } catch (Throwable $e) {
+            report($e);
+   
+            return false;
+      }
+      
 
       // $acc = Vessel::find(27);
       // $kj4 = Port::find(1);

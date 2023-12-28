@@ -21,37 +21,30 @@
       <div class="row">
          <div class="col-md-4">
             <div class="card">
-               {{-- <div class="card-header">
+               <div class="card-header">
                   <b>Form Add</b>
-               </div> --}}
+               </div>
                <div class="card-body">
-                  <form action="{{route('port.store')}}" method="POST">
+                  <form action="{{route('user.store')}}" method="POST">
                      @csrf
                      <div class="form-row">
                         
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-8">
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
+                        <div class="form-group col-md-4">
+                           <label for="ekstensi">Ekstensi</label>
+                           <input type="text" class="form-control " id="ekstensi" name="ekstensi" >
+                        </div>
+                        
                         <div class="form-group col-md-6">
                            <label for="username">Username</label>
                            <input type="text" class="form-control " id="username" name="username" >
                         </div>
                         <div class="form-group col-md-6">
-                           <label for="ekstensi">Ekstensi</label>
-                           <input type="text" class="form-control " id="ekstensi" name="ekstensi" >
-                        </div>
-                     </div>
-                     <div class="form-row">
-                        <div class="form-group col-md-12">
-                           <label for="email">Email</label>
-                           <input type="text" class="form-control " id="email" name="email" >
-                        </div>
-                     </div>
-                     <div class="form-row">
-                        <div class="form-group col-md-12">
                            <label>Location*</label>
-                           <select  class="custom-select" id="type" name="type">
+                           <select  class="custom-select" id="port" name="port">
                               <option  disabled selected>Choose one</option>
                               @foreach ($ports as $port)
                                   <option value="{{$port->id}}">{{$port->name}}</option>
@@ -60,6 +53,24 @@
                         </div>
                         
                      </div>
+                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label for="email">Email</label>
+                           <input type="text" class="form-control " id="email" name="email" >
+                        </div>
+                     </div>
+                     {{-- <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label>Location*</label>
+                           <select  class="custom-select" id="port" name="port">
+                              <option  disabled selected>Choose one</option>
+                              @foreach ($ports as $port)
+                                  <option value="{{$port->id}}">{{$port->name}}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                        
+                     </div> --}}
                      <button class="btn btn-primary">Submit</button>
                   </form>
                </div>
@@ -116,7 +127,7 @@
                               </td> --}}
                               <td>
                                  <div class="btn-group btn-sm">
-                                 <a href="{{route('user.edit', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Detail</a>
+                                 <a href="{{route('user.detail', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Detail</a>
                                  <a href="{{route('user.edit', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Edit</a>
                                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#user-delete-{{$user->id}}"><i class="fa fa-trash"></i></a>
                                  </div>

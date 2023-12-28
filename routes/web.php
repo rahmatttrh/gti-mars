@@ -75,7 +75,9 @@ Route::middleware(["auth"])->group(function () {
    //   });
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
+      Route::post('store', [UserController::class, 'store'])->name('user.store');
       Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+      Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');
       Route::put('update', [UserController::class, 'update'])->name('user.update');
       Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
    });
