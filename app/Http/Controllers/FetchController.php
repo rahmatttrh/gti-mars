@@ -174,21 +174,36 @@ class FetchController extends Controller
 
          $result[] = '<tr>
             <td>
-               ' . $vesselName  . ' <br>
-               <small> ' . $vesselType . '</small>
+               ' . $vesselName  . ' 
             </td>
-            <td>' . \Carbon\Carbon::parse($row->date)->format('l') .  ' on '. $row->port->name .' <br> 
-               <small> ' . \Carbon\Carbon::parse($row->date)->format('d/m/Y') .' </small>
+            <td>' . \Carbon\Carbon::parse($row->date)->format('l') .  ' on '. $row->port->name .' 
             </td>
             
             
             <td> ' .
                   $first->port->name . ' 
-               <br>
-               <small> '. \Carbon\Carbon::parse($first->date)->format('d/m/Y') .'</small>
+              
             </td>
             <td>' . $persen  . ' %</td>
          </tr>';
+
+         // $result[] = '<tr>
+         //    <td>
+         //       ' . $vesselName  . ' <br>
+         //       <small> ' . $vesselType . '</small>
+         //    </td>
+         //    <td>' . \Carbon\Carbon::parse($row->date)->format('l') .  ' on '. $row->port->name .' <br> 
+         //       <small> ' . \Carbon\Carbon::parse($row->date)->format('d/m/Y') .' </small>
+         //    </td>
+            
+            
+         //    <td> ' .
+         //          $first->port->name . ' 
+         //       <br>
+         //       <small> '. \Carbon\Carbon::parse($first->date)->format('d/m/Y') .'</small>
+         //    </td>
+         //    <td>' . $persen  . ' %</td>
+         // </tr>';
       }
 
       foreach ($schedules as $schedule) {
@@ -219,21 +234,35 @@ class FetchController extends Controller
          
          $result[] = '<tr>
             <td>
-               ' . $vesselName  . ' <br>
-               <small> ' . $vesselType . '</small>
+               ' . $vesselName  . ' 
             </td>
-            <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' <br> 
-               <small> ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') .' </small>
+            <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' 
             </td>
             
             
             <td> ' .
                   $portName . ' 
-               <br>
-               <small> '. $portDate .'</small>
+               
             </td>
             <td>' . $persen  . ' %</td>
          </tr>';
+      //    $result[] = '<tr>
+      //    <td>
+      //       ' . $vesselName  . ' <br>
+      //       <small> ' . $vesselType . '</small>
+      //    </td>
+      //    <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' <br> 
+      //       <small> ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') .' </small>
+      //    </td>
+         
+         
+      //    <td> ' .
+      //          $portName . ' 
+      //       <br>
+      //       <small> '. $portDate .'</small>
+      //    </td>
+      //    <td>' . $persen  . ' %</td>
+      // </tr>';
       }
 
       // foreach ($schedules as $row) {

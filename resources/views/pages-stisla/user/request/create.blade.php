@@ -33,13 +33,13 @@
                               <select class="custom-select" id="activity" style="background-color: lightgrey" required name="activity">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($activities as $activity)
-                                    <option {{ old('activity') == $activity->id ? 'selected' : '' }} value="{{ $activity->id }}">{{ $activity->name }}</option>
+                                    <option  value="{{ $activity->id }}">{{ $activity->name }}</option>
                                  @endforeach
                               </select>
                            </div>
                            <div class="form-group col-md-6">
                               <label for="date">Date*</label>
-                              <input class="form-control date origin input" id="date" style="background-color: lightgrey" type="date" required name="date">
+                              <input class="form-control date origin input" {{old('date')}} id="date" style="background-color: lightgrey" type="date" required name="date">
                            </div>
                         </div>
                         <div class="form-row port">
@@ -61,7 +61,7 @@
                                  @endforeach
                               </select>
                            </div>
-                           <div class="form-group col-md-12 file-cargo">
+                           <div class="form-group col-md-6 file-cargo">
                               <label for="file-cargo">File Excel Cargo</label>
                               <input class="form-control mb-2" id="file-cargo" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-cargo">
                               <a class="file-cargo mt-3" href="{{ asset('template/dsp-template-cargo.xlsx') }}">Download Template ...</a>
@@ -73,7 +73,7 @@
                               <select class="custom-select origin" id="origin" style="background-color: lightgrey" name="origin">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($platforms as $platform)
-                                    <option {{ old('origin') == $platform->id ? 'selected' : '' }} value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                    <option  value="{{ $platform->id }}">{{ $platform->name }}</option>
                                  @endforeach
                               </select>
                            </div>
@@ -82,7 +82,7 @@
                               <select class="custom-select " id="destination" style="background-color: lightgrey" name="destination">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($platforms as $platform)
-                                    <option {{ old('destination') == $platform->id ? 'selected' : '' }} value="{{ $platform->id }}">{{ $platform->name }}</option>
+                                    <option  value="{{ $platform->id }}">{{ $platform->name }}</option>
                                  @endforeach
                               </select>
                            </div>
@@ -129,38 +129,35 @@
                </div>
             </div>
             <div class="col-md-7">
-               <div class="card">
+               <div class="card border">
                   <div class="card-header">
                      <h4>Nearest Vessel</h4>
                   </div>
                   <div class="card-body p-0">
-                     <table class="table">
-                        <thead>
+                     <table class="table table-striped">
+                        {{-- <thead>
                            <tr>
                               <th scope="col">Vessel</th>
                            </tr>
-                        </thead>
+                        </thead> --}}
                         <tbody class="near" id="near">
 
                         </tbody>
                      </table>
                   </div>
-               </div>
-
-               <div class="card">
                   <div class="card-header">
                      <h4>Available Schedule</h4>
                   </div>
                   <div class="card-body p-0">
-                     <table class="table">
-                        <thead>
+                     <table class="table  table-striped">
+                        {{-- <thead>
                            <tr>
                               <th>Vessel</th>
                               <th>Date</th>
                               <th>From</th>
                               <th>Space</th>
                            </tr>
-                        </thead>
+                        </thead> --}}
                         <tbody class="result" id="result">
 
                         </tbody>

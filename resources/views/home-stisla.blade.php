@@ -164,7 +164,7 @@
          
          
          <div class="col-md-8">
-            <div id="map" class="card" style="height: 72vh; width:auto; border-radius: 15px;background-size: cover;"></div>
+            <div id="map" class="card" style="height: 80vh; width:auto; border-radius: 15px;background-size: cover;"></div>
             {{-- <div class="row">
                <div class="col-md-12">
                   <div class="card border shadow-sm">

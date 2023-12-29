@@ -4,11 +4,11 @@
        <h4>Incoming Request from User</h4>
      </div> --}}
      <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
-      <div class="table-responsive">
+      <div class="table-responsive p-0">
          <table class="table table-striped table-sm" >
             <thead>
                <tr>
-                  <th>Activity</th>
+                  <th>ID</th>
                   <th>Route</th>
                   <th>User</th>
                   <th>Vessel</th>
@@ -19,10 +19,16 @@
                @if ($recents->count() > 0)
                   @foreach ($recents as $req)
                      <tr>
-                        <td>{{$req->activity->name}} {{$req->description}}</td>
+                        <td>
+                           {{$req->code}} <br>
+                           <small>{{$req->activity->name}} {{$req->description}}</small>
+                        </td>
                         <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
-                        <td>Req by {{$req->employee->name}}</td>
-                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
+                        <td>{{$req->employee->name}}</td>
+                        <td>
+                           {{$req->schedule->vessel->name ?? '-'}} <br>
+                           <small>{{$req->schedule->code}}</small>
+                        </td>
                         <td>
                            <div class="btn-group btn-sm">
                               <a href="#" class="btn btn-sm btn-light" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
