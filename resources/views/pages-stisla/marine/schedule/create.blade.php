@@ -38,6 +38,15 @@
                       <input style="background-color: lightgrey" type="date" required class="form-control date origin input" id="date" name="date" >
                   </div>
                 </div>
+                <div class="form-group">
+                  <label>From/Origin</label>
+                  <select style="background-color: lightgrey" required class="custom-select" id="port" name="port">
+                      <option  disabled selected>Choose one</option>
+                      @foreach ($ports as $port)
+                          <option {{ old('port') == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->name}}</option>
+                      @endforeach
+                  </select>
+              </div>
               </div>
               <div class="card-footer bg-whitesmoke">
                 <button type="submit" class="btn btn-primary">Submit</button>

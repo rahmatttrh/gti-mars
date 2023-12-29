@@ -93,6 +93,7 @@
                         <tr>
                            <th class="text-center">No</th>
                            <th>ID</th>
+                           <th>Vessel</th>
                            <th>Date</th>
                            <th>Type</th>
                            {{-- <th>Activity</th> --}}
@@ -105,8 +106,21 @@
                            @foreach ($schedules as $schedule)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td >{{$schedule->code}}</td>
-                                 <td>{{ \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') }}</td>
+                                 <td>
+                                    {{$schedule->code}} 
+                                    <br>
+                                    <small>{{$schedule->class}}</small>
+                                 </td>
+                                 <td>
+                                    {{$schedule->vessel->name}} 
+                                    <br>
+                                    <small>{{$schedule->vessel->type}}</small>
+                                 </td>
+                                 <td>
+                                    {{ formatDateName($schedule->date) }}
+                                    <br>
+                                    <small>{{formatDayName($schedule->date)}}</small>
+                                 </td>
                                  
                                  {{-- <td class="text-muted">
                                     From {{$schedule->origin->name}} 

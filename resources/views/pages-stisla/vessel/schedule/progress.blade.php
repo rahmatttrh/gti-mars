@@ -53,7 +53,7 @@
                               <small>{{$schedule->class}}</small>
                               </td>
                             <td>
-                                <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? ''}}</a> <br>
+                              {{$schedule->vessel->name ?? ''}} <br>
                                 <small>{{$schedule->vessel->vessel_type}} Supply</small>
                             </td>
                             <td>

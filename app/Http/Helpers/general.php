@@ -24,6 +24,12 @@ function formatDateTime($data)
    return $date;
 }
 
+function formatDayName($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('l');
+   return $date;
+}
+
 function dayDate($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('l ,d/m/Y');

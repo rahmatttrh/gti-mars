@@ -69,6 +69,8 @@ $("#table-5").dataTable({
 
 $("#table-6").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
+    pageLength : 5,
+   lengthMenu: [[5, 10, 20, -1], [8, 10, 20, 'Todos']]
 });
 $("#table-7").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],

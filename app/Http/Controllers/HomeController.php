@@ -943,7 +943,7 @@ class HomeController extends Controller
          $monthName = 'Desember';
       }
       $vessel = Vessel::where('email', auth()->user()->email)->first();
-      $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->get();
+      $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
       $nowSchedule = Schedule::find($vessel->schedule_id);
       if ($nowSchedule) {
          $routes = ScheduleRoute::where('schedule_id', $nowSchedule->id)->orderBy('rank', 'asc')->get();

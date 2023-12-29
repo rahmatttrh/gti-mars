@@ -263,6 +263,7 @@
                success: function(result) {
                   console.log('near :' + result.near);
                   console.log('result :' + result.result);
+                  console.log('log :' + result.log);
                   $.each(result.result, function(i, index) {
                      $('.result').html(result.result);
 

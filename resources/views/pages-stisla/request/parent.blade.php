@@ -126,15 +126,22 @@
                            @csrf
                            <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
                            <div class="form-group">
-                              <label for="schedule">Change vessel?</label>
+                              <label for="schedule">Change vessel? </label>
                               <div class="input-group">
                                  <select class="form-control" name="schedule" id="schedule">
                                     {{-- @foreach ($vessels as $vessel)
                                     <option {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}} {{$vessel->id}}  {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? '- Selected' : ''}}</option>
                                     @endforeach --}}
-                                       @foreach ($scheduleRoutes as $sche)
-                                       <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
-                                       @endforeach
+                                       @if (count($scheduleRoutes) > 0)
+                                          @foreach ($scheduleRoutes as $sche)
+                                          <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
+                                          @endforeach
+                                       @endif
+
+                                       @foreach ($schedules as $schedule)
+                                          <option {{$parent->requests->first()->schedule_id == $schedule->id ? 'selected' : ''}} value="{{$schedule->id}}">{{$schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $schedule->id ? '- Selected' : ''}}</option>
+                                          @endforeach
+                                       
                                  </select>
                                  <div class="input-group-append">
                                  <button class="btn btn-primary px-4" type="submit">Submit</button>

@@ -33,7 +33,8 @@
           <div class="page-inner">
             <h1>419</h1>
             <div class="page-description">
-            	Sorry, your session has expired.
+               <b>Session Expired</b> <br>
+            	please login again by clicking the login button below
             </div>
             <div class="page-search">
               {{-- <form>              	
@@ -55,7 +56,7 @@
               </form> --}}
               <div class="mt-3">
                   {{-- <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button> --}}
-                <a href="/" class="btn btn-primary btn-lg">take me back</a>
+                <a href="/" class="btn btn-primary btn-lg">Login</a>
               </div>
             </div>
           </div>

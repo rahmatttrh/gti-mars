@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
    <div class="section-header">
-      <h1 class="section-title">User Detail</h1>
+      <h1 class="section-title">User Detail & History Request</h1>
       <div class="section-header-breadcrumb">
          <div class="breadcrumb-item "><a href="#">Dashboard</a></div>
          <div class="breadcrumb-item active">User Detail</div>
@@ -15,7 +15,7 @@
    <div class="section-body">
       <div class="row">
          <div class="col-md-4">
-            <div class="card profile-widget">
+            <div class="card profile-widget border">
                <div class="profile-widget-header">                     
                   <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle profile-widget-picture">
                   <div class="profile-widget-items">
@@ -54,14 +54,13 @@
             </div>
          </div>
          <div class="col-md-8">
-            <div class="card">
-               <form method="post" class="needs-validation" novalidate="">
-               <div class="card-header">
+            <div class="card border">
+               {{-- <div class="card-header">
                   <h4>History Request Activity</h4>
-               </div>
+               </div> --}}
                <div class="card-body">
                   <div class="table-responsive">
-                     <table class="table table-striped" id="table-1">
+                     <table class="table table-striped table-sm" id="table-1">
                          <thead>
                              <tr>
                                 <th class="text-center">No.</th>
@@ -109,7 +108,6 @@
                <div class="card-footer text-right">
                   {{-- <button class="btn btn-primary">Save Changes</button> --}}
                </div>
-               </form>
             </div>
          </div>
       </div>

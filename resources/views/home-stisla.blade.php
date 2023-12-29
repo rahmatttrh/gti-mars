@@ -272,9 +272,16 @@
                            @elseif(($schedule->class == 'Fuel Oil'))
                            <td>
                               {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
-                              <span>
+                              <small>
                                  Request by {{$schedule->requests->first()->user->name}}
-                              </span>
+                              </small>
+                           </td>
+                           @elseif(($schedule->class == 'Flush Water'))
+                           <td>
+                              {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
+                              <small>
+                                 Request by {{$schedule->requests->first()->user->name}}
+                              </small>
                            </td>
                         @endif
                         

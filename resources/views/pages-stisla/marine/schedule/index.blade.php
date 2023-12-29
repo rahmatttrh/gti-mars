@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-      <h1 class="section-title">Schedule Plan</h1>
+      <h1 class="section-title">Schedule Plan {{$monthName}}</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Schedule Plan</div>

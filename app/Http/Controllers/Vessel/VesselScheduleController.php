@@ -63,7 +63,7 @@ class VesselScheduleController extends Controller
    public function progress()
    {
      
-      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 0)->where('status', '<=', 11)->orderBy('date', 'asc')->get();
+      $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 0)->where('status', '<', 11)->orderBy('date', 'asc')->get();
       return view('pages-stisla.vessel.schedule.progress', [
          
          'schedules' => $schedules,

@@ -654,6 +654,8 @@ class DepartmentRequestController extends Controller
       $request = ModelsRequest::find($dekripId);
       $type = $request->activity->type_id;
       $schedules = Schedule::where('date', $request->date)->get();
+      $schedule = Schedule::where('date', $request->date)->first();
+      // dd($schedules);
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       if (isset($lastSchedule)) {
          $scheduleCode =
@@ -745,7 +747,7 @@ class DepartmentRequestController extends Controller
 
       // dd('end');
       if ($scheduleRoute) {
-         // dd('ada routeee');
+         dd('ada routeee');
          $schedule = Schedule::find($scheduleRoute->schedule_id);
          $request->update([
             // 'status' => 1,
@@ -754,26 +756,38 @@ class DepartmentRequestController extends Controller
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
       }
 
-      if (count($schedules) > 0) {
+      // dd('ga ada route');
+
+      if ($schedule != null) {
          // dd($schedules);
-         // dd('ada schedule');
-         foreach ($schedules as $schedule) {
-            $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
-            if ($uncompleteRoute != null) {
-               $schedule = Schedule::find($uncompleteRoute->schedule_id);
-               $request->update([
-                  // 'status' => 1,
-                  'schedule_id' => $schedule->id
-               ]);
-               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
-            }
-         }
+         // dd($schedule->id);
+         $request->update([
+            // 'status' => 1,
+            'schedule_id' => $schedule->id
+         ]);
+         // dd($request->schedule_id);
+         // foreach ($schedules as $schedule) {
+         //    $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
+         //    // if ($uncompleteRoute != null) {
+         //    //    $schedule = Schedule::find($uncompleteRoute->schedule_id);
+         //    //    $request->update([
+         //    //       'schedule_id' => $schedule->id
+         //    //    ]);
+         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+         //    // }
+         //    // $schedule = Schedule::find($uncompleteRoute->schedule_id);
+               
+         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+               
+         // }
          
       } else {
          // dd('tidak ada schedule');
+         $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'class' => 'Cargo/Crew',
+            'vessel_id' => $vessel->id,
             'by' => 'user',
             'type' => 2,
             'status' => 0,

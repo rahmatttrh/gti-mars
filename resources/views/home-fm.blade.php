@@ -135,7 +135,7 @@
                   </div>
                   <div class="form-group col-md-6">
                      <label for="qty_approve">Qty Approve</label>
-                     <input type="text" required class="form-control" id="qty_approve" name="qty_approve"  >
+                     <input type="text" required class="form-control" id="qty_approve" name="qty_approve" max="{{$req->qty}}" >
                   </div>
                </div>
                </div>

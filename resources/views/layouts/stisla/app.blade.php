@@ -526,7 +526,7 @@
                         <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
                         <ul class="dropdown-menu">
                         <li><a class="nav-link" href="{{route('request.vessel.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('request.vessel.index')}}">Progress</a></li>   
+                        <li><a class="nav-link" href="{{route('request.vessel.index')}}">All</a></li>   
                         </ul>
                      </li>
 

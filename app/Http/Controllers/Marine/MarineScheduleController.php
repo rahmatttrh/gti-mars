@@ -27,7 +27,7 @@ class MarineScheduleController extends Controller
 {
    public function inbox()
    {
-      $cargoSchedules = Schedule::where('type', 2)->where('class', 'Cargo/Crew')->where('status', 0)->get();
+      $cargoSchedules = Schedule::where('by', 'user')->where('class', 'Cargo/Crew')->where('status', 0)->get();
       $movingSchedules = Schedule::where('type', 2)->where('class', '!=', 'Cargo/Crew')->where('status', 0)->get();
 
       return view('pages-stisla.marine.schedule.inbox', [
@@ -117,6 +117,9 @@ class MarineScheduleController extends Controller
          // dd($wednesdays);
          $vessel = Vessel::find(9);
          $giat = Vessel::find(11);
+
+
+
          $elok = Vessel::find(9);
          $sigap = Vessel::find(6);
          $tegas = Vessel::find(36);
@@ -434,8 +437,8 @@ class MarineScheduleController extends Controller
          $schedules = Schedule::where('vessel_id', auth()->user()->getVesselId())->whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
          $requlerSchedules = null;
       } else {
-         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 2)->orderBy('vessel_type', 'asc')->get();
-         $regulerSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('type', 1)->whereMonth('date', $dekripMonth)->get();
+         $schedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('by', '!=', 'user')->orderBy('vessel_type', 'asc')->get();
+         $regulerSchedules = Schedule::orderBy('updated_at', 'desc')->where('status', '=', 0)->where('by', '!=', 'user')->whereMonth('date', $dekripMonth)->get();
       }
 
       if ($dekripMonth == 1) {
@@ -555,7 +558,15 @@ class MarineScheduleController extends Controller
          // 'destination_id' => 'different:origin_id'
       ]);
       // dd($req->type);
+      $now = Carbon::today();
       $vessel = Vessel::find($req->vessel);
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+      }
 
       $vesselHasSchedule = Schedule::where('date', $req->date)->where('vessel_id', $vessel->id)->first();
       if ($vesselHasSchedule) {
@@ -563,6 +574,7 @@ class MarineScheduleController extends Controller
       } else {
          $schedule = Schedule::create([
             'by' => 'marine',
+            'code' => $scheduleCode,
             'class' => 'Cargo/Crew',
             'type' => 2,
             'status' => 0,
@@ -572,6 +584,14 @@ class MarineScheduleController extends Controller
             // 'etd' => $req->departure_estimasi,
             // 'eta' => $req->arrive_estimasi,
             'remark' => $req->remark
+         ]);
+
+         ScheduleRoute::create([
+            'schedule_id' => $schedule->id,
+            'port_id' => $req->port,
+            'rank' => 1,
+            'status' => 1,
+            'date' => $now
          ]);
 
          return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Schedule successfuly added');

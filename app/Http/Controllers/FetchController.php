@@ -123,6 +123,7 @@ class FetchController extends Controller
 
       $now = Carbon::now();
       $schedules = Schedule::where('date', $date)->get();
+      // dd($schedules);
       $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin)->get();
 
       // Masukin ke array
@@ -136,6 +137,7 @@ class FetchController extends Controller
       $portLong = $port->longitude;
       $vessels = Vessel::where('latitude', '!=', null)->get();
 
+      
       // $nearVessel = null;
       foreach($vessels as $vessel){
          $vesselLat = $vessel->latitude;
@@ -153,7 +155,6 @@ class FetchController extends Controller
       // dd($nearestVessels);
       
       foreach ($scheduleRoutes as $row) {
-
          $schedule = Schedule::find($row->schedule_id);
          $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
 
@@ -170,6 +171,7 @@ class FetchController extends Controller
             $vesselDeadweight = '0';
             $persen = '-';
          }
+
          $result[] = '<tr>
             <td>
                ' . $vesselName  . ' <br>
@@ -184,6 +186,51 @@ class FetchController extends Controller
                   $first->port->name . ' 
                <br>
                <small> '. \Carbon\Carbon::parse($first->date)->format('d/m/Y') .'</small>
+            </td>
+            <td>' . $persen  . ' %</td>
+         </tr>';
+      }
+
+      foreach ($schedules as $schedule) {
+         // $schedule = Schedule::find($row->schedule_id);
+         $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
+
+         if ($schedule->vessel_id != null) {
+            $vesselName = $schedule->vessel->name;
+            $vesselType = $schedule->vessel->type;
+            $totalWeight = $schedule->total_weight;
+            $vesselDeadweight = $schedule->vessel->deadweight;
+            $persen = $totalWeight / $vesselDeadweight * 100;
+         } else {
+            $vesselName = '-';
+            $vesselType = '';
+            $totalWeight = 0;
+            $vesselDeadweight = '0';
+            $persen = '-';
+         }
+
+         if ($first != null) {
+            $portName = $first->port->name;
+            $portDate = \Carbon\Carbon::parse($first->date)->format('d/m/Y');
+         } else {
+            $portName = '-';
+            $portDate = '-';
+         }
+         
+         $result[] = '<tr>
+            <td>
+               ' . $vesselName  . ' <br>
+               <small> ' . $vesselType . '</small>
+            </td>
+            <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' <br> 
+               <small> ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') .' </small>
+            </td>
+            
+            
+            <td> ' .
+                  $portName . ' 
+               <br>
+               <small> '. $portDate .'</small>
             </td>
             <td>' . $persen  . ' %</td>
          </tr>';
@@ -248,7 +295,7 @@ class FetchController extends Controller
          'success' => true,
          'result' => $result,
          'near' => $near,
-         // 'log' => $near
+         'log' => count($schedules)
       ]);
    }
 }

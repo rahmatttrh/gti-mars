@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 class VesselRequestController extends Controller
 {
    public function index(){
-      $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
+      $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();
       return view('pages-stisla.vessel.request.index', [
          'requests' => $requests
       ])->with('i');

@@ -1,14 +1,14 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Request Progress
+   All Request
 @endsection
 @section('content')
 <section class="section">
     <div class="section-header">
-      <h1 class="section-title">Request Progress</h1>
+      <h1 class="section-title">All Request</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-        <div class="breadcrumb-item active">Request Progress</div>
+        <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
+        <div class="breadcrumb-item active">All Request</div>
       </div>
     </div>
 
@@ -26,7 +26,7 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped " id="table-1">
+                <table class="table table-striped table-sm" id="table-1">
                     <thead>
                         <tr>
                            <th class="text-center">No.</th>

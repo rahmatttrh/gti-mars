@@ -410,39 +410,102 @@
                   </div>
                </div>
             </div>
-            @elseif($schedule->class == 'Fuel Oil')
-            {{-- <div class="card">
-               <div class="card-body">
-                  <div class="summary-item">
-                  <h6>Fuel Oil </h6>
-                  <ul class="list-unstyled list-unstyled-border">
-                     
-                     <li class="media">
-                        <a href="#">
-                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                        </a>
-                        <div class="media-body">
-                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->qty}} KL</a></div>
-                        </div>
-                     </li>
-                  </ul>
-                  </div>
-               </div>
-            </div> --}}
+            @elseif($schedule->class == 'Fuel Oil' )
             <div class="card border">
                <div class="card-header">
                   <b>Fuel Oil</b>
                </div>
                <div class="card-body">
                   <div class="d-flex align-items-center">
-                     <img width="70" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
+                     <img width="100" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
                      <div>
-                        <h5>{{$schedule->requests()->first()->qty}}</h5>
-                        <span>KL</span>
+                        <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
+                        
+                        Requested by {{$schedule->requests()->first()->user->name}}
                      </div>
                   </div>
-                  <br>
-                  Requested by {{$schedule->requests()->first()->user->name}}
+               </div>
+               <div class="card-footer bg-whitesmoke">
+                  @if (auth()->user()->hasRole('marine'))
+                     @if ($schedule->status == 0)
+                     <form action="{{route('schedule.jetty.update')}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+
+                        <div class="form-row">
+                           <div class="form-group col-md-4">
+                              <div class="input-group">
+                                 <select id="jetty" class="form-control" name="jetty" id="jetty">
+                                    <option selected disabled>Choose one...</option>
+                                    <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
+                                    <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
+                                    <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
+                                    <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
+                                 </select>
+                                 <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                     @else
+                     <span>{{$schedule->remark}}</span>
+                     @endif
+                     
+                     @elseif(auth()->user()->hasRole('vessel'))
+                     <span>{{$schedule->remark}}</span>
+                  @endif
+               </div>
+            </div>
+            @elseif($schedule->class == 'Fresh Water')
+            <div class="card border">
+               <div class="card-header">
+                  <b>Fresh Water</b>
+               </div>
+               <div class="card-body">
+                  <div class="d-flex align-items-center">
+                     <img width="100" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
+                     <div>
+                        <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
+                        
+                        Requested by {{$schedule->requests()->first()->user->name}}
+                     </div>
+                  </div>
+               </div>
+               <div class="card-footer bg-whitesmoke">
+                  @if (auth()->user()->hasRole('marine'))
+                     @if ($schedule->status == 0)
+                     <form action="{{route('schedule.jetty.update')}}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+
+                        <div class="form-row">
+                           <div class="form-group col-md-4">
+                              <div class="input-group">
+                                 <select id="jetty" class="form-control" name="jetty" id="jetty">
+                                    <option selected disabled>Choose one...</option>
+                                    <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
+                                    <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
+                                    <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
+                                    <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
+                                 </select>
+                                 <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </form>
+                     @else
+                     <span>{{$schedule->remark}}</span>
+                     @endif
+                     
+                     @elseif(auth()->user()->hasRole('vessel'))
+                     <span>{{$schedule->remark}}</span>
+                  @endif
                </div>
             </div>
             @endif
@@ -471,27 +534,27 @@
    </div>
 
   {{-- Modal Send Schedule --}}
-  @if ($schedule->vessel)
-  <div class="modal fade" id="schedule-send" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Send Schedule</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Send this schedule to {{$schedule->vessel->name}}?
-        </div>
-        <div class="modal-footer bg-whitesmoke">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{{route('schedule.send', enkripRambo($schedule->id))}}" class="btn btn-primary">Send</a>
-        </div>
+   @if ($schedule->vessel)
+   <div class="modal fade" id="schedule-send" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Confirm Send Schedule</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               Send this schedule to {{$schedule->vessel->name}}?
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('schedule.send', enkripRambo($schedule->id))}}" class="btn btn-primary">Send</a>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
-  @endif
+   </div>
+   @endif
 
   {{-- Modal Accept Schedule --}}
   <div class="modal fade" id="schedule-accept" tabindex="-1" role="dialog" aria-hidden="true">

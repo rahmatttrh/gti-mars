@@ -86,7 +86,7 @@ class ActivitySeeder extends Seeder
       ]);
       DB::table('activities')->insert([
          'type_id' => 6,
-         'name' => 'Flush Water',
+         'name' => 'Fresh Water',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
