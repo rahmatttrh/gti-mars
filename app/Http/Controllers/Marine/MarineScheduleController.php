@@ -785,17 +785,24 @@ class MarineScheduleController extends Controller
       $schedule = Schedule::find($choseRoute->schedule_id);
       // dd($choseRoute->port->name);
 
-      $after = ScheduleRoute::find($req->after);
-      // dd($after->port->name);
-      $remainRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $after->rank)->where('id', '!=', $choseRoute->id)->get();
-      foreach ($remainRoutes as $rr) {
-         $rr->update([
-            'rank' => $rr->rank + 1
-         ]);
+      if ($req->after) {
+         $after = ScheduleRoute::find($req->after);
+         // dd($after->port->name);
+         $remainRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', '>', $after->rank)->where('id', '!=', $choseRoute->id)->get();
+         foreach ($remainRoutes as $rr) {
+            $rr->update([
+               'rank' => $rr->rank + 1
+            ]);
+         }
+         $newRank = $after->rank + 1;
+      } else{
+         $newRank = $choseRoute->rank;
       }
+      
 
       $choseRoute->update([
-         'rank' => $after->rank + 1
+         'date' => $req->date,
+         'rank' => $newRank
       ]);
 
       return redirect()->back()->with('success', 'Schedule Route successfully updated');

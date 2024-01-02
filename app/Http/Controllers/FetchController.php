@@ -124,7 +124,7 @@ class FetchController extends Controller
       $now = Carbon::now();
       $schedules = Schedule::where('date', $date)->get();
       // dd($schedules);
-      $scheduleRoutes = ScheduleRoute::where('date', $date)->where('port_id', $origin)->get();
+      $scheduleRoutes = ScheduleRoute::where('port_id', $origin)->orderBy('updated_at', 'desc')->take(5)->get();
 
       // Masukin ke array
       $result = array();
@@ -176,7 +176,7 @@ class FetchController extends Controller
             <td>
                ' . $vesselName  . ' 
             </td>
-            <td>' . \Carbon\Carbon::parse($row->date)->format('l') .  ' on '. $row->port->name .' 
+            <td>' . \Carbon\Carbon::parse($row->date)->format('d-m-Y') .  ' on '. $row->port->name .' 
             </td>
             
             
@@ -206,64 +206,7 @@ class FetchController extends Controller
          // </tr>';
       }
 
-      foreach ($schedules as $schedule) {
-         // $schedule = Schedule::find($row->schedule_id);
-         $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
-
-         if ($schedule->vessel_id != null) {
-            $vesselName = $schedule->vessel->name;
-            $vesselType = $schedule->vessel->type;
-            $totalWeight = $schedule->total_weight;
-            $vesselDeadweight = $schedule->vessel->deadweight;
-            $persen = $totalWeight / $vesselDeadweight * 100;
-         } else {
-            $vesselName = '-';
-            $vesselType = '';
-            $totalWeight = 0;
-            $vesselDeadweight = '0';
-            $persen = '-';
-         }
-
-         if ($first != null) {
-            $portName = $first->port->name;
-            $portDate = \Carbon\Carbon::parse($first->date)->format('d/m/Y');
-         } else {
-            $portName = '-';
-            $portDate = '-';
-         }
-         
-         $result[] = '<tr>
-            <td>
-               ' . $vesselName  . ' 
-            </td>
-            <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' 
-            </td>
-            
-            
-            <td> ' .
-                  $portName . ' 
-               
-            </td>
-            <td>' . $persen  . ' %</td>
-         </tr>';
-      //    $result[] = '<tr>
-      //    <td>
-      //       ' . $vesselName  . ' <br>
-      //       <small> ' . $vesselType . '</small>
-      //    </td>
-      //    <td>' . \Carbon\Carbon::parse($schedule->date)->format('l') .  ' on '. $portName .' <br> 
-      //       <small> ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') .' </small>
-      //    </td>
-         
-         
-      //    <td> ' .
-      //          $portName . ' 
-      //       <br>
-      //       <small> '. $portDate .'</small>
-      //    </td>
-      //    <td>' . $persen  . ' %</td>
-      // </tr>';
-      }
+      
 
       // foreach ($schedules as $row) {
       //    $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
@@ -308,7 +251,7 @@ class FetchController extends Controller
          
             $near[] = '<tr>
                <td>
-                  ' . $row->name  . ' <br>
+                  ' . $row->name  . ' /
                   <small> ' . $row->type . '</small>
                </td>
             </tr>';

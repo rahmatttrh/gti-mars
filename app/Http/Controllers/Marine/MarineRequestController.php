@@ -121,6 +121,7 @@ class MarineRequestController extends Controller
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,
+               'date' =>  Carbon::now(),
                'port_id' => $request->origin_id,
                'rank' => $lastScheduleRoutesA->rank + 1,
                'date' => null,
@@ -154,6 +155,7 @@ class MarineRequestController extends Controller
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,
+               'date' =>  Carbon::now(),
                'port_id' => $request->destination_id,
                'rank' => $lastScheduleRoutes->rank + 1,
                'date' => null,
@@ -168,6 +170,7 @@ class MarineRequestController extends Controller
          ScheduleRoute::create([
             'schedule_id' => $schedule->id,
             'request_id' => $request->id,
+            'date' =>  Carbon::now(),
             'port_id' => $request->origin_id,
             'rank' => 1,
             'status' => 1
@@ -176,6 +179,7 @@ class MarineRequestController extends Controller
          ScheduleRoute::create([
             'schedule_id' => $schedule->id,
             'request_id' => $request->id,
+            'date' =>  Carbon::now(),
             'port_id' => $request->destination_id,
             'rank' => 2,
             'status' => 1
@@ -283,6 +287,7 @@ class MarineRequestController extends Controller
                ScheduleRoute::create([
                   'schedule_id' => $schedule->id,
                   'request_id' => $request->id,
+                  'date' =>  Carbon::now(),
                   'port_id' => $request->origin_id,
                   'rank' => $lastScheduleRoutesA->rank + 1
                ]);
@@ -302,6 +307,7 @@ class MarineRequestController extends Controller
                ScheduleRoute::create([
                   'schedule_id' => $schedule->id,
                   'request_id' => $request->id,
+                  'date' =>  Carbon::now(),
                   'port_id' => $request->destination_id,
                   'rank' => $lastScheduleRoutes->rank + 1
                ]);
@@ -314,6 +320,7 @@ class MarineRequestController extends Controller
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,
+               'date' =>  Carbon::now(),
                'port_id' => $request->origin_id,
                'rank' => 1
             ]);
@@ -321,6 +328,7 @@ class MarineRequestController extends Controller
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,
+               'date' =>  Carbon::now(),
                'port_id' => $request->destination_id,
                'rank' => 2
             ]);

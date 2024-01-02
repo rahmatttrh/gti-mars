@@ -10,8 +10,9 @@
                <tr>
                   <th>ID</th>
                   <th>Route</th>
-                  <th>User</th>
+                  <th>Date</th>
                   <th>Vessel</th>
+                  <th>User</th>
                   <th>Action</th>
                </tr>
             </thead>
@@ -24,15 +25,21 @@
                            <small>{{$req->activity->name}} {{$req->description}}</small>
                         </td>
                         <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
-                        <td>{{$req->employee->name}}</td>
+                        <td>{{formatDate($req->date)}}</td>
+                        
                         <td>
                            {{$req->schedule->vessel->name ?? '-'}} <br>
                            <small>{{$req->schedule->code}}</small>
                         </td>
                         <td>
+                           {{$req->employee->name}}
+                           <br>
+                           <small>{{formatDateTime($req->created_at)}}</small>
+                        </td>
+                        <td>
                            <div class="btn-group btn-sm">
-                              <a href="#" class="btn btn-sm btn-light" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
-                              <a href="#" class="btn btn-sm btn-light" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change</a>
+                              <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
+                              <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change</a>
                               <a href="{{route('request.detail', enkripRambo($req->id))}}" class="btn btn-sm btn-primary">Detail</a>
                            </div>
                         </td>

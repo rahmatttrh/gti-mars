@@ -133,8 +133,8 @@
                   <div class="card-header">
                      <h4>Nearest Vessel</h4>
                   </div>
-                  <div class="card-body p-0">
-                     <table class="table table-striped">
+                  <div class="card-body">
+                     <table class="table table-striped table-sm">
                         {{-- <thead>
                            <tr>
                               <th scope="col">Vessel</th>
@@ -148,8 +148,8 @@
                   <div class="card-header">
                      <h4>Available Schedule</h4>
                   </div>
-                  <div class="card-body p-0">
-                     <table class="table  table-striped">
+                  <div class="card-body ">
+                     <table class="table  table-striped table-sm">
                         {{-- <thead>
                            <tr>
                               <th>Vessel</th>

@@ -3,13 +3,13 @@
       {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Draft
       </button> --}}
-      <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span><small>00 : Draft</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span><small>Draft</small></div>
       @elseif($request->status == 1)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>01 : Validasi Fleet Control</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>Validasi Marine</small></div>
       @elseif($request->status == 2)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>02 : Schedule on Set</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>Schedule on Set</small></div>
       @elseif($request->status == 3)
-      <div class="badge badge-warning "><span class="badge bg-info me-1"></span><small>03 : Waiting Vessel</small></div>
+      <div class="badge badge-warning "><span class="badge bg-info me-1"></span><small>Waiting Vessel</small></div>
       @elseif($request->status == 4)
       {{-- <button type="button" class="btn btn-info btn-icon icon-left">
          <i class="fas fa-edit"></i>{{$request->getStatus()->status->name}} 

@@ -20,7 +20,7 @@ class CreateParentRequestsTable extends Migration
          $table->smallInteger('status');
          $table->string('code');
          $table->mediumInteger('origin_id');
-         $table->dateTime('date');
+         $table->date('date');
          $table->mediumInteger('user_id');
          $table->mediumInteger('employee_id');
          $table->mediumInteger('department_id');

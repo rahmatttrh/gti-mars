@@ -35,6 +35,7 @@
                            <th>Route</th>
                            <th>Vessel</th>
                            <th>Date</th>
+                           <th>Created at</th>
                            <th>Status</th>
                            <th></th>
                         </tr>
@@ -44,7 +45,11 @@
                            @foreach ($progress as $request)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td>{{$request->code}}</td>
+                                 <td>
+                                    {{$request->code}}
+                                    {{-- <br>
+                                    <small>{{$request->activity->name}}</small> --}}
+                                 </td>
                                  <td>{{$request->activity->name}}</td>
                                  <td>
                                   {{-- @if ($request->parent_id)
@@ -62,6 +67,7 @@
                                  {{-- <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td> --}}
                                  <td><a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name ?? 'Empty'}}</a></td>
                                  <td>{{formatDate($request->date)}}</td>
+                                 <td>{{formatDateTime($request->created_at)}}</td>
                                  <td>
                                     {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                                        @if ($request->status < 3)

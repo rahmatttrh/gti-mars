@@ -179,8 +179,8 @@
                      {{-- <x-schedule-stisla.incoming :recents="$recentRequests" /> --}}
                      <div id="accordion">
                         <div class="accordion">
-                        <div class="accordion-header bg-warning" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
-                           <h4>Incoming Request <i class="fa fa-exclamation"></i></h4>
+                        <div class="accordion-header bg-info" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
+                           <h4>Incoming Request from User <i class="fa fa-exclamation"></i></h4>
                         </div>
                         <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
                            <x-schedule-stisla.incoming :recents="$recentRequests" />
@@ -213,7 +213,7 @@
                         <thead>
                            <tr>
                               <th>MTD</th>
-                              <th>Destination</th>
+                              <th>Route</th>
                               <th>Descriptive</th>
                               <th>Contract</th>
                               <th class="text-center">Qty</th>
@@ -237,7 +237,7 @@
                                        {{$item->mtd}}
                                     </div>
                                     </td>
-                                    <td>{{$item->request->destination->name}}</td>
+                                    <td>{{$item->request->origin->name}} - {{$item->request->destination->name}}</td>
                                     <td class=" text-truncate ">
                                     {{$item->desc}} <br>
                                     {{-- <small>{{$item->contract}}</small> --}}
@@ -798,49 +798,69 @@
 
 
   {{-- Modal reorder route --}}
-  @foreach ($fixRoutes as $route)
-    <div class="modal fade" id="reorder-route-{{$route->id}}" tabindex="1" role="dialog"  aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <form action="{{route('schedule.reorder.route')}}" method="POST">
-          @csrf
-          <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-          <input type="number" name="route" id="route" value="{{$route->id}}" hidden>
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Reorder Route </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              {{-- Change {{$req->activity->name}} {{$req->description}} to  ...
-              <hr> --}}
-              <div class="form-row">
-                <div class="form-group col-md-12">
-                  <label for="after">Move {{$route->port->name}} After</label>
-                  <select id="after" name="after" class="form-control">
-                    {{-- <option selected>Choose...</option>
-                    <option>...</option> --}}
-                    @foreach ($fixRoutes as $fr)
-                      @if ($fr->id != $route->id )
-                      <option  value="{{$fr->id}}"> {{$fr->port->name}}</option>
-                      @endif
-                      
-                    @endforeach
-                  </select>
-                </div>
-              </div>
-              
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save</button>
-            </div>
-          </div>
-        </form>
+   @foreach ($fixRoutes as $route)
+      <div class="modal fade" id="reorder-route-{{$route->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <form action="{{route('schedule.reorder.route')}}" method="POST">
+               @csrf
+               <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+               <input type="number" name="route" id="route" value="{{$route->id}}" hidden>
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title">Edit Route </h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+                  <div class="modal-body">
+                  {{-- Change {{$req->activity->name}} {{$req->description}} to  ...
+                  <hr> --}}
+                     <div class="form-row">
+                        <div class="form-group col-md-8">
+                           <label for="after">Destination</label>
+                           <select id="after" disabled name="after" class="form-control">
+                           {{-- <option selected>Choose...</option>
+                           <option>...</option> --}}
+                           @foreach ($fixRoutes as $fr)
+                             
+                              <option {{$fr->id == $route->id ? 'selected' : ''}}  value="{{$fr->id}}"> {{$fr->port->name}}</option>
+                           
+                              
+                           @endforeach
+                           </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                           <label for="after">Date</label>
+                           <input type="date" name="date" id="date" value="{{$route->date}}" class="form-control">
+                        </div>
+                     </div>
+                     <div class="form-row">
+                        <div class="form-group col-md-12">
+                           <label for="after">Move {{$route->port->name}} After</label>
+                           <select id="after" name="after" class="form-control">
+                              <option selected disabled>Choose...</option>
+                           @foreach ($fixRoutes as $fr)
+                              @if ($fr->id != $route->id )
+                              
+                           
+                              <option  value="{{$fr->id}}"> {{$fr->port->name}}</option>
+                              @endif
+                              
+                           @endforeach
+                           </select>
+                        </div>
+                     </div>
+                  
+                  </div>
+                  <div class="modal-footer bg-whitesmoke">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     <button type="submit" class="btn btn-primary">Save</button>
+                  </div>
+               </div>
+            </form>
+         </div>
       </div>
-    </div>
-  @endforeach
+   @endforeach
 
 
   {{-- Modal Cofirm Arrival Cargo --}}

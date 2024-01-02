@@ -25,9 +25,13 @@ class ParentRequestController extends Controller
       $dekripId = dekripRambo($id);
       $parent = ParentRequest::find($dekripId);
       $now = Carbon::now();
+      // dd($parent->origin_id);
+      // $scheduleRoutes = ScheduleRoute::where('port_id', 12)->where('schedule_id', 29)->first();
+      // dd($scheduleRoutes->schedule->vessel->name);
 
       if ($parent->status == 202) {
-         $scheduleRoutes = ScheduleRoute::where('date', $parent->date)->where('port_id', $parent->origin_id)->get();
+         
+         $scheduleRoutes = ScheduleRoute::where('port_id', $parent->origin_id)->get();
       } else {
          $scheduleRoutes = null;
       }
@@ -46,6 +50,7 @@ class ParentRequestController extends Controller
       $vessels = Vessel::where('port_id', $parent->origin_id)->get();
       $scheduleRoutes = ScheduleRoute::where('port_id', $parent->origin_id)->where('date', $parent->date)->get();
       $schedules = Schedule::where('date', $parent->date)->get();
+      // dd($scheduleRoutes);
       // foreach($scheduleRoutes as $sche){
       //    dd($sche->schedule->vessel->name);
       // }
@@ -151,7 +156,7 @@ class ParentRequestController extends Controller
          'status' => 1
       ]);
 
-      return redirect()->back()->with('success', 'Request Activity sent to Fleet Control');
+      return redirect()->route('request.progress')->with('success', 'Request Activity sent to Fleet Control');
    }
 
    public function releaseOld($id)
@@ -206,6 +211,9 @@ class ParentRequestController extends Controller
 
    public function addCrew(Request $req){
       // dd('add crew');
+      $req->validate([
+         'destination' => 'required'
+      ]);
       $parent = ParentRequest::find($req->parent);
       // dd($parent->id);
       Excel::import(new PassengerItemImport($parent->id, $req->destination), $req->file('file-crew'));

@@ -5,11 +5,11 @@
 @section('content')
 <section class="section">
    <div class="section-header">
-   <h1 class="section-title">Request Detail</h1>
-   <div class="section-header-breadcrumb">
-      <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-      <div class="breadcrumb-item active">Request Detail</div>
-   </div>
+      <h1 class="section-title">Request Detail</h1>
+      <div class="section-header-breadcrumb">
+         <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
+         <div class="breadcrumb-item active">Request Detail</div>
+      </div>
    </div>
 
    <div class="section-body">
@@ -20,54 +20,50 @@
 
       <div class="row">
          <div class="col-md-12">
-            <div class="d-flex">
-               @if (auth()->user()->hasRole('department'))
-                  <x-parent-stisla.action-user :parent="$parent" :ports="$ports" />
-               @endif
-               
-
-               <div class="btn-group ml-2">
-                  <a href="{{route('invoice.request', enkripRambo($parent->id))}}" class="btn btn-light border btn-lg">Preview PDF</a>
-                  
-                  @if (auth()->user()->hasRole('department') )
-                     <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
-                        <span class="sr-only">Toggle Dropdown</span>
-                     </button>
-                     <div class="dropdown-menu">
-                        {{-- @if ($request->status == 00) --}}
-                        {{-- <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a> --}}
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#request-delete">
-                           Delete
-                        </a>
-                        {{-- @endif --}}
-                        
-                        {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-delete">Delete</a> --}}
-                        {{-- <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a> --}}
-                     </div>
-                  @endif
-               
-               </div>
-            </div>
+            
          </div>
          <div class="col-12">
          
             {{-- @if (auth()->user()->hasRole('department'))
             @endif --}}
             
-            <hr>
+            
             <div class="card">
-               {{-- <div class="card-header">
-                  <h4>{{formatDateName($parent->date)}}</h4>
-                  <div class="card-header-action">
-                  
-                  </div>
-               </div> --}}
                <div class="card-body">
                   
                   <div class="row">
                      <div class="col">
-                        {{$parent->activity->name}} <br>
+                        <div class="d-flex">
+                           @if (auth()->user()->hasRole('department'))
+                              <x-parent-stisla.action-user :parent="$parent" :ports="$ports" />
+                           @endif
+                           
+            
+                           <div class="btn-group ml-2">
+                              {{-- <a href="{{route('invoice.request', enkripRambo($parent->id))}}" class="btn btn-light border btn-lg">Preview PDF</a> --}}
+                              
+                              @if (auth()->user()->hasRole('department') )
+                                 <button type="button" class="btn btn-light border btn-lg dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                 </button>
+                                 <div class="dropdown-menu">
+                                    {{-- @if ($request->status == 00) --}}
+                                    {{-- <a class="dropdown-item" href="{{route('request.edit', enkripRambo($request->id))}}"> Edit</a> --}}
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#request-delete">
+                                       Delete
+                                    </a>
+                                    {{-- @endif --}}
+                                    
+                                    {{-- <a class="dropdown-item" href="#" data-toggle="modal" data-target="#schedule-delete">Delete</a> --}}
+                                    {{-- <a class="dropdown-item" href="{{route('document.manifest', enkripRambo($schedule->id))}}">Preview Manifest</a> --}}
+                                 </div>
+                              @endif
+                           
+                           </div>
+                        </div>
+                        <hr>
+                        {{$parent->activity->name}} Activity
                         From <b>{{$parent->origin->name}}</b><br>
                         <small> Request by {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
                      </div>
@@ -78,7 +74,7 @@
                            <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
                            <div class="form-group">
                               <div class="input-group">
-                                    <input type="file" class="form-control" name="file-cargo" id="file-cargo">
+                                    <input type="file" required class="form-control" name="file-cargo" id="file-cargo">
                                     
                                  <div class="input-group-append">
                                     <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
@@ -98,11 +94,11 @@
                            <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
                            <div class="form-group">
                               <div class="input-group">
-                                 <input type="file" class="form-control" name="file-crew" id="file-crew">
-                                 <select class="form-control" name="destination" id="destination">
+                                 <input type="file" class="form-control" required name="file-crew" id="file-crew">
+                                 <select class="form-control" name="destination" required id="destination">
                                     <option selected disabled>Destination...</option>
                                        @foreach ($ports as $port)
-                                       <option value="{{$port->id}}">{{$port->name}} *</option>
+                                       <option value="{{$port->id}}">{{$port->name}}</option>
                                        @endforeach
                                  </select>
                                  <div class="input-group-append">
@@ -138,9 +134,9 @@
                                           @endforeach
                                        @endif
 
-                                       @foreach ($schedules as $schedule)
+                                       {{-- @foreach ($schedules as $schedule)
                                           <option {{$parent->requests->first()->schedule_id == $schedule->id ? 'selected' : ''}} value="{{$schedule->id}}">{{$schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $schedule->id ? '- Selected' : ''}}</option>
-                                          @endforeach
+                                          @endforeach --}}
                                        
                                  </select>
                                  <div class="input-group-append">
@@ -154,157 +150,150 @@
                      
                   </div>
                </div>
-            </div>
-            <div class="card">
-            {{-- <div class="card-header">
-               {{count($parent->requests)}} Destination
-            </div> --}}
-            <div class="card-body">
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                  <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
-                  </li>
-               </ul>
-               <div class="tab-content" id="myTabContent">
-                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                  <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-1">
-                        <thead>
-                        <tr>
-                           <th>Status</th>
-                           <th>MTD</th>
-                           <th>Destination</th>
-                           <th>Descriptive</th>
-                           <th>Contract</th>
-                           <th class="text-center">Qty</th>
-                           <th class="text-center">Weight</th>
-                           <th class="text-center">Drop</th>
-                           <th class="text-center">Size (m<sup>2</sup>)</th>
-                           <th></th>
-                           {{-- @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                              <th>Action</th>
-                           @endif --}}
-                        </tr>
+               <div class="card-body">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                     <li class="nav-item">
+                     <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
+                     </li>
+                     <li class="nav-item">
+                     <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
+                     </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                     <div class="table-responsive">
+                        <table class="table table-striped table-sm" id="table-1">
+                           <thead>
+                           <tr>
+                              <th>Status</th>
+                              <th>MTD</th>
+                              <th>Destination</th>
+                              <th>Descriptive</th>
+                              <th>Contract</th>
+                              <th class="text-center">Qty</th>
+                              <th class="text-center">Weight</th>
+                              <th class="text-center">Drop</th>
+                              <th class="text-center">Size (m<sup>2</sup>)</th>
+                              <th></th>
+                              {{-- @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                 <th>Action</th>
+                              @endif --}}
+                           </tr>
+                           </thead>
+                           <tbody>
+                           @foreach ($parent->requests as $request)
+                           {{-- <tr>
+                              <td colspan="8">{{$request->destination->name}}</td>
+                           </tr> --}}
+                              @foreach ($request->cargoItems as $item)
+                                 <tr>
+                                    <td><x-status-stisla.request :request="$item->request" /></td>
+                                    <td class=" text-truncate">
+                                       <div class="dropdown">
+                                       {{$item->mtd}}
+                                       </div>
+                                    </td>
+                                    <td>{{$item->request->destination->name}}</td>
+                                    <td class=" text-truncate ">
+                                       {{$item->desc}} 
+                                    </td>
+                                    {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
+                                    <td class=" text-truncate">{{$item->contract}}</td>
+                                    <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                                    <td class=" text-center">{{$item->weight}}</td>
+                                    <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                                    {{-- <td class=" text-center">
+                                       {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
+                                    
+                                    </td> --}}
+                                    <td class=" text-center">{{$item->size}}</td>
+                                    
+                                    {{-- <td>
+                                       @if ($request->status == 0)
+                                       <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                       @endif
+                                    </td> --}}
+                                    @if (auth()->user()->hasRole('department') && $parent->status == 0)
+                                       <td>
+                                       <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
+                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
+                                       </div>
+                                       </td>
+                                       @elseif($request->status == 10 && auth()->user()->hasRole('department'))
+                                       <td>
+                                       @if ($item->status == 1)
+                                          <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                          <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
+                                          @else
+                                          -
+                                       @endif
+                                    </td>
+                                    @else
+                                    <td>-</td>
+                                    @endif
+                                    
+                                 </tr>
+                              @endforeach
+                           @endforeach
+                           </tbody>
+                        </table>
+                     </div>
+                     </div>
+                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                     <div class="table-responsive">
+                        <table class="table table-striped table-sm" id="table-5">
+                           <thead>
+                           <tr>
+                              <th>Status</th>
+                                 <th>Type</th>
+                                 <th>Route</th>
+                              <th>Name</th>
+                              <th>Barcode</th>
+                              <th>Department</th>
+                              <th>Company</th>
+                              <th>Desc</th>
+                              <th></th>
+                           </tr>
                         </thead>
                         <tbody>
-                        @foreach ($parent->requests as $request)
-                        {{-- <tr>
-                           <td colspan="8">{{$request->destination->name}}</td>
-                        </tr> --}}
-                           @foreach ($request->cargoItems as $item)
+                           
+                           @foreach ($parent->requests as $request)
+                           @foreach ($request->passengerItems as $passenger)
                               <tr>
-                                 <td><x-status-stisla.request :request="$item->request" /></td>
-                                 <td class=" text-truncate">
-                                    <div class="dropdown">
-                                    {{$item->mtd}}
-                                    </div>
+                                 <td><x-status-stisla.request :request="$passenger->request" /></td>
+                                 <td>{{$passenger->type}}</td>
+                                 <td> {{$passenger->request->destination->name}}</td>
+                                 <td >{{$passenger->name}}</td>
+                                 <td >{{$passenger->barcode}}</td>
+                                 <td >{{$passenger->department}}</td>
+                                 <td >{{$passenger->company}}</td>
+                                 <td >{{$passenger->desc}}</td>
+                                 <td>
+                                    @if (auth()->user()->hasRole('department') && $parent->status == 0)
+                                       <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}"><i class="fa fa-edit"></i></button>
+                                       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}"><i class="fa fa-trash"></i></button>
+                                       </div>
+                                    @endif
+                                    
                                  </td>
-                                 <td>{{$item->request->destination->name}}</td>
-                                 <td class=" text-truncate ">
-                                    {{$item->desc}} 
-                                 </td>
-                                 {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
-                                 <td class=" text-truncate">{{$item->contract}}</td>
-                                 <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                                 <td class=" text-center">{{$item->weight}}</td>
-                                 <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                                 {{-- <td class=" text-center">
-                                    {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
-                                 
-                                 </td> --}}
-                                 <td class=" text-center">{{$item->size}}</td>
-                                 
-                                 {{-- <td>
+                                 {{-- <td class="text-end">
                                     @if ($request->status == 0)
-                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
                                     @endif
                                  </td> --}}
-                                 @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                    <td>
-                                    <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
-                                       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
-                                    </div>
-                                    </td>
-                                    @elseif($request->status == 10 && auth()->user()->hasRole('department'))
-                                    <td>
-                                    @if ($item->status == 1)
-                                       <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                       <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
-                                       @else
-                                       -
-                                    @endif
-                                 </td>
-                                 @else
-                                 <td>-</td>
-                                 @endif
-                                 
                               </tr>
+                              {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
                            @endforeach
-                        @endforeach
+                           @endforeach
                         </tbody>
-                     </table>
-                  </div>
-                  </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                  <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-5">
-                        <thead>
-                        <tr>
-                           <th>Status</th>
-                              <th>Type</th>
-                              <th>Route</th>
-                           <th>Name</th>
-                           <th>Barcode</th>
-                           <th>Department</th>
-                           <th>Company</th>
-                           <th>Desc</th>
-                           <th></th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        
-                        @foreach ($parent->requests as $request)
-                        @foreach ($request->passengerItems as $passenger)
-                           <tr>
-                              <td><x-status-stisla.request :request="$passenger->request" /></td>
-                              <td>{{$passenger->type}}</td>
-                              <td> {{$passenger->request->destination->name}}</td>
-                              <td >{{$passenger->name}}</td>
-                              <td >{{$passenger->barcode}}</td>
-                              <td >{{$passenger->department}}</td>
-                              <td >{{$passenger->company}}</td>
-                              <td >{{$passenger->desc}}</td>
-                              <td>
-                                 @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                    <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}"><i class="fa fa-edit"></i></button>
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}"><i class="fa fa-trash"></i></button>
-                                    </div>
-                                 @endif
-                                 
-                              </td>
-                              {{-- <td class="text-end">
-                                 @if ($request->status == 0)
-                                 <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
-                                 @endif
-                              </td> --}}
-                           </tr>
-                           {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
-                        @endforeach
-                        @endforeach
-                     </tbody>
-                     </table>
-                  </div>
+                        </table>
+                     </div>
+                     </div>
                   </div>
                </div>
             </div>
-            </div>
-
-            
          </div>
       </div>
    </div>

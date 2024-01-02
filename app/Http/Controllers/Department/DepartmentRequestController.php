@@ -108,6 +108,11 @@ class DepartmentRequestController extends Controller
             'file-cargo' => 'required'
          ]);
       }
+
+      if ($req->origin == $req->destination) {
+         return redirect()->back()->with('warning', 'From and Destination has the same Value');
+      }
+
       // dd('ok');
       $employee = Employee::where('email', auth()->user()->email)->first();
       if ($employee) {
@@ -629,10 +634,10 @@ class DepartmentRequestController extends Controller
       // $depart = Department::where('email', auth()->user()->email)->first();
       if ($employee) {
          $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-         $progress = ModelsRequest::where('status', '>', 0)->where('employee_id', $employee->id)->get();
+         $progress = ModelsRequest::where('status', '>', 0)->where('employee_id', $employee->id)->orderBy('updated_at', 'desc')->get();
       } else {
          $departs = ModelsRequest::where('user_id', auth()->user()->id)->get();
-         $progress = ModelsRequest::where('status', '>', 0)->where('user_id', auth()->user()->id)->get();
+         $progress = ModelsRequest::where('status', '>', 0)->where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();
       }
       // $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
       
