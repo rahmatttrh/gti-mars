@@ -101,8 +101,9 @@ class VdrController extends Controller
 
 
 
-
-        return view('pages.vdr.create-vdr', [
+      //   pages.vdr.create-vdr
+      return view('pages-stisla.vdr.home-vessel', [
+      //   return view('pages.vdr.create-vdr', [
             'user' => $user,
             'vessel' => $vessel,
             'vdr' => $vdr,

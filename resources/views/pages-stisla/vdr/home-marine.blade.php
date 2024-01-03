@@ -68,6 +68,7 @@
             <div class="card">
                
                <div class="card-body">
+                  <div class="badge badge-info">Fuel Consumption</div>
                   <div id="chartdiv3"></div>
                </div>
                
