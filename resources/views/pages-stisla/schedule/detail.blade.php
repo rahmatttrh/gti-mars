@@ -352,11 +352,11 @@
                               <tr>
                                  <td>{{$passenger->type}}</td>
                                  <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td>
-                                 <td>{{$passenger->name}}</td>
-                                 <td>{{$passenger->barcode}}</td>
+                                 <td class="text-truncate">{{$passenger->name}}</td>
+                                 <td class="text-truncate">{{$passenger->barcode}}</td>
                                  <td class="text-truncate">{{$passenger->department}}</td>
                                  <td class="text-truncate">{{$passenger->company}}</td>
-                                 <td>{{$passenger->desc}}</td>
+                                 <td class="text-truncate">{{$passenger->desc}}</td>
                                  
                               </tr>
                            @endforeach

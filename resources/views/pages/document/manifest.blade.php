@@ -1,6 +1,6 @@
 @extends('layouts.app-doc')
 @section('title')
-   Preview Manifest
+   Manifest {{$schedule->code}}
 @endsection
 @section('content')
 <div class="container-xl">
@@ -29,7 +29,7 @@
          <div class="card-body">
             <div class="row border-bottom mb-4">
                <div class="col-12">
-                  <h1 class="text-primary border-bottom pb-2">MANIFEST VESSEL</h1>
+                  <h1 class="text-primary border-bottom pb-2">MANIFEST {{$schedule->code}}</h1>
                </div>
                <div class="col-6">
                   <p class="h3">DETAIL</p>
@@ -93,9 +93,9 @@
                            
                            <th>Description</th>
                            <th>Doc Number</th>
-                           
+                           <th>Contract</th>
                            <th class="text-center" style="width: 1%">Qnt</th>
-                           <th class="text-end" style="width: 1%">Unit</th>
+                           <th class="text-center" style="width: 1%">Unit</th>
                            <th class="text-center" style="width: 10%">Size (m<sup>2</sup>)</th>
                            <th class="text-center" style="width: 10%">Weight (ton)</th>
                            
@@ -109,12 +109,15 @@
                            <small>{{$cargo->remark}}</small>
                         </td>
                         <td>
-                           <p class="strong mb-1">{{$cargo->no_doc}}</p>
+                           <p class="strong mb-1">{{$cargo->mtd}}</p>
+                        </td>
+                        <td>
+                           <p class="strong mb-1">{{$cargo->contract}}</p>
                         </td>
                         <td class="text-center">
                            {{$cargo->qty}}
                         </td>
-                        <td class="text-end">{{$cargo->unit}}</td>
+                        <td class="text-center">{{$cargo->unit}}</td>
                         <td class="text-center">
                            {{$cargo->size}}
                         </td>
@@ -124,7 +127,7 @@
                      </tr>
                      @endforeach
                      <tr>
-                        <td colspan="4" class="text-end strong">Total</td>
+                        <td colspan="5" class="text-end strong">Total</td>
                         <td class="text-center">
                            {{$req->cargoItems->sum('size')}}
                         </td>
@@ -165,7 +168,7 @@
                               <th>Desc</th>
                            </tr>
                         </thead>
-                        @foreach ($req->passengerItems->where('type', 'Depart') as $item)
+                        @foreach ($req->passengerItems as $item)
                         <tr>
                            <td>{{$item->type}}</td>
                            <td>

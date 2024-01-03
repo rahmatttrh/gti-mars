@@ -30,7 +30,7 @@
                   </button>
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
-                     <a href="/" class="d-flex align-items-center">
+                     
                      @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
                         <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                         {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
@@ -68,149 +68,8 @@
                      @endif
                      
                      
-                     </a>
                   </h1>
-                  <div class="navbar-nav flex-row order-md-last">
-                     <a href="?theme=dark" class="nav-link px-0 hide-theme-dark me-3" title="Enable dark mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                        <!-- Download SVG icon froƒm http://tabler-icons.io/i/moon -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" /></svg>
-                        </a>
-                        <a href="?theme=light" class="nav-link px-0 hide-theme-light me-3" title="Enable light mode" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                        <!-- Download SVG icon from http://tabler-icons.io/i/sun -->
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><circle cx="12" cy="12" r="4" /><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" /></svg>
-                        </a>
-                     <div class="nav-item d-none d-md-flex me-3">
-                        <div class="btn-list">
-                           <div class="btn">
-                              @if (auth()->user()->hasRole('superuser'))
-                                 SUPERUSER
-                                 @elseif(auth()->user()->hasRole('department'))
-                                 {{auth()->user()->getDepartment()->name}}
-                                 @elseif(auth()->user()->hasRole('marine'))
-                                 MARINE
-                                 @elseif(auth()->user()->hasRole('vessel'))
-                                 MASTER
-                              @endif
-                           </div>
-                        </div>
-                     </div>
-                   
-                     <div class="nav-item dropdown">
-                     @if (auth()->user()->hasRole('superuser'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/hacker.png')}});"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>Developer </div>
-                           <div class="mt-1 small text-muted">Super User</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('department'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">{{auth()->user()->getDepartment()->name}}</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('logistic'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Logistic</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('drilling'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Drilling</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('platform'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/businessman.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Platform</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('retail'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Retail</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('supplier'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Supplier</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('receiving'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Receiving</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('marine'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/flaticon/worker.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Marine</div>
-                        </div>
-                     </a>
-                     @elseif(auth()->user()->hasRole('vessel'))
-                     <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
-                        <span class="avatar avatar-sm" style="background-image: url({{asset('img/avatar/captain.png')}})"></span>
-                        <div class="d-none d-xl-block ps-2">
-                           <div>{{auth()->user()->name}}</div>
-                           <div class="mt-1 small text-muted">Master</div>
-                        </div>
-                     </a>
-                     @endif
-                     
-                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                        @if (auth()->user()->hasRole('superuser'))
-                        <a href="{{route('user')}}" class="dropdown-item">User Management</a>
-                        @elseif(auth()->user()->hasRole('platform'))
-                        <a href="{{route('platform.detail', enkripRambo(auth()->user()->getPlatformId()))}}" class="dropdown-item">Profile & account</a>
-                        @elseif(auth()->user()->hasRole('department'))
-                        <a href="{{route('employee.profile', enkripRambo(auth()->user()->getEmployeeId()))}}" class="dropdown-item">Profile & account</a>
-                        <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
-                        @elseif(auth()->user()->hasRole('vessel'))
-                        <a href="{{route('vessel.detail', enkripRambo(auth()->user()->getVesselId()))}}" class="dropdown-item">Profile & account</a>
-                        <a href="{{route('password.request')}}" class="dropdown-item">Reset Password</a>
-                        @endif
-                        
-                        
-                        <a href="{{route('document')}}" class="dropdown-item">Documents</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                       document.getElementById('logout-form').submit();">
-                           
-                              {{-- <a class="dropdown-item" href="{{ route('logout') }}"
-                                 onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                 {{ __('Logout') }}
-                              </a> --}}
-                              {{ __('Logout') }}
-                              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                 @csrf
-                              </form>
-                        </a>
-                     </div>
-                     </div>
-                  </div>
+                  
                </div>
             </header>
          </div>

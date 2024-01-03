@@ -55,8 +55,8 @@ $("#table-request-crew").dataTable({
 
 $("#table-3").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
-    pageLength : 5,
-   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+    pageLength : 7,
+   lengthMenu: [[7, 10, 20, -1], [7, 10, 20, 'Todos']]
 });
 
 $("#table-4").dataTable({

@@ -64,7 +64,7 @@
                            <div class="form-group col-md-6 file-cargo">
                               <label for="file-cargo">File Excel Cargo</label>
                               <input class="form-control mb-2" id="file-cargo" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-cargo">
-                              <a class="file-cargo mt-3" href="{{ asset('template/dsp-template-cargo.xlsx') }}">Download Template ...</a>
+                              
                            </div>
                         </div>
                         <div class="form-row platform route">
@@ -91,7 +91,7 @@
                            <div class="form-group col-md-12">
                               <label for="file-passenger">File Excel Crew</label>
                               <input class="form-control mb-1" id="file-passenger" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-passenger">
-                              <a class="file-crew mt-3" href="{{ asset('template/dsp-template-cre.xlsx') }}">Download Template ...</a>
+                              
                            </div>
                         </div>
 
@@ -123,17 +123,24 @@
                      </div>
                      
                      <div class="card-footer bg-whitesmoke">
-                        
+                        <a class="file-creww" href="{{ asset('template/dsp-template-crew.xlsx') }}">
+                           <i class="fa fa-download"></i>
+                           Download Template Excel Crew
+                        </a> <br>
+                        <a class="file-cargoo mt-3" href="{{ asset('template/dsp-template-cargo.xlsx') }}">
+                           <i class="fa fa-download"></i>
+                           Download Template Excel Cargo
+                        </a>
                      </div>
                   </form>
                </div>
             </div>
             <div class="col-md-7">
                <div class="card border">
-                  <div class="card-header">
-                     <h4>Nearest Vessel</h4>
-                  </div>
+                  
                   <div class="card-body">
+                     <b>Nearest Vessel</b>
+                     <hr>
                      <table class="table table-striped table-sm">
                         {{-- <thead>
                            <tr>
@@ -145,10 +152,10 @@
                         </tbody>
                      </table>
                   </div>
-                  <div class="card-header">
-                     <h4>Available Schedule</h4>
-                  </div>
+                 
                   <div class="card-body ">
+                     <b>Available Schedule</b>
+                     <hr>
                      <table class="table  table-striped table-sm">
                         {{-- <thead>
                            <tr>

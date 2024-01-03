@@ -102,10 +102,21 @@ class DepartmentRequestController extends Controller
 
    public function storeImport(Request $req)
    {
+      $req->validate([
+         'activity' => 'required'
+      ]);
       if ($req->activity == 1) {
          $req->validate([
             'origin' => 'required',
             'file-cargo' => 'required'
+         ]);
+      }
+
+      if ($req->activity == 2) {
+         $req->validate([
+            'origin' => 'required',
+            'destination' => 'required',
+            'file-crew' => 'required'
          ]);
       }
 

@@ -881,7 +881,7 @@ class HomeController extends Controller
 
       $vesselLastUpdates = Vessel::orderBy('last_update', 'desc')->take(5)->get();
       // dd($vesselLastUpdates);
-      return view('home-stisla', [
+      return view('pages-stisla.dsp.home-stisla', [
          'today' => $today,
          'monthName' => $monthName,
          'requestAdditionals' => $requestAdditionals,
@@ -954,7 +954,7 @@ class HomeController extends Controller
       $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
       $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
       $surveillances = Surveillance::where('vessel_id', $vessel->id)->get();
-      return view('home-vessel', [
+      return view('pages-stisla.dsp.home-vessel', [
          'today' => $today,
          'vessel' => $vessel,
          'schedules' => $schedules,
@@ -1021,7 +1021,7 @@ class HomeController extends Controller
       // dd(auth()->user()->getPort());
 
 
-      return view('home-user', [
+      return view('pages-stisla.dsp.home-user', [
          'user' => $user,
          'today' => $today,
          'requests' => $requests,
@@ -1040,7 +1040,7 @@ class HomeController extends Controller
       $requests = ModelsRequest::where('activity_id', 5)->where('status','>', 0)->orderBy('status', 'desc')->get();
       $schedules = Schedule::where('class', 'Fuel Oil')->orderBy('updated_at', 'desc')->get();
       $progressSchedules = Schedule::where('status', '>=', 0)->where('status', '!=', 101)->where('class', 'Fuel Oil')->get();
-      return view('home-fm', [
+      return view('pages-stisla.dsp.home-fm', [
          'user' => $user,
          'requests' => $requests,
          'schedules' => $schedules,
@@ -1051,14 +1051,20 @@ class HomeController extends Controller
 
    public function vdrMarine()
    {
-      return view('pages.vdr.marine.index');
+      // return view('pages.vdr.marine.index');
+      return view('pages-stisla.vdr.home-marine');
    }
 
    public function vdrMarineTable()
    {
       $vdrs = Vdr::get();
-      return view('pages.vdr.marine.table', [
+      return view('pages-stisla.marine.vdr.index', [
          'vdrs' => $vdrs
       ])->with('i');
+
+
+      // return view('pages.vdr.marine.table', [
+      //    'vdrs' => $vdrs
+      // ])->with('i');
    }
 }
