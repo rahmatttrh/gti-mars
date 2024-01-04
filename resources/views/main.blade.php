@@ -158,7 +158,7 @@
                           <img class="d-block w-100 rounded" src="{{asset('img/bg/barge.jpg')}}" alt="Second slide">
                           <div class="carousel-caption d-none d-md-block rounded" style="background-color:rgba(0, 0, 0, 0.7);">
                             <h5>VDR</h5>
-                            <p>- Under Development -</p>
+                            <p>Vessel Daily Report</p>
                           </div>
                         </div>
                         <div class="carousel-item" style="max-height: 180px">
