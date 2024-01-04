@@ -93,6 +93,142 @@
    </div>
 </div>
 
+<div class="modal fade" id="modalEdit" tabindex="1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{route('vdr.update')}}" method="POST" enctype="multipart/form-data">
+         @csrf
+         @method('PUT')
+         <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+         <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+         <input type="hidden" name="created_by" value="{{$user->name}}">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Edit VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-group">
+                  <label for="vessel">Vessel Name</label>
+                  <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" readonly>
+                  @error('vessel')
+                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                  @enderror
+               </div>
+               
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="date">Date</label>
+                     <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" readonly>
+                     @error('date')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="location_midnight">Location</label>
+                     <input class="form-control" id="location_midnight" name="location_midnight" required type="text"  value="{{$vdr->location_midnight}}" >
+                     @error('location_midnight')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="onduty">Number of Crew</label>
+                     <input class="form-control" id="onduty" name="onduty" type="number" value="{{$vdr->crew_onduty}}">
+                     @error('onduty')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="max">Max</label>
+                     <input class="form-control" id="max" name="max" type="text" value="{{$vdr->crew_max}}" >
+                     @error('max')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+               </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+{{-- <div class="modal modal-blur fade" id="modalEdit2" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+       <div class="modal-content">
+           <form action="{{route('vdr.update')}}" method="POST">
+               <div class="modal-body">
+                   @csrf
+                   @method('PUT')
+                   <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+                   <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+                   <input type="hidden" name="created_by" value="{{$user->name}}">
+                   <div class="card-body">
+                       @if ($errors->any())
+                       <div class="alert alert-danger text-danger">
+                           <ul>
+                               @foreach ($errors->all() as $error)
+                               <li><small>{{ $error }}</small></li>
+                               @endforeach
+                           </ul>
+                       </div>
+                       @endif
+                       <div class="form-floating mb-3">
+                           <input type="text" required class="form-control" id="vessel" name="vessel" value="{{$user->name}}" readonly>
+                           <label for="vessel">Vessel</label>
+                           @error('vessel')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                       </div>
+                       <div class="form-floating mb-3">
+                           <input type="date" required class="form-control" id="date" name="date" value="{{$vdr->date }}" readonly>
+                           <label for="date">Date</label>
+                           @error('date')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                       </div>
+                       <div class="row">
+                           <label for="email">Number of Crew / Pax</label>
+                           <div class="col-md-6">
+                               <div class="form-floating mb-3">
+                                   <input type="number" required class="form-control" id="onduty" name="onduty" value="{{$vdr->crew_onduty}}" value="1">
+                                   <label for="onduty">On Duty</label>
+                                   @error('onduty')
+                                   <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                                   @enderror
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="form-floating mb-3">
+                                   <input type="number" required class="form-control" id="max" name="max" value="{{$vdr->crew_max}}">
+                                   <label for="max">Max</label>
+                               </div>
+                           </div>
+                       </div>
+                       <div class="form-floating mb-3">
+                           <input type="text" required class="form-control" id="location_midnight" name="location_midnight" value="{{$vdr->location_midnight}}">
+                           <label for="location_midnight">Location (Midnight)</label>
+                           @error('location_midnight')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                       </div>
+                   </div>
+               </div>
+               <div class="modal-footer">
+                   <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                   <button type="submit" class="btn btn-success">Update</button>
+               </div>
+           </form>
+       </div>
+   </div>
+</div> --}}
+
 @foreach ($crews as $crew)
    <div class="modal fade" id="deleteAct-{{$crew->id}}" tabindex="1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">

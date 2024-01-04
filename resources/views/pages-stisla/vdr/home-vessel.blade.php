@@ -7,15 +7,13 @@
       @if ($vdr)
          <div class="card">
             <div class="card-header d-flex justify-content-between">
-               <b>{{$vessel->name}}</b>
-               <a href="" class="btn btn-primary">Edit</a>
+               <b><span class="text-primary">VDR</span> {{$vessel->name}} | {{dayDate($vdr->date)}}</b>
+               <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Edit</a>
             </div>
             <div class="card-body">
                <div class="row">
                   <div class="col-md-6">
                      <dl class="row">
-                        <dt class="col-5">Date</dt>
-                        <dd class="col-7">{{dayDate($vdr->date)}}</dd>
                         
                         <dt class="col-5">Contract No.</dt>
                         <dd class="col-7">{{$vessel->contract_no ?? '-'}}</dd>
@@ -38,8 +36,6 @@
                   </dl>
                   </div>
                </div>
-               
-            
             </div>
          </div>
          
@@ -50,7 +46,7 @@
             <div class="col-md-6">
                <div class="card">
                   <div class="card-header">
-                     WEATHER CONDITION
+                     <b>WEATHER CONDITION</b>
                   </div>
                   <form action="{{route('vdr.update.weather')}}" method="post">
                      @csrf
@@ -366,6 +362,8 @@
             </div>
          </div>
          @else
+
+         {{-- FORM CREATE VDR --}}
          <div class="row">
             <div class="col-md-4">
                <div class="card">
@@ -387,7 +385,7 @@
    
                         <div class="form-group">
                            <label for="vessel">Vessel Name</label>
-                           <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" >
+                           <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" readonly>
                            @error('vessel')
                               <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                            @enderror
@@ -478,7 +476,10 @@
       
    </section>
 
+   @if ($vdr)
    <x-vdr.crew-modal :crews="$crews" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
+   @endif
+   
 
 
    

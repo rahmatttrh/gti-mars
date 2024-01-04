@@ -1,6 +1,6 @@
 <div class="card">
    <div class="card-header d-flex justify-content-between">
-      CREW & PASSENGER LIST
+      <b>CREW & PASSENGER LIST</b>
       <div class="dropdown d-inline mr-2">
          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            Option
