@@ -124,7 +124,7 @@ class FetchController extends Controller
       $now = Carbon::now();
       $schedules = Schedule::where('date', $date)->get();
       // dd($schedules);
-      $scheduleRoutes = ScheduleRoute::where('port_id', $origin)->orderBy('updated_at', 'desc')->take(5)->get();
+      $scheduleRoutes = ScheduleRoute::where('port_id', $origin)->where('date', '>=', $date)->orderBy('date', 'asc')->take(5)->get();
 
       // Masukin ke array
       $result = array();

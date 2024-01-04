@@ -763,7 +763,7 @@ class DepartmentRequestController extends Controller
 
       // dd('end');
       if ($scheduleRoute) {
-         dd('ada routeee');
+         // dd('ada routeee');
          $schedule = Schedule::find($scheduleRoute->schedule_id);
          $request->update([
             // 'status' => 1,
