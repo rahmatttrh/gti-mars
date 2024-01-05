@@ -1,7 +1,7 @@
 <div class="card">
    <div class="card-header d-flex justify-content-between">
-      DETAIL OF DAILY OPERATIONAL ACTIVITIES
-      <a href="#" class="card-btn " data-bs-toggle="modal" data-bs-target="#modalAdd">
+      <b>DETAIL OF DAILY OPERATIONAL ACTIVITIES</b>
+      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalAddActivity">
          Add Activites
      </a>
    </div>
@@ -53,10 +53,11 @@
                      <td>{{floatToTime($activity->ah)}}</td>
                      <td>{{floatToTime($activity->sb)}}</td>
                      <td>
-                         <a href="#" data-bs-toggle="modal" data-bs-target="#editAct-{{$activity->id}}"> {{$activity->activity}} </a>
+                        {{$activity->activity}}
                      </td>
                      <td>
-                         <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#deleteAct-{{$activity->id}}"> Delete </a>
+                        <a href="#" data-toggle="modal" data-target="#editActivity-{{$activity->id}}"> Edit </a>
+                         <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivity-{{$activity->id}}"> Delete </a>
                      </td>
                  </tr>
 

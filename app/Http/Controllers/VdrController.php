@@ -42,7 +42,8 @@ class VdrController extends Controller
 
         $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
 
-        return view('pages.vdr.history-vdr', [
+      //   return view('pages.vdr.history-vdr', [
+         return view('pages-stisla.vessel.vdr.history', [
             'vdrs' => $vdrs
         ])->with('i');
     }
@@ -79,7 +80,7 @@ class VdrController extends Controller
         ])->with('i');
     }
 
-    public function create()
+    public function vdrVessel()
     {
 
         $user = auth()->user();
@@ -119,11 +120,52 @@ class VdrController extends Controller
         ])->with('i');
     }
 
+    public function vdrCreate()
+    {
+
+        $user = auth()->user();
+
+        // Opsi 1 
+        $vessel = Vessel::where('email', $user->email)->first();
+
+        $vdr = null;
+
+        $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
+        $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
+        $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
+        $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
+        $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
+        $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
+        $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
+        $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+        $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+
+
+
+      //   pages.vdr.create-vdr
+      return view('pages-stisla.vdr.home-vessel', [
+      //   return view('pages.vdr.create-vdr', [
+            'user' => $user,
+            'vessel' => $vessel,
+            'vdr' => $vdr,
+            'activities' => $activities,
+            'operatings' => $operatings,
+            'cargos' => $cargos,
+            'weathers' => $weathers,
+            'hses' => $hses,
+            'engines' => $engines,
+            'crews' => $crews,
+            'totalJam' => $totalJam,
+            'totalDaily' => $totalDaily
+        ])->with('i');
+      }
+
 
     public function show($id)
     {
 
         $vdr = Vdr::find($id);
+        $user = auth()->user();
 
         # code...
         $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
@@ -131,19 +173,26 @@ class VdrController extends Controller
         $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
         $hses = VdrHse::where('vdr_id', $vdr->id)->get();
         $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
+        $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
         $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
 
+        $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+        $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
-
-        return view('pages.vdr.show-vdr', [
+        return view('pages-stisla.vdr.detail', [
+      //   return view('pages.vdr.show-vdr', [
             'vessel' => $vdr->vessel,
+            'user' => $user,
             'vdr' => $vdr,
             'activities' => $activities,
             'cargos' => $cargos,
             'weathers' => $weathers,
             'hses' => $hses,
             'engines' => $engines,
-            'crews' => $crews
+            'crews' => $crews,
+            'operatings' => $operatings,
+            'totalJam' => $totalJam,
+            'totalDaily' => $totalDaily
         ])->with('i');
 
         // return view('pages.vdr.create-vdr', [

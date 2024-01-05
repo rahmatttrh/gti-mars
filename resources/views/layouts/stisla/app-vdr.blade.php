@@ -25,27 +25,17 @@
   <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
 
-  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  {{-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/locales/de_DE.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/geodata/germanyLow.js"></script>
    <script src="https://cdn.amcharts.com/lib/5/fonts/notosans-sc.js"></script>
 
-   <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
-   
+   <script src="https://cdn.amcharts.com/lib/5/percent.js"></script> --}}
 
-  <style>
-    .input {
-        background-color: lightgrey
-    }
-    html {
-  scroll-behavior: smooth;
-}
 
-</style>
-
-  <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+  
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -264,7 +254,7 @@
                      <a href="{{route('dsp.vessel')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
                   </li>
                   <li>
-                     <a href="{{route('vdr.create')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
+                     <a href="{{route('vdr.vessel')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report"><b>VDR</b></a>
                   </li>
                   <li>
                      <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a>
@@ -418,83 +408,16 @@
 
                </aside>
             </div>
-            @elseif(auth()->user()->hasRole('fm'))
-            <div class="main-sidebar sidebar-style-2 ">
-               <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('dsp.fm')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.fm')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Schedule</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.create')}}">Inbox</a></li> 
-                        {{-- <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                        <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('request.history')}}">History</a></li>  --}}
-                        </ul>
-                     </li>
-                  </ul>
-               </aside>
-            </div>
-            @elseif(auth()->user()->hasRole('department'))
-            <div class="main-sidebar sidebar-style-2 ">
-                  <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('dsp.user')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.user')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                        <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
-                        </ul>
-                     </li>
-
-                     @if (auth()->user()->isPlatform() == true)
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-infinity"></i> <span>Surveillance Activity</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('surveillance.create')}}">Today</a></li> 
-                        <li><a class="nav-link" href="{{route('surveillance.history.user')}}">History</a></li> 
-                        </ul>
-                     </li>
-                     @endif
-                     
-                     
-                     
-                  </ul>
-         
-                        
-                  </aside>
-            </div>
+            
             @elseif(auth()->user()->hasRole('vessel'))
             <div class="main-sidebar sidebar-style-2 ">
                   <aside id="sidebar-wrapper">
                   <div class="sidebar-brand">
-                     <a href="{{route('dsp.vessel')}}" class="fw-bold">VESSEL DAILY REPORT</a>
+                     <a href="{{route('vdr.vessel')}}" class="fw-bold">VESSEL DAILY REPORT</a>
                   
                   </div>
                   <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.vessel')}}">VDR</a>
+                     <a href="{{route('vdr.vessel')}}">VDR</a>
                   </div>
                   <hr>
                   <ul class="sidebar-menu">
@@ -504,29 +427,13 @@
                      {{-- <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li> --}}
 
                      <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
+                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-pencil-ruler"></i> <span>Vessel Daily Report</span></a>
                         <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.vessel.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('request.vessel.index')}}">All</a></li>   
+                        <li><a class="nav-link" href="{{route('vdr.vessel.create')}}">Create</a></li> 
+                        <li><a class="nav-link" href="{{route('vdr.history')}}">History</a></li>   
                         </ul>
                      </li>
 
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Schedules</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('schedule.progress.vessel')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('schedule.history.vessel')}}">History</a></li>   
-                        </ul>
-                     </li>
-
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-pencil-ruler"></i> <span>Surveillance</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('surveillance.today')}}">Today</a></li> 
-                        <li><a class="nav-link" href="{{route('surveillance.history.vessel')}}">History</a></li>   
-                        </ul>
-                     </li>
-                     
                      
                   </ul>
          
@@ -581,11 +488,17 @@
 
       <script src="{{asset('stisla/modules/izitoast/js/iziToast.min.js')}}"></script>
 
+      <!-- JS Libraies -->
+      <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
+
+      <!-- Page Specific JS File -->
+      {{-- <script src="{{asset('stisla/js/page/modules-chartjs.js')}}"></script> --}}
+
       <!-- Page Specific JS File -->
       <script src="{{asset('stisla/js/page/modules-toastr.js')}}"></script>
 
       <!-- Page Specific JS File -->
-      <script src="{{asset('stisla/js/page/index.js')}}"></script>
+      {{-- <script src="{{asset('stisla/js/page/index.js')}}"></script> --}}
       
       <!-- Template JS File -->
       <script src="{{asset('stisla/js/scripts.js')}}"></script>
@@ -595,7 +508,7 @@
 
       {{-- MYJS --}}
       @stack('map')
-      @stack('get_schedules')
+      @stack('chart')
       @stack('autorefresh')
       @stack('report')
 

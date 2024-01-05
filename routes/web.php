@@ -82,6 +82,8 @@ Route::middleware(["auth"])->group(function () {
       Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
    });
 
+   Route::get('vdr/detail/{id}', [VdrController::class, 'show'])->name('vdr.show');
+
    Route::prefix('fuel')->group(function () {
       Route::put('approve', [FuelController::class, 'approve'])->name('fuel.approve');
    });
@@ -98,12 +100,7 @@ Route::middleware(["auth"])->group(function () {
       // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
    });
 
-   Route::prefix("vdr")->group(function () {
-      Route::get("marine/dashboard", [HomeController::class, "vdrMarine",])->name('vdr.marine');
-      Route::get("marine/table", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
-      Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
-      // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
-   });
+   
 
    Route::prefix("surveillance")->group(function () {
       Route::get("marine", [SurveillanceController::class, "marine",])->name('surveillance.marine');
@@ -298,6 +295,14 @@ Route::group(['middleware' => ['role:marine']], function () {
 
    Route::get('get-distance', [GeofenceController::class, 'getDistance']);
 
+   Route::prefix("vdr")->group(function () {
+      Route::get("marine/dashboard", [HomeController::class, "vdrMarine",])->name('vdr.marine');
+      Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
+      Route::get("marine/history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
+      // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
+      // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
+
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
       Route::post('store', [PortController::class, 'store'])->name('port.store');
@@ -470,11 +475,13 @@ Route::group(['middleware' => ['role:vessel']], function () {
 
 
    Route::prefix('vdr')->group(function () {
-      Route::get('/', [VdrController::class, 'create'])->name('vdr.create');
+      Route::get('/create/test', [VdrController::class, 'vdrVessel'])->name('vdr.create');
+      Route::get('/', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
+      Route::get('/create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
 
-      Route::get('detail/{id}', [VdrController::class, 'show'])->name('vdr.show');
+      
 
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
 

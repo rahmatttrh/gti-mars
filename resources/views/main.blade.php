@@ -50,7 +50,7 @@
             @elseif (auth()->user()->hasRole('vessel'))
             <ul class="navbar-nav">
               <li class="nav-item "><a href="{{route('dsp.vessel')}}" class=" nav-link" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
-              <li class="nav-item"><a href="{{route('vdr.create')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+              <li class="nav-item"><a href="{{route('vdr.vessel')}}" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
               <li class="nav-item"><a href="#" class="nav-link" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a></li>
             </ul>
             @elseif (auth()->user()->hasRole('fm'))

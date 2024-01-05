@@ -1,4 +1,4 @@
-@extends('layouts.stisla.app')
+@extends('layouts.stisla.app-vdr')
 @section('title')
     Dashboard
 @endsection
@@ -48,7 +48,19 @@
             </div>
          </div>
          
-         <x-vdr.activity :activities="$activities" :operatings="$operatings"/>
+         <x-vdr.activity :activities="$activities" :operatings="$operatings" :vdr="$vdr"/>
+         <div class="row">
+            <div class="col-md-12">
+               <x-vdr.data :operatings="$operatings" :totaljam="$totalJam" :totaldaily="$totalDaily" :vdr="$vdr"/>
+            </div>
+            <div class="col-md-12">
+               <x-vdr.fuel :cargos="$cargos" :vdr="$vdr" />
+            </div>
+         </div>
+
+         <x-vdr.hsse :hses="$hses" :vdr="$vdr" />
+         <x-vdr.engine :engines="$engines" :vdr="$vdr" />
+         
          @else
 
          {{-- FORM CREATE VDR --}}

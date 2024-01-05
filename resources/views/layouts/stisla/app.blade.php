@@ -70,7 +70,7 @@
                         </a>
                      </li>
                      <li>
-                        <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
+                        <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port"><b>DSP</b></a>
                      </li>
                      <li>
                         <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>

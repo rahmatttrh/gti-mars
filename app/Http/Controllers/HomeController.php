@@ -22,6 +22,8 @@ use App\Http\Controllers\GeofenceController;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
+use App\Models\VdrOperating;
+use App\Models\VdrOperatingHeader;
 use App\Models\VesselHistory;
 use Throwable;
 
@@ -1052,13 +1054,154 @@ class HomeController extends Controller
    public function vdrMarine()
    {
       // return view('pages.vdr.marine.index');
-      return view('pages-stisla.vdr.home-marine');
+      $today = Carbon::now();
+      // dd($today->month);
+      $vessels = Vessel::get();
+      $vessel = Vessel::find(11);
+      $vdrs = Vdr::where('vessel_id', $vessel->id)->whereMonth('date', $today->month)->whereYear('date', $today->year)->orderBy('date', 'asc')->get();
+      // dd($vdrs);
+
+      // $operatingHeaders = VdrOperatingHeader::get();
+      // // dd(count($operatingHeaders));
+
+      // foreach($operatingHeaders as $head){
+
+      // }
+      
+      if ($today->month == 1) {
+         $monthName = 'Januari';
+      } else if ($today->month == 2){
+         $monthName = 'Februari';
+      } else if ($today->month == 3){
+         $monthName = 'Maret';
+      } else if ($today->month == 4){
+         $monthName = 'April';
+      } else if ($today->month == 5){
+         $monthName = 'Mei';
+      } else if ($today->month == 6){
+         $monthName = 'Juni';
+      }  else if ($today->month == 7){
+         $monthName = 'Juli';
+      } else if ($today->month == 8){
+         $monthName = 'Agustus';
+      } else if ($today->month == 9){
+         $monthName = 'September';
+      } else if ($today->month == 10){
+         $monthName = 'Oktober';
+      } else if ($today->month == 11){
+         $monthName = 'November';
+      } else if ($today->month == 12){
+         $monthName = 'Desember';
+      }
+
+      $date = array();
+      $value = array();
+      $fuel = array();
+      foreach($vdrs as $vdr){
+         $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+         $totalTime = $operatings->sum('time');
+         $totalFuel = $operatings->sum('daily');
+
+         // dd($operatings);
+         $date[] = formatDateOnly($vdr->date);
+         $value[] = $totalTime;
+         $fuel[] = $totalFuel;
+      }
+
+      // dd($value);
+      return view('pages-stisla.vdr.home-marine', [
+         'thisMonth' => $today->month,
+         'thisYear' => $today->year,
+         'monthName' => $monthName,
+         'vdrs' => $vdrs,
+         'vessel' => $vessel,
+         'vessels' => $vessels,
+         'date' => $date,
+         'value' => $value,
+         'fuel' => $fuel
+      ])->with('i');
+   }
+
+   public function vdrFilter(Request $req)
+   {
+
+      // dd($req->year);
+      // return view('pages.vdr.marine.index');
+      $today = Carbon::now();
+      // dd($today->month);
+      $vessels = Vessel::get();
+
+      $vessel = Vessel::find($req->vessel);
+      $month = $req->month;
+      $year = $req->year;
+      $vdrs = Vdr::where('vessel_id', $vessel->id)->whereMonth('date', $month)->whereYear('date', $year)->orderBy('date', 'asc')->get();
+      // dd($vdrs);
+
+      // $operatingHeaders = VdrOperatingHeader::get();
+      // // dd(count($operatingHeaders));
+
+      // foreach($operatingHeaders as $head){
+
+      // }
+      
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } else if ($month == 2){
+         $monthName = 'Februari';
+      } else if ($month == 3){
+         $monthName = 'Maret';
+      } else if ($month == 4){
+         $monthName = 'April';
+      } else if ($month == 5){
+         $monthName = 'Mei';
+      } else if ($month == 6){
+         $monthName = 'Juni';
+      }  else if ($month == 7){
+         $monthName = 'Juli';
+      } else if ($month == 8){
+         $monthName = 'Agustus';
+      } else if ($month == 9){
+         $monthName = 'September';
+      } else if ($month == 10){
+         $monthName = 'Oktober';
+      } else if ($month == 11){
+         $monthName = 'November';
+      } else if ($month == 12){
+         $monthName = 'Desember';
+      }
+
+      $date = array();
+      $value = array();
+      $fuel = array();
+      foreach($vdrs as $vdr){
+         $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+         $totalTime = $operatings->sum('time');
+         $totalFuel = $operatings->sum('daily');
+
+         // dd($operatings);
+         $date[] = formatDateOnly($vdr->date);
+         $value[] = $totalTime;
+         $fuel[] = $totalFuel;
+      }
+
+      // dd($value);
+      return view('pages-stisla.vdr.home-marine', [
+         'thisMonth' => $month,
+         'thisYear' => $year,
+         'monthName' => $monthName,
+         'vdrs' => $vdrs,
+         'vessel' => $vessel,
+         'vessels' => $vessels,
+         'date' => $date,
+         'value' => $value,
+         'fuel' => $fuel
+      ])->with('i');
    }
 
    public function vdrMarineTable()
    {
       $vdrs = Vdr::get();
-      return view('pages-stisla.marine.vdr.index', [
+      return view('pages-stisla.marine.vdr.history', [
          'vdrs' => $vdrs
       ])->with('i');
 

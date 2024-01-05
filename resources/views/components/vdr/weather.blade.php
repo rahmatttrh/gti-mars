@@ -46,7 +46,7 @@
       {{-- </div> --}}
       </div>
       <div class="card-footer">
-         <button class="btn btn-primary" type="submit">Save</button>
+         <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> Save</button>
       </div>
    </form>
 </div>

@@ -12,6 +12,12 @@ function formatDate($data)
    return $date;
 }
 
+function formatDateOnly($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('d');
+   return $date;
+}
+
 function formatDateName($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('d F Y');

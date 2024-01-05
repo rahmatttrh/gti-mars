@@ -8,46 +8,70 @@
          <input type="hidden" name="created_by" value="{{$user->name}}">
          <div class="modal-content">
             <div class="modal-header">
-               <h5 class="modal-title" ">Add Crew </h5>
+               <h5 class="modal-title">Add Activity </h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
             <div class="modal-body">
                <div class="form-group">
-                  <label for="name">Name</label>
-                  <input class="form-control" id="name" name="name" type="text" >
-                  @error('name')
+                  <label for="activity">Activity Name</label>
+                  <input class="form-control" id="activity" name="activity" type="text" >
+                  @error('activity')
                      <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                   @enderror
                </div>
 
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="form mb-3">
-                        <input type="radio" id="is_crew" value="1" class="crew" name="is_crew"> Crew
-                     </div>
+
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="start">Start</label>
+                     <input class="form-control jam24" id="start" name="start" type="time" >
+                     @error('start')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
                   </div>
-                  <div class="col-md-6">
-                     <div class="form mb-3">
-                        <input type="radio" id="is_crew" value="0" class="passenger" name="is_crew"> Passenger
-                     </div>
+                  <div class="form-group col-md-6">
+                     <label for="finish">Finish</label>
+                     <input class="form-control jam24" id="finish" name="finish" type="time" >
+                     @error('finish')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
                   </div>
                </div>
+
                <div class="form-row">
                   <div class="form-group col-md-3">
-                     <label for="rank">Rank</label>
-                     <input class="form-control" id="rank" name="rank" type="number" >
-                     @error('rank')
-                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                     @enderror
+                     <label for="high">High</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="high" name="high" type="text" >
                   </div>
-                  <div class="form-group col-md-9">
-                     <label for="company">Company</label>
-                     <input class="form-control" id="company" name="company" type="text" >
-                     @error('company')
-                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                     @enderror
+                  <div class="form-group col-md-3">
+                     <label for="normal">Normal</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="normal" name="normal" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="slow">Slow</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="slow" name="slow" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="manu">Manu</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="manu" name="manu" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="idle">Idle</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="idle" name="idle" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="tow">Tow</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="tow" name="tow" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="ah">A/H</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="ah" name="ah" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="sb">S/B</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" type="text" >
                   </div>
                </div>
                
@@ -62,6 +86,124 @@
       </form>
    </div>
 </div>
+
+
+@foreach ($activities as $activity)
+   <div class="modal fade" id="deleteActivity-{{$activity->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.delete.activity')}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="id" value="{{$activity->id}}" id="">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Delete Activity </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <span>Anda yakin ingin menghapus activity <span class="text-danger">{{$activity->activity}} </span> ?</span>
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Delete</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="modal fade" id="editActivity-{{$activity->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.update.activity')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+            <input type="hidden" name="id" value="{{$activity->id}}" id="">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Edit Activity </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="form-group">
+                     <label for="activity">Activity Name</label>
+                     <input class="form-control" id="activity" name="activity" type="text" value="{{$activity->activity}}" >
+                     @error('activity')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+   
+   
+                  <div class="form-row">
+                     <div class="form-group col-md-6">
+                        <label for="start">Start</label>
+                        <input class="form-control jam24" id="start" name="start" type="time" value="{{$activity->start}}" >
+                        @error('start')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                     <div class="form-group col-md-6">
+                        <label for="finish">Finish</label>
+                        <input class="form-control jam24" id="finish" name="finish" type="time"value="{{$activity->finish}}" >
+                        @error('finish')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+   
+                  <div class="form-row">
+                     <div class="form-group col-md-3">
+                        <label for="high">High</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="high" name="high" type="text" value="{{$activity->high}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="normal">Normal</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="normal" name="normal" type="text" value="{{$activity->normal}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="slow">Slow</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="slow" name="slow" type="text" value="{{$activity->slow}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="manu">Manu</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="manu" name="manu" type="text" value="{{$activity->manu}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="idle">Idle</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="idle" name="idle" type="text" value="{{$activity->idle}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="tow">Tow</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="tow" name="tow" type="text" value="{{$activity->tow}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="ah">A/H</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="ah" name="ah" type="text" value="{{$activity->ah}}">
+                     </div>
+                     <div class="form-group col-md-3">
+                        <label for="sb">S/B</label>
+                        <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" type="text" value="{{$activity->sb}}">
+                     </div>
+                  </div>
+                  
+                  
+               
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+@endforeach
+
+
 
 <div class="modal modal-blur fade" id="modalAdd" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
