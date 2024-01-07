@@ -848,13 +848,13 @@ class HomeController extends Controller
                   if ($vessel->schedule_id && $vessel->schedule->status > 1) {
                      $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
                      // dd($curentReport);
-                     if ($curentReport->status_id == 8 && $curentReport->port_id == $port->id) {
+                     if ($curentReport->status_id >= 8 && $curentReport->port_id == $port->id) {
                      } else {
                         Report::create([
                            'schedule_id' => $vessel->schedule_id,
                            'vessel_id' => $vessel->id,
                            // arrived
-                           'status_id' => 9,
+                           'status_id' => 8,
                            'port_id' => $port->id
                         ]);
                      }
@@ -1114,7 +1114,7 @@ class HomeController extends Controller
          'thisYear' => $today->year,
          'monthName' => $monthName,
          'vdrs' => $vdrs,
-         'vessel' => $vessel,
+         'vessel' => $vessel->id,
          'vessels' => $vessels,
          'date' => $date,
          'value' => $value,
@@ -1190,7 +1190,7 @@ class HomeController extends Controller
          'thisYear' => $year,
          'monthName' => $monthName,
          'vdrs' => $vdrs,
-         'vessel' => $vessel,
+         'vessel' => $vessel->id,
          'vessels' => $vessels,
          'date' => $date,
          'value' => $value,

@@ -9,7 +9,7 @@
          <div class="col-md-8">
             <div class="card">
                <div class="card-header">
-                  <span class="badge badge-info">Total Operating Mode (Hour)</span>
+                  <span class="badge badge-light">Total Operating Mode (Hour)</span>
                </div>
                
                <div class="card-body">
@@ -20,6 +20,7 @@
                <div class="card-footer bg-whitesmoke">
                   {{-- <span class="badge badge-warning" style="background-color: #f58056">Fresh Water</span>
                   <span class="badge badge-primary">Fuel Oil</span> --}}
+                  <small>Nilai <b>Total Hours</b> adalah hasil dari penjumlahan nilai High, Normal, Slow, Maneuvering, Idle, Towing, A/H, S/B, Maintenance dan Downtime  </small>
                </div>
            </div>
          </div>
@@ -59,8 +60,9 @@
                         <div class="input-group">
                            
                            <select class="form-control " required name="vessel" id="vessel">
+                              {{-- <option {{$vessel == 'all' ? 'selected' : ''}} value="all">All Vessel</option> --}}
                               @foreach ($vessels as $vess)
-                                 <option {{$vessel->id == $vess->id ? 'selected' : ''}} value="{{$vess->id}}">{{$vess->name}}</option> 
+                                 <option {{$vessel == $vess->id ? 'selected' : ''}} value="{{$vess->id}}">{{$vess->name}}</option> 
                               @endforeach
                               
                               {{-- <option value="Maret">Transko Moloko</option> 
@@ -78,10 +80,15 @@
                   {{-- <hr>
 
                   <canvas id="myChart4"></canvas> --}}
+                  
                </div>
+               
+            </div>
+
+            <div class="card">
                <div class="card-body">
-                  <div class="badge badge-info">Fuel Consumption (Liter)</div>
-                  <hr>
+                  <div class="badge badge-light mb-4">Fuel Consumption (Liter)</div>
+                  
                   <canvas id="myChart2"></canvas>
                </div>
             </div>
@@ -154,13 +161,13 @@
                label: 'Total Hours',
                data: {!! json_encode($value) !!},
                borderWidth: 2,
-               backgroundColor: 'rgba(63,82,227,.8)',
+               backgroundColor: '#73d1af',
                borderWidth: 0,
                borderColor: 'transparent',
                pointBorderWidth: 0,
                pointRadius: 3.5,
                pointBackgroundColor: 'transparent',
-               pointHoverBackgroundColor: 'rgba(63,82,227,.8)',
+               pointHoverBackgroundColor: '#73d1af',
             }
             ]
          },
@@ -202,8 +209,8 @@
                label: 'Total Fuel',
                data: {!! json_encode($fuel) !!},
                borderWidth: 2,
-               backgroundColor: '#6777ef',
-               borderColor: '#6777ef',
+               backgroundColor: '#73d1af',
+               borderColor: '#73d1af',
                borderWidth: 2.5,
                pointBackgroundColor: '#ffffff',
                pointRadius: 4
