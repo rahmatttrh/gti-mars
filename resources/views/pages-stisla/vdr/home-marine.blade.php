@@ -184,7 +184,7 @@
                },
                ticks: {
                   beginAtZero: true,
-                  stepSize: 30,
+                  stepSize: 2,
                   callback: function(value, index, values) {
                      return '' + value + ' H';
                   }
@@ -209,8 +209,8 @@
                label: 'Total Fuel',
                data: {!! json_encode($fuel) !!},
                borderWidth: 2,
-               backgroundColor: '#73d1af',
-               borderColor: '#73d1af',
+               backgroundColor: '#37b6ed',
+               borderColor: '#37b6ed',
                borderWidth: 2.5,
                pointBackgroundColor: '#ffffff',
                pointRadius: 4

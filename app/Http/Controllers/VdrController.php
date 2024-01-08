@@ -741,6 +741,7 @@ class VdrController extends Controller
             $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
 
             $daily = round($a + $b);
+            // dd($daily);
 
             $operatingUpdate = $operating->update([
                 'daily' => $daily
