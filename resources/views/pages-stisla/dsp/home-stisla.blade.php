@@ -276,7 +276,7 @@
                                  Request by {{$schedule->requests->first()->user->name}}
                               </small>
                            </td>
-                           @elseif(($schedule->class == 'Flush Water'))
+                           @elseif(($schedule->class == 'Fresh Water'))
                            <td>
                               {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
                               <small>

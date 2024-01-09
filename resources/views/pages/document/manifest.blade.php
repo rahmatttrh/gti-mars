@@ -68,6 +68,70 @@
                </div> --}}
             </div>
             <h4 class="">ACTIVITIES</h4>
+            @if ($schedule->class == 'Cargo/Crew')
+               @else
+               <div class="mb-2">
+                  {{-- @if ($schedule->status == 12)
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-success" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                  </svg>
+                  @else
+                  <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-check-filled text-muted" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                     <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                     <path d="M17 3.34a10 10 0 1 1 -14.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 14.995 -8.336zm-1.293 5.953a1 1 0 0 0 -1.32 -.083l-.094 .083l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.403 1.403l.083 .094l2 2l.094 .083a1 1 0 0 0 1.226 0l.094 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z" stroke-width="0" fill="currentColor"></path>
+                  </svg>
+                  @endif --}}
+                  <h1>{{$schedule->class}}</h1>
+                  
+                  {{-- <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5> --}}
+
+               </div>
+               <table class="table table-transparent table-responsive  mb-4">
+                  <thead>
+                     <tr>
+                        {{-- <th class="text-center" style="width: 1%"></th> --}}
+                        
+                        <th>User</th>
+                        <th>Desc</th>
+                        <th>Request Date</th>
+                        <th class="text-center" style="width: 10%">Qty Req</th>
+                        <th class="text-center" style="width: 10%">Qty Approved</th>
+                        <th class="text-center" style="width: 10%">Jetty</th>
+                        
+                     </tr>
+                  </thead>
+                  <tr>
+                     {{-- <td class="text-center">{{++$i}}</td> --}}
+                     <td>
+                        <p class="strong mb-1">{{$schedule->requests()->first()->user->name}} </p>
+                        <small></small>
+                     </td>
+                     <td>{{$schedule->requests()->first()->desc}}</td>
+                     <td>{{formatDate($schedule->requests()->first()->created_at)}}</td>
+                     <td class="text-center">
+                        <p class="strong mb-1">{{$schedule->requests()->first()->qty}}</p>
+                     </td>
+                     <td class="text-center">
+                        <p class="strong mb-1">{{$schedule->requests()->first()->qty_approve ?? '0'}}</p>
+                     </td>
+                     <td class="text-center">
+                        {{$schedule->remark}}
+                     </td>
+                     
+                     
+                  </tr>
+                  {{-- <tr>
+                     <td colspan="5" class="text-end strong">Total</td>
+                     <td class="text-center">
+                        10
+                     </td>
+                     <td class="text-center">
+                        10
+                     </td>
+                  </tr> --}}
+               </table>
+            @endif
             @foreach ($schedule->requests as $req)
                @if ($req->activity_id == 1)
                   <div class="mb-2">
