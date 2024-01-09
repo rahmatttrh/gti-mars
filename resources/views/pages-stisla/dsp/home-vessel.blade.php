@@ -39,13 +39,7 @@
          </div>
          <div class="col-md-9">
          
-            @if ($recentSchedules->count() > 0)
-               @foreach ($recentSchedules as $recent)
-               <div class="alert alert-warning" role="alert">
-                     You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
-               </div>
-               @endforeach
-            @endif
+            
             {{-- <div class="card">
                <div class="card-body">
                   <span>Ongoing Schedule</span> <br>
@@ -83,6 +77,17 @@
             @endif
             
             <div class="card">
+               @if ($recentSchedules->count() > 0)
+               <div class="card-body">
+                  
+                     @foreach ($recentSchedules as $recent)
+                     <div class="alert alert-info" role="alert">
+                         <i class="fa fa-bell"></i>  You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
+                     </div>
+                     @endforeach
+                  
+               </div>
+               @endif
                <div class="card-header">
                   <h4>Sailing Order</h4>
                </div>
@@ -141,12 +146,68 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="5" class="text-center text-muted"><small>Empty</small></td>
+                              <td colspan="7" class="text-center text-muted"><small>Empty</small></td>
                            </tr>
                         @endif
                         
                      </tbody>
                   </table>
+                  </div>
+               </div>
+            </div>
+
+            <div class="card">
+               <div class="card-header">
+                  <h4>My Requests</h4>
+               </div>
+               <div class="card-body">
+                  <div class="table-responsive">
+                     <table class="table table-striped table-sm" id="table-6">
+                        <thead>
+                           <tr>
+                              <th class="text-center">No.</th>
+                              <th>ID</th>
+                              <th>Activity</th>
+                              <th>Date</th>
+                              <th>QTY</th>
+                              
+                              <th>Schedule ID</th>
+                              <th>Status</th>
+                              <th></th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @if ($requests->count() > 0)
+                              @foreach ($requests as $request)
+                                 <tr>
+                                    <td class="text-center">{{++$i}}</td>
+                                    <td>{{$request->code}}</td>
+                                    <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
+                                    <td>{{formatDateName($request->date)}}</td>
+                                    <td>{{$request->qty}} KL</td>
+                                    <td>{{$request->schedule->code}}</td>
+                                    <td>
+                                       {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
+                                          @if ($request->status < 3)
+                                             <x-status-stisla.request :request="$request" :lastreport="null"/>
+                                             @else
+                                             <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
+                                          @endif
+                                    </td>
+                                    
+                                    <td>
+                                       <a href="{{route('request.detail', enkripRambo($request->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                                    </td>
+                                 </tr>
+                              @endforeach
+                              @else
+                              <tr>
+                                 <td colspan="8" style="text-align: center"><small>Emtpy</small></td>
+                              </tr>
+                           @endif
+                           
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>

@@ -417,7 +417,7 @@
                </div>
                <div class="card-body">
                   <div class="d-flex align-items-center">
-                     <img width="100" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
+                     <img width="100" src="{{asset('img/flaticon/oil-barrel.png')}}" alt="" class="img-thumbnail mr-4">
                      <div>
                         <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
                         

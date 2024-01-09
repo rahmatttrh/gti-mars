@@ -62,7 +62,10 @@
                               @foreach ($requests as $req)
                               <tr>
                                  <td>{{++$i}}</td>
-                                 <td>{{$req->code}}</td>
+                                 <td>
+                                    {{$req->code}} <br>
+                                    <small>{{$req->activity->name}}</small>
+                                 </td>
                                  <td>{{formatDate($req->date)}}</td>
                                  <td>{{$req->user->name}}</td>
                                  <td>{{$req->qty}} / {{$req->qty_approve}}</td>

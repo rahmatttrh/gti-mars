@@ -380,4 +380,38 @@
     </div>
   </div>
     
+
+  <div class="modal fade" id="fuel-approve-{{$request->id}}" tabindex="7" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{route('fuel.approve')}}" method="POST">
+         @csrf
+         @method('PUT')
+         <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <div class="modal-title">Fuel Approve</div>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+            <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="qty">Qty Request</label>
+                  <input type="text" required class="form-control" id="qty"  readonly name="qty" value="{{$request->qty}}" >
+               </div>
+               <div class="form-group col-md-6">
+                  <label for="qty_approve">Qty Approve</label>
+                  <input type="text" required class="form-control" id="qty_approve" name="qty_approve" max="{{$request->qty}}" >
+               </div>
+            </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Approve</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
 @endsection

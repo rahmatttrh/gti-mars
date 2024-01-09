@@ -329,7 +329,7 @@ class DepartmentRequestController extends Controller
             'code' => $scheduleCode,
             'vessel_id' => $vesselId,
             'by' => 'user',
-            'class' => 'Flush Water',
+            'class' => 'Fresh Water',
             'type' => 2,
             'status' => 101,
             'date' => $req->date,

@@ -55,7 +55,7 @@ class VesselRequestController extends Controller
       if ($req->activity == 5) {
          $class = 'Fuel Oil';
       } elseif($req->activity == 6){
-         $class = 'Flush Water';
+         $class = 'Fresh Water';
       }
 
       if (auth()->user()->hasRole('vessel')) {

@@ -944,22 +944,123 @@ class HomeController extends Controller
       } elseif ($month == 12) {
          $monthName = 'Desember';
       }
-      $vessel = Vessel::where('email', auth()->user()->email)->first();
-      $schedules = Schedule::where('vessel_id', $vessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
-      $nowSchedule = Schedule::find($vessel->schedule_id);
+      $currentVessel = Vessel::where('email', auth()->user()->email)->first();
+      // dd($vessel->name);
+      $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
+      $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
+      $nowSchedule = Schedule::find($currentVessel->schedule_id);
       if ($nowSchedule) {
          $routes = ScheduleRoute::where('schedule_id', $nowSchedule->id)->orderBy('rank', 'asc')->get();
       } else {
          $routes = null;
       }
 
-      $recentSchedules = Schedule::where('vessel_id', $vessel->id)->where('status', '=', 1)->get();
-      $reports = ReportVessel::where('vessel_id', $vessel->id)->orderBy('created_at', 'desc')->get();
-      $surveillances = Surveillance::where('vessel_id', $vessel->id)->get();
+      $recentSchedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '=', 1)->get();
+      $reports = ReportVessel::where('vessel_id', $currentVessel->id)->orderBy('created_at', 'desc')->get();
+      $surveillances = Surveillance::where('vessel_id', $currentVessel->id)->get();
+
+
+      $this->loadLocVessel();
+
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+      $ports = Port::where('latitude', '!=', null)->get();
+
+      $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+      $token = '73ob73y64nt3n63MP4tk4l1';
+      $response = Http::withHeaders([
+         'Authorization' => 'Bearer ' . $token,
+      ])->post($url, []);
+
+      $responseBody = json_decode($response->getBody());
+      
+      foreach ($responseBody->data as $res) {
+         
+         if ($res->MMSI) {
+            $thisVessel = Vessel::where('mmsi', $res->MMSI)->first();
+            $barge = Port::where('mmsi', $res->MMSI)->first();
+
+            if ($thisVessel) {
+               if ($thisVessel->latitude != $res->lat) {
+                  $thisVessel->update([
+                     'latitude' => $res->lat,
+                     'longitude' => $res->lon,
+                     'speed' => $res->speed,
+                     'calcspeed' => $res->calcspeed,
+                     'heading' => $res->heading,
+                     'last_update' => $res->date
+                  ]);
+               }
+            }
+
+            if ($barge) {
+               $barge->update([
+                  'latitude' => $res->lat,
+                  'longitude' => $res->lon
+               ]);
+            }
+         }
+      }
+
+      foreach ($vessels as $vessel) {
+         $vesselLat = $vessel->latitude;
+         $vesselLong = $vessel->longitude;
+
+         if ($vessel->speed > 0) {
+            $vessel->update([
+               // 'status' => 2,
+               'port_id' => null
+            ]);
+         } else {
+            foreach ($ports as $port) {
+               $portLat = $port->latitude;
+               $portLong = $port->longitude;
+               $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+               // dd($vessel->name . ' ke ' . $port->name . ': ' .$distance);
+               if ($distance < 300) {
+                  $vessel->update([
+                     // 'status' => 9,
+                     'port_id' => $port->id
+                  ]);
+
+                  if ($vessel->schedule_id && $vessel->schedule->status > 1) {
+                     $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
+                     // dd($curentReport);
+                     if ($curentReport->status_id >= 8 && $curentReport->port_id == $port->id) {
+                     } else {
+                        Report::create([
+                           'schedule_id' => $vessel->schedule_id,
+                           'vessel_id' => $vessel->id,
+                           // arrived
+                           'status_id' => 8,
+                           'port_id' => $port->id
+                        ]);
+                     }
+                  }
+                  // ReportVessel::create([
+                  //    'vessel_id' => $vessel->id,
+                  //    'port_id' => $port->id,
+                  //    'status_id' => 3
+                  // ]);
+               }
+               // else {
+               //    $vessel->update([
+               //       'status' => 3,
+               //       'port_id' => null
+               //    ]);
+               // }
+
+
+            }
+         }
+      }
+
+     
+
       return view('pages-stisla.dsp.home-vessel', [
          'today' => $today,
-         'vessel' => $vessel,
+         'vessel' => $currentVessel,
          'schedules' => $schedules,
+         'requests' => $requests,
          'surveillances' => $surveillances,
          'nowSchedule' => $nowSchedule,
          'recentSchedules' => $recentSchedules,
@@ -1039,7 +1140,7 @@ class HomeController extends Controller
 
    public function dspFm(){
       $user = User::find(auth()->user()->id);
-      $requests = ModelsRequest::where('activity_id', 5)->where('status','>', 0)->orderBy('status', 'desc')->get();
+      $requests = ModelsRequest::where('activity_id', 5)->orWhere('activity_id', 6)->where('status','>', 0)->orderBy('status', 'desc')->get();
       $schedules = Schedule::where('class', 'Fuel Oil')->orderBy('updated_at', 'desc')->get();
       $progressSchedules = Schedule::where('status', '>=', 0)->where('status', '!=', 101)->where('class', 'Fuel Oil')->get();
       return view('pages-stisla.dsp.home-fm', [
