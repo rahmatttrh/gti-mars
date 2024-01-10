@@ -848,7 +848,7 @@ class HomeController extends Controller
                   if ($vessel->schedule_id && $vessel->schedule->status > 1) {
                      $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
                      // dd($curentReport);
-                     if ($curentReport->status_id >= 8 && $curentReport->port_id == $port->id) {
+                     if ($curentReport->status_id != 7 && $curentReport->port_id == $port->id) {
                      } else {
                         Report::create([
                            'schedule_id' => $vessel->schedule_id,
@@ -1025,7 +1025,7 @@ class HomeController extends Controller
                   if ($vessel->schedule_id && $vessel->schedule->status > 1) {
                      $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
                      // dd($curentReport);
-                     if ($curentReport->status_id >= 8 && $curentReport->port_id == $port->id) {
+                     if ($curentReport->status_id != 7 && $curentReport->port_id == $port->id) {
                      } else {
                         Report::create([
                            'schedule_id' => $vessel->schedule_id,
