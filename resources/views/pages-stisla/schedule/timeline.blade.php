@@ -5,7 +5,7 @@
 @section('content')
 <section class="section">
     <div class="section-header">
-      <h1 class="section-title">Timeline Sailing Order</h1>
+      <h1 class="section-title">Timeline Sailing Order {{$schedule->code}}</h1>
       <div class="section-header-breadcrumb">
         @if (auth()->user()->hasRole('marine'))
           <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
