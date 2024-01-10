@@ -55,22 +55,23 @@ class ParentRequestController extends Controller
       //    dd($sche->schedule->vessel->name);
       // }
 
-      // $nearestVessels = array();
-      // if ($parent->date ==  $now->format('Y-m-d')) {
-      //    // dd('today');
-      //    foreach($vessels as $vessel){
-      //       $vesselLat = $vessel->latitude;
-      //       $vesselLong = $vessel->longitude;
-      //       $portLat = $parent->origin->latitude;
-      //       $portLong = $parent->origin->longitude;
-      //       $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+      $nearestVessels = array();
+      if ($parent->date ==  $now->format('Y-m-d')) {
+         // dd('today');
+         foreach($vessels as $vessel){
+            $vesselLat = $vessel->latitude;
+            $vesselLong = $vessel->longitude;
+            $portLat = $parent->origin->latitude;
+            $portLong = $parent->origin->longitude;
+            $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
             
-      //       if($distance < 1800){
-      //          // dd($vessel->name);
-      //          $nearestVessels[] = $vessel;
-      //       }
-      //    }
-      // }
+            if($distance < 1800){
+               // dd($vessel->name);
+               $nearestVessels[] = $vessel;
+
+            }
+         }
+      }
       // foreach($nearestVessels as $ves){
       //    dd($ves->name);
       // }
@@ -81,6 +82,7 @@ class ParentRequestController extends Controller
          'ports' => $ports,
          'scheduleRoutes' => $scheduleRoutes,
          'schedules' => $schedules,
+         'nearestVessels' => $nearestVessels,
          'vessels' => $vessels
          
       ])->with('i');
@@ -143,12 +145,17 @@ class ParentRequestController extends Controller
    public function change(Request $req){
       // dd($req->parent);
       $parent = ParentRequest::find($req->parent);
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'vessel_id' => $req->vessel
+      ]);
       // dd($parent->origin->name);
+
 
       foreach($parent->requests as $request){
          $request->update([
             'status' => 1,
-            'schedule_id' => $req->schedule
+            // 'schedule_id' => $req->schedule
          ]);
       }
 

@@ -12,9 +12,10 @@
                </div>
                <div class="card-wrap">
                <div class="card-header">
-                  <h4>Vessel Name</h4>
+                  <small>Name</small>
+                  <h4 class="text-dark">{{$vessel->name}}</h4>
                </div>
-               <div class="card-body">{{$vessel->name}}</div>
+               {{-- <div class="card-body">{{$vessel->name}}</div> --}}
                </div>
             </div>
             <div class="card border">

@@ -121,16 +121,29 @@
                         <form class="" action="{{route('parent.change.vessel')}}" method="POST">
                            @csrf
                            <input type="number" name="parent" id="parent" value="{{$parent->id}}" hidden>
+                           <input type="number" name="schedule" id="schedule" value="{{$parent->requests->first()->schedule->id}}" hidden>
                            <div class="form-group">
                               <label for="schedule">Change vessel? </label>
                               <div class="input-group">
-                                 <select class="form-control" name="schedule" id="schedule">
+                                 <select class="form-control" name="vessel" id="vessel">
                                     {{-- @foreach ($vessels as $vessel)
                                     <option {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}} {{$vessel->id}}  {{$parent->requests->first()->schedule->vessel_id == $vessel->id ? '- Selected' : ''}}</option>
                                     @endforeach --}}
-                                       @if (count($scheduleRoutes) > 0)
+                                       {{-- @if (count($scheduleRoutes) > 0)
                                           @foreach ($scheduleRoutes as $sche)
-                                          <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
+                                             @if ($parent->requests->first()->schedule_id == $sche->schedule->id)
+                                             <option {{$parent->requests->first()->schedule_id == $sche->schedule->id ? 'selected' : ''}} value="{{$sche->schedule->id}}">{{$sche->schedule->vessel->name}}  {{$parent->requests->first()->schedule_id == $sche->schedule->id ? '- Selected' : ''}}</option>
+                                             @endif
+                                          @endforeach
+                                       @endif --}}
+
+                                       <option value="{{$parent->requests->first()->schedule->vessel_id}}" selected>{{$parent->requests->first()->schedule->vessel->name}}</option>
+                                       @if (count($nearestVessels) > 0)
+                                          @foreach ($nearestVessels  as $vess)
+                                             @if ($vess->id == $parent->requests->first()->schedule->vessel_id)
+                                                @else
+                                                <option value="{{$vess->id}}">{{$vess->name}}</option>
+                                             @endif
                                           @endforeach
                                        @endif
 
