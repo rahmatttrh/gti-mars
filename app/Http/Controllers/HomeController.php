@@ -692,6 +692,9 @@ class HomeController extends Controller
 
       $this->map();
 
+      $tegas = User::where('email', 'tegasjaya@gmail.com')->first();
+      dd($tegas);
+
       $today = Carbon::now();
       $month = $today->format('m');
       $vessels = Vessel::get();

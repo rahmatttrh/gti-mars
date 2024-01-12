@@ -3,75 +3,105 @@
     Timeline Sailing Order
 @endsection
 @section('content')
-<section class="section">
-    <div class="section-header">
-      <h1 class="section-title">Timeline Sailing Order {{$schedule->code}}</h1>
-      <div class="section-header-breadcrumb">
-        @if (auth()->user()->hasRole('marine'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
-          @elseif(auth()->user()->hasRole('vessel'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
-          @elseif(auth()->user()->hasRole('user'))
-          <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-        @endif
-        
-        {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
-        <div class="breadcrumb-item active"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">Schedule</a></div>
-        <div class="breadcrumb-item active">Timeline</div>
-      </div>
-    </div>
-
-    <div class="section-body">
-      {{-- <h2 class="section-title">Schedule Plan</h2>
-      <p class="section-lead">
-        We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-      </p> --}}
-
-      {{-- <div class="badge badge-info">
-         Timeline Activity
-       </div>
-       <hr> --}}
-       <div class="activities" >
-         {{-- <div class="activities" style="height: 350px; overflow-y: scroll"> --}}
-         @if ($reports->count() > 0)
-           @foreach ($reports as $report)
-           <div class="activity">
-             <div class="activity-icon bg-primary text-white shadow-primary">
-               <i class="fas fa-comment-alt"></i>
-             </div>
-             <div class="activity-detail">
-               <div class="mb-2">
-                 <span class="text-job text-primary">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</span>
-                 <span class="bullet"></span>
-               
-               </div>
-               <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}} {{$report->anchor ?? ''}}</p>
-               @if ($report->status_id == 9)
-                   <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
-               @endif
-
-               @if ($report->status_id == 6)
-                   <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
-               @endif
-
-               @if ($report->status_id > 27 && $report->status_id < 32)
-                   <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
-               @endif
-             </div>
-           </div>
-            
-             @endforeach
-             @else
-             <div class="row">
-               <div class="col">
-                   <small class="text-center text-muted">Empty</small>
-               </div>
-             </div>
+   <section class="section">
+      <div class="section-header">
+         <h1 class="section-title">Timeline Sailing Order {{$schedule->code}}</h1>
+         <div class="section-header-breadcrumb">
+         @if (auth()->user()->hasRole('marine'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
+            @elseif(auth()->user()->hasRole('vessel'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
+            @elseif(auth()->user()->hasRole('user'))
+            <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
          @endif
          
-       </div>
-    </div>
-  </section>
+         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
+         <div class="breadcrumb-item active"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">Schedule</a></div>
+         <div class="breadcrumb-item active">Timeline</div>
+         </div>
+      </div>
+
+      <div class="section-body">
+         {{-- <h2 class="section-title">Schedule Plan</h2>
+         <p class="section-lead">
+         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
+         </p> --}}
+
+         {{-- <div class="badge badge-info">
+            Timeline Activity
+         </div>
+         <hr> --}}
+         <div class="row">
+            <div class="col-md-6">
+               <div class="card gradient-bottom border">
+                  <div class="card-header">
+                  <h4>All Timeline</h4>
+                  
+                  </div>
+                  <div class="card-body" id="top-5-scroll">
+                     <div  class="activities " >
+                        {{-- <div class="activities" style="height: 350px; overflow-y: scroll"> --}}
+                        @if ($reports->count() > 0)
+                           @foreach ($reports as $report)
+                           <div class="activity">
+                              <div class="activity-icon bg-primary text-white shadow-primary">
+                              <i class="fas fa-comment-alt"></i>
+                              </div>
+                              <div class="activity-detail">
+                              <div class="mb-2">
+                                 <span class="text-job text-primary">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</span>
+                                 <span class="bullet"></span>
+                              
+                              </div>
+                              <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}} {{$report->anchor ?? ''}}</p>
+                              @if ($report->status_id == 9)
+                                    <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
+                              @endif
+                  
+                              @if ($report->status_id == 6)
+                                    <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
+                              @endif
+                  
+                              @if ($report->status_id > 27 && $report->status_id < 32)
+                                    <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
+                              @endif
+                              </div>
+                           </div>
+                           
+                              @endforeach
+                              @else
+                              <div class="row">
+                              <div class="col">
+                                    <small class="text-center text-muted">Empty</small>
+                              </div>
+                              </div>
+                        @endif
+                        
+                        </div>
+                  </div>
+                  <div class="card-footer pt-3 d-flex justify-content-center">
+                  {{-- <div class="budget-price justify-content-center">
+                     <div
+                        class="budget-price-square bg-primary"
+                        data-width="20"
+                     ></div>
+                     <div class="budget-price-label">Selling Price</div>
+                  </div>
+                  <div class="budget-price justify-content-center">
+                     <div
+                        class="budget-price-square bg-danger"
+                        data-width="20"
+                     ></div>
+                     <div class="budget-price-label">Budget Price</div>
+                  </div> --}}
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+      </div>
+   </section>
   @if ($reports->count() > 0)
     @foreach ($reports as $report)
     <div class="modal fade" id="report-evidance-{{$report->id}}" tabindex="-1" role="dialog" aria-hidden="true">

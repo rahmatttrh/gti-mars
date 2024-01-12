@@ -599,6 +599,16 @@ class UserSeeder extends Seeder
       ]);
       $merlion121->assignRole('vessel');
 
+      $tegasjaya = User::create([
+         'name' => 'Tegas Jaya',
+         'username' => 'tegasjaya',
+         'email' => 'tegasjaya@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $tegasjaya->assignRole('vessel');
+
       $merlion131 = User::create([
          'name' => 'MERLION 131',
          'username' => 'merlion131',
