@@ -6,16 +6,24 @@
 
    <section class="section">
       <div class="row">
-         <div class="col-md-8">
+         <div class="col-md-4">
             <div class="card">
-               <div class="card-header">
+               {{-- <div class="card-header">
                   <span class="badge badge-light">Total Operating Mode (Hour)</span>
-               </div>
+                  
+               </div> --}}
                
                <div class="card-body">
-                  <canvas id="myChart"></canvas>
+                  <small class="mb-2">Total Operating Mode (Hour)</small>
+                  <canvas class="mt-2" id="myChart"></canvas>
                   {{-- <canvas id="myChart2"></canvas> --}}
                   {{-- <div id="chartdiv"></div> --}}
+               </div>
+               <div class="card-body">
+                  {{-- <div class="badge badge-light mb-4">Fuel Consumption (Liter)</div> --}}
+
+                  <small class="mb-2">Fuel Consumption (Liter)</small>
+                  <canvas class="mt-2" id="myChart2"></canvas>
                </div>
                <div class="card-footer bg-whitesmoke">
                   {{-- <span class="badge badge-warning" style="background-color: #f58056">Fresh Water</span>
@@ -24,17 +32,16 @@
                </div>
            </div>
          </div>
-         <div class="col-md-4">
+         <div class="col-md-8">
             <div class="card">
                <div class="card-body">
-                  <hr>
+                  {{-- <hr> --}}
                   <form action="{{route('vdr.filter')}}" method="POST">
                      @csrf
-                     <div class="form-group">
+                     {{-- <div class="form-group">
                         <div class="input-group">
                            
                            <select class="form-control " required name="month" id="month">
-                              {{-- <option value="All Month">All Month</option>  --}}
                               <option {{$thisMonth == 1 ? 'selected' : ''}} value="1">Januari</option>  
                               <option {{$thisMonth == 2 ? 'selected' : ''}} value="2">Februari</option> 
                               <option {{$thisMonth == 3 ? 'selected' : ''}} value="3">Maret</option> 
@@ -49,13 +56,12 @@
                               <option {{$thisMonth == 12 ? 'selected' : ''}} value="12">Desember</option> 
                            </select>
                            <select class="form-control " required name="year" id="year">
-                              {{-- <option value="All Month">All Month</option>  --}}
                               <option {{$thisYear == 2024 ? 'selected' : ''}} value="2024">2024</option>  
                               <option {{$thisYear == 2023 ? 'selected' : ''}} value="2023">2023</option> 
                               <option {{$thisYear == 2022 ? 'selected' : ''}} value="2022">2022</option> 
                            </select>
                         </div>
-                     </div>
+                     </div> --}}
                      <div class="form-group">
                         <div class="input-group">
                            
@@ -69,6 +75,8 @@
                               <option value="April">Elok Jaya</option> 
                               <option value="Mei">ENC One</option>  --}}
                            </select>
+                           <input type="date" name="from" id="from" class="form-control">
+                           <input type="date" name="to" id="to" class="form-control">
                            <div class="input-group-append">
                               <button class="btn btn-primary px-4" type="submit">Filter</button>
                               
@@ -80,16 +88,44 @@
                   {{-- <hr>
 
                   <canvas id="myChart4"></canvas> --}}
-                  
-               </div>
-               
-            </div>
-
-            <div class="card">
-               <div class="card-body">
-                  <div class="badge badge-light mb-4">Fuel Consumption (Liter)</div>
-                  
-                  <canvas id="myChart2"></canvas>
+                  <div class="table-responsive">
+                     <table class="table table-striped table-sm" id="table-1">
+                        <thead>
+                           <tr>
+                              <th class="text-center">No.</th>
+                              <th>VDR Number</th>
+                              <th>Vessel</th>
+                              <th>Date</th>
+                              <th>Crew</th>
+                              <th>Created</th>
+                              <th>Status</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+      
+                              @foreach($vdrs as $vdr)
+                              <tr>
+                                 <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                                 <td>
+                                    <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a>
+      
+                                 </td>
+                                 <td>{{$vdr->vessel->name}}</td>
+                                 <td>{{dayDate($vdr->date)}}</td>
+                                 <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
+                                 <td>{{$vdr->created_by}}</td>
+                                 <td>
+                                    @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
+                                    <span class="badge badge-warning">Draft</span>
+                                    @else
+                                    <span class="badge badge-success">Release</span>
+                                    @endif
+                                 </td>
+                              </tr>
+                              @endforeach
+                        </tbody>
+                     </table>
+                  </div>
                </div>
             </div>
         </div>
@@ -97,46 +133,7 @@
 
       <div class="card">
            
-         <div class="card-body">
-            <div class="table-responsive">
-               <table class="table table-striped" id="table-1">
-                  <thead>
-                     <tr>
-                        <th class="text-center">No.</th>
-                        <th>VDR Number</th>
-                        <th>Vessel</th>
-                        <th>Date</th>
-                        <th>Crew</th>
-                        <th>Created</th>
-                        <th>Status</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-
-                        @foreach($vdrs as $vdr)
-                        <tr>
-                           <td class="text-muted text-center"><small>{{++$i}}</small></td>
-                           <td>
-                              <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a>
-
-                           </td>
-                           <td>{{$vdr->vessel->name}}</td>
-                           <td>{{dayDate($vdr->date)}}</td>
-                           <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                           <td>{{$vdr->created_by}}</td>
-                           <td>
-                              @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
-                              <span class="badge badge-warning">Draft</span>
-                              @else
-                              <span class="badge badge-success">Release</span>
-                              @endif
-                           </td>
-                        </tr>
-                        @endforeach
-                  </tbody>
-               </table>
-            </div>
-         </div>
+         
        </div>
     
    </section>
