@@ -1221,6 +1221,7 @@ class HomeController extends Controller
          'thisYear' => $today->year,
          'monthName' => $monthName,
          'vdrs' => $vdrs,
+         'thisVessel' => null,
          'vessel' => $vessel->id,
          'vessels' => $vessels,
          'date' => $date,
@@ -1239,9 +1240,14 @@ class HomeController extends Controller
       $vessels = Vessel::get();
 
       $vessel = Vessel::find($req->vessel);
+      $startDate = $req->start;
+      $endDate = $req->end;
+      $vdrs = Vdr::where('vessel_id', $vessel->id)->whereBetween('date', [$startDate, $endDate])->get();
+      // dd($vdrs);
+
       $month = $req->month;
       $year = $req->year;
-      $vdrs = Vdr::where('vessel_id', $vessel->id)->whereMonth('date', $month)->whereYear('date', $year)->orderBy('date', 'asc')->get();
+      // $vdrs = Vdr::where('vessel_id', $vessel->id)->whereMonth('date', $month)->whereYear('date', $year)->orderBy('date', 'asc')->get();
       // dd($vdrs);
 
       // $operatingHeaders = VdrOperatingHeader::get();
@@ -1251,31 +1257,31 @@ class HomeController extends Controller
 
       // }
       
-      if ($month == 1) {
-         $monthName = 'Januari';
-      } else if ($month == 2){
-         $monthName = 'Februari';
-      } else if ($month == 3){
-         $monthName = 'Maret';
-      } else if ($month == 4){
-         $monthName = 'April';
-      } else if ($month == 5){
-         $monthName = 'Mei';
-      } else if ($month == 6){
-         $monthName = 'Juni';
-      }  else if ($month == 7){
-         $monthName = 'Juli';
-      } else if ($month == 8){
-         $monthName = 'Agustus';
-      } else if ($month == 9){
-         $monthName = 'September';
-      } else if ($month == 10){
-         $monthName = 'Oktober';
-      } else if ($month == 11){
-         $monthName = 'November';
-      } else if ($month == 12){
-         $monthName = 'Desember';
-      }
+      // if ($month == 1) {
+      //    $monthName = 'Januari';
+      // } else if ($month == 2){
+      //    $monthName = 'Februari';
+      // } else if ($month == 3){
+      //    $monthName = 'Maret';
+      // } else if ($month == 4){
+      //    $monthName = 'April';
+      // } else if ($month == 5){
+      //    $monthName = 'Mei';
+      // } else if ($month == 6){
+      //    $monthName = 'Juni';
+      // }  else if ($month == 7){
+      //    $monthName = 'Juli';
+      // } else if ($month == 8){
+      //    $monthName = 'Agustus';
+      // } else if ($month == 9){
+      //    $monthName = 'September';
+      // } else if ($month == 10){
+      //    $monthName = 'Oktober';
+      // } else if ($month == 11){
+      //    $monthName = 'November';
+      // } else if ($month == 12){
+      //    $monthName = 'Desember';
+      // }
 
       $date = array();
       $value = array();
@@ -1295,9 +1301,12 @@ class HomeController extends Controller
       return view('pages-stisla.vdr.home-marine', [
          'thisMonth' => $month,
          'thisYear' => $year,
-         'monthName' => $monthName,
+         // 'monthName' => $monthName,
          'vdrs' => $vdrs,
+         'start' => $startDate,
+         'end' => $endDate,
          'vessel' => $vessel->id,
+         'thisVessel' => $vessel,
          'vessels' => $vessels,
          'date' => $date,
          'value' => $value,
@@ -1316,5 +1325,20 @@ class HomeController extends Controller
       // return view('pages.vdr.marine.table', [
       //    'vdrs' => $vdrs
       // ])->with('i');
+   }
+
+   public function proactMarine(){
+      return view('pages-stisla.marine.proact.index');
+   }
+
+   public function mapMarine(){
+      return view('pages-stisla.marine.map.index');
+   }
+
+   public function proact(){
+      return view('pages-stisla.proact.home');
+   }
+   public function mapp(){
+      return view('pages-stisla.map.home');
    }
 }

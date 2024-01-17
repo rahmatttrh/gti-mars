@@ -7,13 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vdr extends Model
 {
-    use HasFactory;
+   use HasFactory;
 
-    protected $guarded = [];
+   protected $guarded = [];
 
-    public function vessel(){
-        return $this->belongsTo(Vessel::class);
-    }
+   public function vessel(){
+      return $this->belongsTo(Vessel::class);
+   }
+
+   public function operatings(){
+      return $this->hasMany(VdrOperating::class);
+   }
 
   
 }

@@ -73,6 +73,9 @@ Route::middleware(["auth"])->group(function () {
    //    Route::group(['middleware' => ['role:department|vessel']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
+
+   Route::get("proact/dashboard", [HomeController::class, "proact",])->name('proact');
+   Route::get("map/dashboard", [HomeController::class, "mapp",])->name('map');
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::post('store', [UserController::class, 'store'])->name('user.store');
@@ -301,6 +304,14 @@ Route::group(['middleware' => ['role:marine']], function () {
       Route::get("marine/history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
       // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
       // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+   });
+
+   Route::prefix("proact")->group(function () {
+      Route::get("marine/dashboard", [HomeController::class, "proactMarine",])->name('proact.marine');
+   });
+
+   Route::prefix("map")->group(function () {
+      Route::get("marine/dashboard", [HomeController::class, "mapMarine",])->name('map.marine');
    });
 
    Route::prefix('port')->group(function () {

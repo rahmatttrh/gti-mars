@@ -7,7 +7,7 @@
          <input type="hidden" name="created_by" value="{{$user->name}}">
          <div class="modal-content">
             <div class="modal-header">
-               <h5 class="modal-title" ">Add Crew </h5>
+               <h5 class="modal-title">Add Crew </h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
@@ -36,7 +36,7 @@
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="rank">Rank</label>
-                     <input class="form-control" id="rank" name="rank" type="number" >
+                     <input class="form-control" id="rank" name="rank" type="text" >
                      @error('rank')
                         <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                      @enderror

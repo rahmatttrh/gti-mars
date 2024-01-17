@@ -5,50 +5,124 @@
 @section('content')
    <section class="section">
       @if ($vdr)
-         <div class="card">
-            <div class="card-header d-flex justify-content-between">
-               <b><span class="text-primary">VDR</span> {{$vessel->name}} | {{dayDate($vdr->date)}}</b>
-               <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalEdit">Edit</a>
-            </div>
-            <div class="card-body">
-               <div class="row">
-                  <div class="col-md-6">
-                     <dl class="row">
-                        
-                        <dt class="col-5">Contract No.</dt>
-                        <dd class="col-7">{{$vessel->contract_no ?? '-'}}</dd>
-                        <dt class="col-5">Contract Period</dt>
-                        <dd class="col-7">{{$vessel->contract_start ?? '-'}} - {{$vessel->contract_end ?? '-'}}</dd>
-                        <dt class="col-5">Location (Midnight)</dt>
-                        <dd class="col-7">{{$vdr->location_midnight ?? '-'}}</dd>
-                        
-                  </dl>
-                  </div>
-                  <div class="col-md-6">
-                     <dl class="row">
-                        
-                        <dt class="col-5">Owner/Operator</dt>
-                        <dd class="col-7"> {{$vessel->owner ?? '-'}} / {{$vessel->operator ?? '-'}}</dd>
-                        <dt class="col-5">Master Name</dt>
-                        <dd class="col-7"> {{$vessel->master ?? '-'}}</dd>
-                        <dt class="col-5">Number of Crew / Pax</dt>
-                        <dd class="col-7">{{$vdr->crew_onduty}} / {{$vdr->crew_max}} Person</dd>
-                  </dl>
+         <div class="row">
+            
+            <div class="col-md-12">
+               <div class="card">
+                  {{-- <div class="card-header">
+                    <h4>Accordion</h4>
+                  </div> --}}
+                  <div class="card-body">
+                     {{-- <hr> --}}
+                     <div id="accordion">
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-head" aria-expanded="true">
+                           <h4>Vessel Daily Report {{$vessel->name}}  | {{dayDate($vdr->date)}}</h4>
+                           </div>
+                           <div class="accordion-body collapse show" id="panel-head" data-parent="#accordion">
+                              
+                              {{-- <h5 class="mt-2">{{$vessel->name}}</h5> --}}
+                              <a href="#" class="mb-2" data-toggle="modal" data-target="#modalEdit">Edit...</a>
+                              <div class="row">
+                                 <div class="col">
+                                    <dl class="row">
+                              
+                                       <dt class="col-5">Contract No.</dt>
+                                       <dd class="col-7">{{$vessel->contract_no ?? '-'}}</dd>
+                                       <dt class="col-5">Contract Period</dt>
+                                       <dd class="col-7">{{$vessel->contract_start ?? '-'}} - {{$vessel->contract_end ?? '-'}}</dd>
+                                       <dt class="col-5">Location</dt>
+                                       <dd class="col-7">{{$vdr->location_midnight ?? '-'}}</dd>
+                                       
+                                    </dl>
+                                 </div>
+                                 <div class="col">
+                                    <dl class="row">
+                              
+                                       <dt class="col-5">Owner</dt>
+                                       <dd class="col-7"> {{$vessel->owner ?? '-'}} / {{$vessel->operator ?? '-'}}</dd>
+                                       <dt class="col-5">Master Name</dt>
+                                       <dd class="col-7"> {{$vessel->master ?? '-'}}</dd>
+                                       <dt class="col-5">Num of Crew / Pax</dt>
+                                       <dd class="col-7">{{$vdr->crew_onduty}} / {{$vdr->crew_max}} Person</dd>
+                                    </dl>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-1" >
+                           <h4>Crew & Passenger List</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
+                              <x-vdr.crew :crews="$crews" :vdr="$vdr" />
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-2">
+                              <h4>Wheater Condition</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-2" data-parent="#accordion">
+                              <x-vdr.weather :weathers="$weathers" :vdr="$vdr" />
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-3">
+                              <h4>Detail of Daily Operational Activities</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-3" data-parent="#accordion">
+                              <x-vdr.activity :activities="$activities" :operatings="$operatings" :vdr="$vdr"/>
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-4">
+                              <h4>Summary of Daily Operating Data</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-4" data-parent="#accordion">
+                              <x-vdr.data :operatings="$operatings" :totaljam="$totalJam" :totaldaily="$totalDaily" :vdr="$vdr"/>
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-5">
+                              <h4>Summary of Daily Fuel, Water and Cargos Remaining Onboard</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-5" data-parent="#accordion">
+                              <x-vdr.fuel :cargos="$cargos" :vdr="$vdr" />
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-6">
+                              <h4>HSSE</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-6" data-parent="#accordion">
+                              <x-vdr.hsse :hses="$hses" :vdr="$vdr" />
+                           </div>
+                        </div>
+                        <div class="accordion">
+                           <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-body-7">
+                              <h4>Vessel Daily Engine Parameter Log</h4>
+                           </div>
+                           <div class="accordion-body collapse" id="panel-body-7" data-parent="#accordion">
+                              <x-vdr.engine :engines="$engines" :vdr="$vdr" />
+                           </div>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>
          </div>
          
-         <div class="row">
+         
+         {{-- <div class="row">
             <div class="col-md-6">
                <x-vdr.crew :crews="$crews" :vdr="$vdr" />
             </div>
             <div class="col-md-6">
                <x-vdr.weather :weathers="$weathers" :vdr="$vdr" />
             </div>
-         </div>
+         </div> --}}
          
-         <x-vdr.activity :activities="$activities" :operatings="$operatings" :vdr="$vdr"/>
+         {{-- <x-vdr.activity :activities="$activities" :operatings="$operatings" :vdr="$vdr"/>
          <div class="row">
             <div class="col-md-12">
                <x-vdr.data :operatings="$operatings" :totaljam="$totalJam" :totaldaily="$totalDaily" :vdr="$vdr"/>
@@ -56,10 +130,10 @@
             <div class="col-md-12">
                <x-vdr.fuel :cargos="$cargos" :vdr="$vdr" />
             </div>
-         </div>
+         </div> --}}
 
-         <x-vdr.hsse :hses="$hses" :vdr="$vdr" />
-         <x-vdr.engine :engines="$engines" :vdr="$vdr" />
+         {{-- <x-vdr.hsse :hses="$hses" :vdr="$vdr" />
+         <x-vdr.engine :engines="$engines" :vdr="$vdr" /> --}}
          
          @else
 

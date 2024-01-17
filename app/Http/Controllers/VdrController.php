@@ -523,6 +523,8 @@ class VdrController extends Controller
                 $sb = $this->hitungTime($sb, $activity->sb);
             }
 
+            
+
             $totalMode = array(
                 'high'   => $high,
                 'normal' => $normal,
@@ -533,6 +535,8 @@ class VdrController extends Controller
                 'ah'     => $ah,
                 'sb'     => $sb
             );
+
+            
 
             // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
             //     ->where('vdr_id', $req->vdr_id)

@@ -27,35 +27,7 @@
                <div class="card-body">
                   <form action="{{route('user.store')}}" method="POST">
                      @csrf
-                     <label class="d-block"><b>Choose app</b></label>
-                     <div class="d-flex mb-3">
-                        <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="dsp" value="DSP">
-                           <label class="form-check-label" for="dsp">
-                             DSP
-                           </label>
-                        </div>
-                        <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="vdr" value="VDR" checked>
-                           <label class="form-check-label" for="vdr">
-                             VDR
-                           </label>
-                        </div>
-                        <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="proact" value="PROACT" >
-                           <label class="form-check-label" for="proact">
-                              PROACT
-                           </label>
-                        </div>
-                        <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="map" value="MAP">
-                           <label class="form-check-label" for="map">
-                             MAP
-                           </label>
-                        </div>
-                     </div>
-                     
-                     {{-- <div class="form-group">
+                     <div class="form-group">
                         <label class="d-block">Choose app</label>
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -73,15 +45,17 @@
                            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
                            <label class="form-check-label" for="inlineCheckbox2">MAP</label>
                         </div>
-                     </div> --}}
+                        {{-- <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3" disabled>
+                          <label class="form-check-label" for="inlineCheckbox3">3 (disabled)</label>
+                        </div> --}}
+                      </div>
                      <div class="form-row">
                         <div class="form-group col-md-6">
                            <label>Role *</label>
                            <select  class="custom-select" id="port" name="port">
                               <option value="department">User</option>
-                              <option value="admin">Admin</option>
-                              <option value="admin-fm">Admin FM</option>
-                              {{-- <option value="superadmin">Super</option> --}}
+                              <option value="admin">Admin Fleet Control</option>
                            </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -97,11 +71,11 @@
                            <input type="text" class="form-control " id="ekstensi" name="ekstensi" >
                         </div>
                         
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                            <label for="email">Email</label>
                            <input type="text" class="form-control " id="email" name="email" >
                         </div>
-                        {{-- <div class="form-group col-md-6">
+                        <div class="form-group col-md-6">
                            <label>Location*</label>
                            <select  class="custom-select" id="port" name="port">
                               <option  disabled selected>Choose one</option>
@@ -109,7 +83,7 @@
                                   <option value="{{$port->id}}">{{$port->name}}</option>
                               @endforeach
                            </select>
-                        </div> --}}
+                        </div>
                         
                      </div>
                      
@@ -144,7 +118,7 @@
                            <th>Name</th>
                            
                            <th>Username</th>
-                           {{-- <th>Location</th> --}}
+                           <th>Location</th>
                            {{-- <th>Email</th> --}}
                            {{-- <th>Role</th> --}}
                            <th></th>
@@ -152,7 +126,7 @@
                      </thead>
                      <tbody>
                         @foreach ($users as $user)
-                        @if ($user->hasRole('vessel') || $user->hasRole('department') || $user->hasRole('marine'))
+                        @if ($user->hasRole('vessel'))
                            @else
                            <tr>
                               <td class="text-center">{{++$i}}</td>
@@ -164,7 +138,7 @@
                               </td>
                               <td>{{$user->username}}</td>
                               <td>
-                                 {{-- {{$user->getPortName() ?? ''}} --}}
+                                 {{$user->getPortName() ?? ''}}
                                  
                               </td>
                               

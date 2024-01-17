@@ -75,8 +75,9 @@
                               <option value="April">Elok Jaya</option> 
                               <option value="Mei">ENC One</option>  --}}
                            </select>
-                           <input type="date" name="from" id="from" class="form-control">
-                           <input type="date" name="to" id="to" class="form-control">
+                           <input type="date" name="start" id="start" class="form-control">
+                           <span class="mx-2 mt-3">To</span>
+                           <input type="date" name="end" id="end" class="form-control">
                            <div class="input-group-append">
                               <button class="btn btn-primary px-4" type="submit">Filter</button>
                               
@@ -87,7 +88,15 @@
                   </form>
                   {{-- <hr>
 
+                  
                   <canvas id="myChart4"></canvas> --}}
+                  @if ($thisVessel)
+                  <span>
+                     VDR Data of <b>{{$thisVessel->name}}</b> between <b>{{formatDate($start)}}</b> and <b>{{formatDate($end)}}</b>
+                  </span>
+                  @endif
+                  
+                  <hr>
                   <div class="table-responsive">
                      <table class="table table-striped table-sm" id="table-1">
                         <thead>

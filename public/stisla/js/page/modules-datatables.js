@@ -105,3 +105,27 @@ $("#table-13").dataTable({
    pageLength : 5,
    lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
 });
+
+$("#table-14").dataTable({
+   columnDefs: [{ sortable: false, targets: [2, 3] }],
+   pageLength : 5,
+   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+   searching: false,
+   // bPaginate: false,
+    bLengthChange: false,
+    bFilter: true,
+    bInfo: false,
+    bAutoWidth: false 
+});
+
+$("#table-15").dataTable({
+   columnDefs: [{ sortable: false, targets: [2, 3] }],
+   pageLength : 5,
+   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+   searching: false,
+   // bPaginate: false,
+    bLengthChange: false,
+    bFilter: true,
+    bInfo: false,
+    bAutoWidth: false 
+});

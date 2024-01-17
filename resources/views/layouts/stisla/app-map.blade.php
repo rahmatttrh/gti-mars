@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>VDR PHE - @yield('title')</title>
+  <title> @yield('title')</title>
 
   <!-- General CSS Files -->
 
@@ -24,17 +24,6 @@
   <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
-
-  {{-- <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-   <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
-   <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-   <script src="https://cdn.amcharts.com/lib/5/locales/de_DE.js"></script>
-   <script src="https://cdn.amcharts.com/lib/5/geodata/germanyLow.js"></script>
-   <script src="https://cdn.amcharts.com/lib/5/fonts/notosans-sc.js"></script>
-
-   <script src="https://cdn.amcharts.com/lib/5/percent.js"></script> --}}
-
-
   
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
@@ -73,13 +62,13 @@
                            <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
                         </li>
                         <li>
-                           <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report"><b>VDR</b></a>
+                           <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                         </li>
                         <li>
                            <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
                         </li>
                         <li>
-                           <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
+                           <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program"><b>MAP</b></a>
                         </li>
                         <li>
                            <a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
@@ -144,7 +133,7 @@
                      <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
                   </li>
                   <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program"><b>Marine Assurance Program</b></a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -260,13 +249,13 @@
                      <a href="{{route('dsp.vessel')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
                   </li>
                   <li>
-                     <a href="{{route('vdr.vessel')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report"><b>VDR</b></a>
+                     <a href="{{route('vdr.vessel')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                   </li>
                   <li>
                      <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
                   </li>
                   <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program"><b>MAP</b></a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -323,7 +312,7 @@
                      <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
                   </li>
                   <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program"><b>MAP</b></a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -392,28 +381,28 @@
 
 
             {{-- Siedbar --}}
-            @if (auth()->user()->hasRole('marine'))
+            
             <div class="main-sidebar sidebar-style-2 ">
                <aside id="sidebar-wrapper">
                   <div class="sidebar-brand">
-                  <a href="{{route('dsp.marine')}}" class="fw-bold">VESSEL DAILY REPORT</a>
+                  <a href="{{route('map')}}" class="fw-bold">MAP</a>
                   </div>
                   <div class="sidebar-brand sidebar-brand-sm">
-                  <a href="{{route('dsp.marine')}}">VDR</a>
+                  <a href="{{route('map')}}">MAP</a>
                   </div>
                   <hr>
                   <ul class="sidebar-menu">
                      
                      <li class="menu-header">Menu</li>
                      
-                     <li class="dropdown">
+                     {{-- <li class="dropdown">
                      <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Vessel Daily Report</span></a>
-                     <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('vdr.marine')}}">Chart</a></li>
-                        <li><a class="nav-link" href="{{route('vdr.marine.table')}}">History</a></li>
-                        
-                     </ul>
-                     </li>
+                        <ul class="dropdown-menu">
+                           <li><a class="nav-link" href="{{route('vdr.marine')}}">Chart</a></li>
+                           <li><a class="nav-link" href="{{route('vdr.marine.table')}}">History</a></li>
+                           
+                        </ul>
+                     </li> --}}
                      
                      
                   </ul>
@@ -421,42 +410,7 @@
                </aside>
             </div>
             
-            @elseif(auth()->user()->hasRole('vessel'))
-            <div class="main-sidebar sidebar-style-2 ">
-                  <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('vdr.vessel')}}" class="fw-bold">VESSEL DAILY REPORT</a>
-                  
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('vdr.vessel')}}">VDR</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     {{-- <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li> --}}
-
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-pencil-ruler"></i> <span>Vessel Daily Report</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('vdr.vessel.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('vdr.history')}}">History</a></li>   
-                        </ul>
-                     </li>
-
-                     
-                  </ul>
-         
-                  {{-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                     <a href="https://getstisla.com/docs" class="btn btn-success btn-lg btn-block btn-icon-split">
-                        <i class="fas fa-rocket"></i> Documentation
-                     </a>
-                  </div>         --}}
-                  </aside>
-            </div>
-            @endif
+           
             
 
             <!-- Main Content -->

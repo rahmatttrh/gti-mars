@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>DSP PHE - @yield('title')</title>
+  <title> @yield('title')</title>
 
   <!-- General CSS Files -->
 
@@ -76,7 +76,10 @@
                         <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                      </li>
                      <li>
-                        <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a>
+                        <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
+                     </li>
+                     <li>
+                        <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
                      </li>
                      <li>
                         <a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
@@ -149,7 +152,10 @@
                      <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                   </li>
                   <li>
-                     <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a>
+                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
+                  </li>
+                  <li>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -268,7 +274,10 @@
                      <a href="{{route('vdr.create')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                   </li>
                   <li>
-                     <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a>
+                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
+                  </li>
+                  <li>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
@@ -322,7 +331,10 @@
                      <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
                   </li>
                   <li>
-                     <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Under Developement">AIMS</a>
+                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
+                  </li>
+                  <li>
+                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
                   </li>
                   {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
                   <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
