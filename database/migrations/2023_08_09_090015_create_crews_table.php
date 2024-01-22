@@ -15,12 +15,18 @@ class CreateCrewsTable extends Migration
    {
       Schema::create('crews', function (Blueprint $table) {
          $table->id();
+         $table->integer('status')->nullable();
          $table->string('name');
-         $table->string('barcode');
-         $table->string('department');
-         $table->string('company');
-         $table->string('desc')->nullable();
-         $table->smallInteger('status')->nullable();
+         $table->string('number')->nullable();
+         $table->integer('vessel_id');
+         $table->integer('rank_id');
+
+         // $table->string('name');
+         // $table->string('barcode');
+         // $table->string('department');
+         // $table->string('company');
+         // $table->string('desc')->nullable();
+         // $table->smallInteger('status')->nullable();
          $table->timestamps();
       });
    }

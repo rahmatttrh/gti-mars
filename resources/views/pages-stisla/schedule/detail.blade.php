@@ -209,7 +209,7 @@
                   <div class="tab-content" id="myTabContent">
                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                      <div class="table-responsive">
-                        <table class="table table-striped table-sm datatable" id="table-1">
+                        <table class="" id="table-1">
                         <thead>
                            <tr>
                               <th>MTD</th>
@@ -285,7 +285,7 @@
                      </div>
                      <hr>
                      <div class="table-responsive">
-                        <table class="table table-striped table-sm card-table">
+                        <table class="">
                         <thead>
                               <tr>
                               <th colspan="7" class="text-info">Deflection</th>
@@ -330,7 +330,7 @@
                   </div>
                   <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                      <div class="table-responsive ">
-                        <table class="table table-striped table-sm" id="table-3">
+                        <table class="" id="table-3">
                         <thead>
                            
                            <tr>

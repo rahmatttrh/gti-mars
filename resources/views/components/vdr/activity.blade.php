@@ -1,7 +1,7 @@
-<a href="#" class="" data-toggle="modal" data-target="#modalAddActivity">
-   Add Activites...
+<a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalAddActivity">
+   Add
 </a>
-<table class="table table-striped table-sm">
+<table class="table table-striped table-sm mt-2">
     <thead>
         <tr>
             <th colspan="2" class="text-center">TIME</th>

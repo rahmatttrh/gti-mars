@@ -41,4 +41,19 @@ class Vessel extends Model
    public function histories(){
       return $this->hasMany(VesselHistory::class);
    }
+   public function crews(){
+      return $this->hasMany(Crew::class);
+   }
+   public function master(){
+      $master = Crew::where('vessel_id', $this->id)->where('rank_id', 1)->first();
+      return $master;
+   }
+   public function co(){
+      $co = Crew::where('vessel_id', $this->id)->where('rank_id', 2)->first();
+      return $co;
+   }
+
+   public function docs(){
+      return $this->hasMany(Document::class);
+   }
 }

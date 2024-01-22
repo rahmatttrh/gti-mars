@@ -89,105 +89,96 @@
                   
                </div>
                @endif
-               <div class="card-header">
+               {{-- <div class="card-header">
                   <h4>Sailing Order</h4>
-               </div>
+               </div> --}}
                <div class="card-body">
                   <div class="table-responsive">
-                  <table class="table table-striped table-sm" id="table-6">
-                     <thead >
-                        <tr>
-                           <th class="text-center">No</th>
-                           <th>ID</th>
-                           <th>Vessel</th>
-                           <th>Date</th>
-                           <th>Type</th>
-                           {{-- <th>Activity</th> --}}
-                           <th>Status</th>
-                           <th></th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @if ($schedules->count() > 0 )
-                           @foreach ($schedules as $schedule)
-                              <tr>
-                                 <td class="text-center">{{++$i}}</td>
-                                 <td>
-                                    {{$schedule->code}} 
-                                    <br>
-                                    <small>{{$schedule->class}}</small>
-                                 </td>
-                                 <td>
-                                    {{$schedule->vessel->name}} 
-                                    <br>
-                                    <small>{{$schedule->vessel->type}}</small>
-                                 </td>
-                                 <td>
-                                    {{ formatDateName($schedule->date) }}
-                                    <br>
-                                    <small>{{formatDayName($schedule->date)}}</small>
-                                 </td>
-                                 
-                                 {{-- <td class="text-muted">
-                                    From {{$schedule->origin->name}} 
-                                 </td> --}}
-                                 <td>{{$schedule->class}}</td>
-                                 {{-- <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td> --}}
-                                 <td>
-                                    <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                                    {{-- @if ($schedule->deviations->where('status', 0)->count() == 0)
-                                    <div class="badge bg-danger">Deviation Alert</div>
-                                    @endif --}}
-                                 </td>
-                                 <td>
-                                    <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                                 </td>
-                              </tr>
-                              <x-modal.schedule.request :schedule="$schedule" />
-                           @endforeach
-                           @else
-                           <tr>
-                              <td colspan="7" class="text-center text-muted"><small>Empty</small></td>
-                           </tr>
-                        @endif
-                        
-                     </tbody>
-                  </table>
-                  </div>
-               </div>
-            </div>
-
-            <div class="card">
-               <div class="card-header">
-                  <h4>My Requests</h4>
-               </div>
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-6">
+                     <table class="table-striped" id="table-6">
                         <thead>
+                           <tr><th colspan="5" class="py-2">Sailing Order</th></tr>
                            <tr>
-                              <th class="text-center">No.</th>
+                              {{-- <th class="text-center">No</th> --}}
+                              <th>ID</th>
+                              <th>Vessel</th>
+                              <th>Date</th>
+                              <th>Type</th>
+                              {{-- <th>Activity</th> --}}
+                              <th class="text-center">Status</th>
+                              {{-- <th></th> --}}
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @if ($schedules->count() > 0 )
+                              @foreach ($schedules as $schedule)
+                                 <tr>
+                                    {{-- <td class="text-center">{{++$i}}</td> --}}
+                                    <td>
+                                       <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}} </a> 
+                                    </td>
+                                    <td>
+                                       {{$schedule->vessel->name}} 
+                                    </td>
+                                    <td>
+                                       {{ formatDateName($schedule->date) }}
+                                    </td>
+                                    
+                                    {{-- <td class="text-muted">
+                                       From {{$schedule->origin->name}} 
+                                    </td> --}}
+                                    <td>{{$schedule->class}}</td>
+                                    {{-- <td class="text-muted"><a href="#" data-bs-toggle="modal" data-bs-target="#modal-request-list-{{$schedule->id}}">{{$schedule->requests->count()}} Activity</a></td> --}}
+                                    <td  class="text-center">
+                                       <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                                       {{-- @if ($schedule->deviations->where('status', 0)->count() == 0)
+                                       <div class="badge bg-danger">Deviation Alert</div>
+                                       @endif --}}
+                                    </td>
+                                    {{-- <td>
+                                       <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                                    </td> --}}
+                                    <td></td>
+                                 </tr>
+                                 <x-modal.schedule.request :schedule="$schedule" />
+                              @endforeach
+                              @else
+                              <tr>
+                                 <td colspan="7" class="text-center text-muted"><small>Empty</small></td>
+                              </tr>
+                           @endif
+                           
+                        </tbody>
+                     </table>
+                  </div>
+                  <hr>
+                  <div class="table-responsive">
+                     <table class="table-striped" id="table-7">
+                        <thead>
+                           <tr><th colspan="6" class="py-2">My Request</th></tr>
+                           <tr>
+                              
+                              {{-- <th class="text-center">No.</th> --}}
                               <th>ID</th>
                               <th>Activity</th>
                               <th>Date</th>
                               <th>QTY</th>
                               
                               <th>Schedule ID</th>
-                              <th>Status</th>
-                              <th></th>
+                              <th class="text-center">Status</th>
+                              {{-- <th></th> --}}
                            </tr>
                         </thead>
                         <tbody>
                            @if ($requests->count() > 0)
                               @foreach ($requests as $request)
                                  <tr>
-                                    <td class="text-center">{{++$i}}</td>
-                                    <td>{{$request->code}}</td>
+                                    {{-- <td class="text-center">{{++$i}}</td> --}}
+                                    <td><a href="{{route('request.detail', enkripRambo($request->id))}}"> {{$request->code}}</a></td>
                                     <td>{{$request->activity->name ?? ''}} {{$request->description}}</td>
                                     <td>{{formatDateName($request->date)}}</td>
                                     <td>{{$request->qty}} KL</td>
                                     <td>{{$request->schedule->code}}</td>
-                                    <td>
+                                    <td class="text-center">
                                        {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
                                           @if ($request->status < 3)
                                              <x-status-stisla.request :request="$request" :lastreport="null"/>
@@ -195,10 +186,11 @@
                                              <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
                                           @endif
                                     </td>
+                                    <td></td>
                                     
-                                    <td>
+                                    {{-- <td>
                                        <a href="{{route('request.detail', enkripRambo($request->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                                    </td>
+                                    </td> --}}
                                  </tr>
                               @endforeach
                               @else
@@ -212,6 +204,8 @@
                   </div>
                </div>
             </div>
+
+            
          </div>
       </div>
       

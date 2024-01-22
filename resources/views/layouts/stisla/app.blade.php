@@ -35,6 +35,20 @@
 
 </style>
 
+<style>
+   table {
+      width: 100%;
+   }
+
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+   }
+   th, td {
+      padding-left: 5px
+   }
+</style>
+
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
@@ -55,7 +69,7 @@
          <div class="main-wrapper main-wrapper-1 ">
             <div class="navbar-bg " style="background-color: #0b4e99"></div>
             
-            @if (auth()->user()->hasRole('marine'))
+            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
             <nav class="navbar navbar-expand-lg main-navbar">
                <form class="form-inline mr-auto">
                   <ul class="navbar-nav mr-3">
@@ -115,9 +129,9 @@
                      <div class="d-sm-none d-lg-inline-block">Hi, Marine</div></a>
                      <div class="dropdown-menu dropdown-menu-right">
                      {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-                     {{-- <a href="/" class="dropdown-item has-icon">
-                        <i class="fa fa-home"></i> Back to Home Page
-                     </a> --}}
+                     <a href="{{route('user')}}" class="dropdown-item has-icon">
+                        <i class="fa fa-users"></i> User Management
+                     </a>
                      
                      <div class="dropdown-divider"></div>
                      
@@ -403,7 +417,7 @@
 
 
             {{-- Siedbar --}}
-            @if (auth()->user()->hasRole('marine'))
+            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
             <div class="main-sidebar sidebar-style-2 ">
                <aside id="sidebar-wrapper">
                   <div class="sidebar-brand">
@@ -421,7 +435,7 @@
                         {{-- <li><a class="nav-link" href="{{route('activity')}}">Activity</a></li>
                         <li><a class="nav-link" href="{{route('crew')}}">Crew</a></li> --}}
                         <li><a class="nav-link" href="{{route('port')}}">Port</a></li>
-                        <li><a class="nav-link" href="{{route('user')}}">User</a></li>
+                        {{-- <li><a class="nav-link" href="{{route('user')}}">User</a></li> --}}
                         <li><a class="nav-link" href="{{route('vessel')}}">Vessel</a></li>
                      </ul>
                      </li>
@@ -444,6 +458,7 @@
                      </ul>
                      </li>
                      <li><a class="nav-link" href="{{route('surveillance.marine')}}"><i class="fas fa-table"></i> <span> Surveillance Activity</span></a></li>
+                     <li><a class="nav-link" href="{{route('log.dsp')}}"><i class="fas fa-book"></i> <span> Log System Activity</span></a></li>
                      
                   </ul>
 

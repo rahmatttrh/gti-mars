@@ -1,8 +1,26 @@
 @extends('layouts.stisla.app')
 @section('title')
-    User
+    User Management
 @endsection
 @section('content')
+<style>
+   table {
+      width: 100%;
+   }
+
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+      font-size: 12px;
+   }
+   th, td {
+      padding-left: 5px
+   }
+   
+   input {
+      width: 70px"
+   }
+</style>
 <section class="section">
    <div class="section-header">
       <h1 class="section-title">User Management</h1>
@@ -30,25 +48,25 @@
                      <label class="d-block"><b>Choose app</b></label>
                      <div class="d-flex mb-3">
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="dsp" value="DSP">
+                           <input class="form-check-input" type="radio" name="sistem" id="dsp" value="dsp">
                            <label class="form-check-label" for="dsp">
                              DSP
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="vdr" value="VDR" checked>
+                           <input class="form-check-input" type="radio" name="sistem" id="vdr" value="vdr" checked>
                            <label class="form-check-label" for="vdr">
                              VDR
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="proact" value="PROACT" >
+                           <input class="form-check-input" type="radio" name="sistem" id="proact" value="proact" >
                            <label class="form-check-label" for="proact">
                               PROACT
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="map" value="MAP">
+                           <input class="form-check-input" type="radio" name="sistem" id="map" value="map">
                            <label class="form-check-label" for="map">
                              MAP
                            </label>
@@ -75,32 +93,36 @@
                         </div>
                      </div> --}}
                      <div class="form-row">
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-5">
                            <label>Role *</label>
-                           <select  class="custom-select" id="port" name="port">
-                              <option value="department">User</option>
-                              <option value="admin">Admin</option>
-                              <option value="admin-fm">Admin FM</option>
+                           <select  class="custom-select" id="role" name="role">
+                              {{-- <option value="department">User</option> --}}
+                              <option value="admin" selected>Admin</option>
+                              <option value="superadmin">Super Admin</option>
+                              {{-- <option value="admin-fm">Admin FM</option> --}}
                               {{-- <option value="superadmin">Super</option> --}}
                            </select>
                         </div>
-                        <div class="form-group col-md-6">
-                           <label for="username">Username *</label>
-                           <input type="text" class="form-control " id="username" name="username" >
+                        <div class="form-group col-md-7">
+                           <label for="email">Email *</label>
+                           <input type="text" class="form-control " id="email" name="email" >
                         </div>
-                        <div class="form-group col-md-8">
+                        <div class="form-group col-md-12">
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
-                        <div class="form-group col-md-4">
-                           <label for="ekstensi">Ekstensi</label>
-                           <input type="text" class="form-control " id="ekstensi" name="ekstensi" >
+                        <div class="form-group col-md-5">
+                           <label for="username">Username *</label>
+                           <input type="text" class="form-control " id="username" name="username" >
+                        </div>
+                        <div class="form-group col-md-7">
+                           <label for="no_telp">No. Telp</label>
+                           <input type="text" class="form-control " id="no_telp" name="no_telp" >
                         </div>
                         
-                        <div class="form-group col-md-12">
-                           <label for="email">Email</label>
-                           <input type="text" class="form-control " id="email" name="email" >
-                        </div>
+                        
+                        
+                        
                         {{-- <div class="form-group col-md-6">
                            <label>Location*</label>
                            <select  class="custom-select" id="port" name="port">
@@ -126,6 +148,7 @@
                         
                      </div> --}}
                      <button class="btn btn-primary">Submit</button>
+                     <a href="{{route('user')}}" class="btn btn-light border">Reset</a>
                   </form>
                </div>
             </div>
@@ -142,12 +165,15 @@
                         <tr>
                            <th class="text-center">No.</th>
                            <th>Name</th>
-                           
+                           <th>System</th>
+                           <th>Role</th>
+                           <th>Email</th>
+                           <th>Telp</th>
                            <th>Username</th>
                            {{-- <th>Location</th> --}}
                            {{-- <th>Email</th> --}}
                            {{-- <th>Role</th> --}}
-                           <th></th>
+                           <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
@@ -162,11 +188,14 @@
                                  {{-- <br>
                                  <small>{{$user->email}}</small> --}}
                               </td>
-                              <td>{{$user->username}}</td>
+                              <td>{{strtoupper($user->system)}}</td>
                               <td>
-                                 {{-- {{$user->getPortName() ?? ''}} --}}
-                                 
+                                 {{getRoleName($user)}}
                               </td>
+                              <td>{{$user->email}}</td>
+                              <td>{{$user->no_telp}}</td>
+                              <td>{{$user->username}}</td>
+                             
                               
                               
                               {{-- <td>{{$user->email}}</td> --}}
@@ -180,11 +209,14 @@
                                  @endif
                               </td> --}}
                               <td>
-                                 <div class="btn-group btn-sm">
+                                 {{-- <div class="btn-group btn-sm">
                                  <a href="{{route('user.detail', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Detail</a>
                                  <a href="{{route('user.edit', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Edit</a>
                                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#user-delete-{{$user->id}}"><i class="fa fa-trash"></i></a>
-                                 </div>
+                                 </div> --}}
+                                 {{-- <a href="{{route('user.detail', enkripRambo($user->id))}}" >Detail</a> --}}
+                                 <a href="{{route('user.edit', enkripRambo($user->id))}}" class="mx-1" >Edit</a>
+                                 <a href="#"  data-toggle="modal" data-target="#user-delete-{{$user->id}}">Delete</a>
                               </td>
                            </tr>
                         @endif

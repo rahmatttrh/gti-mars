@@ -29,6 +29,7 @@ class CreateVesselsTable extends Migration
          $table->string('email')->nullable();
          $table->string('telp')->nullable();
          $table->string('master')->nullable();
+         $table->string('co')->nullable();
 
          $table->string('latitude')->nullable();
          $table->string('longitude')->nullable();

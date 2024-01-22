@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Document;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
+use App\Models\VdrHse;
+use App\Models\VdrOperating;
 use App\Models\VdrWeather;
+use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -21,12 +26,22 @@ class DocumentController extends Controller
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
       $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
       $vdrWheathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+      $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+      $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+
+      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
       return view('pages.document.vdr', [
          'vdr' => $vdr,
+         'vessel' => $vdr->vessel,
          'vdrActivities' => $vdrActivities,
          'vdrCargos' => $vdrCargos,
-         'vdrWheathers' => $vdrWheathers
+         'vdrWheathers' => $vdrWheathers,
+         'hses' => $hses,
+         'operatings' => $operatings,
+         'totaljam' => $totalJam,
+         'totaldaily' => $totalDaily
       ]);
    }
 
@@ -53,4 +68,69 @@ class DocumentController extends Controller
          'requests' => $requests
       ])->with('i');
    }
+
+
+
+   public function add(Request $req){
+      $vessel = Vessel::find($req->vessel);
+      // dd($vessel->name);
+
+      $today = Carbon::now();
+      $doc = Document::create([
+         'status' => 1,
+         'vessel_id' => $vessel->id,
+         'name' => $req->name,
+         'date' => $req->date
+      ]);
+
+      $diffMonth = $today->diffInMonths($doc->date);
+      if ($diffMonth <= 2) {
+         $doc->update([
+            'status' => 3
+         ]);
+      } else if($diffMonth <= 12) {
+         $doc->update([
+            'status' => 2
+         ]);
+      } else if($diffMonth > 12){
+         $doc->update([
+            'status' => 1
+         ]);
+      }
+
+      return redirect()->back()->with('success', 'Document Alert added');
+      // dd($diffMonth);
+   }
+
+   public function update(Request $req){
+      // dd($req->doc);
+      $doc = Document::find($req->doc);
+
+      $today = Carbon::now();
+      $doc->update([
+         'name' => $req->name,
+         'date' => $req->date
+      ]);
+
+      $diffMonth = $today->diffInMonths($doc->date);
+      if ($diffMonth <= 2) {
+         $doc->update([
+            'status' => 3
+         ]);
+      } else if($diffMonth <= 12) {
+         $doc->update([
+            'status' => 2
+         ]);
+      } else if($diffMonth > 12){
+         $doc->update([
+            'status' => 1
+         ]);
+      }
+
+      return redirect()->back()->with('success', 'Document Alert updated');
+   }
+
+
+
+
 }

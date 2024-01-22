@@ -226,6 +226,8 @@ class VesselSeeder extends Seeder
          'email' => 'giatjaya@pertamina.com',
          'deckspace' => 60,
          'deadweight' => 100,
+         'master' => 'Yudi Hermanto',
+         'co' => 'Indra Ismiyanto',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);

@@ -94,3 +94,19 @@ function vdrId($id)
 
    return $hasil;
 }
+
+function getRoleName($user){
+   if ($user->hasRole('admin-dsp')){
+      $roleName = 'Admin';
+   } else if ($user->hasRole('admin-vdr')){
+      $roleName = 'Admin';
+   } else if($user->hasRole('superadmin-dsp')){
+      $roleName = 'Super Admin';
+   } else if($user->hasRole('superadmin-vdr')){
+      $roleName = 'Super Admin';
+   } else {
+      $roleName = 'OK';
+   }
+
+   return $roleName;
+}

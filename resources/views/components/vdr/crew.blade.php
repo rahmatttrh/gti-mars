@@ -10,14 +10,14 @@
    </div>
 </div> --}}
 
-<a href="#" data-toggle="modal" data-target="#modalAddCrew">Add</a>
-<a href="#" data-toggle="modal" data-target="#modalImport" class="mx-3">Import</a>
-<a href="/template/template-passenger-vdr.xlsx">Download Template Import</a>
-<hr>
-<div class="row">
+<a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalAddCrew">Add</a>
+<a href="#" data-toggle="modal" data-target="#modalImport" class="btn btn-sm btn-light border shadow-none">Import</a>
+<a href="/template/template-passenger-vdr.xlsx" class="btn btn-sm btn-light border shadow-none">Download Template Import</a>
+{{-- <hr> --}}
+<div class="row mt-2">
    <div class="col">
       <div class="badge badge-info">Crew</div>
-      <div class="table-responsive mt-2">
+      <div class="table-responsive">
          <table class="table table-striped table-sm" id="table-14">
             <thead>
                {{-- <tr>
@@ -101,7 +101,7 @@
    </div>
    <div class="col">
       <div class="badge badge-info">Passenger</div>
-      <div class="table-responsive mt-2">
+      <div class="table-responsive">
          <table class="table table-striped table-sm" id="table-15">
             <thead>
                {{-- <tr>

@@ -253,12 +253,9 @@
                            </td>
                            
                            @if ($schedule->class == 'Cargo/Crew')
-                              <td class="d-flex">
+                              <td class="">
                                  @foreach ($schedule->routes as $route)
-                                 <div class="mr-2">{{$route->port->name}} 
-                                    {{-- <br>
-                                    <small>{{formatDate($route->date)}}</small> --}}
-                                 </div> 
+                                 <span>{{$route->port->name}} </span>
                                  @endforeach
                               </td>
                               @elseif($schedule->class == 'Moving')

@@ -1,182 +1,413 @@
-@extends('layouts.app')
+@extends('layouts.app-doc')
 @section('title')
-   Preview VDR
+   VDR - Preview {{$vdr->code}}
 @endsection
 @section('content')
+<style>
+   table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.ttd {
+   font-size: 10px;
+}
+
+table td {
+  font-size: 8px
+}
+
+table {
+   width: 100%;
+}
+
+</style>
 <div class="container-xl">
    <!-- Page title -->
    <div class="page-header d-print-none">
-     <div class="row align-items-center">
-       <div class="col">
-         <h2 class="page-title">
-           VDR
-         </h2>
-       </div>
-       <!-- Page title actions -->
-       <div class="col-auto ms-auto d-print-none">
-         <button type="button" class="btn btn-primary" onclick="javascript:window.print();">
-           <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
-           <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
-           Print VDR
-         </button>
-       </div>
-     </div>
+      <div class="row align-items-center">
+         <div class="col">
+            <h2 class="page-title">
+            Vessel Daily Report [{{$vdr->code}}]
+            </h2>
+         </div>
+         <!-- Page title actions -->
+         <div class="col-auto ms-auto d-print-none">
+            <button type="button" class="btn btn-primary" onclick="javascript:window.print();">
+            <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
+            Print VDR
+            </button>
+         </div>
+      </div>
    </div>
- </div>
+</div>
 <div class="page-body" >
-   <div class="container-xl">
-      <div class="card card-lg">
-         <div class="card-body">
-            <div class="row border-bottom mb-4">
-               <div class="col-md-12">
+   <div class="container-xl bg-white rounded">
+      <div class="row border-bottom pt-1 mb-2">
+         <div class="col-12">
+            <div class="d-flex justify-content-between">
+               <div class="">
                   <small>PERTAMINA HULU ENERGI OSES</small><br>
                   <small>PRODUCTION & OPERATION - MARINE TEAM</small>
                </div>
-               <div class="col-12">
-                  <h1 class="text-primary border-bottom pb-2 mt-2">VESSEL DAILY REPORT                   <span>(Every Midnight)</spann></h1>
-
-                  <p class="h3 mt-4">GENERAL INFORMATION</p>
+               <div class="text-center">
+                  <small><b>VESSEL DAILY REPORT</b></small><br>
+                  <small>(Every Midnight)</small>
                </div>
-               <div class="col-6">
-
-                  <dl class="row">
-                     <dd class="col-3">Date</dd>
-                     <dd class="col-9">: {{\Carbon\Carbon::parse($vdr->date)->format('d/m/Y')}}</dd>
-                     <dd class="col-3">Vessel</dd>
-                     <dd class="col-9">: {{$vdr->vessel->name}}</dd>
-                     <dd class="col-3">Contract</dd>
-                     <dd class="col-9">:  {{$vdr->vessel->contract_no}}</dd>
-                     <dd class="col-3">Contract Period</dd>
-                     <dd class="col-9">:  {{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</dd>
-                     
-                  </dl>
+               <div>
+                  <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                </div>
-               <div class="col-6">
-                  {{-- <p class="h3">DETAIL</p> --}}
-                  <dl class="row">
-                     <dd class="col-4">Location</dd>
-                     <dd class="col-8">: {{$vdr->location_midnight}}</dd>
-                     <dd class="col-4">Owner</dd>
-                     <dd class="col-8">: {{$vdr->vessel->owner}}</dd>
-                     <dd class="col-4">Master</dd>
-                     <dd class="col-8">:  {{$vdr->vessel->master}}</dd>
-                     <dd class="col-4 text-truncate">Number of Crew</dd>
-                     <dd class="col-8">:  {{$vdr->crew_onduty}} / {{$vdr->crew_max}}</dd>
-                     
-                  </dl>
-               </div>
-
-               <p class="h3 mt-4">WEATHER CONDITION</p>
-               <table class="table table-transparent table-responsive">
-                  <thead>
-                     
-                     <tr>
-                        <th>Wheather/Time</th>
-                        <th>00:00 - 06:00 HRS</th>
-                        <th>06:00 - 12:00 HRS</th>
-                        <th>12:00 - 18:00 HRS</th>
-                        <th>18:00 - 24:00 HRS</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($vdrWheathers as $vdrWheather)
-                     <tr>
-                        <td>{{$vdrWheather->heading->description}}</td>
-                        <td>{{$vdrWheather->t_0006}}</td>
-                        <td>{{$vdrWheather->t_1218}}</td>
-                        <td>{{$vdrWheather->t_1824}}</td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-                  
-               </table>
-
-               <p class="h3 mt-4">DETAIL OF DAILY OPERATIONAL ACTIVITY</p>
-               <table class="table table-transparent table-responsive">
-                  <thead>
-                     <tr>
-                        <th colspan="2" class="text-center">TIME</th>
-                        <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
-                        <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
-                     </tr>
-                     <tr>
-                        <th>Start</th>
-                        <th>Finish</th>
-                        <th>High</th>
-                        <th>Normal</th>
-                        <th>Slow</th>
-                        <th>Manu</th>
-                        <th>Idle</th>
-                        <th>Tow</th>
-                        <th>A/H</th>
-                        <th>S/B</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($vdrActivities as $vdrActivity)
-                     <tr>
-                        <td>{{$vdrActivity->start}}</td>
-                        <td>{{$vdrActivity->finish}}</td>
-                        <td>{{$vdrActivity->high}}</td>
-                        <td>{{$vdrActivity->normal}}</td>
-                        <td>{{$vdrActivity->slow}}</td>
-                        <td>{{$vdrActivity->manu}}</td>
-                        <td>{{$vdrActivity->idle}}</td>
-                        <td>{{$vdrActivity->tow}}</td>
-                        <td>{{$vdrActivity->ah}}</td>
-                        <td>{{$vdrActivity->sb}}</td>
-                        <td>{{$vdrActivity->activity}}</td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-                  
-               </table>
-               
-
-               <p class="h3 mt-4">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</p>
-               <table class="table table-transparent table-responsive">
-                  <thead>
-                     {{-- <tr>
-                        <th colspan="2" class="text-center">TIME</th>
-                        <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
-                        <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
-                     </tr> --}}
-                     <tr>
-                        <th>Type</th>
-                        <th class="text-truncate">OPENING 
-                           (ROB FROM PREVIOUS DAY)</th>
-                        <th>CONSUMPTION 
-                           (BASED ON ACTUAL SOUNDING)</th>
-                        <th>RECEIVED</th>
-                        <th>TRANSFERRED</th>
-                        <th>CLOSING</th>
-                        <th>REMARKS</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($vdrCargos as $vdrCargo)
-                     <tr>
-                        <td>{{$vdrCargo->heading->description}}</td>
-                        <td>{{$vdrCargo->opening}}</td>
-                        <td>{{$vdrCargo->consumption}}</td>
-                        <td>{{$vdrCargo->received}}</td>
-                        <td>{{$vdrCargo->transferred}}</td>
-                        <td>{{$vdrCargo->closing}}</td>
-                        <td>{{$vdrCargo->remark}}</td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-                  
-               </table>
-
-              
-            
-            
-               <p class="text-muted text-center mt-5">Thank you very much for doing business with us. We look forward to working with
-               you again!</p>
             </div>
          </div>
+        
+         {{-- <div class="col-6">
+
+            <dl class="row">
+               <dd class="col-3">Date</dd>
+               <dd class="col-9">: {{\Carbon\Carbon::parse($vdr->date)->format('d/m/Y')}}</dd>
+               <dd class="col-3">Vessel</dd>
+               <dd class="col-9">: {{$vdr->vessel->name}}</dd>
+               <dd class="col-3">Contract</dd>
+               <dd class="col-9">:  {{$vdr->vessel->contract_no}}</dd>
+               <dd class="col-3">Contract Period</dd>
+               <dd class="col-9">:  {{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</dd>
+               
+            </dl>
+         </div>
+         <div class="col-6">
+            <dl class="row">
+               <dd class="col-4">Location</dd>
+               <dd class="col-8">: {{$vdr->location_midnight}}</dd>
+               <dd class="col-4">Owner</dd>
+               <dd class="col-8">: {{$vdr->vessel->owner}}</dd>
+               <dd class="col-4">Master</dd>
+               <dd class="col-8">:  {{$vdr->vessel->master}}</dd>
+               <dd class="col-4 text-truncate">Number of Crew</dd>
+               <dd class="col-8">:  {{$vdr->crew_onduty}} / {{$vdr->crew_max}}</dd>
+               
+            </dl>
+         </div> --}}
+
+
+         
       </div>
+
+      <div class="row">
+         <div class="col-md-5">
+            <small class=" mt-4">GENERAL INFORMATION</small>
+            <table class="mb-1">
+               <tbody>
+                  <tr>
+                     <td><small>Date</small></td>
+                     <td><small>{{\Carbon\Carbon::parse($vdr->date)->format('d/m/Y')}}</small></td>
+                     <td><small>Location</small></td>
+                     <td><small>{{$vdr->location_midnight}}</small></td>
+                  </tr>
+                  <tr>
+                     <td><small>Vessel Name</small></td>
+                     <td><small>{{$vdr->vessel->name}}</small></td>
+                     <td><small>Owner Opt</small></td>
+                     <td><small>{{$vdr->vessel->owner ?? '-'}}</small></td>
+                  </tr>
+                  <tr>
+                     <td><small>Contract No.</small></td>
+                     <td><small>{{$vdr->vessel->contract_no ?? '-'}}</small></td>
+                     <td><small>Master Name</small></td>
+                     <td><small>{{$vdr->vessel->master ?? '-'}}</small></td>
+                  </tr>
+                  <tr>
+                     <td><small>Contract Periode</small></td>
+                     <td><small>{{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</small></td>
+                     <td><small>Number of Crew/Pax</small></td>
+                     <td><small>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</small></td>
+                  </tr>
+               </tbody>
+               
+            </table>
+            
+            <small class="">WEATHER CONDITION</small>
+            <table class="mb-1">
+               <thead>
+                  <tr>
+                     <td>Wheather</td>
+                     <td>00 - 06</td>
+                     <td>06 - 12</td>
+                     <td>12 - 18</td>
+                     <td>18 - 24</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($vdrWheathers as $vdrWheather)
+                  <tr>
+                     <td><small>{{$vdrWheather->heading->description}}</small></td>
+                     <td><small>{{$vdrWheather->t_0006}}</small></td>
+                     <td><small>{{ $vdrWheather->t_0612  }}</small></td>
+                     <td><small>{{$vdrWheather->t_1218}}</small></td>
+                     <td><small>{{$vdrWheather->t_1824}}</small></td>
+                  </tr>
+                  @endforeach
+               </tbody>
+               
+            </table>
+
+            <small>HSSE</small>
+            <table class="mb-3">
+               <thead>
+                  <tr>
+                     <td class="text-center">A</td>
+                     <td>HSSE STATISTICS (INPUT)</td>
+                     <td>Previous</td>
+                     <td>Today</td>
+                     <td>Monthly</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  @php
+                  $groupHeader = 'A';
+                  $no = 1;
+                  @endphp
+         
+                        @foreach ($hses as $hse)
+                        <input type="hidden" name="id[]" value="{{$hse->id}}">
+                        @if($hse->header->group_header != $groupHeader)
+                        <thead>
+                           <tr>
+                                 <td class="text-center">B</td>
+                                 <td>HSSE STATISTICS (Output)</td>
+                                 <td>Previous</td>
+                                 <td>Today</td>
+                                 <td>Monthly</td>
+                           </tr>
+                        </thead>
+         
+                        @php
+                        $no = 1;
+                        @endphp
+         
+                        @endif
+                        <tr>
+                           <td><small>{{ $no++}}</small></td>
+                           <td><small>{{$hse->header->description}}</small></td>
+                           @if($hse->header_id != 8)
+                           <td>
+                              <small>{{$hse->previous}}</small>
+                           </td>
+                           <td>
+                              <small>{{$hse->today}}</small>
+                           </td>
+                           <td>
+                              <small>{{$hse->previous + $hse->today}}</small>
+                           </td>
+                           @else
+                           
+                           <td colspan="3"></td>
+                           @endif
+                        </tr>
+         
+                        @php
+                        $groupHeader = $hse->header->group_header
+                        @endphp
+                        @endforeach
+         
+               
+                     
+               </tbody>
+            </table>
+
+            <div class="row ttd">
+               <div class="col">
+                  <small>Prepared by,</small>
+                  <br><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
+                  <small>Title : Chief Engineer</small>
+                  <br><br><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
+                  <small>Title : Master</small>
+               </div>
+               
+               <div class="col">
+                  <small>Acknowledged by</small>
+                  <br><br>
+                  <small>Name : ____________</small><br>
+                  <small>Title : PHE OSES Representative</small>
+                  <br><br><br>
+                  <small>Name : ____________</small><br>
+                  <small>Title : Superintendent</small>
+                  <br><br><br>
+                  <small>Name : ____________</small><br>
+                  <small>Title : ______________</small>
+               </div>
+            </div>
+            
+         </div>
+         <div class="col-md-7">
+            <small class="">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
+            <table class="mb-1" style="width: 100%">
+               <thead>
+                  <tr>
+                     <td colspan="2" class="text-center">TIME</td>
+                     <td colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
+                     <td rowspan="2" class="text-center align-middle">ACTIVITIES</td>
+                  </tr>
+                  <tr>
+                     <td>Start</td>
+                     <td>Finish</td>
+                     <td>High</td>
+                     <td>Normal</td>
+                     <td>Slow</td>
+                     <td>Manu</td>
+                     <td>Idle</td>
+                     <td>Tow</td>
+                     <td>A/H</td>
+                     <td>S/B</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($vdrActivities as $vdrActivity)
+                  <tr>
+                     <td><small>{{$vdrActivity->start}}</small></td>
+                     <td><small>{{$vdrActivity->finish}}</small></td>
+                     <td><small>{{$vdrActivity->high}}</small></td>
+                     <td><small>{{$vdrActivity->normal}}</small></td>
+                     <td><small>{{$vdrActivity->slow}}</small></td>
+                     <td><small>{{$vdrActivity->manu}}</small></td>
+                     <td><small>{{$vdrActivity->idle}}</small></td>
+                     <td><small>{{$vdrActivity->tow}}</small></td>
+                     <td><small>{{$vdrActivity->ah}}</small></td>
+                     <td><small>{{$vdrActivity->sb}}</small></td>
+                     <td><small>{{$vdrActivity->activity}}</small></td>
+                  </tr>
+                  @endforeach
+               </tbody>
+               
+            </table>
+
+            <small class="">SUMMARY OF DAILY OPERATING DATA</small>
+            <table class="mb-1">
+               <thead>
+                  <tr class="text-center ">
+                     <td class="">Operating Mode</td>
+                     <td>Total Time</td>
+                     <td>Min. Speed as Contract (Knots) <br> </td>
+                     <td >Contractual Fuel Cons. </td>
+                     <td>Daily Fuel Cons. </td>
+                  </tr>
+               </thead>
+               <tbody>
+                  
+                     @foreach ($operatings as $operating)
+                     @if($operating->heading->daily == '1')
+                        
+                           <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                           
+                        
+                     @else
+                        <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
+                     @endif
+                     <tr id="baris-{{$operating->id}}">
+                       
+                        <td> <small>{{$operating->heading->description}} </small></td>
+                        <td class="text-center">
+                           <small>{{$operating->time}}</small>
+                        </td>
+                        <td class="text-center">
+                           @if($operating->heading->speed == '1')
+                           <small>{{$operating->speed}}</small>
+                           @else
+                           <small>{{$operating->speed}}</small>
+                           @endif
+                        </td>
+   
+                        <td class="text-center">
+                              @if($operating->heading->contractual == '1')
+                              <small>{{$operating->contractual_fuel}}</small>
+                              @else
+                              <small>{{$operating->contractual_fuel}}</small>
+                              @endif
+                        </td>
+                        <td class="text-center">
+   
+   
+                              @if($operating->heading->daily == '1')
+                              <small>{{round($operating->daily)}}</small>
+                              {{-- <div class="input-group ">
+                                 <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                 
+                              </div> --}}
+                              @else
+                              <small>{{$operating->daily}}</small>
+                              @endif
+                        </td>
+                     </tr>
+                     @endforeach
+                     <tr>
+                        <td>Total Daily</td>
+                        <td>
+                              <small>{{$totaljam}}</small>
+                        </td>
+                        <td colspan="2"></td>
+                        <td>
+                              <small>{{round($totaldaily)}} Ltrs</small>
+                        </td>
+                     </tr>
+   
+                  
+               </tbody>
+            </table>
+
+            <div class="row">
+               <div class="col-12">
+                  <small class="">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
+                  <table class="mb-1">
+                     <thead>
+                        {{-- <tr>
+                           <th colspan="2" class="text-center">TIME</th>
+                           <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
+                           <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
+                        </tr> --}}
+                        <tr>
+                           <td>Type</td>
+                           <td class="text-truncate">OPENING 
+                              </td>
+                           <td>CONSUMPTION 
+                              </td>
+                           <td>RECEIVED</td>
+                           <td>TRANSFERRED</td>
+                           <td>CLOSING</td>
+                           <td>REMARKS</td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vdrCargos as $vdrCargo)
+                        <tr>
+                           <td>{{$vdrCargo->heading->description}}</td>
+                           <td>{{$vdrCargo->opening}}</td>
+                           <td>{{$vdrCargo->consumption}}</td>
+                           <td>{{$vdrCargo->received}}</td>
+                           <td>{{$vdrCargo->transferred}}</td>
+                           <td>{{$vdrCargo->closing}}</td>
+                           <td>{{$vdrCargo->remark}}</td>
+                        </tr>
+                        @endforeach
+                     </tbody>
+                     
+                  </table>
+               </div>
+               <div class="col-6">
+                  
+               </div>
+            </div>
+            
+         </div>
+      </div>
+
+     
+ 
+      
+
+      {{-- <p class="text-muted text-center mt-5">Thank you very much for doing business with us. We look forward to working with
+      you again!</p> --}}
    </div>
 </div>
 @endsection

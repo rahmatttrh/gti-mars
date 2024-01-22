@@ -175,7 +175,7 @@
                   <div class="tab-content" id="myTabContent">
                      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                      <div class="table-responsive">
-                        <table class="table table-striped table-sm" id="table-1">
+                        <table class="" id="table-1">
                            <thead>
                            <tr>
                               <th>Status</th>

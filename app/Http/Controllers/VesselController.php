@@ -210,7 +210,8 @@ class VesselController extends Controller
       $vessel = Vessel::find($dekripId);
       // dd($vessel->port->name);
       $today = Carbon::now();
-      return view('pages.vessel.detail', [
+      // return view('pages.vessel.detail', [
+      return view('pages-stisla.master-data.vessel-detail', [
          'vessel' => $vessel,
          'today' => $today
       ]);

@@ -34,14 +34,14 @@
                   </div>
                </div>
                <div class="form-row">
-                  <div class="form-group col-md-3">
+                  <div class="form-group col-md-12">
                      <label for="rank">Rank</label>
                      <input class="form-control" id="rank" name="rank" type="text" >
                      @error('rank')
                         <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                      @enderror
                   </div>
-                  <div class="form-group col-md-9">
+                  <div class="form-group col-md-12">
                      <label for="company">Company</label>
                      <input class="form-control" id="company" name="company" type="text" >
                      @error('company')
@@ -291,14 +291,14 @@
                      </div>
                   </div>
                   <div class="form-row">
-                     <div class="form-group col-md-3">
+                     <div class="form-group col-md-12">
                         <label for="rank">Rank</label>
-                        <input class="form-control" id="rank" name="rank" type="number" value="{{$crew->rank}}">
+                        <input class="form-control" id="rank" name="rank" type="text" value="{{$crew->rank}}">
                         @error('rank')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
                      </div>
-                     <div class="form-group col-md-9">
+                     <div class="form-group col-md-12">
                         <label for="company">Company</label>
                         <input class="form-control" id="company" name="company" type="text" value="{{$crew->company}}">
                         @error('company')

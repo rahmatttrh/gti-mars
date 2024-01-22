@@ -14,4 +14,8 @@ class Crew extends Model
    {
       return $this->hasMany(PassengerItem::class);
    }
+
+   public function vessel(){
+      return $this->belongsTo(Vessel::class);
+   }
 }

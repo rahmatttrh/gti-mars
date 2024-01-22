@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <section class="section">
-    <div class="section-header">
+    {{-- <div class="section-header">
       <h1 class="section-title">Schedule Plan {{$monthName}}</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Schedule Plan</div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="section-body">
       
@@ -21,7 +21,11 @@
             {{-- <div class="card-header">
               <h4>Basic DataTables</h4>
             </div> --}}
-            <div class="card-header">
+            {{-- <div class="card-header">
+               
+                
+            </div> --}}
+            <div class="card-body">
                <div class="dropdown d-inline mr-2 ">
                   <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Select Month
@@ -64,16 +68,20 @@
                         Desember
                     </a>
                   </div>
-                </div>
-                <a href="{{route('schedule.create')}}" class="btn btn-primary btn-sm">
+               </div>
+               <a href="{{route('schedule.create')}}" class="btn btn-primary btn-sm">
                   <i class="fa fa-plus"></i>
                   Create
-                </a>
-            </div>
-            <div class="card-body">
+               </a>
+               <hr>
               <div class="table-responsive">
                 <table class="table table-striped table-sm" id="table-8">
-                  <thead>                                 
+                  <thead>     
+                     <tr>
+                        <th colspan="8" >Schedule Plan {{$monthName}}</th>
+                       
+                       
+                     </tr>                            
                     <tr>
                       <th class="text-center">
                         #
@@ -85,7 +93,7 @@
                       <th>Date</th>
                       <th>Capacity</th>
                       <th>Status</th>
-                      <th></th>
+                      {{-- <th></th> --}}
                     </tr>
                   </thead>
                   <tbody>     
@@ -95,7 +103,7 @@
                             {{++$i}}
                             </td>
                             <td>
-                              {{$schedule->code}}
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}}</a> 
                               <br>
                               <small>{{$schedule->class}}</small>
                            </td>
@@ -124,20 +132,9 @@
                             <td>
                                 <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                             </td>
-                            <td>
-                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                            </td>
-                            {{-- <td class="align-middle">
-                                <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
-                                    <div class="progress-bar bg-success" data-width="100%"></div>
-                                </div>
-                            </td> --}}
                             {{-- <td>
-                            <img alt="image" src="assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Wildan Ahdian">
-                            </td>
-                            <td>2018-01-20</td>
-                            <td><div class="badge badge-success">Completed</div></td>
-                            <td><a href="#" class="btn btn-secondary">Detail</a></td> --}}
+                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                            </td> --}}
                         </tr>
                     @endforeach   
                   </tbody>

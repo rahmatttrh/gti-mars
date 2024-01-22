@@ -16,4 +16,8 @@ class VdrWeather extends Model
     {
         return $this->belongsTo(VdrWeatherHeading::class, 'heading_id');
     }
+
+    public function vdr(){
+      return $this->belongsTo(Vdr::class);
+    }
 }

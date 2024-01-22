@@ -17,7 +17,7 @@ class CreateVdrCrewsTable extends Migration
             $table->id();
             $table->string('is_crew', 1)->default('0');
             $table->string('name');
-            $table->integer('rank')->nullable();
+            $table->string('rank')->nullable();
             $table->string('company')->nullable();
             $table->unsignedInteger('vdr_id');
             $table->unsignedInteger('crew_id')->nullable();

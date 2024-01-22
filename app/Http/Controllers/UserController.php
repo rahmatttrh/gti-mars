@@ -15,7 +15,7 @@ class UserController extends Controller
 {
    public function index()
    {
-      $users = User::orderBy('created_at', 'desc')->get();
+      $users = User::where('system', '!=', null)->orderBy('created_at', 'desc')->get();
       $usersTotal = User::get();
       $ports = Port::get();
       return view('pages-stisla.master-data.user', [
@@ -39,7 +39,7 @@ class UserController extends Controller
 
    public function store(Request $req){
 
-      dd($req->sistem);
+      // dd($req->role);
 
       $req->validate([
          'name' => 'required',
@@ -47,32 +47,57 @@ class UserController extends Controller
          'username' => 'required'
       ]);
 
-      $employee = Employee::create([
-         'name' => $req->name,
-         'username' => $req->username,
-         'ekstensi' => $req->ekstensi,
-         'email' => $req->email,
-         'port_id' => $req->port
-      ]);
 
-      User::create([
-         'name' => $employee->name,
-         'username' => $employee->username,
-         'email' => $employee->email,
+      $user = User::create([
+         'name' => $req->name,
+         'system' => $req->sistem,
+         'username' => $req->username,
+         'email' => $req->email,
+         'no_telp' => $req->no_telp,
          'password' => Hash::make('12345678'),
       ]);
+
+      $user->assignRole($req->role . '-' . $req->sistem);
 
       return redirect()->back()->with('success', 'User added.');
    }
 
+   // public function store(Request $req){
+
+   //    dd($req->sistem);
+
+   //    $req->validate([
+   //       'name' => 'required',
+   //       'email' => 'required',
+   //       'username' => 'required'
+   //    ]);
+
+   //    $employee = Employee::create([
+   //       'name' => $req->name,
+   //       'username' => $req->username,
+   //       'ekstensi' => $req->ekstensi,
+   //       'email' => $req->email,
+   //       'port_id' => $req->port
+   //    ]);
+
+   //    User::create([
+   //       'name' => $employee->name,
+   //       'username' => $employee->username,
+   //       'email' => $employee->email,
+   //       'password' => Hash::make('12345678'),
+   //    ]);
+
+   //    return redirect()->back()->with('success', 'User added.');
+   // }
+
    public function edit($id){
       $dekripId = dekripRambo($id);
       $user = User::find($dekripId);
-      $ports = Port::get();
-      $users = User::orderBy('updated_at', 'desc')->get();
+      // $ports = Port::get();
+      $users = User::where('system', '!=', null)->orderBy('updated_at', 'desc')->get();
 
-      $employee = Employee::where('email', $user->email)->first();
-      $port = Port::find($employee->port_id);
+      // $employee = Employee::where('email', $user->email)->first();
+      // $port = Port::find($employee->port_id);
       // if ($employee) {
       //    $port = Port::find($employee->port_id);
          
@@ -82,9 +107,9 @@ class UserController extends Controller
       return view('pages-stisla.master-data.user-edit', [
          'user' => $user,
          'users' => $users,
-         'employee' => $employee,
-         'port' => $port,
-         'ports' => $ports
+         // 'employee' => $employee,
+         // 'port' => $port,
+         // 'ports' => $ports
       ])->with('i');
    }
 
@@ -109,9 +134,9 @@ class UserController extends Controller
    public function delete($id){
       $dekripId = dekripRambo($id);
       $user = User::find($dekripId);
-      $employee = Employee::where('email', $user->email)->first();
+      // $employee = Employee::where('email', $user->email)->first();
 
-      $employee->delete();
+      // $employee->delete();
       $user->delete();
 
       return redirect()->back()->with('success', 'User deleted');

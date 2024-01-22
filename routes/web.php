@@ -21,6 +21,7 @@ use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
+use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\Marine\MarineAdditionalController;
 use App\Http\Controllers\Marine\MarineDeviationController;
@@ -46,6 +47,7 @@ use App\Http\Controllers\Vessel\VesselRequestController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\VesselController;
 use App\Models\Activity;
+use App\Models\Document;
 use App\Models\ParentRequest;
 use App\Models\Platform;
 use App\Models\Request;
@@ -74,8 +76,13 @@ Route::middleware(["auth"])->group(function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
 
+   Route::prefix('document')->group(function () {
+      Route::post('add', [DocumentController::class, 'add'])->name('document.add');
+      Route::put('update', [DocumentController::class, 'update'])->name('document.update');
+   });
+
    Route::get("proact/dashboard", [HomeController::class, "proact",])->name('proact');
-   Route::get("map/dashboard", [HomeController::class, "mapp",])->name('map');
+   Route::get("map/dashboard", [HomeController::class, "map",])->name('map');
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::post('store', [UserController::class, 'store'])->name('user.store');
@@ -292,7 +299,14 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-Route::group(['middleware' => ['role:marine']], function () {
+Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr']], function () {
+   Route::prefix("log")->group(function () {
+      Route::get("dsp", [LogController::class, "dsp",])->name('log.dsp');
+      Route::get("vdr", [LogController::class, "vdr",])->name('log.vdr');
+      Route::post("filter/vdr", [LogController::class, "vdrFilter",])->name('log.vdr.filter');
+   });
+
+
    Route::get('chart', [HomeController::class, 'chart'])->name('chart');
    // Route::get('dashboard/map', [HomeController::class, 'map'])->name('dashboard.map');
 

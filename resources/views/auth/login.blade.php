@@ -4,7 +4,7 @@
 
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>POINT - Login</title>
+	<title>MARS - Login</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="{{asset('/img/anchor.png')}}" type="image/x-icon"/>
 
@@ -47,7 +47,7 @@
                   <div class="col-lg-6">
                      <div class="p-5">
                         <div class="text-center">
-                           <h1 class="font-weight-bold"><i>POIN<span class="text-primary">T</span></i></h1>
+                           <h1 class="font-weight-bold"><i>MAR<span class="text-primary">S</span></i></h1>
                            <h5>Pertamina OSES Integrated Technology</h5>
                         </div>
                         <hr>

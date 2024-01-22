@@ -21,26 +21,26 @@
                   <input type="hidden" name="id[]" value="{{$cargo->id}}">
                   <!-- </td> -->
                   <td> {{$cargo->heading->description}} </td>
-                  <td class="text-right align-middle">
+                  <td class="text-center align-middle">
                         <input type="number" name="opening[]"  value="{{$cargo->opening}}">
                   </td>
-                  <td class="text-left align-middle">
+                  <td class="text-center align-middle">
                         @if($cargo->heading->is_consumption == '1')
                         <input type="number" name="consumption[]"  value="{{$cargo->consumption}}">
                         @else
                         <input type="hidden" name="consumption[]"  value="{{$cargo->consumption}}">
                         @endif
                   </td>
-                  <td class="text-left align-middle">
+                  <td class="text-center align-middle">
                         <input type="number" name="received[]"  value="{{$cargo->received}}">
                   </td>
-                  <td class="text-left align-middle">
+                  <td class="text-center align-middle">
                         <input type="number" name="transferred[]"  value="{{$cargo->transferred}}">
                   </td>
-                  <td class="text-left align-middle">
+                  <td class="text-center align-middle">
                         <input type="text" name="closing[]" readonly  value="{{$cargo->closing}}">
                   </td>
-                  <td class="text-left align-middle">
+                  <td class="text-center align-middle">
                         <input type="text" name="remarks[]"  value="{{$cargo->remarks}}">
                   </td>
                </tr>

@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\GeofenceController;
+use App\Models\Document;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
@@ -383,7 +384,39 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function index()
+   public function index(){
+      if (auth()->user()->hasRole('vessel')) {
+         $now = Carbon::now();
+         $currentVessel = Vessel::where('email', auth()->user()->email)->first();
+         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
+         $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
+         $nowSchedule = Schedule::find($currentVessel->schedule_id);
+         // dd($schedules);
+
+         $vdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
+         $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
+         $docs = Document::where('vessel_id', $currentVessel->id)->get();
+      } else {
+         $currentVessel = null;
+         $schedules = null;
+         $requests = null;
+         $nowSchedule = null;
+         $vdr = null;
+         $requests = null;
+         $docs = null;
+      }
+      return view('main', [
+         'currentVessel' => $currentVessel,
+         'schedules' => $schedules,
+         'requests' => $requests,
+         'nowSchedule' => $nowSchedule,
+         'vdr' => $vdr,
+         'requests' => $requests,
+         'docs' => $docs
+      ]);
+   }
+
+   public function indexold()
    {
       // dd('ok');
 

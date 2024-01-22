@@ -9,4 +9,8 @@ class VdrCrew extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function vdr(){
+      return $this->belongsTo(Vdr::class);
+    }
 }

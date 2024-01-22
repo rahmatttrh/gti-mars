@@ -12,6 +12,23 @@
                   <span class="badge badge-light">Total Operating Mode (Hour)</span>
                   
                </div> --}}
+               <div class="card-body">
+                  {{-- <b>{{auth()->user()->name}}</b><br> --}}
+                  <div class="badge badge-info">
+                     @if (auth()->user()->hasRole('marine'))
+                        SUPER USER
+                        @elseif(auth()->user()->hasRole('admin-vdr'))
+                        ADMIN
+                        @elseif(auth()->user()->hasRole('superadmin-vdr'))
+                        SUPER ADMIN
+                     @endif
+                     {{strtoupper(auth()->user()->system)}}
+                  </div>
+                  {{-- <small></small>
+                  <small>
+                     
+                  </small> --}}
+               </div>
                
                <div class="card-body">
                   <small class="mb-2">Total Operating Mode (Hour)</small>

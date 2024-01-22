@@ -19,11 +19,19 @@ class RoleSeeder extends Seeder
          'guard_name' => 'web'
       ]);
       Role::create([
-         'name' => 'superadmin',
+         'name' => 'superadmin-dsp',
          'guard_name' => 'web'
       ]);
       Role::create([
-         'name' => 'admin',
+         'name' => 'superadmin-vdr',
+         'guard_name' => 'web'
+      ]);
+      Role::create([
+         'name' => 'admin-vdr',
+         'guard_name' => 'web'
+      ]);
+      Role::create([
+         'name' => 'admin-dsp',
          'guard_name' => 'web'
       ]);
       Role::create([
@@ -34,18 +42,19 @@ class RoleSeeder extends Seeder
          'name' => 'department',
          'guard_name' => 'web'
       ]);
-      Role::create([
-         'name' => 'logistic',
-         'guard_name' => 'web'
-      ]);
-
-      Role::create([
-         'name' => 'drilling',
-         'guard_name' => 'web'
-      ]);
-
+      
       Role::create([
          'name' => 'vessel',
+         'guard_name' => 'web'
+      ]);
+
+      Role::create([
+         'name' => 'co',
+         'guard_name' => 'web'
+      ]);
+
+      Role::create([
+         'name' => 'master',
          'guard_name' => 'web'
       ]);
 
@@ -64,6 +73,15 @@ class RoleSeeder extends Seeder
          'guard_name' => 'web'
       ]);
 
+      Role::create([
+         'name' => 'logistic',
+         'guard_name' => 'web'
+      ]);
+
+      Role::create([
+         'name' => 'drilling',
+         'guard_name' => 'web'
+      ]);
       // Role::create([
       //    'name' => 'platform',
       //    'guard_name' => 'web'

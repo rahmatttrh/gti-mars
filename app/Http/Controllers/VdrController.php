@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\CrewVdr;
+use App\Models\Log as ModelsLog;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
@@ -231,6 +232,7 @@ class VdrController extends Controller
         try {
 
             $vdr = Vdr::create([
+               
                 'vessel_id' => $req->vessel_id,
                 'date' => $req->date,
                 'crew_onduty' => $req->onduty,
@@ -239,8 +241,11 @@ class VdrController extends Controller
                 'created_by' => $req->created_by
             ]);
 
-            $cargoHeadings = VdrCargoHeading::get();
+            $vdr->update([
+               'code' => vdrId($vdr->id)
+            ]);
 
+            $cargoHeadings = VdrCargoHeading::get();
             foreach ($cargoHeadings as $key => $heading) {
                 # code...
 
@@ -261,7 +266,6 @@ class VdrController extends Controller
             }
 
             $wHeadings = VdrWeatherHeading::get();
-
             foreach ($wHeadings as $key => $heading) {
                 # code...
                 $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
@@ -280,7 +284,6 @@ class VdrController extends Controller
             }
 
             $hseHeadings = VdrHseHeader::get();
-
             foreach ($hseHeadings as $key => $heading) {
                 # code...
                 $vdrHse = VdrHse::where('vdr_id', $vdr->id)
@@ -299,7 +302,6 @@ class VdrController extends Controller
             }
 
             $engineHeadings = VdrEngineHeading::get();
-
             foreach ($engineHeadings as $key => $heading) {
                 # code...
                 $vdrEngine = VdrEngine::where('vdr_id', $vdr->id)
@@ -318,7 +320,6 @@ class VdrController extends Controller
             }
 
             $operatingHeadings = VdrOperatingHeader::get();
-
             foreach ($operatingHeadings as $key => $heading) {
                 # code...
                 $vdrOperating = VdrOperating::where('vdr_id', $vdr->id)
@@ -339,6 +340,17 @@ class VdrController extends Controller
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
+
+            // $vessel = Vessel::where('email', auth()->user()->email)->first();
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdr->vessel_id,
+               'action' => 'Create VDR',
+               'vdr_id' => $vdr->id,
+               'desc' => '',
+               'table' => 'vdrs'
+            ]);
 
             return back()->with('success', 'VDR data successfully saved.');
         } catch (\Exception $e) {
@@ -543,7 +555,7 @@ class VdrController extends Controller
             //     ->first();
 
             $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
-
+            $vdr = Vdr::find($req->vdr_id);
 
             foreach ($operatings as $operating) {
 
@@ -566,6 +578,16 @@ class VdrController extends Controller
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
 
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdr->vessel_id,
+               'action' => 'Add Activity',
+               'vdr_id' => $vdr->id,
+               'desc' => 'on VDR ' . $vdr->code,
+               'table' => 'vdr_activities'
+            ]);
+
             return back()->with('success', 'Activity data successfully saved.');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
@@ -587,7 +609,7 @@ class VdrController extends Controller
             'is_crew' => 'required',
         ]);
 
-
+        $vdr = Vdr::find($req->id);
         $createVdr = VdrCrew::create([
             'vdr_id' => $req->id,
             'is_crew' => $req->is_crew,
@@ -600,6 +622,15 @@ class VdrController extends Controller
 
         if ($createVdr) {
             # code...
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'action' => 'Add Crew',
+               'vessel_id' => $vdr->vessel_id,
+               'vdr_id' => $vdr->id,
+               'desc' => 'on VDR ' . $vdr->code,
+               'table' => 'vdr_crews'
+            ]);
             return redirect()->back()->with('success', 'Crew / Passenger data successfully saved');
         } else {
             return redirect()->back()->with('warning', 'Crew / Passenger gagal Disimpan!');
@@ -713,6 +744,17 @@ class VdrController extends Controller
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
+            $vdr = Vdr::find($req->vdr_id);
+
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdr->vessel_id,
+               'action' => 'Update Activity',
+               'vdr_id' => $vdr->id,
+               'desc' => 'on VDR ' . $vdr->code,
+               'table' => 'vdr_activities'
+            ]);
 
             return back()->with('success', 'Activity data successfully updated.');
         } catch (\Exception $e) {
@@ -758,11 +800,21 @@ class VdrController extends Controller
         $req->validate([
             'id' => 'required'
         ]);
-
+        $vdrActivity = VdrActivity::find($req->id);
+        $vdr = Vdr::find($vdrActivity->vdr_id);
         $deleteActivity  = VdrActivity::destroy($req->id);
 
         if ($deleteActivity) {
             # code...
+            // $vdr = Vdr::find($req->vdr_id);
+
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'action' => 'Delete Activity',
+               'desc' => 'on VDR ' . $vdr->code,
+               'table' => 'vdr_activities'
+            ]);
             return redirect()->back()->with('success', 'Activity data successfully deleted');
         } else {
             return redirect()->back()->with('warning', 'Activity gagal di delete!');
@@ -775,10 +827,20 @@ class VdrController extends Controller
             'id' => 'required'
         ]);
 
+        $vdrCrew = VdrCrew::where('id', $req->id)->first();
         $deleteCrew  = VdrCrew::destroy($req->id);
 
         if ($deleteCrew) {
             # code...
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdrCrew->vdr->vessel_id,
+               'action' => 'Delete Crew',
+               'vdr_id' => $vdrCrew->vdr->id,
+               'desc' => 'on VDR ' . $vdrCrew->vdr->code,
+               'table' => 'vdr_crews'
+            ]);
             return redirect()->back()->with('success', 'VDR Crew data successfully deleted');
         } else {
             return redirect()->back()->with('warning', 'VDR Crew gagal di delete!');
@@ -866,7 +928,7 @@ class VdrController extends Controller
             'vdr_id' => 'required'
         ]);
 
-
+      //   dd('oke');
 
         $datas = $req->id;
 
@@ -889,7 +951,16 @@ class VdrController extends Controller
 
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
-
+            
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $weather->vdr->vessel_id,
+               'action' => 'Update Weather Condition',
+               'vdr_id' => $weather->vdr->id,
+               'desc' => 'on VDR ' . $weather->vdr->code,
+               'table' => 'vdr_crews'
+            ]);
             return back()->with('success', 'VDR Weather data successfully updated.');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
@@ -1030,6 +1101,17 @@ class VdrController extends Controller
             // Jika semuanya berhasil, kita commit transaksi
             DB::commit();
 
+            $vdr = Vdr::find($req->vdr_id);
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdr->vessel_id,
+               'action' => 'Update Operating Data',
+               'vdr_id' => $vdr->id,
+               'desc' => 'on VDR ' . $vdr->code,
+               'table' => 'vdr_operating'
+            ]);
+
             return back()->with('success', 'VDR Engine data successfully updated.');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
@@ -1051,8 +1133,8 @@ class VdrController extends Controller
             'is_crew' => 'required',
         ]);
 
-
-
+        
+        $vdrCrew = VdrCrew::where('id', $req->id)->first();
         $updateVdr = VdrCrew::where('id', $req->id)
             ->update([
                 'is_crew' => $req->is_crew,
@@ -1063,6 +1145,15 @@ class VdrController extends Controller
 
         if ($updateVdr) {
             # code...
+            ModelsLog::create([
+               'system' => 'VDR',
+               'user_id' => auth()->user()->id,
+               'vessel_id' => $vdrCrew->vdr->vessel_id,
+               'action' => 'Update Crew',
+               'vdr_id' => $vdrCrew->vdr->id,
+               'desc' => 'on VDR ' . $vdrCrew->vdr->code,
+               'table' => 'vdr_crews'
+            ]);
             return redirect()->back()->with('success', 'Crew data successfully updated');
         } else {
             return redirect()->back()->with('warning', 'Crew gagal di update!');

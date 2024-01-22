@@ -1,20 +1,28 @@
 <div>
    @if ($schedule->status == 0)
-      <div class=""><span class=""></span>Draft</div>
+      <small>Draft</small>
+      
       @elseif($schedule->status == 1)
-      <div class=""><span class=""></span>Waiting Vessel</div>
+      <small>Waiting Vessel</small>
       @elseif($schedule->status == 2)
-      <div class=""><span class=""></span>{{$lastreport->status->name}} {{$lastreport->port_id == null ? '' : 'at ' . $lastreport->port->name}}</div>
-      @elseif($schedule->status == 10)
-      <div class=""><span class=""></span>Waiting Confirmation</div>
+      <small>{{$schedule->getStatus()->status->name}}</small>
+      @elseif($schedule->status == 3)
+      <small>User Confirmation</small>
+      @elseif($schedule->status == 4)
+      <small>Approval Additional Request</small>
+      @elseif($schedule->status == 101)
+      <small>Validasi FM</small>
       @elseif($schedule->status == 11)
-      <div class=""><span class=""></span>Complete</div>
+      <small>Complete</small>
    @endif
-
-   @if ($schedule->deviations->where('status', 0)->count() > 0)
-   <div class="">Deviation Alert!</div>
+  
+   @if ($schedule->requests->where('class', 'additional')->where('status', 5)->count() > 0)
+   <div class="badge bg-danger">Additional</div>
+   @endif
+   @if ($schedule->requests->where('class', 'deviation')->where('status', 3)->count() > 0)
+   <div class="badge bg-danger">Deviation</div>
    @endif
    @if ($schedule->postpones->where('status', 0)->count() > 0)
-   <div class="">Postpone</div>
+   <div class="badge bg-warning">Postpone</div>
    @endif
 </div>
