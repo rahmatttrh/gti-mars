@@ -385,6 +385,25 @@ class HomeController extends Controller
    }
 
    public function index(){
+      $today = Carbon::now();
+      $docs = Document::get();
+      foreach ($docs as $doc) {
+         $diffMonth = $today->diffInMonths($doc->date);
+         if ($diffMonth <= 2) {
+            $doc->update([
+               'status' => 3
+            ]);
+         } else if($diffMonth <= 12) {
+            $doc->update([
+               'status' => 2
+            ]);
+         } else if($diffMonth > 12){
+            $doc->update([
+               'status' => 1
+            ]);
+         }
+      }
+      
       if (auth()->user()->hasRole('vessel')) {
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();

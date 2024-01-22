@@ -139,12 +139,15 @@
                <p class="section-lead">This page is just an example for you to create your own page.</p> --}}
                   <div class="card">
                      <div class="card-body">
+                        <marquee  class="px-4 bg-info  rounded text-white py-2 px-2 mb-2" >
+                           <i class="fa fa-bell"></i> Welcome to MARS, This app contains several systems (Digital Smart Port, Vessel Daily Report, PROACT and MAP)  
+                        </marquee>
                         <div class="row">
-                           <div class="col-md-7">
+                           <div class="col-md-8">
                               <div class="hero text-white hero-bg-image hero-bg-parallax" style="background-image: url('{{asset('img/bg/rig3.jpg')}}');">
                                  <div class="hero-inner">
                                  <h2>Welcome, {{auth()->user()->name}}!</h2>
-                                 <p class="lead">This is home page of Pertamina OSES Integrated Technology App</p>
+                                 <p class="lead">This is home page of MARS (Marine Advanced Resource System)</p>
                                  {{-- <div class="row">
                                     <div class="col-md-4">
                                        
@@ -155,7 +158,7 @@
                               </div>
                            
                            </div>
-                           <div class="col-md-5">
+                           <div class="col-md-4">
                                  <div id="carouselExampleIndicators2" class="carousel slide" data-ride="carousel">
                                     <ol class="carousel-indicators">
                                        <li data-target="#carouselExampleIndicators2" data-slide-to="0" class="active"></li>
@@ -209,19 +212,9 @@
                         {{-- <hr> --}}
                         <div class="row mt-3">
                            <div class="col">
-                              <div class="card border">
-                                 <div class="card-header">
-                                    <marquee  class="px-4 bg-info  rounded text-white py-2 px-2 mb-2" >
-                                       <i class="fa fa-bell"></i> Welcome to MARS App, This app contains several systems (Digital Smart Port, Vessel Daily Report, PROACT and Map)  
-                                    </marquee>
-                                 </div>
-                                 <div class="card-body">
-                                 <p>The purpose of the Marine Operation Information System is to assess and improve Marine assurance, technical and operational to the managing safe work procedures to assure marine work activities are completed without incident and poor reliability. These activities include Digital Smart Port, Vessel Daily Report, Preventive maintenance System, Contractor Safety Management System, Service performance Report, Leadership Engagement, Leadership Safeguard Verification, General Inspection. , Fuel Monitoring System. The Marine Operation Team conduct field engagements and written assessments to evaluate knowledge and conformance to safe work procedures. During the field engagement, the team uses a protocol specific to the safe work procedure being observed that is aligned with IMO and industry standards, regulations, and managing safe work procedures. Results of the assessments are shared immediately with the employee or contractor. If an assessment identifies significant opportunities for improvement, the Marine Operation Team will conduct a follow up observation with the employee of contractor to validate the coaching was effective. On a routine basis, the data from the assessments is gathered and analyzed to identify systemic gaps and remedial actions for improvement. </p>
-                                 </div>
-                                 <div class="card-footer bg-whitesmoke">
-                                 Development
-                                 </div>
-                              </div>
+                              <h4>MARS (Marine Advanced Reporting System)</h4>
+                              <p>The purpose of the Marine Operation Information System is to assess and improve Marine assurance, technical and operational to the managing safe work procedures to assure marine work activities are completed without incident and poor reliability. These activities include Digital Smart Port, Vessel Daily Report, Preventive maintenance System, Contractor Safety Management System, Service performance Report, Leadership Engagement, Leadership Safeguard Verification, General Inspection. , Fuel Monitoring System. The Marine Operation Team conduct field engagements and written assessments to evaluate knowledge and conformance to safe work procedures. During the field engagement, the team uses a protocol specific to the safe work procedure being observed that is aligned with IMO and industry standards, regulations, and managing safe work procedures. Results of the assessments are shared immediately with the employee or contractor. If an assessment identifies significant opportunities for improvement, the Marine Operation Team will conduct a follow up observation with the employee of contractor to validate the coaching was effective. On a routine basis, the data from the assessments is gathered and analyzed to identify systemic gaps and remedial actions for improvement. </p>
+                              
                            </div>
                         </div>
                      </div>

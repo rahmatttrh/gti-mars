@@ -116,7 +116,7 @@ class DepartmentRequestController extends Controller
          $req->validate([
             'origin' => 'required',
             'destination' => 'required',
-            'file-crew' => 'required'
+            'file-passenger' => 'required'
          ]);
       }
 

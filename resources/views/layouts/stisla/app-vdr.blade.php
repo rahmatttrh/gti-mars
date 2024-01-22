@@ -37,6 +37,23 @@
 
   
 <!-- Start GA -->
+
+<style>
+   table {
+      width: 100%;
+   }
+
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+   }
+   th, td {
+      padding-left: 5px
+   }
+
+   
+</style>
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -286,7 +303,7 @@
             </div>
             <footer class="main-footer">
             <div class="footer-left">
-               Copyright &copy; 2023 <div class="bullet"></div> Ekanuri Development</a>
+               Copyright &copy; 2023 <div class="bullet"></div> ENC Development</a>
             </div>
             <div class="footer-right">
                

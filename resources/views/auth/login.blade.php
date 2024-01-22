@@ -48,7 +48,9 @@
                      <div class="p-5">
                         <div class="text-center">
                            <h1 class="font-weight-bold"><i>MAR<span class="text-primary">S</span></i></h1>
-                           <h5>Pertamina OSES Integrated Technology</h5>
+                           
+                           <h5>Marine Advanced Reporting <br> System </h5>
+                           
                         </div>
                         <hr>
                         <form class="user" method="POST" action="{{ route('login') }}">
@@ -85,7 +87,7 @@
                            <hr>
                         </form>
                         <div class="login-account">
-                           <small class="msg text-muted">Copyright &copy; 2021 ENC IT Development</small>
+                           <small class="msg text-muted">Copyright &copy; 2021 ENC Development</small>
                         </div>
                      </div>
                   </div>

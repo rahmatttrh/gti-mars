@@ -15,9 +15,7 @@
 <div class="card">
    <div class="card-body">
       <div class="row">
-         <div class="col-md-12">
-            
-         </div>
+         
          <div class="col-md-8">
             {{-- <div class="badge badge-info">DSP</div> --}}
             <div class="table-responsive">
@@ -103,7 +101,7 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($requests)
+                     @if (count($requests) > 0)
                         @foreach ($requests as $req)
                             <tr>
                               <td><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a></td>
@@ -114,7 +112,7 @@
                             </tr>
                         @endforeach
                         @else
-                        <tr><td colspan="2" class="text-center py-3">Anda belum membuat Request Activity</td></tr>
+                        <tr><td colspan="5" class="text-center py-3">Anda belum membuat Request Activity</td></tr>
                      @endif
                      
                   </tbody>
@@ -123,14 +121,14 @@
          </div>
          <div class="col-md-4">
             <marquee  class="px-4 bg-info  rounded text-white py-2 px-2 mb-2" >
-               <i class="fa fa-bell"></i> Welcome to MARS App, This page contains summary data from several systems (Digital Smart Port, Vessel Daily Report) and Document Alert on the right side. 
+               <i class="fa fa-bell"></i> Welcome to MARS, This main page contains summary data from several systems (Digital Smart Port, Vessel Daily Report) and Document Alert on the right side. 
             </marquee>
             <div class="table-responsive">
-               <table class="" id="table-6">
+               <table class="table-striped" id="table-6">
                   <thead >
                      <tr>
-                        <th  class="py-1">Alert</th>
-                        <th style="width: 140px" class="text-center"><a href="#" data-toggle="modal" data-target="#modal-add-doc">Add New</a></th>
+                        <th  class="py-2">Alert</th>
+                        <th  class="text-center"><a href="#" data-toggle="modal" data-target="#modal-add-doc">Add New</a></th>
                      </tr>
                      
                   </thead>
@@ -138,7 +136,7 @@
                      @if (count($docs) > 0)
                         @foreach ($docs as $doc)
                            <tr>
-                              <td class="py-1"><x-status-stisla.doc :doc="$doc" /> </td>
+                              <td class="py-2"><x-status-stisla.doc :doc="$doc" /> </td>
                               <td class="text-center"><a href="#" data-toggle="modal" data-target="#modal-edit-doc-{{$doc->id}}">{{formatDate($doc->date)}}</a> </td>
                            </tr>
                         @endforeach

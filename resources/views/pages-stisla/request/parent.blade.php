@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <section class="section">
-   <div class="section-header">
+   {{-- <div class="section-header">
       <h1 class="section-title">Request Detail</h1>
       <div class="section-header-breadcrumb">
          <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
          <div class="breadcrumb-item active">Request Detail</div>
       </div>
-   </div>
+   </div> --}}
 
    <div class="section-body">
       {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -174,88 +174,91 @@
                   </ul>
                   <div class="tab-content" id="myTabContent">
                      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                     <div class="table-responsive">
-                        <table class="" id="table-1">
-                           <thead>
-                           <tr>
-                              <th>Status</th>
-                              <th>MTD</th>
-                              <th>Destination</th>
-                              <th>Descriptive</th>
-                              <th>Contract</th>
-                              <th class="text-center">Qty</th>
-                              <th class="text-center">Weight</th>
-                              <th class="text-center">Drop</th>
-                              <th class="text-center">Size (m<sup>2</sup>)</th>
-                              <th></th>
-                              {{-- @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                                 <th>Action</th>
-                              @endif --}}
-                           </tr>
-                           </thead>
-                           <tbody>
-                           @foreach ($parent->requests as $request)
-                           {{-- <tr>
-                              <td colspan="8">{{$request->destination->name}}</td>
-                           </tr> --}}
-                              @foreach ($request->cargoItems as $item)
-                                 <tr>
-                                    <td><x-status-stisla.request :request="$item->request" /></td>
-                                    <td class=" text-truncate">
-                                       <div class="dropdown">
-                                       {{$item->mtd}}
-                                       </div>
-                                    </td>
-                                    <td>{{$item->request->destination->name}}</td>
-                                    <td class=" text-truncate ">
-                                       {{$item->desc}} 
-                                    </td>
-                                    {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
-                                    <td class=" text-truncate">{{$item->contract}}</td>
-                                    <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                                    <td class=" text-center">{{$item->weight}}</td>
-                                    <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                                    {{-- <td class=" text-center">
-                                       {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
-                                    
-                                    </td> --}}
-                                    <td class=" text-center">{{$item->size}}</td>
-                                    
-                                    {{-- <td>
-                                       @if ($request->status == 0)
-                                       <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
-                                       @endif
-                                    </td> --}}
-                                    @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                       <td>
-                                       <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
-                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
-                                       </div>
+                        <div class="table-responsive">
+                           <table class="table-striped" id="table-1">
+                              <thead>
+                              <tr>
+                                 <th>Status</th>
+                                 <th>MTD</th>
+                                 <th>Destination</th>
+                                 <th>Descriptive</th>
+                                 <th>Contract</th>
+                                 <th class="text-center">Qty</th>
+                                 <th class="text-center">Weight</th>
+                                 <th class="text-center">Drop</th>
+                                 <th class="text-center">Size (m<sup>2</sup>)</th>
+                                 <th></th>
+                                 {{-- @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                                    <th>Action</th>
+                                 @endif --}}
+                              </tr>
+                              </thead>
+                              <tbody>
+                              @foreach ($parent->requests as $request)
+                              {{-- <tr>
+                                 <td colspan="8">{{$request->destination->name}}</td>
+                              </tr> --}}
+                                 @foreach ($request->cargoItems as $item)
+                                    <tr>
+                                       <td><x-status-stisla.request :request="$item->request" /></td>
+                                       <td class=" text-truncate">
+                                          <div class="dropdown">
+                                          {{$item->mtd}}
+                                          </div>
                                        </td>
-                                       @elseif($request->status == 10 && auth()->user()->hasRole('department'))
-                                       <td>
-                                       @if ($item->status == 1)
-                                          <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
-                                          <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
-                                          @else
-                                          -
+                                       <td>{{$item->request->destination->name}}</td>
+                                       <td class=" text-truncate ">
+                                          {{$item->desc}} 
+                                       </td>
+                                       {{-- <td class=" ">{{$item->remark ?? '-'}}</td> --}}
+                                       <td class=" text-truncate">{{$item->contract}}</td>
+                                       <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                                       <td class=" text-center">{{$item->weight}}</td>
+                                       <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                                       {{-- <td class=" text-center">
+                                          {{$item->offloading ? $item->offloading->onboard : '-'}} # {{$item->offloading->desc ?? '-'}}
+                                       
+                                       </td> --}}
+                                       <td class=" text-center">{{$item->size}}</td>
+                                       
+                                       {{-- <td>
+                                          @if ($request->status == 0)
+                                          <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCargoItem_{{$item->id}}">Delete</a>
+                                          @endif
+                                       </td> --}}
+                                       @if (auth()->user()->hasRole('department') && $parent->status == 0)
+                                          <td>
+                                             {{-- <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}"><i class="fa fa-edit"></i></button>
+                                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}"><i class="fa fa-trash"></i></button>
+                                             </div> --}}
+                                             <a href="#" data-toggle="modal" data-target="#cargo-edit-{{$item->id}}">Edit</a>
+                                             <a href="#" data-toggle="modal" data-target="#cargo-delete-{{$item->id}}">Delete</a>
+                                          </td>
+
+                                          @elseif($request->status == 10 && auth()->user()->hasRole('department'))
+                                          <td>
+                                          @if ($item->status == 1)
+                                             <a href="#" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                             <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" />
+                                             @else
+                                             -
+                                          @endif
+                                       </td>
+                                       @else
+                                       <td>-</td>
                                        @endif
-                                    </td>
-                                    @else
-                                    <td>-</td>
-                                    @endif
-                                    
-                                 </tr>
+                                       
+                                    </tr>
+                                 @endforeach
                               @endforeach
-                           @endforeach
-                           </tbody>
-                        </table>
-                     </div>
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
                      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                      <div class="table-responsive">
-                        <table class="table table-striped table-sm" id="table-5">
+                        <table class=" table-striped " id="table-5">
                            <thead>
                            <tr>
                               <th>Status</th>
@@ -284,10 +287,12 @@
                                  <td >{{$passenger->desc}}</td>
                                  <td>
                                     @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                       <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                       {{-- <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}"><i class="fa fa-edit"></i></button>
                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}"><i class="fa fa-trash"></i></button>
-                                       </div>
+                                       </div> --}}
+                                       <a href="#" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}">Edit</a>
+                                       <a href="#" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}">Delete</a>
                                     @endif
                                     
                                  </td>

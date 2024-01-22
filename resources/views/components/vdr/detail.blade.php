@@ -12,7 +12,7 @@
    }
    
    input {
-      width: 70px
+      width: 70px"
    }
 </style>
 <div class="card">
@@ -30,6 +30,10 @@
             <div class="accordion-body collapse show" id="panel-head" data-parent="#accordion">
                
                {{-- <h5 class="mt-2">{{$vessel->name}}</h5> --}}
+               @if ($vdr->status == 1)
+                  <a href="#" class="btn btn-sm btn-light text-primary border shadow-none" data-toggle="modal" data-target="#modalEdit">Release</a>
+               @endif
+               
                <a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
                <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-sm btn-light border shadow-none">Export PDF</a>
                <div class="row mt-2">

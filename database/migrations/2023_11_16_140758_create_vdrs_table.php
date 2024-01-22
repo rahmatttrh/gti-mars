@@ -15,6 +15,7 @@ class CreateVdrsTable extends Migration
     {
         Schema::create('vdrs', function (Blueprint $table) {
             $table->integerIncrements('id');
+            // $table->integer('status')->nullable();
             $table->string('code')->nullable();
             $table->unsignedSmallInteger('vessel_id');
             $table->date('date');

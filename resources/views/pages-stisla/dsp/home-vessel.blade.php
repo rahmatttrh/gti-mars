@@ -78,21 +78,16 @@
             @endif
             
             <div class="card">
-               @if ($recentSchedules->count() > 0)
+               
                <div class="card-body">
-                  
-                     @foreach ($recentSchedules as $recent)
-                     <div class="alert alert-info" role="alert">
-                         <i class="fa fa-bell"></i>  You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
-                     </div>
-                     @endforeach
-                  
-               </div>
-               @endif
-               {{-- <div class="card-header">
-                  <h4>Sailing Order</h4>
-               </div> --}}
-               <div class="card-body">
+                  @if ($recentSchedules->count() > 0)
+                        @foreach ($recentSchedules as $recent)
+                        <div class="alert alert-info" role="alert">
+                           <i class="fa fa-bell"></i>  You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
+                        </div>
+                        @endforeach
+                     
+                  @endif
                   <div class="table-responsive">
                      <table class="table-striped" id="table-6">
                         <thead>
@@ -150,8 +145,8 @@
                         </tbody>
                      </table>
                   </div>
-                  <hr>
-                  <div class="table-responsive">
+                  
+                  <div class="table-responsive mt-3">
                      <table class="table-striped" id="table-7">
                         <thead>
                            <tr><th colspan="6" class="py-2">My Request</th></tr>

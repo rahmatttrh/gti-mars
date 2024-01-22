@@ -26,10 +26,11 @@
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped table-sm" id="table-1">
+                <table class=" table-striped " id="table-1">
                     <thead>
+                        <tr><th colspan="8" class="py-1">Request Progress</th></tr>
                         <tr>
-                           <th class="text-center">No.</th>
+                           <th class="text-center" style="width: 15px">No.</th>
                            <th>ID</th>
                            <th>Class</th>
                            <th>Route</th>
@@ -37,7 +38,7 @@
                            <th>Date</th>
                            <th>Created at</th>
                            <th>Status</th>
-                           <th></th>
+                           {{-- <th></th> --}}
                         </tr>
                      </thead>
                      <tbody>
@@ -46,7 +47,7 @@
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
                                  <td>
-                                    {{$request->code}}
+                                    <a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a> 
                                     {{-- <br>
                                     <small>{{$request->activity->name}}</small> --}}
                                  </td>
@@ -76,9 +77,9 @@
                                           <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
                                        @endif
                                  </td>
-                                 <td>
+                                 {{-- <td>
                                   <a href="{{route('request.detail', enkripRambo($request->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                                 </td>
+                                 </td> --}}
                               </tr>
                            @endforeach
                            @else
