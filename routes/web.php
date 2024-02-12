@@ -25,9 +25,12 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogisticController;
 use App\Http\Controllers\Marine\MarineAdditionalController;
 use App\Http\Controllers\Marine\MarineDeviationController;
+use App\Http\Controllers\Marine\MarineMasterController;
 use App\Http\Controllers\Marine\MarineRequestController;
 use App\Http\Controllers\Marine\MarineScheduleController;
+use App\Http\Controllers\Marine\MarineVdrController;
 use App\Http\Controllers\MarineController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ParentRequestController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PlatformController;
@@ -45,6 +48,7 @@ use App\Http\Controllers\VdrCrewController;
 use App\Http\Controllers\Vessel\VesselDeviationController;
 use App\Http\Controllers\Vessel\VesselRequestController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
+use App\Http\Controllers\Vessel\VesselVdrController;
 use App\Http\Controllers\VesselController;
 use App\Models\Activity;
 use App\Models\Document;
@@ -76,13 +80,23 @@ Route::middleware(["auth"])->group(function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
 
+   Route::prefix('news')->group(function () {
+      
+      Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
+      Route::post('store', [NewsController::class, 'store'])->name('news.store');
+   });
+
+   Route::get('forbidden', [HomeController::class, 'forbidden'])->name('forbidden');
+
+   
+
    Route::prefix('document')->group(function () {
       Route::post('add', [DocumentController::class, 'add'])->name('document.add');
       Route::put('update', [DocumentController::class, 'update'])->name('document.update');
    });
 
    Route::get("proact/dashboard", [HomeController::class, "proact",])->name('proact');
-   Route::get("map/dashboard", [HomeController::class, "map",])->name('map');
+   Route::get("map/dashboard", [HomeController::class, "mapp",])->name('map');
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::post('store', [UserController::class, 'store'])->name('user.store');
@@ -99,9 +113,9 @@ Route::middleware(["auth"])->group(function () {
    });
 
    Route::prefix("dsp")->group(function () {
-      Route::get("marine/dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
-      Route::get("vessel/dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
-      Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+      // Route::get("marine/dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
+      // Route::get("vessel/dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+      
    });
 
    Route::prefix("dsp")->group(function () {
@@ -234,7 +248,7 @@ Route::middleware(["auth"])->group(function () {
       Route::post('check', [RequestController::class, 'check'])->name('request.check');
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
       Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
-      Route::get('parent/detail/{parent:id}', [ParentRequestController::class, 'detail'])->name('request.detail.parent');
+      
 
       Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
 
@@ -299,11 +313,70 @@ Route::middleware(["auth"])->group(function () {
 
 
 
-Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr']], function () {
+
+// Level Admin
+Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+   Route::prefix("dsp/m")->group(function () {
+      Route::get("dash/main", [HomeController::class, "dspMarine",])->name('dsp.marine');
+      Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');
+      Route::get("surveillance", [SurveillanceController::class, "marine",])->name('surveillance.marine');
+
+      Route::prefix('schedule')->group(function () {
+         Route::get('progress', [MarineScheduleController::class, 'progress'])->name('schedule.progress');
+         Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
+   
+         Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
+         
+         Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
+         Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
+         Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
+         Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
+         Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
+         Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
+         Route::put('jetty/update', [MarineScheduleController::class, 'jettyUpdate'])->name('schedule.jetty.update');
+         Route::get('delete/{schedule:id}', [MarineScheduleController::class, 'delete'])->name('schedule.delete');
+         Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
+         Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
+         Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
+         Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
+         Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
+         Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
+         Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
+      });
+   });
+
+   Route::prefix("vdr/m")->group(function () {
+      Route::get("dashboard", [MarineVdrController::class, "index",])->name('vdr.marine');
+
+      Route::prefix("act")->group(function () {
+         Route::get('validation', [MarineVdrController::class, 'validation'])->name('vdr.marine.validation');
+         Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
+         Route::get("history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
+         // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
+         // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
+         Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
+         Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
+         Route::get('approve/luthfi/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
+      });
+      
+   });
+
+
+
+   Route::prefix("news/m")->group(function () {
+      Route::get('/edit', [NewsController::class, 'index'])->name('news.edit');
+      Route::put('/update', [NewsController::class, 'update'])->name('news.update');
+   });
+   
+   
    Route::prefix("log")->group(function () {
       Route::get("dsp", [LogController::class, "dsp",])->name('log.dsp');
       Route::get("vdr", [LogController::class, "vdr",])->name('log.vdr');
       Route::post("filter/vdr", [LogController::class, "vdrFilter",])->name('log.vdr.filter');
+   });
+
+   Route::prefix("master")->group(function () {
+      Route::get("data", [MarineMasterController::class, "index",])->name('master.data');
    });
 
 
@@ -312,13 +385,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
 
    Route::get('get-distance', [GeofenceController::class, 'getDistance']);
 
-   Route::prefix("vdr")->group(function () {
-      Route::get("marine/dashboard", [HomeController::class, "vdrMarine",])->name('vdr.marine');
-      Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
-      Route::get("marine/history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
-      // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
-      // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
-   });
+   
 
    Route::prefix("proact")->group(function () {
       Route::get("marine/dashboard", [HomeController::class, "proactMarine",])->name('proact.marine');
@@ -327,6 +394,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    Route::prefix("map")->group(function () {
       Route::get("marine/dashboard", [HomeController::class, "mapMarine",])->name('map.marine');
    });
+   
 
    Route::prefix('port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
@@ -369,26 +437,29 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
       Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
-   Route::prefix('schedule')->group(function () {
+
+   // Route::prefix('schedule')->group(function () {
+   //    Route::get('m/progress', [MarineScheduleController::class, 'progress'])->name('schedule.progress');
+   //    Route::get('m/plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
+
+   //    Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
       
-      Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
-      Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
-      Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
-      Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
-      Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
-      Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
-      Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
-      Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
-      Route::put('jetty/update', [MarineScheduleController::class, 'jettyUpdate'])->name('schedule.jetty.update');
-      Route::get('delete/{schedule:id}', [MarineScheduleController::class, 'delete'])->name('schedule.delete');
-      Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
-      Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
-      Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
-      Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
-      Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
-      Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
-      Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
-   });
+   //    Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
+   //    Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
+   //    Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
+   //    Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
+   //    Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
+   //    Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
+   //    Route::put('jetty/update', [MarineScheduleController::class, 'jettyUpdate'])->name('schedule.jetty.update');
+   //    Route::get('delete/{schedule:id}', [MarineScheduleController::class, 'delete'])->name('schedule.delete');
+   //    Route::get('send/{schedule:id}', [MarineScheduleController::class, 'send'])->name('schedule.send');
+   //    Route::post('postpone', [MarineScheduleController::class, 'postpone'])->name('schedule.postpone');
+   //    Route::get('remove/reqeust/{request:id}', [MarineScheduleController::class, 'removeRequest'])->name('schedule.remove.request');
+   //    Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
+   //    Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
+   //    Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
+   //    Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
+   // });
    Route::prefix('vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
       Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
@@ -411,42 +482,97 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
 });
 
 Route::group(['middleware' => ['role:vessel']], function () {
-   Route::prefix('vessel/request')->group(function () {
-      Route::get('create', [VesselRequestController::class, 'create'])->name('request.vessel.create');
-      Route::post('store', [VesselRequestController::class, 'store'])->name('request.vessel.store');
-      Route::get('index', [VesselRequestController::class, 'index'])->name('request.vessel.index');
+   Route::prefix('dsp/v/')->group(function () {
+      Route::get("dash/main", [HomeController::class, "dspVessel",])->name('dsp.vessel');
+
+      Route::prefix('request')->group(function () {
+         Route::get('create', [VesselRequestController::class, 'create'])->name('request.vessel.create');
+         Route::post('store', [VesselRequestController::class, 'store'])->name('request.vessel.store');
+         Route::get('index', [VesselRequestController::class, 'index'])->name('request.vessel.index');
+      });
+
+      Route::prefix('schedule')->group(function () {
+         Route::get('all', [VesselScheduleController::class, 'all'])->name('schedule.vessel.all');
+         Route::get('progress', [VesselScheduleController::class, 'progress'])->name('schedule.progress.vessel');
+         Route::get('history', [VesselScheduleController::class, 'history'])->name('schedule.history.vessel');
+         Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+      });
    });
+   
+   Route::prefix('vdr/v/')->group(function () {
+      Route::get('dashboard', [VdrController::class, 'vdrVessel'])->name('vdr.create');
+      
+      Route::prefix('act')->group(function () {
+         Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
+      Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
+      Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
+      Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
+      Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
 
-   Route::prefix('vessel/schedule')->group(function () {
-      Route::get('progress', [VesselScheduleController::class, 'progress'])->name('schedule.progress.vessel');
-      Route::get('history', [VesselScheduleController::class, 'history'])->name('schedule.history.vessel');
+      Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
+      Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
 
-      Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+      Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
+      Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
+      Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
+
+      // Crew
+      Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
+      Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
+      Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
+
+      Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
+      Route::post('import/crew', [VdrController::class, 'importCrew'])->name('vdr.import.crew');
+
+      // 
+      Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
+      Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
+      Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
+      Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
+
+      Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
+
+      // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+      Route::get('release/{id}', [VesselVdrController::class, 'release'])->name('vdr.release');
+      });
+      
    });
-
    
 });
 
+
+// Level User Field
 Route::group(['middleware' => ['role:logistic|drilling|department']], function () {
-   Route::prefix('department/request')->group(function () {
-      Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
-      Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
-      Route::post('store', [DepartmentRequestController::class, 'storeImport'])->name('request.store');
-      Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
-      Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
+   Route::prefix('dsp/u/')->group(function () {
+      Route::get("dash/main", [HomeController::class, "dspUser",])->name('dsp.user');
 
-      Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
-      Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
-      Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
-      Route::get('release/{id}', [DepartmentRequestController::class, 'release'])->name('request.release');
-      Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
 
-      Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
-      Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
-      Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
-      Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
-      Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
+      // Request
+      Route::prefix('request')->group(function () {
+         Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
+         Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
+         Route::post('store', [DepartmentRequestController::class, 'storeImport'])->name('request.store');
+         Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
+         Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
+   
+         Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
+         Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
+         Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
+         Route::get('release/{id}', [DepartmentRequestController::class, 'release'])->name('request.release');
+         Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
+   
+         Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
+         Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
+         Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
+         Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
+         Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
+
+         Route::get('parent/detail/{parent:id}', [ParentRequestController::class, 'detail'])->name('request.detail.parent');
+      });
    });
+   
+
+   
 
 
 
@@ -499,42 +625,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
    });
 
 
-   Route::prefix('vdr')->group(function () {
-      Route::get('/create/test', [VdrController::class, 'vdrVessel'])->name('vdr.create');
-      Route::get('/', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
-      Route::get('/create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
-      Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
-      Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
-
-      
-
-      Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
-
-      Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
-      Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
-
-      Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
-      Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
-      Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
-
-      // Crew
-      Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
-      Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
-      Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
-
-      Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
-      Route::post('import/crew', [VdrController::class, 'importCrew'])->name('vdr.import.crew');
-
-      // 
-      Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
-      Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
-      Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
-      Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
-
-      Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
-
-      // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
-   });
+   
 });
 
 

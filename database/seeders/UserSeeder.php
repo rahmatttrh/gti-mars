@@ -54,6 +54,26 @@ class UserSeeder extends Seeder
       ]);
       $admin_fm->assignRole('fm');
 
+      $suptent = User::create([
+         'name' => 'Super Intendent',
+         'username' => 'suptent',
+         'email' => 'suptent@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $suptent->assignRole('suptent');
+
+      $luthfi = User::create([
+         'name' => 'Mr. Lutfi',
+         'username' => 'lutfi',
+         'email' => 'lutfi@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $luthfi->assignRole('chief');
+
 
       // USER KJ
       $yoyo = User::create([

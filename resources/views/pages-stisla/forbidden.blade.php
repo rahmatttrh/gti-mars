@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <title>MARS - Home Page</title>
+
+  <!-- General CSS Files -->
+  <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
+
+  <!-- CSS Libraries -->
+  <link rel="stylesheet" href="{{asset('stisla/modules/chocolat/dist/css/chocolat.css')}}">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
+  <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
+<!-- Start GA -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-94034622-3');
+</script>
+<!-- /END GA -->
+<style>
+   .bga-1 {
+      background-color: #365486
+   }
+   .bga-2 {
+      background-color: #7FC7D9
+   }
+
+   .bgb-1{
+      background-color: #00A9FF
+   }
+   .bgb-2 {
+      background-color: #89CFF3
+   }
+   .bgb-3 {
+      background-color: #A0E9FF
+   }
+   .bgb-4 {
+      background-color: #CDF5FD
+   }
+
+   .bgc-1 {
+      background-color: #176B87
+   }
+   .bgc-2 {
+      background-color: #86B6F6
+   }
+</style>
+</head>
+
+<body class="layout-3">
+   <div id="app">
+      <div class="main-wrapper container">
+         {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
+         <div class="navbar-bg" ></div>
+         @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
+            <x-main.navbar.top.marine />
+            @elseif (auth()->user()->hasRole('vessel'))
+            <x-main.navbar.top.vessel />
+            @elseif (auth()->user()->hasRole('fm'))
+            <x-main.navbar.top.fm />
+            @elseif (auth()->user()->hasRole('department'))
+            <x-main.navbar.top.department />
+            @elseif(auth()->user()->hasRole('suptent'))
+            <x-main.navbar.top.suptent />
+            @elseif(auth()->user()->hasRole('chief'))
+            <x-main.navbar.top.chief />
+            @elseif(auth()->user()->hasRole('admin-dsp'))
+            <x-main.navbar.admin-dsp />
+            @elseif(auth()->user()->hasRole('admin-vdr'))
+            <x-main.navbar.admin-vdr />
+         @endif
+         
+
+         
+
+         <!-- Main Content -->
+         <div class="main-content">
+            <section class="section">
+               <div class="section-body">
+                  <div class="card shadow-lg">
+                     <div class="card-body text-center">
+                        <br>
+                        <img width="200px" src="{{asset('img/flaticon/sign.png')}}" alt="" class="">
+                        <hr>
+                        <h1>Forbidden</h1>
+                        
+                     </div>
+                     <div class="card-footer bg-whitesmoke text-center">
+                        <span>You don't have permission to access this Page</span>
+                     </div>
+                  </div>
+               </div>
+            </section>
+         </div>
+         <footer class="main-footer">
+         <div class="footer-left">
+            Copyright &copy; 2023 <div class="bullet"></div> Ekanuri Development
+         </div>
+         <div class="footer-right">
+            
+         </div>
+         </footer>
+      </div>
+   </div>
+
+  
+
+  <!-- General JS Scripts -->
+  <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/popper.js')}}"></script>
+  <script src="{{asset('stisla/modules/tooltip.js')}}"></script>
+  <script src="{{asset('stisla/modules/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
+  <script src="{{asset('stisla/modules/moment.min.js')}}"></script>
+  <script src="{{asset('stisla/js/stisla.js')}}"></script>
+  <script src="{{asset('stisla/js/page/bootstrap-modal.js')}}"></script>
+  
+  <!-- JS Libraies -->
+  <script src="{{asset('stisla/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
+  <!-- Page Specific JS File -->
+  
+  <!-- Template JS File -->
+  <script src="{{asset('stisla/js/scripts.js')}}"></script>
+  <script src="{{asset('stisla/js/custom.js')}}"></script>
+</body>
+</html>

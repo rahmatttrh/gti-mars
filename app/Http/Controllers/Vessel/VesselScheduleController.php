@@ -18,6 +18,19 @@ use PhpParser\Node\Expr\FuncCall;
 
 class VesselScheduleController extends Controller
 {
+
+   public function all()
+   {
+     
+      $progresses = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 0)->where('status', '<', 11)->orderBy('date', 'asc')->get();
+      $histories = Schedule::where('vessel_id', auth()->user()->getVesselId())->where('status', '>', 1)->where('status', '!=', 11)->orderBy('date', 'asc')->get();
+      return view('pages-stisla.vessel.schedule.top.all', [
+         'histories' => $histories,
+         'progresses' => $progresses,
+      ])->with('i');
+   }
+
+
    public function index($month)
    {
       $dekripMonth = dekripRambo($month);

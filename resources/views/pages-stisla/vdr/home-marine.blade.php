@@ -7,7 +7,7 @@
    <section class="section">
       <div class="row">
          <div class="col-md-4">
-            <div class="card">
+            <div class="card shadow-sm border">
                {{-- <div class="card-header">
                   <span class="badge badge-light">Total Operating Mode (Hour)</span>
                   
@@ -15,14 +15,15 @@
                <div class="card-body">
                   {{-- <b>{{auth()->user()->name}}</b><br> --}}
                   <div class="badge badge-info">
-                     @if (auth()->user()->hasRole('marine'))
+                     {{-- @if (auth()->user()->hasRole('marine'))
                         SUPER USER
                         @elseif(auth()->user()->hasRole('admin-vdr'))
                         ADMIN
                         @elseif(auth()->user()->hasRole('superadmin-vdr'))
                         SUPER ADMIN
                      @endif
-                     {{strtoupper(auth()->user()->system)}}
+                     {{strtoupper(auth()->user()->system)}} --}}
+                     <x-status-stisla.user />
                   </div>
                   {{-- <small></small>
                   <small>
@@ -50,7 +51,7 @@
            </div>
          </div>
          <div class="col-md-8">
-            <div class="card">
+            <div class="card shadow-sm border">
                <div class="card-body">
                   {{-- <hr> --}}
                   <form action="{{route('vdr.filter')}}" method="POST">
@@ -123,7 +124,7 @@
                               <th>Vessel</th>
                               <th>Date</th>
                               <th>Crew</th>
-                              <th>Created</th>
+                              <th>Loc</th>
                               <th>Status</th>
                            </tr>
                         </thead>
@@ -133,19 +134,15 @@
                               <tr>
                                  <td class="text-muted text-center"><small>{{++$i}}</small></td>
                                  <td>
-                                    <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a>
+                                    <a href="{{route('vdr.show', enkripRambo($vdr->id))}}">{{vdrId($vdr->id)}}</a>
       
                                  </td>
                                  <td>{{$vdr->vessel->name}}</td>
                                  <td>{{dayDate($vdr->date)}}</td>
                                  <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                                 <td>{{$vdr->created_by}}</td>
+                                 <td>{{$vdr->location_midnight}}</td>
                                  <td>
-                                    @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
-                                    <span class="badge badge-warning">Draft</span>
-                                    @else
-                                    <span class="badge badge-success">Release</span>
-                                    @endif
+                                    <x-status-stisla.vdr :vdr="$vdr" />
                                  </td>
                               </tr>
                               @endforeach
@@ -184,13 +181,13 @@
                label: 'Total Hours',
                data: {!! json_encode($value) !!},
                borderWidth: 2,
-               backgroundColor: '#73d1af',
+               backgroundColor: '#89CFF3',
                borderWidth: 0,
                borderColor: 'transparent',
                pointBorderWidth: 0,
                pointRadius: 3.5,
                pointBackgroundColor: 'transparent',
-               pointHoverBackgroundColor: '#73d1af',
+               pointHoverBackgroundColor: '#89CFF3',
             }
             ]
          },
@@ -232,8 +229,8 @@
                label: 'Total Fuel',
                data: {!! json_encode($fuel) !!},
                borderWidth: 2,
-               backgroundColor: '#37b6ed',
-               borderColor: '#37b6ed',
+               backgroundColor: '#A0E9FF',
+               borderColor: '#A0E9FF',
                borderWidth: 2.5,
                pointBackgroundColor: '#ffffff',
                pointRadius: 4

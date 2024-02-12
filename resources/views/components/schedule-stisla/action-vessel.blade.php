@@ -1,6 +1,6 @@
 <span >
    @if ($schedule->status == 1 )
-      <button class="btn btn-primary btn-block " data-toggle="modal" data-target="#schedule-accept">
+      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
          Accept
       </button>
       @elseif($schedule->status == 2 || $schedule->status == 10)
@@ -53,7 +53,7 @@
                   <option value="8">8</option>   
                </select>
               <div class="input-group-append">
-                <button class="btn btn-primary  px-4" type="submit">Add Report</button>
+                <button class="btn btn-info  px-4" type="submit">Add Report</button>
                 @if ($schedule->status > 1 && $schedule->status < 11 )
                 <span class="btn btn-info  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
                 @endif

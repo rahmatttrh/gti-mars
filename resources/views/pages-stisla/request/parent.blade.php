@@ -19,16 +19,28 @@
       </p> --}}
 
       <div class="row">
-         <div class="col-md-12">
-            
-         </div>
+         
          <div class="col-12">
          
-            {{-- @if (auth()->user()->hasRole('department'))
-            @endif --}}
             
-            
-            <div class="card">
+             
+            <nav aria-label="breadcrumb">
+               <ol class="breadcrumb">
+                  <li class="breadcrumb-item">Create</li>
+                  @if ($parent->status == 0)
+                  <li class="breadcrumb-item"><span class="bg-info py-1 px-2 text-white rounded">Edit</span></li>
+                  @else
+                  <li class="breadcrumb-item">Edit</li>
+                  @endif
+
+                  @if ($parent->status == 201)
+                  <li class="breadcrumb-item"><span class="bg-info py-1 px-2 text-white rounded">Choose Vessel</span></li>
+                  @else
+                  <li class="breadcrumb-item">Choose Vessel</li>
+                  @endif
+               </ol>
+            </nav>
+            <div class="card border shadow-sm">
                <div class="card-body">
                   
                   <div class="row">
@@ -77,7 +89,7 @@
                                     <input type="file" required class="form-control" name="file-cargo" id="file-cargo">
                                     
                                  <div class="input-group-append">
-                                    <button class="btn btn-primary px-4" type="submit">Add Cargo</button>
+                                    <button class="btn btn-info px-4" type="submit">Add Cargo</button>
                                  </div>
                               </div>
                            </div>
@@ -102,7 +114,7 @@
                                        @endforeach
                                  </select>
                                  <div class="input-group-append">
-                                 <button class="btn btn-primary px-4" type="submit">Add Crew</button>
+                                 <button class="btn btn-info px-4" type="submit">Add Crew</button>
                                  </div>
                               </div>
                            </div>
@@ -153,7 +165,7 @@
                                        
                                  </select>
                                  <div class="input-group-append">
-                                 <button class="btn btn-primary px-4" type="submit">Submit</button>
+                                 <button class="btn btn-info px-4" type="submit">Release</button>
                                  </div>
                               </div>
                            </div>
@@ -324,19 +336,21 @@
   <div class="modal fade" id="parent-release" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Release Request</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Release all request to Fleet Control?
-        </div>
-        <div class="modal-footer bg-whitesmoke">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{{route('parent.release', enkripRambo($parent->id))}}" class="btn btn-primary">Release</a>
-        </div>
+         <div class="modal-header">
+            <h5 class="modal-title">Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            Save this Request?
+            <br>
+            <small>Sistem akan otomatis mencari dan memilih Vessel</small>
+         </div>
+         <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+            <a href="{{route('parent.release', enkripRambo($parent->id))}}" class="btn btn-info">Save</a>
+         </div>
       </div>
     </div>
   </div>

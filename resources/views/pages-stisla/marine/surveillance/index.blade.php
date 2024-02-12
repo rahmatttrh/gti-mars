@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <section class="section">
-    <div class="section-header">
+    {{-- <div class="section-header">
       <h1 class="section-title">Surveillance Activity</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
         <div class="breadcrumb-item active">Surveillance Activity</div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="section-body">
       {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -20,13 +20,13 @@
 
       <div class="row">
         <div class="col-12">
-          <div class="card">
+          <div class="card shadow-sm border">
             {{-- <div class="card-header">
               <h4>Basic DataTables</h4>
             </div> --}}
             <div class="card-body">
               <div class="table-responsive">
-                <table class="table table-striped " id="table-1">
+                <table class=" table-sm table-striped " id="table-1">
                   <thead>                                 
                     <tr>
                       <th class="text-center">

@@ -40,8 +40,8 @@ $("[data-checkboxes]").each(function () {
 
 $("#table-1").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
-    pageLength : 7,
-   lengthMenu: [[7, 10, 20, -1], [7, 10, 20, 'Todos']]
+    pageLength : 10,
+   lengthMenu: [[5, 10, 20, -1], [7, 10, 20, 'Todos']]
 });
 $("#table-2").dataTable({
     columnDefs: [{ sortable: false, targets: [0, 2, 3] }],
@@ -78,8 +78,8 @@ $("#table-7").dataTable({
 
 $("#table-8").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
-    pageLength : 5,
-   lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
+    pageLength : 10,
+   lengthMenu: [[10, 20, -1], [5, 10, 20, 'Todos']]
 });
 
 $("#table-9").dataTable({
@@ -96,8 +96,8 @@ $("#table-11").dataTable({
 
 $("#table-12").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
-    pageLength : 8,
-   lengthMenu: [[8, 10, 20, -1], [8, 10, 20, 'Todos']]
+    pageLength : 10,
+   lengthMenu: [[5, 10, 20, -1], [8, 10, 20, 'Todos']]
 });
 
 $("#table-13").dataTable({
@@ -128,4 +128,8 @@ $("#table-15").dataTable({
     bFilter: true,
     bInfo: false,
     bAutoWidth: false 
+});
+
+$("#table-16").dataTable({
+   columnDefs: [{ sortable: false, targets: [2, 3] }],
 });

@@ -29,7 +29,27 @@
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
 	<link rel="stylesheet" href="{{asset('css/atlantis.min.css')}}">
+   <style>
+      .bga-1 {
+         background-color: #365486
+      }
+      .bga-2 {
+         background-color: #7FC7D9
+      }
 
+      .bgb-1{
+      background-color: #00A9FF
+   }
+   .bgb-2 {
+      background-color: #89CFF3
+   }
+   .bgb-3 {
+      background-color: #A0E9FF
+   }
+   .bgb-4 {
+      background-color: #CDF5FD
+   }
+   </style>
 </head>
 
 <body class="login">
@@ -41,7 +61,7 @@
          <div class="card o-hidden border shadow-lg my-5">
             <div class="card-body p-0">
                <div class="row">
-                  <div class="col-lg-6 d-none d-lg-block " style="background-image: url({{asset('img/bg/barge-com.jpeg')}});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
+                  <div class="col-lg-6 d-none d-lg-block " style="background-image: url({{asset('img/bg/phe-offshore.jpg')}});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
                      <img width="120px" class="mt-3" src="{{asset('img/logo/phe-oses.png')}}" alt="">
                   </div>
                   <div class="col-lg-6">
@@ -59,7 +79,7 @@
 
                            
                            <div class="form-group form-group-default">
-                              <label for="username" class="placeholder"><small>Username</small></label>
+                              <label for="username" class="placeholder"><small>Email/Username</small></label>
                               <input id="username" name="username" type="text" class="form-control @error('username') is-invalid @enderror" required>
                               @error('username')
                               <span class="invalid-feedback bg-danger p-2 rounded mb-2 text-light" role="alert">
@@ -82,7 +102,7 @@
                               @enderror
                            </div>
                            
-                           <button type="submit" class="btn btn-primary btn-block">Login</button>
+                           <button type="submit"  class="btn bgb-1 btn-block text-white">Login</button>
                         
                            <hr>
                         </form>

@@ -143,7 +143,7 @@ class FetchController extends Controller
          $vesselLat = $vessel->latitude;
          $vesselLong = $vessel->longitude;
          $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-         if($distance < 1000){
+         if($distance < 30000){
             $nearestVessels[] = $vessel;
             $nearVessel = $vessel;
          }

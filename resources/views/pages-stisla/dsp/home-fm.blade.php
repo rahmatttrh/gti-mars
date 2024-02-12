@@ -6,7 +6,7 @@
    <section class="section">
       <div class="row">
          <div class="col-md-3">
-            <div class="card card-statistic-2 border">
+            <div class="card card-statistic-2 border shadow-sm">
                <div class="card-icon shadow-primary bg-primary">
                   <i class="fas fa-user"></i>
                </div>
@@ -17,7 +17,7 @@
                   <div class="card-body">{{$user->name}} </div>
                </div>
             </div>
-            <div class="card border">
+            <div class="card border shadow-sm">
                <div class="card-body">
                   <small>Progress Request</small><br>
                   {{-- <b>{{$requests->where('status', '>', 0)->count()}} </b> --}}
@@ -37,7 +37,7 @@
                   </div>
                @endforeach
             @endif --}}
-            <div class="card">
+            <div class="card border shadow-sm">
                <div class="card-header">
                   <h4>Incoming Fuel Request</h4>
                </div>

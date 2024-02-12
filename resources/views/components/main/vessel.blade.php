@@ -12,7 +12,7 @@
    }
 </style>
 
-<div class="card">
+<div class="card shadow-lg">
    <div class="card-body">
       <div class="row">
          
@@ -120,7 +120,7 @@
             </div>
          </div>
          <div class="col-md-4">
-            <marquee  class="px-4 bg-info  rounded text-white py-2 px-2 mb-2" >
+            <marquee  class="px-4 bgb-2  rounded text-white py-2 px-2 mb-2" >
                <i class="fa fa-bell"></i> Welcome to MARS, This main page contains summary data from several systems (Digital Smart Port, Vessel Daily Report) and Document Alert on the right side. 
             </marquee>
             <div class="table-responsive">
@@ -150,6 +150,9 @@
             </div>
          </div>
       </div>
+   </div>
+   <div class="card-footer bg-whitesmoke">
+      Please pay attention to the alert table on the right
    </div>
 </div>
 

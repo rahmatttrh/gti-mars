@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 <section class="section">
-   <div class="section-header">
+   {{-- <div class="section-header">
       <h1 class="section-title">Detail Sailing Order {{$schedule->code}}</h1>
       <div class="section-header-breadcrumb">
          @if (auth()->user()->hasRole('marine'))
@@ -15,10 +15,9 @@
             <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
          @endif
          
-         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
          <div class="breadcrumb-item active">Schedule Detail</div>
       </div>
-   </div>
+   </div> --}}
 
    <div class="section-body">
    {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -40,7 +39,8 @@
                <a href="" class="btn  btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
                <div class="mb-3"></div>
             @endif --}}
-            <div class="card border">
+            <div class="card shadow-sm border">
+               <div class="card-header"><b>Detail Sailing Order</b></div>
                <div class="card-header">
                   @if ($schedule->vessel)
                      <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
@@ -177,9 +177,9 @@
                @if ($schedule->class == 'Cargo/Crew')
                   @if ($recentRequests->count() > 0)
                      {{-- <x-schedule-stisla.incoming :recents="$recentRequests" /> --}}
-                     <div id="accordion">
+                     <div id="accordion shadow">
                         <div class="accordion">
-                        <div class="accordion-header bg-info" role="button" data-toggle="collapse" data-target="#panel-body-1" aria-expanded="true">
+                        <div class="accordion-header " role="button" data-toggle="collapse" data-target="#panel-body-1">
                            <h4>Incoming Request from User <i class="fa fa-exclamation"></i></h4>
                         </div>
                         <div class="accordion-body collapse" id="panel-body-1" data-parent="#accordion">
@@ -194,7 +194,7 @@
             @endif
 
             @if ($schedule->class == 'Cargo/Crew')
-            <div class="card border">
+            <div class="card shadow-sm border">
                
                <div class="card-body">
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -743,8 +743,8 @@
               
             </div>
             <div class="modal-footer bg-whitesmoke">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Approve</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-info">Approve</button>
             </div>
           </div>
         </form>
@@ -786,8 +786,8 @@
               
             </div>
             <div class="modal-footer bg-whitesmoke">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-info">Save</button>
             </div>
           </div>
         </form>

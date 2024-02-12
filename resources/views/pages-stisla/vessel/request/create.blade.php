@@ -32,7 +32,7 @@
                               <select class="custom-select" id="activity" style="background-color: lightgrey" required name="activity">
                                  <option disabled selected>Choose one</option>
                                  <option value="5">Fuel Oil</option>
-                                 <option value="6">Flush Water</option>
+                                 <option value="6">Fresh Water</option>
                               </select>
                            </div>
                            <div class="form-group col-md-5">

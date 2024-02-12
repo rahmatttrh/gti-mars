@@ -652,13 +652,15 @@ class DepartmentRequestController extends Controller
       }
       // $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
       
+      $drafts = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
       return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,
          'vessels' => $vessels,
          'schedules' => $schedules,
          'month' => $month,
-         'progress' => $progress
+         'progress' => $progress,
+         'drafts' => $drafts
       ])->with('i');
    }
 
@@ -713,7 +715,7 @@ class DepartmentRequestController extends Controller
             $portLat = $request->origin->latitude;
             $portLong = $request->origin->longitude;
             $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-            if ($distance < 600) {
+            if ($distance < 30000) {
                $nearestVessel = $vessel;
             }
          }

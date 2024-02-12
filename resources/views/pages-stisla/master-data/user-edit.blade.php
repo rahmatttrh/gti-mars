@@ -45,6 +45,8 @@
                <div class="card-body">
                   <form action="{{route('user.update')}}" method="POST">
                      @csrf
+                     @method('PUT')
+                     <input type="number" name="user" id="user" value="{{$user->id}}" hidden>
                      <label class="d-block"><b>Choose app</b></label>
                      <div class="d-flex mb-3">
                         <div class="form-check mr-3">

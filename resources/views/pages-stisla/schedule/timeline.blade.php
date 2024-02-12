@@ -4,7 +4,7 @@
 @endsection
 @section('content')
    <section class="section">
-      <div class="section-header">
+      {{-- <div class="section-header">
          <h1 class="section-title">Timeline Sailing Order {{$schedule->code}}</h1>
          <div class="section-header-breadcrumb">
          @if (auth()->user()->hasRole('marine'))
@@ -15,11 +15,10 @@
             <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
          @endif
          
-         {{-- <div class="breadcrumb-item">Schedule Plan</div> --}}
          <div class="breadcrumb-item active"><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">Schedule</a></div>
          <div class="breadcrumb-item active">Timeline</div>
          </div>
-      </div>
+      </div> --}}
 
       <div class="section-body">
          {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -33,9 +32,9 @@
          <hr> --}}
          <div class="row">
             <div class="col-md-6">
-               <div class="card gradient-bottom border">
+               <div class="card border shadow-sm">
                   <div class="card-header">
-                  <h4>All Timeline</h4>
+                  <h4>SCHEDULE TIMELINE {{$schedule->code}}</h4>
                   
                   </div>
                   <div class="card-body" id="top-5-scroll">
@@ -44,7 +43,7 @@
                         @if ($reports->count() > 0)
                            @foreach ($reports as $report)
                            <div class="activity">
-                              <div class="activity-icon bg-primary text-white shadow-primary">
+                              <div class="activity-icon bg-info text-white shadow-primary">
                               <i class="fas fa-comment-alt"></i>
                               </div>
                               <div class="activity-detail">

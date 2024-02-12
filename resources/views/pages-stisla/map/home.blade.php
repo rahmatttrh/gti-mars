@@ -1,4 +1,4 @@
-@extends('layouts.stisla.app-map')
+@extends('layouts.stisla.app-proact')
 @section('title')
    MAP - PHE
 @endsection

@@ -12,10 +12,10 @@
             </a>
          </li>
          <li>
-            <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
+            <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port"><b>DSP</b></a>
          </li>
          <li>
-            <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report"><b>VDR</b></a>
+            <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
          </li>
          <li>
             <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
@@ -29,35 +29,23 @@
       </ul>
    </form>
    <ul class="navbar-nav navbar-right">
-      {{-- {{$notif == 'true'  ? 'beep' : ''}} --}}
-      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg "><i class="far fa-bell"></i></a>
-         <div class="dropdown-menu dropdown-list dropdown-menu-right">
-         
-            <div class="dropdown-list-content dropdown-list-icons">
-               
-            </div>
-            <div class="dropdown-footer text-center">
-               {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}
-            </div>
-         </div>
-      </li>
+      
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
          <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
          <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
          <div class="dropdown-menu dropdown-menu-right">
-         {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-         {{-- <a href="/" class="dropdown-item has-icon">
-            <i class="fa fa-home"></i> Back to Home Page
-         </a> --}}
+         <div class="dropdown-title"><x-status-stisla.user /></div>
+         <div class="dropdown-divider"></div>
          <a href="{{route('user')}}" class="dropdown-item has-icon">
             <i class="fa fa-users"></i> User Management
          </a>
          
-         <div class="dropdown-divider"></div>
+         {{-- <div class="dropdown-divider"></div> --}}
          
-         <a class="dropdown-item" href="{{ route('logout') }}"
+         <a class="dropdown-item has-icon" href="{{ route('logout') }}"
             onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
+                        <i class="fa fa-lock "></i>
                {{ __('Logout') }}
                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                   @csrf

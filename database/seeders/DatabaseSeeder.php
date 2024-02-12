@@ -45,8 +45,9 @@ class DatabaseSeeder extends Seeder
          VdrEngineHeadingSeeder::class,
          VdrOperatingHeaderSeeder::class,
          RankSeeder::class,
-         CrewSeeder::class
+         CrewSeeder::class,
          // VesselStatusSeeder::class
+         NewsSeeder::class,
       ]);
 
       // Crew::factory(30)->create();

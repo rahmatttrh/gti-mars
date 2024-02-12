@@ -54,7 +54,7 @@
          {{-- FORM CREATE VDR --}}
          <div class="row">
             <div class="col-md-4">
-               <div class="card">
+               <div class="card shadow-sm border">
                   <div class="card-header">Form Create VDR</div>
                   <div class="card-body">
                      <form action="{{route('vdr.store')}}" method="POST" class="inline-form">
@@ -112,22 +112,24 @@
                            </div>
                         </div>
    
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-info">Submit</button>
                      </form>
                   </div>
                </div>
             </div>
    
             <div class="col-md-8">
-               <div class="card">
-                  <div class="card-header">
+               <div class="card border shadow-sm">
+                  {{-- <div class="card-header">
                      WEATHER CONDITION
-                  </div>
-                  <div class="card-body">
-                     Empty
+                  </div> --}}
+                  <div class="card-body text-center">
+                     <h1>Data VDR</h1>
+                     <hr>
+                     Data akan muncul setelah klik Submit pada Form Create VDR
                   </div>
                </div>
-               <div class="card">
+               {{-- <div class="card border shadow-sm">
                   <div class="card-header d-flex justify-content-between">
                      DETAIL OF DAILY OPERATIONAL ACTIVITIES
                      <a href="#" class="card-btn " data-bs-toggle="modal" data-bs-target="#modalAdd">
@@ -157,7 +159,7 @@
                   <div class="card-body">
                      Empty
                   </div>
-               </div>
+               </div> --}}
             </div>
          </div>
       @endif

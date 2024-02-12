@@ -20,7 +20,7 @@
 
       <div class="row">
          <div class="col-12">
-            <div class="card">
+            <div class="card border shadow-sm">
                {{-- <div class="card-header">
                   <h4>Basic DataTables</h4>
                </div> --}}
@@ -35,7 +35,7 @@
                               <th rowspan="2">Date</th>
                               <th rowspan="2">Crew</th>
                               {{-- <th>Created</th> --}}
-                              <th rowspan="2">Status</th>
+                              <th rowspan="2" class="text-center">Status</th>
                               <th colspan="2" class="text-center">High Speed Contract</th>
                               <th colspan="2" class="text-center">Normal Speed Contract</th>
                               <th colspan="2" class="text-center">Slow Speed Contract</th>
@@ -58,7 +58,7 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$i}}</small></td>
                               <td>
-                                 <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a> <br>
+                                 <a href="{{route('vdr.show', enkripRambo($vdr->id))}}">{{vdrId($vdr->id)}}</a> <br>
                                  <small>{{$vdr->vessel->name}}</small>
                               </td>
                               {{-- <td>{{$vdr->vessel->name}}</td> --}}
@@ -68,12 +68,13 @@
                               </td>
                               <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
                               {{-- <td>{{$vdr->created_by}}</td> --}}
-                              <td>
-                                 @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
+                              <td class="text-center">
+                                 {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
                                  <span class="badge badge-warning">Draft</span>
                                  @else
                                  <span class="badge badge-success">Release</span>
-                                 @endif
+                                 @endif --}}
+                                 <x-status-stisla.vdr :vdr="$vdr" />
                               </td>
                               
                               <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>

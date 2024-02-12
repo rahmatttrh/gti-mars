@@ -1,12 +1,12 @@
 <span class="mb-2">
    @if (!$schedule->vessel)
-      <button class="btn btn-primary  btn-block mb-2" data-toggle="modal" data-target="#schedule-select-vessel">
+      <button class="btn btn-info  btn-block mb-2" data-toggle="modal" data-target="#schedule-select-vessel">
          Select Vessel
       </button>
       @else
       @if ($schedule->status == 0 )
       {{-- @if ($schedule->requests()->count() > 0) --}}
-      <button class="btn btn-primary btn-block mb-2" data-toggle="modal" data-target="#schedule-send">
+      <button class="btn btn-info btn-block mb-3" data-toggle="modal" data-target="#schedule-send">
          Send to vessel
       </button>
       

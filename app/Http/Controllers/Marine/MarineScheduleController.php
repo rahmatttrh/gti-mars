@@ -25,6 +25,30 @@ use Illuminate\Support\Facades\Mail;
 
 class MarineScheduleController extends Controller
 {
+
+   public function progress(){
+      // $now = Carbon::now();
+      // $dekripMonth = dekripRambo($month);
+      
+
+      $schedules = Schedule::orderBy('date', 'asc')->where('status', '>', 0)->where('by', '!=', 'user')->orderBy('vessel_type', 'asc')->get();
+      // $regulerSchedules = Schedule::orderBy('updated_at', 'desc')->where('status', '=', 0)->where('by', '!=', 'user')->whereMonth('date', $dekripMonth)->get();
+      $cargoSchedules = Schedule::where('by', 'user')->where('class', 'Cargo/Crew')->where('status', 0)->get();
+      $movingSchedules = Schedule::where('type', 2)->where('class', '!=', 'Cargo/Crew')->where('status', 0)->get();
+
+      $vessels = Vessel::get();
+      $ports = Port::get();
+
+     
+      return view('pages-stisla.marine.schedule.top.progress',[
+        
+         'schedules' => $schedules,
+         'cargoSchedules' => $cargoSchedules,
+         'movingSchedules' => $movingSchedules,
+         'vessels' => $vessels,
+         'ports' => $ports
+      ])->with('i');
+   }
    public function inbox()
    {
       $cargoSchedules = Schedule::where('by', 'user')->where('class', 'Cargo/Crew')->where('status', 0)->get();
@@ -470,7 +494,7 @@ class MarineScheduleController extends Controller
       $vessels = Vessel::get();
       $movingSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('class', 'Moving')->get();
 
-      return view('pages-stisla.marine.schedule.index', [
+      return view('pages-stisla.marine.schedule.top.plan', [
          'typeName' => 'by Request',
          'type' => 2,
          'month' => $dekripMonth,
@@ -535,6 +559,7 @@ class MarineScheduleController extends Controller
 
    public function create()
    {
+      // dd('create');
       $vessels = Vessel::where('status', 1)->get();
       $offhireVessels = Vessel::where('status', 0)->get();
       $ports = Port::get();

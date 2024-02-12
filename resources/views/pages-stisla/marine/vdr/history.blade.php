@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <section class="section">
-   <div class="section-header">
+   {{-- <div class="section-header">
       <h1 class="section-title">VDR History</h1>
       <div class="section-header-breadcrumb">
          <div class="breadcrumb-item "><a href="{{route('vdr.marine')}}">Dashboard</a></div>
          <div class="breadcrumb-item active">VDR History</div>
       </div>
-   </div>
+   </div> --}}
 
    <div class="section-body">
       {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -20,10 +20,13 @@
 
       <div class="row">
          <div class="col-12">
-            <div class="card">
+            <div class="card shdaow-sm border">
+               {{-- <div class="card-header">
+                  <h4>VDR History</h4>
+               </div> --}}
                <div class="card-body">
                   <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-1">
+                     <table class="table table-striped table-sm" id="table-13">
                         <thead>
                            <tr>
                               <th rowspan="2" class="text-center">No.</th>
@@ -54,7 +57,7 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$i}}</small></td>
                               <td>
-                                 <a href="{{route('vdr.show', $vdr->id)}}">{{vdrId($vdr->id)}}</a> <br>
+                                 <a href="{{route('vdr.show', enkripRambo( $vdr->id))}}">{{vdrId($vdr->id)}}</a> <br>
                                  <small>{{$vdr->vessel->name}}</small>
                               </td>
                               {{-- <td>{{$vdr->vessel->name}}</td> --}}
@@ -65,11 +68,12 @@
                               <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
                               {{-- <td>{{$vdr->created_by}}</td> --}}
                               <td>
-                                 @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
+                                 {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
                                  <span class="badge badge-warning">Draft</span>
                                  @else
                                  <span class="badge badge-success">Release</span>
-                                 @endif
+                                 @endif --}}
+                                 <x-status-stisla.vdr :vdr="$vdr" />
                               </td>
                               
                               <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>

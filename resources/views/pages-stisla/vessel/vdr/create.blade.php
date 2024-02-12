@@ -32,7 +32,7 @@
             <input type="hidden" name="created_by" value="{{$user->name}}">
             <div class="row">
                 <div class="col-4">
-                    <div class="card">
+                    <div class="card border shadow-sm">
                         <div class="card-header">
                         <h4>{{$user->name}}</h4>
                         </div>

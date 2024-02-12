@@ -59,531 +59,92 @@
 
   gtag('config', 'UA-94034622-3');
 </script>
-<!-- /END GA --></head>
+<!-- /END GA -->
+<style>
+   .bga-1 {
+      background-color: #365486
+   }
+   .bga-2 {
+      background-color: #7FC7D9
+   }
+
+   .bgb-1{
+      background-color: #00A9FF
+   }
+   .bgb-2 {
+      background-color: #89CFF3
+   }
+   .bgb-3 {
+      background-color: #A0E9FF
+   }
+   .bgb-4 {
+      background-color: #CDF5FD
+   }
+   
+   .secnav a:hover {
+      color: #7C81AD
+   }
+
+   table td {
+      font-size: 11px
+   }
+   .badge {
+      font-size: 11px
+   }
+</style>
+
+
+</head>
 
 
 
-   {{-- <body class=""> --}}
-   <body class="sidebar-mini">
+   <body class="layout-3 bg-white">
+      {{-- <div class="bg-white">
+         <h4>Logo</h4>
+      </div> --}}
       <div id="app ">
-         <div class="main-wrapper main-wrapper-1 ">
-            <div class="navbar-bg " style="background-color: #0b4e99"></div>
+         
+         <div class="main-wrapper container ">
+            {{-- <div class="main-wrapper main-wrapper-1 "> --}}
+               
+            <div class="navbar-bg bgb-1"></div>
             
-            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
-            <nav class="navbar navbar-expand-lg main-navbar">
-               <form class="form-inline mr-auto">
-                  <ul class="navbar-nav mr-3">
-                     <li>
-                        <a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a>
-                     </li>
-                     <li>
-                        <a href="/" data-toggle="tooltip" data-placement="bottom" title="Home Page">
-                           <div class="bg-white py-1 px-3 rounded">
-                              <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                           </div>
-                        </a>
-                     </li>
-                     <li>
-                        <a href="{{route('dsp.marine')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port"><b>DSP</b></a>
-                     </li>
-                     <li>
-                        <a href="{{route('vdr.marine')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
-                     </li>
-                     <li>
-                        <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
-                     </li>
-                     <li>
-                        <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
-                     </li>
-                     <li>
-                        <a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a>
-                     </li>
-                  </ul>
-               </form>
-               <ul class="navbar-nav navbar-right">
-                  <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{$notif == 'true'  ? 'beep' : ''}}"><i class="far fa-bell"></i></a>
-                     <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                     
-                        <div class="dropdown-list-content dropdown-list-icons">
-                           @foreach ($allSchedules as $schedule)
-                              @if ($schedule->requests->where('status', 1)->count() > 0)
-                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="dropdown-item dropdown-item-unread">
-                                    <div class="dropdown-item-icon bg-primary text-white">
-                                       <i class="fas fa-code"></i>
-                                    </div>
-                                    <div class="dropdown-item-desc">
-                                       You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}}
-                                       <div class="time text-primary">{{$schedule->updated_at->diffForHumans()}}</div>
-                                    </div>
-                                 </a>
-                              @endif
-                           @endforeach
-                        </div>
-                        <div class="dropdown-footer text-center">
-                           {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}
-                        </div>
-                     </div>
-                  </li>
-                  <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                     <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-                     <div class="d-sm-none d-lg-inline-block">Hi, Marine</div></a>
-                     <div class="dropdown-menu dropdown-menu-right">
-                     {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-                     <a href="{{route('user')}}" class="dropdown-item has-icon">
-                        <i class="fa fa-users"></i> User Management
-                     </a>
-                     
-                     <div class="dropdown-divider"></div>
-                     
-                     <a class="dropdown-item" href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
-                           {{ __('Logout') }}
-                           <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                              @csrf
-                           </form>
-                        </a>
-                     </div>
-                  </li>
-               </ul>
-            </nav>
+            {{-- NAVBAR --}}
+            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
+            
+            <x-navbar.top.marine :allschedules="$allSchedules" :notif="$notif" />
+            {{-- <x-navbar.marine :allschedules="$allSchedules" :notif="$notif" /> --}}
             @elseif(auth()->user()->hasRole('department'))
-            <nav class="navbar navbar-expand-lg main-navbar">
-            <form class="form-inline mr-auto">
-               <ul class="navbar-nav mr-3">
-                  <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                  <li>
-                     <a href="/" data-toggle="tooltip" data-placement="bottom" title="Home Page">
-                        <div class="bg-white py-1 px-3 rounded">
-                           <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        </div>
-                     </a>  
-                  </li>
-                  <li>
-                     <a href="{{route('dsp.user')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
-                  </li>
-                  <li>
-                     <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
-                  </li>
-                  <li>
-                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
-                  </li>
-                  <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
-                  </li>
-                  {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
-                  <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-               </ul>
-               
-            </form>
-            <ul class="navbar-nav navbar-right">
-               
-               {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-                  <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                  <div class="dropdown-header">Notifications
-                     <div class="float-right">
-                        <a href="#">Mark All As Read</a>
-                     </div>
-                  </div>
-                  <div class="dropdown-list-content dropdown-list-icons">
-                     <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                        <i class="fas fa-code"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        Template update is available now!
-                        <div class="time text-primary">2 Min Ago</div>
-                        </div>
-                     </a>
-                     <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                        <i class="far fa-user"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        <b>You</b> and <b>Dedik Sugiharto</b> are now friends
-                        <div class="time">10 Hours Ago</div>
-                        </div>
-                     </a>
-                     <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-success text-white">
-                        <i class="fas fa-check"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        <b>Kusnaedi</b> has moved task <b>Fix bug header</b> to <b>Done</b>
-                        <div class="time">12 Hours Ago</div>
-                        </div>
-                     </a>
-                     <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-danger text-white">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        Low disk space. Let's clean it!
-                        <div class="time">17 Hours Ago</div>
-                        </div>
-                     </a>
-                     <a href="#" class="dropdown-item">
-                        <div class="dropdown-item-icon bg-info text-white">
-                        <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        Welcome to Stisla template!
-                        <div class="time">Yesterday</div>
-                        </div>
-                     </a>
-                  </div>
-                  <div class="dropdown-footer text-center">
-                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                  </div>
-                  </div>
-               </li> --}}
-               <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                  <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-                  <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                  {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-                  <a href="{{route('user.detail', enkripRambo(auth()->user()->id))}}" class="dropdown-item has-icon">
-                     <i class="fa fa-home"></i> My Profile
-                  </a>
-                  {{-- <a href="features-activities.html" class="dropdown-item has-icon">
-                     <i class="fas fa-bolt"></i> Activities
-                  </a>
-                  <a href="features-settings.html" class="dropdown-item has-icon">
-                     <i class="fas fa-cog"></i> Settings
-                  </a> --}}
-                  <div class="dropdown-divider"></div>
-                  {{-- <a href="#" class="dropdown-item has-icon text-danger">
-                     <i class="fas fa-sign-out-alt"></i> Logout
-                  </a> --}}
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                              onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                 
-                     
-                                    {{ __('Logout') }}
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                       @csrf
-                                    </form>
-                              </a>
-                  </div>
-               </li>
-            </ul>
-            </nav>
+            <x-navbar.top.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <nav class="navbar navbar-expand-lg main-navbar">
-            <form class="form-inline mr-auto">
-               <ul class="navbar-nav mr-3">
-                  <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                  <li>
-                     <a href="/" data-toggle="tooltip" data-placement="bottom" title="Home Page">
-                        <div class="bg-white py-1 px-3 rounded">
-                           <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        </div>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="{{route('dsp.vessel')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
-                  </li>
-                  <li>
-                     <a href="{{route('vdr.create')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
-                  </li>
-                  <li>
-                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
-                  </li>
-                  <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
-                  </li>
-                  {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
-                  <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-               </ul>
-               
-            </form>
-            <ul class="navbar-nav navbar-right">
-               
-              
-               <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                  <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-                  <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                  {{-- <div class="dropdown-title">Logged in 5 min ago</div> --}}
-                  {{-- <a href="{{route('user.detail', enkripRambo(auth()->user()->id))}}" class="dropdown-item has-icon">
-                     <i class="fa fa-home"></i> My Profile
-                  </a> --}}
-                  
-                  <div class="dropdown-divider"></div>
-                 
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                              onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                 
-                     
-                                    {{ __('Logout') }}
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                       @csrf
-                                    </form>
-                              </a>
-                  </div>
-               </li>
-            </ul>
-            </nav>
+            <x-navbar.top.vessel />
             @elseif(auth()->user()->hasRole('fm'))
-            <nav class="navbar navbar-expand-lg main-navbar">
-            <form class="form-inline mr-auto">
-               <ul class="navbar-nav mr-3">
-                  <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
-                  <li>
-                     <a href="/" data-toggle="tooltip" data-placement="bottom" title="Home Page">
-                        <div class="bg-white py-1 px-3 rounded">
-                           <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        </div>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="{{route('dsp.fm')}}" class="nav-link nav-link-lg ml-4" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a>
-                  </li>
-                  <li>
-                     <a href="#" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a>
-                  </li>
-                  <li>
-                     <a href="{{route('proact')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a>
-                  </li>
-                  <li>
-                     <a href="{{route('map')}}" class="nav-link nav-link-lg" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Program">MAP</a>
-                  </li>
-                  {{-- <li><h5 class="nav-link nav-link-lg">DIGITAL SMART PORT - PHE</h5></li> --}}
-                  <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"><i class="fas fa-search"></i></a></li>
-               </ul>
-               
-            </form>
-            <ul class="navbar-nav navbar-right">
-               
-               {{-- <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg beep"><i class="far fa-bell"></i></a>
-                  <div class="dropdown-menu dropdown-list dropdown-menu-right">
-                  <div class="dropdown-header">Notifications
-                     
-                  </div>
-                  <div class="dropdown-list-content dropdown-list-icons">
-                     
-                     <a href="#" class="dropdown-item dropdown-item-unread">
-                        <div class="dropdown-item-icon bg-primary text-white">
-                        <i class="fas fa-code"></i>
-                        </div>
-                        <div class="dropdown-item-desc">
-                        Template update is available now!
-                        <div class="time text-primary">2 Min Ago</div>
-                        </div>
-                     </a>
-                  </div>
-                  <div class="dropdown-footer text-center">
-                     <a href="#">View All <i class="fas fa-chevron-right"></i></a>
-                  </div>
-                  </div>
-               </li> --}}
-               <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                  <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
-                  <div class="d-sm-none d-lg-inline-block">Hi, {{auth()->user()->name}}</div></a>
-                  <div class="dropdown-menu dropdown-menu-right">
-                  <div class="dropdown-title">Logged in 5 min ago</div>
-                  <a href="/" class="dropdown-item has-icon">
-                     <i class="fa fa-home"></i> Back to Home Page
-                  </a>
-                  {{-- <a href="features-activities.html" class="dropdown-item has-icon">
-                     <i class="fas fa-bolt"></i> Activities
-                  </a>
-                  <a href="features-settings.html" class="dropdown-item has-icon">
-                     <i class="fas fa-cog"></i> Settings
-                  </a> --}}
-                  <div class="dropdown-divider"></div>
-                  {{-- <a href="#" class="dropdown-item has-icon text-danger">
-                     <i class="fas fa-sign-out-alt"></i> Logout
-                  </a> --}}
-                  <a class="dropdown-item" href="{{ route('logout') }}"
-                              onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                 
-                     
-                                    {{ __('Logout') }}
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                       @csrf
-                                    </form>
-                              </a>
-                  </div>
-               </li>
-            </ul>
-            </nav>
+            <x-navbar.top.fm />
+            @elseif(auth()->user()->hasRole('suptent'))
+            {{-- <x-navbar.suptent /> --}}
+            <x-navbar.top.suptent  />
+            @elseif(auth()->user()->hasRole('chief'))
+            {{-- <x-navbar.chief /> --}}
+            <x-navbar.top.chief  />
             @endif
 
 
 
 
-            {{-- Siedbar --}}
-            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin') || auth()->user()->hasRole('superadmin'))
-            <div class="main-sidebar sidebar-style-2 ">
-               <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                  <a href="{{route('dsp.marine')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                  <a href="{{route('dsp.marine')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     <li class="menu-header">Dashboard</li>
-                     <li class="dropdown">
-                     <a href="#" class="nav-link has-dropdown"><i class="fas fa-database"></i> <span>Master Data</span></a>
-                     <ul class="dropdown-menu">
-                        {{-- <li><a class="nav-link" href="{{route('activity')}}">Activity</a></li>
-                        <li><a class="nav-link" href="{{route('crew')}}">Crew</a></li> --}}
-                        <li><a class="nav-link" href="{{route('port')}}">Port</a></li>
-                        {{-- <li><a class="nav-link" href="{{route('user')}}">User</a></li> --}}
-                        <li><a class="nav-link" href="{{route('vessel')}}">Vessel</a></li>
-                     </ul>
-                     </li>
-                     <li class="menu-header">Menu</li>
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-info"></i> <span>Request Activity</span></a>
-                        <ul class="dropdown-menu">
-                           <li><a class="nav-link" href="{{route('request.inbox.marine')}}">Inbox</a></li>                
-                           <li><a class="nav-link" href="{{route('request.progress.marine')}}">Progress</a></li>  
-                           <li><a class="nav-link" href="{{route('request.history.marine')}}">History</a></li>     
-                        </ul>
-                     </li>
-                     <li class="dropdown">
-                     <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Sailing Order</span></a>
-                     <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('schedule.inbox')}}">Inbox</a></li>
-                        <li><a class="nav-link" href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}">Plan</a></li>
-                        <li><a class="nav-link" href="{{route('schedule.order', enkripRambo(auth()->user()->getMonth()))}}">Progress</a></li>
-                        <li><a class="nav-link" href="{{route('schedule.history')}}">History</a></li>
-                     </ul>
-                     </li>
-                     <li><a class="nav-link" href="{{route('surveillance.marine')}}"><i class="fas fa-table"></i> <span> Surveillance Activity</span></a></li>
-                     <li><a class="nav-link" href="{{route('log.dsp')}}"><i class="fas fa-book"></i> <span> Log System Activity</span></a></li>
-                     
-                  </ul>
-
-               </aside>
-            </div>
+            {{-- SIDEBAR --}}
+            {{-- @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
+            <x-sidebar.dsp.marine />
             @elseif(auth()->user()->hasRole('fm'))
-            <div class="main-sidebar sidebar-style-2 ">
-               <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('dsp.fm')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.fm')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Schedule</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.create')}}">Inbox</a></li> 
-                        {{-- <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                        <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('request.history')}}">History</a></li>  --}}
-                        </ul>
-                     </li>
-                  </ul>
-               </aside>
-            </div>
+            <x-sidebar.dsp.fm />
             @elseif(auth()->user()->hasRole('department'))
-            <div class="main-sidebar sidebar-style-2 ">
-                  <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('dsp.user')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.user')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('request.draft')}}">Draft</a></li>    
-                        <li><a class="nav-link" href="{{route('request.progress')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('request.history')}}">History</a></li> 
-                        </ul>
-                     </li>
-
-                     @if (auth()->user()->isPlatform() == true)
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-infinity"></i> <span>Surveillance Activity</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('surveillance.create')}}">Today</a></li> 
-                        <li><a class="nav-link" href="{{route('surveillance.history.user')}}">History</a></li> 
-                        </ul>
-                     </li>
-                     @endif
-                     
-                     
-                     
-                  </ul>
-         
-                        
-                  </aside>
-            </div>
+            <x-sidebar.dsp.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <div class="main-sidebar sidebar-style-2 ">
-                  <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                     <a href="{{route('dsp.vessel')}}" class="fw-bold">DIGITAL SMART PORT </a>
-                  
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                     <a href="{{route('dsp.vessel')}}">DSP</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     {{-- <li class="menu-header">Dashboard</li> --}}
-                     
-                     <li class="menu-header">Menu</li>
-                     {{-- <li><a class="nav-link" href="{{route('vdr.create')}}"><i class="fas fa-pencil-ruler"></i> <span>Create VDR</span></a></li> --}}
-
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Request Activity</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('request.vessel.create')}}">Create</a></li> 
-                        <li><a class="nav-link" href="{{route('request.vessel.index')}}">All</a></li>   
-                        </ul>
-                     </li>
-
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Schedules</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('schedule.progress.vessel')}}">Progress</a></li> 
-                        <li><a class="nav-link" href="{{route('schedule.history.vessel')}}">History</a></li>   
-                        </ul>
-                     </li>
-
-                     <li class="dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-pencil-ruler"></i> <span>Surveillance</span></a>
-                        <ul class="dropdown-menu">
-                        <li><a class="nav-link" href="{{route('surveillance.today')}}">Today</a></li> 
-                        <li><a class="nav-link" href="{{route('surveillance.history.vessel')}}">History</a></li>   
-                        </ul>
-                     </li>
-                     
-                     
-                  </ul>
-         
-                  {{-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-                     <a href="https://getstisla.com/docs" class="btn btn-success btn-lg btn-block btn-icon-split">
-                        <i class="fas fa-rocket"></i> Documentation
-                     </a>
-                  </div>         --}}
-                  </aside>
-            </div>
-            @endif
+            <x-sidebar.dsp.vessel />
+            @elseif(auth()->user()->hasRole('suptent'))
+            <x-sidebar.dsp.marine />
+            @elseif(auth()->user()->hasRole('chief'))
+            <x-sidebar.dsp.marine />
+            @endif --}}
             
 
             <!-- Main Content -->
@@ -643,6 +204,7 @@
       @stack('get_schedules')
       @stack('autorefresh')
       @stack('report')
+      {{-- @stack('get_schedules') --}}
 
       <script>
          $(document).ready(function () {

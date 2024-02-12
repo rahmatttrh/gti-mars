@@ -6,8 +6,8 @@
    <section class="section">
       <div class="row">
          <div class="col-md-3">
-            <div class="card card-statistic-2 border">
-               <div class="card-icon shadow-primary bg-primary">
+            <div class="card card-statistic-2 shadow-sm border">
+               <div class="card-icon  bgb-3 text-white">
                   <i class="fas fa-user"></i>
                </div>
                <div class="card-wrap">
@@ -20,26 +20,24 @@
             </div>
 
            
-               <div class="card border">
+               <div class="card border shadow-sm">
                   <div class="card-body">
                      {{-- <small>Name</small> --}}
                      <small >{{$user->port->type}} - {{$user->port->region ?? ''}}</small><br>
                      <b class="text-dark">{{$user->port->name}}</b>
                      
                   </div>
+                  <div class="card-footer">
+                     <small>Progress Request</small><br>
+                     <b>{{$requests->where('status', '>', 0)->count()}} </b>
+                     <hr>
+                     <small>Complete Request</small><br>
+                     <b>{{$requests->where('status', 12)->count()}} </b>
+                  </div>
                   {{-- <div class="card-body">{{$user->name}} </div> --}}
                </div>
 
-            <div class="card border">
-               <div class="card-body">
-                  
-                  <small>Progress Request</small><br>
-                  <b>{{$requests->where('status', '>', 0)->count()}} </b>
-                  <hr>
-                  <small>Complete Request</small><br>
-                  <b>{{$requests->where('status', 12)->count()}} </b>
-               </div>
-            </div>
+            
             
          </div>
          <div class="col-md-9">
@@ -51,7 +49,7 @@
                   </div>
                @endforeach
             @endif
-            <div class="card">
+            <div class="card shadow-sm border">
                {{-- <div class="card-header">
                   <h4>Request Activity</h4>
                </div> --}}
@@ -91,11 +89,11 @@
                               <td>
                                  {{-- <x-status.request :request="$r" :lastreport="$r->schedule->lastreport()" /> --}}
                                     @if ($r->status < 3)
-                                       <x-status-stisla.request :request="$r" :lastreport="null"/>
+                                       <x-status-stisla.request-plain :request="$r" :lastreport="null"/>
                                        @else
                                        {{-- {{$r->schedule_id}} --}}
                                        {{-- {{$r->id}} --}}
-                                       <x-status-stisla.request :request="$r" :lastreport="$r->getStatus()"/>
+                                       <x-status-stisla.request-plain :request="$r" :lastreport="$r->getStatus()"/>
                                     @endif
                               </td>
                               {{-- <td>
@@ -118,7 +116,6 @@
 
          
       </div>
-      
    </section>
 @endsection
 

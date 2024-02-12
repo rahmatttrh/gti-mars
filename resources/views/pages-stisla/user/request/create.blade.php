@@ -4,15 +4,24 @@
 @endsection
 @section('content')
    <section class="section">
-      <div class="section-header">
+      {{-- <div class="section-header">
          <h1 class="section-title">Create Request Activity</h1>
          <div class="section-header-breadcrumb">
             <div class="breadcrumb-item "><a href="{{ route('dsp.user') }}">Dashboard</a></div>
             <div class="breadcrumb-item active">Request Create</div>
          </div>
-      </div>
+      </div> --}}
 
       <div class="section-body">
+         
+          
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+               <li class="breadcrumb-item"><span class="bg-info py-1 px-2 text-white rounded">Create</span></li>
+               <li class="breadcrumb-item">Edit</li>
+               <li class="breadcrumb-item">Choose Vessel</li>
+            </ol>
+         </nav>
          <div class="row">
             <div class="col-md-5">
                @if ($errors->any())
@@ -22,7 +31,10 @@
                      @endforeach
                   </div>
                @endif
-               <div class="card border">
+               <div class="card border shadow-sm">
+                  {{-- <div class="card-header">
+                     <b>Form Create Request</b>
+                  </div> --}}
                   <form action="{{ route('request.store') }}" method="POST" enctype="multipart/form-data">
                      @csrf
 
@@ -30,7 +42,8 @@
                         <div class="form-row">
                            <div class="form-group col-md-6">
                               <label>Type*</label>
-                              <select class="custom-select" id="activity" style="background-color: lightgrey" required name="activity">
+                              {{-- style="background-color: lightgrey" --}}
+                              <select class="custom-select" id="activity"  required name="activity">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($activities as $activity)
                                     <option  value="{{ $activity->id }}">{{ $activity->name }}</option>
@@ -39,13 +52,13 @@
                            </div>
                            <div class="form-group col-md-6">
                               <label for="date">Date*</label>
-                              <input class="form-control date origin input" {{old('date')}} id="date" style="background-color: lightgrey" type="date" required name="date">
+                              <input class="form-control date origin " {{old('date')}} id="date"  type="date" required name="date">
                            </div>
                         </div>
                         <div class="form-row port">
                            <div class="form-group col-md-6">
                               <label>Origin/From</label>
-                              <select class="custom-select origin" id="origin" style="background-color: lightgrey" name="origin">
+                              <select class="custom-select origin" id="origin"  name="origin">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($ports as $port)
                                     <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
@@ -54,7 +67,7 @@
                            </div>
                            <div class="form-group col-md-6 destination">
                               <label>Destination</label>
-                              <select class="custom-select " id="destination" style="background-color: lightgrey" name="destination">
+                              <select class="custom-select " id="destination"  name="destination">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($ports as $port)
                                     <option {{ old('destination') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
@@ -63,14 +76,14 @@
                            </div>
                            <div class="form-group col-md-6 file-cargo">
                               <label for="file-cargo">File Excel Cargo</label>
-                              <input class="form-control mb-2" id="file-cargo" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-cargo">
+                              <input class="form-control mb-2" id="file-cargo" type="file"  value="{{ old('file') }}" name="file-cargo">
                               
                            </div>
                         </div>
                         <div class="form-row platform route">
                            <div class="form-group col-md-6">
                               <label>From Platform</label>
-                              <select class="custom-select origin" id="origin" style="background-color: lightgrey" name="origin">
+                              <select class="custom-select origin" id="origin"  name="origin">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($platforms as $platform)
                                     <option  value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -79,7 +92,7 @@
                            </div>
                            <div class="form-group col-md-6 destination">
                               <label>Destination Platform</label>
-                              <select class="custom-select " id="destination" style="background-color: lightgrey" name="destination">
+                              <select class="custom-select " id="destination"  name="destination">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($platforms as $platform)
                                     <option  value="{{ $platform->id }}">{{ $platform->name }}</option>
@@ -90,7 +103,7 @@
                         <div class="form-row file-crew">
                            <div class="form-group col-md-12">
                               <label for="file-passenger">File Excel Crew</label>
-                              <input class="form-control mb-1" id="file-passenger" type="file" style="background-color: lightgrey" value="{{ old('file') }}" name="file-passenger">
+                              <input class="form-control mb-1" id="file-passenger" type="file"  value="{{ old('file') }}" name="file-passenger">
                               
                            </div>
                         </div>
@@ -98,14 +111,14 @@
                         <div class="form-row qty">
                            <div class="form-group col-md-12">
                               <label for="qty">Quantity (KL)</label>
-                              <input class="form-control mb-1" id="qty" type="text" style="background-color: lightgrey" value="{{ old('qty') }}" name="qty">
+                              <input class="form-control mb-1" id="qty" type="text"  value="{{ old('qty') }}" name="qty">
                            </div>
                         </div>
 
                         <div class="form-row barge">
                            <div class="form-group col-md-12">
                               <label>Barge</label>
-                              <select class="custom-select" id="barge" style="background-color: lightgrey" name="barge">
+                              <select class="custom-select" id="barge"  name="barge">
                                  <option disabled selected>Choose one</option>
                                  @foreach ($barges as $barge)
                                     <option {{ old('barge') == $barge->id ? 'selected' : '' }} value="{{ $barge->id }}">{{ $barge->name }}</option>
@@ -116,10 +129,10 @@
                         <div class="form-row">
                            <div class="form-group col-md-12">
                               <label for="desc">Description</label>
-                              <input class="form-control " id="desc" type="text" style="background-color:lightgrey" value="{{ old('desc') }}" name="desc">
+                              <input class="form-control " id="desc" type="text"  value="{{ old('desc') }}" name="desc">
                            </div>
                         </div>
-                        <button class="btn btn-primary btn-lg" type="submit">Submit</button>
+                        <button class="btn btn-info" type="submit">Submit</button>
                      </div>
                      
                      <div class="card-footer bg-whitesmoke">
@@ -136,7 +149,7 @@
                </div>
             </div>
             <div class="col-md-7">
-               <div class="card border">
+               <div class="card border shadow-sm">
                   
                   <div class="card-body">
                      <b>Nearest Vessel</b>

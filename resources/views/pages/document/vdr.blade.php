@@ -229,14 +229,28 @@ table {
                <div class="col">
                   <small>Acknowledged by</small>
                   <br><br>
-                  <small>Name : ____________</small><br>
-                  <small>Title : PHE OSES Representative</small>
-                  <br><br><br>
-                  <small>Name : ____________</small><br>
-                  <small>Title : Superintendent</small>
-                  <br><br><br>
-                  <small>Name : ____________</small><br>
-                  <small>Title : ______________</small>
+                  @if ($vdr->status >= 2)
+                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+                  @else
+                  <small>Status : ____________</small><br>
+                  @endif
+                  <small>Name : PHE OSES Representative</small>
+                  <br><br>
+
+                  @if ($vdr->status >= 3)
+                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+                  @else
+                  <small>Status : ____________</small><br>
+                  @endif
+                  
+                  <small>Name : Superintendent</small>
+                  <br><br>
+                  @if ($vdr->status >= 3)
+                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+                  @else
+                  <small>Status : ____________</small><br>
+                  @endif
+                  <small>Name : Mr. Lutfi</small>
                </div>
             </div>
             

@@ -22,13 +22,20 @@
    }
 </style>
 <section class="section">
-   <div class="section-header">
+   {{-- <div class="section-header">
       <h1 class="section-title">User Management</h1>
       <div class="section-header-breadcrumb">
          <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
          <div class="breadcrumb-item active">User</div>
       </div>
-   </div>
+   </div> --}}
+   <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+         <li class="breadcrumb-item">User Management</li>
+         {{-- <li class="breadcrumb-item">Edit</li>
+         <li class="breadcrumb-item">Choose Vessel</li> --}}
+      </ol>
+   </nav>
 
    <div class="section-body">
       {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -38,7 +45,7 @@
 
       <div class="row">
          <div class="col-md-4">
-            <div class="card">
+            <div class="card border shadow-sm">
                {{-- <div class="card-header">
                   <b>Form Add</b>
                </div> --}}
@@ -48,26 +55,26 @@
                      <label class="d-block"><b>Choose app</b></label>
                      <div class="d-flex mb-3">
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="dsp" value="dsp">
+                           <input class="form-check-input" type="checkbox" name="dsp" id="dsp" value="dsp">
                            <label class="form-check-label" for="dsp">
                              DSP
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="vdr" value="vdr" checked>
+                           <input class="form-check-input" type="checkbox" name="vdr" id="vdr" value="vdr" checked>
                            <label class="form-check-label" for="vdr">
                              VDR
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="proact" value="proact" >
-                           <label class="form-check-label" for="proact">
+                           <input class="form-check-input" type="checkbox" name="proact" id="proact" value="proact" disabled>
+                           <label class="form-check-label text-muted" for="proact">
                               PROACT
                            </label>
                         </div>
                         <div class="form-check mr-3">
-                           <input class="form-check-input" type="radio" name="sistem" id="map" value="map">
-                           <label class="form-check-label" for="map">
+                           <input class="form-check-input" type="checkbox" name="map" id="map" value="map" disabled>
+                           <label class="form-check-label text-muted" for="map">
                              MAP
                            </label>
                         </div>
@@ -93,24 +100,22 @@
                         </div>
                      </div> --}}
                      <div class="form-row">
-                        <div class="form-group col-md-5">
+                        {{-- <div class="form-group col-md-5">
                            <label>Role *</label>
                            <select  class="custom-select" id="role" name="role">
-                              {{-- <option value="department">User</option> --}}
                               <option value="admin" selected>Admin</option>
                               <option value="superadmin">Super Admin</option>
-                              {{-- <option value="admin-fm">Admin FM</option> --}}
-                              {{-- <option value="superadmin">Super</option> --}}
                            </select>
-                        </div>
-                        <div class="form-group col-md-7">
-                           <label for="email">Email *</label>
-                           <input type="text" class="form-control " id="email" name="email" >
-                        </div>
+                        </div> --}}
                         <div class="form-group col-md-12">
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
+                        <div class="form-group col-md-12">
+                           <label for="email">Email *</label>
+                           <input type="text" class="form-control " id="email" name="email" >
+                        </div>
+                        
                         <div class="form-group col-md-5">
                            <label for="username">Username *</label>
                            <input type="text" class="form-control " id="username" name="username" >
@@ -154,7 +159,7 @@
             </div>
          </div>
          <div class="col-8">
-            <div class="card">
+            <div class="card border shadow-sm">
                {{-- <div class="card-header">
                   <h4>Basic DataTables</h4>
                </div> --}}
@@ -163,9 +168,9 @@
                      <table class="table table-striped table-sm" id="table-1">
                      <thead>
                         <tr>
-                           <th class="text-center">No.</th>
+                           {{-- <th class="text-center">No.</th> --}}
                            <th>Name</th>
-                           <th>System</th>
+                           {{-- <th>System</th> --}}
                            <th>Role</th>
                            <th>Email</th>
                            <th>Telp</th>
@@ -181,16 +186,23 @@
                         @if ($user->hasRole('vessel') || $user->hasRole('department') || $user->hasRole('marine'))
                            @else
                            <tr>
-                              <td class="text-center">{{++$i}}</td>
+                              {{-- <td class="text-center">{{++$i}}</td> --}}
                               <td>
                                  {{-- <a href="{{route('vessel.detail', enkripRambo($user->id))}}">{{$user->name}}</a>  --}}
                                  {{$user->name}} 
                                  {{-- <br>
                                  <small>{{$user->email}}</small> --}}
                               </td>
-                              <td>{{strtoupper($user->system)}}</td>
+                              {{-- <td>{{strtoupper($user->system)}}</td> --}}
                               <td>
-                                 {{getRoleName($user)}}
+                                 {{-- {{getRoleName($user)}} --}}
+                                [ @if ($user->hasRole('admin-dsp'))
+                                    Admin DSP
+                                 @endif
+                                 -
+                                 @if ($user->hasRole('admin-vdr'))
+                                    Admin VDR
+                                 @endif ]
                               </td>
                               <td>{{$user->email}}</td>
                               <td>{{$user->no_telp}}</td>

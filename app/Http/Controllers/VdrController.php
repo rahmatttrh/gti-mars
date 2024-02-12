@@ -162,50 +162,51 @@ class VdrController extends Controller
       }
 
 
-    public function show($id)
-    {
+   public function show($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      // dd($vdr->id);
+      $user = auth()->user();
 
-        $vdr = Vdr::find($id);
-        $user = auth()->user();
+      # code...
+      $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+      $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+      $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+      $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
+      $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
 
-        # code...
-        $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
-        $cargos = VdrCargo::where('vdr_id', $vdr->id)->get();
-        $weathers = VdrWeather::where('vdr_id', $vdr->id)->get();
-        $hses = VdrHse::where('vdr_id', $vdr->id)->get();
-        $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
-        $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
-        $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
+      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
-        $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
-        $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      return view('pages-stisla.vdr.detail', [
+   //   return view('pages.vdr.show-vdr', [
+         'vessel' => $vdr->vessel,
+         'user' => $user,
+         'vdr' => $vdr,
+         'activities' => $activities,
+         'cargos' => $cargos,
+         'weathers' => $weathers,
+         'hses' => $hses,
+         'engines' => $engines,
+         'crews' => $crews,
+         'operatings' => $operatings,
+         'totalJam' => $totalJam,
+         'totalDaily' => $totalDaily
+      ])->with('i');
 
-        return view('pages-stisla.vdr.detail', [
-      //   return view('pages.vdr.show-vdr', [
-            'vessel' => $vdr->vessel,
-            'user' => $user,
-            'vdr' => $vdr,
-            'activities' => $activities,
-            'cargos' => $cargos,
-            'weathers' => $weathers,
-            'hses' => $hses,
-            'engines' => $engines,
-            'crews' => $crews,
-            'operatings' => $operatings,
-            'totalJam' => $totalJam,
-            'totalDaily' => $totalDaily
-        ])->with('i');
-
-        // return view('pages.vdr.create-vdr', [
-        //     'user' => $user,
-        //     'vessel' => $vessel,
-        //     'vdr' => $vdr,
-        //     'activities' => $activities,
-        //     'cargos' => $cargos,
-        //     'weathers' => $weathers,
-        //     'hses' => $hses,
-        // ])->with('i');
-    }
+      // return view('pages.vdr.create-vdr', [
+      //     'user' => $user,
+      //     'vessel' => $vessel,
+      //     'vdr' => $vdr,
+      //     'activities' => $activities,
+      //     'cargos' => $cargos,
+      //     'weathers' => $weathers,
+      //     'hses' => $hses,
+      // ])->with('i');
+   }
 
 
     public function store(Request $req)
@@ -238,7 +239,8 @@ class VdrController extends Controller
                 'crew_onduty' => $req->onduty,
                 'crew_max' => $req->max,
                 'location_midnight' => $req->location_midnight,
-                'created_by' => $req->created_by
+                'created_by' => $req->created_by,
+                'status' => 0
             ]);
 
             $vdr->update([
@@ -352,7 +354,7 @@ class VdrController extends Controller
                'table' => 'vdrs'
             ]);
 
-            return back()->with('success', 'VDR data successfully saved.');
+            return redirect()->route('vdr.show', enkripRambo($vdr->id))->with('success', 'VDR data successfully saved.');
         } catch (\Exception $e) {
             // Jika terjadi kesalahan, kita rollback transaksi
             DB::rollback();

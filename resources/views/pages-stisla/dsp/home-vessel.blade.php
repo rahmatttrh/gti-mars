@@ -6,7 +6,7 @@
    <section class="section">
       <div class="row">
          <div class="col-md-3">
-            <div class="card card-statistic-2">  
+            <div class="card shadow-lg card-statistic-2">  
                <div class="card-icon shadow-primary bg-primary">
                <i class="fas fa-ship"></i>
                </div>
@@ -18,25 +18,32 @@
                {{-- <div class="card-body">{{$vessel->name}}</div> --}}
                </div>
             </div>
-            <div class="card border">
+            <div class="card shadow-lg">
                <div class="card-body">
-                  <small>Progress Schedule</small><br>
-                  <b>{{count($schedules->where('status', '>', 1)->where('status', '!=', 11))}}</b>
-                  <hr>
-                  <small>Complete Schedule</small><br>
-                  <b>{{count($schedules->where('status', 11))}}</b>
+                  <div class="row">
+                     <div class="col text-center">
+                        <small>Progress</small><br>
+                        <b>{{count($schedules->where('status', '>', 1)->where('status', '!=', 11))}}</b>
+                     </div>
+                     <div class="col text-center">
+                        <small>Complete</small><br>
+                        <b>{{count($schedules->where('status', 11))}}</b>
+                     </div>
+                  </div>
+                  
+                  
+               </div>
+               <div class="card-body p-0">
+                  @if ($vessel->latitude)
+                     <div class="" id="map2"  style="width: 100%; height: 38vh"></div>
+                     @else
+                           <small style="text-muted">No GPS Signal</small>
+                        
+                  @endif
                </div>
             </div>
          
-            @if ($vessel->latitude)
-               <div class="card mb-3" id="map2"  style="width: 100%; height: 35vh"></div>
-               @else
-               <div class="card mb-3">
-                  <div class="card-body text-center py-4">
-                     <small style="text-muted">No GPS Signal</small>
-                  </div>
-               </div>
-            @endif
+            
          </div>
          <div class="col-md-9">
          
@@ -56,7 +63,7 @@
                </div>
             </div> --}}
             @if (count($surveillances) > 0)
-            <div class="card">
+            <div class="card shadow-lg">
                <div class="card-header">
                   <h4>Surveillance Activity</h4>
                </div>
@@ -77,7 +84,7 @@
             </div>
             @endif
             
-            <div class="card">
+            <div class="card shadow-lg">
                
                <div class="card-body">
                   @if ($recentSchedules->count() > 0)

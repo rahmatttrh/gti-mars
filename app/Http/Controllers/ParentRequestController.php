@@ -47,9 +47,10 @@ class ParentRequestController extends Controller
       // dd($parent->requests);
 
       // $vessels = Vessel::where('latitude', '!=', null)->get();
-      $vessels = Vessel::where('port_id', $parent->origin_id)->get();
+      $vessels = Vessel::where('latitude', '!=', null)->get();
       $scheduleRoutes = ScheduleRoute::where('port_id', $parent->origin_id)->where('date', $parent->date)->get();
       $schedules = Schedule::where('date', $parent->date)->get();
+      // dd($vessels);
       // dd($scheduleRoutes);
       // foreach($scheduleRoutes as $sche){
       //    dd($sche->schedule->vessel->name);
@@ -64,8 +65,8 @@ class ParentRequestController extends Controller
             $portLat = $parent->origin->latitude;
             $portLong = $parent->origin->longitude;
             $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-            
-            if($distance < 1800){
+            // dd($distance);
+            if($distance < 30000){
                // dd($vessel->name);
                $nearestVessels[] = $vessel;
 
@@ -75,6 +76,8 @@ class ParentRequestController extends Controller
       // foreach($nearestVessels as $ves){
       //    dd($ves->name);
       // }
+      // dd($nearestVessels);
+
       // dd($nearestVessels);
       return view('pages-stisla.request.parent', [
          'parent' => $parent,

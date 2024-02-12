@@ -40,6 +40,7 @@ class UserController extends Controller
    public function store(Request $req){
 
       // dd($req->role);
+      
 
       $req->validate([
          'name' => 'required',
@@ -47,17 +48,28 @@ class UserController extends Controller
          'username' => 'required'
       ]);
 
+      // dd($req->role . '-' . $req->sistem);
+
 
       $user = User::create([
          'name' => $req->name,
-         'system' => $req->sistem,
+         'system' => 'system',
          'username' => $req->username,
          'email' => $req->email,
          'no_telp' => $req->no_telp,
          'password' => Hash::make('12345678'),
       ]);
 
-      $user->assignRole($req->role . '-' . $req->sistem);
+      // $user->assignRole($req->role . '-' . $req->sistem);
+      if ($req->vdr) {
+         $user->assignRole('admin-vdr');
+      } 
+
+      if ($req->dsp) {
+         $user->assignRole('admin-dsp');
+      }
+
+      
 
       return redirect()->back()->with('success', 'User added.');
    }
@@ -115,18 +127,19 @@ class UserController extends Controller
 
    public function update(Request $req){
       $user = User::find($req->user);
-      $employee = Employee::where('email', $user->email)->first();
+      // $employee = Employee::where('email', $user->email)->first();
       // dd($user->name);
       $user->update([
          'name' => $req->name,
          'username' => $req->username,
          'email' => $req->email
       ]);
-      $employee->update([
-         'name' => $req->name,
-         'username' => $req->username,
-         'email' => $req->email
-      ]);
+      // $employee->update([
+      //    'name' => $req->name,
+      //    'username' => $req->username,
+      //    'email' => $req->email
+      // ]);
+      $user->assignRole($req->role . '-' . $req->sistem);
 
       return redirect()->route('user')->with('success', 'User data updated');
    }
