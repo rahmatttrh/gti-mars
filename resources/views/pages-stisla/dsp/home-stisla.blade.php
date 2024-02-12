@@ -34,7 +34,7 @@
                   </div>
                </div>
                
-               <div id="map" style="height: 25vh" class="card-footer">
+               <div id="map" style="height: 30vh" class="card-footer">
                   Loading Vessel Coordinates...
                </div>
                <div class="card-footer">

@@ -152,7 +152,7 @@
                         </div>
                         
                      </div> --}}
-                     <button class="btn btn-primary">Submit</button>
+                     <button class="btn btn-primary mr-2">Submit</button>
                      <a href="{{route('user')}}" class="btn btn-light border">Reset</a>
                   </form>
                </div>
@@ -196,13 +196,13 @@
                               {{-- <td>{{strtoupper($user->system)}}</td> --}}
                               <td>
                                  {{-- {{getRoleName($user)}} --}}
-                                [ @if ($user->hasRole('admin-dsp'))
-                                    Admin DSP
+                                 @if ($user->hasRole('admin-dsp'))
+                                    Admin DSP |
                                  @endif
-                                 -
+                                 
                                  @if ($user->hasRole('admin-vdr'))
-                                    Admin VDR
-                                 @endif ]
+                                    Admin VDR |
+                                 @endif 
                               </td>
                               <td>{{$user->email}}</td>
                               <td>{{$user->no_telp}}</td>
