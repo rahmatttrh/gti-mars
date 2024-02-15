@@ -24,7 +24,32 @@
   <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
-  
+
+  <style>
+    .input {
+        background-color: lightgrey
+    }
+    html {
+  scroll-behavior: smooth;
+}
+
+</style>
+
+<style>
+   table {
+      width: 100%;
+   }
+
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+   }
+   th, td {
+      padding-left: 5px
+   }
+</style>
+
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
 <script>
@@ -34,61 +59,66 @@
 
   gtag('config', 'UA-94034622-3');
 </script>
-<!-- /END GA --></head>
+<!-- /END GA -->
+<style>
+   .bga-1 {
+      background-color: #365486
+   }
+   .bga-2 {
+      background-color: #7FC7D9
+   }
+
+   .bgb-1{
+      background-color: #00A9FF
+   }
+   .bgb-2 {
+      background-color: #89CFF3
+   }
+   .bgb-3 {
+      background-color: #A0E9FF
+   }
+   .bgb-4 {
+      background-color: #CDF5FD
+   }
+   
+   .secnav a:hover {
+      color: #7C81AD
+   }
+
+   table td {
+      font-size: 11px
+   }
+   .badge {
+      font-size: 11px
+   }
+</style>
 
 
-
-   {{-- <body class=""> --}}
-   <body class="sidebar-mini">
+</head>
+   <body class="layout-3 bg-white">
+     
       <div id="app ">
-         <div class="main-wrapper main-wrapper-1 ">
-            <div class="navbar-bg " style="background-color: #0b4e99"></div>
+         
+         <div class="main-wrapper container ">
+            {{-- <div class="main-wrapper main-wrapper-1 "> --}}
+               
+            <div class="navbar-bg bgb-1"></div>
             
-            {{-- NAVBAR --}}
+            
             @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
-            <x-navbar.marine :allschedules="$allSchedules" :notif="$notif" />
+            <x-navbar.proact.marine  />
             @elseif(auth()->user()->hasRole('department'))
-            <x-navbar.department />
+            <x-navbar.proact.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <x-navbar.vessel />
+            <x-navbar.proact.vessel />
             @elseif(auth()->user()->hasRole('fm'))
-            <x-navbar.fm />
+            <x-navbar.proact.fm />
+             @elseif(auth()->user()->hasRole('suptent'))
+            <x-navbar.proact.suptent  />
+            
+            @elseif(auth()->user()->hasRole('chief'))
+            <x-navbar.proact.chief  />
             @endif
-
-
-
-
-            {{-- Siedbar --}}
-            
-            <div class="main-sidebar sidebar-style-2 ">
-               <aside id="sidebar-wrapper">
-                  <div class="sidebar-brand">
-                  <a href="{{route('proact')}}" class="fw-bold">PROACT</a>
-                  </div>
-                  <div class="sidebar-brand sidebar-brand-sm">
-                  <a href="{{route('proact')}}">PRCT</a>
-                  </div>
-                  <hr>
-                  <ul class="sidebar-menu">
-                     
-                     <li class="menu-header">Menu</li>
-                     
-                     {{-- <li class="dropdown">
-                     <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Vessel Daily Report</span></a>
-                        <ul class="dropdown-menu">
-                           <li><a class="nav-link" href="{{route('vdr.marine')}}">Chart</a></li>
-                           <li><a class="nav-link" href="{{route('vdr.marine.table')}}">History</a></li>
-                           
-                        </ul>
-                     </li> --}}
-                     
-                     
-                  </ul>
-
-               </aside>
-            </div>
-            
-           
             
 
             <!-- Main Content -->
@@ -152,9 +182,10 @@
 
       {{-- MYJS --}}
       @stack('map')
-      @stack('chart')
+      @stack('get_schedules')
       @stack('autorefresh')
       @stack('report')
+      @stack('chart')
 
       <script>
          $(document).ready(function () {

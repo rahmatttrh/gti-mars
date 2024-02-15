@@ -22,6 +22,10 @@
                <li class="breadcrumb-item">Choose Vessel</li>
             </ol>
          </nav>
+
+         <x-intermilan />
+
+         
          <div class="row">
             <div class="col-md-5">
                @if ($errors->any())

@@ -7,7 +7,7 @@
       <div class="row">
          <div class="col-md-3">
             <div class="card shadow-lg card-statistic-2">  
-               <div class="card-icon shadow-primary bg-primary">
+               <div class="card-icon shadow-primary bg-info">
                <i class="fas fa-ship"></i>
                </div>
                <div class="card-wrap">

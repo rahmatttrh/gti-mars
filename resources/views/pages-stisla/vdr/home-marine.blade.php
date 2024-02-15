@@ -97,7 +97,7 @@
                            <span class="mx-2 mt-3">To</span>
                            <input type="date" name="end" id="end" class="form-control">
                            <div class="input-group-append">
-                              <button class="btn btn-primary px-4" type="submit">Filter</button>
+                              <button class="btn btn-light border px-4" type="submit">Filter</button>
                               
                             </div>
                         </div>

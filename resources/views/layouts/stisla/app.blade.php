@@ -91,6 +91,11 @@
    .badge {
       font-size: 11px
    }
+
+   .bg-darkgreen{
+      background-color: rgb(4, 197, 4);
+      color: white;
+   }
 </style>
 
 
@@ -112,20 +117,20 @@
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
             
-            <x-navbar.top.marine :allschedules="$allSchedules" :notif="$notif" />
+            <x-navbar.dsp.marine :allschedules="$allSchedules" :notif="$notif" />
             {{-- <x-navbar.marine :allschedules="$allSchedules" :notif="$notif" /> --}}
             @elseif(auth()->user()->hasRole('department'))
-            <x-navbar.top.department />
+            <x-navbar.dsp.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <x-navbar.top.vessel />
+            <x-navbar.dsp.vessel />
             @elseif(auth()->user()->hasRole('fm'))
-            <x-navbar.top.fm />
+            <x-navbar.dsp.fm />
             @elseif(auth()->user()->hasRole('suptent'))
             {{-- <x-navbar.suptent /> --}}
-            <x-navbar.top.suptent  />
+            <x-navbar.dsp.suptent  />
             @elseif(auth()->user()->hasRole('chief'))
             {{-- <x-navbar.chief /> --}}
-            <x-navbar.top.chief  />
+            <x-navbar.dsp.chief  />
             @endif
 
 

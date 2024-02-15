@@ -26,61 +26,121 @@
                 
             </div> --}}
             <div class="card-body">
-               <div class="dropdown d-inline mr-2 ">
-                  <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Select Month
-                  </button>
-                  <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(01))}}">
-                      Januari
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(02))}}">
-                        Februari
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(03))}}">
-                        Maret
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(04))}}">
-                        April
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(05))}}">
-                        Mei
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(06))}}">
-                        Juni
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(07))}}">
-                        Juli
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(8))}}">
-                        Agustus
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(9))}}">
-                        September
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(10))}}">
-                        Oktober
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(11))}}">
-                        November
-                    </a>
-                    <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(12))}}">
-                        Desember
-                    </a>
+              
+               {{-- <div class="d-flex">
+                  <div class="dropdown mr-2 show">
+                     <a class="btn btn-light border dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       Dropdown link
+                     </a>
+                   
+                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(01))}}">
+                           Januari
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(02))}}">
+                             Februari
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(03))}}">
+                             Maret
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(04))}}">
+                             April
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(05))}}">
+                             Mei
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(06))}}">
+                             Juni
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(07))}}">
+                             Juli
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(8))}}">
+                             Agustus
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(9))}}">
+                             September
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(10))}}">
+                             Oktober
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(11))}}">
+                             November
+                         </a>
+                         <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(12))}}">
+                             Desember
+                         </a>
+                     </div>
+                  </div>
+                  <a href="{{route('schedule.create')}}" class="btn btn-light border">
+                     <i class="fa fa-plus"></i>
+                     Create
+                  </a>
+               </div> --}}
+               <div class="d-flex justify-content-between align-items-center">
+                  <div class="div">
+                     <div class="dropdown dropright d-inline mr-2 ">
+                        <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Select Month
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(01))}}">
+                            Januari
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(02))}}">
+                              Februari
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(03))}}">
+                              Maret
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(04))}}">
+                              April
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(05))}}">
+                              Mei
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(06))}}">
+                              Juni
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(07))}}">
+                              Juli
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(8))}}">
+                              Agustus
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(9))}}">
+                              September
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(10))}}">
+                              Oktober
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(11))}}">
+                              November
+                          </a>
+                          <a class="dropdown-item" href="{{route('schedule.plan', enkripRambo(12))}}">
+                              Desember
+                          </a>
+                        </div>
+                     </div>
+                     <a href="{{route('schedule.create')}}" class="btn btn-light border">
+                        <i class="fa fa-plus"></i>
+                        Create
+                     </a>
+                  </div>
+                  <div class="div">
+                     <h3># {{$monthName}}</h3>
                   </div>
                </div>
-               <a href="{{route('schedule.create')}}" class="btn btn-primary btn-sm">
-                  <i class="fa fa-plus"></i>
-                  Create
-               </a>
+               
+               
                <hr>
                <div class="table-responsive">
                   <table class="table table-striped table-sm" id="table-8">
                      <thead>     
-                        <tr>
-                           <th colspan="9" >Schedule Plan {{$monthName}}</th>
+                        {{-- <tr>
+                           <th colspan="9" ></th>
 
-                        </tr>                            
+                        </tr>                             --}}
                      <tr>
                         <th class="text-center">
                            #

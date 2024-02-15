@@ -61,17 +61,17 @@
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
          <div class="navbar-bg" ></div>
          @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
-            <x-main.navbar.top.marine />
+            <x-main.navbar.marine />
             @elseif (auth()->user()->hasRole('vessel'))
-            <x-main.navbar.top.vessel />
+            <x-main.navbar.vessel />
             @elseif (auth()->user()->hasRole('fm'))
-            <x-main.navbar.top.fm />
+            <x-main.navbar.fm />
             @elseif (auth()->user()->hasRole('department'))
-            <x-main.navbar.top.department />
+            <x-main.navbar.department />
             @elseif(auth()->user()->hasRole('suptent'))
-            <x-main.navbar.top.suptent />
+            <x-main.navbar.suptent />
             @elseif(auth()->user()->hasRole('chief'))
-            <x-main.navbar.top.chief />
+            <x-main.navbar.chief />
             @elseif(auth()->user()->hasRole('admin-dsp'))
             <x-main.navbar.admin-dsp />
             @elseif(auth()->user()->hasRole('admin-vdr'))

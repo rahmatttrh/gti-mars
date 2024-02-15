@@ -106,19 +106,17 @@
             
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
-            <x-navbar.top.vdr.marine  />
+            <x-navbar.vdr.marine  />
             @elseif(auth()->user()->hasRole('department'))
-            <x-navbar.top.department />
+            <x-navbar.vdr.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <x-navbar.top.vdr.vessel />
-            @elseif(auth()->user()->hasRole('fm'))
-            <x-navbar.fm />
+            <x-navbar.vdr.vessel />
+            {{-- @elseif(auth()->user()->hasRole('fm'))
+            <x-navbar.vdr.fm /> --}}
             @elseif(auth()->user()->hasRole('suptent'))
-            {{-- <x-navbar.suptent /> --}}
-            <x-navbar.top.vdr.suptent  />
+            <x-navbar.vdr.suptent  />
             @elseif(auth()->user()->hasRole('chief'))
-            {{-- <x-navbar.chief /> --}}
-            <x-navbar.top.vdr.chief  />
+            <x-navbar.vdr.chief  />
             @endif
             
 

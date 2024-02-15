@@ -11,7 +11,7 @@
          <i class="fas fa-edit"></i>Waiting Vessel 
       </button> --}}
       @elseif($schedule->status == 2)
-      <div class="badge badge-primary "><span class="badge bg-primary me-1"></span><small>{{$schedule->getStatus()->status->name}}</small> </div>
+      <div class="badge badge-light "><span class="badge bg-primary me-1"></span><small>{{$schedule->getStatus()->status->name}}</small> </div>
       {{-- <div class="badge bg-light border text-dark"><span class="badge bg-primary me-1"></span>02 : {{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}</div> --}}
       {{-- <button type="button" class="btn btn-primary btn-icon icon-left">
          <i class="fas fa-user"></i>{{$schedule->getStatus()->status->name}} {{$schedule->getStatus()->port_id == null ? '' : 'at ' . $schedule->getStatus()->port->name}}

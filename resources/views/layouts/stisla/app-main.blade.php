@@ -3,16 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>MARS - @yield('title')</title>
+  <title>MARS - Home Page</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
-  <link rel="stylesheet" href="{{asset('stisla/modules/datatables/datatables.min.css')}}">
-  <link rel="stylesheet" href="{{asset('stisla/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
-  <link rel="stylesheet" href="{{asset('stisla/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
 
   <!-- CSS Libraries -->
+  <link rel="stylesheet" href="{{asset('stisla/modules/chocolat/dist/css/chocolat.css')}}">
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
@@ -26,22 +24,7 @@
 
   gtag('config', 'UA-94034622-3');
 </script>
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.8/dist/trix.css">
-<script type="text/javascript" src="https://unpkg.com/trix@2.0.8/dist/trix.umd.min.js"></script>
 <!-- /END GA -->
-<style>
-   table {
-      width: 100%;
-   }
-
-   table, th, td {
-      border: 1px solid rgb(226, 218, 218);
-      border-collapse: collapse;
-   }
-   th, td {
-      padding-left: 5px
-   }
-</style>
 <style>
    .bga-1 {
       background-color: #365486
@@ -72,37 +55,34 @@
 </style>
 </head>
 
-<body class="layout-3 bg-white">
+<body class="layout-3">
    <div id="app">
       <div class="main-wrapper container">
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
-         <div class="navbar-bg bgb-1" ></div>
-            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
-               <x-main.navbar.top.marine />
-               @elseif (auth()->user()->hasRole('vessel'))
-               <x-main.navbar.vessel />
-               @elseif (auth()->user()->hasRole('fm'))
-               <x-main.navbar.fm />
-               @elseif (auth()->user()->hasRole('department'))
-               <x-main.navbar.department />
-               @elseif(auth()->user()->hasRole('suptent'))
-               <x-main.navbar.suptent />
-               @elseif(auth()->user()->hasRole('admin-dsp'))
-               <x-main.navbar.admin-dsp />
-               @elseif(auth()->user()->hasRole('admin-vdr'))
-               <x-main.navbar.admin-vdr />
-            @endif
-        
-
+         <div class="navbar-bg" ></div>
+         @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
+            <x-main.navbar.marine />
+            @elseif (auth()->user()->hasRole('vessel'))
+            <x-main.navbar.vessel />
+            @elseif (auth()->user()->hasRole('fm'))
+            <x-main.navbar.fm />
+            @elseif (auth()->user()->hasRole('department'))
+            <x-main.navbar.department />
+            @elseif(auth()->user()->hasRole('suptent'))
+            <x-main.navbar.suptent />
+            @elseif(auth()->user()->hasRole('chief'))
+            <x-main.navbar.chief />
+            @elseif(auth()->user()->hasRole('admin-dsp'))
+            <x-main.navbar.admin-dsp />
+            @elseif(auth()->user()->hasRole('admin-vdr'))
+            <x-main.navbar.admin-vdr />
+         @endif
+       
          
 
          <!-- Main Content -->
          <div class="main-content">
-            <section class="section">
-               <div class="section-body">
-                  @yield('content')
-               </div>
-            </section>
+            @yield('content')
          </div>
          <footer class="main-footer">
          <div class="footer-left">
@@ -126,13 +106,9 @@
   <script src="{{asset('stisla/modules/moment.min.js')}}"></script>
   <script src="{{asset('stisla/js/stisla.js')}}"></script>
   <script src="{{asset('stisla/js/page/bootstrap-modal.js')}}"></script>
-  <script src="{{asset('stisla/modules/datatables/datatables.min.js')}}"></script>
-  <script src="{{asset('stisla/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
-   <script src="{{asset('stisla/modules/datatables/Select-1.2.4/js/dataTables.select.min.js')}}"></script>
-   <script src="{{asset('stisla/js/page/modules-datatables.js')}}"></script>
   
   <!-- JS Libraies -->
-
+  <script src="{{asset('stisla/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
   <!-- Page Specific JS File -->
   
   <!-- Template JS File -->

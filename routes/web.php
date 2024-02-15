@@ -97,6 +97,10 @@ Route::middleware(["auth"])->group(function () {
 
    Route::get("proact/dashboard", [HomeController::class, "proact",])->name('proact');
    Route::get("map/dashboard", [HomeController::class, "mapp",])->name('map');
+   Route::get("fms/dashboard", [HomeController::class, "fms",])->name('fms');
+   Route::get("hse/dashboard", [HomeController::class, "hse",])->name('hse');
+   
+   
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::post('store', [UserController::class, 'store'])->name('user.store');
@@ -319,6 +323,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    Route::prefix("dsp/m")->group(function () {
       Route::get("dash/main", [HomeController::class, "dspMarine",])->name('dsp.marine');
       Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');
+      Route::get("dash/intermilan", [HomeController::class, "dspMarineIntermilan",])->name('dsp.marine.intermilan');
       Route::get("surveillance", [SurveillanceController::class, "marine",])->name('surveillance.marine');
 
       Route::prefix('schedule')->group(function () {
@@ -482,6 +487,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
 });
 
 Route::group(['middleware' => ['role:vessel']], function () {
+   Route::get("v/newsfeed", [HomeController::class, "newsVessel",])->name('vessel.newsfeed');
    Route::prefix('dsp/v/')->group(function () {
       Route::get("dash/main", [HomeController::class, "dspVessel",])->name('dsp.vessel');
 

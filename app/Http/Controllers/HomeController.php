@@ -975,6 +975,13 @@ class HomeController extends Controller
       
    }
 
+   public function dspMarineIntermilan(){
+      $requests = ModelsRequest::get();
+      return view('pages-stisla.dsp.home-intermilan', [
+         'requests' => $requests
+      ])->with('i');
+   }
+
    public function dspVessel()
    {
 
@@ -1330,13 +1337,25 @@ class HomeController extends Controller
 
    public function proact(){
       $system = 'PROACT';
-      return view('pages-stisla.under', [
+      return view('pages-stisla.future.proact', [
          'system' => $system
       ]);
    }
    public function mapp(){
       $system = 'MAP';
-      return view('pages-stisla.under', [
+      return view('pages-stisla.future.map', [
+         'system' => $system
+      ]);
+   }
+   public function fms(){
+      $system = 'FMS';
+      return view('pages-stisla.future.fms', [
+         'system' => $system
+      ]);
+   }
+   public function hse(){
+      $system = 'HSE';
+      return view('pages-stisla.future.hse', [
          'system' => $system
       ]);
    }
@@ -1569,5 +1588,12 @@ class HomeController extends Controller
 
    public function forbidden(){
       return view('pages-stisla.forbidden');
+   }
+
+   public function newsVessel(){
+      $feed = News::get()->first();
+      return view('main-news', [
+         'feed' => $feed
+      ]);
    }
 }
