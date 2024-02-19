@@ -14,6 +14,10 @@
 }
 
 table td {
+  font-size: 7px
+}
+
+.title {
   font-size: 8px
 }
 
@@ -95,7 +99,7 @@ table {
 
       <div class="row">
          <div class="col-md-5">
-            <small class=" mt-4">GENERAL INFORMATION</small>
+            <small class="title mt-4">GENERAL INFORMATION</small>
             <table class="mb-1">
                <tbody>
                   <tr>
@@ -126,7 +130,7 @@ table {
                
             </table>
             
-            <small class="">WEATHER CONDITION</small>
+            <small class="title">WEATHER CONDITION</small>
             <table class="mb-1">
                <thead>
                   <tr>
@@ -151,7 +155,7 @@ table {
                
             </table>
 
-            <small>HSSE</small>
+            <small class="title">HSSE</small>
             <table class="mb-3">
                <thead>
                   <tr>
@@ -215,49 +219,14 @@ table {
                </tbody>
             </table>
 
-            <div class="row ttd">
-               <div class="col">
-                  <small>Prepared by,</small>
-                  <br><br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
-                  <small>Title : Chief Engineer</small>
-                  <br><br><br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
-                  <small>Title : Master</small>
-               </div>
-               
-               <div class="col">
-                  <small>Acknowledged by</small>
-                  <br><br>
-                  @if ($vdr->status >= 2)
-                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-                  @else
-                  <small>Status : ____________</small><br>
-                  @endif
-                  <small>Name : PHE OSES Representative</small>
-                  <br><br>
+            
 
-                  @if ($vdr->status >= 3)
-                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-                  @else
-                  <small>Status : ____________</small><br>
-                  @endif
-                  
-                  <small>Name : Superintendent</small>
-                  <br><br>
-                  @if ($vdr->status >= 3)
-                  <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-                  @else
-                  <small>Status : ____________</small><br>
-                  @endif
-                  <small>Name : Mr. Lutfi</small>
-               </div>
-            </div>
+            
             
          </div>
          <div class="col-md-7">
-            <small class="">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
-            <table class="mb-1" style="width: 100%">
+            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY {{count($vdrActivities)}}</small>
+            <table class="" style="width: 100%">
                <thead>
                   <tr>
                      <td colspan="2" class="text-center">TIME</td>
@@ -265,7 +234,13 @@ table {
                      <td rowspan="2" class="text-center align-middle">ACTIVITIES</td>
                   </tr>
                   <tr>
-                     <td>Start</td>
+                     <td>Start 
+                        {{-- @if (count($vdrActivities) <= 22)
+                        Kurang dari 22
+                           @else
+                           lebih dari 22
+                        @endif --}}
+                     </td>
                      <td>Finish</td>
                      <td>High</td>
                      <td>Normal</td>
@@ -292,12 +267,218 @@ table {
                      <td><small>{{$vdrActivity->sb}}</small></td>
                      <td><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
+                  @if (count($vdrActivities) <= 5)
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                     <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>-</td>
+                     </tr>
+                      @else
+                      <tr>
+                        <td><small>lebih dari 22</small></td>
+               
+                     </tr>
+                  @endif
+                  
                   @endforeach
                </tbody>
                
             </table>
 
-            <small class="">SUMMARY OF DAILY OPERATING DATA</small>
+            
+
+            <div class="row">
+               <div class="col-12">
+                  
+               </div>
+               <div class="col-6">
+                  
+               </div>
+            </div>
+            
+         </div>
+      </div>
+
+      <div class="row">
+         <div class="col-md-4">
+            <small class="title">SUMMARY OF DAILY OPERATING DATA</small>
             <table class="mb-1">
                <thead>
                   <tr class="text-center ">
@@ -369,10 +550,9 @@ table {
                   
                </tbody>
             </table>
-
-            <div class="row">
-               <div class="col-12">
-                  <small class="">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
+         </div>
+         <div class="col-md-8">
+            <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
                   <table class="mb-1">
                      <thead>
                         {{-- <tr>
@@ -407,17 +587,51 @@ table {
                      </tbody>
                      
                   </table>
-               </div>
-               <div class="col-6">
-                  
-               </div>
-            </div>
-            
          </div>
       </div>
 
      
- 
+      <div class="row ttd">
+         <div class="col">
+            <small>Prepared by,</small><br>
+            <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
+            <small>Title : Chief Engineer</small>
+         </div>
+         <div class="col">
+            <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
+            <small>Title : Master</small>
+         </div>
+         <div class="col">
+            <small>Acknowledged by</small>
+            <br>
+            @if ($vdr->status >= 2)
+            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+            @else
+            <small>Status : ____________</small><br>
+            @endif
+            <small>Name : PHE OSES Representative</small>
+            
+         </div>
+         <div class="col">
+            
+            @if ($vdr->status >= 3)
+            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+            @else
+            <small>Status : ____________</small><br>
+            @endif
+            <small>Name : Superintendent</small>
+         </div>
+         <div class="col">
+            @if ($vdr->status >= 3)
+            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
+            @else
+            <small>Status : ____________</small><br>
+            @endif
+            <small>Name : Mr. Lutfi</small>
+         </div>
+         
+         
+      </div>
       
 
       {{-- <p class="text-muted text-center mt-5">Thank you very much for doing business with us. We look forward to working with

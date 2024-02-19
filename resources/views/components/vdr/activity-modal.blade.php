@@ -43,35 +43,35 @@
                <div class="form-row">
                   <div class="form-group col-md-3">
                      <label for="high">High</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="high" name="high" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="high" name="high" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="normal">Normal</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="normal" name="normal" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="normal" name="normal" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="slow">Slow</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="slow" name="slow" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="slow" name="slow" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="manu">Manu</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="manu" name="manu" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="manu" name="manu" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="idle">Idle</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="idle" name="idle" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="idle" name="idle" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="tow">Tow</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="tow" name="tow" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="tow" name="tow" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="ah">A/H</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="ah" name="ah" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="ah" name="ah" value="00.00" type="text" >
                   </div>
                   <div class="form-group col-md-3">
                      <label for="sb">S/B</label>
-                     <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" type="text" >
+                     <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" value="00.00" type="text" >
                   </div>
                </div>
                

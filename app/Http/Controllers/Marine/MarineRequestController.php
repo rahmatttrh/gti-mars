@@ -58,26 +58,38 @@ class MarineRequestController extends Controller
    //       'month' => $month
    //    ])->with('i');
    // }
-   public function undoApprove(Request $req)
-   {
-      $now = Carbon::now();
-      $request = ModelsRequest::find($req->requestId);
+   // public function undoApprove(Request $req)
+   // {
+   //    $now = Carbon::now();
+   //    $request = ModelsRequest::find($req->requestId);
 
-      RequestHistory::create([
-         'request_id' => $request->id,
-         'date' => $request->undo,
-         'reason' => $request->reason,
-         'approve' => $now
-      ]);
+   //    RequestHistory::create([
+   //       'request_id' => $request->id,
+   //       'date' => $request->undo,
+   //       'reason' => $request->reason,
+   //       'approve' => $now
+   //    ]);
 
+   //    $request->update([
+   //       'status' => 00,
+   //       'undo' => null,
+   //       'reason' => null
+   //    ]);
+
+   //    return redirect()->to('/')->with('success', 'Cancel Request successfully approved');
+   // }
+
+   public function undoApprove($id){
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
       $request->update([
-         'status' => 00,
-         'undo' => null,
-         'reason' => null
+         'status' => 1
       ]);
 
-      return redirect()->to('/')->with('success', 'Cancel Request successfully approved');
+      return redirect()->back()->with('success', 'Undo Request Successfully');
    }
+
+
 
 
    public function selectSchedule(Request $req)
