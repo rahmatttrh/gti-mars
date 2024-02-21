@@ -103,7 +103,7 @@
                            @endforeach
                            @else
                            <tr>
-                              <td colspan="6" style="text-align: center"><small>Empty</small></td>
+                              <td colspan="7" style="text-align: center"><small>Empty</small></td>
                            </tr>
                         @endif
                      </tbody>

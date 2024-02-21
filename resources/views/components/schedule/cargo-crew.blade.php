@@ -8,6 +8,13 @@
          <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
          </li>
+         @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
+            @if ($recents->count() > 0)
+            <li class="nav-item">
+               <a class="nav-link" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="false">Incoming Request <span class="bg-danger px-2 text-white rounded">!</span></a>
+            </li>
+            @endif
+         @endif
       </ul>
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -31,10 +38,10 @@
                      <tr>
                         <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b></td>
                         <td class="text-center">
-                           @if (auth()->user()->hasRole('marine') && $schedule->status == 0)
-                               
-                           
-                           <a href="{{route('request.undo.approve', enkripRambo($request->id))}}" class="btn btn-sm btn-light border shadow-none">Undo</a>
+                           @if (auth()->user()->hasRole('marine'))
+                              @if ($schedule->status == 0 || $schedule->status == 5)
+                                 <a href="{{route('request.undo.approve', enkripRambo($request->id))}}" class="btn btn-sm btn-light border shadow-none">Undo</a>
+                              @endif
                            @endif
                         </td>
                      </tr>
@@ -174,6 +181,16 @@
                </table>
             </div>
          </div>
+         @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
+            @if ($recents->count() > 0)
+            <div class="tab-pane fade" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
+               
+               <x-schedule-stisla.incoming :recents="$recents" />
+               <hr>
+               <small class="text-muted">This tab is only appear on Marine User Level</small>
+            </div>
+            @endif
+         @endif
       </div>
    </div>
 </div>

@@ -117,16 +117,20 @@ class ParentRequestController extends Controller
       $dekripId = dekripRambo($id);
       $now = Carbon::now();
       $parent = ParentRequest::find($dekripId);
-      $reqDate = \Carbon\Carbon::parse($parent->date)->format('Y-m-d');
+      // $reqDate = \Carbon\Carbon::parse($parent->date)->format('Y-m-d');
       // dd($parent->id);
-      $todaySchedules = Schedule::where('date', $parent->date)->get();
-      $allSchedules = Schedule::where('date','>=', $parent->date)->get();
-      $scheduleRoutes = ScheduleRoute::where('date', $reqDate)->where('port_id', $parent->origin_id)->get();
-      $scheduleRoute = ScheduleRoute::where('date', $reqDate)->where('port_id', $parent->origin_id)->first();
-      // $todayScheduleRoute = ScheduleRoute::where('date', $parent->date)->where('port_id', $parent->origin_id)->first();
-      $vessels = Vessel::where('latitude', '!=', null)->get();
-      // dd($now->format('Y-m-d'));
+      // $todaySchedules = Schedule::where('date', $parent->date)->get();
+      // $allSchedules = Schedule::where('date','>=', $parent->date)->get();
+      // $scheduleRoutes = ScheduleRoute::where('date', $reqDate)->where('port_id', $parent->origin_id)->get();
+      // $scheduleRoute = ScheduleRoute::where('date', $reqDate)->where('port_id', $parent->origin_id)->first();
+      // // $todayScheduleRoute = ScheduleRoute::where('date', $parent->date)->where('port_id', $parent->origin_id)->first();
+      // $vessels = Vessel::where('latitude', '!=', null)->get();
+      // // dd($now->format('Y-m-d'));
 
+      
+
+
+      
       
 
 

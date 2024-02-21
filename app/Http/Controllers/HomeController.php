@@ -746,7 +746,6 @@ class HomeController extends Controller
 
    public function dspMarine()
    {
-
       $this->map();
 
       // $tegas = User::where('email', 'tegasjaya@gmail.com')->first();

@@ -95,10 +95,10 @@
                         @endforeach
                      
                   @endif
-                  <div class="table-responsive">
+                  {{-- <div class="table-responsive"> --}}
                      <table class="table-striped" id="table-6">
                         <thead>
-                           <tr><th colspan="5" class="py-2">Sailing Order</th></tr>
+                           <tr><th colspan="6" class="py-2">Sailing Order</th></tr>
                            <tr>
                               {{-- <th class="text-center">No</th> --}}
                               <th>ID</th>
@@ -139,7 +139,9 @@
                                     {{-- <td>
                                        <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
                                     </td> --}}
-                                    <td></td>
+                                    {{-- <td>
+                                       {{$schedule->revisions->where('status', 1)->first()->desc}}
+                                    </td> --}}
                                  </tr>
                                  <x-modal.schedule.request :schedule="$schedule" />
                               @endforeach
@@ -151,7 +153,7 @@
                            
                         </tbody>
                      </table>
-                  </div>
+                  {{-- </div> --}}
                   
                   <div class="table-responsive mt-3">
                      <table class="table-striped" id="table-7">

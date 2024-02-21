@@ -292,7 +292,7 @@ class VesselSeeder extends Seeder
          'status' => 0,
          'name' => 'DSV. PATRA OFFSHORE',
          'username' => 'patraoffshore',
-         'type' => 'Diiving & Support Vessel',
+         'type' => 'Diving & Support Vessel',
          'email' => 'patraoffshore@pertamina.com',
          'txid' => '01143267SKY33AC',
          'imo' => '8502729',

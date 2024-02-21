@@ -98,7 +98,7 @@
                </div>
                <div class="col-8">
                   <div class="table-responsive">
-                     <table class=" table-striped table-sm" id="table-1">
+                     <table class=" table-striped" id="table-1">
                         <thead>
                         <tr>
                            {{-- <th class="text-center">No.</th> --}}

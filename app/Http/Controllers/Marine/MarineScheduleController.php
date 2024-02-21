@@ -158,12 +158,19 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
+
+            if($elok->type = 'Crew Boat'){
+               $classElok = 'Crew';
+            } else{
+               $classElok = 'Cargo';
+            }
+
             $elokMonday = Schedule::create([
                'by' => 'system',
                // 'code' => $scheduleCode,
                'type' => 1,
                'status' => 0,
-               'class' => 'Cargo/Crew',
+               'class' => $classElok,
                'vessel_id' => $elok->id,
                'vessel_type' => $elok->type,
                'date' => $monday->format('Y-m-d'),
@@ -191,11 +198,17 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
+
+            if($giat->type = 'Crew Boat'){
+               $classGiat = 'Crew';
+            } else{
+               $classGiat = 'Cargo';
+            }
             $giatMonday = Schedule::create([
                'by' => 'system',
                'type' => 1,
                'status' => 0,
-               'class' => 'Cargo/Crew',
+               'class' => $classGiat,
                'vessel_id' => $giat->id,
                'vessel_type' => $giat->type,
                'date' => $monday->format('Y-m-d'),
@@ -243,13 +256,19 @@ class MarineScheduleController extends Controller
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
 
+            if($elok->type = 'Crew Boat'){
+               $classElok = 'Crew';
+            } else{
+               $classElok = 'Cargo';
+            }
+
             $elokWednesday = Schedule::create([
                'by' => 'system',
                'type' => 1,
                'status' => 0,
                'vessel_id' => $elok->id,
                'vessel_type' => $elok->type,
-               'class' => 'Cargo/Crew',
+               'class' => $classElok,
                'date' => $wednesday->format('Y-m-d'),
                'etd' => $wednesday->format('Y-m-d'),
                'eta' => $wednesday->format('Y-m-d'),
@@ -307,10 +326,15 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
+            if($giat->type = 'Crew Boat'){
+               $classGiat = 'Crew';
+            } else{
+               $classGiat = 'Cargo';
+            }
             $giatSaturday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'Cargo/Crew',
+               'class' => $classGiat,
                'status' => 0,
                'vessel_id' => $giat->id,
                'vessel_type' => $giat->type,
@@ -348,10 +372,16 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
+
+            if($sigap->type = 'Crew Boat'){
+               $classSigap = 'Crew';
+            } else{
+               $classSigap = 'Cargo';
+            }
             $sigapSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'Cargo/Crew',
+               'class' => $classSigap,
                'status' => 0,
                'vessel_id' => $sigap->id,
                'vessel_type' => $sigap->type,
@@ -371,10 +401,16 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
+
+            if($tegas->type = 'Crew Boat'){
+               $classTegas = 'Crew';
+            } else{
+               $classTegas = 'Cargo';
+            }
             $tegasSunday = Schedule::create([
                'by' => 'system',
                'type' => 1,
-               'class' => 'Cargo/Crew',
+               'class' => $classTegas,
                'status' => 0,
                'vessel_id' => $tegas->id,
                'vessel_type' => $tegas->type,
@@ -704,7 +740,7 @@ class MarineScheduleController extends Controller
 
       $now = Carbon::now();
 
-      foreach ($schedule->requests as $req) {
+      foreach ($schedule->requests->where('status', 2) as $req) {
          $req->update([
             'status' => 3
          ]);
@@ -730,6 +766,12 @@ class MarineScheduleController extends Controller
       $schedule->update([
          'status' => 1
       ]);
+
+      foreach($schedule->revisions as $rev){
+         $rev->update([
+            'status' => 0
+         ]);
+      }
 
 
 

@@ -14,30 +14,31 @@
                </button>
             </div>
             <div class="modal-body">
-               <div class="form-group">
-                  <label for="activity">Activity Name</label>
-                  <input class="form-control" id="activity" name="activity" type="text" >
-                  @error('activity')
-                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                  @enderror
-               </div>
+               
 
 
                <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-9">
+                     <label for="activity">Activity Name</label>
+                     <input class="form-control" id="activity" name="activity" type="text" >
+                     @error('activity')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  <div class="form-group col-md-3">
                      <label for="start">Start</label>
                      <input class="form-control jam24" id="start" name="start" type="time" >
                      @error('start')
                         <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                      @enderror
                   </div>
-                  <div class="form-group col-md-6">
+                  {{-- <div class="form-group col-md-6">
                      <label for="finish">Finish</label>
                      <input class="form-control jam24" id="finish" name="finish" type="time" >
                      @error('finish')
                         <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                      @enderror
-                  </div>
+                  </div> --}}
                </div>
 
                <div class="form-row">
@@ -80,7 +81,7 @@
             </div>
             <div class="modal-footer bg-whitesmoke">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Add</button>
+               <button type="submit" class="btn btn-info">Add</button>
             </div>
          </div>
       </form>

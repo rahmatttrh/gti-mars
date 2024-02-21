@@ -120,7 +120,7 @@
    <div class="container">
       <ul class="navbar-nav">
          
-         <li class="nav-item pl-3 {{ (request()->is('/')) ? 'active' : '' }}">
+         <li class="nav-item pl-2 {{ (request()->is('/')) ? 'active' : '' }}">
             <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/'))
                <i class="fas fa-fire"></i>
@@ -130,12 +130,20 @@
             </a>
          </li>
         
-         <li class="nav-item pr-3 {{ (request()->is('news/*')) ? 'active' : '' }}">
+         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}">
             <a href="{{route('news.edit')}}" class="nav-link {{ (request()->is('news/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('news/*'))
                <i class="fas fa-fire "></i>
                @endif
                <span class="mr-3">News Feed</span>
+            </a>
+         </li>
+         <li class="nav-item pr-3 {{ (request()->is('images/m/*')) ? 'active' : '' }}">
+            <a href="{{route('images')}}" class="nav-link {{ (request()->is('images/m/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('images/m/*'))
+               <i class="fas fa-fire "></i>
+               @endif
+               <span class="mr-3">Images Feed</span>
             </a>
          </li>
         

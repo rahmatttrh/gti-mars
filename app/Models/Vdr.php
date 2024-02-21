@@ -19,5 +19,9 @@ class Vdr extends Model
       return $this->hasMany(VdrOperating::class);
    }
 
+   public function times(){
+      return $this->hasMany(VdrTimestamp::class);
+   }
+
   
 }

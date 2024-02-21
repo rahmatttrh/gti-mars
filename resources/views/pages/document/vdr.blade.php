@@ -37,7 +37,7 @@ table {
          </div>
          <!-- Page title actions -->
          <div class="col-auto ms-auto d-print-none">
-            <button type="button" class="btn btn-primary" onclick="javascript:window.print();">
+            <button type="button" class="btn btn-light" onclick="javascript:window.print();">
             <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
             Print VDR
@@ -100,7 +100,7 @@ table {
       <div class="row">
          <div class="col-md-5">
             <small class="title mt-4">GENERAL INFORMATION</small>
-            <table class="mb-1">
+            <table class="">
                <tbody>
                   <tr>
                      <td><small>Date</small></td>
@@ -135,20 +135,20 @@ table {
                <thead>
                   <tr>
                      <td>Wheather</td>
-                     <td>00 - 06</td>
-                     <td>06 - 12</td>
-                     <td>12 - 18</td>
-                     <td>18 - 24</td>
+                     <td class="text-center">00 - 06</td>
+                     <td class="text-center">06 - 12</td>
+                     <td class="text-center">12 - 18</td>
+                     <td class="text-center">18 - 24</td>
                   </tr>
                </thead>
                <tbody>
                   @foreach ($vdrWheathers as $vdrWheather)
                   <tr>
                      <td><small>{{$vdrWheather->heading->description}}</small></td>
-                     <td><small>{{$vdrWheather->t_0006}}</small></td>
-                     <td><small>{{ $vdrWheather->t_0612  }}</small></td>
-                     <td><small>{{$vdrWheather->t_1218}}</small></td>
-                     <td><small>{{$vdrWheather->t_1824}}</small></td>
+                     <td class="text-center"><small>{{$vdrWheather->t_0006}}</small></td>
+                     <td class="text-center"><small>{{ $vdrWheather->t_0612  }}</small></td>
+                     <td class="text-center"><small>{{$vdrWheather->t_1218}}</small></td>
+                     <td class="text-center"><small>{{$vdrWheather->t_1824}}</small></td>
                   </tr>
                   @endforeach
                </tbody>
@@ -156,14 +156,14 @@ table {
             </table>
 
             <small class="title">HSSE</small>
-            <table class="mb-3">
+            <table class="">
                <thead>
                   <tr>
                      <td class="text-center">A</td>
                      <td>HSSE STATISTICS (INPUT)</td>
-                     <td>Previous</td>
-                     <td>Today</td>
-                     <td>Monthly</td>
+                     <td class="text-center">Previous</td>
+                     <td class="text-center">Today</td>
+                     <td class="text-center">Monthly</td>
                   </tr>
                </thead>
                <tbody>
@@ -179,9 +179,9 @@ table {
                            <tr>
                                  <td class="text-center">B</td>
                                  <td>HSSE STATISTICS (Output)</td>
-                                 <td>Previous</td>
-                                 <td>Today</td>
-                                 <td>Monthly</td>
+                                 <td class="text-center">Previous</td>
+                                 <td class="text-center">Today</td>
+                                 <td class="text-center">Monthly</td>
                            </tr>
                         </thead>
          
@@ -191,16 +191,16 @@ table {
          
                         @endif
                         <tr>
-                           <td><small>{{ $no++}}</small></td>
+                           <td class="text-center"><small>{{ $no++}}</small></td>
                            <td><small>{{$hse->header->description}}</small></td>
                            @if($hse->header_id != 8)
-                           <td>
+                           <td class="text-center">
                               <small>{{$hse->previous}}</small>
                            </td>
-                           <td>
+                           <td class="text-center">
                               <small>{{$hse->today}}</small>
                            </td>
-                           <td>
+                           <td class="text-center">
                               <small>{{$hse->previous + $hse->today}}</small>
                            </td>
                            @else
@@ -220,12 +220,9 @@ table {
             </table>
 
             
-
-            
-            
          </div>
          <div class="col-md-7">
-            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY {{count($vdrActivities)}}</small>
+            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
             <table class="" style="width: 100%">
                <thead>
                   <tr>
@@ -234,245 +231,438 @@ table {
                      <td rowspan="2" class="text-center align-middle">ACTIVITIES</td>
                   </tr>
                   <tr>
-                     <td>Start 
+                     <td class="text-center">Start 
                         {{-- @if (count($vdrActivities) <= 22)
                         Kurang dari 22
                            @else
                            lebih dari 22
                         @endif --}}
                      </td>
-                     <td>Finish</td>
-                     <td>High</td>
-                     <td>Normal</td>
-                     <td>Slow</td>
-                     <td>Manu</td>
-                     <td>Idle</td>
-                     <td>Tow</td>
-                     <td>A/H</td>
-                     <td>S/B</td>
+                     <td class="text-center">Finish</td>
+                     <td class="text-center">High</td>
+                     <td class="text-center">Normal</td>
+                     <td class="text-center">Slow</td>
+                     <td class="text-center">Manu</td>
+                     <td class="text-center">Idle</td>
+                     <td class="text-center">Tow</td>
+                     <td class="text-center">A/H</td>
+                     <td class="text-center">S/B</td>
                   </tr>
                </thead>
                <tbody>
                   @foreach ($vdrActivities as $vdrActivity)
                   <tr>
-                     <td><small>{{$vdrActivity->start}}</small></td>
-                     <td><small>{{$vdrActivity->finish}}</small></td>
-                     <td><small>{{$vdrActivity->high}}</small></td>
-                     <td><small>{{$vdrActivity->normal}}</small></td>
-                     <td><small>{{$vdrActivity->slow}}</small></td>
-                     <td><small>{{$vdrActivity->manu}}</small></td>
-                     <td><small>{{$vdrActivity->idle}}</small></td>
-                     <td><small>{{$vdrActivity->tow}}</small></td>
-                     <td><small>{{$vdrActivity->ah}}</small></td>
-                     <td><small>{{$vdrActivity->sb}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->start}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->finish}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->high}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->normal}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->slow}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->manu}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->idle}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->tow}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->ah}}</small></td>
+                     <td class="text-center"><small>{{$vdrActivity->sb}}</small></td>
                      <td><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
-                  @if (count($vdrActivities) <= 5)
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>-</td>
-                     </tr>
-                      @else
-                      <tr>
-                        <td><small>lebih dari 22</small></td>
-               
-                     </tr>
-                  @endif
+                  
+                  
+
                   
                   @endforeach
+                  @if (count($vdrActivities) == 0)
+                     @for ($i = 0; $i < 23; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 1)
+                     @for ($i = 0; $i < 22; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 2)
+                     @for ($i = 0; $i < 21; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 3)
+                     @for ($i = 0; $i < 20; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 4)
+                     @for ($i = 0; $i < 19; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 5)
+                     @for ($i = 0; $i < 18; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 6)
+                     @for ($i = 0; $i < 17; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 7)
+                     @for ($i = 0; $i < 16; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 8)
+                     @for ($i = 0; $i < 15; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 9)
+                     @for ($i = 0; $i < 14; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 10)
+                     @for ($i = 0; $i < 13; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 11)
+                     @for ($i = 0; $i < 12; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 12)
+                     @for ($i = 0; $i < 11; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 13)
+                     @for ($i = 0; $i < 10; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 14)
+                     @for ($i = 0; $i < 9; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 15)
+                     @for ($i = 0; $i < 8; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 16)
+                     @for ($i = 0; $i < 7; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 17)
+                     @for ($i = 0; $i < 6; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 18)
+                     @for ($i = 0; $i < 5; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 19)
+                     @for ($i = 0; $i < 4; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 20)
+                     @for ($i = 0; $i < 3; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 21)
+                     @for ($i = 0; $i < 2; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
+                  @if (count($vdrActivities) == 22)
+                     @for ($i = 0; $i < 1; $i++)
+                        <tr>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td></td>
+                           <td>-</td>
+                        </tr>
+                     @endfor
+                  @endif
                </tbody>
                
             </table>
-
-            
-
-            <div class="row">
-               <div class="col-12">
-                  
-               </div>
-               <div class="col-6">
-                  
-               </div>
-            </div>
-            
          </div>
       </div>
 
@@ -550,88 +740,105 @@ table {
                   
                </tbody>
             </table>
+            <div class="row ttd">
+               <div class="col">
+                  <small>Prepared by,</small><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
+                  <small>Title : Chief Engineer</small>
+               </div>
+               <div class="col">
+                  <br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
+                  <small>Title : Master</small>
+               </div>
+               
+               
+               
+               
+            </div>
          </div>
          <div class="col-md-8">
             <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
-                  <table class="mb-1">
-                     <thead>
-                        {{-- <tr>
-                           <th colspan="2" class="text-center">TIME</th>
-                           <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
-                           <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
-                        </tr> --}}
-                        <tr>
-                           <td>Type</td>
-                           <td class="text-truncate">OPENING 
-                              </td>
-                           <td>CONSUMPTION 
-                              </td>
-                           <td>RECEIVED</td>
-                           <td>TRANSFERRED</td>
-                           <td>CLOSING</td>
-                           <td>REMARKS</td>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($vdrCargos as $vdrCargo)
-                        <tr>
-                           <td>{{$vdrCargo->heading->description}}</td>
-                           <td>{{$vdrCargo->opening}}</td>
-                           <td>{{$vdrCargo->consumption}}</td>
-                           <td>{{$vdrCargo->received}}</td>
-                           <td>{{$vdrCargo->transferred}}</td>
-                           <td>{{$vdrCargo->closing}}</td>
-                           <td>{{$vdrCargo->remark}}</td>
-                        </tr>
-                        @endforeach
-                     </tbody>
-                     
-                  </table>
+            <table class="mb-1">
+               <thead>
+                  {{-- <tr>
+                     <th colspan="2" class="text-center">TIME</th>
+                     <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
+                     <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
+                  </tr> --}}
+                  <tr>
+                     <td>Type</td>
+                     <td class="text-truncate text-center">OPENING</td>
+                     <td class="text-center">CONSUMPTION</td>
+                     <td class="text-center">RECEIVED</td>
+                     <td class="text-center">TRANSFERRED</td>
+                     <td class="text-center">CLOSING</td>
+                     <td>REMARKS</td>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($vdrCargos as $vdrCargo)
+                  <tr>
+                     <td>{{$vdrCargo->heading->description}}</td>
+                     <td class="text-center">{{$vdrCargo->opening}}</td>
+                     <td class="text-center">{{$vdrCargo->consumption}}</td>
+                     <td class="text-center">{{$vdrCargo->received}}</td>
+                     <td class="text-center">{{$vdrCargo->transferred}}</td>
+                     <td class="text-center">{{$vdrCargo->closing}}</td>
+                     <td>{{$vdrCargo->remark}}</td>
+                  </tr>
+                  @endforeach
+               </tbody>
+               
+            </table>
+            <div class="row ttd">
+               <div class="col pt-1">
+                  <small>Acknowledged by,</small>
+                  <br>
+                  <small>Name : PHE OSES Representative</small><br>
+                  @if ($vdr->status >= 2)
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                  <small class="text-muted">{{formatDateTime($vdr->times->where('status', 2)->first()->created_at)}}</small><br>
+                  @else
+                  <small>Status : ____________</small>
+                  @endif
+                  
+                  
+               </div>
+               <div class="col pt-1">
+                  <br>
+                  <small>Name : Superintendent</small><br>
+                  @if ($vdr->status >= 3)
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                  <small class="text-muted">{{formatDateTime($vdr->times->where('status', 3)->first()->created_at)}}</small><br>
+                  @else
+                  <small>Status : ____________</small>
+                  @endif
+                  
+               </div>
+               <div class="col pt-1">
+                  <br>
+                  <small>Name : Mr. Lutfi</small><br>
+                  @if ($vdr->status >= 4)
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                  <small class="text-muted">{{formatDateTime($vdr->times->where('status', 4)->first()->created_at)}}</small><br>
+                  @else
+                  <small>Status : ____________</small>
+                  @endif
+                  
+               </div>
+               <div class="col pt-1">
+                  {!! QrCode::size(100)->generate(Request::url()); !!}
+               </div>
+            </div>
          </div>
       </div>
 
      
-      <div class="row ttd">
-         <div class="col">
-            <small>Prepared by,</small><br>
-            <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
-            <small>Title : Chief Engineer</small>
-         </div>
-         <div class="col">
-            <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
-            <small>Title : Master</small>
-         </div>
-         <div class="col">
-            <small>Acknowledged by</small>
-            <br>
-            @if ($vdr->status >= 2)
-            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-            @else
-            <small>Status : ____________</small><br>
-            @endif
-            <small>Name : PHE OSES Representative</small>
-            
-         </div>
-         <div class="col">
-            
-            @if ($vdr->status >= 3)
-            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-            @else
-            <small>Status : ____________</small><br>
-            @endif
-            <small>Name : Superintendent</small>
-         </div>
-         <div class="col">
-            @if ($vdr->status >= 3)
-            <small >Status : <span style="color:rgb(44, 133, 251)">APPROVED</span></small><br>
-            @else
-            <small>Status : ____________</small><br>
-            @endif
-            <small>Name : Mr. Lutfi</small>
-         </div>
-         
-         
-      </div>
+      
+      <hr>
+
+      
       
 
       {{-- <p class="text-muted text-center mt-5">Thank you very much for doing business with us. We look forward to working with

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Marine;
 use App\Http\Controllers\Controller;
 use App\Models\Vdr;
 use App\Models\VdrOperating;
+use App\Models\VdrTimestamp;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -107,6 +108,12 @@ class MarineVdrController extends Controller
       $vdr->update([
          'status' => 2
       ]);
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 2,
+         'user_id' => auth()->user()->id
+      ]);
       // dd()
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
@@ -119,6 +126,11 @@ class MarineVdrController extends Controller
          'status' => 3
       ]);
       // dd()
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 3,
+         'user_id' => auth()->user()->id
+      ]);
 
       return redirect()->back()->with('success', 'VDR Suptent Approved');
    }
@@ -130,6 +142,12 @@ class MarineVdrController extends Controller
          'status' => 4
       ]);
       // dd()
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 4,
+         'user_id' => auth()->user()->id
+      ]);
 
       return redirect()->back()->with('success', 'VDR Approved');
    }

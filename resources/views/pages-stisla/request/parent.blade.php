@@ -149,12 +149,12 @@
                                           @endforeach
                                        @endif --}}
 
-                                       <option value="{{$parent->requests->first()->schedule->vessel_id}}" selected>{{$parent->requests->first()->schedule->vessel->name}}</option>
+                                       <option value="{{$parent->requests->first()->schedule->vessel_id}}" selected>{{$parent->requests->first()->schedule->vessel->name}} / {{$parent->requests->first()->schedule->vessel->type}}</option>
                                        @if (count($nearestVessels) > 0)
                                           @foreach ($nearestVessels  as $vess)
                                              @if ($vess->id == $parent->requests->first()->schedule->vessel_id)
                                                 @else
-                                                <option value="{{$vess->id}}">{{$vess->name}}</option>
+                                                <option value="{{$vess->id}}">{{$vess->name}} / {{$vess->type}}</option>
                                              @endif
                                           @endforeach
                                        @endif

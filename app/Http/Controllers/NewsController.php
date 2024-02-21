@@ -28,8 +28,8 @@ class NewsController extends Controller
       if (request('image')) {
          Storage::delete($feed->image);
          $image = request()->file('image')->store('images/news');
-      } elseif ($feed->foto) {
-         $image = $feed->foto;
+      } elseif ($feed->image) {
+         $image = $feed->image;
       } else {
          $image = null;
       }

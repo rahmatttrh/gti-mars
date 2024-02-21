@@ -80,4 +80,9 @@ class Schedule extends Model
       $status = Report::where('schedule_id', $this->id)->orderBy('created_at', 'desc')->first();
       return $status;
    }
+
+   public function revisions()
+   {
+      return $this->hasMany(Revision::class);
+   }
 }

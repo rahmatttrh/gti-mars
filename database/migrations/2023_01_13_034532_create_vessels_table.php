@@ -31,14 +31,6 @@ class CreateVesselsTable extends Migration
          $table->string('master')->nullable();
          $table->string('co')->nullable();
 
-         $table->string('latitude')->nullable();
-         $table->string('longitude')->nullable();
-         $table->string('speed')->nullable();
-         $table->string('calcspeed')->nullable();
-         $table->string('heading')->nullable();
-         $table->string('last_update')->nullable();
-
-         
          $table->string('require')->nullable();
          $table->string('imo')->nullable();
          $table->string('type')->nullable();
@@ -50,6 +42,16 @@ class CreateVesselsTable extends Migration
          $table->string('portname')->nullable();
          $table->string('build')->nullable();
          $table->string('classed_by')->nullable();
+
+         $table->string('latitude')->nullable();
+         $table->string('longitude')->nullable();
+         $table->string('speed')->nullable();
+         $table->string('calcspeed')->nullable();
+         $table->string('heading')->nullable();
+         $table->string('last_update')->nullable();
+
+         
+         
 
          $table->string('class_notation')->nullable();
          $table->integer('loa')->nullable();

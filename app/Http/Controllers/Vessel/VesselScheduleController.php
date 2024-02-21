@@ -9,6 +9,7 @@ use App\Models\Port;
 use App\Models\Report;
 use App\Models\ReportRequest;
 use App\Models\ReportVessel;
+use App\Models\Revision;
 use App\Models\Schedule;
 use App\Models\Status;
 use App\Models\Vessel;
@@ -29,7 +30,6 @@ class VesselScheduleController extends Controller
          'progresses' => $progresses,
       ])->with('i');
    }
-
 
    public function index($month)
    {
@@ -103,7 +103,7 @@ class VesselScheduleController extends Controller
          'status' => 2
       ]);
 
-      foreach ($schedule->requests as $req) {
+      foreach ($schedule->requests->where('status', 3) as $req) {
          $req->update([
             'status' => 4
          ]);
@@ -251,7 +251,6 @@ class VesselScheduleController extends Controller
       return redirect()->back()->with('success', "Schedule Status successfully updated");
    }
 
-
    public function complete($id){
       // dd('ok');
       $dekripId = dekripRambo($id);
@@ -281,6 +280,43 @@ class VesselScheduleController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Sailing Order completed');
+   }
+
+   public function revision(Request $req){
+      $schedule = Schedule::find($req->schedule);
+      $schedule->update([
+         'status' => 5
+      ]);
+
+
+      foreach ($schedule->requests->where('status', 3) as $request) {
+         $request->update([
+            'status' => 2
+         ]);
+
+         // ReportRequest::create([
+         //    'request_id' => $req->id,
+         //    'status_id' => $status->id,
+         // ]);
+      }
+
+      Revision::create([
+         'status' => 1,
+         'schedule_id' => $schedule->id,
+         'desc' => $req->desc
+      ]);
+
+      Report::create([
+         'schedule_id' => $schedule->id,
+         'vessel_id' => $schedule->vessel_id,
+         'status_id' => 1,
+         'desc' => 'Request Revision'
+      ]);
+
+      return redirect()->back()->with('success', 'Revision Successfully sent to Marine');
+
+
+
    }
 
 

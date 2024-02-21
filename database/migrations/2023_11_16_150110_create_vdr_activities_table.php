@@ -18,7 +18,7 @@ class CreateVdrActivitiesTable extends Migration
             $table->unsignedInteger('vdr_id');
             $table->text('activity');
             $table->time('start');
-            $table->time('finish');
+            $table->time('finish')->nullable();
             $table->decimal('high', 4, 2);
             $table->decimal('normal', 4, 2);
             $table->decimal('slow', 4, 2);

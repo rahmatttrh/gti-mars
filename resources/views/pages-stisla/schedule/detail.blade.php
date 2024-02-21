@@ -33,7 +33,7 @@
             @endif
             @if (auth()->user()->hasRole('vessel') && $schedule->status == 1)
                <x-schedule-stisla.action-vessel :schedule="$schedule" />
-               <div class="mb-2"></div>
+               <div class="mb-3"></div>
             @endif
             {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1 && $schedule->status < 11 )
                <a href="" class="btn  btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
@@ -41,19 +41,30 @@
             @endif --}}
             <div class="card shadow-sm border">
                <div class="card-header"><b>Detail Sailing Order</b></div>
-               <div class="card-header">
-                  @if ($schedule->vessel)
-                     <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
-                  @endif
-                  <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
-               </div>
+               {{-- <div class="card-body d-flex">
+                  
+                  
+               </div> --}}
                <div class="card-body">
+                  <div class="mb-2">
+                     <div class="d-flex">
+                        {{-- @if ($schedule->vessel)
+                           <x-status-stisla.vessel :vessel="$schedule->vessel" /> &nbsp;
+                        @endif --}}
+                        <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
+                     </div>
+                     {{-- @if ($schedule->status == 5)
+                     <small>{{$schedule->revisions->where('status', 1)->first()->desc}}</small> <br>
+                     @endif --}}
+                  </div>
+                  
                   <span>{{$schedule->code}}</span>
                   <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
+                  
                   <span>{{formatDateName($schedule->date)}}</span> <br>
-                  @if ($schedule->class == 'Cargo/Crew')
+                  @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew')
                      <span>
-                        @if ($schedule->class == 'Cargo/Crew')
+                        @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew')
                            @foreach ($fixRoutes as  $route)
                               
                                  @if (auth()->user()->hasRole('marine'))
@@ -163,10 +174,9 @@
                <x-schedule-stisla.action-department :schedule="$schedule" />
             @endif
   
-            @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
-               @if ($schedule->class == 'Cargo/Crew')
+            {{-- @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
+               @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew')
                   @if ($recentRequests->count() > 0)
-                     {{-- <x-schedule-stisla.incoming :recents="$recentRequests" /> --}}
                      <div id="accordion shadow">
                         <div class="accordion">
                         <div class="accordion-header " role="button" data-toggle="collapse" data-target="#panel-body-1">
@@ -180,10 +190,10 @@
                   
                   @endif
                @endif
-            @endif
+            @endif --}}
 
-            @if ($schedule->class == 'Cargo/Crew')
-               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" />
+            @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew')
+               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" />
             @elseif($schedule->class == 'Moving')
             <div class="card border">
                <div class="card-header">
@@ -361,33 +371,67 @@
             </div>
             <div class="modal-footer bg-whitesmoke">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <a href="{{route('schedule.send', enkripRambo($schedule->id))}}" class="btn btn-primary">Send</a>
+               <a href="{{route('schedule.send', enkripRambo($schedule->id))}}" class="btn btn-info">Send</a>
             </div>
          </div>
       </div>
    </div>
    @endif
 
-  {{-- Modal Accept Schedule --}}
-  <div class="modal fade" id="schedule-accept" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Confirm Accept</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          Accept this Sailing Order?
-        </div>
-        <div class="modal-footer bg-whitesmoke">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{{route('schedule.accept', enkripRambo($schedule->id))}}" class="btn btn-primary">Accept</a>
-        </div>
+   {{-- Modal Accept Schedule --}}
+   <div class="modal fade" id="schedule-accept" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Confirm Accept</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               Accept this Sailing Order?
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('schedule.accept', enkripRambo($schedule->id))}}" class="btn btn-info">Accept</a>
+            </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
+
+   {{-- Modal Revision Schedule --}}
+   <div class="modal fade" id="schedule-revision" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('schedule.revision')}}" method="POST">
+         @csrf
+         @method('PUT')
+         <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Revision Schedule</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     <label for="desc">Description</label>
+                     <input type="text" class="form-control" id="desc" name="desc" >
+                  </div>
+                  
+               </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info">Revision</button>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
+
+  
 
   {{-- Modal delete Schedule --}}
   <div class="modal fade" id="schedule-delete" tabindex="-1" role="dialog" aria-hidden="true">
@@ -411,44 +455,44 @@
   </div>
 
   {{-- Modal Edit Schedule --}}
-  <div class="modal fade" id="schedule-edit" tabindex="1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <form action="{{route('schedule.update')}}" method="POST">
-        @csrf
-        @method('PUT')
-        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Form Edit Schedule</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="form-row">
-              <div class="form-group col-md-4">
-                <label for="date">Date</label>
-                <input type="date" class="form-control" id="date" name="date" value="{{$schedule->date}}">
-              </div>
-              <div class="form-group col-md-8">
-                <label>Vessel</label>
-                <select class="custom-select" id="vessel" name="vessel">
-                  @foreach ($vessels as $vessel)
-                      <option {{ $schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}} [{{$vessel->type}}]</option>
-                    @endforeach
-                </select>
-              </div>
+   <div class="modal fade" id="schedule-edit" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('schedule.update')}}" method="POST">
+         @csrf
+         @method('PUT')
+         <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Edit Schedule</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
             </div>
-            
-          </div>
-          <div class="modal-footer bg-whitesmoke">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Approve</button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
+            <div class="modal-body">
+               <div class="form-row">
+               <div class="form-group col-md-4">
+                  <label for="date">Date</label>
+                  <input type="date" class="form-control" id="date" name="date" value="{{$schedule->date}}">
+               </div>
+               <div class="form-group col-md-8">
+                  <label>Vessel</label>
+                  <select class="custom-select" id="vessel" name="vessel">
+                     @foreach ($vessels as $vessel)
+                        <option {{ $schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}} [{{$vessel->type}}]</option>
+                     @endforeach
+                  </select>
+               </div>
+               </div>
+               
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Approve</button>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
 
 
   {{-- Modal Select Vessel --}}

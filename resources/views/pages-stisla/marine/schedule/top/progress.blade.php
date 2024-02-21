@@ -75,7 +75,7 @@
                               {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
                            </td>
                            <td>
-                              <x-status-stisla.schedule-plain :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                              <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                            </td>
                            {{-- <td>
                               <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>

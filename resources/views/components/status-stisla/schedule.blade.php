@@ -23,6 +23,8 @@
       <div class="badge badge-primary "><span class="badge bg-primary me-1"></span><small>User Confirmation</small></div>
       @elseif($schedule->status == 4)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>04 : Approval Additional Request</div>
+      @elseif($schedule->status == 5)
+      <div class="badge badge-warning" data-toggle="tooltip" data-placement="right" title="{{$schedule->revisions->where('status', 1)->first()->desc}}"><small>Revision</small></div>
       @elseif($schedule->status == 101)
       <div class="badge badge-info"><span class="badge bg-info me-1"></span><small>Validasi FM</small></div>
       @elseif($schedule->status == 11)
@@ -39,5 +41,8 @@
    @endif
    @if ($schedule->postpones->where('status', 0)->count() > 0)
    <div class="badge bg-warning">Postpone</div>
+   @endif
+   @if ($schedule->revisions->where('status', 5)->first() != null)
+   <div class="badge badge-warning border"><small>Revision</small></div>
    @endif
 </div>

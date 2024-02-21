@@ -4,7 +4,7 @@
          Select Vessel
       </button>
       @else
-      @if ($schedule->status == 0 )
+      @if ($schedule->status == 0 || $schedule->status == 5 )
       {{-- @if ($schedule->requests()->count() > 0) --}}
       <button class="btn btn-info btn-block mb-3" data-toggle="modal" data-target="#schedule-send">
          Send to vessel

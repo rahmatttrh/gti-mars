@@ -97,10 +97,10 @@
          <div class="col-md-8">
             <div class="card shadow-lg" id="schedule">
                <div class="card-body">
-                  <small><b>Schedule Vessel</b></small>
-                  <hr>
+                  {{-- <small><b>Schedule Vessel</b></small>
+                  <hr> --}}
                   <div class="table-responsive">
-                  <table class="table table-striped table-sm" id="table-12">
+                  <table class=" table-striped " id="table-12">
                      <thead>                                 
                         <tr>
                         <th class="text-center">
@@ -145,7 +145,7 @@
                                  <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small> --}}
                            </td>
                            
-                           @if ($schedule->class == 'Cargo/Crew')
+                           @if ($schedule->class == 'Crew' || $schedule->class == 'Cargo')
                               <td class="">
                                  @foreach ($schedule->routes as $route)
                                  <span>{{$route->port->name}} </span>
@@ -178,7 +178,7 @@
                            
                            <td class="text-center">
                               {{-- <div class="badge badge-info"><small>Draft</small></div> --}}
-                              <x-status-stisla.schedule-plain :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                              <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                            </td>
                            
                            

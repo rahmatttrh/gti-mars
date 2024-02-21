@@ -36,7 +36,7 @@
         @endphp
         @foreach ($activities as $activity)
         <tr>
-            <td class="text-success">{{substr($activity->start, 0, 5)}}</td>
+            <td class="text-info">{{substr($activity->start, 0, 5)}}</td>
             <td class="text-danger">{{substr($activity->finish, 0, 5)}}</td>
             <td>{{floatToTime($activity->high)}}</td>
             <td>{{floatToTime($activity->normal)}}</td>

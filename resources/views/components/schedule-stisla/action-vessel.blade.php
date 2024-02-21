@@ -1,8 +1,15 @@
 <span >
    @if ($schedule->status == 1 )
-      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
+   <div class="btn-group " role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-info " data-toggle="modal" data-target="#schedule-accept">Approve</button>
+      <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#schedule-revision">Revision</button>
+    </div>
+      {{-- <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
          Accept
       </button>
+      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
+         Revision
+      </button> --}}
       @elseif($schedule->status == 2 || $schedule->status == 10)
       <form action="{{route('schedule.update.status')}}" method="POST" enctype="multipart/form-data">
          @csrf

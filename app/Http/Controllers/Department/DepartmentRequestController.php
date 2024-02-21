@@ -701,6 +701,8 @@ class DepartmentRequestController extends Controller
 
       // }
 
+      
+
 
       $nearestVessel = null;
       $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
@@ -715,16 +717,27 @@ class DepartmentRequestController extends Controller
             $portLat = $request->origin->latitude;
             $portLong = $request->origin->longitude;
             $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
-            if ($distance < 30000) {
-               $nearestVessel = $vessel;
+            if ($request->parent->activity_id == 2) {
+               if ($distance < 30000 && $vessel->type == 'Crew Boat') {
+                  $nearestVessel = $vessel;
+               }
+            } else {
+               if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel' ) {
+                  $nearestVessel = $vessel;
+               }
             }
+            
          }
-
+         // dd($nearestVessel);
          // dd(count($nearestVessels) > 0);
          if ($nearestVessel) {
             // dd('ada kapal terdekat');
+            if ($request->parent->activity_id == 2) {
+               
+            }
             if ($nearestVessel->schedule_id) {
                // dd('kapal sudah ada schedule');
+
                $request->update([
                   // 'status' => 1,
                   'schedule_id' => $nearestVessel->schedule->id
@@ -734,7 +747,7 @@ class DepartmentRequestController extends Controller
                // dd('kapal blm ada schedule');
                $schedule = Schedule::create([
                   'code' => $scheduleCode,
-                  'class' => 'Cargo/Crew',
+                  'class' => $request->parent->activity->name,
                   'by' => 'system',
                   'vessel_id' => $nearestVessel->id,
                   'type' => 2,
@@ -804,7 +817,7 @@ class DepartmentRequestController extends Controller
          $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
          $schedule = Schedule::create([
             'code' => $scheduleCode,
-            'class' => 'Cargo/Crew',
+            'class' => $request->parent->activity->name,
             'vessel_id' => $vessel->id,
             'by' => 'user',
             'type' => 2,

@@ -19,6 +19,7 @@ use App\Http\Controllers\FetchController;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogController;
@@ -372,6 +373,12 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       Route::get('/edit', [NewsController::class, 'index'])->name('news.edit');
       Route::put('/update', [NewsController::class, 'update'])->name('news.update');
    });
+
+   Route::prefix("images/m")->group(function () {
+      Route::get('index', [ImagesController::class, 'index'])->name('images');
+      Route::post('store', [ImagesController::class, 'store'])->name('images.store');
+      Route::get('delete/{id}', [ImagesController::class, 'delete'])->name('images.delete');
+   });
    
    
    Route::prefix("log")->group(function () {
@@ -503,6 +510,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
          Route::get('progress', [VesselScheduleController::class, 'progress'])->name('schedule.progress.vessel');
          Route::get('history', [VesselScheduleController::class, 'history'])->name('schedule.history.vessel');
          Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+         Route::put('revision', [VesselScheduleController::class, 'revision'])->name('schedule.revision');
       });
    });
    

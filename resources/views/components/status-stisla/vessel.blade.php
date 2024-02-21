@@ -1,7 +1,7 @@
 <div >
    @if ($vessel->status == 0)
-      <div class="badge badge-light"><small><i class="fa fa-ship"></i></small>  </div>
+      <div class="badge badge-light"><small>Off Hire</small>  </div>
       @elseif($vessel->status == 1)
-      <div class="badge badge-info"><small> <i class="fa fa-ship"></i></small> </div>
+      <div class="badge badge-info"><small> On Hire</small> </div>
    @endif
  </div>

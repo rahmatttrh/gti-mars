@@ -19,6 +19,7 @@ class CreateReportRequestsTable extends Migration
             $table->mediumInteger('employee_id')->nullable();
             $table->mediumInteger('status_id');
             $table->mediumInteger('port_id')->nullable();
+            $table->string('desc')->nullable();
             $table->timestamps();
         });
     }
