@@ -26,29 +26,44 @@
    <ul class="navbar-nav navbar-right ml-auto">
       
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{$notif == 'true'  ? 'beep' : ''}}"><i class="far fa-bell text-info"></i></a>
-       <div class="dropdown-menu dropdown-list dropdown-menu-right">
-         <div class="dropdown-header">Notifications
-           
-         </div>
-         <div class="dropdown-list-content dropdown-list-icons">
-            @foreach ($allschedules as $schedule)
-            @if ($schedule->requests->where('status', 1)->count() > 0)
-               <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="dropdown-item dropdown-item-unread">
-                  <div class="dropdown-item-icon bg-primary text-white">
+         <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
+            <div class="dropdown-header">NOTIFICATIONS
+            
+            </div>
+            <div class="dropdown-list-content dropdown-list-icons">
+               @if ($allschedules != null)
+                  @foreach ($allschedules as $schedule)
+                     @if ($schedule->requests->where('status', 1)->count() > 0)
+                        <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="dropdown-item dropdown-item-unread">
+                           <div class="dropdown-item-icon bg-primary text-white">
+                              <i class="fas fa-code"></i>
+                           </div>
+                           <div class="dropdown-item-desc">
+                              You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}}
+                              <div class="time text-primary">{{$schedule->updated_at->diffForHumans()}}</div>
+                           </div>
+                        </a>
+                        
+                     @endif
+                  @endforeach
+                  @else
+                  <a href="#" class="dropdown-item dropdown-item-unread text-center">Tidak ada Request dari User Field</a>
+                  <small class="dropdown-item dropdown-item-unread">Tidak ada Request dari User Field </small>
+               @endif
+               <span class="dropdown-item dropdown-item-unread">
+                  {{-- <div class="dropdown-item-icon bg-primary text-white">
                      <i class="fas fa-code"></i>
+                  </div> --}}
+                  <div class="dropdown-item-desc text-muted">
+                     Tidak ada Request dari User Field
                   </div>
-                  <div class="dropdown-item-desc">
-                     You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}}
-                     <div class="time text-primary">{{$schedule->updated_at->diffForHumans()}}</div>
-                  </div>
-               </a>
-            @endif
-         @endforeach
+               </span>
+              
+            </div>
+            <div class="dropdown-footer text-center">
+            {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}
+            </div>
          </div>
-         <div class="dropdown-footer text-center">
-           {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}
-         </div>
-       </div>
       </li>
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
        <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">

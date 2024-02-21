@@ -735,14 +735,16 @@ class DepartmentRequestController extends Controller
             if ($request->parent->activity_id == 2) {
                
             }
-            if ($nearestVessel->schedule_id) {
-               // dd('kapal sudah ada schedule');
 
+            $nearVesselHasSchedule = $nearestVessel->schedules->where('status', '!=', 11)->where('date', $now)->first();
+            if ($nearVesselHasSchedule != null) {
+               // dd('kapal sudah ada schedule');
+               // dd($nearVesselHasSchedule->code);
                $request->update([
                   // 'status' => 1,
-                  'schedule_id' => $nearestVessel->schedule->id
+                  'schedule_id' => $nearVesselHasSchedule->id
                ]);
-               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearestVessel->schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+               return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($nearVesselHasSchedule->date)->format('d/m/Y') . ' by ' . $nearVesselHasSchedule->vessel->name);
             } else {
                // dd('kapal blm ada schedule');
                $schedule = Schedule::create([

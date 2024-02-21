@@ -145,6 +145,7 @@ class MarineScheduleController extends Controller
 
 
          $elok = Vessel::find(9);
+         // dd($elok->name . ' Type: ' .  $elok->type);
          $sigap = Vessel::find(6);
          $tegas = Vessel::find(36);
 
@@ -158,11 +159,13 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
-
-            if($elok->type = 'Crew Boat'){
+            // dd($elok->name . ' Type: ' .  $elok->type);
+            if($elok->type == 'Crew Boat'){
                $classElok = 'Crew';
+               // dd('crew');
             } else{
                $classElok = 'Cargo';
+               // dd('cargo');
             }
 
             $elokMonday = Schedule::create([
@@ -199,7 +202,7 @@ class MarineScheduleController extends Controller
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
 
-            if($giat->type = 'Crew Boat'){
+            if($giat->type == 'Crew Boat'){
                $classGiat = 'Crew';
             } else{
                $classGiat = 'Cargo';
@@ -256,11 +259,13 @@ class MarineScheduleController extends Controller
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
 
-            if($elok->type = 'Crew Boat'){
+            if($elok->type == 'Crew Boat'){
                $classElok = 'Crew';
             } else{
                $classElok = 'Cargo';
             }
+
+            // dd($elok->name);
 
             $elokWednesday = Schedule::create([
                'by' => 'system',
@@ -326,7 +331,7 @@ class MarineScheduleController extends Controller
             } else {
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
-            if($giat->type = 'Crew Boat'){
+            if($giat->type == 'Crew Boat'){
                $classGiat = 'Crew';
             } else{
                $classGiat = 'Cargo';
@@ -373,7 +378,7 @@ class MarineScheduleController extends Controller
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
 
-            if($sigap->type = 'Crew Boat'){
+            if($sigap->type == 'Crew Boat'){
                $classSigap = 'Crew';
             } else{
                $classSigap = 'Cargo';
@@ -402,7 +407,7 @@ class MarineScheduleController extends Controller
                $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
             }
 
-            if($tegas->type = 'Crew Boat'){
+            if($tegas->type == 'Crew Boat'){
                $classTegas = 'Crew';
             } else{
                $classTegas = 'Cargo';
