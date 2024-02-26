@@ -4,13 +4,15 @@
 @endsection
 @section('content')
 <style>
+
+ html { -webkit-print-color-adjust: exact; }
    table, th, td {
   border: 1px solid black;
   border-collapse: collapse;
 }
 
 .ttd {
-   font-size: 10px;
+   font-size: 9px;
 }
 
 table td {
@@ -18,11 +20,20 @@ table td {
 }
 
 .title {
-  font-size: 8px
+  font-size: 7px;
+  font-weight: bold;
+}
+
+table th {
+   font-weight: bold;
 }
 
 table {
    width: 100%;
+}
+
+.bg-yellow {
+   background-color: rgb(247, 247, 183)
 }
 
 </style>
@@ -52,8 +63,8 @@ table {
          <div class="col-12">
             <div class="d-flex justify-content-between">
                <div class="">
-                  <small>PERTAMINA HULU ENERGI OSES</small><br>
-                  <small>PRODUCTION & OPERATION - MARINE TEAM</small>
+                  <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
+                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small>
                </div>
                <div class="text-center">
                   <small><b>VESSEL DAILY REPORT</b></small><br>
@@ -98,33 +109,33 @@ table {
       </div>
 
       <div class="row">
-         <div class="col-md-5">
+         <div class="col-5">
             <small class="title mt-4">GENERAL INFORMATION</small>
             <table class="">
                <tbody>
                   <tr>
                      <td><small>Date</small></td>
-                     <td><small>{{\Carbon\Carbon::parse($vdr->date)->format('d/m/Y')}}</small></td>
+                     <td class="bg-yellow"><small>{{\Carbon\Carbon::parse($vdr->date)->format('d/m/Y')}}</small></td>
                      <td><small>Location</small></td>
-                     <td><small>{{$vdr->location_midnight}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->location_midnight}}</small></td>
                   </tr>
                   <tr>
                      <td><small>Vessel Name</small></td>
-                     <td><small>{{$vdr->vessel->name}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->vessel->name}}</small></td>
                      <td><small>Owner Opt</small></td>
-                     <td><small>{{$vdr->vessel->owner ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->vessel->owner ?? '-'}}</small></td>
                   </tr>
                   <tr>
                      <td><small>Contract No.</small></td>
-                     <td><small>{{$vdr->vessel->contract_no ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->vessel->contract_no ?? '-'}}</small></td>
                      <td><small>Master Name</small></td>
-                     <td><small>{{$vdr->vessel->master ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->vessel->master ?? '-'}}</small></td>
                   </tr>
                   <tr>
                      <td><small>Contract Periode</small></td>
-                     <td><small>{{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</small></td>
+                     <td class="bg-yellow"><small>{{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</small></td>
                      <td><small>Number of Crew/Pax</small></td>
-                     <td><small>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</small></td>
                   </tr>
                </tbody>
                
@@ -134,21 +145,21 @@ table {
             <table class="mb-1">
                <thead>
                   <tr>
-                     <td>Wheather</td>
-                     <td class="text-center">00 - 06</td>
-                     <td class="text-center">06 - 12</td>
-                     <td class="text-center">12 - 18</td>
-                     <td class="text-center">18 - 24</td>
+                     <td class="title">Wheather</td>
+                     <td class="text-center title">00 - 06</td>
+                     <td class="text-center title">06 - 12</td>
+                     <td class="text-center title">12 - 18</td>
+                     <td class="text-center title">18 - 24</td>
                   </tr>
                </thead>
                <tbody>
                   @foreach ($vdrWheathers as $vdrWheather)
                   <tr>
                      <td><small>{{$vdrWheather->heading->description}}</small></td>
-                     <td class="text-center"><small>{{$vdrWheather->t_0006}}</small></td>
-                     <td class="text-center"><small>{{ $vdrWheather->t_0612  }}</small></td>
-                     <td class="text-center"><small>{{$vdrWheather->t_1218}}</small></td>
-                     <td class="text-center"><small>{{$vdrWheather->t_1824}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrWheather->t_0006}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{ $vdrWheather->t_0612  }}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrWheather->t_1218}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrWheather->t_1824}}</small></td>
                   </tr>
                   @endforeach
                </tbody>
@@ -159,11 +170,11 @@ table {
             <table class="">
                <thead>
                   <tr>
-                     <td class="text-center">A</td>
-                     <td>HSSE STATISTICS (INPUT)</td>
-                     <td class="text-center">Previous</td>
-                     <td class="text-center">Today</td>
-                     <td class="text-center">Monthly</td>
+                     <td class="text-center title">A</td>
+                     <td class="title">HSSE STATISTICS (INPUT)</td>
+                     <td class="text-center title">Previous</td>
+                     <td class="text-center title">Today</td>
+                     <td class="text-center title">Monthly</td>
                   </tr>
                </thead>
                <tbody>
@@ -177,11 +188,11 @@ table {
                         @if($hse->header->group_header != $groupHeader)
                         <thead>
                            <tr>
-                                 <td class="text-center">B</td>
-                                 <td>HSSE STATISTICS (Output)</td>
-                                 <td class="text-center">Previous</td>
-                                 <td class="text-center">Today</td>
-                                 <td class="text-center">Monthly</td>
+                                 <td class="text-center title">B</td>
+                                 <td class="title">HSSE STATISTICS (Output)</td>
+                                 <td class="text-center title">Previous</td>
+                                 <td class="text-center title">Today</td>
+                                 <td class="text-center title">Monthly</td>
                            </tr>
                         </thead>
          
@@ -191,16 +202,16 @@ table {
          
                         @endif
                         <tr>
-                           <td class="text-center"><small>{{ $no++}}</small></td>
+                           <td class="text-center "><small>{{ $no++}}</small></td>
                            <td><small>{{$hse->header->description}}</small></td>
                            @if($hse->header_id != 8)
-                           <td class="text-center">
+                           <td class="text-center bg-yellow">
                               <small>{{$hse->previous}}</small>
                            </td>
-                           <td class="text-center">
+                           <td class="text-center bg-yellow">
                               <small>{{$hse->today}}</small>
                            </td>
-                           <td class="text-center">
+                           <td class="text-center bg-yellow">
                               <small>{{$hse->previous + $hse->today}}</small>
                            </td>
                            @else
@@ -221,14 +232,14 @@ table {
 
             
          </div>
-         <div class="col-md-7">
+         <div class="col-7">
             <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
             <table class="" style="width: 100%">
                <thead>
                   <tr>
-                     <td colspan="2" class="text-center">TIME</td>
-                     <td colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
-                     <td rowspan="2" class="text-center align-middle">ACTIVITIES</td>
+                     <td colspan="2" class="text-center title">TIME</td>
+                     <td colspan="8" class="text-center title">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
+                     <td rowspan="2" class="text-center align-middle title">ACTIVITIES</td>
                   </tr>
                   <tr>
                      <td class="text-center">Start 
@@ -252,17 +263,17 @@ table {
                <tbody>
                   @foreach ($vdrActivities as $vdrActivity)
                   <tr>
-                     <td class="text-center"><small>{{$vdrActivity->start}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->finish}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->high}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->normal}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->slow}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->manu}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->idle}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->tow}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->ah}}</small></td>
-                     <td class="text-center"><small>{{$vdrActivity->sb}}</small></td>
-                     <td><small>{{$vdrActivity->activity}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->start}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->finish}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->high}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->normal}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->slow}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->manu}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->idle}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->tow}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->ah}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{$vdrActivity->sb}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
                   
                   
@@ -272,391 +283,391 @@ table {
                   @if (count($vdrActivities) == 0)
                      @for ($i = 0; $i < 23; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 1)
                      @for ($i = 0; $i < 22; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 2)
                      @for ($i = 0; $i < 21; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 3)
                      @for ($i = 0; $i < 20; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 4)
                      @for ($i = 0; $i < 19; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 5)
                      @for ($i = 0; $i < 18; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 6)
                      @for ($i = 0; $i < 17; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 7)
                      @for ($i = 0; $i < 16; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 8)
                      @for ($i = 0; $i < 15; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 9)
                      @for ($i = 0; $i < 14; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 10)
                      @for ($i = 0; $i < 13; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 11)
                      @for ($i = 0; $i < 12; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 12)
                      @for ($i = 0; $i < 11; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 13)
                      @for ($i = 0; $i < 10; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 14)
                      @for ($i = 0; $i < 9; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 15)
                      @for ($i = 0; $i < 8; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 16)
                      @for ($i = 0; $i < 7; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 17)
                      @for ($i = 0; $i < 6; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 18)
                      @for ($i = 0; $i < 5; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 19)
                      @for ($i = 0; $i < 4; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 20)
                      @for ($i = 0; $i < 3; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 21)
                      @for ($i = 0; $i < 2; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 22)
                      @for ($i = 0; $i < 1; $i++)
                         <tr>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td></td>
-                           <td>-</td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
+                           <td class="bg-yellow">-</td>
                         </tr>
                      @endfor
                   @endif
@@ -667,16 +678,16 @@ table {
       </div>
 
       <div class="row">
-         <div class="col-md-4">
+         <div class="col-4">
             <small class="title">SUMMARY OF DAILY OPERATING DATA</small>
             <table class="mb-1">
                <thead>
                   <tr class="text-center ">
-                     <td class="">Operating Mode</td>
-                     <td>Total Time</td>
-                     <td>Min. Speed as Contract (Knots) <br> </td>
-                     <td >Contractual Fuel Cons. </td>
-                     <td>Daily Fuel Cons. </td>
+                     <td class="title">Operating Mode</td>
+                     <td class="title">Total Time</td>
+                     <td class="title">Min. Speed as Contract (Knots) <br> </td>
+                     <td class="title">Contractual Fuel Cons. </td>
+                     <td class="title">Daily Fuel Cons. </td>
                   </tr>
                </thead>
                <tbody>
@@ -696,7 +707,7 @@ table {
                         <td class="text-center">
                            <small>{{$operating->time}}</small>
                         </td>
-                        <td class="text-center">
+                        <td class="text-center bg-yellow">
                            @if($operating->heading->speed == '1')
                            <small>{{$operating->speed}}</small>
                            @else
@@ -704,7 +715,7 @@ table {
                            @endif
                         </td>
    
-                        <td class="text-center">
+                        <td class="text-center bg-yellow">
                               @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel}}</small>
                               @else
@@ -757,7 +768,7 @@ table {
                
             </div>
          </div>
-         <div class="col-md-8">
+         <div class="col">
             <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
             <table class="mb-1">
                <thead>
@@ -767,12 +778,12 @@ table {
                      <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
                   </tr> --}}
                   <tr>
-                     <td>Type</td>
-                     <td class="text-truncate text-center">OPENING</td>
-                     <td class="text-center">CONSUMPTION</td>
-                     <td class="text-center">RECEIVED</td>
-                     <td class="text-center">TRANSFERRED</td>
-                     <td class="text-center">CLOSING</td>
+                     <td class="title">Type</td>
+                     <td class="text-truncate text-center title">OPENING</td>
+                     <td class="text-center title">CONSUMPTION</td>
+                     <td class="text-center title">RECEIVED</td>
+                     <td class="text-center title">TRANSFERRED</td>
+                     <td class="text-center title">CLOSING</td>
                      <td>REMARKS</td>
                   </tr>
                </thead>
@@ -780,14 +791,37 @@ table {
                   @foreach ($vdrCargos as $vdrCargo)
                   <tr>
                      <td>{{$vdrCargo->heading->description}}</td>
-                     <td class="text-center">{{$vdrCargo->opening}}</td>
-                     <td class="text-center">{{$vdrCargo->consumption}}</td>
-                     <td class="text-center">{{$vdrCargo->received}}</td>
-                     <td class="text-center">{{$vdrCargo->transferred}}</td>
+                     <td class="text-center bg-yellow">{{$vdrCargo->opening}}</td>
+                     <td class="text-center bg-yellow">{{$vdrCargo->consumption}}</td>
+                     <td class="text-center bg-yellow">{{$vdrCargo->received}}</td>
+                     <td class="text-center bg-yellow">{{$vdrCargo->transferred}}</td>
                      <td class="text-center">{{$vdrCargo->closing}}</td>
-                     <td>{{$vdrCargo->remark}}</td>
+                     <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                   </tr>
                   @endforeach
+                  <tr>
+                     <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                     {{-- <td><small><b></b></small></td> --}}
+                  </tr>
+                  <tr>
+                     <td class="text-center"><b>Activity</b></td>
+                     <td class="text-center"><b>ROB Check Time</b></td>
+                     <td class="text-center"><b>ROB by VDR at Check Time</b></td>
+                     <td class="text-center"><b>Actual ROB at Check Time</b></td>
+                     <td class="text-center"><b>ROB Different</b></td>
+                     <td rowspan="3">
+                        ROB Correction Rule <br>
+                        <small>* Positive Diff -> Correction Applied</small><br>
+                        <small>* Negative Diff -> Correction Not-Applied</small>
+                     </td>
+                  </tr>
+                  <tr>
+                     <td>{{$vdrPeriodic->activity}}</td>
+                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time}}</td>
+                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_value}}</td>
+                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_actual}}</td>
+                     <td class="text-center">{{$vdrPeriodic->rob_diff}}</td>
+                  </tr>
                </tbody>
                
             </table>
@@ -827,11 +861,23 @@ table {
                   @endif
                   
                </div>
-               <div class="col pt-1">
+               <div class="col text-end pt-1">
                   {!! QrCode::size(100)->generate(Request::url()); !!}
                </div>
+               
             </div>
          </div>
+         {{-- <div class="col-2">
+            <small class="title">QRCODE</small>
+            <table>
+               <tbody>
+                  <tr>
+                     <td class="text-center p-1">{!! QrCode::size(120)->generate(Request::url()); !!}</td>
+                  </tr>
+               </tbody>
+            </table>
+            
+         </div> --}}
       </div>
 
      

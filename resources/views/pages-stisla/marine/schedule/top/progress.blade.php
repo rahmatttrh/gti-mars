@@ -12,9 +12,9 @@
          <li class="nav-item">
             <a class="nav-link active" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="true">Porgress</a>
          </li>
-         <li class="nav-item">
+         {{-- <li class="nav-item">
             <a class="nav-link" id="inbox-tab" data-toggle="tab" href="#inbox" role="tab" aria-controls="inbox" aria-selected="false">Inbox</a>
-         </li>
+         </li> --}}
          
          <li class="nav-item">
             <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History </a>

@@ -14,12 +14,12 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
-         <li class="nav-item active text-dark"><a href="{{route('dsp.marine')}}" class="nav-link  bgb-1 rounded px-2 py-1">DSP</a></li>
-         <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
-         <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
-         <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
-         <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-         <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+         <li class="nav-item active text-dark"><a href="{{route('dsp.marine')}}" class="nav-link  bgb-1 rounded px-2 py-1" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
+         <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+         <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>
+         <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Programs">MAP</a></li>
+         <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Fuel Management System">FMS</a></li>
+         <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Health, Security, and Environment">HSE</a></li>
       </ul>
    </div>
    
@@ -50,14 +50,12 @@
                   <a href="#" class="dropdown-item dropdown-item-unread text-center">Tidak ada Request dari User Field</a>
                   <small class="dropdown-item dropdown-item-unread">Tidak ada Request dari User Field </small>
                @endif
-               <span class="dropdown-item dropdown-item-unread">
-                  {{-- <div class="dropdown-item-icon bg-primary text-white">
-                     <i class="fas fa-code"></i>
-                  </div> --}}
+               {{-- <span class="dropdown-item dropdown-item-unread">
+                  
                   <div class="dropdown-item-desc text-muted">
                      Tidak ada Request dari User Field
                   </div>
-               </span>
+               </span> --}}
               
             </div>
             <div class="dropdown-footer text-center">
@@ -117,7 +115,7 @@
             
             <ul class="dropdown-menu">
             <li class="nav-item"><a href="{{route('dsp.marine')}}" class="nav-link">General Dashboard</a></li>
-            <li class="nav-item"><a href="{{route('dsp.marine.intermilan')}}" class="nav-link">Intermilan Dashboard</a></li>
+            <li class="nav-item"><a href="{{route('dsp.marine.intermilan', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link">Intermilan Dashboard</a></li>
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
          </li>

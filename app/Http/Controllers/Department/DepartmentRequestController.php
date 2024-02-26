@@ -613,14 +613,15 @@ class DepartmentRequestController extends Controller
       $request = ModelsRequest::find($req->requestId);
 
       $request->update([
-         'activity_id' => $req->activity,
-         'date' => $req->date,
-         'description' => $req->desc,
-         'origin_id' => $req->origin,
-         'destination_id' => $req->destination,
+         // 'activity_id' => $req->activity,
+         // 'date' => $req->date,
+         // 'description' => $req->desc,
+         // 'origin_id' => $req->origin,
+         // 'destination_id' => $req->destination,
+         'desc' => $req->desc
       ]);
 
-      return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully updated');
+      return redirect()->back()->with('success', 'Request Activity successfully updated');
    }
 
    public function draft()
@@ -816,11 +817,11 @@ class DepartmentRequestController extends Controller
          
       } else {
          // dd('tidak ada schedule');
-         $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
+         // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'class' => $request->parent->activity->name,
-            'vessel_id' => $vessel->id,
+            // 'vessel_id' => $vessel->id,
             'by' => 'user',
             'type' => 2,
             'status' => 0,

@@ -1,8 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.app-doc')
 @section('title')
    Intermilan
 @endsection
 @section('content')
+<style>
+   table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.ttd {
+   font-size: 10px;
+}
+
+table td {
+  font-size: 10px
+}
+
+.title {
+  font-size: 11px
+}
+
+table {
+   width: 100%;
+}
+
+</style>
 <div class="container-xl">
    <!-- Page title -->
    <div class="page-header d-print-none">
@@ -34,11 +57,11 @@
             </div>
             
 
-            <table class="table table-transparent table-responsive">
+            <table class="table-sm">
                <thead>
                   <tr>
                      <th class="text-center" style="width: 1%">No.</th>
-                     
+                     <th>User</th>
                      <th>Activity</th>
                      <th>Location</th>
                      
@@ -51,6 +74,7 @@
                @foreach ($requests as $req)
                <tr>
                   <td class="text-center">{{++$i}}</td>
+                  <td>{{$req->employee->name}}/{{$req->employee->port->name}}</td>
                   <td>
                      {{$req->activity->name}} {{$req->desc}}
                   </td>
@@ -58,12 +82,12 @@
                      {{$req->origin->name}} -  {{$req->destination->name}}
                   </td>
                   <td >
-                     {{$req->schedule->vessel_type}}
+                     {{$req->schedule->vessel->type}}
                   </td>
                   <td >{{$req->schedule->vessel->name}}</td>
                   
                   <td >
-                     {{$req->date}}
+                     {{formatDate($req->date)}}
                   </td>
                </tr>
                @endforeach

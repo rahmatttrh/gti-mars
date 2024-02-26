@@ -44,11 +44,133 @@
             
             @if ($confirms->count() > 0)
                @foreach ($confirms as $confirm)
-                  <div class="alert alert-primary" role="alert">
+                  <div class="alert alert-info" role="alert">
                      You have a Arrival Cargo from {{$confirm->origin->name}}. Click <a href="{{route('schedule.detail', enkripRambo($confirm->schedule_id))}}" class="alert-link">here</a> to see detail.
                   </div>
                @endforeach
             @endif
+            <div class="card shadow-sm border">
+               {{-- <div class="card-header">
+                  <small>INTERMILAN</small>
+               </div> --}}
+               <div class="card-body">
+                  <div class="d-flex justify-content-between mb-2">
+                     <b>INTERMILAN <span class="text-uppercase">{{$monthName}}</span> </b>
+                     <div class="dropdown d-inline mr-2 ">
+                        <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Select Month
+                        </button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
+                            Januari
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
+                              Februari
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
+                              Maret
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
+                              April
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
+                              Mei
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
+                              Juni
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(07), enkripRambo(auth()->user()->getYear())])}}">
+                              Juli
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
+                              Agustus
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
+                              September
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
+                              Oktober
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
+                              November
+                          </a>
+                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
+                              Desember
+                          </a>
+                        </div>
+                     </div>
+                  </div>
+                  
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                     @foreach ($dates as $date)
+                     <li class="nav-item">
+                        @if ($allRequests->where('date', $date->format('Y-m-d'))->first() != null)
+                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-danger">
+                           {{$date->format('d')}}
+                           {{-- {{$date->format('Y-m-d')}} --}}
+                        </div></a>
+                        @else 
+                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-info">
+                           {{$date->format('d')}}
+                           {{-- {{$date->format('Y-m-d')}} --}}
+                        </div></a>
+                        @endif
+                     </li>
+                     @endforeach
+                     
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                     <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="text-muted mt-4 mb-4">klik tanggal diatas untuk menampilkan data Intermilan</div>
+                     </div>
+                     @foreach ($dates as $date)
+                     <div class="tab-pane fade " id="date-{{$date->format('d')}}" role="tabpanel" aria-labelledby="date-{{$date->format('d')}}-tab">
+                        <table>
+                           <thead>
+                              <tr>
+                                 <td colspan="6">{{$date->format('d F Y')}}</td>
+                              </tr>
+                              <tr>
+                                 <td>ID</td>
+                                 <td>Location</td>
+                                 <td>Activity</td>
+                                 <td>Required Boat</td>
+                                 <td>Boat Assigned</td>
+                                 <td>User</td>
+                                 <td>Status</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($allRequests as $req)
+                                 @if ($req->date == $date->format('Y-m-d'))
+                                    <tr>
+                                       <td>
+                                          <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
+                                       </td>
+                                       <td><b>{{$req->origin->name}} - {{$req->destination->name}}</b></td>
+                                       
+                                       <td>{{$req->activity->name}}</td>
+                                       
+                                       <td>{{$req->schedule->vessel->type ?? '-'}}</td>
+                                       <td>{{$req->schedule->vessel->name ?? '-'}}</td>
+                                       <td>{{$req->employee->name}}</td>
+                                       <td><x-status-stisla.request-plain :request="$req" /></td>
+                                    </tr>
+                                    {{-- <b>{{$req->schedule->vessel->name}}</b><br>
+                                    <small>{{$req->origin->name}} - {{$req->destination->name}}</small>
+                                    <hr> --}}
+                                    @else
+                                    
+                                 @endif
+                              @endforeach
+                           </tbody>
+                        </table>
+                     </div>
+                     @endforeach
+                     
+                  </div>
+               </div>
+            </div>
             <div class="card shadow-sm border">
                {{-- <div class="card-header">
                   <h4>Request Activity</h4>

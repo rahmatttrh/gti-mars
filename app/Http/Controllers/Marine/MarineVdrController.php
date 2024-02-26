@@ -119,6 +119,23 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
+   public function reject(Request $req){
+      $vdr = Vdr::find($req->vdr);
+      $vdr->update([
+         'status' => 101
+      ]);
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'type' => 'reject',
+         'status' => 1,
+         'user_id' => auth()->user()->id,
+         'desc' => $req->desc
+      ]);
+
+      return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
+   }
+
    public function approveSuptent($id){
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);

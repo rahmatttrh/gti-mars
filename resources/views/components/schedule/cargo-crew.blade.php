@@ -9,9 +9,23 @@
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
          </li>
          @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
-            @if ($recents->count() > 0)
+            @if ($recents->where('schedule_id', $schedule->id)->count() > 0)
             <li class="nav-item">
                <a class="nav-link" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="false">Incoming Request <span class="bg-danger px-2 text-white rounded">!</span></a>
+            </li>
+            @else
+            <li class="nav-item">
+               <a class="nav-link" id="incoming-tab" data-toggle="tab" href="#incoming" role="tab" aria-controls="incoming" aria-selected="false">Incoming Request </a>
+            </li>
+            @endif
+            @if ($recents->where('schedule_id','!=', $schedule->id)->count() > 0)
+            
+            <li class="nav-item">
+               <a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">Other Request <span class="bg-danger px-2 text-white rounded">!</span></a>
+            </li>
+            @else
+            <li class="nav-item">
+               <a class="nav-link" id="other-tab" data-toggle="tab" href="#other" role="tab" aria-controls="other" aria-selected="false">Other Request </a>
             </li>
             @endif
          @endif
@@ -64,9 +78,9 @@
                            {{-- <td class=" text-center">{{$item->size}}</td> --}}
                         
                            @if ($request->status == 10 && auth()->user()->hasRole('department'))
-                           <td>
+                           <td class="text-center">
                                  @if ($item->status == 0)
-                                 <a href="#" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                 <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#confirmCargo_{{$item->id}}">Confirm</a>
                                  {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
                                  @else
                                  -
@@ -185,9 +199,19 @@
             @if ($recents->count() > 0)
             <div class="tab-pane fade" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
                
-               <x-schedule-stisla.incoming :recents="$recents" />
+               <x-schedule-stisla.incoming :recents="$recents" :schedule="$schedule" />
                <hr>
-               <small class="text-muted">This tab is only appear on Marine User Level</small>
+               
+               <small class="text-muted">Tab ini berisi data Request Activity dari User yang otomatis masuk ke Schedule {{$schedule->vessel->name ?? ''}} {{formatDate($schedule->date)}}</small><br>
+               <small class="text-muted">Hanya bisa di lihat oleh pihak Fleet Control</small>
+            </div>
+
+            <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+               
+               <x-schedule-stisla.other :recents="$recents" :schedule="$schedule" />
+               <hr>
+               <small class="text-muted">Tab ini berisi data Request Activity dari User yang otomatis masuk ke Schedule lain</small><br>
+               <small class="text-muted">Hanya bisa di lihat oleh pihak Fleet Control</small>
             </div>
             @endif
          @endif

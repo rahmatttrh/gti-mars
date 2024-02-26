@@ -25,18 +25,25 @@
       <div id="accordion">
          <div class="accordion">
             <div class="accordion-header" role="button" data-toggle="collapse" data-target="#panel-head" aria-expanded="true">
-            <h4>Vessel Daily Report {{$vessel->name}}  | {{dayDate($vdr->date)}}</h4>
+               <h4>Vessel Daily Report {{$vessel->name}}  | {{dayDate($vdr->date)}}</h4>
             </div>
             <div class="accordion-body collapse show" id="panel-head" data-parent="#accordion">
                
                {{-- <h5 class="mt-2">{{$vessel->name}}</h5> --}}
-               @if ($vdr->status == 0 && auth()->user()->hasRole('vessel'))
-                  <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Release</a>
-                  <a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+               @if (auth()->user()->hasRole('vessel'))
+                  @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                     <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Release</a>
+                     <a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                  @endif
                @endif
+               
 
                @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
-               <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Approve Marine</a>
+               <div class="btn-group mr-2">
+                  <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-sm btn-info">Approve </a>
+                  <a href="" class="btn btn-sm btn-danger shadow-none" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+               </div>
+               
                @endif
 
                @if ($vdr->status == 2 && auth()->user()->hasRole('suptent'))

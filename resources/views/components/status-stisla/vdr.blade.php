@@ -8,4 +8,8 @@
    <div class="badge badge-info">Validasi Mr. Luthfi</div>
    @elseif($vdr->status == 4)
    <div class="badge badge-info">Approved</div>
+
+   @elseif($vdr->status == 101)
+   
+   <div class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc}}">Reject Marine</div>
 @endif

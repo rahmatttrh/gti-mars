@@ -1,11 +1,17 @@
-<a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalAddActivity">
-   Add
-</a>
-<table class="table table-striped table-sm mt-2">
+@if (auth()->user()->hasRole('vessel'))
+   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+   <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalAddActivity">
+      <i class="fa fa-plus"></i> Add
+   </a>
+   @endif
+@endif
+
+
+<table class=" table-striped  mt-2">
     <thead>
         <tr>
             <th colspan="2" class="text-center">TIME</th>
-            <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime </th>
+            <th colspan="8" class="text-center">Operation Mode Duration (hh::mm) <br> <small>Except Maintenance & Downtime</small> </th>
             <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
             <th rowspan="2" class="text-center align-middle">Action</th>
         </tr>

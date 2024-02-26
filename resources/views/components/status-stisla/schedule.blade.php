@@ -20,7 +20,7 @@
       {{-- <button type="button" class="btn btn-danger btn-icon icon-left">
          <i class="fas fa-user"></i>User Confirmation 
       </button> --}}
-      <div class="badge badge-primary "><span class="badge bg-primary me-1"></span><small>User Confirmation</small></div>
+      <div class="badge badge-warning "><span class="badge bg-warning me-1"></span><small>User Confirmation</small></div>
       @elseif($schedule->status == 4)
       <div class="badge bg-light border text-dark"><span class="badge bg-success me-1"></span>04 : Approval Additional Request</div>
       @elseif($schedule->status == 5)

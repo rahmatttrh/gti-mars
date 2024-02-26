@@ -142,6 +142,12 @@ class User extends Authenticatable
       return $now->format('m');
    }
 
+   public function getYear()
+   {
+      $now = Carbon::now();
+      return $now->format('Y');
+   }
+
    public function isPlatform()
    {
       $port = Port::where('email', $this->email)->first();
@@ -155,4 +161,6 @@ class User extends Authenticatable
          return false;
       }
    }
+
+
 }

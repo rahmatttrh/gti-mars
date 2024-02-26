@@ -67,16 +67,16 @@
                <div class="d-flex justify-content-between">
                   <div>
                   @if ($activity->id > 2)
-                     <h5>{{$activity->name}}</h5>
+                     <h5>{{$activity->name}} </h5>
                      <div class=""> {{$request->origin->name}} to  {{$request->destination->name}}</div>
                      {{-- <div class="d-block mt-2">                               --}}
                      <small> Request by {{$request->user->name ?? '-'}} {{$request->employee->name ?? '-'}} </small>
                      {{-- </div> --}}
                      @else
-                        <h5>{{$activity->name}} Activity</h5>
+                        <h5>{{$request->code}} - {{$activity->name}}  {{$request->desc}}</h5>
                         <div>{{$request->origin->name}} to  {{$request->destination->name}}</div>
                                                       
-                        <small> Request by {{$request->employee->name}}  {{$request->employee->ekstensi}}</small>
+                        <span> User : {{$request->employee->name}}  {{$request->employee->ekstensi}}</span>
                         
                   @endif
                   </div>
@@ -88,7 +88,13 @@
                         <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
                      @endif
                      
-                     <small>{{formatDate($request->date)}}</small>
+                     <span>{{formatDate($request->date)}}</span><br>
+                     @if ($request->schedule_id != null)
+                     <a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}">{{$request->schedule->vessel->name ?? 'Vessel Empty'}} {{$request->schedule->code}}</a>
+                     @else
+                     - Empty -
+                     @endif
+                     
                   </div>
                </div>
                <div class="summary">
@@ -114,7 +120,7 @@
                   
                   @if ($activity->id == 1)
                   <div class="table-responsive">
-                     <table class=" table-striped " id="table-4">
+                     <table class="table table-sm table-striped " id="table-4">
                         <thead>
                            <tr>
                               <th>MTD</th>

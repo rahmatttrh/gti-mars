@@ -63,5 +63,9 @@
          </tbody>
       </table>
    </div>
-   <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Save</button>
+   @if (auth()->user()->hasRole('vessel'))
+         @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+         <button type="submit" class="btn btn-info btn-sm"> <i class="fa fa-save"></i> Save</button>
+         @endif
+      @endif
 </form>

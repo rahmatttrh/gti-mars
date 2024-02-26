@@ -77,7 +77,8 @@
                         <hr>
                         {{$parent->activity->name}} Activity
                         From <b>{{$parent->origin->name}}</b><br>
-                        <small> Request by {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
+                        <b>{{formatDate($parent->date)}}</b><br>
+                        <small> User : {{$parent->employee->name}}  {{$parent->employee->ekstensi}}</small>
                      </div>
                      @if ($parent->status == 0)
                      <div class="col">
@@ -149,7 +150,10 @@
                                           @endforeach
                                        @endif --}}
 
+                                       @if ($parent->requests->first()->schedule->vessel_id != null)
                                        <option value="{{$parent->requests->first()->schedule->vessel_id}}" selected>{{$parent->requests->first()->schedule->vessel->name}} / {{$parent->requests->first()->schedule->vessel->type}}</option>
+                                       @endif
+                                       
                                        @if (count($nearestVessels) > 0)
                                           @foreach ($nearestVessels  as $vess)
                                              @if ($vess->id == $parent->requests->first()->schedule->vessel_id)
@@ -190,9 +194,10 @@
                            <table class="table-striped" id="table-1">
                               <thead>
                               <tr>
-                                 <th>Status</th>
+                                 <th>#</th>
+                                 {{-- <th>Status</th> --}}
                                  <th>MTD</th>
-                                 <th>Destination</th>
+                                 {{-- <th>Destination</th> --}}
                                  <th>Descriptive</th>
                                  <th>Contract</th>
                                  <th class="text-center">Qty</th>
@@ -207,18 +212,21 @@
                               </thead>
                               <tbody>
                               @foreach ($parent->requests as $request)
-                              {{-- <tr>
-                                 <td colspan="8">{{$request->destination->name}}</td>
-                              </tr> --}}
+                              <tr>
+                                 <td colspan="8">{{++$i}}. {{$request->destination->name}} - {{$request->desc}}</td>
+                                 {{-- <td colspan="6">Example Desc</td> --}}
+                                 <td><a href="#" data-toggle="modal" data-target="#request-edit-{{$request->id}}">Edit</a></td>
+                              </tr>
                                  @foreach ($request->cargoItems as $item)
                                     <tr>
-                                       <td><x-status-stisla.request :request="$item->request" /></td>
+                                       {{-- <td><x-status-stisla.request :request="$item->request" /></td> --}}
+                                          <td></td>
                                        <td class=" text-truncate">
                                           <div class="dropdown">
                                           {{$item->mtd}}
                                           </div>
                                        </td>
-                                       <td>{{$item->request->destination->name}}</td>
+                                       {{-- <td>{{$item->request->destination->name}}</td> --}}
                                        <td class=" text-truncate ">
                                           {{$item->desc}} 
                                        </td>
@@ -269,57 +277,57 @@
                         </div>
                      </div>
                      <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                     <div class="table-responsive">
-                        <table class=" table-striped " id="table-5">
-                           <thead>
-                           <tr>
-                              <th>Status</th>
-                                 <th>Type</th>
-                                 <th>Route</th>
-                              <th>Name</th>
-                              <th>Barcode</th>
-                              <th>Department</th>
-                              <th>Company</th>
-                              <th>Desc</th>
-                              <th></th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           
-                           @foreach ($parent->requests as $request)
-                           @foreach ($request->passengerItems as $passenger)
+                        <div class="table-responsive">
+                           <table class=" table-striped " id="table-5">
+                              <thead>
                               <tr>
-                                 <td><x-status-stisla.request :request="$passenger->request" /></td>
-                                 <td>{{$passenger->type}}</td>
-                                 <td> {{$passenger->request->destination->name}}</td>
-                                 <td >{{$passenger->name}}</td>
-                                 <td >{{$passenger->barcode}}</td>
-                                 <td >{{$passenger->department}}</td>
-                                 <td >{{$passenger->company}}</td>
-                                 <td >{{$passenger->desc}}</td>
-                                 <td>
-                                    @if (auth()->user()->hasRole('department') && $parent->status == 0)
-                                       {{-- <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
-                                       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}"><i class="fa fa-edit"></i></button>
-                                       <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}"><i class="fa fa-trash"></i></button>
-                                       </div> --}}
-                                       <a href="#" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}">Edit</a>
-                                       <a href="#" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}">Delete</a>
-                                    @endif
-                                    
-                                 </td>
-                                 {{-- <td class="text-end">
-                                    @if ($request->status == 0)
-                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
-                                    @endif
-                                 </td> --}}
+                                 <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Route</th>
+                                 <th>Name</th>
+                                 <th>Barcode</th>
+                                 <th>Department</th>
+                                 <th>Company</th>
+                                 <th>Desc</th>
+                                 <th></th>
                               </tr>
-                              {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
-                           @endforeach
-                           @endforeach
-                        </tbody>
-                        </table>
-                     </div>
+                           </thead>
+                           <tbody>
+                              
+                              @foreach ($parent->requests as $request)
+                              @foreach ($request->passengerItems as $passenger)
+                                 <tr>
+                                    <td><x-status-stisla.request :request="$passenger->request" /></td>
+                                    <td>{{$passenger->type}}</td>
+                                    <td> {{$passenger->request->destination->name}}</td>
+                                    <td>{{$passenger->name}}</td>
+                                    <td>{{$passenger->barcode}}</td>
+                                    <td>{{$passenger->department}}</td>
+                                    <td>{{$passenger->company}}</td>
+                                    <td>{{$passenger->desc}}</td>
+                                    <td>
+                                       @if (auth()->user()->hasRole('department') && $parent->status == 0)
+                                          {{-- <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}"><i class="fa fa-edit"></i></button>
+                                          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}"><i class="fa fa-trash"></i></button>
+                                          </div> --}}
+                                          <a href="#" data-toggle="modal" data-target="#passenger-edit-{{$passenger->id}}">Edit</a>
+                                          <a href="#" data-toggle="modal" data-target="#passenger-delete-{{$passenger->id}}">Delete</a>
+                                       @endif
+                                       
+                                    </td>
+                                    {{-- <td class="text-end">
+                                       @if ($request->status == 0)
+                                       <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deletePassengerItem_{{$passenger->id}}">Delete</a>
+                                       @endif
+                                    </td> --}}
+                                 </tr>
+                                 {{-- <x-modal.passenger.delete :item="$passenger" /> --}}
+                              @endforeach
+                              @endforeach
+                           </tbody>
+                           </table>
+                        </div>
                      </div>
                   </div>
                </div>
@@ -516,5 +524,62 @@
     </div>
     @endforeach
   @endforeach
+
+   @foreach ($parent->requests as $request)
+      <div class="modal fade" id="request-edit-{{$request->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <form action="{{route('request.update')}}" method="POST">
+               @csrf
+               @method('PUT')
+               <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+               <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Edit Request </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  {{-- Change {{$req->activity->name}} {{$req->description}} to  ...
+                  <hr> --}}
+                  <div class="form-row">
+                     
+                     <div class="form-group col-md-12">
+                        <label for="desc">Description</label>
+                        <input type="text" class="form-control" name="desc" id="desc" value="{{$request->desc}}">
+                     </div>
+                     
+                  </div>
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Save</button>
+               </div>
+               </div>
+            </form>
+         </div>
+      </div>
+
+      {{-- <div class="modal fade" id="cargo-delete-{{$cargo->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title">Delete Confirmation</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+            Delete {{$cargo->desc}} data of the list?
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="{{route('cargo.delete', enkripRambo($cargo->id))}}" class="btn btn-danger">Delete</a>
+            </div>
+         </div>
+      </div>
+      </div> --}}
+   @endforeach
     
 @endsection

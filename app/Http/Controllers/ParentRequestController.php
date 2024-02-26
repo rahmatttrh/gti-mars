@@ -97,19 +97,22 @@ class ParentRequestController extends Controller
       $parent = ParentRequest::find($dekripId);
       $status = 0;
       foreach ($parent->requests as $request) {
-         if ($request->status > 0) {
-            $status = 1;
+         foreach($request->cargoItems as $item){
+            $item->delete();
          }
+         $request->delete();
       }
 
-      if ($status == 0) {
-         foreach ($parent->requests as $request) {
-            $request->delete();
-         }
-         return redirect()->route('request.draft')->with('success', 'Master Request successfully deleted');
-      } elseif ($status == 1) {
-         return redirect()->back()->with('success', 'Failed, this Master Request has atleast one Request Activity On Progress');
-      }
+      return redirect()->route('request.progress')->with('success', 'Master Request successfully deleted');
+
+      // if ($status == 0) {
+      //    foreach ($parent->requests as $request) {
+      //       $request->delete();
+      //    }
+      //    return redirect()->route('request.draft')->with('success', 'Master Request successfully deleted');
+      // } elseif ($status == 1) {
+      //    return redirect()->back()->with('success', 'Failed, this Master Request has atleast one Request Activity On Progress');
+      // }
    }
 
    public function release($id)

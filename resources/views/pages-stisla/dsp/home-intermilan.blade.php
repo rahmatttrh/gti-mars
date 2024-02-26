@@ -11,143 +11,146 @@
                   <small>INTERMILAN</small>
                </div> --}}
                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                     <b>INTERMILAN <span class="text-uppercase">{{$monthName}}</span></b>
+                     <div>
+                        <div class="dropdown d-inline mr-2 ">
+                           <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                             Select Month
+                           </button>
+                           <div class="dropdown-menu">
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
+                               Januari
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
+                                 Februari
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
+                                 Maret
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
+                                 April
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
+                                 Mei
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
+                                 Juni
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(7), enkripRambo(auth()->user()->getYear())])}}">
+                                 Juli
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
+                                 Agustus
+                              </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
+                                 September
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
+                                 Oktober
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
+                                 November
+                             </a>
+                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
+                                 Desember
+                             </a>
+                           </div>
+                        </div>
+                        <a href="{{route('document.intermilan', enkripRambo(2))}}" class="btn btn-sm btn-light shadow-none border"><i class="fa fa-print"></i> Print</a>
+                     </div>
+                     
+                  </div>
+                  
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
+                     {{-- @php
+                         $status = 'info'
+                     @endphp --}}
+                     @foreach ($dates as $date)
                      <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true"><div class="badge badge-danger">1</div></a>
+                        @if ($requests->where('date', $date->format('Y-m-d'))->first() != null)
+                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-danger">
+                           {{$date->format('d')}}
+                           {{-- {{$date->format('Y-m-d')}} --}}
+                        </div></a>
+                        @else 
+                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-info">
+                           {{$date->format('d')}}
+                           {{-- {{$date->format('Y-m-d')}} --}}
+                        </div></a>
+                        @endif
+                        {{-- @foreach ($requests as $req)
+                            @if ($req->date == $date->format('Y-m-d'))
+                                @php
+                                    $status = 'danger'
+                                @endphp
+                                @else
+                                @php
+                                    $status = 'info'
+                                @endphp
+                            @endif
+
+                        @endforeach --}}
+                        
+                       
                      </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="enc-tab" data-toggle="tab" href="#enc" role="tab" aria-controls="enc" aria-selected="false"><div class="badge badge-danger">2</div> </a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">3</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">4</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="one-tab" data-toggle="tab" href="#one" role="tab" aria-controls="one" aria-selected="false"><div class="badge badge-danger">5</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">6</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">7</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">8</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">9</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">10</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">11</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">12</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">13</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">14</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">15</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">16</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">17</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">18</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">19</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">20</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">21</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">22</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">23</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">24</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">25</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">26</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">27</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">28</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">29</div></a>
-                     </li>
-                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><div class="badge bg-darkgreen">30</div></a>
-                     </li>
+                     @endforeach
+                     
                   </ul>
                   <div class="tab-content" id="myTabContent">
-                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="card shadow-none border">
-                           <div class="card-body">
-                              <b>ENC ONE</b> 
-                              <span>Distribute Material</span> <br>
-                              Kalijapat 4 - Pabelokan - COSL 222 - COSL 223 - Winner
-            
-                           </div>
-                        </div>
+                     <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="text-muted mt-4 mb-4">klik tanggal diatas untuk menampilkan data Intermilan</div>
                      </div>
-                     <div class="tab-pane fade" id="enc" role="tabpanel" aria-labelledby="enc-tab">
-                        <div class="card shadow-none border">
-                           <div class="card-body">
-                              <b>GIAT JAYA</b> 
-                              <span>Distribute Material</span> <br>
-                               Kalijapat 4 - Pabelokan - COSL 222 - COSL 223 - Winner
-            
-                           </div>
-                        </div>
+                     @foreach ($dates as $date)
+                     <div class="tab-pane fade " id="date-{{$date->format('d')}}" role="tabpanel" aria-labelledby="date-{{$date->format('d')}}-tab">
+                        <table>
+                           <thead>
+                              <tr>
+                                 <th colspan="6">{{$date->format('d F Y')}}</th>
+                              </tr>
+                              <tr>
+                                 <th>ID</th>
+                                 <th>User</th>
+                                 <th>Activity</th>
+                                 <th>Location</th>
+                                 <th>Schedule</th>
+                                 <th>Required Boat</th>
+                                 <th>Boat Assigned</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($requests as $req)
+                                 @if ($req->date == $date->format('Y-m-d'))
+                                    <tr>
+                                       <td>
+                                          <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
+                                       </td>
+                                       <td>{{$req->employee->name}} / {{$req->employee->port->name}}</td>
+                                       <td>
+                                          <a href="#" data-toggle="modal" data-target="#request-edit-{{$req->id}}">{{$req->activity->name}} </a>
+                                          - {{$req->desc}}</td>
+                                       <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
+                                       <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code}}</a></td>
+                                       <td>{{$req->schedule->vessel->type ?? '-'}}</td>
+                                       <td>{{$req->schedule->vessel->name ?? '-'}}</td>
+                                    </tr>
+                                    {{-- <b>{{$req->schedule->vessel->name}}</b><br>
+                                    <small>{{$req->origin->name}} - {{$req->destination->name}}</small>
+                                    <hr> --}}
+                                    @else
+                                    
+                                 @endif
+                              @endforeach
+                           </tbody>
+                        </table>
                      </div>
-                     <div class="tab-pane fade" id="one" role="tabpanel" aria-labelledby="one-tab">
-                        <div class="card shadow-none border">
-                           <div class="card-body">
-                              <b>TRANSKO BALIHE</b> 
-                              <span>Distribute Material</span> <br>
-                               Kalijapat 4 - Pabelokan - COSL 222 - COSL 223 - Winner
-            
-                           </div>
-                        </div>
-                     </div>
-                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        <div class="card shadow-none border">
-                           <div class="card-body text-center">
-                              <small>Data Empty</small>
-                           </div>
-                        </div>
-                     </div>
+                     @endforeach
+                     
                   </div>
                </div>
             </div>
-            <div class="card shadow-lg" id="schedule">
+            {{-- <div class="card shadow-lg" id="schedule">
                <div class="card-body">
-                  {{-- <small><b>Intermilan</b></small>
-                  <hr> --}}
                   <div class="table-responsive">
                   <table class="table table-striped table-sm" id="table-12">
                      <thead>                                 
@@ -162,8 +165,6 @@
                         <th>Required Boat</th>
                         <th>Boat Assigned</th>
                         <th>Date</th>
-                        {{-- <th class="text-center">Status</th> --}}
-                        {{-- <th></th> --}}
                         </tr>
                      </thead>
                      <tbody>     
@@ -176,7 +177,6 @@
                               <td>{{$req->schedule->vessel->type}}</td>
                               <td>{{$req->schedule->vessel->name}}</td>
                               <td>{{formatDate($req->schedule->date)}}</td>
-                              {{-- <td>-</td> --}}
                            </tr>
                         @endforeach                            
                         
@@ -184,10 +184,47 @@
                   </table>
                   </div>
                </div>
-            </div>
+            </div> --}}
          </div>
       </div>
    </section>
+
+   @foreach ($requests as $request)
+   <div class="modal fade" id="request-edit-{{$request->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('request.update')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+            <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Edit Request </h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               {{-- Change {{$req->activity->name}} {{$req->description}} to  ...
+               <hr> --}}
+               <div class="form-row">
+                  
+                  <div class="form-group col-md-12">
+                     <label for="desc">Description</label>
+                     <input type="text" class="form-control" name="desc" id="desc" value="{{$request->desc}}">
+                  </div>
+                  
+               </div>
+               
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info">Save</button>
+            </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   @endforeach
 @endsection
 
 @push('autorefresh')

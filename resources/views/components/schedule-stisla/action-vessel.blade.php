@@ -1,7 +1,7 @@
 <span >
    @if ($schedule->status == 1 )
    <div class="btn-group " role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-info " data-toggle="modal" data-target="#schedule-accept">Approve</button>
+      <button type="button" class="btn btn-info " data-toggle="modal" data-target="#schedule-accept">Accept</button>
       <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#schedule-revision">Revision</button>
     </div>
       {{-- <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
@@ -30,7 +30,7 @@
                     @endif
                  @endforeach
                </select>
-               @if ($schedule->class == 'Cargo/Crew')
+               @if ($schedule->class == 'Cargo' || $schedule->class == 'Cargo')
                <select class="form-control" name="port" id="port">
                   <option selected disabled>Location</option>
                   @foreach ($fixroutes as $route)

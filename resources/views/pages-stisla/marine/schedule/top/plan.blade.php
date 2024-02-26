@@ -80,7 +80,7 @@
                <div class="d-flex justify-content-between align-items-center">
                   <div class="div">
                      <div class="dropdown dropright d-inline mr-2 ">
-                        <button class="btn btn-light border dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <button class="btn btn-light border shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Select Month
                         </button>
                         <div class="dropdown-menu">
@@ -122,7 +122,7 @@
                           </a>
                         </div>
                      </div>
-                     <a href="{{route('schedule.create')}}" class="btn btn-light border">
+                     <a href="{{route('schedule.create')}}" class="btn btn-light border shadow-none">
                         <i class="fa fa-plus"></i>
                         Create
                      </a>

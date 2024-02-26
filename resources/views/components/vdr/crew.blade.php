@@ -10,8 +10,13 @@
    </div>
 </div> --}}
 
-<a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalAddCrew">Add</a>
-<a href="#" data-toggle="modal" data-target="#modalImport" class="btn btn-sm btn-light border shadow-none">Import</a>
+@if (auth()->user()->hasRole('vessel'))
+   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+   <a href="#" class="btn btn-sm btn-light border shadow-none" data-toggle="modal" data-target="#modalAddCrew">Add</a>
+   <a href="#" data-toggle="modal" data-target="#modalImport" class="btn btn-sm btn-light border shadow-none">Import</a>
+   @endif
+@endif
+
 <a href="/template/template-passenger-vdr.xlsx" class="btn btn-sm btn-light border shadow-none">Download Template Import</a>
 {{-- <hr> --}}
 <div class="row mt-2">

@@ -7,7 +7,7 @@
          
          Add Additional
       </button> --}}
-      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#schedule-confirm-complete">
+      <button class="btn btn-info mb-2 btn-block" data-toggle="modal" data-target="#schedule-confirm-complete">
          
          Complete
       </button>

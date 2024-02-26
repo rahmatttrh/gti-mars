@@ -2,12 +2,12 @@
    @csrf
    @method('PUT')
    <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-      <table class="table table-striped table-sm">
+      <table class=" table-striped ">
          <thead>
             <tr class="text-center align-middle">
                <th>TYPE</th>
-               <th>Opening <br> (ROB from Previous Day)</th>
-               <th>Consumption <br> (Based on Actual Sounding)</th>
+               <th>Opening <br> <small>(ROB from Previous Day)</small></th>
+               <th>Consumption <br> <small>(Based on Actual Sounding)</small></th>
                <th>Received</th>
                <th>Transferred</th>
                <th>Closing</th>
@@ -47,5 +47,11 @@
             @endforeach
          </tbody>
       </table>
-   <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Save</button>
+      @if (auth()->user()->hasRole('vessel'))
+         @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+         <hr>
+         <button type="submit" class="btn btn-info "> <i class="fa fa-save"></i> Save</button>
+         @endif
+      @endif
+   
 </form>

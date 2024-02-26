@@ -15,7 +15,7 @@
    <div class="section-body">
       <div class="row mt-3">
          <div class="col-6">
-            <div class="card shadow-lg">
+            <div class="card shadow-sm border">
                <form action="{{route('schedule.store')}}" method="POST">
                   @csrf
                   <div class="card-header">
@@ -48,7 +48,7 @@
                      </div>
                   </div>
                   <div class="card-footer bg-whitesmoke">
-                     <button type="submit" class="btn btn-primary">Submit</button>
+                     <button type="submit" class="btn btn-info">Submit</button>
                   </div>
                </form>
             </div>

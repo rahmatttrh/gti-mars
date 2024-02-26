@@ -2,10 +2,17 @@
     
 
 <span class="d-flex">
-   <button class="btn btn-info" data-toggle="modal" data-target="#parent-release">
+   <div class="btn-group">
+      <button class="btn btn-info px-4" data-toggle="modal" data-target="#parent-release">
       
-      Save
-    </button>
+         Save
+      </button>
+      <a href="{{route('request.delete.parent', enkripRambo($parent->id))}}" class="btn btn-danger pt-2" >
+         Delete
+         
+      </a>
+   </div>
+   
    
 </span>
 @endif

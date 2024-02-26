@@ -15,6 +15,7 @@ use App\Models\VdrHse;
 use App\Models\VdrHseHeader;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
+use App\Models\VdrPeriodic;
 use App\Models\VdrWeather;
 use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
@@ -176,6 +177,7 @@ class VdrController extends Controller
       $engines = VdrEngine::where('vdr_id', $vdr->id)->get();
       $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
       $crews = VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get();
+      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
@@ -187,6 +189,7 @@ class VdrController extends Controller
          'vdr' => $vdr,
          'activities' => $activities,
          'cargos' => $cargos,
+         'periodic' => $periodic,
          'weathers' => $weathers,
          'hses' => $hses,
          'engines' => $engines,
@@ -243,6 +246,10 @@ class VdrController extends Controller
 
          $vdr->update([
             'code' => vdrId($vdr->id)
+         ]);
+
+         $periodic = VdrPeriodic::create([
+            'vdr_id' => $vdr->id
          ]);
 
          $cargoHeadings = VdrCargoHeading::get();

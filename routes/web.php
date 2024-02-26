@@ -46,6 +46,7 @@ use App\Http\Controllers\SurveillanceCrewController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VdrController;
 use App\Http\Controllers\VdrCrewController;
+use App\Http\Controllers\VdrPeriodicController;
 use App\Http\Controllers\Vessel\VesselDeviationController;
 use App\Http\Controllers\Vessel\VesselRequestController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
@@ -58,6 +59,7 @@ use App\Models\Platform;
 use App\Models\Request;
 use App\Models\Schedule;
 use App\Models\Surveillance;
+use App\Models\VdrPeriodic;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -80,7 +82,7 @@ Route::middleware(["auth"])->group(function () {
    //    Route::group(['middleware' => ['role:department|vessel']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
-
+   Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
    Route::prefix('news')->group(function () {
       
       Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
@@ -324,7 +326,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    Route::prefix("dsp/m")->group(function () {
       Route::get("dash/main", [HomeController::class, "dspMarine",])->name('dsp.marine');
       Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');
-      Route::get("dash/intermilan", [HomeController::class, "dspMarineIntermilan",])->name('dsp.marine.intermilan');
+      Route::get("dash/intermilan/{month}/{year}", [HomeController::class, "dspMarineIntermilan",])->name('dsp.marine.intermilan');
       Route::get("surveillance", [SurveillanceController::class, "marine",])->name('surveillance.marine');
 
       Route::prefix('schedule')->group(function () {
@@ -347,6 +349,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          Route::get('reset/route/{schedule:id}', [MarineScheduleController::class, 'resetRoute'])->name('schedule.reset.route');
          Route::post('add/route', [MarineScheduleController::class, 'addRoute'])->name('schedule.add.route');
          Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
+         Route::get('delete/route/{id}', [MarineScheduleController::class, 'deleteRoute'])->name('schedule.delete.route');
          Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
       });
    });
@@ -361,6 +364,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
          // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
+         Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
          Route::get('approve/luthfi/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
       });
@@ -546,6 +550,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
       Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
 
       Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
+      Route::put('update/periodic', [VdrPeriodicController::class, 'update'])->name('vdr.update.periodic');
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
       Route::get('release/{id}', [VesselVdrController::class, 'release'])->name('vdr.release');
@@ -559,7 +564,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
 // Level User Field
 Route::group(['middleware' => ['role:logistic|drilling|department']], function () {
    Route::prefix('dsp/u/')->group(function () {
-      Route::get("dash/main", [HomeController::class, "dspUser",])->name('dsp.user');
+      Route::get("dash/main/{month}/{year}", [HomeController::class, "dspUser",])->name('dsp.user');
 
 
       // Request
@@ -580,7 +585,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
          Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
          Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
          Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
-         Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
+         
 
          Route::get('parent/detail/{parent:id}', [ParentRequestController::class, 'detail'])->name('request.detail.parent');
       });

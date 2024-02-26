@@ -11,6 +11,7 @@ use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrHse;
 use App\Models\VdrOperating;
+use App\Models\VdrPeriodic;
 use App\Models\VdrWeather;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -28,6 +29,7 @@ class DocumentController extends Controller
       $vdrWheathers = VdrWeather::where('vdr_id', $vdr->id)->get();
       $hses = VdrHse::where('vdr_id', $vdr->id)->get();
       $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
@@ -37,6 +39,7 @@ class DocumentController extends Controller
          'vessel' => $vdr->vessel,
          'vdrActivities' => $vdrActivities,
          'vdrCargos' => $vdrCargos,
+         'vdrPeriodic' => $periodic,
          'vdrWheathers' => $vdrWheathers,
          'hses' => $hses,
          'operatings' => $operatings,

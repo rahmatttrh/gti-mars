@@ -14,7 +14,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
-         <li class="nav-item text-dark"><a href="{{route('dsp.user')}}" class="nav-link text-dark">DSP</a></li>
+         <li class="nav-item text-dark"><a href="{{route('dsp.user', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link text-dark">DSP</a></li>
          <li class="nav-item text-dark"><a href="{{route('forbidden')}}" class="nav-link text-dark">VDR</a></li>
          <li class="nav-item active text-dark"><a href="{{route('proact')}}" class="nav-link bgb-1 rounded px-2 py-1">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>

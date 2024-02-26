@@ -35,12 +35,15 @@
                <x-schedule-stisla.action-vessel :schedule="$schedule" />
                <div class="mb-3"></div>
             @endif
+            @if (auth()->user()->hasRole('department'))
+               <x-schedule-stisla.action-department :schedule="$schedule" />
+            @endif
             {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1 && $schedule->status < 11 )
                <a href="" class="btn  btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
                <div class="mb-3"></div>
             @endif --}}
             <div class="card shadow-sm border">
-               <div class="card-header"><b>Detail Sailing Order</b></div>
+               {{-- <div class="card-header"><b>Detail Sailing Order</b></div> --}}
                {{-- <div class="card-body d-flex">
                   
                   
@@ -58,7 +61,8 @@
                      @endif --}}
                   </div>
                   
-                  <span>{{$schedule->code}}</span>
+                  <span>{{$schedule->code}}</span><br>
+                  <small>{{$schedule->vessel->type ?? 'Empty'}}</small>
                   <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
                   
                   <span>{{formatDateName($schedule->date)}}</span> <br>
@@ -170,9 +174,7 @@
                <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixRoutes" />
             @endif
 
-            @if (auth()->user()->hasRole('department'))
-               <x-schedule-stisla.action-department :schedule="$schedule" />
-            @endif
+            
   
             {{-- @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
                @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew')
@@ -266,7 +268,7 @@
                                     <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
                                  </select>
                                  <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-info" type="submit">Submit</button>
                                  </div>
                               </div>
                            </div>
@@ -315,7 +317,7 @@
                                     <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
                                  </select>
                                  <div class="input-group-append">
-                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                    <button class="btn btn-info" type="submit">Submit</button>
                                  </div>
                               </div>
                            </div>
@@ -487,7 +489,7 @@
             </div>
             <div class="modal-footer bg-whitesmoke">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Approve</button>
+               <button type="submit" class="btn btn-info">Approve</button>
             </div>
          </div>
          </form>
@@ -526,7 +528,7 @@
           </div>
           <div class="modal-footer bg-whitesmoke">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-info">Save</button>
           </div>
         </div>
       </form>
@@ -565,7 +567,7 @@
           </div>
           <div class="modal-footer bg-whitesmoke">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <button type="submit" class="btn btn-info">Save</button>
           </div>
         </div>
       </form>
@@ -622,11 +624,23 @@
               </button>
             </div>
             <div class="modal-body">
-              Change {{$req->activity->name}} {{$req->description}} {{$req->id}} to  ...
+               {{$req->code}} {{$req->activity->name}} {{$req->description}} <br>
+               @foreach ($req->cargoItems as $item)
+                   {{$item->desc}}
+               @endforeach 
+               [{{$req->total_weight}} ton]
+               <hr>
+               @if ($req->schedule_id != null)
+                   From {{$req->schedule->code}} {{$req->schedule->vessel->name ?? ''}} {{formatDate($req->schedule->date)}}
+                   @else
+                   -
+               @endif
+               
+               
               <hr>
               <div class="form-row">
                 <div class="form-group col-md-12">
-                  {{-- <label for="inputState">State</label> --}}
+                  <label for="inputState">Change to</label>
                   <select id="schedule" name="schedule" class="form-control">
                     {{-- <option selected>Choose...</option>
                     <option>...</option> --}}
@@ -685,10 +699,10 @@
                            @endforeach
                            </select>
                         </div>
-                        <div class="form-group col-md-4">
+                        {{-- <div class="form-group col-md-4">
                            <label for="after">Date</label>
                            <input type="date" name="date" id="date" value="{{$route->date}}" class="form-control">
-                        </div>
+                        </div> --}}
                      </div>
                      <div class="form-row">
                         <div class="form-group col-md-12">
@@ -706,11 +720,13 @@
                            </select>
                         </div>
                      </div>
+
+                     <a href="{{route('schedule.delete.route', enkripRambo($route->id))}}">Delete</a>
                   
                   </div>
                   <div class="modal-footer bg-whitesmoke">
                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                     <button type="submit" class="btn btn-primary">Save</button>
+                     <button type="submit" class="btn btn-info">Save</button>
                   </div>
                </div>
             </form>
@@ -764,7 +780,7 @@
               </div>
               <div class="modal-footer bg-whitesmoke">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-info">Save</button>
               </div>
             </div>
           </form>
@@ -788,7 +804,7 @@
         </div>
         <div class="modal-footer bg-whitesmoke">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{{route('schedule.complete', enkripRambo($schedule->id))}}" class="btn btn-primary">Complete</a>
+          <a href="{{route('schedule.complete', enkripRambo($schedule->id))}}" class="btn btn-info">Complete</a>
         </div>
       </div>
     </div>
@@ -829,13 +845,13 @@
    <script>
 
       $(document).ready(function() {
-         console.log('report function');
+         // console.log('report function');
          $('#foto').hide();
          $('.eta').hide();
          $('.anchor').hide();
 
          $('.status').change(function() {
-            console.log('okeee');
+            // console.log('okeee');
             var status = $(this).val();
             if (status == 9) {
               $('#foto').show();

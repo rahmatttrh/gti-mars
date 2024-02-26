@@ -793,7 +793,7 @@ class HomeController extends Controller
 
       $vessels = Vessel::where('status', '>', 1)->get();
 
-      $schedules = Schedule::orderBy('updated_at', 'desc')->get();
+      $schedules = Schedule::orderBy('updated_at', 'asc')->get();
       $progressSchedules = Schedule::where('status', '>', '1')->get();
       $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
@@ -974,10 +974,70 @@ class HomeController extends Controller
       
    }
 
-   public function dspMarineIntermilan(){
+   public function dspMarineIntermilan($month, $year){
+      $now = Carbon::now();
+      // dd($now->format('Y-m-d'));
+      // $yearMonth = $now->format('Y-m');
+      $month = dekripRambo($month);
+      $year = dekripRambo($year);
+      $yearMonth = $year . '-' . $month;
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      // dd($dates);
+      foreach($dates as $date){
+         // dd($date->format('Y-m-d'));
+
+         $requests = ModelsRequest::get();
+         foreach($requests as $req){
+            if ($req->date == $date->format('Y-m-d')) {
+               // dd('Ada');
+            }
+         }
+         
+      }
+
+      
       $requests = ModelsRequest::get();
+
       return view('pages-stisla.dsp.home-intermilan', [
-         'requests' => $requests
+         'now' => $now,
+         'monthName' => $monthName,
+         'requests' => $requests,
+         'dates' => $dates
       ])->with('i');
    }
 
@@ -1143,10 +1203,14 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function dspUser()
+   public function dspUser($month, $year)
    {
       $today = Carbon::now();
-      $month = $today->format('m');
+
+      // $month = $today->format('m');
+      $month = dekripRambo($month);
+      $year = dekripRambo($year);
+      // dd($year);
 
       $vessels = Vessel::get();
       $vessel3 = Vessel::paginate('3');
@@ -1178,9 +1242,37 @@ class HomeController extends Controller
          $monthName = 'Desember';
       }
 
+      $now = Carbon::now();
+      // dd($now->format('Y-m-d'));
+
+      // $yearMonth = $now->format('Y-m');
+      $yearMonth = $year . '-' . $month;
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      // dd($dates);
+      foreach($dates as $date){
+         // dd($date->format('Y-m-d'));
+
+         $requests = ModelsRequest::get();
+         foreach($requests as $req){
+            if ($req->date == $date->format('Y-m-d')) {
+               // dd('Ada');
+            }
+         }
+         
+      }
+
       $employee = Employee::where('email', auth()->user()->email)->first();
       $vessel = '';
-      $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->get();
+      $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->whereYear('date', $year)->get();
 
       $empl = Employee::where('email', auth()->user()->email)->first();
       if ($empl) {
@@ -1195,19 +1287,24 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
       }
 
+      $allRequests = ModelsRequest::get();
+
       // dd(auth()->user()->getPort());
 
 
       return view('pages-stisla.dsp.home-user', [
          'user' => $user,
          'today' => $today,
+         'allRequests' => $allRequests,
          'requests' => $requests,
          'monthName' => $monthName,
          'vessel' => $vessel,
          'vessels' => $vessels,
          // 'vessel3' => $vessel3,
          'schedules' => $schedules,
-         'confirms' => $confirms
+         'confirms' => $confirms,
+         'dates' => $dates
+
          // 'schedulesFix' => $schedulesFix
       ])->with('i');
    }

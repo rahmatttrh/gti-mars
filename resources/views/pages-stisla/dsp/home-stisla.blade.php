@@ -103,9 +103,9 @@
                   <table class=" table-striped " id="table-12">
                      <thead>                                 
                         <tr>
-                        <th class="text-center">
+                        {{-- <th class="text-center">
                            #
-                        </th>
+                        </th> --}}
 
                         <th>ID</th>
                         <th>Type</th>
@@ -119,9 +119,9 @@
                      <tbody>     
                         @foreach ($schedules as $schedule)
                         <tr>
-                           <td class="text-center">
+                           {{-- <td class="text-center">
                               <small>{{++$i}}</small> 
-                           </td>
+                           </td> --}}
                            <td>
                               <span><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}}</a></span>
                               {{-- <br> --}}
@@ -147,9 +147,10 @@
                            
                            @if ($schedule->class == 'Crew' || $schedule->class == 'Cargo')
                               <td class="">
-                                 @foreach ($schedule->routes as $route)
+                                 {{count($schedule->requests)}} Request
+                                 {{-- @foreach ($schedule->routes as $route)
                                  <span>{{$route->port->name}} </span>
-                                 @endforeach
+                                 @endforeach --}}
                               </td>
                               @elseif($schedule->class == 'Moving')
                               <td>

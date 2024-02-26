@@ -26,7 +26,7 @@
                 
             </div> --}}
             <div class="card-body">
-               <div class="dropdown d-inline mr-2 ">
+               <div class="dropdown d-inline mr-2 border shadow-none">
                   <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Select Month
                   </button>
@@ -69,7 +69,7 @@
                     </a>
                   </div>
                </div>
-               <a href="{{route('schedule.create')}}" class="btn btn-info btn-sm">
+               <a href="{{route('schedule.create')}}" class="btn btn-info btn-sm border shadow-none">
                   <i class="fa fa-plus"></i>
                   Create
                </a>

@@ -18,12 +18,12 @@
          <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                <li class="breadcrumb-item"><span class="bg-info py-1 px-2 text-white rounded">Create</span></li>
-               <li class="breadcrumb-item">Edit</li>
-               <li class="breadcrumb-item">Choose Vessel</li>
+               <li class="breadcrumb-item">Costumize</li>
+               <li class="breadcrumb-item">Confirm Vessel</li>
             </ol>
          </nav>
 
-         <x-intermilan />
+         {{-- <x-intermilan /> --}}
 
          
          <div class="row">

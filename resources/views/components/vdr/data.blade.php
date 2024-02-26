@@ -5,7 +5,7 @@
    @method('PUT')
    <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
    
-         <table class="table table-striped table-sm">
+         <table class=" table-striped ">
             <thead>
                <tr class="text-center ">
                   <th class="">Operating Mode</th>
@@ -67,5 +67,11 @@
                
             </tbody>
          </table>
-         <button type="submit" class="btn btn-primary btn-sm"> <i class="fa fa-save"></i> Save</button>
+         @if (auth()->user()->hasRole('vessel'))
+            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+            <hr>
+            <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
+            @endif
+         @endif
+         
 </form>

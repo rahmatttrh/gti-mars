@@ -31,13 +31,14 @@ class MarineScheduleController extends Controller
       // $dekripMonth = dekripRambo($month);
       
 
-      $schedules = Schedule::orderBy('date', 'asc')->where('status', '>', 0)->where('by', '!=', 'user')->orderBy('vessel_type', 'asc')->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('status', '>', 0)->orderBy('vessel_type', 'asc')->get();
       // $regulerSchedules = Schedule::orderBy('updated_at', 'desc')->where('status', '=', 0)->where('by', '!=', 'user')->whereMonth('date', $dekripMonth)->get();
       $cargoSchedules = Schedule::where('by', 'user')->where('class', 'Cargo/Crew')->where('status', 0)->get();
       $movingSchedules = Schedule::where('type', 2)->where('class', '!=', 'Cargo/Crew')->where('status', 0)->get();
 
       $vessels = Vessel::get();
       $ports = Port::get();
+      // dd($schedules);
 
      
       return view('pages-stisla.marine.schedule.top.progress',[
@@ -878,6 +879,16 @@ class MarineScheduleController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Schedule Route successfully updated');
+   }
+
+   public function deleteRoute($id){
+      $dekripId = dekripRambo($id);
+      // dd($dekripId);
+      $scheduleRoute = ScheduleRoute::find($dekripId);
+      // dd($scheduleRoute->id);
+      $scheduleRoute->delete();
+
+      return redirect()->back()->with('success', 'Route deleted');
    }
 
    public function resetRoute($id)

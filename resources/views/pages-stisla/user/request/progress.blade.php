@@ -30,7 +30,7 @@
                        <tr>
                           {{-- <th class="text-center" style="width: 15px">No.</th> --}}
                           <th>ID</th>
-                          <th>Class</th>
+                          <th>Desc</th>
                           <th>Route</th>
                           <th>Vessel</th>
                           <th>Date</th>
@@ -49,7 +49,7 @@
                                    {{-- <br>
                                    <small>{{$request->activity->name}}</small> --}}
                                 </td>
-                                <td>{{$request->activity->name}}</td>
+                                <td>{{$request->activity->name}} - {{$request->desc}}</td>
                                 <td>
                                  {{-- @if ($request->parent_id)
                                  <a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a>
