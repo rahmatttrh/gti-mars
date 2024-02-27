@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\Jetty;
 use App\Models\Port;
 use App\Models\User;
@@ -25,7 +26,7 @@ class PortController extends Controller
          'email' => 'unique:ports'
       ]);
 
-      $Port = Port::create([
+      $port = Port::create([
          'name' => $req->name,
          'email' => $req->email,
          'type' => $req->type,
@@ -34,11 +35,21 @@ class PortController extends Controller
          // 'longitude' => $req->longitude
       ]);
 
-      // $user = User::create([
-      //    'name' => $employee->name,
-      //    'email' => $employee->email,
-      //    'password' => Hash::make('12345678'),
-      // ]);
+      $employee = Employee::create([
+         'port_id' => $port->id,
+         'name' => $port->name,
+         'username' => $req->username,
+         'email' => $req->email,
+         'ekstensi' => 111
+      ]);
+
+      $user = User::create([
+         'name' => $employee->name,
+         'username' => $employee->username,
+         'email' => $employee->email,
+         'password' => Hash::make('12345678'),
+      ]);
+      $user->assignRole('department');
 
 
       // $user->assignRole('port');

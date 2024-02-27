@@ -66,9 +66,13 @@
                            <label for="name">Location Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                            <label for="email">Email</label>
                            <input type="text" class="form-control " id="email" name="email" >
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label for="username">Username</label>
+                           <input type="text" class="form-control " id="username" name="username" >
                         </div>
                      </div>
                      <div class="form-row">
