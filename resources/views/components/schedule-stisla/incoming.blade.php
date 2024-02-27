@@ -71,8 +71,8 @@
                @if ($req->schedule_id == $schedule->id)
                <tr>
                   <td>
+                     <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
                      
-                     {{$req->code}}
                   </td>
                   <td>{{formatDate($req->date)}} </td>
                   <td><span >{{$req->activity->name}} [{{$req->desc}}]</span></td>

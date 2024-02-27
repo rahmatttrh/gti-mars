@@ -49,56 +49,57 @@
                   </div>
                @endforeach
             @endif
-            <div class="card shadow-sm border">
+            <div class="dropdown d-inline mb-2 ">
+               <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                 Select Month
+               </button>
+               <div class="dropdown-menu">
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
+                   Januari
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
+                     Februari
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
+                     Maret
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
+                     April
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
+                     Mei
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
+                     Juni
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(07), enkripRambo(auth()->user()->getYear())])}}">
+                     Juli
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
+                     Agustus
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
+                     September
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
+                     Oktober
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
+                     November
+                 </a>
+                 <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
+                     Desember
+                 </a>
+               </div>
+            </div>
+            <div class="card shadow-sm border mt-2">
                {{-- <div class="card-header">
                   <small>INTERMILAN</small>
                </div> --}}
                <div class="card-body">
                   <div class="d-flex justify-content-between mb-2">
                      <b>INTERMILAN <span class="text-uppercase">{{$monthName}}</span> </b>
-                     <div class="dropdown d-inline mr-2 ">
-                        <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          Select Month
-                        </button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
-                            Januari
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
-                              Februari
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
-                              Maret
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
-                              April
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
-                              Mei
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
-                              Juni
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(07), enkripRambo(auth()->user()->getYear())])}}">
-                              Juli
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
-                              Agustus
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
-                              September
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
-                              Oktober
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
-                              November
-                          </a>
-                          <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
-                              Desember
-                          </a>
-                        </div>
-                     </div>
+                     
                   </div>
                   
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
