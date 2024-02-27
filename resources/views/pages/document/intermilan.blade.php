@@ -79,12 +79,16 @@ table {
                      {{$req->activity->name}} {{$req->desc}}
                   </td>
                   <td>
-                     {{$req->origin->name}} -  {{$req->destination->name}}
+                     @if ($req->activity_id == 5)
+                                             {{$req->employee->name}}
+                                              @else
+                                              {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
+                                          @endif
                   </td>
                   <td >
-                     {{$req->schedule->vessel->type}}
+                     {{$req->schedule->vessel->type ?? '-'}}
                   </td>
-                  <td >{{$req->schedule->vessel->name}}</td>
+                  <td >{{$req->schedule->vessel->name ?? '-'}}</td>
                   
                   <td >
                      {{formatDate($req->date)}}

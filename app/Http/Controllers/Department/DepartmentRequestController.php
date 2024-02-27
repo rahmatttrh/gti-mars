@@ -102,6 +102,7 @@ class DepartmentRequestController extends Controller
 
    public function storeImport(Request $req)
    {
+      
       $req->validate([
          'activity' => 'required'
       ]);
@@ -114,15 +115,13 @@ class DepartmentRequestController extends Controller
 
       if ($req->activity == 2) {
          $req->validate([
-            'origin' => 'required',
-            'destination' => 'required',
+            // 'origin' => 'required',
+            // 'destination' => 'required',
             'file-passenger' => 'required'
          ]);
       }
 
-      if ($req->origin == $req->destination) {
-         return redirect()->back()->with('warning', 'From and Destination has the same Value');
-      }
+      
 
       // dd('ok');
       $employee = Employee::where('email', auth()->user()->email)->first();
@@ -146,6 +145,9 @@ class DepartmentRequestController extends Controller
       
       
       if ($req->activity == 1 || $req->activity == 2) {
+         if ($req->origin == $req->destination) {
+            return redirect()->back()->with('warning', 'From and Destination has the same Value');
+         }
          $parentLast = ParentRequest::orderBy("created_at", "desc")->first();
 
          if (isset($parentLast)) {
@@ -192,7 +194,7 @@ class DepartmentRequestController extends Controller
 
 
 
-
+      // dd($req->activity);
       if ($req->activity == 1) {
          Excel::import(new CargoItemImport($parent->id), $req->file('file-cargo'));
          return redirect()->route('request.detail.parent', enkripRambo($parent->id))->with('success', 'Request Activity successfully saved');
@@ -283,6 +285,8 @@ class DepartmentRequestController extends Controller
             'activity_id' => $req->activity,
             'date' => $req->date,
             'desc' => $req->desc,
+            
+            'employee_id' => $employee->id,
             'status' => 00
          ]);
          $schedule = Schedule::create([

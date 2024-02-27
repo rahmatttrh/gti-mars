@@ -129,7 +129,13 @@
                                        <td>
                                           <a href="#" data-toggle="modal" data-target="#request-edit-{{$req->id}}">{{$req->activity->name}} </a>
                                           - {{$req->desc}}</td>
-                                       <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
+                                       <td>
+                                          @if ($req->activity_id == 5)
+                                             {{$req->employee->name}}
+                                              @else
+                                              {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
+                                          @endif
+                                       </td>
                                        <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code}}</a></td>
                                        <td>{{$req->schedule->vessel->type ?? '-'}}</td>
                                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>

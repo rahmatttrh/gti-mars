@@ -147,13 +147,20 @@
                                        <td>
                                           <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
                                        </td>
-                                       <td><b>{{$req->origin->name}} - {{$req->destination->name}}</b></td>
+                                       <td><b>
+                                          @if ($req->activity_id == 5)
+                                             {{$req->employee->name}}
+                                              @else
+                                              {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
+                                          @endif
+                                          
+                                       </b></td>
                                        
                                        <td>{{$req->activity->name}}</td>
                                        
                                        <td>{{$req->schedule->vessel->type ?? '-'}}</td>
                                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
-                                       <td>{{$req->employee->name}}</td>
+                                       <td>{{$req->employee->name ?? '-'}}</td>
                                        <td><x-status-stisla.request-plain :request="$req" /></td>
                                     </tr>
                                     {{-- <b>{{$req->schedule->vessel->name}}</b><br>
@@ -171,68 +178,7 @@
                   </div>
                </div>
             </div>
-            <div class="card shadow-sm border">
-               {{-- <div class="card-header">
-                  <h4>Request Activity</h4>
-               </div> --}}
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table table-sm table-striped " id="table-1">
-                     <thead>                                 
-                        <tr>
-                           <th>#</th>
-                           <th>ID</th>
-                           {{-- <th>Class</th> --}}
-                           <th>Type</th>
-                           <th>Route</th>
-                           <th>Vessel</th>
-                           <th>Date</th>
-                           <th>Status</th>
-                           {{-- <th></th> --}}
-                        </tr>
-                     </thead>
-                     <tbody>     
-                        @if ($requests->count() > 0)
-                           @foreach ($requests as $r)
-                           <tr>
-                           <td class="text-center">{{++$i}}</td>
-                           <td>
-                              <a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->code}} </a> 
-                              
-                           </td>
-                           <td>{{$r->activity->name ?? ''}} {{$r->description}}</td>
-                           <td >{{$r->origin->name}} - {{$r->destination->name}}</td>
-                           <td><a href="{{route('schedule.detail', enkripRambo($r->schedule_id))}}">{{$r->schedule->vessel->name ?? '-'}}</a></td>
-                           <td>{{formatDate($r->date)}}</td>
-                              
-                              {{-- <td ><a href="{{route('request.detail', enkripRambo($r->id))}}">{{$r->activity->name ?? ''}} {{$r->description}}</a></td> --}}
-                              
-                     
-                              <td>
-                                 {{-- <x-status.request :request="$r" :lastreport="$r->schedule->lastreport()" /> --}}
-                                    @if ($r->status < 3)
-                                       <x-status-stisla.request-plain :request="$r" :lastreport="null"/>
-                                       @else
-                                       {{-- {{$r->schedule_id}} --}}
-                                       {{-- {{$r->id}} --}}
-                                       <x-status-stisla.request-plain :request="$r" :lastreport="$r->getStatus()"/>
-                                    @endif
-                              </td>
-                              {{-- <td>
-                                 <a href="{{route('request.detail', enkripRambo($r->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                              </td> --}}
-                           </tr>
-                           @endforeach
-                           @else
-                           <tr>
-                              <td colspan="7" style="text-align: center"><small>Empty</small></td>
-                           </tr>
-                        @endif
-                     </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
+            
         
          </div>
 
