@@ -24,6 +24,7 @@ class CreateParentRequestsTable extends Migration
          $table->mediumInteger('user_id');
          $table->mediumInteger('employee_id');
          $table->mediumInteger('department_id');
+         $table->string('desc')->nullable();
          $table->timestamps();
       });
    }

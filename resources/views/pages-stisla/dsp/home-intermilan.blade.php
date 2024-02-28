@@ -6,61 +6,80 @@
    <section class="section">
       <div class="row">
          <div class="col-md-12">
-            <div class="card shadow-lg">
+            <div class="d-flex justify-content-between">
+               <div>
+                  <span class="btn btn-white border"><b>INTERMILAN</b></span>
+                  <div class="btn-group dropright">
+                     <button type="button" class="btn btn-light border shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     {{$monthName}}
+                     </button>
+                     <div class="dropdown-menu dropright">
+                        <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(01), enkripRambo($year)])}}">
+                           Januari
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(02), enkripRambo($year)])}}">
+                             Februari
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(03), enkripRambo($year)])}}">
+                             Maret
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(04), enkripRambo($year)])}}">
+                             April
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(05), enkripRambo($year)])}}">
+                             Mei
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(06), enkripRambo($year)])}}">
+                             Juni
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(7), enkripRambo($year)])}}">
+                             Juli
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(8), enkripRambo($year)])}}">
+                             Agustus
+                          </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(9), enkripRambo($year)])}}">
+                             September
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(10), enkripRambo($year)])}}">
+                             Oktober
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(11), enkripRambo($year)])}}">
+                             November
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(12), enkripRambo($year)])}}">
+                             Desember
+                         </a>
+                     </div>
+                  </div>
+                  <div class="btn-group dropright">
+                     <button type="button" class="btn btn-light border shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     {{$year}}
+                     </button>
+                     <div class="dropdown-menu dropright">
+                        <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2024)])}}">
+                           2024
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2023)])}}">
+                             2023
+                         </a>
+                         <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2022)])}}">
+                             2022
+                         </a>
+                     </div>
+                   </div>
+               </div>
+               <a href="{{route('document.intermilan', enkripRambo(2))}}" class="btn btn-light shadow-none border"><i class="fa fa-print"></i> Print</a>
+               
+               
+               
+            </div>
+            <div class="card shadow-sm border mt-2">
                {{-- <div class="card-header">
                   <small>INTERMILAN</small>
                </div> --}}
                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                     <b>INTERMILAN <span class="text-uppercase">{{$monthName}}</span></b>
-                     <div>
-                        <div class="dropdown d-inline mr-2 ">
-                           <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                             Select Month
-                           </button>
-                           <div class="dropdown-menu">
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
-                               Januari
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
-                                 Februari
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
-                                 Maret
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
-                                 April
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
-                                 Mei
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
-                                 Juni
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(7), enkripRambo(auth()->user()->getYear())])}}">
-                                 Juli
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
-                                 Agustus
-                              </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
-                                 September
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
-                                 Oktober
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
-                                 November
-                             </a>
-                             <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
-                                 Desember
-                             </a>
-                           </div>
-                        </div>
-                        <a href="{{route('document.intermilan', enkripRambo(2))}}" class="btn btn-sm btn-light shadow-none border"><i class="fa fa-print"></i> Print</a>
-                     </div>
-                     
-                  </div>
+                  
                   
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                      {{-- @php

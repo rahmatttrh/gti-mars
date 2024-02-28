@@ -164,7 +164,8 @@ class DepartmentRequestController extends Controller
             'user_id' => auth()->user()->id,
             'employee_id' => $employee->id,
             'department_id' => $department->id,
-            'activity_id' => $req->activity
+            'activity_id' => $req->activity,
+            'desc' => $req->desc
          ]);
       }
       

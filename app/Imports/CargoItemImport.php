@@ -123,6 +123,7 @@ class CargoItemImport implements ToModel, WithHeadingRow, WithValidation
                 'origin_id' => $parent->origin_id,
                 'destination_id' => $destination->id,
                 'destination_name' => $row['destination'],
+                'desc' => $parent->desc,
                 'status' => 00
             ]);
             return new CargoItem([

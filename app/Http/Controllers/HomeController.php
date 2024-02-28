@@ -1035,6 +1035,8 @@ class HomeController extends Controller
 
       return view('pages-stisla.dsp.home-intermilan', [
          'now' => $now,
+         'year' => $year,
+         'month' => $month,
          'monthName' => $monthName,
          'requests' => $requests,
          'dates' => $dates
@@ -1293,6 +1295,8 @@ class HomeController extends Controller
 
 
       return view('pages-stisla.dsp.home-user', [
+         'month' => $month,
+         'year' => $year,
          'user' => $user,
          'today' => $today,
          'allRequests' => $allRequests,
