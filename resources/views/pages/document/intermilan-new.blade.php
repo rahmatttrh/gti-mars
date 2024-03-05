@@ -56,11 +56,25 @@ table {
    <div class="container-xl bg-white rounded">
       <div class="row border-bottom py-2 mb-2">
          <div class="col-12">
-            <div class="text-center border-bottom mb-2">
-               <h3>MONTHLY INTEGRATED BOAT PLANNING <span class="text-uppercase">{{$monthName}}</span></h3>
+            <div class="d-flex justify-content-between">
+               <div class="">
+                  <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
+                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small>
+               </div>
+               <div class="text-center">
+                  <h3>MONTHLY INTEGRATED BOAT PLANNING <span class="text-uppercase">{{$monthName}}</span></h3>
+               </div>
+               <div>
+                  <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+               </div>
             </div>
+         </div>
+         <div class="col-12">
+            {{-- <div class="text-center border-bottom mb-2">
+               <h3>MONTHLY INTEGRATED BOAT PLANNING <span class="text-uppercase">{{$monthName}}</span></h3>
+            </div> --}}
             
-            <table class="">
+            <table class="mt-2">
                <thead>
                   <tr>
                      <th class="text-center">Station</th>
@@ -86,11 +100,14 @@ table {
                                        {{$item->desc}},
                                  @endforeach
                               </td>
-                              <td >@if ($request->activity_id < 5)
+                              <td >
+                                 {{-- @if ($request->activity_id < 5)
                                  {{$request->origin->code}} to {{$request->destination->code}}
                                  @else
                                  
-                                 @endif</td>
+                                 @endif --}}
+                                 {{$request->origin->code}} to {{$request->destination->code}}
+                              </td>
                               <td>
                                  {{$request->schedule->vessel->name ?? 'Not Available'}}
                               </td>
@@ -190,6 +207,26 @@ table {
                   </tr>
                </tbody>
             </table>
+         </div>
+         <div class="col-6">
+            <div class="row ttd">
+               <div class="col">
+                  <br>
+                  <small>Acknowladge by,</small><br>
+                  <br>
+                  <br>
+                  <small>Name _____________________  </small>
+               </div>
+               {{-- <div class="col">
+                  <br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
+                  <small>Title : Master</small>
+               </div> --}}
+               
+               
+               
+               
+            </div>
          </div>
       </div>
    </div>

@@ -144,7 +144,7 @@
                                        {{$item->desc}},
                                  @endforeach
                               </td>
-                              <td style="width:100px">
+                              <td style="width:115px">
                                  {{-- @if ($request->activity_id < 5)
                                  {{$request->origin->code}} to {{$request->destination->code}}
                                  @else

@@ -129,7 +129,7 @@
                      @foreach ($schedules as $sche)
                          <tr>
                            <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{formatDayName($sche->date)}}, {{formatDate($sche->date)}}</a></td>
-                           <td>{{$sche->requests->first()->origin->name}} -  {{$sche->requests->first()->destination->name}}</td>
+                           <td>{{$sche->requests->first()->origin->name ?? ''}} -  {{$sche->requests->first()->destination->name ?? ''}}</td>
                            <td>{{$sche->description}}</td>
                            <td>{{$sche->total_depart}}</td>
                            <td>{{$sche->total_return}}</td>

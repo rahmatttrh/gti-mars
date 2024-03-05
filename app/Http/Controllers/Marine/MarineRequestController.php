@@ -50,7 +50,7 @@ class MarineRequestController extends Controller
          $monthName = 'Desember';
       }
 
-      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
+      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear  ('date', $dekripYear)->get();
       $schedules = Schedule::where('class', 'Crew Change')->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
       return view('pages-stisla.marine.request.crew-change', [
          'year' => $dekripYear,
@@ -166,7 +166,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = $req->end;
       $requests = ModelsRequest::where('activity_id', '!=', 7)->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
       $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->get();

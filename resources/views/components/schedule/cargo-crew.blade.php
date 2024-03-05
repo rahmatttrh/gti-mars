@@ -3,10 +3,10 @@
    <div class="card-body"> --}}
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item">
-            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
+            <a class="nav-link {{$schedule->class == 'Cargo' ? 'active' : ''}}" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
+            <a class="nav-link  {{$schedule->class == 'Crew' ? 'active' : ''}}" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
          </li>
          @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
             @if ($recents->where('schedule_id', $schedule->id)->count() > 0)
@@ -31,7 +31,7 @@
          @endif
       </ul>
       <div class="tab-content" id="myTabContent">
-         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+         <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="table-responsive">
                <table class="" id="table-1">
                <thead>
@@ -157,7 +157,7 @@
                </table>
             </div>
          </div>
-         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+         <div class="tab-pane fade {{$schedule->class == 'Crew' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="table-responsive ">
                <table class="" id="table-3">
                <thead>

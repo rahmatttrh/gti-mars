@@ -12,7 +12,7 @@
    <td class="text-center" style="background-color: rgb(89, 192, 51)">D</td>
    @elseif($request->schedule->vessel_id == 9)
    {{-- Elok Jaya --}}
-   <td class="text-center" style="background-color: rgb(41, 95, 134)">E</td>
+   <td class="text-center text-white" style="background-color: rgb(41, 95, 134)">E</td>
    @elseif($request->schedule->vessel_id == 4)
    {{-- Indoliziz Satu --}}
    <td class="text-center" style="background-color: rgb(172, 236, 149)">F</td>

@@ -1396,7 +1396,15 @@ class DepartmentRequestController extends Controller
       $dekripId = dekripRambo($id);
       $now = Carbon::now();
       $request = ModelsRequest::find($dekripId);
-      $schedule = Schedule::where('date', $request->date)->first();
+      if ($request->activity_id == 1) {
+         // dd('cargo');
+         $schedule = Schedule::where('date', $request->date)->where('class', 'Cargo')->first();
+         // dd($schedule->vessel->name);
+      } else {
+         // dd('crew');
+         $schedule = Schedule::where('date', $request->date)->where('class', 'Crew')->first();
+      }
+      
       // dd($schedules);
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       if (isset($lastSchedule)) {
@@ -1522,15 +1530,15 @@ class DepartmentRequestController extends Controller
 
 
       // dd('end');
-      if ($scheduleRoute) {
-         // dd('ada routeee');
-         $schedule = Schedule::find($scheduleRoute->schedule_id);
-         $request->update([
-            'status' => 404,
-            'schedule_id' => $schedule->id
-         ]);
-         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
-      }
+      // if ($scheduleRoute) {
+      //    dd('ada routeee');
+      //    $schedule = Schedule::find($scheduleRoute->schedule_id);
+      //    $request->update([
+      //       'status' => 404,
+      //       'schedule_id' => $schedule->id
+      //    ]);
+      //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
+      // }
 
       // dd('ga ada route');
 
