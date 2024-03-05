@@ -17,6 +17,7 @@ use App\Models\Department;
 use App\Models\Employee;
 use App\Models\FuelItem;
 use App\Models\ParentRequest;
+use App\Models\PassengerItem;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\ReportRequest;
@@ -100,9 +101,74 @@ class DepartmentRequestController extends Controller
       ]);
    }
 
+   public function createSingle()
+   {
+      // if (auth()->user()->getDepartment()->name == 'Logistic') {
+      //    $acts = Activity::where('type_id', 1)->orderBy('name', 'asc')->get();
+      // } elseif (auth()->user()->getDepartment()->name == 'drilling') {
+      //    $acts = Activity::where('type_id', 3)->orWhere('type_id', 4)->orWhere('type_id', 2)->orderBy('name', 'asc')->get();
+      // } else {
+      //    $acts = Activity::orderBy('name', 'asc')->get();
+      // }
+      
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      if ($employee) {
+         $portId = $employee->port_id;
+      } else {
+         $port = Port::where('email', auth()->user()->email)->first();
+         $portId = $port->id;
+      }
+      $now = Carbon::now();
+      $acts = Activity::get();
+      $activities = $acts;
+      $types = Type::get();
+      $ports = Port::where('type', '!=', 'platform')->get();
+      $platforms = Port::where('type', 'platform')->get();
+      $barges = Port::where('type', 'Barge')->get();
+
+      // $schedules = Schedule::where('date', '>=', $now)->get();
+      // dd($schedules);
+      $scheduleRoutes = ScheduleRoute::where('date', '>=', $now)->where('port_id', $portId)->get();
+      $schedules = array();
+      // dd($scheduleRoutes);
+      foreach ($scheduleRoutes as $row) {
+
+         $schedule = Schedule::find($row->schedule_id);
+         $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
+
+         if ($row->schedule->vessel_id != null) {
+            $vesselName = $row->schedule->vessel->name;
+            $vesselType = $row->schedule->vessel->type;
+            $totalWeight = $row->schedule->total_weight;
+            $vesselDeadweight = $row->schedule->vessel->deadweight;
+            $persen = $totalWeight / $vesselDeadweight * 100;
+         } else {
+            $vesselName = '-';
+            $vesselType = '';
+            $totalWeight = 0;
+            $vesselDeadweight = '0';
+            $persen = '-';
+         }
+
+         $schedules[] = $schedule;
+      }
+
+      // dd($schedules);
+
+      return view('pages-stisla.user.request.create-new', [
+         'activities' => $activities,
+         'ports' => $ports,
+         'platforms' => $platforms,
+         'barges' => $barges,
+         'types' => $types,
+         'schedules' => $schedules,
+         'scheduleRoutes' => $scheduleRoutes
+      ]);
+   }
+
    public function storeImport(Request $req)
    {
-      
+      // dd('lama');
       $req->validate([
          'activity' => 'required'
       ]);
@@ -354,6 +420,173 @@ class DepartmentRequestController extends Controller
 
          return redirect()->route('request.detail', enkripRambo($request->id))->with('success', 'Request Activity successfully send to Marine');
       }
+   }
+
+   public function storeNew(Request $req){
+      // dd('baru');
+      $now = Carbon::today();
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      if ($employee) {
+         $department = Department::find($employee->department->id);
+      } else {
+         $department = null;
+      }
+
+      
+
+      if (auth()->user()->hasRole('vessel')) {
+         $level = 'V';
+      } else if(auth()->user()->hasRole('department')){
+         $level = 'U';
+      }
+      if (isset($request)) {
+         $code =
+            "R/" . $level . '/' . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/"  . $level . '/' . $now->format("dmy") . '/' . 1;
+      }
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 7) {
+         $status = 0;
+      } else {
+         $status = 1;
+      }
+
+      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 3 || $req->activity == 5 || $req->activity == 6 || $req->activity == 7){
+         $requestUser = ModelsRequest::create([
+            'code' => $code,
+            'type' => 2,
+            'class' => 'main',
+            'user_id' => auth()->user()->id,
+            'user_name' => auth()->user()->name,
+            'employee_id' => $employee->id,
+            'department_id' => $department->id,
+            'func' => $department->code,
+            'desc' => $req->desc,
+            'description' => $req->desc,
+            'activity_id' => $req->activity,
+            'date' => $req->date,
+            'origin_id' => $req->origin,
+            'destination_id' => $req->destination,
+            'status' => $status
+         ]);
+      }
+
+      if ($req->activity == 3) {
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'class' => 'Moving',
+            'type' => 2,
+            'status' => 0,
+            'date' => $req->date,
+         ]);
+         BargeItem::create([
+            'status' => 1,
+            'request_id' => $requestUser->id,
+            'barge_id' => $req->barge
+         ]);
+         $requestUser->update([
+            'schedule_id' => $schedule->id
+         ]);
+      }
+
+      if ($req->activity == 5) {
+         if (auth()->user()->hasRole('vessel')) {
+            $vessel = Vessel::where('email', auth()->user()->email)->first();
+            $vesselId = $vessel->id;
+         } else {
+            $vesselId = null;
+         }
+
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'vessel_id' => $vesselId,
+            'class' => 'Fuel Oil',
+            'type' => 2,
+            'status' => 101,
+            'date' => $req->date,
+         ]);
+
+         FuelItem::create([
+            'request_id' => $requestUser->id,
+            'qty' => $req->qty
+         ]);
+
+         $requestUser->update([
+            'schedule_id' => $schedule->id,
+            'origin_id' => 12,
+            'destination_id' => $employee->port_id,
+            'status' => 101
+         ]);
+      }
+
+      if ($req->activity == 6) {
+         if (auth()->user()->hasRole('vessel')) {
+            $vessel = Vessel::where('email', auth()->user()->email)->first();
+            $vesselId = $vessel->id;
+         } else {
+            $vesselId = null;
+         }
+         
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'vessel_id' => $vesselId,
+            'by' => 'user',
+            'class' => 'Fresh Water',
+            'type' => 2,
+            'status' => 101,
+            'date' => $req->date,
+         ]);
+
+         WaterItem::create([
+            'request_id' => $requestUser->id,
+            'qty' => $req->qty
+         ]);
+
+         $requestUser->update([
+            'schedule_id' => $schedule->id,
+            'status' => 1
+         ]);
+      }
+
+      // if ($req->activity == 7) {
+      //    if (auth()->user()->hasRole('vessel')) {
+      //       $vessel = Vessel::where('email', auth()->user()->email)->first();
+      //       $vesselId = $vessel->id;
+      //    } else {
+      //       $vesselId = null;
+      //    }
+         
+      //    $schedule = Schedule::create([
+      //       'code' => $scheduleCode,
+      //       'vessel_id' => $vesselId,
+      //       'by' => 'user',
+      //       'class' => 'Crew Change',
+      //       'type' => 2,
+      //       'status' => 101,
+      //       'date' => $req->date,
+      //    ]);
+
+        
+
+      //    $requestUser->update([
+      //       'schedule_id' => $schedule->id,
+      //       'status' => 1
+      //    ]);
+      // }
+
+      
+
+      return redirect()->route('request.detail.new', enkripRambo($requestUser->id))->with('success', 'Request Activity successfully submitted');
    }
 
    public function save(Request $req)
@@ -619,10 +852,9 @@ class DepartmentRequestController extends Controller
 
       $request->update([
          // 'activity_id' => $req->activity,
-         // 'date' => $req->date,
-         // 'description' => $req->desc,
-         // 'origin_id' => $req->origin,
-         // 'destination_id' => $req->destination,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
          'desc' => $req->desc
       ]);
 
@@ -1142,15 +1374,226 @@ class DepartmentRequestController extends Controller
    {
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
-      $parentId = $request->parent->id;
+      // $parentId = $request->parent->id;
 
       $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      $passengerItems = PassengerItem::where('request_id', $request->id)->get();
       foreach ($cargoItems as $item) {
+         $item->delete();
+      }
+      foreach ($passengerItems as $item) {
          $item->delete();
       }
 
       $request->delete();
 
-      return redirect()->route('request.detail.parent', enkripRambo($parentId))->with('success', 'Request Activity successfully deleted');
+      return redirect()->route('request.progress')->with('success', 'Request Activity deleted');
+   }
+
+   public function getVessel($id)
+   {
+      // dd('oke');
+      $dekripId = dekripRambo($id);
+      $now = Carbon::now();
+      $request = ModelsRequest::find($dekripId);
+      $schedule = Schedule::where('date', $request->date)->first();
+      // dd($schedules);
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO/"   . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      if ($request->activity_id == 7) {
+         $reqDate = new Carbon($request->date);
+         // $scheduleCrewChange = Schedule::where('class', 'Crew Change')->where('date', $request->date)->first();
+         // if ($scheduleCrewChange) {
+         //    $request->update([
+         //       'status' => 1,
+         //       'schedule_id' => $scheduleCrewChange->id
+         //    ]);
+         // } else {
+         //    // $schedule = Schedule::create([
+         //    //    'by' => 'marine',
+         //    //    'code' => $scheduleCode,
+         //    //    'class' => 'Crew Change',
+         //    //    'type' => 2,
+         //    //    'status' => 0,
+         //    //    'date' => $request->date
+         //    // ]);
+         //    $request->update([
+         //       'status' => 1,
+         //       // 'schedule_id' => $schedule->id
+         //    ]);
+         // }
+         $request->update([
+            'status' => 1,
+         ]);
+
+         return redirect()->back()->with('success', 'Your Request Activity successfully sent to Fleet Control ');
+      } 
+
+      $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
+
+      // jika request cargo
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+     
+      $nearestVessel = null;
+      $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
+      // dd($now->format('Y-m-d'));
+
+      $nearestVessels = array();
+
+      if ($request->origin->latitude != null) {
+         if ($reqDate ==  $now->format('Y-m-d')) {
+            // dd('today');
+            foreach ($vessels as $vessel) {
+               $vesselLat = $vessel->latitude;
+               $vesselLong = $vessel->longitude;
+               $portLat = $request->origin->latitude;
+               $portLong = $request->origin->longitude;
+               $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+               if ($request->activity_id == 2) {
+                  if ($distance < 30000 && $vessel->type == 'Crew Boat') {
+                     $nearestVessel = $vessel;
+                  }
+               } else {
+                  if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel' ) {
+                     $nearestVessel = $vessel;
+                  }
+               }
+               
+            }
+            // dd($nearestVessel);
+            // dd(count($nearestVessels) > 0);
+            if ($nearestVessel) {
+               // dd('ada kapal terdekat');
+               if ($request->activity_id == 2) {
+                  
+               }
+   
+               $nearVesselHasSchedule = $nearestVessel->schedules->where('status', '!=', 11)->where('date', $reqDate)->first();
+               
+               // dd(count($nearestVessel->schedules->where('date', $reqDate)));
+      
+               if ($nearVesselHasSchedule != null) {
+                  // dd('kapal sudah ada schedule');
+                  // dd($nearVesselHasSchedule->code);
+                  $request->update([
+                     'status' => 404,
+                     'schedule_id' => $nearVesselHasSchedule->id
+                  ]);
+                  return redirect()->back()->with('success', 'Your requesttttt activity would be pick up at ' . \Carbon\Carbon::parse($nearVesselHasSchedule->date)->format('d/m/Y') . ' by ' . $nearVesselHasSchedule->vessel->name);
+               } else {
+                  // dd('kapal blm ada schedule');
+                  $schedule = Schedule::create([
+                     'code' => $scheduleCode,
+                     'class' => $request->activity->name,
+                     'by' => 'system',
+                     'vessel_id' => $nearestVessel->id,
+                     'type' => 2,
+                     'status' => 0,
+                     'date' => $request->date,
+                  ]);
+                  $nearestVessel->update([
+                     'schedule_id' => $schedule->id
+                  ]);
+                  ScheduleRoute::create([
+                     'schedule_id' => $schedule->id,
+                     'port_id' => $request->origin_id,
+                     'rank' => 1,
+                     'status' => 1,
+                     'date' => $request->date
+                  ]);
+                  $request->update([
+                     'status' => 404,
+                     'schedule_id' => $schedule->id,
+                  ]);
+                  return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $nearestVessel->name);
+               }
+            }
+         }
+      }
+      
+
+
+
+
+      // dd('end');
+      if ($scheduleRoute) {
+         // dd('ada routeee');
+         $schedule = Schedule::find($scheduleRoute->schedule_id);
+         $request->update([
+            'status' => 404,
+            'schedule_id' => $schedule->id
+         ]);
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($scheduleRoute->date)->format('d/m/Y') . ' by ' . $scheduleRoute->schedule->vessel->name);
+      }
+
+      // dd('ga ada route');
+
+      if ($schedule != null) {
+         // dd('ada schedule');
+         // dd($schedule->id);
+         $request->update([
+            'status' => 404,
+            'schedule_id' => $schedule->id
+         ]);
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+         // dd($request->schedule_id);
+         // foreach ($schedules as $schedule) {
+         //    $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
+         //    // if ($uncompleteRoute != null) {
+         //    //    $schedule = Schedule::find($uncompleteRoute->schedule_id);
+         //    //    $request->update([
+         //    //       'schedule_id' => $schedule->id
+         //    //    ]);
+         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+         //    // }
+         //    // $schedule = Schedule::find($uncompleteRoute->schedule_id);
+               
+         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
+               
+         // }
+         
+      } else {
+         // dd('tidak ada schedule');
+         // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'class' => $request->activity->name,
+            // 'vessel_id' => $vessel->id,
+            'by' => 'user',
+            'type' => 2,
+            'status' => 0,
+            'date' => $request->date,
+         ]);
+         $request->update([
+            'status' => 404,
+            'schedule_id' => $schedule->id,
+         ]);
+         // dd($request->schedule_id);
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+      }
+
+   }
+
+   public function changeVessel(Request $req){
+      // dd('ok');
+      $request = ModelsRequest::find($req->requestId);
+      $schedule = Schedule::find($request->schedule_id);
+      $schedule->update([
+         'vessel_id' => $req->vessel,
+         'class' => $request->activity->name
+      ]);
+      // dd($parent->origin->name);
+
+      $request->update([
+         'status' => 1,
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity sent to Fleet Control');
    }
 }

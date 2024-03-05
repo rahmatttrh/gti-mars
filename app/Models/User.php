@@ -47,6 +47,10 @@ class User extends Authenticatable
       'email_verified_at' => 'datetime',
    ];
 
+   public function requests(){
+      return $this->hasMany(Request::class);
+   }
+
    public function employee(){
       $employee = Employee::where('email', $this->email)->first();
       return $employee;

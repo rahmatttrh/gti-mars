@@ -1,6 +1,6 @@
-<div class="card shadow-sm border">
+{{-- <div class="card shadow-sm border">
                   
-   <div class="card-body">
+   <div class="card-body"> --}}
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Cargo</a>
@@ -199,7 +199,7 @@
             @if ($recents->count() > 0)
             <div class="tab-pane fade" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
                
-               <x-schedule-stisla.incoming :recents="$recents" :schedule="$schedule" />
+               <x-schedule-stisla.incoming :incomings="$schedule->requests->where('status','=', 1)" :schedule="$schedule" />
                <hr>
                
                <small class="text-muted">Tab ini berisi data Request Activity dari User yang otomatis masuk ke Schedule {{$schedule->vessel->name ?? ''}} {{formatDate($schedule->date)}}</small><br>
@@ -216,5 +216,5 @@
             @endif
          @endif
       </div>
-   </div>
-</div>
+   {{-- </div>
+</div> --}}

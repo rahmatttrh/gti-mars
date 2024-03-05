@@ -26,6 +26,7 @@ class CreateRequestsTable extends Migration
          $table->string('by')->nullable();
          $table->smallInteger('employee_id')->nullable();
          $table->smallInteger('user_id')->nullable();
+         $table->string('user_name')->nullable();
          $table->string('class')->nullable();
 
          $table->date('date')->nullable();

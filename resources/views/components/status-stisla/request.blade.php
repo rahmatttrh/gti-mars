@@ -3,11 +3,11 @@
       {{-- <button type="button" class="btn btn-light btn-icon icon-left">
          <i class="fas fa-edit"></i>Draft
       </button> --}}
-      <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span><small>Draft</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-warning me-1"></span>Draft</div>
       @elseif($request->status == 1)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>Validasi Marine</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Validasi Marine</div>
       @elseif($request->status == 2)
-      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>Schedule on Set</small></div>
+      <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span>Assigned</div>
       @elseif($request->status == 3)
       <div class="badge badge-warning "><span class="badge bg-info me-1"></span><small>Waiting Vessel</small></div>
       @elseif($request->status == 4)
@@ -21,6 +21,8 @@
       <div class="badge bg-light border text-dark"><span class="badge bg-info me-1"></span><small>10 : User Confirmation</small></div>
       @elseif($request->status == 12)
       <div class="badge badge-success"><small>Complete</small></div>
+      @elseif($request->status == 404)
+      <div class="badge badge-info">Select Vessel</div>
       @elseif($request->status == 101)
       <div class="badge badge-info"><small>Validasi FM</small></div>
       @elseif($request->status == 202)

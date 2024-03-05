@@ -70,7 +70,7 @@ class PortSeeder extends Seeder
       // ]);
 
       DB::table('ports')->insert([
-         'code' => 'kj4',
+         'code' => 'KJ4',
          'name' => 'Kalijapat 4',
          'email' => 'kj4@gmail.com',
          'type' => 'Port',
@@ -81,7 +81,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'kj5',
+         'code' => 'KJ4',
          'name' => 'Kalijapat 5',
          'email' => 'kj5@pertamina.com',
          'type' => 'Port',
@@ -142,7 +142,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'pw',
+         'code' => 'WINNER',
          'name' => 'Petroleum Winner',
          'email' => 'winner@pertamina.com',
          'type' => 'Barge',
@@ -154,7 +154,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'falcon',
+         'code' => 'FALCON',
          'name' => 'Falcon',
          'email' => 'falcon@pertamina.com',
          'type' => 'Barge',
@@ -163,7 +163,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'bc',
+         'code' => 'BCA',
          'name' => 'Bayu Cakrawala',
          'email' => 'bayuc@pertamina.com',
          'type' => 'Barge',
@@ -172,7 +172,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'onix',
+         'code' => 'Onyx',
          'name' => 'Onyx',
          'email' => 'onyx@pertamina.com',
          'type' => 'Barge',
@@ -181,7 +181,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'pb',
+         'code' => 'PAB',
          'name' => 'Pabelokan',
          'email' => 'pabelokan@pertamina.com',
          'type' => 'Island',
@@ -192,7 +192,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'tjl',
+         'code' => 'Tj. LESUNG',
          'name' => 'Tanjung Lesung',
          'email' => 'tjlesung@pertamina.com',
          'type' => 'Rig/Barge/Tanker',
@@ -201,7 +201,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'h902',
+         'code' => 'HYSY902',
          'name' => 'HYSY 902',
          'email' => 'hysy902@pertamina.com',
          'type' => 'Rig/Barge/Tanker',
@@ -210,7 +210,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'lisa',
+         'code' => 'LISA',
          'name' => 'Lisa',
          'email' => 'lisa@pertamina.com',
          'type' => 'Rig/Barge/Tanker',
@@ -219,7 +219,7 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 's114',
+         'code' => 'S114',
          'name' => 'Ship 114',
          'email' => 'ship114@pertamina.com',
          'type' => 'Rig/Barge/Tanker',
@@ -228,16 +228,16 @@ class PortSeeder extends Seeder
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'f2',
-         'name' => 'Federal 2',
-         'email' => 'federal2@pertamina.com',
+         'code' => 'FEDERAL',
+         'name' => 'Federal',
+         'email' => 'federal@pertamina.com',
          'type' => 'Rig/Barge/Tanker',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
       DB::table('ports')->insert([
-         'code' => 'superior',
+         'code' => 'Superior',
          'name' => 'Superior',
          'email' => 'superior@pertamina.com',
          'type' => 'Rig/Barge/Tanker',

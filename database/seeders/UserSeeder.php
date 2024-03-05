@@ -75,7 +75,18 @@ class UserSeeder extends Seeder
       $luthfi->assignRole('chief');
 
 
-      // USER KJ
+
+      // USER KJ4
+      $kj4 = User::create([
+         'name' => 'Kalijapat 4',
+         'username' => 'kj4',
+         'email' => 'kj4@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $kj4->assignRole('department');
+
       $yoyo = User::create([
          'name' => 'Yoyo',
          'username' => 'yoyo',
@@ -86,107 +97,117 @@ class UserSeeder extends Seeder
       ]);
       $yoyo->assignRole('department');
 
-      $dimaz = User::create([
-         'name' => 'Dimaz',
-         'username' => 'dimaz',
-         'email' => 'dimaz@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $dimaz->assignRole('department');
+      // $dimaz = User::create([
+      //    'name' => 'Dimaz',
+      //    'username' => 'dimaz',
+      //    'email' => 'dimaz@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $dimaz->assignRole('department');
 
-      $dicky = User::create([
-         'name' => 'Dicky',
-         'username' => 'dicky',
-         'email' => 'dicky@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $dicky->assignRole('department');
+      // $dicky = User::create([
+      //    'name' => 'Dicky',
+      //    'username' => 'dicky',
+      //    'email' => 'dicky@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $dicky->assignRole('department');
 
 
       // USER PABELOKAN
-      $andi = User::create([
-         'name' => 'Andi',
-         'username' => 'andi',
-         'email' => 'andi@pertamina.com',
+      $pab = User::create([
+         'name' => 'Pabelokan Island',
+         'username' => 'pab',
+         'email' => 'pab@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $andi->assignRole('department');
+      $pab->assignRole('department');
 
-      $aan = User::create([
-         'name' => 'Aan',
-         'username' => 'aan',
-         'email' => 'aan@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $aan->assignRole('department');
+      // $andi = User::create([
+      //    'name' => 'Andi',
+      //    'username' => 'andi',
+      //    'email' => 'andi@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $andi->assignRole('department');
 
-      $said = User::create([
-         'name' => 'Said',
-         'username' => 'said',
-         'email' => 'said@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $said->assignRole('department');
+      // $aan = User::create([
+      //    'name' => 'Aan',
+      //    'username' => 'aan',
+      //    'email' => 'aan@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $aan->assignRole('department');
 
-      $tommy = User::create([
-         'name' => 'Tommy',
-         'username' => 'tommy',
-         'email' => 'tommy@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $tommy->assignRole('department');
+      // $said = User::create([
+      //    'name' => 'Said',
+      //    'username' => 'said',
+      //    'email' => 'said@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $said->assignRole('department');
 
-      $sukma = User::create([
-         'name' => 'Sukma Yogi',
-         'username' => 'sukma',
-         'email' => 'sukma@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $sukma->assignRole('department');
+      // $tommy = User::create([
+      //    'name' => 'Tommy',
+      //    'username' => 'tommy',
+      //    'email' => 'tommy@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $tommy->assignRole('department');
 
-      $giat = User::create([
-         'name' => 'Giat',
-         'username' => 'giat',
-         'email' => 'giat@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $giat->assignRole('department');
+      // $sukma = User::create([
+      //    'name' => 'Sukma Yogi',
+      //    'username' => 'sukma',
+      //    'email' => 'sukma@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $sukma->assignRole('department');
 
-      $nuzila = User::create([
-         'name' => 'Nuzila',
-         'username' => 'nuzila',
-         'email' => 'nuzila@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $nuzila->assignRole('department');
+      // $giat = User::create([
+      //    'name' => 'Giat',
+      //    'username' => 'giat',
+      //    'email' => 'giat@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $giat->assignRole('department');
 
-      $arief = User::create([
-         'name' => 'Arief',
-         'username' => 'arief',
-         'email' => 'arief@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $arief->assignRole('department');
+      // $nuzila = User::create([
+      //    'name' => 'Nuzila',
+      //    'username' => 'nuzila',
+      //    'email' => 'nuzila@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $nuzila->assignRole('department');
+
+      // $arief = User::create([
+      //    'name' => 'Arief',
+      //    'username' => 'arief',
+      //    'email' => 'arief@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $arief->assignRole('department');
 
 
       // USER COSL221
@@ -202,15 +223,25 @@ class UserSeeder extends Seeder
 
 
       // USER COSL222
-      $muchsin = User::create([
-         'name' => 'Abdillah Muchsin',
-         'username' => 'muchsin',
-         'email' => 'muchsin@pertamina.com',
+      $cosl222 = User::create([
+         'name' => 'COSL 222',
+         'username' => 'cosl222',
+         'email' => 'cosl222@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $muchsin->assignRole('department');
+      $cosl222->assignRole('department');
+
+      // $muchsin = User::create([
+      //    'name' => 'Abdillah Muchsin',
+      //    'username' => 'muchsin',
+      //    'email' => 'muchsin@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $muchsin->assignRole('department');
 
 
       // USER COSL223
@@ -226,81 +257,111 @@ class UserSeeder extends Seeder
 
 
       // USER COSL225
-      $felix = User::create([
-         'name' => 'Felix',
-         'username' => 'felix',
-         'email' => 'felix@pertamina.com',
+      $cosl225 = User::create([
+         'name' => 'COSL 225',
+         'username' => 'cosl225',
+         'email' => 'cosl225@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $felix->assignRole('department');
+      $cosl225->assignRole('department');
 
-      $faizal = User::create([
-         'name' => 'Adam Faizal',
-         'username' => 'faizal',
-         'email' => 'faizal@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $faizal->assignRole('department');
+      // $felix = User::create([
+      //    'name' => 'Felix',
+      //    'username' => 'felix',
+      //    'email' => 'felix@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $felix->assignRole('department');
 
-      $bayu = User::create([
-         'name' => 'Bayu Iqbal Tawakal',
-         'username' => 'bayu',
-         'email' => 'bayu@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $bayu->assignRole('department');
+      // $faizal = User::create([
+      //    'name' => 'Adam Faizal',
+      //    'username' => 'faizal',
+      //    'email' => 'faizal@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $faizal->assignRole('department');
+
+      // $bayu = User::create([
+      //    'name' => 'Bayu Iqbal Tawakal',
+      //    'username' => 'bayu',
+      //    'email' => 'bayu@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $bayu->assignRole('department');
 
 
       // USER ONYX
-      $mahmud = User::create([
-         'name' => 'Mahmud',
-         'username' => 'mahmud',
-         'email' => 'mahmud@pertamina.com',
+      $onyx = User::create([
+         'name' => 'Onyx',
+         'username' => 'onyx',
+         'email' => 'onyx@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $mahmud->assignRole('department');
+      $onyx->assignRole('department');
 
-      $umar = User::create([
-         'name' => 'Umar',
-         'username' => 'umar',
-         'email' => 'umar@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $umar->assignRole('department');
+      // $mahmud = User::create([
+      //    'name' => 'Mahmud',
+      //    'username' => 'mahmud',
+      //    'email' => 'mahmud@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $mahmud->assignRole('department');
+
+      // $umar = User::create([
+      //    'name' => 'Umar',
+      //    'username' => 'umar',
+      //    'email' => 'umar@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $umar->assignRole('department');
 
 
       // USER WINNER
-      $lulu = User::create([
-         'name' => 'Lulu Luana Setiadi',
-         'username' => 'lulu',
-         'email' => 'lulu@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $lulu->assignRole('department');
-
-
-      // USER BAYU CAKRAWALA
       $winner = User::create([
-         'name' => 'Bayu Cakrawala',
-         'username' => 'bayuc',
-         'email' => 'bayuc@pertamina.com',
+         'name' => 'Winner',
+         'username' => 'winner',
+         'email' => 'winner@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
       $winner->assignRole('department');
+
+      // $lulu = User::create([
+      //    'name' => 'Lulu Luana Setiadi',
+      //    'username' => 'lulu',
+      //    'email' => 'lulu@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $lulu->assignRole('department');
+
+
+      // USER BAYU CAKRAWALA
+      $bca = User::create([
+         'name' => 'Bayu Cakrawala',
+         'username' => 'bca',
+         'email' => 'bca@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $bca->assignRole('department');
 
 
       // USER HYSY 902
@@ -316,123 +377,173 @@ class UserSeeder extends Seeder
 
 
       // SUPERIOR
-      $wahyu = User::create([
-         'name' => 'Wahyu',
-         'username' => 'wahyu',
-         'email' => 'wahyu@pertamina.com',
+      $superior = User::create([
+         'name' => 'Superior',
+         'username' => 'superior',
+         'email' => 'superior@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $wahyu->assignRole('department');
+      $superior->assignRole('department');
 
-      $syawal = User::create([
-         'name' => 'Syawal',
-         'username' => 'syawal',
-         'email' => 'syawal@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $syawal->assignRole('department');
+      // $wahyu = User::create([
+      //    'name' => 'Wahyu',
+      //    'username' => 'wahyu',
+      //    'email' => 'wahyu@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $wahyu->assignRole('department');
 
-      $jemmy = User::create([
-         'name' => 'Jemmy Pentury',
-         'username' => 'jemmy',
-         'email' => 'jemmy@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $jemmy->assignRole('department');
+      // $syawal = User::create([
+      //    'name' => 'Syawal',
+      //    'username' => 'syawal',
+      //    'email' => 'syawal@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $syawal->assignRole('department');
 
-      $saut = User::create([
-         'name' => 'Saut Situmorang',
-         'username' => 'saut',
-         'email' => 'saut@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $saut->assignRole('department');
+      // $jemmy = User::create([
+      //    'name' => 'Jemmy Pentury',
+      //    'username' => 'jemmy',
+      //    'email' => 'jemmy@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $jemmy->assignRole('department');
+
+      // $saut = User::create([
+      //    'name' => 'Saut Situmorang',
+      //    'username' => 'saut',
+      //    'email' => 'saut@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $saut->assignRole('department');
 
 
       // SHIP114
-      $khamsani = User::create([
-         'name' => 'Khamsani',
-         'username' => 'khamsani',
-         'email' => 'khamsani@pertamina.com',
+      $ship114 = User::create([
+         'name' => 'Ship 114',
+         'username' => 'ship114',
+         'email' => 'ship114@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $khamsani->assignRole('department');
+      $ship114->assignRole('department');
+
+      // $khamsani = User::create([
+      //    'name' => 'Khamsani',
+      //    'username' => 'khamsani',
+      //    'email' => 'khamsani@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $khamsani->assignRole('department');
 
 
       // FALCON
-      $slamet = User::create([
-         'name' => 'Slamet',
-         'username' => 'slamet',
-         'email' => 'slamet@pertamina.com',
+      $falcon = User::create([
+         'name' => 'Falcon',
+         'username' => 'falcon',
+         'email' => 'falcon@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $slamet->assignRole('department');
+      $falcon->assignRole('department');
+
+      // $slamet = User::create([
+      //    'name' => 'Slamet',
+      //    'username' => 'slamet',
+      //    'email' => 'slamet@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $slamet->assignRole('department');
 
 
       // TANJUNG LESUNG
-      $chlorid = User::create([
-         'name' => 'Chlorid Latifoso',
-         'username' => 'chlorid',
-         'email' => 'chlorid@pertamina.com',
+      $tjlesung = User::create([
+         'name' => 'Tanjung Lesung',
+         'username' => 'tjlesung',
+         'email' => 'tjlesung@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $chlorid->assignRole('department');
+      $tjlesung->assignRole('department');
 
-      $rachmat = User::create([
-         'name' => 'Rachmat Hidayat',
-         'username' => 'rachmat',
-         'email' => 'rachmat@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $rachmat->assignRole('department');
+      // $chlorid = User::create([
+      //    'name' => 'Chlorid Latifoso',
+      //    'username' => 'chlorid',
+      //    'email' => 'chlorid@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $chlorid->assignRole('department');
 
-      $juhri = User::create([
-         'name' => 'Juhri hasibuan',
-         'username' => 'juhri',
-         'email' => 'juhri@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $juhri->assignRole('department');
+      // $rachmat = User::create([
+      //    'name' => 'Rachmat Hidayat',
+      //    'username' => 'rachmat',
+      //    'email' => 'rachmat@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $rachmat->assignRole('department');
+
+      // $juhri = User::create([
+      //    'name' => 'Juhri hasibuan',
+      //    'username' => 'juhri',
+      //    'email' => 'juhri@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $juhri->assignRole('department');
 
 
       // USER FEDERAL
-      $poniman = User::create([
-         'name' => 'Poniman',
-         'username' => 'poniman',
-         'email' => 'poniman@pertamina.com',
+      $federal = User::create([
+         'name' => 'Federal',
+         'username' => 'federal',
+         'email' => 'federal@pertamina.com',
          'password' => Hash::make('12345678'),
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
-      $poniman->assignRole('department');
+      $federal->assignRole('department');
 
-      $gunawan = User::create([
-         'name' => 'Gunawan Winisobo',
-         'username' => 'gunawan',
-         'email' => 'gunawan@pertamina.com',
-         'password' => Hash::make('12345678'),
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
-      $gunawan->assignRole('department');
+      // $poniman = User::create([
+      //    'name' => 'Poniman',
+      //    'username' => 'poniman',
+      //    'email' => 'poniman@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $poniman->assignRole('department');
+
+      // $gunawan = User::create([
+      //    'name' => 'Gunawan Winisobo',
+      //    'username' => 'gunawan',
+      //    'email' => 'gunawan@pertamina.com',
+      //    'password' => Hash::make('12345678'),
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+      // $gunawan->assignRole('department');
 
 
 

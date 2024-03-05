@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
+use App\Imports\CrewsImport;
 use App\Mail\ApprovalEmail;
 use App\Mail\AssignEmail;
 use App\Models\Activity;
@@ -22,6 +23,7 @@ use App\Models\Type;
 use App\Models\Vessel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MarineScheduleController extends Controller
 {
@@ -61,7 +63,53 @@ class MarineScheduleController extends Controller
       ])->with('i');
    }
 
-   public function plan($month)
+   public function plan($month){
+      $dekripMonth = dekripRambo($month);
+      $regulerSchedules = Schedule::where('type', 1)->whereMonth('date', $dekripMonth)->get();
+      $schedules = Schedule::whereMonth('created_at', $dekripMonth)->orderBy('vessel_type', 'asc')->get();
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+
+      $vessels = Vessel::get();
+      $movingSchedules = Schedule::orderBy('date', 'asc')->where('status', '=', 0)->where('class', 'Moving')->get();
+
+      return view('pages-stisla.marine.schedule.top.plan', [
+         'typeName' => 'by Request',
+         'type' => 2,
+         'month' => $dekripMonth,
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+         'regulerSchedules' => $regulerSchedules,
+         'movingSchedules' => $movingSchedules,
+         'vessels' => $vessels,
+         // 'ports' => $ports
+      ])->with('i');
+   }
+
+   public function planOld($month)
    {
 
       $now = Carbon::now();
@@ -616,6 +664,103 @@ class MarineScheduleController extends Controller
       ]);
    }
 
+   public function storeNew(Request $req){
+      // dd($req->start);
+      $now = Carbon::today();
+      $vessel = Vessel::find($req->vessel);
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      if ($vessel->type == 'Crew Boat') {
+         $class = 'Crew';
+      } else {
+         $class = 'Cargo';
+      }
+
+      $schedule = Schedule::create([
+         'by' => 'marine',
+         'code' => $scheduleCode,
+         'class' => $class,
+         'type' => 2,
+         'status' => 0,
+         'vessel_id' => $vessel->id,
+         'vessel_type' => $vessel->type,
+         'date' => $req->date,
+      ]);
+
+      
+
+      return redirect()->route('intermilan.filter.get', [enkripRambo($req->start), enkripRambo($req->end)])->with('success', 'Sailing Order successfully added');
+   }
+
+   public function storeCrewChangeSchedule(Request $req){
+      $now = Carbon::today();
+      $vessel = Vessel::find($req->vessel);
+      $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
+      if (isset($lastSchedule)) {
+         $scheduleCode =
+            "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
+      } else {
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
+      }
+
+      $schedule = Schedule::create([
+         'by' => 'marine',
+         'code' => $scheduleCode,
+         'class' => 'Crew Change',
+         'type' => 2,
+         'status' => 0,
+         'vessel_id' => $vessel->id,
+         'vessel_type' => $vessel->type,
+         'date' => $req->date,
+         'description' => $req->func
+      ]);
+
+      return redirect()->route('marine.crew.change')->with('success', 'Schedule Crew Change successfully added');
+
+   }
+
+   public function importCrewChange(Request $req){
+      $now = Carbon::today();
+      $schedule = Schedule::find($req->schedule);
+      // dd($schedule->requests);
+      if (count($schedule->requests) > 0) {
+         dd('ada req');
+      } else {
+         $request = ModelsRequest::orderBy("created_at", "desc")->first();
+         if (isset($request)) {
+            $code = "R/M/" . $now->format("dmy") . '/' . ($request->id + 1);
+         } else {
+            $code = "R/M/" . $now->format("dmy") . '/' . 1;
+         }
+         $requestUser = ModelsRequest::create([
+            'code' => $code,
+            'type' => 2,
+            'class' => 'main',
+            'activity_id' => 2,
+            'user_id' => auth()->user()->id,
+            'user_name' => auth()->user()->name,
+            'employee_id' => auth()->user()->id,
+            // 'department_id' => 'Marine',
+            'func' => 'Marine',
+            'schedule_id' => $schedule->id,
+            'date' => $req->date,
+            'origin_id' => $req->origin,
+            'destination_id' => $req->destination,
+            'status' => 2
+         ]);
+      }
+
+      Excel::import(new CrewsImport($requestUser->id), $req->file('file-crew'));
+
+      return redirect()->back()->with('success', 'Manifest Crew imported');
+   }
+
    public function store(Request $req)
    {
       $req->validate([
@@ -642,7 +787,7 @@ class MarineScheduleController extends Controller
          $schedule = Schedule::create([
             'by' => 'marine',
             'code' => $scheduleCode,
-            'class' => 'Cargo/Crew',
+            'class' => 'Cargo',
             'type' => 2,
             'status' => 0,
             'vessel_id' => $vessel->id,
@@ -746,17 +891,32 @@ class MarineScheduleController extends Controller
 
       $now = Carbon::now();
 
-      foreach ($schedule->requests->where('status', 2) as $req) {
-         $req->update([
-            'status' => 3
-         ]);
-
-         ReportRequest::create([
-            'request_id' => $req->id,
-            'status_id' => $status->id,
-
-         ]);
+      if ($schedule->class == 'Cargo' || $schedule->class == 'Crew') {
+         foreach ($schedule->requests->where('status', 2) as $req) {
+            $req->update([
+               'status' => 3
+            ]);
+   
+            ReportRequest::create([
+               'request_id' => $req->id,
+               'status_id' => $status->id,
+   
+            ]);
+         }
+      } else {
+         foreach ($schedule->requests as $req) {
+            $req->update([
+               'status' => 3
+            ]);
+   
+            ReportRequest::create([
+               'request_id' => $req->id,
+               'status_id' => $status->id,
+   
+            ]);
+         }
       }
+      
 
       // Report::create([
       //    'schedule_id' => $schedule->id,
@@ -835,18 +995,27 @@ class MarineScheduleController extends Controller
 
    public function addRoute(Request $req)
    {
-      $scheduleRoute = ScheduleRoute::find($req->destination);
-      $lastScheduleRoute = $scheduleRoute::where('schedule_id', $req->schedule)->where('status', 1)->orderBy('rank', 'desc')->first();
+      // dd('ok');
+      // $scheduleRoute = ScheduleRoute::find($req->destination);
+      $lastScheduleRoute = ScheduleRoute::where('schedule_id', $req->schedule)->where('status', 1)->orderBy('rank', 'desc')->first();
       // dd($lastScheduleRoute->rank);
       if ($lastScheduleRoute) {
          $rank = $lastScheduleRoute->rank + 1;
       } else {
          $rank = 1;
       }
-      $scheduleRoute->update([
+
+      ScheduleRoute::create([
+         'schedule_id' => $req->schedule,
          'status' => 1,
+         'port_id' => $req->destination,
          'rank' => $rank
       ]);
+
+      // $scheduleRoute->update([
+      //    'status' => 1,
+      //    'rank' => $rank
+      // ]);
 
       return redirect()->back()->with('success', 'Schedule Route successfully added');
    }

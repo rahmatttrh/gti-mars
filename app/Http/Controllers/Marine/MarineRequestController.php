@@ -11,6 +11,7 @@ use App\Models\RequestHistory;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
 use App\Models\Type;
+use App\Models\User;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,6 +19,216 @@ use Illuminate\Support\Facades\Mail;
 
 class MarineRequestController extends Controller
 {
+
+   public function indexCrewChange($month, $year){
+      $dekripMonth = dekripRambo($month);
+      $dekripYear = dekripRambo($year);
+
+      if ($dekripMonth == 1) {
+         $monthName = 'Januari';
+      } elseif ($dekripMonth == 2) {
+         $monthName = 'Februari';
+      } elseif ($dekripMonth == 3) {
+         $monthName = 'Maret';
+      } elseif ($dekripMonth == 4) {
+         $monthName = 'April';
+      } elseif ($dekripMonth == 5) {
+         $monthName = 'Mei';
+      } elseif ($dekripMonth == 6) {
+         $monthName = 'Juni';
+      } elseif ($dekripMonth == 7) {
+         $monthName = 'Juli';
+      } elseif ($dekripMonth == 8) {
+         $monthName = 'Agustus';
+      } elseif ($dekripMonth == 9) {
+         $monthName = 'September';
+      } elseif ($dekripMonth == 10) {
+         $monthName = 'Oktober';
+      } elseif ($dekripMonth == 11) {
+         $monthName = 'November';
+      } elseif ($dekripMonth == 12) {
+         $monthName = 'Desember';
+      }
+
+      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
+      $schedules = Schedule::where('class', 'Crew Change')->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
+      return view('pages-stisla.marine.request.crew-change', [
+         'year' => $dekripYear,
+         'month' => $dekripMonth,
+         'monthName' => $monthName,
+         'schedules' => $schedules,
+         'requests' => $requests
+      ])->with('i');
+   }
+   public function index(){
+      
+      
+      // $users = User::get();
+      $vessels = Vessel::get();
+
+      
+
+      // dd($users);
+
+      $now = Carbon::now();
+      $today = $now->format('l');
+      // dd($today);
+
+      if ($today == 'Friday') {
+         // dd('Friday');
+         $start = $now->addDay(-3);
+         $end = Carbon::now()->addDays(3);
+      }
+      if ($today == 'Saturday') {
+         // dd('Monday');
+         $start = $now->addDay(-4);
+         $end = Carbon::now()->addDays(2);
+      }
+      if ($today == 'Sunday') {
+         // dd('Monday');
+         $start = $now->addDay(-5);
+         $end = Carbon::now()->addDays(1);
+      }
+      if ($today == 'Monday') {
+         // dd('Monday');
+         $start = $now->addDay(+1);
+         $end = Carbon::now()->addDays(7);
+      }
+      if ($today == 'Tuesday') {
+         // dd('Monday');
+         $start = $now;
+         $end = Carbon::now()->addDays(8);
+      }
+      if ($today == 'Wednesday') {
+         // dd('Monday');
+         $start = $now->addDays(-1);
+         $end = Carbon::now()->addDays(5);
+      }
+      if ($today == 'Thusrsday') {
+         // dd('Monday');
+         $start = $now->addDays(-2);
+         $end = Carbon::now()->addDays(4);
+      }
+      
+
+      $start = $start->format('Y-m-d');
+      // dd($start);
+      $end = $end->format('Y-m-d');
+      $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$start, $end])->get();
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>', 1)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
+      // dd(count($requests));
+      $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->get();
+
+      $startDate = new Carbon($start);
+      $endDate = new Carbon($end);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
+      }
+
+
+
+      
+
+      return view('pages-stisla.marine.request.inbox', [
+         'vessels' => $vessels,
+         'requests' => $requests,
+         'schedules' => $schedules,
+         'users' => $users,
+         'dates' => $dates,
+         'weekSchedules' => $weekSchedules,
+         'start' => $start,
+         'end' => $end,
+         'now' => Carbon::now()
+      ])->with('i');
+   }
+
+   public function filter(Request $req){
+      // $requests = ModelsRequest::where('status','=', 1)->get();
+
+      
+      // $users = User::get();
+      $vessels = Vessel::get();
+      $startDate = new Carbon($req->start);
+      // dd($startDate);
+      $endDate = new Carbon($req->end);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
+      }
+      // dd($dates);
+
+
+      $startDate = $req->start;
+      // dd($startDate);
+      $endDate = $req->end;
+      $requests = ModelsRequest::where('activity_id', '!=', 7)->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+      // dd(count($requests));
+      $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->get();
+      // dd(count($requests));
+
+      
+
+      return view('pages-stisla.marine.request.inbox', [
+         'vessels' => $vessels,
+         'requests' => $requests,
+         'schedules' => $schedules,
+         'weekSchedules' => $weekSchedules,
+         'users' => $users,
+         'dates' => $dates,
+         'start' => $startDate,
+         'end' => $endDate,
+         'now' => Carbon::now()
+      ])->with('i');
+   }
+
+   public function filterGet($start, $end){
+      // $requests = ModelsRequest::where('status','=', 1)->get();
+      $dekripStart = dekripRambo($start);
+      $dekripEnd = dekripRambo($end);
+      
+      // $users = User::get();
+      $vessels = Vessel::get();
+      $startDate = new Carbon($dekripStart);
+      // dd($startDate);
+      $endDate = new Carbon($dekripEnd);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
+      }
+      // dd($dates);
+
+
+      $startDate = $dekripStart;
+      // dd($startDate);
+      $endDate = $dekripEnd;
+      $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+      // dd(count($requests));
+      $weekSchedules = Schedule::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->get();
+      // dd(count($requests));
+
+      
+
+      return view('pages-stisla.marine.request.inbox', [
+         'vessels' => $vessels,
+         'requests' => $requests,
+         'schedules' => $schedules,
+         'weekSchedules' => $weekSchedules,
+         'users' => $users,
+         'dates' => $dates,
+         'start' => $startDate,
+         'end' => $endDate,
+         'now' => Carbon::now()
+      ])->with('i');
+   }
 
    public function inbox(){
       $requests = ModelsRequest::where('status', 1)->get();
@@ -141,18 +352,6 @@ class MarineRequestController extends Controller
             ]);
          }
 
-         // $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
-         // $routeOrigin = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->first();
-         // if (!$routeOrigin) {
-         //    ScheduleRoute::create([
-         //       'schedule_id' => $schedule->id,
-         //       'request_id' => $request->id,
-         //       'port_id' => $request->origin_id,
-         //       'rank' => $lastScheduleRoutes->rank + 1,
-         //       'status' => 1
-         //    ]);
-         // }
-
          $lastScheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
          $route = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->destination_id)->first();
 
@@ -163,7 +362,7 @@ class MarineRequestController extends Controller
                'rank' => $route->rank
             ]);
          } else {
-            // dd('ok');
+            // dd('blm ada rute');
             ScheduleRoute::create([
                'schedule_id' => $schedule->id,
                'request_id' => $request->id,

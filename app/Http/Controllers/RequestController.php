@@ -244,6 +244,52 @@ class RequestController extends Controller
    }
 
 
+   public function detailNew($id){
+      $now = Carbon::now();
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $ports = Port::where('type', '!=', 'platform')->get();
+      $platforms = Port::where('type', 'platform')->get();
+      $barges = Port::where('type', 'Barge')->get();
+
+      $cargos = CargoItem::where('request_id', $request->id)->get();
+      $passengers = PassengerItem::where('request_id', $request->id)->get();
+
+      $vessels = Vessel::where('latitude', '!=', null)->get();
+      $nearestVessels = array();
+      
+      if ($request->origin->latitude != null) {
+         if ($request->date ==  $now->format('Y-m-d')) {
+            // dd('today');
+            foreach($vessels as $vessel){
+               $vesselLat = $vessel->latitude;
+               $vesselLong = $vessel->longitude;
+               $portLat = $request->origin->latitude;
+               $portLong = $request->origin->longitude;
+               $distance = (new GeofenceController)->getDistance($vesselLat, $vesselLong, $portLat, $portLong);
+               // dd($distance);
+               if($distance < 30000){
+                  // dd($vessel->name);
+                  $nearestVessels[] = $vessel;
+   
+               }
+            }
+         }
+      }
+      
+      return view('pages-stisla.request.detail-new', [
+         'request' => $request,
+         'ports' => $ports,
+         'platforms' => $platforms,
+         'barges' => $barges,
+         'cargos' => $cargos,
+         'passengers' => $passengers,
+         'nearestVessels' => $nearestVessels,
+      ])->with('i');
+   }
+
+
 
 
 

@@ -29,7 +29,7 @@
                        {{-- <tr><th colspan="8" class="py-1">Request Progress</th></tr> --}}
                        <tr>
                           {{-- <th class="text-center" style="width: 15px">No.</th> --}}
-                          <th>ID</th>
+                          <th></th>
                           <th>Desc</th>
                           <th>Route</th>
                           <th>Vessel</th>
@@ -41,15 +41,18 @@
                     </thead>
                     <tbody>
                        @if ($progress->count() > 0)
+                       <tr>
+                        <td colspan="4">{{auth()->user()->getPortName()}}</td>
+                       </tr>
                           @foreach ($progress as $request)
                              <tr>
                                 {{-- <td class="text-center">{{++$i}}</td> --}}
                                 <td>
-                                   <a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a> 
+                                   {{-- <a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a>  --}}
                                    {{-- <br>
                                    <small>{{$request->activity->name}}</small> --}}
                                 </td>
-                                <td>{{$request->activity->name}} - {{$request->desc}}</td>
+                                <td>{{$request->desc}}</td>
                                 <td>
                                  {{-- @if ($request->parent_id)
                                  <a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a>
@@ -110,7 +113,7 @@
                           @foreach ($drafts as $request)
                              <tr>
                                 {{-- <td class="text-center">{{++$i}}</td> --}}
-                                <td><a href="{{route('request.detail', enkripRambo($request->id))}}">{{$request->code}}</a></td>
+                                <td><a href="{{route('request.detail.new', enkripRambo($request->id))}}">{{$request->code}}</a></td>
                                 {{-- <td><a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}"> {{$request->parent->origin->name}}</a></td> --}}
                                 <td>
                                  <a href="{{route('request.detail.parent', enkripRambo($request->parent_id))}}">{{$request->origin->name}}</a>

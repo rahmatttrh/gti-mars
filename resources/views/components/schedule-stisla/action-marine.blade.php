@@ -1,4 +1,4 @@
-<span class="mb-2">
+<div class=" d-flex">
    @if (!$schedule->vessel)
       <button class="btn btn-info  btn-block mb-2" data-toggle="modal" data-target="#schedule-select-vessel">
          Select Vessel
@@ -6,8 +6,11 @@
       @else
       @if ($schedule->status == 0 || $schedule->status == 5 )
       {{-- @if ($schedule->requests()->count() > 0) --}}
-      <button class="btn btn-info btn-block mb-3" data-toggle="modal" data-target="#schedule-send">
+      <button class="btn btn-info mr-1 mb-2" data-toggle="modal" data-target="#schedule-send">
          Send to vessel
+      </button>
+      <button class="btn btn-info btn-block  mb-2" data-toggle="modal" data-target="#schedule-select-vessel">
+         Select Vessel
       </button>
       
       
@@ -32,4 +35,4 @@
 
    
    
-</span>
+   </div>

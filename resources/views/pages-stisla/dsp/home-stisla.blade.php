@@ -99,6 +99,21 @@
                <div class="card-body">
                   {{-- <small><b>Schedule Vessel</b></small>
                   <hr> --}}
+                  {{-- @if (count($incomingRequests) > 0)
+                  <div class="badge badge-info mb-1">Incoming Request !</div>
+                  <table>
+                     <tbody>
+                        @foreach ($incomingRequests as $req)
+                        <tr>
+                           <td>{{$req->desc}}</td>
+                        </tr>
+                            
+                        @endforeach
+                     </tbody>
+                  </table>
+                  @endif --}}
+                  
+                  
                   <div class="table-responsive">
                   <table class=" table-striped " id="table-12">
                      <thead>                                 
@@ -106,11 +121,11 @@
                         {{-- <th class="text-center">
                            #
                         </th> --}}
-
-                        <th>ID</th>
-                        <th>Type</th>
                         <th>Vessel</th>
                         <th>Date</th>
+                        {{-- <th>ID</th> --}}
+                        {{-- <th>Type</th> --}}
+                        
                         <th>Desc</th>
                         <th class="text-center">Status</th>
                         {{-- <th></th> --}}
@@ -118,75 +133,88 @@
                      </thead>
                      <tbody>     
                         @foreach ($schedules as $schedule)
-                        <tr>
-                           {{-- <td class="text-center">
-                              <small>{{++$i}}</small> 
-                           </td> --}}
-                           <td>
-                              <span><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}}</a></span>
-                              {{-- <br> --}}
+                        @if (count($schedule->requests) > 0)
+                           <tr>
+                              
+                              <td>
+                                 <span><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a></span><br>
+                                 {{-- <small>
+                                    @if ($schedule->class == 'Cargo')
+                                       @foreach ($schedule->requests as $req)
+                                          @foreach ($req->cargoItems as $item)
+                                              {{$item->desc}},
+                                          @endforeach
+                                       @endforeach
+
+                                       @else
+                                       {{$schedule->requests->first()->desc}}
+                                    @endif
+                                 </small> --}}
+                              
+                              </td>
+                              <td>
+                                 {{formatDate($schedule->date)}}
+                                 {{-- <br>
+                                    <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small> --}}
+                              </td>
+                              {{-- <td>
+                                 <span>{{$schedule->class}}</span>
+                              </td> --}}
                               
                               
-                              {{-- <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">
-                              {{$schedule->vessel->name ?? '-'}} 
-                              </a> --}}
-                           </td>
-                           <td>
-                              <span>{{$schedule->class}}</span>
-                           </td>
-                           <td>
-                              <span>{{$schedule->vessel->name ?? '-'}} </span> 
-                              {{-- <br>
-                              <small>{{$schedule->vessel->type ?? '-'}}</small> --}}
-                           </td>
-                           <td>
-                              {{formatDate($schedule->date)}}
-                              {{-- <br>
-                                 <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small> --}}
-                           </td>
-                           
-                           @if ($schedule->class == 'Crew' || $schedule->class == 'Cargo')
-                              <td class="">
-                                 {{count($schedule->requests)}} Request
-                                 {{-- @foreach ($schedule->routes as $route)
-                                 <span>{{$route->port->name}} </span>
-                                 @endforeach --}}
+                              
+                              @if ($schedule->class == 'Crew' || $schedule->class == 'Cargo')
+                                 <td class="">
+                                    @if (count($schedule->requests->where('activity_id', 1)) > 0)
+                                        Cargo,
+                                    @endif
+                                    @if (count($schedule->requests->where('activity_id', 2)) > 0)
+                                        Crew,
+                                    @endif
+                                    {{-- {{count($schedule->requests)}} Request --}}
+                                    {{-- @foreach ($schedule->routes as $route)
+                                    <span>{{$route->port->name}} </span>
+                                    @endforeach --}}
+                                 </td>
+                                 @elseif($schedule->class == 'Moving')
+                                 <td>
+                                    {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->bargeItem->barge->name}} <br>
+                                    
+                                 </td>
+                                 @elseif(($schedule->class == 'Fuel Oil'))
+                                 <td>
+                                    {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->fuel->qty}} KL  
+                                 </td>
+                                 @elseif(($schedule->class == 'Fresh Water'))
+                                 <td>
+                                    {{-- {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br> --}}
+                                    <small>
+                                       
+                                       {{$schedule->date}}
+                                       {{-- Request by {{$schedule->requests->first()->user->name}} --}}
+                                    </small>
+                                 </td>
+                                 @else
+                                 <td></td>
+                              @endif
+                              
+                              {{-- <td><small>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</small></td> --}}
+                              
+                              <td class="text-center">
+                                 {{-- <div class="badge badge-info"><small>Draft</small></div> --}}
+                                 <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
                               </td>
-                              @elseif($schedule->class == 'Moving')
-                              <td>
-                                 {{$schedule->requests->first()->bargeItem->barge->name}} <br>
-                                 <span>
-                                    Request by {{$schedule->requests->first()->user->name}}
-                                 </span>
-                              </td>
-                              @elseif(($schedule->class == 'Fuel Oil'))
-                              <td>
-                                 {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
-                                 <small>
-                                    Request by {{$schedule->requests->first()->user->name}}
-                                 </small>
-                              </td>
-                              @elseif(($schedule->class == 'Fresh Water'))
-                              <td>
-                                 {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br>
-                                 <small>
-                                    Request by {{$schedule->requests->first()->user->name}}
-                                 </small>
-                              </td>
-                           @endif
-                           
-                           {{-- <td><small>{{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}</small></td> --}}
-                           
-                           <td class="text-center">
-                              {{-- <div class="badge badge-info"><small>Draft</small></div> --}}
-                              <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                           </td>
+                              
+                              
+                              {{-- <td>
+                                 <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                              </td> --}}
+                           </tr>
                            
                            
-                           {{-- <td>
-                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                           </td> --}}
-                        </tr>
+                           
+                        @endif
+                        
                         @endforeach                            
                         
                      </tbody>

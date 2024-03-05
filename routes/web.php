@@ -82,7 +82,7 @@ Route::middleware(["auth"])->group(function () {
    //    Route::group(['middleware' => ['role:department|vessel']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
-   Route::put('update', [DepartmentRequestController::class, 'update'])->name('request.update');
+   Route::put('request/update', [DepartmentRequestController::class, 'update'])->name('request.update');
    Route::prefix('news')->group(function () {
       
       Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
@@ -255,6 +255,7 @@ Route::middleware(["auth"])->group(function () {
       Route::post('check', [RequestController::class, 'check'])->name('request.check');
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
       Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
+      Route::get('detail/n/{request:id}', [RequestController::class, 'detailNew'])->name('request.detail.new');
       
 
       Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
@@ -292,6 +293,7 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('document')->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
       Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
+      Route::get('/export/intermilan/{start}/{end}', [DocumentController::class, 'intermilanExport'])->name('document.intermilan.export');
       Route::get('/vdr/{vdr:id}', [DocumentController::class, 'vdr'])->name('document.vdr');
    });
 
@@ -328,6 +330,9 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');
       Route::get("dash/intermilan/{month}/{year}", [HomeController::class, "dspMarineIntermilan",])->name('dsp.marine.intermilan');
       Route::get("surveillance", [SurveillanceController::class, "marine",])->name('surveillance.marine');
+      Route::post("intermilan/filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
+      Route::get("intermilan/filter/{start}/{end}", [MarineRequestController::class, "filterGet",])->name('intermilan.filter.get');
+       
 
       Route::prefix('schedule')->group(function () {
          Route::get('progress', [MarineScheduleController::class, 'progress'])->name('schedule.progress');
@@ -339,6 +344,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
          Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
          Route::post('store', [MarineScheduleController::class, 'store'])->name('schedule.store');
+         Route::post('store/so', [MarineScheduleController::class, 'storeNew'])->name('schedule.store.so');
          Route::get('edit/{schedule:id}', [MarineScheduleController::class, 'edit'])->name('schedule.edit');
          Route::put('update', [MarineScheduleController::class, 'update'])->name('schedule.update');
          Route::put('jetty/update', [MarineScheduleController::class, 'jettyUpdate'])->name('schedule.jetty.update');
@@ -352,6 +358,18 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          Route::get('delete/route/{id}', [MarineScheduleController::class, 'deleteRoute'])->name('schedule.delete.route');
          Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
       });
+
+      Route::prefix("request")->group(function () {
+         Route::get("/user", [MarineRequestController::class, "index",])->name('marine.request');
+         Route::post("/filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
+      });
+
+      Route::prefix("crew/change")->group(function () {
+         Route::get("/index/{month}/{year}", [MarineRequestController::class, "indexCrewChange",])->name('marine.crew.change');
+         Route::post('store/', [MarineScheduleController::class, 'storeCrewChangeSchedule'])->name('schedule.store.crew.change');
+         Route::post('import/', [MarineScheduleController::class, 'importCrewChange'])->name('marine.crew.change.import');
+      });
+
    });
 
    Route::prefix("vdr/m")->group(function () {
@@ -448,6 +466,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    });
 
    Route::prefix('request')->group(function () {
+      Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
       Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
       Route::put('change/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.change.schedule');
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
@@ -569,9 +588,11 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
 
       // Request
       Route::prefix('request')->group(function () {
-         Route::get('create', [DepartmentRequestController::class, 'create'])->name('request.create');
+         Route::get('create/m/d', [DepartmentRequestController::class, 'create'])->name('request.create');
+         Route::get('create/s/d', [DepartmentRequestController::class, 'createSingle'])->name('request.create.single');
          Route::post('save', [DepartmentRequestController::class, 'save'])->name('request.save');
          Route::post('store', [DepartmentRequestController::class, 'storeImport'])->name('request.store');
+         Route::post('store/new', [DepartmentRequestController::class, 'storeNew'])->name('request.store.new');
          Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
          Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
    
@@ -579,6 +600,9 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
          Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
          Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
          Route::get('release/{id}', [DepartmentRequestController::class, 'release'])->name('request.release');
+         Route::get('get/vessel/{id}', [DepartmentRequestController::class, 'getVessel'])->name('request.get.vessel');
+         Route::post('change/vessel', [DepartmentRequestController::class, 'changeVessel'])->name('request.change.vessel');
+
          Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
    
          Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
@@ -607,6 +631,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
 Route::group(['middleware' => ['role:logistic|department|marine']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
+      Route::post('import', [CargoItemController::class, 'storeImport'])->name('cargo.import');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.delete');
       Route::put('update', [CargoItemController::class, 'update'])->name('cargo.update');
       Route::post('offloading', [CargoItemController::class, 'offloading'])->name('cargo.item.offloading');
@@ -616,6 +641,7 @@ Route::group(['middleware' => ['role:logistic|department|marine']], function () 
 Route::group(['middleware' => ['role:drilling|department']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
+      Route::post('import', [PassengerItemController::class, 'storeImport'])->name('crew.import');
       Route::get('delete/{id}', [PassengerItemController::class, 'delete'])->name('passenger.delete');
       Route::put('update', [PassengerItemController::class, 'update'])->name('passenger.update');
       Route::post('add', [CrewController::class, 'add'])->name('crew.add');

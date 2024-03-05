@@ -217,8 +217,8 @@
                               <tr>
                                  <td>ID</td>
                                  <td>Location</td>
-                                 <td>Activity</td>
-                                 <td>Required Boat</td>
+                                 {{-- <td>Activity</td> --}}
+                                 {{-- <td>Required Boat</td> --}}
                                  <td>Boat Assigned</td>
                                  <td>User</td>
                                  <td>Status</td>
@@ -229,27 +229,55 @@
                                  @if ($req->date == $date->format('Y-m-d'))
                                     <tr>
                                        <td>
-                                          <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
+                                          <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->desc}}</a>
                                        </td>
-                                       <td><b>
+                                       <td>
                                           @if ($req->activity_id == 5)
                                              {{$req->employee->name}}
                                               @else
                                               {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
                                           @endif
                                           
-                                       </b></td>
+                                       </td>
                                        
-                                       <td>{{$req->activity->name}}</td>
+                                       {{-- <td>{{$req->activity->name}}</td> --}}
                                        
-                                       <td>{{$req->schedule->vessel->type ?? '-'}}</td>
+                                       {{-- <td>{{$req->schedule->vessel->type ?? '-'}}</td> --}}
                                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
                                        <td>{{$req->employee->name ?? '-'}}</td>
                                        <td><x-status-stisla.request-plain :request="$req" /></td>
                                     </tr>
-                                    {{-- <b>{{$req->schedule->vessel->name}}</b><br>
-                                    <small>{{$req->origin->name}} - {{$req->destination->name}}</small>
-                                    <hr> --}}
+                                    @if ($req->activity_id == 1)
+                                    <tr>
+                                       <td colspan="7">
+                                          <small>
+                                          @foreach ($req->cargoItems as $item)
+                                              {{$item->desc}},
+                                          @endforeach
+                                          @if (count($req->passengerItems) >  0)
+                                          {{count($req->passengerItems)}} Total Passenger
+                                          @endif
+                                          </small>
+                                       </td>
+                                    </tr>
+                                 
+                                    @endif
+                                    @if ($req->activity_id == 2)
+                                    <tr>
+                                       <td colspan="7">
+                                          <small>
+                                             @if (count($req->passengerItems) >  0)
+                                             {{count($req->passengerItems)}} Total Passenger (
+                                             {{count($req->passengerItems->where('type', 'Departure'))}} Berangkat, {{count($req->passengerItems->where('type', 'Return'))}} Pulang)
+                                             @endif
+                                          
+                                          </small>
+                                       </td>
+                                    </tr>
+                                 
+                                    @endif
+                                    
+                                    
                                     @else
                                     
                                  @endif

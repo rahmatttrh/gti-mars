@@ -107,7 +107,7 @@
          <li class="nav-item dropdown {{ (request()->is('dsp/m/dash/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/m/dash/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('dsp/m/dash/*'))
-               <i class="fas fa-fire ml-3"></i>
+               <i class="text-primary fas fa-fire ml-3"></i>
                @endif
                
                <span >Dashboard </span>
@@ -119,15 +119,24 @@
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
          </li>
-         <li class="nav-item {{ (request()->is('master/data')) ? 'active' : '' }}">
-            <a href="{{route('master.data')}}" class="nav-link {{ (request()->is('master/data')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('master/data'))
-               <i class="fas fa-fire ml-3"></i>
+         <li class="nav-item {{ (request()->is('dsp/m/request/*')) ? 'active' : '' }}">
+            <a href="{{route('marine.request')}}" class="nav-link {{ (request()->is('dsp/m/request/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/m/request/*'))
+               <i class="text-primary fas fa-calendar ml-3"></i>
                @endif
-               
-               <span class="">Master Data</span>
+               <span>Intermilan</span>
             </a>
          </li>
+         <li class="nav-item {{ (request()->is('dsp/m/crew/change/*')) ? 'active' : '' }}">
+            <a href="{{route('marine.crew.change', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link {{ (request()->is('dsp/m/crew/change/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/m/crew/change/*'))
+               <i class="text-primary fas fa-users ml-3"></i>
+               @endif
+               <span>Crew Change</span>
+            </a>
+         </li>
+        
+         
          
          {{-- <li class="nav-item {{ (request()->is('schedule/*')) ? 'active' : '' }}">
             <a href="{{route('schedule.all', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link {{ (request()->is('schedule/*')) ? 'text-dark' : 'text-white' }}">
@@ -142,7 +151,7 @@
          <li class="nav-item dropdown {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/m/schedule/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('dsp/m/schedule/*'))
-               <i class="fas fa-fire ml-3"></i>
+               <i class="text-primary fas fa-fire ml-3"></i>
                @endif
                
                <span >Sailing Order </span>
@@ -153,11 +162,12 @@
             <li class="nav-item"><a href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link">Plan Sailing Order</a></li>
             </ul>
          </li>
+         
 
          <li class="nav-item {{ (request()->is('dsp/m/surveillance')) ? 'active' : '' }}">
             <a href="{{route('surveillance.marine')}}" class="nav-link {{ (request()->is('dsp/m/surveillance')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/surveillance'))
-               <i class="fas fa-fire ml-3"></i>
+               <i class="text-primary fas fa-fire ml-3"></i>
                @endif
                <span>Surveillance</span>
             </a>
@@ -166,6 +176,15 @@
             <a href="{{route('log.dsp')}}" class="nav-link text-white">
                {{-- <i class="far fa-heart"></i> --}}
                <span>Log</span>
+            </a>
+         </li>
+         <li class="nav-item {{ (request()->is('master/data')) ? 'active' : '' }}">
+            <a href="{{route('master.data')}}" class="nav-link {{ (request()->is('master/data')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('master/data'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Master Data</span>
             </a>
          </li>
       </ul>

@@ -128,36 +128,42 @@
                                  <th colspan="6">{{$date->format('d F Y')}}</th>
                               </tr>
                               <tr>
-                                 <th>ID</th>
+                                 {{-- <th>ID</th> --}}
                                  <th>User</th>
                                  <th>Activity</th>
                                  <th>Location</th>
-                                 <th>Schedule</th>
+                                 
                                  <th>Required Boat</th>
                                  <th>Boat Assigned</th>
+                                 <th>Schedule</th>
                               </tr>
                            </thead>
                            <tbody>
                               @foreach ($requests as $req)
                                  @if ($req->date == $date->format('Y-m-d'))
                                     <tr>
-                                       <td>
+                                       {{-- <td>
                                           <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
-                                       </td>
-                                       <td>{{$req->employee->name}} / {{$req->employee->port->name}}</td>
+                                       </td> --}}
+                                       <td> {{$req->employee->port->name}}</td>
                                        <td>
-                                          <a href="#" data-toggle="modal" data-target="#request-edit-{{$req->id}}">{{$req->activity->name}} </a>
-                                          - {{$req->desc}}</td>
+                                          {{$req->desc}} 
+                                          @foreach ($req->cargoItems as $cargo)
+                                              {{$cargo->desc}},
+                                          @endforeach
+                                          {{-- <a href="#" data-toggle="modal" data-target="#request-edit-{{$req->id}}">{{$req->activity->name}} </a>
+                                          - {{$req->desc}}</td> --}}
                                        <td>
                                           @if ($req->activity_id == 5)
-                                             {{$req->employee->name}}
+                                             -
                                               @else
                                               {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
                                           @endif
                                        </td>
-                                       <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code}}</a></td>
+                                       {{-- <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code ?? ''}}</a></td> --}}
                                        <td>{{$req->schedule->vessel->type ?? '-'}}</td>
-                                       <td>{{$req->schedule->vessel->name ?? '-'}}</td>
+                                       <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}"> {{$req->schedule->vessel->name ?? '-'}}</a></td>
+                                       <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code ?? ''}}</a></td>
                                     </tr>
                                     {{-- <b>{{$req->schedule->vessel->name}}</b><br>
                                     <small>{{$req->origin->name}} - {{$req->destination->name}}</small>

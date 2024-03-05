@@ -131,11 +131,40 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $schedules = Schedule::orderBy('date', 'asc')->get();
+
+      // dd(count($schedules));
       // $ahtsVessels = Vessel::where('type', 'AHTS')->get();
 
       // $recentRequests = ModelsRequest::where('date', $schedule->date)->where('status', '=', 1)->get();
 
-      $recentRequests = ModelsRequest::where('status', '=', 1)->where('activity_id', '<', 3)->get();
+      $recentRequests = ModelsRequest::where('status', 1)->where('activity_id','!=', 7)->get();
+      $recentCrewChangeRequests = ModelsRequest::where('activity_id', 7)->where('status', 1)->get();
+
+      if ($schedule->class == 'Crew Change') {
+         // dd(count($schedule->requests));
+         $totalDeparture = null;
+         $totalReturn = null;
+         foreach($schedule->requests->where('activity_id', 7) as $req){
+            // dd(count($req->passengerItems->where('type', 'Departure')));
+            $totalDeparture += count($req->passengerItems->where('type', 'Departure'));
+         }
+         foreach($schedule->requests->where('activity_id', 7) as $req){
+            // dd(count($req->passengerItems->where('type', 'Departure')));
+            $totalReturn += count($req->passengerItems->where('type', 'Return'));
+         }
+
+         $schedule->update([
+            'total_depart' => $totalDeparture,
+            'total_return' => $totalReturn
+         ]);
+
+         // dd($totalDeparture);
+      } else {
+         $totalDeparture = null;
+         $totalReturn = null;
+
+      }
+      
 
 
       if ($schedule->class == 'Cargo' || $schedule->class == 'Crew') {
@@ -149,7 +178,8 @@ class ScheduleController extends Controller
       // } 
       else {
          // dd('cargo/crew');
-         $vessels = Vessel::where('type', 'AHTS')->get();
+         // $vessels = Vessel::where('type', 'AHTS')->get();
+         $vessels = Vessel::get();
          $statuses = Status::where('class', 'moving')->where('type', 1)->get();
       }
 
@@ -254,9 +284,10 @@ class ScheduleController extends Controller
          $persenSize = 0;
       }
 
-
+      // dd($totalDeparture);
 
       // dd(round($persenWeight));
+      // dd(count($recentCrewChangeRequests));
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,
@@ -280,7 +311,10 @@ class ScheduleController extends Controller
             'lastPostpone' => $lastPostpone,
             'activities' => $acts,
             'offloadings' => $offloadings,
-            'scheduleRoutes' => $scheduleRoutes
+            'scheduleRoutes' => $scheduleRoutes,
+            'recentCrewChangeRequests' => $recentCrewChangeRequests,
+            'totalDeparture' => $totalDeparture,
+            'totalReturn' => $totalReturn
             // 'report' => $requests
          ]);
       } else {
@@ -306,7 +340,10 @@ class ScheduleController extends Controller
             'lastPostpone' => $lastPostpone,
             'activities' => $acts,
             'offloadings' => $offloadings,
-            'scheduleRoutes' => $scheduleRoutes
+            'scheduleRoutes' => $scheduleRoutes,
+            'recentCrewChangeRequests' => $recentCrewChangeRequests,
+            'totalDeparture' => $totalDeparture,
+            'totalReturn' => $totalReturn
             // 'report' => $requests
          ]);
       }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
+use App\Imports\CargosImport;
 use App\Models\CargoItem;
 use App\Models\Deflection;
 use App\Models\Offloading;
@@ -11,20 +12,21 @@ use App\Models\ReportRequest;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CargoItemController extends Controller
 {
    public function store(Request $r)
    {
       // dd($r->qty);
-      $request = ModelsRequest::find($r->req);
+      $request = ModelsRequest::find($r->requestId);
 
       CargoItem::create([
          'type' => 'main',
          'status' => 1,
-         'request_id' => $r->req,
+         'request_id' => $r->requestId,
          'no_doc' => $r->no_document,
-         'mtd' => $r->no_document,
+         'mtd' => $r->mtd,
          'contract' => $r->contract,
          'desc' => $r->desc,
          'qty' => $r->qty,
@@ -39,6 +41,14 @@ class CargoItemController extends Controller
          'total_weight' => $request->cargoItems->sum('weight')
       ]);
       return redirect()->back()->with('success', 'Cargo Item successfully added.');
+   }
+
+
+   public function storeImport(Request $req){
+      // dd($req->requestId);
+      Excel::import(new CargosImport($req->requestId), $req->file('file-cargo'));
+
+      return redirect()->back()->with('success', 'Manifest imported');
    }
 
    public function delete($id)

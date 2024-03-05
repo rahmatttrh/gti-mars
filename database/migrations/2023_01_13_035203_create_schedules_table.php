@@ -28,6 +28,7 @@ class CreateSchedulesTable extends Migration
          // $table->mediumInteger('destination_id')->nullable();
          $table->dateTime('etd')->nullable();
          $table->dateTime('eta')->nullable();
+         $table->string('description')->nullable();
          $table->string('remark')->nullable();
          $table->decimal('total_size', 6, 2)->nullable();
          $table->decimal('total_weight', 6, 2)->nullable();

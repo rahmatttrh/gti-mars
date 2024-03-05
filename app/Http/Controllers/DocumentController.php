@@ -72,6 +72,32 @@ class DocumentController extends Controller
       ])->with('i');
    }
 
+   public function intermilanExport($start, $end){
+      $dekripStart = dekripRambo($start);
+      $dekripEnd = dekripRambo($end);
+      // dd($dekripEnd);
+      $startDate = new Carbon($dekripStart);
+      $endDate = new Carbon($dekripEnd);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
+      }
+
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+      // dd($users);
+
+      // dd( $startDate->format('F'));
+
+      return view('pages.document.intermilan-new', [
+         'users' => $users,
+         'dates' => $dates,
+         'start' => $dekripStart,
+         'end' => $dekripEnd,
+         'monthName' => $startDate->format('F Y')
+      ])->with('i');
+   }
+
 
 
    public function add(Request $req){

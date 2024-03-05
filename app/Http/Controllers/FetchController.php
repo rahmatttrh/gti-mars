@@ -206,6 +206,44 @@ class FetchController extends Controller
          // </tr>';
       }
 
+
+      if (count($scheduleRoutes) == 0) {
+         $schedules = Schedule::where('date', $date)->get();
+         foreach ($schedules as $row) {
+            
+            // $first = ScheduleRoute::where('schedule_id', $schedule->id)->where('rank', 1)->first();
+   
+            if ($row->vessel_id != null) {
+               $vesselName = $row->vessel->name;
+               $vesselType = $row->vessel->type;
+               $totalWeight = $row->total_weight;
+               $vesselDeadweight = $row->vessel->deadweight;
+               $persen = $totalWeight / $vesselDeadweight * 100;
+            } else {
+               $vesselName = '-';
+               $vesselType = '';
+               $totalWeight = 0;
+               $vesselDeadweight = '0';
+               $persen = '-';
+            }
+   
+            $result[] = '<tr>
+               <td>
+                  ' . $vesselName  . ' 
+               </td>
+               <td>' . \Carbon\Carbon::parse($row->date)->format('d-m-Y')  .'
+               </td>
+               
+               
+               <td> ' .
+                     '-' . ' 
+                 
+               </td>
+               <td>' . $persen  . ' %</td>
+            </tr>';
+         }
+      } 
+
       
 
       // foreach ($schedules as $row) {

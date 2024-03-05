@@ -60,14 +60,14 @@
             <th>Type</th>
             <th>Route</th>
             {{-- <th>Date</th> --}}
-            <th>Vessel</th>
+            {{-- <th>Vessel</th> --}}
             {{-- <th>User</th> --}}
             <th class="text-center">Action</th>
          </tr>
       </thead>
       <tbody>
-         @if ($recents->count() > 0)
-            @foreach ($recents as $req)
+         @if ($incomings->count() > 0)
+            @foreach ($incomings as $req)
                @if ($req->schedule_id == $schedule->id)
                <tr>
                   <td>
@@ -75,17 +75,17 @@
                      
                   </td>
                   <td>{{formatDate($req->date)}} </td>
-                  <td><span >{{$req->activity->name}} [{{$req->desc}}]</span></td>
+                  <td><span >{{$req->desc}}</span></td>
                   <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
                   
                   
-                  <td>
+                  {{-- <td>
                      @if ($req->schedule_id != null)
                          <a href={{route('schedule.detail', enkripRambo($req->schedule_id))}}"">{{$req->schedule->vessel->name ?? 'Vessel Empty'}} </a>
                          @else
                          -
                      @endif
-                  </td>
+                  </td> --}}
                  
                   <td>
 

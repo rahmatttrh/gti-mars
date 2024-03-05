@@ -47,6 +47,41 @@
    th, td {
       padding-left: 5px
    }
+
+   .bg-complete {
+      background-color: rgb(199, 248, 162)
+   }
+   .bg-assigned {
+      background-color: rgb(132, 210, 244)
+   }
+   .bg-draft {
+      background-color: rgb(228, 233, 234)
+   }
+
+   .bg-triton {
+      background-color: rgb(255, 231, 16);
+   }
+   .bg-balihe {
+      background-color: rgb(244, 66, 66);
+   }
+   .bg-logindo {
+      background-color: rgb(89, 192, 51);
+   }
+   .bg-elok {
+      background-color: rgb(41, 95, 134);
+   }
+   .bg-indoliziz {
+      background-color: rgb(172, 236, 149)
+   }
+   .bg-giat {
+      background-color: rgb(129, 181, 245)
+   }
+   .bg-sigap {
+      background-color: rgb(241, 156, 38)
+   }
+   .bg-moloko {
+      background-color: rgb(213, 226, 131)
+   }
 </style>
 
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
@@ -85,9 +120,9 @@
       color: #7C81AD
    }
 
-   table td {
+   /* table td {
       font-size: 11px
-   }
+   } */
    .badge {
       font-size: 11px
    }

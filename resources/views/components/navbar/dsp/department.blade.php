@@ -135,12 +135,26 @@
                @if (request()->is('dsp/u/dash/*'))
                <i class="fas fa-fire ml-3"></i>
                @endif
-               
                <span class="">Dashboard</span>
             </a>
          </li>
+
+         <li class="nav-item dropdown {{ (request()->is('dsp/u/request/create/*')) ? 'active' : '' }}">
+            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/u/request/create/*')) ? 'text-dark' : 'text-white' }} ">
+               @if (request()->is('dsp/u/request/create/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span>Create Request</span>
+            </a>
+            
+            <ul class="dropdown-menu">
+               <li class="nav-item"><a href="{{route('request.create.single', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link">Single Destination</a></li>
+               <li class="nav-item"><a href="{{route('request.create', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link">Multiple Destination</a></li>
+            </ul>
+         </li>
          
-         <li class="nav-item {{ (request()->is('dsp/u/request/create')) ? 'active' : '' }}">
+         {{-- <li class="nav-item {{ (request()->is('dsp/u/request/create')) ? 'active' : '' }}">
             <a href="{{route('request.create', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link {{ (request()->is('dsp/u/request/create')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/u/request/create'))
                <i class="fas fa-fire ml-3"></i>
@@ -148,7 +162,7 @@
                
                <span class="">Create Request</span>
             </a>
-         </li>
+         </li> --}}
 
          <li class="nav-item pr-3 {{ (request()->is('dsp/u/request/progress')) ? 'active' : '' }}">
             <a href="{{route('request.progress')}}" class="nav-link {{ (request()->is('dsp/u/request/progress')) ? 'text-dark' : 'text-white' }}">

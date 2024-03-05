@@ -27,7 +27,7 @@ class EmployeeSeeder extends Seeder
          'updated_at' => NOW()
       ]);
 
-      // USER KJ
+      // USER KJ4
       DB::table('employees')->insert([
          'status' => 1,
          'department_id' => 2,
@@ -44,25 +44,37 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 1,
-         'name' => 'Dimaz',
-         'email' => 'dimaz@pertamina.com',
-         'username' => 'dimaz',
+         'name' => 'Kalijapat 4',
+         'email' => 'kj4@pertamina.com',
+         'username' => 'kj4',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 1,
-         'name' => 'Dicky',
-         'email' => 'dicky@pertamina.com',
-         'username' => 'dicky',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 1,
+      //    'name' => 'Dimaz',
+      //    'email' => 'dimaz@pertamina.com',
+      //    'username' => 'dimaz',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 1,
+      //    'name' => 'Dicky',
+      //    'email' => 'dicky@pertamina.com',
+      //    'username' => 'dicky',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER PABELOKAN
@@ -70,97 +82,108 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 12,
-         'name' => 'Andi',
-         'email' => 'andi@pertamina.com',
-         'username' => 'andi',
+         'name' => 'Pabelokan Island',
+         'email' => 'pab@pertamina.com',
+         'username' => 'pab',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Andi',
+      //    'email' => 'andi@pertamina.com',
+      //    'username' => 'andi',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Aan',
-         'email' => 'aan@pertamina.com',
-         'username' => 'aan',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Aan',
+      //    'email' => 'aan@pertamina.com',
+      //    'username' => 'aan',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
+      // DB::table('employees')->insert([
          
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Said',
-         'email' => 'said@pertamina.com',
-         'username' => 'said',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Said',
+      //    'email' => 'said@pertamina.com',
+      //    'username' => 'said',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
+      // DB::table('employees')->insert([
          
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Tommy',
-         'email' => 'Tommy@pertamina.com',
-         'username' => 'Tommy',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Tommy',
+      //    'email' => 'Tommy@pertamina.com',
+      //    'username' => 'Tommy',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Sukma Yogi',
-         'email' => 'sukma@pertamina.com',
-         'username' => 'sukma',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Sukma Yogi',
+      //    'email' => 'sukma@pertamina.com',
+      //    'username' => 'sukma',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Giat',
-         'email' => 'giat@pertamina.com',
-         'username' => 'giat',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Giat',
+      //    'email' => 'giat@pertamina.com',
+      //    'username' => 'giat',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Nuzila',
-         'email' => 'nuzila@pertamina.com',
-         'username' => 'nuzila',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Nuzila',
+      //    'email' => 'nuzila@pertamina.com',
+      //    'username' => 'nuzila',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 12,
-         'name' => 'Arief',
-         'email' => 'arief@pertamina.com',
-         'username' => 'arief',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 12,
+      //    'name' => 'Arief',
+      //    'email' => 'arief@pertamina.com',
+      //    'username' => 'arief',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER COSL221
@@ -182,13 +205,24 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 5,
-         'name' => 'Abdillah Muchsin',
-         'email' => 'muchsin@pertamina.com',
-         'username' => 'muchsin',
+         'name' => 'COSL 222',
+         'email' => 'cosl222@pertamina.com',
+         'username' => 'cosl222',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 5,
+      //    'name' => 'Abdillah Muchsin',
+      //    'email' => 'muchsin@pertamina.com',
+      //    'username' => 'muchsin',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER COSL223
@@ -210,37 +244,49 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 7,
-         'name' => 'Felix',
-         'email' => 'felix@pertamina.com',
-         'username' => 'felix',
+         'name' => 'COSL 225',
+         'email' => 'cosl225@pertamina.com',
+         'username' => 'cosl225',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 7,
-         'name' => 'Adam Faizal',
-         'email' => 'faizal@pertamina.com',
-         'username' => 'faizal',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 7,
+      //    'name' => 'Felix',
+      //    'email' => 'felix@pertamina.com',
+      //    'username' => 'felix',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 7,
-         'name' => 'Bayu Iqbal Tawakal',
-         'email' => 'bayu@pertamina.com',
-         'username' => 'bayu',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 7,
+      //    'name' => 'Adam Faizal',
+      //    'email' => 'faizal@pertamina.com',
+      //    'username' => 'faizal',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 7,
+      //    'name' => 'Bayu Iqbal Tawakal',
+      //    'email' => 'bayu@pertamina.com',
+      //    'username' => 'bayu',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER ONYX
@@ -248,25 +294,37 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 11,
-         'name' => 'Mahmud',
-         'email' => 'mahmud@pertamina.com',
-         'username' => 'mahmud',
+         'name' => 'Onyx',
+         'email' => 'onix@pertamina.com',
+         'username' => 'onix',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 11,
-         'name' => 'Umar',
-         'email' => 'umar@pertamina.com',
-         'username' => 'umar',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 11,
+      //    'name' => 'Mahmud',
+      //    'email' => 'mahmud@pertamina.com',
+      //    'username' => 'mahmud',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 11,
+      //    'name' => 'Umar',
+      //    'email' => 'umar@pertamina.com',
+      //    'username' => 'umar',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER WINNER
@@ -274,23 +332,36 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 8,
-         'name' => 'Lulu Luana Setiadi',
-         'email' => 'lulu@pertamina.com',
-         'username' => 'lulu',
+         'name' => 'Winner',
+         'email' => 'winner@pertamina.com',
+         'username' => 'winner',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 8,
+      //    'name' => 'Lulu Luana Setiadi',
+      //    'email' => 'lulu@pertamina.com',
+      //    'username' => 'lulu',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
 
       // USER BAYU CAKRAWALA
+      
       DB::table('employees')->insert([
          'status' => 1,
          'department_id' => 2,
          'port_id' => 10,
          'name' => 'Bayu Cakrawala',
-         'email' => 'bayuc@pertamina.com',
-         'username' => 'bayuc',
+         'email' => 'bca@pertamina.com',
+         'username' => 'bca',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
@@ -302,49 +373,61 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 18,
-         'name' => 'Wahyu',
-         'email' => 'wahyu@pertamina.com',
-         'username' => 'wahyu',
+         'name' => 'Superior',
+         'email' => 'superior@pertamina.com',
+         'username' => 'superior',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 18,
-         'name' => 'Syawal',
-         'email' => 'syawal@pertamina.com',
-         'username' => 'syawal',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 18,
+      //    'name' => 'Wahyu',
+      //    'email' => 'wahyu@pertamina.com',
+      //    'username' => 'wahyu',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 18,
-         'name' => 'Jemmy Pentury',
-         'email' => 'jemmy@pertamina.com',
-         'username' => 'jemmy',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 18,
+      //    'name' => 'Syawal',
+      //    'email' => 'syawal@pertamina.com',
+      //    'username' => 'syawal',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 18,
-         'name' => 'Saut Situmorang',
-         'email' => 'saut@pertamina.com',
-         'username' => 'saut',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 18,
+      //    'name' => 'Jemmy Pentury',
+      //    'email' => 'jemmy@pertamina.com',
+      //    'username' => 'jemmy',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
+
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 18,
+      //    'name' => 'Saut Situmorang',
+      //    'email' => 'saut@pertamina.com',
+      //    'username' => 'saut',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER SHIP114
@@ -352,13 +435,24 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 16,
-         'name' => 'Khamsani',
-         'email' => 'khamsani@pertamina.com',
-         'username' => 'khamsani',
+         'name' => 'Ship 114',
+         'email' => 'ship114@pertamina.com',
+         'username' => 'ship114',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 16,
+      //    'name' => 'Khamsani',
+      //    'email' => 'khamsani@pertamina.com',
+      //    'username' => 'khamsani',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER FALCON
@@ -366,13 +460,25 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 9,
-         'name' => 'Slamet',
-         'email' => 'slamet@pertamina.com',
-         'username' => 'slamet',
+         'name' => 'Falcon',
+         'email' => 'falcon@pertamina.com',
+         'username' => 'falcon',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 9,
+      //    'name' => 'Slamet',
+      //    'email' => 'slamet@pertamina.com',
+      //    'username' => 'slamet',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER TANJUNG LESUNG
@@ -380,37 +486,48 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 13,
-         'name' => 'Chlorid Latifoso',
-         'email' => 'chlorid@pertamina.com',
-         'username' => 'chlorid',
+         'name' => 'Tanjung Lesung',
+         'email' => 'tjlesung@pertamina.com',
+         'username' => 'tjlesung',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 13,
+      //    'name' => 'Chlorid Latifoso',
+      //    'email' => 'chlorid@pertamina.com',
+      //    'username' => 'chlorid',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 13,
-         'name' => 'Rachmat Hidayat',
-         'email' => 'rachmat@pertamina.com',
-         'username' => 'rachmat',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 13,
+      //    'name' => 'Rachmat Hidayat',
+      //    'email' => 'rachmat@pertamina.com',
+      //    'username' => 'rachmat',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 13,
-         'name' => 'Juhri hasibuan',
-         'email' => 'juhri@pertamina.com',
-         'username' => 'juhri',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 13,
+      //    'name' => 'Juhri hasibuan',
+      //    'email' => 'juhri@pertamina.com',
+      //    'username' => 'juhri',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER FEDERAL
@@ -418,28 +535,29 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 17,
-         'name' => 'Poniman',
-         'email' => 'poniman@pertamina.com',
-         'username' => 'poniman',
+         'name' => 'Federal',
+         'email' => 'federal@pertamina.com',
+         'username' => 'federal',
          'ekstensi' => '111',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
 
-      DB::table('employees')->insert([
-         'status' => 1,
-         'department_id' => 2,
-         'port_id' => 17,
-         'name' => 'Gunawan Wibisono',
-         'email' => 'gunawan@pertamina.com',
-         'username' => 'gunawan',
-         'ekstensi' => '111',
-         'created_at' => NOW(),
-         'updated_at' => NOW()
-      ]);
+      // DB::table('employees')->insert([
+      //    'status' => 1,
+      //    'department_id' => 2,
+      //    'port_id' => 17,
+      //    'name' => 'Gunawan Wibisono',
+      //    'email' => 'gunawan@pertamina.com',
+      //    'username' => 'gunawan',
+      //    'ekstensi' => '111',
+      //    'created_at' => NOW(),
+      //    'updated_at' => NOW()
+      // ]);
 
 
       // USER HYSY 902
+      
       DB::table('employees')->insert([
          'status' => 1,
          'department_id' => 2,
