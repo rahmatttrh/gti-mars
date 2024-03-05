@@ -63,7 +63,8 @@
                               <tr>
                                  <td>{{++$i}}</td>
                                  <td>
-                                    {{$req->code}} <br>
+                                    <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->code}}</a>
+                                     <br>
                                     <small>{{$req->activity->name}}</small>
                                  </td>
                                  <td>{{formatDate($req->date)}}</td>
@@ -72,10 +73,10 @@
                                  <td><x-status-stisla.request :request="$req" /> </td>
                                  <td>
                                     @if ($req->status == 101)
-                                    <a href="" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#fuel-approve-{{$req->id}}">Approve</a>
+                                    <a href="" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fuel-approve-{{$req->id}}">Approve</a>
                                     @endif
                                     
-                                    <a href="{{route('request.detail', enkripRambo($req->id))}}" class="btn btn-sm btn-primary">Detail</a>
+                                    {{-- <a href="{{route('request.detail.new', enkripRambo($req->id))}}" class="btn btn-sm btn-light border">Detail</a> --}}
                                  </td>
                               </tr>
                               @endforeach
@@ -144,7 +145,7 @@
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Approve</button>
+                  <button type="submit" class="btn btn-info">Approve</button>
                </div>
             </div>
          </form>

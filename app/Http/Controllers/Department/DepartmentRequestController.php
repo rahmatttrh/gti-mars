@@ -514,6 +514,7 @@ class DepartmentRequestController extends Controller
             'type' => 2,
             'status' => 101,
             'date' => $req->date,
+            
          ]);
 
          FuelItem::create([
@@ -525,6 +526,7 @@ class DepartmentRequestController extends Controller
             'schedule_id' => $schedule->id,
             'origin_id' => 12,
             'destination_id' => $employee->port_id,
+            'qty' => $req->qty,
             'status' => 101
          ]);
       }
@@ -554,7 +556,8 @@ class DepartmentRequestController extends Controller
 
          $requestUser->update([
             'schedule_id' => $schedule->id,
-            'status' => 1
+            'status' => 1,
+            'qty' => $req->qty,
          ]);
       }
 
