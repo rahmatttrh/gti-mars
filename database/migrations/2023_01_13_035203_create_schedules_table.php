@@ -32,6 +32,8 @@ class CreateSchedulesTable extends Migration
          $table->string('remark')->nullable();
          $table->decimal('total_size', 6, 2)->nullable();
          $table->decimal('total_weight', 6, 2)->nullable();
+         $table->integer('total_depart')->nullable();
+         $table->integer('total_return')->nullable();
          $table->timestamps();
          // $table->mediumInteger('cargo_id')->nullable();
          // $table->string('func')->nullable();
