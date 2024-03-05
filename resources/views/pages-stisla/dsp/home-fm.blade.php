@@ -63,9 +63,8 @@
                               <tr>
                                  <td>{{++$i}}</td>
                                  <td>
-                                    <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->code}}</a>
-                                     <br>
-                                    <small>{{$req->activity->name}}</small>
+                                    <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->code}}</a>
+                                     
                                  </td>
                                  <td>{{formatDate($req->date)}}</td>
                                  <td>{{$req->user->name}}</td>
@@ -119,7 +118,7 @@
       </div>
    </div> --}}
    <div class="modal fade" id="fuel-approve-{{$req->id}}" tabindex="7" role="dialog"  aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-sm" role="document">
          <form action="{{route('fuel.approve')}}" method="POST">
             @csrf
             @method('PUT')
@@ -133,11 +132,11 @@
                </div>
                <div class="modal-body">
                <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-12">
                      <label for="qty">Qty Request</label>
                      <input type="text" required class="form-control" id="qty"  readonly name="qty" value="{{$req->qty}}" >
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-12">
                      <label for="qty_approve">Qty Approve</label>
                      <input type="text" required class="form-control" id="qty_approve" name="qty_approve" max="{{$req->qty}}" >
                   </div>
