@@ -61,10 +61,10 @@
          <div class="card o-hidden border shadow-lg my-5">
             <div class="card-body p-0">
                <div class="row">
-                  <div class="col-lg-6 d-none d-lg-block " style="background-image: url({{asset('img/bg/phe-offshore.jpg')}});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
+                  <div class="col-7 d-none d-lg-block " style="background-image: url({{asset('img/bg/phe-offshore.jpg')}});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
                      <img width="120px" class="mt-3" src="{{asset('img/logo/phe-oses.png')}}" alt="">
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-5">
                      <div class="p-5">
                         <div class="text-center">
                            <h1 class="font-weight-bold"><i>MAR<span class="text-primary">S</span></i></h1>

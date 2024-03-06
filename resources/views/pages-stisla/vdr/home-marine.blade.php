@@ -51,8 +51,7 @@
            </div>
          </div>
          <div class="col-md-8">
-            <div class="card shadow-sm border">
-               <div class="card-body">
+            
                   {{-- <hr> --}}
                   <form action="{{route('vdr.filter')}}" method="POST">
                      @csrf
@@ -149,8 +148,7 @@
                         </tbody>
                      </table>
                   </div>
-               </div>
-            </div>
+               
         </div>
       </div>
 

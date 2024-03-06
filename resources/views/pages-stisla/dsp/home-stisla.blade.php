@@ -132,7 +132,7 @@
                         </tr>
                      </thead>
                      <tbody>     
-                        @foreach ($schedules as $schedule)
+                        @foreach ($progressSchedules as $schedule)
                         @if (count($schedule->requests) > 0)
                            <tr>
                               

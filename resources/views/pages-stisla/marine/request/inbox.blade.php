@@ -228,24 +228,24 @@
             <div class="badge badge-info mb-2">Create Sailing Order</div>
             <form action="{{route('schedule.store.so')}}" method="POST">
                @csrf
-               <div class="form-group">
+               {{-- <div class="form-group"> --}}
                   <input type="date" name="start" id="start" value="{{$start}}" hidden>
                   <input type="date" name="end" id="end" value="{{$end}}" hidden>
-                  <select name="vessel" id="vessel" class="form-control">
+                  <select name="vessel" id="vessel" class="form-control mb-2">
                      @foreach ($vessels as $vessel)
                            <option value="{{$vessel->id}}">{{$vessel->name}}</option>
                      @endforeach
                      <option value="">Elok Jaya</option>
                   </select>
-               </div>
-               <div class="form-group">
-                  <div class="input-group">
+               {{-- </div> --}}
+               {{-- <div class="form-group"> --}}
+                  <div class="input-group mb-3">
                      <input type="date" class="form-control" name="date" id="date" value="{{$now->format('Y-m-d')}}"  min="{{$start}}" max="{{$end}}">
                      <div class="input-group-append">
                         <button class="btn btn-light border btn-block " type="submit">Create</button>
                      </div>
                   </div>
-               </div>
+               {{-- </div> --}}
             </form>
             <table>
                <thead>

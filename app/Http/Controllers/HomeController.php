@@ -794,7 +794,7 @@ class HomeController extends Controller
       $vessels = Vessel::where('status', '>', 1)->get();
 
       $schedules = Schedule::get();
-      $progressSchedules = Schedule::where('status', '>', '1')->get();
+      $progressSchedules = Schedule::where('status', '>=', '1')->get();
       $incomingRequests = ModelsRequest::where('status', '>', 1)->get();
       $requests = ModelsRequest::where('status', '>', 1)->whereMonth('date', $month)->get();
       $completeRequests = ModelsRequest::whereMonth('date', $month)->where('status', 9)->get();
