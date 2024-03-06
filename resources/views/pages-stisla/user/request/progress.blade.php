@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-   Progress Request Activity
+   DSP Progress Request
 @endsection
 
 @section('content')

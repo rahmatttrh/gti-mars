@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Dashboard
+    DSP Dashboard
 @endsection
 @section('content')
    <section class="section">
@@ -17,6 +17,7 @@
                   </div>
                   {{-- <div class="card-body">{{$user->name}} </div> --}}
                </div>
+               
             </div>
 
            

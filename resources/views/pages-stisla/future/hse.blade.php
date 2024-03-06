@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-hse')
 @section('title')
-   HSE - PHE
+   MARS - HSE
 @endsection
 @section('content')
 <section class="section">

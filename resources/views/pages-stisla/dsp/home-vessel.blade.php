@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Dashboard
+   DSP Dashboard
 @endsection
 @section('content')
    <section class="section">

@@ -1,13 +1,13 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Dashboard
+   DSP Dashboard
 @endsection
 @section('content')
    <section class="section">
       <div class="row">
          <div class="col-md-3">
             <div class="card card-statistic-2 border shadow-sm">
-               <div class="card-icon shadow-primary bg-primary">
+               <div class="card-icon shadow-primary bg-info">
                   <i class="fas fa-user"></i>
                </div>
                <div class="card-wrap">
@@ -37,57 +37,51 @@
                   </div>
                @endforeach
             @endif --}}
-            <div class="card border shadow-sm">
-               <div class="card-header">
-                  <h4>Incoming Fuel Request</h4>
-               </div>
-               
-
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-13">
-                        <thead>                                 
-                           <tr>
-                              <th>#</th>
-                              <th>ID</th>
-                              <th>Date</th>
-                              <th>User</th>
-                              <th>Qty / Approve </th>
-                              <th>Status</th>
-                              <th></th>
-                           </tr>
-                        </thead>
-                        <tbody>     
-                           @if ($requests->count() > 0)
-                              @foreach ($requests as $req)
-                              <tr>
-                                 <td>{{++$i}}</td>
-                                 <td>
-                                    <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->activity->name}} {{$req->code}}</a>
-                                     
-                                 </td>
-                                 <td>{{formatDate($req->date)}}</td>
-                                 <td>{{$req->user->name}}</td>
-                                 <td>{{$req->qty}} / {{$req->qty_approve}}</td>
-                                 <td><x-status-stisla.request :request="$req" /> </td>
-                                 <td>
-                                    @if ($req->status == 101)
-                                    <a href="" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fuel-approve-{{$req->id}}">Approve</a>
-                                    @endif
-                                    
-                                    {{-- <a href="{{route('request.detail.new', enkripRambo($req->id))}}" class="btn btn-sm btn-light border">Detail</a> --}}
-                                 </td>
-                              </tr>
-                              @endforeach
-                              @else
-                              <tr>
-                                 <td colspan="7" style="text-align: center"><small>Empty</small></td>
-                              </tr>
-                           @endif
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
+            <div class="badge badge-info mb-2">Incoming Request</div>
+            <div class="table-responsive">
+               <table class="table table-striped table-sm" id="table-1">
+                  <thead>                                 
+                     <tr>
+                        {{-- <th>#</th> --}}
+                        <th>ID</th>
+                        <th>Desc</th>
+                        <th>Date</th>
+                        <th>User</th>
+                        <th>Qty / Approve </th>
+                        <th>Status</th>
+                        <th></th>
+                     </tr>
+                  </thead>
+                  <tbody>     
+                     @if ($requests->count() > 0)
+                        @foreach ($requests as $req)
+                        <tr>
+                           {{-- <td>{{++$i}}</td> --}}
+                           <td>
+                              <a href="{{route('request.detail.new', enkripRambo($req->id))}}"> {{$req->code}}</a>
+                               
+                           </td>
+                           <td>{{$req->activity->name}} {{$req->description}}</td>
+                           <td>{{formatDate($req->date)}}</td>
+                           <td>{{$req->user->name}}</td>
+                           <td>{{$req->qty}} / {{$req->qty_approve}}</td>
+                           <td><x-status-stisla.request :request="$req" /> </td>
+                           <td>
+                              @if ($req->status == 101)
+                              <a href="" class="btn btn-sm btn-info" data-toggle="modal" data-target="#fuel-approve-{{$req->id}}">Approve</a>
+                              @endif
+                              
+                              {{-- <a href="{{route('request.detail.new', enkripRambo($req->id))}}" class="btn btn-sm btn-light border">Detail</a> --}}
+                           </td>
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                           <td colspan="7" style="text-align: center"><small>Empty</small></td>
+                        </tr>
+                     @endif
+                  </tbody>
+               </table>
             </div>
         
          </div>

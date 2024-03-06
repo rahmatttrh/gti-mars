@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-proact')
 @section('title')
-   PROACT - PHE
+   MARS - PROACT
 @endsection
 @section('content')
 <section class="section">

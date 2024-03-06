@@ -43,7 +43,7 @@
             
             
             {{-- <div class="badge badge-info mb-2">Incoming Request</div> --}}
-            <div class="table-responsive mb-2">
+            <div class="table-responsive mb-3">
                <table class=" table-striped " >
                   <thead>
                      <tr>

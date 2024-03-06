@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-proact')
 @section('title')
-   MAP - PHE
+   MARS - MAP
 @endsection
 @section('content')
 <section class="section">

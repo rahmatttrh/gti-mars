@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-vdr')
 @section('title')
-    Dashboard
+   VDR Dashboard
 @endsection
 @section('content')
 

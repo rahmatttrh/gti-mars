@@ -1,16 +1,10 @@
 @extends('layouts.stisla.app')
 @section('title')
-			Request Create
+	DSP Create Request
 @endsection
 @section('content')
    <section class="section">
-      <div class="section-header">
-         <h1 class="section-title">Create Request Activity</h1>
-         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item "><a href="{{ route('dsp.vessel') }}">Dashboard</a></div>
-            <div class="breadcrumb-item active">Request Create</div>
-         </div>
-      </div>
+      
 
       <div class="section-body">
          <div class="row">
@@ -22,7 +16,7 @@
                      @endforeach
                   </div>
                @endif
-               <div class="card border">
+               <div class="card border shadow-sm">
                   <form action="{{ route('request.vessel.store') }}" method="POST" enctype="multipart/form-data">
                      @csrf
                      <div class="card-body">
@@ -55,7 +49,7 @@
                               <input class="form-control mb-2" id="desc" type="text" style="background-color:lightgrey" value="{{ old('desc') }}" name="desc">
                            </div>
                         </div>
-                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-info" type="submit">Submit</button>
                      </div>
                      {{-- <div class="card-footer bg-whitesmoke">
                         <button class="btn btn-primary" type="submit">Submit</button>

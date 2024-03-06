@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-fms')
 @section('title')
-   FMS - PHE
+   MARS - FMS
 @endsection
 @section('content')
 <section class="section">

@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-		Detail Request Activity
+		DSP Detail Request
 @endsection
 @section('content')
    <section class="section">

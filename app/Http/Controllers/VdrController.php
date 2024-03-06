@@ -99,8 +99,10 @@ class VdrController extends Controller
       $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
       $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
       $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
+      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      
 
 
 
@@ -117,6 +119,7 @@ class VdrController extends Controller
          'hses' => $hses,
          'engines' => $engines,
          'crews' => $crews,
+         'periodic' => $periodic,
          'totalJam' => $totalJam,
          'totalDaily' => $totalDaily
       ])->with('i');
