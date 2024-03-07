@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title> @yield('title')</title>
-  <link rel="icon" href="{{asset('img/flaticon/lifesaver.png')}}" type="image/x-icon" />
+  <link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
 
   <!-- General CSS Files -->
 
@@ -87,11 +87,11 @@
    }
 
    table td {
-      font-size: 11px
+      /* font-size: 11px */
    }
-   .badge {
+   /* .badge {
       font-size: 11px
-   }
+   } */
 </style>
 
 
@@ -107,7 +107,7 @@
             
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
-            <x-navbar.vdr.marine  />
+            <x-navbar.vdr.marine :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.vdr.department />
             @elseif(auth()->user()->hasRole('vessel'))
@@ -115,7 +115,7 @@
             {{-- @elseif(auth()->user()->hasRole('fm'))
             <x-navbar.vdr.fm /> --}}
             @elseif(auth()->user()->hasRole('suptent'))
-            <x-navbar.vdr.suptent  />
+            <x-navbar.vdr.suptent :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('chief'))
             <x-navbar.vdr.chief  />
             @endif

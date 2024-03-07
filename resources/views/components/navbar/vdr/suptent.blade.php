@@ -25,7 +25,30 @@
    
    <ul class="navbar-nav navbar-right ml-auto">
       
-      
+      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($vdrs->where('status', 2)) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
+         <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
+            <div class="dropdown-header">NOTIFICATIONS
+            
+            </div>
+            <div class="dropdown-list-content dropdown-list-icons">
+               @if (count($vdrs->where('status', 2)) > 0)
+                  @foreach ($vdrs->where('status', 2) as $vdr)
+                  <a href="{{route('vdr.show', enkripRambo($vdr->id))}}" class="dropdown-item dropdown-item-unread">
+                    
+                     <div class="dropdown-item-desc">
+                        Validate VDR {{$vdr->vessel->name }} {{formatDate($vdr->date)}} 
+                        <div class="time text-primary">{{$vdr->created_at->diffForHumans()}}</div>
+                     </div>
+                  </a>
+                  @endforeach
+                  @else
+                  <small class="dropdown-item dropdown-item-unread text-muted">Tidak ada VDR dari vessel </small>
+               @endif
+              
+            </div>
+            <div class="dropdown-footer text-center"></div>
+         </div>
+      </li>
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
        <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
        <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>

@@ -69,17 +69,8 @@
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
             <div class="row mt-2">
-               <div class="col-md-8">
-                 
-               
-
-                  @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
-                  <div class="btn-group mr-2">
-                     <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-sm btn-info">Approve </a>
-                     <a href="" class="btn btn-sm btn-danger shadow-none" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                  </div>
+               <div class="col-md-9">
                   
-                  @endif
    
                   @if ($vdr->status == 2 && auth()->user()->hasRole('suptent'))
                   <a href="{{route('vdr.approve.suptent', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Approve Superintendent</a>
@@ -131,6 +122,13 @@
                         <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>
                         <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
                      @endif
+                  @endif
+                  @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
+                  {{-- <div class="btn-group mr-2"> --}}
+                     <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
+                     <a href="" class="btn btn-danger btn-block " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                  {{-- </div> --}}
+                  
                   @endif
                   <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-block btn-light border shadow-none">Export PDF</a>
                   

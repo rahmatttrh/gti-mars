@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title> @yield('title')</title>
-  <link rel="icon" href="{{asset('img/flaticon/lifesaver.png')}}" type="image/x-icon" />
+  <link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
   <!-- General CSS Files -->
 
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -152,7 +152,7 @@
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
             
-            <x-navbar.dsp.marine :allschedules="$allSchedules" :notif="$notif" />
+            <x-navbar.dsp.marine :allschedules="$allSchedules" :notif="$notif" :notifrequests="$notifRequests" />
             {{-- <x-navbar.marine :allschedules="$allSchedules" :notif="$notif" /> --}}
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.dsp.department />

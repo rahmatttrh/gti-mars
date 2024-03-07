@@ -6,8 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<title>MARS - Login</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="{{asset('/img/anchor.png')}}" type="image/x-icon"/>
-
+	<link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
 	<script src="{{asset('js/plugin/webfont/webfont.min.js')}}"></script>
 	<script>
 		WebFont.load({

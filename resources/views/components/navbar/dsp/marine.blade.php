@@ -25,26 +25,27 @@
    
    <ul class="navbar-nav navbar-right ml-auto">
       
-      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{$notif == 'true'  ? 'beep' : ''}}"><i class="far fa-bell text-info"></i></a>
+      <li class="dropdown dropdown-list-toggle">
+         <a href="#" data-toggle="dropdown" class="nav-link notification-toggle  nav-link-lg {{count($notifrequests) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i>
+         </a>
          <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
             <div class="dropdown-header">NOTIFICATIONS
             
             </div>
             <div class="dropdown-list-content dropdown-list-icons">
-               @if ($allschedules != null)
-                  @foreach ($allschedules as $schedule)
-                     @if ($schedule->requests->where('status', 1)->count() > 0)
-                        <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="dropdown-item dropdown-item-unread">
-                           <div class="dropdown-item-icon bg-primary text-white">
-                              <i class="fas fa-code"></i>
-                           </div>
-                           <div class="dropdown-item-desc">
-                              You have Request Activity on Schedule {{$schedule->vessel->name ?? 'Vessel : Not Available'}}
-                              <div class="time text-primary">{{$schedule->updated_at->diffForHumans()}}</div>
-                           </div>
-                        </a>
-                        
-                     @endif
+               @if (count($notifrequests) > 0)
+                  @foreach ($notifrequests as $req)
+                     <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread">
+                        {{-- <div class="dropdown-item-icon border text-danger">
+                           <i class="fas fa-exclamation"></i>
+                        </div> --}}
+                        <div class="dropdown-item-desc">
+                           {{$req->description }}
+                           
+                           on {{formatDate($req->date)}} from {{$req->user->name}}
+                           <div class="time text-primary">{{$req->created_at->diffForHumans()}}</div>
+                        </div>
+                     </a>
                   @endforeach
                   @else
                   <a href="#" class="dropdown-item dropdown-item-unread text-center">Tidak ada Request dari User Field</a>
@@ -59,7 +60,7 @@
               
             </div>
             <div class="dropdown-footer text-center">
-            {{-- <a href="#">View All <i class="fas fa-chevron-right"></i></a> --}}
+               <a href="{{route('marine.request')}}">View Intermilan <i class="fas fa-chevron-right"></i></a>
             </div>
          </div>
       </li>

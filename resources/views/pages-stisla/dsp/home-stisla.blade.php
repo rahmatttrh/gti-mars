@@ -133,7 +133,7 @@
                      </thead>
                      <tbody>     
                         @foreach ($progressSchedules as $schedule)
-                        @if (count($schedule->requests) > 0)
+                        {{-- @if (count($schedule->requests) > 0) --}}
                            <tr>
                               
                               <td>
@@ -213,7 +213,7 @@
                            
                            
                            
-                        @endif
+                        {{-- @endif --}}
                         
                         @endforeach                            
                         

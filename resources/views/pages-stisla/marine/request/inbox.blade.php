@@ -153,7 +153,8 @@
                                  {{$request->origin->code}} to {{$request->destination->code}}
                               </td>
                               <td>
-                                 {{$request->schedule->vessel->name ?? 'Not Available'}}
+                                 <a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}"> {{$request->schedule->vessel->name ?? 'Not Available'}}</a>
+                                
                               </td>
                               @foreach ($dates as $date)
                                  @if ($date == $request->date)

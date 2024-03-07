@@ -118,8 +118,8 @@
                      <table class=" table-striped" id="table-1">
                         <thead>
                            <tr>
-                              <th class="text-center">No.</th>
-                              <th>VDR Number</th>
+                              {{-- <th class="text-center">No.</th> --}}
+                              <th>ID</th>
                               <th>Vessel</th>
                               <th>Date</th>
                               <th>Crew</th>
@@ -131,13 +131,13 @@
       
                               @foreach($vdrs as $vdr)
                               <tr>
-                                 <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                                 {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
                                  <td>
                                     <a href="{{route('vdr.show', enkripRambo($vdr->id))}}">{{vdrId($vdr->id)}}</a>
       
                                  </td>
                                  <td>{{$vdr->vessel->name}}</td>
-                                 <td>{{dayDate($vdr->date)}}</td>
+                                 <td>{{formatDate($vdr->date)}}</td>
                                  <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
                                  <td>{{$vdr->location_midnight}}</td>
                                  <td>

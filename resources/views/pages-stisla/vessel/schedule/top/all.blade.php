@@ -20,17 +20,19 @@
    <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
          <div class="table-responsive">
-            <table class="table table-striped table-sm" id="table-1">
+            <table class="ttable-striped" id="table-1">
                <thead>                                 
                   <tr>
                   <th class="text-center">
                      #
                   </th>
                   <th>ID</th>
-                  <th>Vessel</th>
-                  <th>From</th>
-                  <th>Activity</th>
+                  {{-- <th>Vessel</th> --}}
                   <th>Date</th>
+                  <th>Desc</th>
+                  <th>Location</th>
+                  <th>Activity</th>
+                  
                   <th>Capacity</th>
                   <th>Status</th>
                   <th></th>
@@ -43,23 +45,20 @@
                         {{++$i}}
                         </td>
                         <td>
-                           {{$schedule->code}} <br>
-                           <small>{{$schedule->class}}</small>
+                           {{$schedule->code}}
                            </td>
-                        <td>
-                           {{$schedule->vessel->name ?? ''}} <br>
-                              <small>{{$schedule->vessel->vessel_type}} Supply</small>
+                           <td>
+                              {{-- {{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br> --}}
+                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
                         </td>
+                        <td>{{$schedule->class}}</td>
                         <td>
                               @if (count($schedule->routes) > 0)
                               {{$schedule->routes->where('rank', 1)->first()->port->name}}
                               @endif
                         </td>
                         <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
-                        <td>
-                              {{-- {{\Carbon\Carbon::parse($schedule->date)->format('l')}} <br> --}}
-                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                        </td>
+                        
                         <td>
                               {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
                         </td>

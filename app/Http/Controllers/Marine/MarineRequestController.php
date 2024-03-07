@@ -104,7 +104,7 @@ class MarineRequestController extends Controller
          $start = $now->addDays(-1);
          $end = Carbon::now()->addDays(5);
       }
-      if ($today == 'Thusrsday') {
+      if ($today == 'Thursday') {
          // dd('Monday');
          $start = $now->addDays(-2);
          $end = Carbon::now()->addDays(4);
@@ -115,10 +115,10 @@ class MarineRequestController extends Controller
       // dd($start);
       $end = $end->format('Y-m-d');
       $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$start, $end])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>', 1)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 1)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
-      $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->get();
+      $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
 
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);
@@ -166,7 +166,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = $req->end;
       $requests = ModelsRequest::where('activity_id', '!=', 7)->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('activity_id', '!=', 7)->where('status', '>', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 1)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
       $schedules = Schedule::orderBy('date', 'asc')->where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->get();

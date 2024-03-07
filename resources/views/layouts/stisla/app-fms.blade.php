@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title> @yield('title')</title>
-  <link rel="icon" href="{{asset('img/flaticon/lifesaver.png')}}" type="image/x-icon" />
+  <link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
 
   <!-- General CSS Files -->
 

@@ -91,6 +91,7 @@ class VdrController extends Controller
       $vessel = Vessel::where('email', $user->email)->first();
 
       $vdr = Vdr::where('vessel_id', $vessel->id)->where('date', date('Y-m-d'))->first();
+      // dd($vdr->id);
 
       $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
       $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
@@ -99,7 +100,7 @@ class VdrController extends Controller
       $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
       $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
       $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
-      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
+      $periodic = $vdr ? VdrPeriodic::where('vdr_id', $vdr->id)->first() : null;
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
       

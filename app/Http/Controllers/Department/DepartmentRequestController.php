@@ -556,22 +556,19 @@ class DepartmentRequestController extends Controller
 
          $requestUser->update([
             'schedule_id' => $schedule->id,
-            'status' => 1,
+            'origin_id' => 12,
+            'destination_id' => $employee->port_id,
             'qty' => $req->qty,
+            'status' => 101
          ]);
       }
 
       // if ($req->activity == 7) {
-      //    if (auth()->user()->hasRole('vessel')) {
-      //       $vessel = Vessel::where('email', auth()->user()->email)->first();
-      //       $vesselId = $vessel->id;
-      //    } else {
-      //       $vesselId = null;
-      //    }
+         
          
       //    $schedule = Schedule::create([
       //       'code' => $scheduleCode,
-      //       'vessel_id' => $vesselId,
+            
       //       'by' => 'user',
       //       'class' => 'Crew Change',
       //       'type' => 2,
@@ -1417,34 +1414,34 @@ class DepartmentRequestController extends Controller
          $scheduleCode = "SO/"   . '/' . $now->format("dmy") . '/' . 1;
       }
 
-      if ($request->activity_id == 7) {
-         $reqDate = new Carbon($request->date);
-         // $scheduleCrewChange = Schedule::where('class', 'Crew Change')->where('date', $request->date)->first();
-         // if ($scheduleCrewChange) {
-         //    $request->update([
-         //       'status' => 1,
-         //       'schedule_id' => $scheduleCrewChange->id
-         //    ]);
-         // } else {
-         //    // $schedule = Schedule::create([
-         //    //    'by' => 'marine',
-         //    //    'code' => $scheduleCode,
-         //    //    'class' => 'Crew Change',
-         //    //    'type' => 2,
-         //    //    'status' => 0,
-         //    //    'date' => $request->date
-         //    // ]);
-         //    $request->update([
-         //       'status' => 1,
-         //       // 'schedule_id' => $schedule->id
-         //    ]);
-         // }
-         $request->update([
-            'status' => 1,
-         ]);
+      // if ($request->activity_id == 7) {
+      //    $reqDate = new Carbon($request->date);
+      //    // $scheduleCrewChange = Schedule::where('class', 'Crew Change')->where('date', $request->date)->first();
+      //    // if ($scheduleCrewChange) {
+      //    //    $request->update([
+      //    //       'status' => 1,
+      //    //       'schedule_id' => $scheduleCrewChange->id
+      //    //    ]);
+      //    // } else {
+      //    //    // $schedule = Schedule::create([
+      //    //    //    'by' => 'marine',
+      //    //    //    'code' => $scheduleCode,
+      //    //    //    'class' => 'Crew Change',
+      //    //    //    'type' => 2,
+      //    //    //    'status' => 0,
+      //    //    //    'date' => $request->date
+      //    //    // ]);
+      //    //    $request->update([
+      //    //       'status' => 1,
+      //    //       // 'schedule_id' => $schedule->id
+      //    //    ]);
+      //    // }
+      //    $request->update([
+      //       'status' => 1,
+      //    ]);
 
-         return redirect()->back()->with('success', 'Your Request Activity successfully sent to Fleet Control ');
-      } 
+      //    return redirect()->back()->with('success', 'Your Request Activity successfully sent to Fleet Control ');
+      // } 
 
       $scheduleRoute = ScheduleRoute::where('date', $request->date)->where('port_id', $request->origin_id)->first();
 

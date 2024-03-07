@@ -84,9 +84,7 @@
             </div>
             @endif
             
-            <div class="card shadow-lg">
-               
-               <div class="card-body">
+            
                   @if ($recentSchedules->count() > 0)
                         @foreach ($recentSchedules as $recent)
                         <div class="alert alert-info" role="alert">
@@ -206,8 +204,7 @@
                         </tbody>
                      </table>
                   </div>
-               </div>
-            </div>
+               
 
             
          </div>

@@ -1,15 +1,15 @@
 @if ($vdr->status == 0)
-   <div class="badge badge-light">Draft</div>
+   Draft
    @elseif($vdr->status == 1)
-   <div class="badge badge-info">Validasi Fleet Control</div>
+   Validasi Fleet Control
    @elseif($vdr->status == 2)
-   <div class="badge badge-info">Validasi Superintendent</div>
+   Validasi Superintendent
    @elseif($vdr->status == 3)
-   <div class="badge badge-info">Validasi Mr. Luthfi</div>
+   Validasi Mr. Lutfi
    @elseif($vdr->status == 4)
-   <div class="badge badge-info">Approved</div>
+   Approved
 
    @elseif($vdr->status == 101)
    
-   <div class="badge badge-danger" data-toggle="tooltip" data-placement="top" title="{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc}}">Reject Marine</div>
+   <div class="" data-toggle="tooltip" data-placement="top" title="{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc}}">Reject Marine</div>
 @endif

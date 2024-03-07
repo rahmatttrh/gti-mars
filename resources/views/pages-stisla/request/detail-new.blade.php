@@ -149,11 +149,19 @@
                            </div>
                         @endif
 
-                        @if ($request->activity_id == 5 || $request->activity_id == 6)
+                        @if ($request->activity_id == 5)
                         <div class="form-row qty">
                            <div class="form-group col-md-12">
                               {{-- <label for="qty">Quantity (KL)</label> --}}
                               <input class="form-control mb-1" id="qty" type="text"  value="{{ $request->fuel->qty }} KL"  name="qty">
+                           </div>
+                        </div>
+                        @endif
+                        @if ($request->activity_id == 6)
+                        <div class="form-row qty">
+                           <div class="form-group col-md-12">
+                              {{-- <label for="qty">Quantity (KL)</label> --}}
+                              <input class="form-control mb-1" id="qty" type="text"  value="{{ $request->water->qty }} KL"  name="qty">
                            </div>
                         </div>
                         @endif
@@ -540,7 +548,7 @@
                @endif
 
 
-               @if ($request->activity_id == 3 || $request->activity_id == 5)
+               @if ($request->activity_id == 3 || $request->activity_id == 5 || $request->activity_id == 6)
                    <div class="card border shadow-sm">
                      <div class="card-header">
                         SCHEDULE

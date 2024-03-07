@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>MARS - Home Page</title>
-  <link rel="icon" href="{{asset('img/flaticon/lifesaver.png')}}" type="image/x-icon" />
+  <link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
@@ -62,7 +62,7 @@
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
          <div class="navbar-bg" ></div>
          @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
-            <x-main.navbar.marine />
+            <x-main.navbar.marine :notifrequests="$notifRequests" :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif (auth()->user()->hasRole('vessel'))
             <x-main.navbar.vessel />
             @elseif (auth()->user()->hasRole('fm'))
@@ -70,7 +70,7 @@
             @elseif (auth()->user()->hasRole('department'))
             <x-main.navbar.department />
             @elseif(auth()->user()->hasRole('suptent'))
-            <x-main.navbar.suptent />
+            <x-main.navbar.suptent :notif="$notif" :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('chief'))
             <x-main.navbar.chief />
             @elseif(auth()->user()->hasRole('admin-dsp'))
