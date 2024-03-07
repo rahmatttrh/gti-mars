@@ -721,7 +721,7 @@ class MarineScheduleController extends Controller
          'description' => $req->func
       ]);
 
-      return redirect()->route('marine.crew.change')->with('success', 'Schedule Crew Change successfully added');
+      return redirect()->route('marine.crew.change', [enkripRambo($now->format('m')), enkripRambo($now->format('Y'))] )->with('success', 'Schedule Crew Change successfully added');
 
    }
 
@@ -995,7 +995,7 @@ class MarineScheduleController extends Controller
 
    public function addRoute(Request $req)
    {
-      // dd('ok');
+      // dd($req->schedule);
       // $scheduleRoute = ScheduleRoute::find($req->destination);
       $lastScheduleRoute = ScheduleRoute::where('schedule_id', $req->schedule)->where('status', 1)->orderBy('rank', 'desc')->first();
       // dd($lastScheduleRoute->rank);

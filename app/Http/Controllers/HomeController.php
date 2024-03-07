@@ -906,21 +906,24 @@ class HomeController extends Controller
                      'port_id' => $port->id
                   ]);
 
-                  if ($vessel->schedule_id && $vessel->schedule->status > 1) {
-                     $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
-                     // dd($curentReport);
-                     if ($curentReport->status_id == 7 && $curentReport->port_id == $port->id) {
-                        Report::create([
-                           'schedule_id' => $vessel->schedule_id,
-                           'vessel_id' => $vessel->id,
-                           // arrived
-                           'status_id' => 8,
-                           'port_id' => $port->id
-                        ]);
-                     } else {
-                        
-                     }
-                  }
+                  // if ($vessel->schedule_id != null) {
+                  //    if ($vessel->schedule->status > 1) {
+                  //       $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
+                  //       // dd($curentReport);
+                  //       if ($curentReport->status_id == 7 && $curentReport->port_id == $port->id) {
+                  //          Report::create([
+                  //             'schedule_id' => $vessel->schedule_id,
+                  //             'vessel_id' => $vessel->id,
+                  //             // arrived
+                  //             'status_id' => 8,
+                  //             'port_id' => $port->id
+                  //          ]);
+                  //       } else {
+                           
+                  //       }
+                  //    }
+                  // }
+                  
                   // ReportVessel::create([
                   //    'vessel_id' => $vessel->id,
                   //    'port_id' => $port->id,

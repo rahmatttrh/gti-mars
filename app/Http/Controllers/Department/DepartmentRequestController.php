@@ -1400,6 +1400,9 @@ class DepartmentRequestController extends Controller
          // dd('cargo');
          $schedule = Schedule::where('date', $request->date)->where('class', 'Cargo')->first();
          // dd($schedule->vessel->name);
+      } elseif($request->activity_id == 7) {
+         // dd('crew');
+         $schedule = Schedule::where('date', $request->date)->where('class', 'Crew Change')->first();
       } else {
          // dd('crew');
          $schedule = Schedule::where('date', $request->date)->where('class', 'Crew')->first();
@@ -1550,25 +1553,11 @@ class DepartmentRequestController extends Controller
             'schedule_id' => $schedule->id
          ]);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
-         // dd($request->schedule_id);
-         // foreach ($schedules as $schedule) {
-         //    $uncompleteRoute = ScheduleRoute::where('schedule_id', $schedule->id)->where('port_id', $request->origin_id)->where('status', 1)->first();
-         //    // if ($uncompleteRoute != null) {
-         //    //    $schedule = Schedule::find($uncompleteRoute->schedule_id);
-         //    //    $request->update([
-         //    //       'schedule_id' => $schedule->id
-         //    //    ]);
-         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
-         //    // }
-         //    // $schedule = Schedule::find($uncompleteRoute->schedule_id);
-               
-         //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
-               
-         // }
-         
+        
       } else {
          // dd('tidak ada schedule');
          // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
+         
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'class' => $request->activity->name,

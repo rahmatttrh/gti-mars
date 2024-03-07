@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Incoming Request 
+    DSP Intermilan Management 
 @endsection
 @section('content')
 <section class="section">

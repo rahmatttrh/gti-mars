@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Detail Sailing Order
+   DSP Detail Sailing Order
 @endsection
 @section('content')
 <section class="section">
@@ -71,22 +71,26 @@
                         @foreach ($fixRoutes as  $route)
                               
                            @if (auth()->user()->hasRole('marine'))
-                           <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
-                           @if ($route->rank > 1)
-                     
-                           @endif 
-                           {{$route->port->name}} 
-                           </a>
+                              <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
+                              @if ($route->rank > 1)
+                                 -
+                                 @else
+                                 
+                              @endif 
+                              {{$route->port->code}} 
+                              </a>
                            @else
-                           @if ($route->rank > 1)
-                     
-                           @endif 
-                           {{$route->port->name}} 
+                              @if ($route->rank > 1)
+                              -
+                              @else
+                              @endif 
+                              {{$route->port->code}} 
                            @endif
-                           -
+                           
                           
                               
                         @endforeach
+                        <br>
                         @if (auth()->user()->hasRole('marine'))
                         <a href="#" data-toggle="modal" data-target="#add-schedule-route" class="" add-schedule-route>add more</a>
                         @endif
@@ -784,7 +788,7 @@
       <div class="modal-dialog modal-sm" role="document">
          <form action="{{route('schedule.add.route')}}" method="POST">
             @csrf
-            <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+            <input type="number" name="schedule" id="schedule" value="{{$thisSchedule->id}}" hidden>
             <div class="modal-content">
                <div class="modal-header">
                   <h5 class="modal-title">Add Route </h5>

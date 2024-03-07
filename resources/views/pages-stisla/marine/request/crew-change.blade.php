@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    Incoming Crew Change 
+    DSP Crew Change 
 @endsection
 @section('content')
 <section class="section">
@@ -12,7 +12,7 @@
             <hr>
          </div>
          <div class="col-md-8 d-flex justify-content-end">
-            <form action="{{route('intermilan.filter')}}" method="POST">
+            <form action="{{route('marine.crew.change.filter')}}" method="POST">
                @csrf
                <div class="form-group">
                   <div class="input-group">
@@ -43,7 +43,7 @@
             </form>
 
             <div class="form-group">
-               <a href="" target="_blank" class="btn btn-light shadow-sm  ml-1" data-toggle="tooltip" data-placement="top" title="Export PDF"><i class="fa fa-print"></i> </a>
+               <a href="{{route('document.crew.change.export', [enkripRambo($month),enkripRambo($year)])}}" target="_blank" class="btn btn-light shadow-sm  ml-1" data-toggle="tooltip" data-placement="top" title="Export PDF"><i class="fa fa-print"></i> </a>
             </div>
             
             
@@ -74,7 +74,8 @@
                   <thead>
                      
                      <tr>
-                        <th  class="text-center">Date</th>
+                        {{-- <th  class="">Date</th> --}}
+                        <th>Desc</th>
                         <th >Destination</th>
                         <th >User</th>
                         <th >Pax  Onduty</th>
@@ -87,9 +88,10 @@
 
                      @foreach ($requests as $req)
                          <tr>
-                           <td><a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{formatDayName($req->date)}}, {{formatDate($req->date)}}</a></td>
+                           {{-- <td><a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{formatDayName($req->date)}}, {{formatDate($req->date)}}</a></td> --}}
+                           <td><a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->activity->name}}</a> </td>
                            <td>{{$req->origin->name}} -  {{$req->destination->name}}</td>
-                           <td>{{$req->description}}</td>
+                           <td>{{$req->user->name}}</td>
                            <td>{{count($req->passengerItems->where('type', 'Departure'))}}</td>
                            <td>{{count($req->passengerItems->where('type', 'Return'))}}</td>
                            
@@ -108,20 +110,20 @@
                   <thead>
                      
                      <tr>
-                        <th rowspan="2" class="text-center">Date</th>
+                        <th rowspan="2" class="">Date</th>
                         <th rowspan="2">Destination</th>
                         <th rowspan="2">Func</th>
-                        <th rowspan="2">Pax <br> Onduty</th>
-                        <th rowspan="2">Pax <br> Offduty</th>
+                        <th rowspan="2" class="text-center">Pax <br> Onduty</th>
+                        <th rowspan="2" class="text-center">Pax <br> Offduty</th>
                         <th rowspan="2">Boat</th>
-                        <th rowspan="2">Cap. Pax</th>
+                        <th rowspan="2" class="text-center">Cap. Pax</th>
                         <th colspan="2" class="text-center">Time of Movement</th>
                         <th rowspan="2">Remark</th>
 
                      </tr>
                      <tr>
-                        <th>Depart KJ4</th>
-                        <th>Arrived KJ4</th>
+                        <th class="text-center">Depart KJ4</th>
+                        <th class="text-center">Arrived KJ4</th>
                      </tr>
                   </thead>
                   <tbody>
@@ -129,14 +131,29 @@
                      @foreach ($schedules as $sche)
                          <tr>
                            <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{formatDayName($sche->date)}}, {{formatDate($sche->date)}}</a></td>
-                           <td>{{$sche->requests->first()->origin->name ?? ''}} -  {{$sche->requests->first()->destination->name ?? ''}}</td>
+                           <td>
+                              @foreach ($sche->routes as  $route)
+                              
+                              {{$route->port->code}} -
+                              
+                                    
+                              @endforeach
+                              {{-- @foreach ($sche->routes as  $route)
+                                 @if ($route->rank == 1)
+                                     {{$route->port->code}}
+                                 @endif
+                                    
+                              @endforeach --}}
+                              {{-- {{$sche->routes->where('rank', 1)->port->id}}
+                              {{count($sche->routes->where('rank', 1))}} --}}
+                           </td>
                            <td>{{$sche->description}}</td>
-                           <td>{{$sche->total_depart}}</td>
-                           <td>{{$sche->total_return}}</td>
+                           <td class="text-center">{{$sche->total_depart}}</td>
+                           <td class="text-center">{{$sche->total_return}}</td>
                            <td>{{$sche->vessel->name ?? '-'}}</td>
-                           <td>150</td>
-                           <td>-</td>
-                           <td>-</td>
+                           <td class="text-center">150</td>
+                           <td class="text-center">-</td>
+                           <td class="text-center">-</td>
                            <td>-</td>
                          </tr>
                      @endforeach

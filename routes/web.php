@@ -294,6 +294,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
       Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
       Route::get('/export/intermilan/{start}/{end}', [DocumentController::class, 'intermilanExport'])->name('document.intermilan.export');
+      Route::get('/export/cc/{month}/{year}', [DocumentController::class, 'crewChangeExport'])->name('document.crew.change.export');
       Route::get('/vdr/{vdr:id}', [DocumentController::class, 'vdr'])->name('document.vdr');
    });
 
@@ -366,6 +367,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
 
       Route::prefix("crew/change")->group(function () {
          Route::get("/index/{month}/{year}", [MarineRequestController::class, "indexCrewChange",])->name('marine.crew.change');
+         Route::post('filter', [MarineRequestController::class, 'filterCrewChange'])->name('marine.crew.change.filter');
          Route::post('store/', [MarineScheduleController::class, 'storeCrewChangeSchedule'])->name('schedule.store.crew.change');
          Route::post('import/', [MarineScheduleController::class, 'importCrewChange'])->name('marine.crew.change.import');
       });
