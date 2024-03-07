@@ -3,10 +3,10 @@
    DSP Dashboard
 @endsection
 @section('content')
-   <section class="section">
+   <section class="section bg-white">
       <div class="row">
          <div class="col-md-3">
-            <div class="card shadow-lg card-statistic-2">  
+            <div class="card border card-statistic-2">  
                <div class="card-icon shadow-primary bg-info">
                <i class="fas fa-ship"></i>
                </div>
@@ -18,7 +18,7 @@
                {{-- <div class="card-body">{{$vessel->name}}</div> --}}
                </div>
             </div>
-            <div class="card shadow-lg">
+            <div class="card border">
                <div class="card-body">
                   <div class="row">
                      <div class="col text-center">
@@ -63,7 +63,7 @@
                </div>
             </div> --}}
             @if (count($surveillances) > 0)
-            <div class="card shadow-lg">
+            <div class="card border">
                <div class="card-header">
                   <h4>Surveillance Activity</h4>
                </div>
@@ -85,18 +85,18 @@
             @endif
             
             
-                  @if ($recentSchedules->count() > 0)
+                  {{-- @if ($recentSchedules->count() > 0)
                         @foreach ($recentSchedules as $recent)
                         <div class="alert alert-info" role="alert">
                            <i class="fa fa-bell"></i>  You have a Schedule for {{\Carbon\Carbon::parse($recent->date)->format('d/m/Y')}}. Click <a href="{{route('schedule.detail', enkripRambo($recent->id))}}" class="alert-link">here</a> to see detail.
                         </div>
                         @endforeach
                      
-                  @endif
+                  @endif --}}
                   {{-- <div class="table-responsive"> --}}
                      <table class="table-striped" id="table-6">
                         <thead>
-                           <tr><th colspan="6" class="py-2">Sailing Order</th></tr>
+                           <tr><th colspan="6" >Sailing Order</th></tr>
                            <tr>
                               {{-- <th class="text-center">No</th> --}}
                               <th>ID</th>

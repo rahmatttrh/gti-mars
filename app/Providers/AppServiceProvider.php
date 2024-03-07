@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
          function ($view) {
             $schedules = Schedule::orderBy('date', 'asc')->get();
             $notifRequests = Request::where('status', 1)->orderBy('created_at', 'desc')->get();
+            $notifVesselSchedules = Schedule::where('status', 1)->where('vessel_id', auth()->user()->getVesselId())->get();
             $notif = false;
             foreach($notifRequests as $req){
                if ($req->status == 1){
@@ -41,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                'allSchedules' => $schedules,
                'notifRequests' => $notifRequests,
+               'notifVesselSchedules' => $notifVesselSchedules,
                'notif' => $notif,
             ]);
          }
@@ -53,7 +55,7 @@ class AppServiceProvider extends ServiceProvider
             $vdrs = Vdr::orderBy('created_at', 'desc')->get();
             $notif = false;
             $notifSuptent = false;
-            
+
             foreach($notifVdrs as $req){
                if ($req->status == 1){
                   $notif = 'true';

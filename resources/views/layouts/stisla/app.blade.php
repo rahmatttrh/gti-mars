@@ -157,7 +157,7 @@
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.dsp.department />
             @elseif(auth()->user()->hasRole('vessel'))
-            <x-navbar.dsp.vessel />
+            <x-navbar.dsp.vessel :notifvesselschedules="$notifVesselSchedules" />
             @elseif(auth()->user()->hasRole('fm'))
             <x-navbar.dsp.fm />
             @elseif(auth()->user()->hasRole('suptent'))

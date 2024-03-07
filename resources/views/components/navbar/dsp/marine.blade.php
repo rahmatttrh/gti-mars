@@ -48,8 +48,7 @@
                      </a>
                   @endforeach
                   @else
-                  <a href="#" class="dropdown-item dropdown-item-unread text-center">Tidak ada Request dari User Field</a>
-                  <small class="dropdown-item dropdown-item-unread">Tidak ada Request dari User Field </small>
+                  <small class="dropdown-item dropdown-item-unread text-muted">Tidak ada Request dari User Field </small>
                @endif
                {{-- <span class="dropdown-item dropdown-item-unread">
                   

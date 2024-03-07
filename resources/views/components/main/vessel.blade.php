@@ -12,8 +12,7 @@
    }
 </style>
 
-<div class="card shadow-lg">
-   <div class="card-body">
+
       <div class="row">
          
          <div class="col-md-8">
@@ -150,9 +149,7 @@
             </div>
          </div>
       </div>
-   </div>
-   <div class="card-footer bg-whitesmoke">
-      Please pay attention to the alert table on the right
-   </div>
-</div>
+   <hr>
+   <small>Please pay attention to the alert table on the right</small>
+
 
