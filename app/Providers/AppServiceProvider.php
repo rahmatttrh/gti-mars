@@ -31,7 +31,13 @@ class AppServiceProvider extends ServiceProvider
          function ($view) {
             $schedules = Schedule::orderBy('date', 'asc')->get();
             $notifRequests = Request::where('status', 1)->orderBy('created_at', 'desc')->get();
-            $notifVesselSchedules = Schedule::where('status', 1)->where('vessel_id', auth()->user()->getVesselId())->get();
+            // $notifVesselSchedules = Schedule::where('status', 1)->where('vessel_id', auth()->user()->getVesselId())->get();
+            if (auth()->user()->hasRole('vessel')) {
+               $notifVesselSchedules = Schedule::where('status', 1)->where('vessel_id', auth()->user()->getVesselId())->get();
+            } else {
+               $notifVesselSchedules = null;
+            }
+            
             $notif = false;
             foreach($notifRequests as $req){
                if ($req->status == 1){
