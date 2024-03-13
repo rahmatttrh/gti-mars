@@ -99,7 +99,7 @@
                <tr>
                   <td colspan="4">
 
-                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add into this Schedule</a> |
+                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add into this Schedule</a> 
                      {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a> | --}}
                      {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Destination</a> --}}
                     
