@@ -459,7 +459,7 @@ class DepartmentRequestController extends Controller
          $status = 1;
       }
 
-      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 3 || $req->activity == 5 || $req->activity == 6 || $req->activity == 7){
+      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 3 || $req->activity == 4 || $req->activity == 5 || $req->activity == 6 || $req->activity == 7){
          $requestUser = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
@@ -493,6 +493,21 @@ class DepartmentRequestController extends Controller
             'request_id' => $requestUser->id,
             'barge_id' => $req->barge
          ]);
+         $requestUser->update([
+            'schedule_id' => $schedule->id
+         ]);
+      }
+
+      if ($req->activity == 4) {
+         $schedule = Schedule::create([
+            'code' => $scheduleCode,
+            'by' => 'user',
+            'class' => 'Lifting',
+            'type' => 2,
+            'status' => 0,
+            'date' => $req->date,
+         ]);
+         
          $requestUser->update([
             'schedule_id' => $schedule->id
          ]);
@@ -1372,8 +1387,10 @@ class DepartmentRequestController extends Controller
 
    public function delete($id)
    {
+      // dd('ok');
       $dekripId = dekripRambo($id);
       $request = ModelsRequest::find($dekripId);
+      // dd($request->status);
       // $parentId = $request->parent->id;
 
       $cargoItems = CargoItem::where('request_id', $request->id)->get();

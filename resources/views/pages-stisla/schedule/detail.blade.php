@@ -277,6 +277,7 @@
                </div>
             </div>
             @elseif($schedule->class == 'Lifting')
+            ok
             <div class="card">
                <div class="card-body">
                   <div class="summary-item">

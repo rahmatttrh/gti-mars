@@ -71,11 +71,12 @@
                      </form>
                   </div>     
                   @endif
+                  <div class="card-body">
                   <form action="{{ route('request.update') }}" method="POST" enctype="multipart/form-data">
                      @csrf
                      @method('PUT')
                      <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
-                     <div class="card-body">
+                     
                         @if ($errors->any())
                            <div class="alert alert-danger">
                               @foreach ($errors->all() as $err)
@@ -179,15 +180,24 @@
                         </div>
                         @if ($request->status == 0)
                         <button class="btn btn-light border" type="submit">Update</button>
+                        @endif
+                        @if ($request->status <= 1)
                         <a href="{{route('request.delete', enkripRambo($request->id))}}" class="btn btn-light border">Delete</a>
                         @endif
                         
                         
                         
                         
-                     </div>
+                     
                   </form>
+                  {{-- @if ($request->status <= 1) --}}
                   
+                  {{-- <a href="{{route('request.delete', enkripRambo($request->id))}}">Delete</a> --}}
+                  {{-- @endif --}}
+                  
+               </div>
+                  
+                     
                      @if ($request->status == 0)
                         @if ($request->activity_id == 1)
                         <div class="card-footer bg-whitesmoke ">
@@ -548,8 +558,8 @@
                @endif
 
 
-               @if ($request->activity_id == 3 || $request->activity_id == 5 || $request->activity_id == 6)
-                   <div class="card border shadow-sm">
+               @if ($request->activity_id == 3 || $request->activity_id == 4 || $request->activity_id == 5 || $request->activity_id == 6)
+                  <div class="card border shadow-sm">
                      <div class="card-header">
                         SCHEDULE
                      </div>
@@ -559,223 +569,197 @@
                         <h4 class="mt-4">{{formatDate($request->schedule->date)}}</h4>
                         <span>{{$request->schedule->vessel->name ?? 'Menunggu Kapal dari Fleet Control'}}</span>
                      </div>
-                   </div>
+                  </div>
                @endif
 
                @if ($request->activity_id == 7)
-               <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  
-                  <li class="nav-item">
-                  <a class="nav-link active" id="passenger-tab" data-toggle="tab" href="#passenger" role="tab" aria-controls="passenger" aria-selected="false">Depart </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link " id="return-tab" data-toggle="tab" href="#return" role="tab" aria-controls="return" aria-selected="false">Return </a>
-                     </li>
-                  <li class="nav-item">
-                     <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">Add </a>
-                  </li>
-               </ul>
-               <div class="tab-content" id="myTabContent">
-                  
-                  <div class="tab-pane fade show active" id="passenger" role="tabpanel" aria-labelledby="passenger-tab">
-                     <div class="table-responsive">
-                        <table class="" id="table-11">
-                           <thead>
-                           <tr>
-                              
-                              <th>Name</th>
-                              <th>Barcode</th>
-                              <th>Company</th>
-                              <th>Desc</th>
-                              
-                              <th></th>
-                           </tr>
-                           </thead>
-                           <tbody>
-                              {{-- <tr>
-                                 <td colspan=""><b>Departure</b></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                              </tr> --}}
-                              @foreach ($passengers as $pass)
-                                 
-                                 @if ($pass->type == 'Departure')
-                                 <tr>
-                                    <td>{{$pass->name ?? '-'}}</td>
-                                    <td>{{$pass->barcode}}</td>
-                                    <td>{{$pass->company}}({{$pass->department}})</td>
-                                    <td>{{$pass->desc}}</td>
-                                    <td>
-                                       @if ($request->status == 0)
-                                       <a href="">Edit</a>
-                                       <a href="">Delete</a>
-                                       @endif
-                                       
-                                    </td>
-                                  </tr>
-                                 @endif
-                              @endforeach
-                              {{-- <tr><td colspan="5"><b>Return</b></td></tr> --}}
-                              {{-- @foreach ($passengers as $pass)
-                                 
-                                 @if ($pass->type == 'Return')
-                                 <tr>
-                                    <td>{{$pass->name ?? '-'}}</td>
-                                    <td>{{$pass->barcode}}</td>
-                                    <td>{{$pass->company}}({{$pass->department}})</td>
-                                    <td>{{$pass->desc}}</td>
-                                    <td>
-                                       @if ($request->status == 0)
-                                       <a href="">Edit</a>
-                                       <a href="">Delete</a>
-                                       @endif
-                                       
-                                    </td>
-                                  </tr>
-                                 @endif
-                              @endforeach --}}
-                           </tbody>
-                        </table>
-                     </div>
-                  </div>
-                  <div class="tab-pane fade " id="return" role="tabpanel" aria-labelledby="return-tab">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
                      
-                     <div class="table-responsive">
-                        <table class="" id="table-12">
-                           <thead>
-                           <tr>
-                              
-                              <th>Name</th>
-                              <th>Barcode</th>
-                              <th>Company</th>
-                              <th>Desc</th>
-                              
-                              <th></th>
-                           </tr>
-                           </thead>
-                           <tbody>
-                              {{-- <tr>
-                                 <td colspan=""><b>Departure</b></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                                 <td></td>
-                              </tr> --}}
-                              @foreach ($passengers as $pass)
+                     <li class="nav-item">
+                     <a class="nav-link active" id="passenger-tab" data-toggle="tab" href="#passenger" role="tab" aria-controls="passenger" aria-selected="false">Depart </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link " id="return-tab" data-toggle="tab" href="#return" role="tab" aria-controls="return" aria-selected="false">Return </a>
+                        </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">Add </a>
+                     </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                     
+                     <div class="tab-pane fade show active" id="passenger" role="tabpanel" aria-labelledby="passenger-tab">
+                        <div class="table-responsive">
+                           <table class="" id="table-11">
+                              <thead>
+                              <tr>
                                  
-                                 @if ($pass->type == 'Return')
-                                 <tr>
-                                    <td>{{$pass->name ?? '-'}}</td>
-                                    <td>{{$pass->barcode}}</td>
-                                    <td>{{$pass->company}}({{$pass->department}})</td>
-                                    <td>{{$pass->desc}}</td>
-                                    <td>
-                                       @if ($request->status == 0)
-                                       <a href="">Edit</a>
-                                       <a href="">Delete</a>
-                                       @endif
-                                       
-                                    </td>
-                                  </tr>
-                                 @endif
-                              @endforeach
-                              {{-- <tr><td colspan="5"><b>Return</b></td></tr> --}}
-                              {{-- @foreach ($passengers as $pass)
+                                 <th>Name</th>
+                                 <th>Barcode</th>
+                                 <th>Company</th>
+                                 <th>Desc</th>
                                  
-                                 @if ($pass->type == 'Return')
-                                 <tr>
-                                    <td>{{$pass->name ?? '-'}}</td>
-                                    <td>{{$pass->barcode}}</td>
-                                    <td>{{$pass->company}}({{$pass->department}})</td>
-                                    <td>{{$pass->desc}}</td>
-                                    <td>
-                                       @if ($request->status == 0)
-                                       <a href="">Edit</a>
-                                       <a href="">Delete</a>
-                                       @endif
-                                       
-                                    </td>
-                                  </tr>
-                                 @endif
-                              @endforeach --}}
-                           </tbody>
-                        </table>
+                                 <th></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach ($passengers as $pass)
+                                    
+                                    @if ($pass->type == 'Departure')
+                                    <tr>
+                                       <td>{{$pass->name ?? '-'}}</td>
+                                       <td>{{$pass->barcode}}</td>
+                                       <td>{{$pass->company}}({{$pass->department}})</td>
+                                       <td>{{$pass->desc}}</td>
+                                       <td>
+                                          @if ($request->status == 0)
+                                          <a href="">Edit</a>
+                                          <a href="">Delete</a>
+                                          @endif
+                                          
+                                       </td>
+                                    </tr>
+                                    @endif
+                                 @endforeach
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     <div class="tab-pane fade " id="return" role="tabpanel" aria-labelledby="return-tab">
+                        
+                        <div class="table-responsive">
+                           <table class="" id="table-12">
+                              <thead>
+                              <tr>
+                                 
+                                 <th>Name</th>
+                                 <th>Barcode</th>
+                                 <th>Company</th>
+                                 <th>Desc</th>
+                                 
+                                 <th></th>
+                              </tr>
+                              </thead>
+                              <tbody>
+                                 {{-- <tr>
+                                    <td colspan=""><b>Departure</b></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                 </tr> --}}
+                                 @foreach ($passengers as $pass)
+                                    
+                                    @if ($pass->type == 'Return')
+                                    <tr>
+                                       <td>{{$pass->name ?? '-'}}</td>
+                                       <td>{{$pass->barcode}}</td>
+                                       <td>{{$pass->company}}({{$pass->department}})</td>
+                                       <td>{{$pass->desc}}</td>
+                                       <td>
+                                          @if ($request->status == 0)
+                                          <a href="">Edit</a>
+                                          <a href="">Delete</a>
+                                          @endif
+                                          
+                                       </td>
+                                    </tr>
+                                    @endif
+                                 @endforeach
+                                 {{-- <tr><td colspan="5"><b>Return</b></td></tr> --}}
+                                 {{-- @foreach ($passengers as $pass)
+                                    
+                                    @if ($pass->type == 'Return')
+                                    <tr>
+                                       <td>{{$pass->name ?? '-'}}</td>
+                                       <td>{{$pass->barcode}}</td>
+                                       <td>{{$pass->company}}({{$pass->department}})</td>
+                                       <td>{{$pass->desc}}</td>
+                                       <td>
+                                          @if ($request->status == 0)
+                                          <a href="">Edit</a>
+                                          <a href="">Delete</a>
+                                          @endif
+                                          
+                                       </td>
+                                    </tr>
+                                    @endif
+                                 @endforeach --}}
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
+                     <div class="tab-pane fade " id="add" role="tabpanel" aria-labelledby="add-tab">
+                        @if ($request->status == 0)
+                        <form action="{{route('passenger.item.store')}}" method="POST">
+                           @csrf
+                           <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
+                           {{-- <input type="text" id="type" name="type" value="Departure" hidden> --}}
+                           <div class="form-row">
+                              <div class="form-group col-md-8">
+                                 <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <div class="input-group-text">Name </div>
+                                 </div>
+                                 <input type="text" class="form-control" id="name" name="name" >
+                                 </div>
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <div class="input-group-text">Barcode</div>
+                                 </div>
+                                 <input type="text" class="form-control" id="barcode" name="barcode" >
+                                 </div>
+                              </div>
+                              
+                              
+                              
+                           </div>
+                           <div class="form-row">
+                              <div class="form-group col-md-2">
+                                 <div class="input-group">
+                                 
+                                 <select class="custom-select" name="type" id="type">
+                                       <option value="Departure">Departure</option>
+                                       <option value="Return">Return</option>
+                                 </select>
+                                 {{-- <input type="text" class="form-control" id="desc" name="desc" > --}}
+                                 </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <div class="input-group-text">Comp</div>
+                                 </div>
+                                 <input type="text" class="form-control" id="company" name="company" placeholder="Company">
+                                 </div>
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <div class="input-group-text">Dept</div>
+                                 </div>
+                                 <input type="text" class="form-control" id="department" name="department" placeholder="Department">
+                                 </div>
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <div class="input-group">
+                                 <div class="input-group-prepend">
+                                    <div class="input-group-text">Desc</div>
+                                 </div>
+                                 <input type="text" class="form-control" id="desc" name="desc" >
+                                 </div>
+                              </div>
+                              
+                              <div class="form-group col-md-1">
+                                 <button type="submit" class="btn btn-info btn-block">Add</button>
+                              </div>
+                              
+                           </div>
+                        </form>
+                        @endif
                      </div>
                   </div>
-                  <div class="tab-pane fade " id="add" role="tabpanel" aria-labelledby="add-tab">
-                     @if ($request->status == 0)
-                     <form action="{{route('passenger.item.store')}}" method="POST">
-                        @csrf
-                        <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
-                        {{-- <input type="text" id="type" name="type" value="Departure" hidden> --}}
-                        <div class="form-row">
-                           <div class="form-group col-md-8">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">Name </div>
-                                </div>
-                                <input type="text" class="form-control" id="name" name="name" >
-                              </div>
-                           </div>
-                           <div class="form-group col-md-4">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">Barcode</div>
-                                </div>
-                                <input type="text" class="form-control" id="barcode" name="barcode" >
-                              </div>
-                           </div>
-                           
-                           
-                           
-                        </div>
-                        <div class="form-row">
-                           <div class="form-group col-md-2">
-                              <div class="input-group">
-                                
-                                <select class="custom-select" name="type" id="type">
-                                    <option value="Departure">Departure</option>
-                                    <option value="Return">Return</option>
-                                </select>
-                                {{-- <input type="text" class="form-control" id="desc" name="desc" > --}}
-                              </div>
-                           </div>
-                           <div class="form-group col-md-6">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">Comp</div>
-                                </div>
-                                <input type="text" class="form-control" id="company" name="company" placeholder="Company">
-                              </div>
-                           </div>
-                           <div class="form-group col-md-4">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">Dept</div>
-                                </div>
-                                <input type="text" class="form-control" id="department" name="department" placeholder="Department">
-                              </div>
-                           </div>
-                           <div class="form-group col-md-6">
-                              <div class="input-group">
-                                <div class="input-group-prepend">
-                                  <div class="input-group-text">Desc</div>
-                                </div>
-                                <input type="text" class="form-control" id="desc" name="desc" >
-                              </div>
-                           </div>
-                           
-                           <div class="form-group col-md-1">
-                              <button type="submit" class="btn btn-info btn-block">Add</button>
-                           </div>
-                           
-                        </div>
-                     </form>
-                     @endif
-                  </div>
-               </div>
                @endif
                
                
