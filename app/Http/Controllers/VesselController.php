@@ -151,6 +151,8 @@ class VesselController extends Controller
          'portname' => $req->port,
          'build' => $req->build,
          'classed_by' => $req->classed_by,
+         'txid' => $req->txid,
+         'mmsi' => $req->mmsi,
 
          'class_notation' => $req->class_notation,
          'loa' => $req->loa,

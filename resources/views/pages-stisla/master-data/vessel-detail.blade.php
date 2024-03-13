@@ -107,6 +107,14 @@
          </div>
          <div class="col-md-4">
             <div class="form-row">
+               <div class="form-group col-md-6">
+                  <label for="txid">TXID </label>
+                  <input type="text" class="form-control" id="txid" name="txid" value="{{$vessel->txid}}" >
+               </div>
+               <div class="form-group col-md-6">
+                  <label for="mmsi">MMSI </label>
+                  <input type="text" class="form-control" id="mmsi" name="mmsi" value="{{$vessel->mmsi}}" >
+               </div>
                <div class="form-group col-md-4">
                   <label for="deadweight">Deadweight </label>
                   <input type="text" class="form-control" id="deadweight" name="deadweight" value="{{$vessel->deadweight}}" >

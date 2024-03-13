@@ -18,6 +18,7 @@
       <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
          <div class="row">
             <div class="col-md-3">
+               <div class="badge badge-info mb-2">Form Add Vessel</div>
                @if ($errors->any())
                   <div class="alert alert-danger">
                      <ul>
