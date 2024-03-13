@@ -113,8 +113,8 @@
                      </div>
                   </div>
                   
-                  <span>{{$schedule->code}} </span><br>
-                  <span>{{formatDate($schedule->date)}}</span> - <span class="text-uppercase">{{$schedule->class }}</span> <br>
+                  <span>{{formatDate($schedule->date)}} </span><br>
+                  <span>{{$schedule->code}}</span> - <span class="text-uppercase">{{$schedule->class }}</span> <br>
                    
                   <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
                   

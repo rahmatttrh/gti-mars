@@ -256,7 +256,7 @@
                                           @if ($req->activity_id == 5)
                                              {{$req->employee->name}}
                                               @else
-                                              {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
+                                              {{$req->origin->code ?? '-'}} - {{$req->destination->code ?? '-'}}
                                           @endif
                                           
                                        </td>

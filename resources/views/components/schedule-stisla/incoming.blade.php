@@ -82,9 +82,9 @@
                      @endforeach
                   </span></td>
                   <td>
-                     {{$req->origin->name}} - {{$req->destination->name}}
+                     {{$req->origin->code}} - {{$req->destination->code}}
                      @if ($req->titip_id != null)
-                         ({{$req->titip->name}})
+                         ({{$req->titip->code}})
                      @endif
                   </td>
                   <td>{{$req->user->name}}</td>

@@ -157,7 +157,7 @@
                                           @if ($req->activity_id == 5)
                                              -
                                               @else
-                                              {{$req->origin->name ?? '-'}} - {{$req->destination->name ?? '-'}}
+                                              {{$req->origin->code ?? '-'}} - {{$req->destination->code ?? '-'}}
                                           @endif
                                        </td>
                                        {{-- <td><a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->code ?? ''}}</a></td> --}}

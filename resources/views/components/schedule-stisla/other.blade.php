@@ -80,7 +80,11 @@
                         {{$item->desc}} ,
                      @endforeach
                   </span></td>
-                  <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
+                  <td>{{$req->origin->code}} - {{$req->destination->code}}
+                     @if ($req->titip_id != null)
+                         ({{$req->titip->code}})
+                     @endif
+                  </td>
                  
                   
                   <td>
@@ -99,7 +103,8 @@
                <tr>
                   <td colspan="4">
 
-                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add into this Schedule</a> 
+                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add into this Schedule</a> |
+                     <a href="#" class="" data-toggle="modal" data-target="#req-change-destination-{{$req->id}}">Change Destination</a> 
                      {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a> | --}}
                      {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Destination</a> --}}
                     
