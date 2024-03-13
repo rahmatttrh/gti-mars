@@ -72,10 +72,12 @@
                                  @endforeach
                                  </a> </td>
                                  <td>
-                                 @if ($request->activity_id < 5)
+                                 {{-- @if ($request->activity_id < 5)
                                     {{$request->origin->name}} to {{$request->destination->name}}
                                  @else
-                                 @endif
+                                 @endif --}}
+
+                                 {{$request->origin->name}} to {{$request->destination->name}}
                                  
                                  </td>
                                  <td>{{$request->user->name}}</td>
@@ -101,6 +103,7 @@
                         <tr>
                            <td></td>
                            <td>{{$schedule->requests->first()->desc }} {{$schedule->requests->first()->fuel->qty }} KL</td>
+                           <td>{{$schedule->requests->first()->origin->name }} to {{$schedule->requests->first()->destination->name }}</td>
                         </tr>
                         @endif
                      @endforeach

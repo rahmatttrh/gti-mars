@@ -154,7 +154,7 @@
                               @endif
                      </span>  
                   @endif
-                  @if ($schedule->class == 'Moving')
+                  @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting')
                       <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
                   @endif
                   
@@ -277,27 +277,23 @@
                </div>
             </div>
             @elseif($schedule->class == 'Lifting')
-            ok
-            <div class="card">
+            <div class="card border">
+               <div class="card-header">
+                  <b>Lifting Tanker</b>
+               </div>
                <div class="card-body">
-                  <div class="summary-item">
-                  <h6>Tanker </h6>
-                  <ul class="list-unstyled list-unstyled-border">
-                     
-                     <li class="media">
-                        <a href="#">
-                        <img class="mr-3 rounded" width="50" src="{{asset('stisla/img/products/product-1-50.png')}}" alt="product">
-                        </a>
-                        <div class="media-body">
-                        {{-- <div class="media-right">$405</div> --}}
-                        <div class="media-title h2"><a href="#">{{$schedule->requests()->first()->desc}}</a></div>
-                        <div class="text-muted text-small">Lifting</div>
-                        </div>
-                     </li>
-                  </ul>
+                  <div class="d-flex align-items-center">
+                     <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
+                     <div>
+                        <h5>{{$schedule->requests()->first()->desc}}</h5>
+                        <span>{{$schedule->requests()->first()->code}}</span>
+                     </div>
                   </div>
+                  <br>
+                  Requested by {{$schedule->requests()->first()->user->name}}
                </div>
             </div>
+            
             @elseif($schedule->class == 'Fuel Oil' )
             <div class="card border">
                <div class="card-header">

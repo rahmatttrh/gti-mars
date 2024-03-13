@@ -15,7 +15,7 @@
       <div class="section-body">
           
          <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-5">
                @if ($errors->any())
                   <div class="alert alert-danger">
                      @foreach ($errors->all() as $err)
@@ -132,7 +132,7 @@
                   </form>
                </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-7">
                <div class="card border shadow-sm">
                   
                   <div class="card-body">

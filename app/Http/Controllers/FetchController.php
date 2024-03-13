@@ -176,12 +176,12 @@ class FetchController extends Controller
             <td>
                ' . $vesselName  . ' 
             </td>
-            <td>' . \Carbon\Carbon::parse($row->date)->format('d-m-Y') .  ' on '. $row->port->name .' 
+            <td>' . \Carbon\Carbon::parse($row->date)->format('d-m-Y')  .' 
             </td>
             
             
             <td> ' .
-                  $first->port->name . ' 
+                  $row->port->name . ' 
               
             </td>
             <td>' . $persen  . ' %</td>
