@@ -85,7 +85,7 @@
                   <table>
                      <tbody>
                         <tr>
-                           <td><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           <td style="width: 250px"><x-status-stisla.vdr :vdr="$vdr" /></td>
                            <td>{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}</td>
                         </tr>
                         <tr>
@@ -105,7 +105,7 @@
                            <td> {{$vessel->owner ?? '-'}} / {{$vessel->operator ?? '-'}}</td>
                         </tr>
                         <tr>
-                           <td>Master name</td>
+                           <td>Master Name</td>
                            <td>{{$vessel->master ?? '-'}}</td>
                         </tr>
                         <tr>
