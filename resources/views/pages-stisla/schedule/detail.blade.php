@@ -154,7 +154,7 @@
                               @endif
                      </span>  
                   @endif
-                  @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting')
+                  @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting' || $schedule->class == 'Fuel Oil' || $schedule->class == 'Fresh Water')
                       <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
                   @endif
                   

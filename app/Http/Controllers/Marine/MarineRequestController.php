@@ -137,7 +137,8 @@ class MarineRequestController extends Controller
       $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 1)->where('activity_id', '!=', 7)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
-      $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
+      // $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
+      $schedules = Schedule::orderBy('date', 'asc')->get();
 
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);

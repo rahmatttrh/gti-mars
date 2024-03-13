@@ -47,8 +47,8 @@
                <table class=" table-striped " >
                   <thead>
                      <tr>
-                        <th>Date</th>
-                        <th>Desc</th>
+                        <th colspan="2">Waiting Validation</th>
+                        {{-- <th>Desc</th> --}}
                         <th>Route</th>
                         <th>User</th>
                      </tr>

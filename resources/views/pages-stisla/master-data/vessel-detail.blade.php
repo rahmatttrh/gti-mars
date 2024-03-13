@@ -120,57 +120,13 @@
                   <input type="text" class="form-control" id="depth" name="depth" value="{{$vessel->depth}}" >
                </div>
             </div>
-            <button class="btn btn-info  btn-lg ">Update</button>
+            <button class="btn btn-info ">Update</button>
+            <a href="{{route('vessel.delete', enkripRambo($vessel->id))}}" class="btn btn-danger" >Delete</a>
          </div>
       </div>
       </form>
       <hr>
-      <div class="row">
-         <div class="col-md-4">
-            <div class="card border shadow-none">
-            {{-- <div class="card-header">
-               <h4>Basic DataTables</h4>
-            </div> --}}
-            <div class="card-body">
-               <small>{{$vessel->type}}</small><br>
-               <b>{{$vessel->name}}</b>
-               <hr>
-               
-               <small>CONTACT</small><br>
-               <b>Telp : {{$vessel->telp}}</b><br>
-               <b>Username : {{$vessel->username}}</b><br>
-               <b>Email : {{$vessel->email}}</b><br>
-               <b>DPA Name : {{$vessel->dpa_name}}</b><br>
-               <b>DPA Telp : {{$vessel->dpa_telp}}</b><br>
-
-               <hr>
-               
-               <small>PERSON</small><br>
-               <b>Master : {{$vessel->master}}</b><br>
-               <b>Chief Officer : {{$vessel->co}}</b><br>
-            </div>
-            </div>
-         </div>
-         <div class="col-md-8">
-            <div class="card border shadow-none">
-               <div class="card-body">
-                  <small>Detail</small><br>
-                  <b>Prev name : {{$vessel->prev_name}}</b><br>
-                  <b>IMO Number : {{$vessel->imo}}</b><br>
-                  <b>Type of Vessel : {{$vessel->type}}</b><br>
-                  <b>Vessel Owner : {{$vessel->owner}}</b><br>
-                  <b>Vessel Operator : {{$vessel->operator}}</b><br>
-                  <b>Flag : {{$vessel->operator}}</b><br>
-                  <b>Call Sign : {{$vessel->operator}}</b><br>
-                  <b>Port of Registry : {{$vessel->operator}}</b><br>
-                  <b>Year of Build : {{$vessel->operator}}</b><br>
-                  <b>Vessel Classed By : {{$vessel->operator}}</b><br>
-                  <b>Deadweight Tonnage : {{$vessel->operator}}</b><br>
-                  <b>Clear Deckspace : {{$vessel->operator}}</b><br>
-               </div>
-            </div>
-         </div>
-      </div>
+     
    </div>
 </section>
 

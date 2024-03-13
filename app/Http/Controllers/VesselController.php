@@ -29,15 +29,13 @@ class VesselController extends Controller
 
    public function store(Request $req)
    {
+
+      
       $req->validate([
          'name' => 'required',
          'username' => 'required|unique:vessels',
          'email' => 'required|email|unique:vessels',
-         'deadweight' => 'required|numeric',
-         'deckspace' => 'required|numeric',
          'type' => 'required',
-         'owner' => 'required',
-         'operator' => 'required'
       ]);
 
       Vessel::create([
@@ -71,15 +69,15 @@ class VesselController extends Controller
 
          'main_engine' => $req->main_engine,
          'no_engine' => $req->no_engine,
-         'no_main_propellers' => $req->no_main_propellers,
+         'no_main_propeller' => $req->no_main_propellers,
          'no_rudder' => $req->no_rudder,
-         'generators' => $req->generators_and_manufactures,
+         'generator' => $req->generators_and_manufactures,
          'no_generator' => $req->no_generator,
          'generator_detail' => $req->generator_detail,
-         'kort_nozzles' => $req->kort_nozzle,
+         'kort_nozzle' => $req->kort_nozzle,
          'bow_thruster' => $req->bow_thruster,
          'stern_thruster' => $req->stern_thruster,
-         'other_propulsors' => $req->other_propulsors,
+         'other_propulsor' => $req->other_propulsors,
          'speed_max' => $req->speed_max,
          'speed_eco' => $req->speed_eco,
          'speed_towing' => $req->speed_towing,
@@ -111,7 +109,7 @@ class VesselController extends Controller
 
       $user->assignRole('vessel');
 
-      return redirect()->route('vessel')->with('success', 'Vessel successfuly added');
+      return redirect()->back()->with('success', 'Vessel successfuly added');
    }
 
    public function edit($id)
