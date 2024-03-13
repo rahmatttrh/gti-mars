@@ -178,7 +178,7 @@
                <span>Log</span>
             </a>
          </li>
-         <li class="nav-item {{ (request()->is('master/data')) ? 'active' : '' }}">
+         <li class="nav-item pr-3 {{ (request()->is('master/data')) ? 'active' : '' }}">
             <a href="{{route('master.data')}}" class="nav-link {{ (request()->is('master/data')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('master/data'))
                <i class="text-primary fas fa-fire ml-3"></i>

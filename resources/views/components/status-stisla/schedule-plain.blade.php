@@ -1,19 +1,19 @@
 <div>
    @if ($schedule->status == 0)
-      <small>Draft</small>
+      Draft
       
       @elseif($schedule->status == 1)
-      <small>Waiting Vessel</small>
+      Waiting Vessel
       @elseif($schedule->status == 2)
-      <small>{{$schedule->getStatus()->status->name}}</small>
+      {{$schedule->getStatus()->status->name}}
       @elseif($schedule->status == 3)
-      <small>User Confirmation</small>
+      User Confirmation
       @elseif($schedule->status == 4)
-      <small>Approval Additional Request</small>
+      Approval Additional Request
       @elseif($schedule->status == 101)
-      <small>Validasi FM</small>
+      Validasi FM
       @elseif($schedule->status == 11)
-      <small>Complete</small>
+      Complete
    @endif
   
    @if ($schedule->requests->where('class', 'additional')->where('status', 5)->count() > 0)

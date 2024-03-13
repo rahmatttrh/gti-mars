@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
 use App\Mail\ApprovalEmail;
+use App\Models\CargoItem;
 use App\Models\Port;
 use App\Models\ReportRequest;
 use App\Models\Request as ModelsRequest;
@@ -493,6 +494,69 @@ class MarineRequestController extends Controller
 
       // dd('ok');
       return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Request Activity set on this schedule');
+   }
+
+   public function changeDestination(Request $req){
+      // dd('ok');
+      $now = Carbon::now();
+      $request = ModelsRequest::find($req->request_id);
+      $lastRequest = ModelsRequest::orderBy("created_at", "desc")->first();
+      if (isset($lastRequest)) {
+         $code =
+            "R/M/" . $now->format("dmy") . '/' . ($lastRequest->id + 1);
+      } else {
+         $code = "R/M/" . $now->format("dmy") . '/' . 1;
+      }
+
+      $newRequest = ModelsRequest::create([
+         'code' => $code,
+         'type' => 2,
+         'class' => 'main',
+         'user_id' => $request->user_id,
+         'user_name' => $request->user_name,
+         'employee_id' => $request->employee->id,
+         'department_id' => $request->department->id,
+         'func' => $request->department->code,
+         'desc' => $request->desc,
+         'description' => $request->desc,
+         'activity_id' => $request->activity_id,
+         'date' => $request->date,
+         'origin_id' => $req->destination,
+         'destination_id' => $request->destination_id,
+         'status' => 0,
+         'request_id' => $request->id,
+         'remark' => 'titipan'
+      ]);
+      foreach($request->cargoItems as $item){
+         CargoItem::create([
+            'type' => 'main',
+            'status' => 1,
+            'request_id' => $newRequest->id,
+            'no_doc' => $item->no_document,
+            'mtd' => $item->mtd,
+            'contract' => $item->contract,
+            'desc' => $item->desc,
+            'qty' => $item->qty,
+            'unit' => $item->unit,
+            'size' => $item->size,
+            'weight' => $item->weight,
+            'remark' => $item->remark
+         ]);
+      }
+      $newRequest->update([
+         'total_size' => $newRequest->cargoItems->sum('size'),
+         'total_weight' => $newRequest->cargoItems->sum('weight')
+      ]);
+
+      $request->update([
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'titip_id' => $request->destination_id,
+         'remark' => $req->desc
+      ]);
+
+
+      return redirect()->back()->with('success', 'Request Activity destination changed');
    }
 
    public function rejectSchedule(Request $req)

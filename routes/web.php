@@ -471,6 +471,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
       Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
       Route::put('change/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.change.schedule');
+      Route::post('change/destination', [MarineRequestController::class, 'changeDestination'])->name('request.change.destination');
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
       // Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
       Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');

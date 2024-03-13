@@ -1299,7 +1299,7 @@ class HomeController extends Controller
 
       // dd(auth()->user()->getPort());
 
-
+      $titipRequests = ModelsRequest::where('user_id', auth()->user()->id)->where('status', 0)->where('request_id', '!=', null)->get();
       return view('pages-stisla.dsp.home-user', [
          'month' => $month,
          'year' => $year,
@@ -1313,7 +1313,8 @@ class HomeController extends Controller
          // 'vessel3' => $vessel3,
          'schedules' => $schedules,
          'confirms' => $confirms,
-         'dates' => $dates
+         'dates' => $dates,
+         'titipRequests' => $titipRequests
 
          // 'schedulesFix' => $schedulesFix
       ])->with('i');

@@ -50,23 +50,30 @@
          </div>
       </div>
       <div class="row">
-         <div class="col-2">
+         <div class="col-3">
             <div class="badge badge-info mb-2">Create Schedule Plan</div>
             <form action="{{route('schedule.store.crew.change')}}" method="POST">
                @csrf
-               <select name="vessel" id="vessel" class="form-control mb-2">
+               
+               <div class="form-row">
+                  <select name="vessel" id="vessel" class="form-control mb-2 col-md-6">
                      
-                  <option value="6">Sigap Jaya</option>
-                  <option value="36">Tegas Jaya</option>
-               </select>
-               <input type="text" name="func" id="func" class="form-control mb-2">
-               <input type="date" class="form-control" name="date" id="date" >
+                     <option value="6">Sigap Jaya</option>
+                     <option value="36">Tegas Jaya</option>
+                  </select>
+                  <input type="date" class="form-control col-md-6" name="date" id="date" >
+               </div>
+               <div class="form-row">
+                  <textarea type="text" name="func" id="func" class="form-control col-12"></textarea>
+               </div>
+               
+               
                <hr>
                <button class="btn btn-lg btn-light border btn-block " type="submit">Create</button>
             </form>
          </div>
          
-         <div class="col-10">
+         <div class="col-9">
             
             <div class="badge badge-info mb-2">Incoming Request Crew Change</div>
             <div class="table-responsive">
@@ -78,8 +85,8 @@
                         <th>Desc</th>
                         <th >Destination</th>
                         <th >User</th>
-                        <th >Pax  Onduty</th>
-                        <th >Pax  Offduty</th>
+                        <th class="text-center">Departure</th>
+                        <th class="text-center">Return</th>
 
                      </tr>
                      
@@ -92,8 +99,8 @@
                            <td><a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->activity->name}}</a> </td>
                            <td>{{$req->origin->name}} -  {{$req->destination->name}}</td>
                            <td>{{$req->user->name}}</td>
-                           <td>{{count($req->passengerItems->where('type', 'Departure'))}}</td>
-                           <td>{{count($req->passengerItems->where('type', 'Return'))}}</td>
+                           <td class="text-center">{{count($req->passengerItems->where('type', 'Departure'))}}</td>
+                           <td class="text-center">{{count($req->passengerItems->where('type', 'Return'))}}</td>
                            
                          </tr>
                      @endforeach
@@ -116,7 +123,7 @@
                         <th rowspan="2" class="text-center">Pax <br> Onduty</th>
                         <th rowspan="2" class="text-center">Pax <br> Offduty</th>
                         <th rowspan="2">Boat</th>
-                        <th rowspan="2" class="text-center">Cap. Pax</th>
+                        <th rowspan="2" class="text-center">Cap. <br> Pax</th>
                         <th colspan="2" class="text-center">Time of Movement</th>
                         <th rowspan="2">Remark</th>
 
@@ -130,7 +137,7 @@
 
                      @foreach ($schedules as $sche)
                          <tr>
-                           <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{formatDayName($sche->date)}}, {{formatDate($sche->date)}}</a></td>
+                           <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}"> {{formatDate($sche->date)}}</a></td>
                            <td>
                               @foreach ($sche->routes as  $route)
                               

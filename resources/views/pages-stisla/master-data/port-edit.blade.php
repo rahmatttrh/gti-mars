@@ -4,13 +4,7 @@
 @endsection
 @section('content')
    <section class="section">
-      <div class="section-header">
-         <h1 class="section-title">Port Edit</h1>
-         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item "><a href="#">Dashboard</a></div>
-            <div class="breadcrumb-item active">Port Edit</div>
-         </div>
-      </div>
+      
 
       <div class="section-body">
          {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -20,7 +14,7 @@
 
          <div class="row">
          <div class="col-md-4">
-            <div class="card">
+            <div class="card border shadow-sm">
                <div class="card-header">
                   <b>Form Edit</b>
                </div>
@@ -62,51 +56,46 @@
                            </select>
                         </div>
                      </div>
-                     <button class="btn btn-primary">Update</button>
+                     <button class="btn btn-info">Update</button>
                   </form>
                </div>
             </div>
          </div>
          <div class="col-8">
-            <div class="card">
-               {{-- <div class="card-header">
-               <h4>Basic DataTables</h4>
-               </div> --}}
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table table-striped table-sm" id="table-1">
-                        <thead>
-                        <tr>
-                           <th class="text-center">No.</th>
-                           <th>Name</th>
-                           <th>Region</th>
-                           <th>Email</th>
-                           <th>Type</th>
-                           <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach ($ports as $port)
-                           <tr>
-                              <td class="text-center">{{++$i}}</td>
-                              <td>{{$port->name}}</td>
-                              
-                              <td>{{$port->region}}</td>
-                              <td>{{$port->email}}</td>
-                              <td>{{$port->type}}</td>
-                              <td>
-                                 
-                                 <a href="{{route('port.edit', enkripRambo($port->id))}}" class="btn btn-sm btn-primary">Edit</a>
-                                 <a href="" class="btn btn-sm btn-danger">Delete</a>
-                              </td>
-                           </tr>
-                        @endforeach
+            
+            <div class="table-responsive">
+               <table class="table-sm table-striped " id="table-1">
+                  <thead>
+                  <tr>
+                     {{-- <th class="text-center">No.</th> --}}
+                     <th>Name</th>
+                     <th>Region</th>
+                     <th>Email</th>
+                     <th>Type</th>
+                     <th></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  @foreach ($ports as $port)
+                     <tr>
+                        {{-- <td class="text-center">{{++$i}}</td> --}}
+                        <td>{{$port->name}}</td>
                         
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
+                        <td>{{$port->region}}</td>
+                        <td>{{$port->email}}</td>
+                        <td>{{$port->type}}</td>
+                        <td>
+                           
+                           <a href="{{route('port.edit', enkripRambo($port->id))}}" class="">Edit</a>
+                           <a href="" class="">Delete</a>
+                        </td>
+                     </tr>
+                  @endforeach
+                  
+                  </tbody>
+               </table>
             </div>
+              
          </div>
          </div>
       </div>

@@ -42,7 +42,19 @@
             
          </div>
          <div class="col-md-9">
-            
+            @if (count($titipRequests) > 0)
+               {{-- <div class="badge badge-danger"><i class="fa fa-exclamation"></i></div> --}}
+               @foreach ($titipRequests as $titip)
+                  Request anda untuk <b> {{$titip->desc}}
+                  @foreach ($titip->cargoItems as $item)
+                      {{$item->desc}}
+                  @endforeach
+                  Tgl {{formatDate($titip->date)}} </b> tujuan {{$titip->request->origin->name}} - {{$titip->request->titip->name}} telah dititipkan di <b>{{$titip->request->destination->name}}</b> oleh Fleet Control.
+                  Silahkan <b>Release Request Ulang</b> dengan rute baru {{$titip->origin->name}} - {{$titip->destination->name}}
+               @endforeach
+               <br>
+               <hr>
+            @endif
             @if ($confirms->count() > 0)
                @foreach ($confirms as $confirm)
                   <div class="alert alert-info" role="alert">
@@ -230,7 +242,15 @@
                                  @if ($req->date == $date->format('Y-m-d'))
                                     <tr>
                                        <td>
-                                          <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->desc}}</a>
+                                          <a href="{{route('request.detail.new', enkripRambo($req->id))}}">
+                                             {{$req->desc}}
+                                             @foreach ($req->cargoItems as $item)
+                                              {{$item->desc}}
+                                             @endforeach
+                                             @if (count($req->passengerItems) >  0)
+                                                {{count($req->passengerItems)}} Total Passenger
+                                             @endif
+                                          </a>
                                        </td>
                                        <td>
                                           @if ($req->activity_id == 5)
@@ -248,7 +268,7 @@
                                        <td>{{$req->employee->name ?? '-'}}</td>
                                        <td><x-status-stisla.request-plain :request="$req" /></td>
                                     </tr>
-                                    @if ($req->activity_id == 1)
+                                    {{-- @if ($req->activity_id == 1)
                                     <tr>
                                        <td colspan="7">
                                           <small>
@@ -276,7 +296,7 @@
                                        </td>
                                     </tr>
                                  
-                                    @endif
+                                    @endif --}}
                                     
                                     
                                     @else

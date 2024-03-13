@@ -1,22 +1,22 @@
 <div>
    @if ($request->status == 0)
-      <small>Draft</small>
+      Draft
       @elseif($request->status == 1)
-      <small>Validasi Marine</small>
+      Validasi Marine
       @elseif($request->status == 2)
-      <small>Schedule on Set</small>
+      Schedule on Set
       @elseif($request->status == 3)
-      <small>Waiting Vessel</small>
+      Waiting Vessel
       @elseif($request->status == 4)
-      <small>  {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}</small>
+        {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}
       @elseif($request->status == 5)
-      <small>Validasi Fleet Control</small>
+      Validasi Fleet Control
       @elseif($request->status == 10)
-      <small>10 : User Confirmation</small>
+      10 : User Confirmation
       @elseif($request->status == 12)
-      <small>Complete</small>
+      Complete
       @elseif($request->status == 101)
-      <small>Validasi FM</small>
+      Validasi FM
       @elseif($request->status == 202)
       <div class="badge bg-light border text-dark"><span class="badge bg-danger me-1"></span>202 : Canceling Proccess</div>
       @elseif($request->status == 505)

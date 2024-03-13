@@ -30,6 +30,11 @@ class Request extends Model
       return $this->belongsTo(Department::class);
    }
 
+   public function request()
+   {
+      return $this->belongsTo(Request::class);
+   }
+
    public function cargoItems()
    {
       return $this->hasMany(CargoItem::class);
@@ -51,6 +56,11 @@ class Request extends Model
 
 
    public function destination()
+   {
+      return $this->belongsTo(Port::class);
+   }
+
+   public function titip()
    {
       return $this->belongsTo(Port::class);
    }

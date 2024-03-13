@@ -59,10 +59,10 @@
             <th>Date</th>
             <th>Type</th>
             <th>Route</th>
-            {{-- <th>Date</th> --}}
+            <th>User</th>
             {{-- <th>Vessel</th> --}}
             {{-- <th>User</th> --}}
-            <th class="text-center">Action</th>
+            {{-- <th class="text-center">Action</th> --}}
          </tr>
       </thead>
       <tbody>
@@ -70,14 +70,24 @@
             @foreach ($incomings as $req)
                @if ($req->schedule_id == $schedule->id)
                <tr>
-                  <td>
+                  <td rowspan="2">
                      <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
                      
                   </td>
                   <td>{{formatDate($req->date)}} </td>
-                  <td><span >{{$req->desc}}</span></td>
-                  <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
-                  
+                  <td><span >
+                     {{$req->desc}} 
+                     @foreach ($req->cargoItems as $item)
+                        {{$item->desc}} ,
+                     @endforeach
+                  </span></td>
+                  <td>
+                     {{$req->origin->name}} - {{$req->destination->name}}
+                     @if ($req->titip_id != null)
+                         ({{$req->titip->name}})
+                     @endif
+                  </td>
+                  <td>{{$req->user->name}}</td>
                   
                   {{-- <td>
                      @if ($req->schedule_id != null)
@@ -87,27 +97,17 @@
                      @endif
                   </td> --}}
                  
-                  <td>
-
-                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a> |
-                     <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a> 
-                     {{-- <a href="{{route('request.detail', enkripRambo($req->id))}}" >Detail</a> --}}
-                     {{-- <div class="btn-group btn-sm">
-                        <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
-                        <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a>
-                        <a href="{{route('request.detail', enkripRambo($req->id))}}" class="btn btn-sm btn-light border">Detail</a>
-                     </div> --}}
-                        
-                  </td>
+                  
                </tr>
                <tr>
-                  <td></td>
-                  <td colspan="3">
-                     @foreach ($req->cargoItems as $item)
-                        {{$item->desc}} ,
-                     @endforeach
+                  
+                  <td colspan="3" class="">
+
+                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add</a> |
+                     <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a> |
+                     <a href="#" class="" data-toggle="modal" data-target="#req-change-destination-{{$req->id}}">Change Destination</a> 
+                     
                   </td>
-                  <td>{{$req->total_weight}} ton</td>
                </tr>
                @endif
                
@@ -116,3 +116,4 @@
       </tbody>
    </table>
 </div>
+

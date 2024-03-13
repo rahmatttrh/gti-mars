@@ -61,8 +61,8 @@
             <th>Route</th>
             {{-- <th>Date</th> --}}
             <th>Vessel</th>
-            {{-- <th>User</th> --}}
-            <th class="text-center">Action</th>
+            <th>User</th>
+            {{-- <th class="text-center">Action</th> --}}
          </tr>
       </thead>
       <tbody>
@@ -70,12 +70,16 @@
             @foreach ($recents as $req)
                @if ($req->schedule_id != $schedule->id)
                <tr>
-                  <td>
+                  <td rowspan="2">
                      <a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a>
                      
                   </td>
                   <td>{{formatDate($req->date)}} </td>
-                  <td><span >{{$req->activity->name}} [{{$req->desc}}]</span></td>
+                  <td><span >{{$req->activity->name}} [{{$req->desc}}]
+                     @foreach ($req->cargoItems as $item)
+                        {{$item->desc}} ,
+                     @endforeach
+                  </span></td>
                   <td>{{$req->origin->name}} - {{$req->destination->name}}</td>
                  
                   
@@ -86,31 +90,21 @@
                          -
                      @endif
                   </td>
-                  {{-- <td>
-                     {{$req->employee->name}}
-                  </td> --}}
                   <td>
-
-                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a> |
-                     <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a>
-                     {{-- <a href="{{route('request.detail', enkripRambo($req->id))}}" >Detail</a> --}}
-                     {{-- <div class="btn-group btn-sm">
-                        <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Approve</a>
-                        <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a>
-                        <a href="{{route('request.detail', enkripRambo($req->id))}}" class="btn btn-sm btn-light border">Detail</a>
-                     </div> --}}
-                        
+                     {{$req->user->name}}
                   </td>
+                 
                </tr>
 
                <tr>
-                  <td></td>
-                  <td colspan="3">
-                     @foreach ($req->cargoItems as $item)
-                        {{$item->desc}} ,
-                     @endforeach
+                  <td colspan="4">
+
+                     <a href="#" class="" data-toggle="modal" data-target="#req-app-{{$req->id}}">Add into this Schedule</a> |
+                     {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Vessel</a> | --}}
+                     {{-- <a href="#" class="" data-toggle="modal" data-target="#req-change-{{$req->id}}">Change Destination</a> --}}
+                    
+                        
                   </td>
-                  <td>{{$req->total_weight}} ton</td>
                </tr>
                @endif
                
