@@ -130,8 +130,8 @@ class VesselController extends Controller
          'name' => 'required',
          'username' => 'required',
          'email' => 'required|email',
-         'deadweight' => 'required',
-         'deckspace' => 'required'
+         // 'deadweight' => 'required',
+         // 'deckspace' => 'required'
       ]);
 
       $vessel = Vessel::find($req->vessel);
