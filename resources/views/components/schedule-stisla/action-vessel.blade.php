@@ -1,7 +1,7 @@
-<span >
+
    @if ($schedule->status == 1 )
    <div class="btn-group " role="group" aria-label="Basic example">
-      <button type="button" class="btn btn-info " data-toggle="modal" data-target="#schedule-accept">Accept</button>
+      <button type="button" class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">Accept</button>
       <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#schedule-revision">Revision</button>
     </div>
       {{-- <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
@@ -73,4 +73,4 @@
       </form>
       
    @endif
-</span>
+<hr>
