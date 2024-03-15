@@ -106,16 +106,18 @@
             </div>
             <hr> --}}
             <div class="card shadow- border">
-               
+               <div class="card-header">
+                  <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
+               </div>
                <div class="card-body">
-                  <div class="mb-2">
+                  {{-- <div class="mb-2">
                      <div class="d-flex">
                         <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
                      </div>
-                  </div>
+                  </div> --}}
                   
-                  <span>{{formatDate($schedule->date)}} </span><br>
-                  <span>{{$schedule->code}}</span> - <span class="text-uppercase">{{$schedule->class }}</span> <br>
+                  {{-- <span>{{formatDate($schedule->date)}} </span><br>
+                  <span>{{$schedule->code}}</span> - <span class="text-uppercase">{{$schedule->class }}</span> <br> --}}
                    
                   <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
                   
@@ -159,13 +161,13 @@
                       <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
                   @endif
                   
-                  @if ($schedule->class != 'Crew Change')
+                  {{-- @if ($schedule->class != 'Crew Change')
                   <br>
                   <small>Deadweight {{$persenWeight}}%</small>
-                  @endif
+                  @endif --}}
                   
-                  <br>
-                  <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
+                  
+                  
                   @if ($schedule->status == 0)
                   <a href="{{route('schedule.delete', enkripRambo($schedule->id))}}"><small>Delete</small></a>
                   @endif
@@ -177,6 +179,41 @@
                         <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}" class=" ">Timeline</a>
                      </div>
                   </div> --}}
+                  <hr>
+                  <div class="d-flex justify-content-between">
+                     <span>Date</span>
+                     <span>{{formatDate($schedule->date)}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                     <span>ID</span>
+                     <span>{{$schedule->code}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                     <span>Class</span>
+                     <span class="text-uppercase">{{$schedule->class }}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                     <span>Deadweight</span>
+                     <span class="">{{intval($schedule->vessel->deadweight)}} Ton</span>
+                  </div>
+                  
+                  @if ($schedule->class != 'Crew Change')
+                  <div class="d-flex justify-content-between">
+                     <span>Occupied</span>
+                     <span class="">{{$persenWeight}}% [{{$schedule->total_weight}} Ton]</span>
+                  </div>
+                  @endif
+                  @if ($schedule->class == 'Crew Change')
+                  <div class="d-flex justify-content-between">
+                     <span>Depart</span>
+                     <span class="">{{$totalDeparture}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                     <span>Return</span>
+                     <span class="">{{$totalReturn}}</span>
+                  </div>
+                  @endif
+                  
                   
                </div>
                <div class="card-footer bg-whitesmoke">
@@ -190,19 +227,15 @@
                         <a href=""  data-toggle="modal" data-target="#report-evidance-{{$report->id}}"><small>Evidance</small></a> <br>
                      @endif
                      <hr>
-                     <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}"><small>See all report..</small></a>
+                     <div class="d-flex justify-content-between">
+                        <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}"><small>Timeline</small></a> <br>
+                        <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
+                     </div>
+                     
                   @endif
                </div>
             </div>
-            @if ($schedule->class == 'Crew Change')
-               {{-- <form action="{{route('marine.crew.change.import')}}" method="POST" enctype="multipart/form-data">
-                  @csrf
-                  <input type="text" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-                  <input type="file" class="form-control mb-2" id="file-crew" name="file-crew">
-                  <input type="file" class="form-control" id="file-crew" name="file-crew">
-                  <hr>
-                  <button class="btn btn-light border btn-block" type="submit">Import</button>
-               </form> --}}
+            {{-- @if ($schedule->class == 'Crew Change')
                <div class="row">
                   <div class="col-md-6">
                      <div class="card card-info">
@@ -223,7 +256,7 @@
                   </div>
                </div>
                      
-            @endif
+            @endif --}}
             {{-- <div class="card border">
                <div class="card-body">
                   <small class="text-primary"><b>{{formatDateTime($report->created_at)}}</b></small><br>

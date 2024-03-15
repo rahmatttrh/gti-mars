@@ -40,7 +40,7 @@
                   </tr>
                </thead>
                <tbody>
-                  @foreach ($schedule->requests->where('status', 2)->where('activity_id', 7) as $requests)
+                  @foreach ($schedule->requests->where('status', '>=', 2)->where('activity_id', 7) as $requests)
                      {{-- <tr>
                      <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
                      </tr> --}}
@@ -77,7 +77,7 @@
                   </tr>
                </thead>
                <tbody>
-                  @foreach ($schedule->requests->where('status', 2)->where('activity_id', 7) as $requests)
+                  @foreach ($schedule->requests->where('status','>=', 2)->where('activity_id', 7) as $requests)
                      {{-- <tr>
                      <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
                      </tr> --}}
