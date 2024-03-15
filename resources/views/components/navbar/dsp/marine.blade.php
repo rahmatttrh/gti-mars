@@ -69,7 +69,7 @@
          {{auth()->user()->name}} 
          {{-- <small>{{getRoleName(auth()->user())}}</small> --}}
       </div></a>
-       <div class="dropdown-menu dropdown-menu-right">
+       <div class="dropdown-menu shadow dropdown-menu-right">
          <div class="dropdown-title">{{getRoleName(auth()->user())}}</div>
          @if (auth()->user()->hasRole('marine'))
          <a href="{{route('user')}}" class="dropdown-item has-icon">

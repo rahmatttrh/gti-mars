@@ -159,7 +159,7 @@ table td {
                   </tr> --}}
                </table>
             @endif
-            @foreach ($schedule->requests->where('status', 2) as $req)
+            @foreach ($schedule->requests->where('status', '>=', 2) as $req)
                @if ($req->activity_id == 1)
                   <div class="">
                      @if ($req->status == 12)
@@ -177,7 +177,7 @@ table td {
                      {{$req->activity->name}} {{$req->origin->name}} - {{$req->destination->name}}
 
                   </div>
-                  <table class="table table-sm table-transparent table-responsive  mb-2">
+                  <table class="table table-sm table-transparent table-responsive   mb-2">
                      <thead>
                         <tr>
                            {{-- <th class="text-center" style="width: 1%"></th> --}}
@@ -248,7 +248,7 @@ table td {
                      </div>
                      
                      {{-- <small class="badge badge-info mt-4">Depart</small> --}}
-                     <table class="table table-transparent table-responsive mt-2">
+                     <table class="table table-transparent table-sm mt-2">
                         <thead>
                            <tr>
                               <th>Type</th>

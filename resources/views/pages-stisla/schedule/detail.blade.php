@@ -28,6 +28,7 @@
       
       <div class="row">
          <div class="col-md-3">
+            {{-- {{$schedule->status}} --}}
             @if (auth()->user()->hasRole('marine'))
                <x-schedule-stisla.action-marine :schedule="$schedule" class="" />
                
@@ -258,7 +259,7 @@
             @endif --}}
 
             @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
-               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" />
+               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" />
             @elseif($schedule->class == 'Moving')
             <div class="card border">
                <div class="card-header">
@@ -1059,7 +1060,7 @@
         </div>
         <div class="modal-footer bg-whitesmoke">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <a href="{{route('schedule.complete', enkripRambo($schedule->id))}}" class="btn btn-info">Complete</a>
+          <a href="{{route('schedule.complete', enkripRambo($thisSchedule->id))}}" class="btn btn-info">Complete</a>
         </div>
       </div>
     </div>

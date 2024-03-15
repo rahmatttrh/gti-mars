@@ -214,7 +214,7 @@ class ScheduleController extends Controller
       } elseif (auth()->user()->hasRole('department')) {
          $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 3)->orWhere('class', 'additional')->where('status', '>=', 2)->orderBy('rank', 'asc')->get();
       } else {
-         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 3)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+         $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
       }
 
 
@@ -288,6 +288,7 @@ class ScheduleController extends Controller
 
       // dd(round($persenWeight));
       // dd(count($recentCrewChangeRequests));
+      // dd(count($requests));
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,

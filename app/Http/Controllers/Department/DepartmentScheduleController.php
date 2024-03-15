@@ -18,7 +18,7 @@ class DepartmentScheduleController extends Controller
       // dd(auth()->user()->getPort());
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-
+      // dd($schedule->code);
       // Cek jika ada additional request
       $draftAdditional = false;
       $additionals = ModelsRequest::where('schedule_id', $schedule->id)->where('class', 'additional')->get();
@@ -31,9 +31,11 @@ class DepartmentScheduleController extends Controller
       // jika ada additional request akan merubah status schedule ke 4 dan status additional request ke 21
       // menunggu approval dari marine
       if ($draftAdditional == true) {
+         // dd('true');
          $schedule->update([
             'status' => 2
          ]);
+         
 
          Report::create([
             'schedule_id' => $schedule->id,
@@ -67,11 +69,14 @@ class DepartmentScheduleController extends Controller
             }
          }
       } else {
+         // dd('false');
          // jika tidak ada additional request akan merubah status schedule ke 2
          // vessel dapat melakukan update schedule
          $schedule->update([
             'status' => 2
          ]);
+
+         // dd($schedule->status);
 
          Report::create([
             'schedule_id' => $schedule->id,
@@ -81,16 +86,7 @@ class DepartmentScheduleController extends Controller
             'port_id' => auth()->user()->getPort()
          ]);
 
-         // foreach ($schedule->requests as $req) {
-         //    if ($req->port == auth()->user()->getPort()) {
-         //       ReportRequest::create([
-         //          'request_id' => $req->id,
-         //          'employee_id' => auth()->user()->getEmployeeId(),
-         //          'status_id' => 16,
-         //          'port_id' => auth()->user()->getPort()
-         //       ]);
-         //    }
-         // }
+         
       }
 
       return redirect()->back()->with('success', 'Schedule successfully completed');

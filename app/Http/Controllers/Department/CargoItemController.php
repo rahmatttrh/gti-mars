@@ -23,7 +23,7 @@ class CargoItemController extends Controller
 
       CargoItem::create([
          'type' => 'main',
-         'status' => 1,
+         'status' => 0,
          'request_id' => $r->requestId,
          'no_doc' => $r->no_document,
          'mtd' => $r->mtd,
@@ -112,7 +112,9 @@ class CargoItemController extends Controller
          // 'onboard' => $onboard
       ]);
 
-      if ($req->destination) {
+      
+
+      if ($req->destination && $onboard > 0) {
          $deflection = Deflection::create([
             'request_id' => $request->id,
             'cargoitem_id' => $cargoItem->id,

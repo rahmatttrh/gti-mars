@@ -50,7 +50,7 @@
                <tbody>
                   @foreach ($requests->where('activity_id', 1) as $request)
                      <tr>
-                        <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b></td>
+                        <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b> [{{$request->status}}]</td>
                         <td class="text-center">
                            @if (auth()->user()->hasRole('marine'))
                               @if ($schedule->status == 0 || $schedule->status == 5)
@@ -80,7 +80,19 @@
                            @if ($request->status == 10 && auth()->user()->hasRole('department'))
                            <td class="text-center">
                                  @if ($item->status == 0)
-                                 <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#confirmCargo_{{$item->id}}">Confirm</a>
+                                 <form action="{{route('cargo.item.offloading')}}" method="POST" class="d-flex">
+                                    @csrf
+                                    <input type="number" name="cargoItem" id="cargoItem" value="{{$item->id}}" hidden>
+                                    <input style="width: 70px" required type="number" name="offloading" id="offloading">
+                                    <select style="width: 120px" required class="form-control" name="destination" id="destination">
+                                       <option selected disabled>Choose</option>
+                                       @foreach ($routes as $route)
+                                          <option value="{{$route->port->id}}">{{$route->port->code}}</option>  
+                                       @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-info">Confirm</button>
+                                 </form>
+                                 {{-- <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#confirmCargo">Confirm</a> --}}
                                  {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
                                  @else
                                  -
@@ -163,7 +175,7 @@
                <thead>
                   
                   <tr>
-                     <th>Type</th>
+                     <th>Type </th>
                      <th>Route</th>
                      <th>Name</th>
                      <th>Barcode</th>
@@ -174,6 +186,9 @@
                </thead>
                <tbody>
                   @foreach ($requests->where('activity_id', 2) as $requests)
+                     {{-- <tr>
+                        <td>{{$requests->id}}</td>
+                     </tr> --}}
                      {{-- <tr>
                      <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
                      </tr> --}}
