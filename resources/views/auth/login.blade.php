@@ -66,9 +66,10 @@
                   <div class="col-5">
                      <div class="p-5">
                         <div class="text-center">
-                           <h1 class="font-weight-bold"><i>MAR<span class="text-primary">S</span></i></h1>
                            
-                           <h5>Marine Advanced Reporting <br> System </h5>
+                           <h1 class="font-weight-bold"><img src="{{asset('img/flaticon/neptune.png')}}" style="width: 60px" class="mr-2" alt=""><i>MAR<span class="text-primary">S</span></i></h1>
+                           
+                           <span>Marine Advanced Reporting System </span>
                            
                         </div>
                         <hr>
