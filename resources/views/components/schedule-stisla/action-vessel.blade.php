@@ -47,7 +47,7 @@
                      <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
                   @endforeach
                </select>
-               <input type="datetime-local" class="form-control eta" name="eta" id="eta">
+               <input style="width: 70px" type="datetime-local" class="form-control eta" name="eta" id="eta">
                <select class="form-control anchor" name="anchor" id="anchor">
                   <option selected disabled>Anchor...</option>
                   <option value="1">1</option> 
