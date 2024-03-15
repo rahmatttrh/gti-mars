@@ -4,6 +4,7 @@
       <button type="button" class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">Accept</button>
       <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#schedule-revision">Revision</button>
     </div>
+    <hr>
       {{-- <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
          Accept
       </button>
@@ -73,3 +74,4 @@
       </form>
       
    @endif
+
