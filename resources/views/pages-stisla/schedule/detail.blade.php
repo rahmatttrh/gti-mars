@@ -193,7 +193,7 @@
                      <span class="text-uppercase">{{$schedule->class }}</span>
                   </div>
                   <div class="d-flex justify-content-between">
-                     <span>Deadweight</span>
+                     <span>Capacity</span>
                      <span class="">{{intval($schedule->vessel->deadweight)}} Ton</span>
                   </div>
                   

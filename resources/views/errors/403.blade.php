@@ -55,8 +55,8 @@
                 </div>
               </form> --}}
               <div class="mt-3">
-                  <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button>
-                {{-- <a href="/" class="btn btn-primary btn-lg">Login</a> --}}
+                  {{-- <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button> --}}
+                <a href="/" class="btn btn-primary btn-lg">Login</a>
               </div>
             </div>
           </div>

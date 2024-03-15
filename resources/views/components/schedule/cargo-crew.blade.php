@@ -41,7 +41,7 @@
                      <th>Descriptive</th>
                      <th>Contract</th>
                      <th class="text-center">Qty</th>
-                     <th class="text-center">Weight</th>
+                     <th class="text-center">Weight(ton)</th>
                      <th class="text-center">Drop</th>
                      {{-- <th class="text-center">Size (m<sup>2</sup>)</th> --}}
                      <th></th>
@@ -50,7 +50,7 @@
                <tbody>
                   @foreach ($requests->where('activity_id', 1) as $request)
                      <tr>
-                        <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b> [{{$request->status}}]</td>
+                        <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b> [{{$request->code}}]</td>
                         <td class="text-center">
                            @if (auth()->user()->hasRole('marine'))
                               @if ($schedule->status == 0 || $schedule->status == 5)
