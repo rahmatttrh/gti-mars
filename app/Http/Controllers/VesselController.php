@@ -61,9 +61,9 @@ class VesselController extends Controller
          'beam' => $req->beam,
          'depth' => $req->depth,
          'maxdraft' => $req->maxdraft,
-         'deadweight' => $req->deadweight,
+         'deadweight' => 100,
          'gross' => $req->gross,
-         'deckspace' => $req->deckspace,
+         'deckspace' => 100,
          'deckstrength' => $req->deckstrength,
          'deckcapacity' => $req->deckcapacity,
 
