@@ -8,6 +8,8 @@
       <div class="section-body">
          @if (auth()->user()->hasRole('vessel'))
             <x-main.vessel :nowschedule="$nowSchedule" :schedules="$schedules" :vdr="$vdr" :requests="$requests" :vessel="$currentVessel" :docs="$docs" />
+            {{-- @elseif(auth()->user()->hasRole('marine'))
+            <x-main.marine :vessels="$vessels" /> --}}
             @else
             
             <div class="row">

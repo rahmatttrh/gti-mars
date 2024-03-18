@@ -113,7 +113,15 @@
   <!-- Page Specific JS File -->
   
   <!-- Template JS File -->
+  
+
+  <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
+  <!-- Page Specific JS File -->
+  {{-- <script src="{{asset('stisla/js/page/modules-chartjs.js')}}"></script> --}}
+
   <script src="{{asset('stisla/js/scripts.js')}}"></script>
   <script src="{{asset('stisla/js/custom.js')}}"></script>
+
+  @stack('chart')
 </body>
 </html>

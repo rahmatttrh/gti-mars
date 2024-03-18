@@ -428,6 +428,7 @@ class HomeController extends Controller
       }
 
       $feed = News::get()->first();
+      $vessels = Vessel::get();
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,
@@ -436,7 +437,8 @@ class HomeController extends Controller
          'nowSchedule' => $nowSchedule,
          'vdr' => $vdr,
          'requests' => $requests,
-         'docs' => $docs
+         'docs' => $docs,
+         'vessels' => $vessels
       ]);
    }
 

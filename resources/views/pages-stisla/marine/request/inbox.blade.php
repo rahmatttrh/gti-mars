@@ -65,7 +65,7 @@
                                  <tr>
                                  {{-- <td class="text-center">{{++$i}}</td> --}}
                                  <td></td>
-                                 <td><a href="{{route('request.detail', enkripRambo($request->id))}}">
+                                 <td><a href="{{route('request.detail.new', enkripRambo($request->id))}}">
                                  {{$request->desc}}
                                  @foreach ($request->cargoItems as $item)
                                        {{$item->desc}},
