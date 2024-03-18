@@ -194,7 +194,14 @@
                   </div>
                   <div class="d-flex justify-content-between">
                      <span>Capacity</span>
-                     <span class="">{{intval($schedule->vessel->deadweight)}} Ton</span>
+                     <span class="">
+                        @if ($schedule->vessel)
+                        {{intval($schedule->vessel->deadweight)}} Ton
+                        @else
+                        -
+                        @endif
+                        
+                     </span>
                   </div>
                   
                   @if ($schedule->class != 'Crew Change')
