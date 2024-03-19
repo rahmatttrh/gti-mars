@@ -28,17 +28,17 @@
             
             <div class="statistic-details-item">
               {{-- <span class="text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</span> --}}
-              <div class="detail-value">35</div>
+              <div class="detail-value">{{$tactivity}}</div>
               <div class="detail-name">Total Activity</div>
             </div>
             <div class="statistic-details-item">
                {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span> --}}
-               <div class="detail-value">24</div>
+               <div class="detail-value">{{$tschedule}}</div>
                <div class="detail-name">Total Sailing Order</div>
              </div>
             <div class="statistic-details-item">
               {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</span> --}}
-              <div class="detail-value">4</div>
+              <div class="detail-value">{{$tactiveschedule}}</div>
               <div class="detail-name">Active Sailing Order</div>
             </div>
             
@@ -124,7 +124,7 @@
                   backgroundColor: '#6777ef',
                   borderColor: '#6777ef',
                   borderWidth: 2.5,
-                  pointBackgroundColor: '#ffffff',
+                  pointBackgroundColor: '#6777ef',
                   pointRadius: 4
                }]
             },

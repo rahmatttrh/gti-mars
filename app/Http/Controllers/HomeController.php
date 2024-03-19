@@ -477,6 +477,10 @@ class HomeController extends Controller
       //    $values[] = $totalRequest;
       // }
       // dd($dates);
+      $thisMonthActivities = ModelsRequest::whereMonth('date', $today->format('m'))->get();
+      $thisMonthSchedules = Schedule::whereMonth('date', $today->format('m'))->get();
+      $thisMonthActiveSchedule = Schedule::whereMonth('date', $today->format('m'))->where('status', '!=', 11)->get();
+
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,
@@ -491,7 +495,10 @@ class HomeController extends Controller
          'allRequests' => $allRequests,
          'dates' => $dates,
          'values' => $values,
-         'vdrsArray' => $vdrsArray
+         'vdrsArray' => $vdrsArray,
+         'totalActivity' => count($thisMonthActivities),
+         'totalSchedule' => count($thisMonthSchedules),
+         'totalActiveSchedule' => count($thisMonthActiveSchedule)
       ])->with('i');
    }
 
