@@ -6,51 +6,33 @@
 
    <section class="section">
       <div class="row">
-         <div class="col-md-4">
-            <div class="card shadow-sm border">
-               {{-- <div class="card-header">
-                  <span class="badge badge-light">Total Operating Mode (Hour)</span>
-                  
-               </div> --}}
+         <div class="col-md-5">
+            <small class="mb-2">Total Operating Mode (Hour)</small>
+            <canvas class="mt-2" id="myChart"></canvas>
+            <small class="mb-2">Fuel Consumption (Liter)</small>
+                  <canvas class="mt-2" id="myChart2"></canvas>
+            {{-- <div class="card shadow-sm border">
+               
                <div class="card-body">
-                  {{-- <b>{{auth()->user()->name}}</b><br> --}}
                   <div class="badge badge-info">
-                     {{-- @if (auth()->user()->hasRole('marine'))
-                        SUPER USER
-                        @elseif(auth()->user()->hasRole('admin-vdr'))
-                        ADMIN
-                        @elseif(auth()->user()->hasRole('superadmin-vdr'))
-                        SUPER ADMIN
-                     @endif
-                     {{strtoupper(auth()->user()->system)}} --}}
                      <x-status-stisla.user />
                   </div>
-                  {{-- <small></small>
-                  <small>
-                     
-                  </small> --}}
                </div>
                
                <div class="card-body">
                   <small class="mb-2">Total Operating Mode (Hour)</small>
                   <canvas class="mt-2" id="myChart"></canvas>
-                  {{-- <canvas id="myChart2"></canvas> --}}
-                  {{-- <div id="chartdiv"></div> --}}
                </div>
                <div class="card-body">
-                  {{-- <div class="badge badge-light mb-4">Fuel Consumption (Liter)</div> --}}
-
                   <small class="mb-2">Fuel Consumption (Liter)</small>
                   <canvas class="mt-2" id="myChart2"></canvas>
                </div>
                <div class="card-footer bg-whitesmoke">
-                  {{-- <span class="badge badge-warning" style="background-color: #f58056">Fresh Water</span>
-                  <span class="badge badge-primary">Fuel Oil</span> --}}
                   <small>Nilai <b>Total Hours</b> adalah hasil dari penjumlahan nilai High, Normal, Slow, Maneuvering, Idle, Towing, A/H, S/B, Maintenance dan Downtime  </small>
                </div>
-           </div>
+           </div> --}}
          </div>
-         <div class="col-md-8">
+         <div class="col-md-7">
             
                   {{-- <hr> --}}
                   <form action="{{route('vdr.filter')}}" method="POST">
@@ -179,7 +161,7 @@
                label: 'Total Hours',
                data: {!! json_encode($value) !!},
                borderWidth: 2,
-               backgroundColor: '#89CFF3',
+               backgroundColor: '#1698f0',
                borderWidth: 0,
                borderColor: 'transparent',
                pointBorderWidth: 0,
@@ -202,7 +184,7 @@
                },
                ticks: {
                   beginAtZero: true,
-                  stepSize: 2,
+                  stepSize: 10,
                   callback: function(value, index, values) {
                      return '' + value + ' H';
                   }
@@ -227,8 +209,8 @@
                label: 'Total Fuel',
                data: {!! json_encode($fuel) !!},
                borderWidth: 2,
-               backgroundColor: '#A0E9FF',
-               borderColor: '#A0E9FF',
+               backgroundColor: '#1698f0',
+               borderColor: '#1698f0',
                borderWidth: 2.5,
                pointBackgroundColor: '#ffffff',
                pointRadius: 4
@@ -246,7 +228,7 @@
                },
                ticks: {
                   beginAtZero: true,
-                  stepSize: 500
+                  stepSize: 1500
                }
                }],
                xAxes: [{

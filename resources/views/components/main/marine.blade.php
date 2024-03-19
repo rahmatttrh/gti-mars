@@ -162,10 +162,10 @@ var ctx = document.getElementById("myChart").getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
-    labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+    labels: {!! json_encode($dates) !!},
     datasets: [{
       label: 'Statistics',
-      data: [460, 458, 330, 502, 430, 610, 488],
+      data: {!! json_encode($fuel) !!},
       borderWidth: 2,
       backgroundColor: '#6777ef',
       borderColor: '#6777ef',
@@ -188,7 +188,7 @@ var myChart = new Chart(ctx, {
         },
         ticks: {
           beginAtZero: true,
-          stepSize: 150
+          stepSize: 1500
         }
       }],
       xAxes: [{

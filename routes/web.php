@@ -326,6 +326,12 @@ Route::middleware(["auth"])->group(function () {
 
 // Level Admin
 Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+   Route::prefix('m/statistic')->group(function () {
+      Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
+
+      
+   });
+   
    Route::prefix("dsp/m")->group(function () {
       Route::get("dash/main", [HomeController::class, "dspMarine",])->name('dsp.marine');
       Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');

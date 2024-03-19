@@ -443,12 +443,29 @@ class HomeController extends Controller
       
       $dates = array();
       $values = array();
+      $vdrsArray = array();
       foreach($rawDates as $d){
          $dates[] = $d->format('l, d/m/Y');
          $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
          $values[] = count($totalRequests);
          // dd($d->format('l'));
       }
+      foreach($rawDates as $d){
+         // dd($d->format('Y-m-d'));
+         $date = $d->format('Y-m-d');
+         $vdr = Vdr::where('date', $date)->first();
+         if ($vdr) {
+            
+            $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+            $dailyFuel = $operatings->sum('daily');
+            // dd($operatings->sum('daily'));
+            $vdrsArray[] = $dailyFuel;
+         }
+        
+         
+         // dd($d->format('l'));
+      }
+      // dd($vdrsArray);
 
       
       // foreach($allSailingOrders as $schedule){
@@ -473,7 +490,8 @@ class HomeController extends Controller
 
          'allRequests' => $allRequests,
          'dates' => $dates,
-         'values' => $values
+         'values' => $values,
+         'vdrsArray' => $vdrsArray
       ])->with('i');
    }
 
