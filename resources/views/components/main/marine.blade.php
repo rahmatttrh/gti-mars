@@ -10,47 +10,51 @@
    th, td {
       padding-left: 5px
    }
+
+   
 </style>
    <div class="row"> 
-      <div class="col-md-9">
-         <div class="card border shadow-none">
-            <div class="card-header">
-               <h4>Activity</h4>
-            </div>
-            <div class="card-body" style="height: 150px">
-               <canvas id="myChart2"></canvas>
-            </div>
+      <div class="col-md-8">
+         <div class="badge badge-info mb-3">12 Activity</div>
+         <div class="" style="height: 150px">
+            <canvas id="myChart2"></canvas>
          </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card bg-primary card-info border shadow-none">
-            <div class="card-body">
-               <h3>12</h3>
-               <br>
-               Acitivity
+         <hr>
+         <div class="badge badge-info mb-3">230 Lt Fuel Consumption</div>
+         <div class="c" style="height: 150px">
+            <canvas id="myChart"></canvas>
+          </div>
+          <div class="statistic-details mt-sm-4">
+            
+            <div class="statistic-details-item">
+              {{-- <span class="text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</span> --}}
+              <div class="detail-value">35</div>
+              <div class="detail-name">Total Activity</div>
             </div>
-         </div>
-      </div>
-      <div class="col-md-4">
-         <div class="card border shadow-none">
-            <div class="card-header">
-              <h4>Fuel Consumption</h4>
+            <div class="statistic-details-item">
+               {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span> --}}
+               <div class="detail-value">24</div>
+               <div class="detail-name">Total Sailing Order</div>
+             </div>
+            <div class="statistic-details-item">
+              {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</span> --}}
+              <div class="detail-value">4</div>
+              <div class="detail-name">Active Sailing Order</div>
             </div>
-            <div class="card-body">
-              <canvas id="myChart"></canvas>
-            </div>
-         </div>
-         <div class="card bg-info border card-success shadow-none">
-            <div class="card-body ">
-               <h3>230</h3> <br>
-               Fuel Consumption
-            </div>
-         </div>
+            
+          </div>
       </div>
       <div class="col-md-4">
-         <form action="{{route('vdr.filter')}}" method="POST">
+         <form action="{{route('statistic.filter')}}" method="POST">
             @csrf
-           
+           <div class="form-group">
+            <div class="input-group">
+               <input type="date" class="form-control" name="start" id="start" >
+               <span class="mx-2 mt-3">To</span>
+               <input type="date" class="form-control" name="end" id="end" >
+               
+            </div>
+           </div>
             <div class="form-group">
                <div class="input-group">
                   
@@ -69,112 +73,53 @@
             </div>
             {{-- <button class="btn btn-primary btn-block" type="submit">Filter</button> --}}
          </form>
-         <div class="table-responsive">
-            <table class="" id="table-6">
+         <div class="table-responsive mb-3">
+            <table class="" id="table-14">
                <thead >
-                  <tr>
-                     <th colspan="4" class="py-1">Digital Smart Port</th>
-                  </tr>
+                  {{-- <tr>
+                     <th colspan="4" class="py-1">Activity</th>
+                  </tr> --}}
                   <tr>
                      {{-- <th class="text-center">No</th> --}}
-                     <th>ID</th>
+                     {{-- <th>#</th> --}}
                      <th>Date</th>
-                     <th>Type</th>
-                     <th style="width: 120px">Status</th>
+                     <th>Vessel</th>
+                     <th>Loc</th>
+                     {{-- <th>Desc</th> --}}
                   </tr>
                </thead>
                <tbody>
-                  <tr>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                  </tr>
-                  <tr>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                  </tr>
-                  <tr>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                  </tr>
-                  <tr>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                     <td>-</td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
-      </div>
-      <div class="col-md-8">
-         
-         {{-- <div class="badge badge-info">DSP</div> --}}
-         
-         
-         <div class="table-responsive mt-4">
-            <table class="" id="table-6">
-               <thead >
-                  <tr>
-                     <th colspan="4" class="py-1">Vessel Daily Report</th>
-                  </tr>
-                  <tr>
-                     {{-- <th class="text-center">No</th> --}}
-                     <th>ID</th>
-                     <th>Date</th>
-                     <th>Crew</th>
-                     <th style="width: 120px">Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  
+                  @foreach ($allreqs as $req)
+                      <tr>
+                        {{-- <td>{{++$i}}</td> --}}
+                        <td>{{formatDate($req->date)}}</td>
+                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
+                        <td>{{$req->destination->code}}</td>
+                        {{-- <td>{{$req->desc}}</td> --}}
+                      </tr>
+                  @endforeach
+
                   
                </tbody>
             </table>
+            
          </div>
-         
-         <div class="table-responsive mt-4">
-            <table class="" id="table-6">
-               <thead >
-                  <tr>
-                     <th colspan="4" class="py-1">My Request</th>
-                  </tr>
-                  <tr>
-                     {{-- <th class="text-center">No</th> --}}
-                     <th>ID</th>
-                     <th>Date</th>
-                     <th>Type</th>
-                     <th class="text-center">Qty (KL)</th>
-                     <th style="width: 120px">Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  
-                  
-               </tbody>
-            </table>
-         </div>
+         {!! $allreqs->links() !!}
       </div>
       
    </div>
-   <hr>
-   <small>Please pay attention to the alert table on the right</small>
-
    @push('chart')
       <script>
+         
+
          var ctx = document.getElementById("myChart2").getContext('2d');
          var myChart = new Chart(ctx, {
          type: 'bar',
             data: {
-               labels: ["1", "2", "3", "4", "5", "6", "7","8","9", "10", "11", "12", "13", "14", "15","16", "17", "18", "19", "20", "21", "22","23","24", "25", "26", "27", "28", "29", "30"],
+               labels: {!! json_encode($dates) !!},
                datasets: [{
-                  label: 'Statistics',
-                  data: [1, 3, 2, 1, 4, 2, 1, 1, 3, 2, 1, 4, 2, 1, 2, 1, 3, 2, 1, 4, 2, 1, 1, 3, 2, 1, 4, 2, 1, 2],
+                  label: 'Activity',
+                  data: {!! json_encode($values) !!},
                   borderWidth: 2,
                   backgroundColor: '#6777ef',
                   borderColor: '#6777ef',
@@ -233,6 +178,8 @@ var myChart = new Chart(ctx, {
     legend: {
       display: false
     },
+    responsive: true,
+   maintainAspectRatio: false,
     scales: {
       yAxes: [{
         gridLines: {

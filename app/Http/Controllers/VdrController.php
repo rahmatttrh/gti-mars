@@ -496,7 +496,7 @@ class VdrController extends Controller
 
 
       DB::beginTransaction();
-      // dd($datas);
+      // dd($req->sb);
       try {
          $createVdr = VdrActivity::create([
                'vdr_id' => $req->id,
@@ -522,6 +522,7 @@ class VdrController extends Controller
          $tow = 0;
          $ah = 0;
          $sb = 0;
+         $total = 0;
 
 
          // TESTING
@@ -534,7 +535,11 @@ class VdrController extends Controller
          $ah = $this->hitungTime($ah, $req->ah);
          $sb = $this->hitungTime($sb, $req->sb);
          $sum = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
-         $totalHour = $this->hitungTime($sb, $sum);
+
+         $totalHour = explode('.', "$sum", 2)[0];
+         // dd($sum);
+         // $totalHour = $this->hitungTime($total, $sum);
+         // dd($totalHour);
         
          $minHigh = explode('.', $req->high, 2)[1];
          $minNormal = explode('.', $req->normal, 2)[1];
@@ -545,15 +550,25 @@ class VdrController extends Controller
          $minAh = explode('.', $req->ah, 2)[1];
          $minSb = explode('.', $req->sb, 2)[1];
          $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb;
-         
          // dd($totalMinute);
+         // dd($req->sb);
+         if ($totalMinute > 0) {
+            $grandMinute = explode('.', "$sum", 2)[1];
+         } else {
+            $grandMinute = 0;
+         }
+         // dd($sum);
+         
 
-         // dd($totalTime);
+         // dd(intval($totalMinute));
          $currentStart = new Carbon($req->start);
          // dd($currentStart);
+         $start = $currentStart;
          $grandTotal = $currentStart->addHours($totalHour);
-         $grandFinal = $grandTotal->addMinutes($totalMinute);
-         // dd($grandTotal);
+         // dd($sum);
+         $grandFinal = $grandTotal->addMinutes(intval($totalMinute));
+         // dd('start:' . $start . ' normal:'. $normal . ' final:'. $grandFinal);
+         // dd($grandFinal);
          $createVdr->update([
             'finish' => $grandFinal
          ]);
@@ -565,6 +580,16 @@ class VdrController extends Controller
 
          foreach ($activities as $key => $activity) {
 
+            $high = 0;
+            $normal = 0;
+            $slow = 0;
+            $manu = 0;
+            $idle = 0;
+            $tow = 0;
+            $ah = 0;
+            $sb = 0;
+            $total = 0;
+
             $high = $this->hitungTime($high, $activity->high);
             $normal = $this->hitungTime($normal, $activity->normal);
             $slow = $this->hitungTime($slow, $activity->slow);
@@ -573,9 +598,20 @@ class VdrController extends Controller
             $tow = $this->hitungTime($tow, $activity->tow);
             $ah = $this->hitungTime($ah, $activity->ah);
             $sb = $this->hitungTime($sb, $activity->sb);
+            // dd($idle);
+
+            // $high = $activity->high;
+            // $normal = $activity->normal;
+            // $slow = $activity->slow;
+            // $manu = $activity->manu;
+            // $idle = $activity->idle;
+            // $tow = $activity->tow;
+            // $ah = $activity->ah;
+            // $sb = $activity->sb;
             
             $total = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
             // dd($total);
+            // dd($high . $normal . $slow . $manu . $idle . $tow .$ah .$sb);
             // $grand = $activity->start + $total;
 
             // $currentStart = new Carbon($activity->start);
@@ -607,22 +643,70 @@ class VdrController extends Controller
          $vdr = Vdr::find($req->vdr_id);
 
          foreach ($operatings as $operating) {
+            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+            $totalHigh = $activities->sum('high');
+            $totalNormal = $activities->sum('normal');
+            $totalSlow = $activities->sum('slow');
+            $totalManu = $activities->sum('manu');
+            $totalIdle = $activities->sum('idle');
+            $totalTow = $activities->sum('tow');
+            $totalAh = $activities->sum('ah');
+            $totalSb = $activities->sum('sb');
 
-               $field = $operating->heading->field;
+            if ($operating->heading_id == 1) {
+               $operating->update([
+                  'time' => floatval($totalHigh)
+               ]);
+            } elseif ($operating->heading_id == 2) {
+               $operating->update([
+                  'time' => floatval($totalNormal)
+               ]);
+            } elseif ($operating->heading_id == 3) {
+               $operating->update([
+                  'time' => floatval($totalSlow)
+               ]);
+            } elseif ($operating->heading_id == 4) {
+               $operating->update([
+                  'time' => floatval($totalManu)
+               ]);
+            } elseif ($operating->heading_id == 5) {
+               $operating->update([
+                  'time' => floatval($totalIdle)
+               ]);
+            } elseif ($operating->heading_id == 6) {
+               $operating->update([
+                  'time' => floatval($totalTow)
+               ]);
+            } elseif ($operating->heading_id == 7) {
+               $operating->update([
+                  'time' => floatval($totalAh)
+               ]);
+            } elseif ($operating->heading_id == 8) {
+               $operating->update([
+                  'time' => floatval($totalSb)
+               ]);
+            } 
+            
 
 
-               if ($field) {
-                  # code...
-                  $totalWaktu = $totalMode[$field];
 
-                  $updateOperating = $operating->update([
-                     'time' => floatval($totalWaktu)
-                  ]);
-               }
+
+               // $field = $operating->heading->field;
+
+
+               // if ($field) {
+               //    $totalWaktu = $totalMode[$field];
+               //    $updateOperating = $operating->update([
+               //       'time' => floatval($totalWaktu)
+               //    ]);
+               // }
+
+               // dd('not ok');
          }
 
          // Hitung Operating Data
          $this->hitungOperatingData($req->vdr_id);
+         // dd($oper)
 
          // Jika semuanya berhasil, kita commit transaksi
          DB::commit();

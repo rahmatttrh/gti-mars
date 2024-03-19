@@ -429,6 +429,37 @@ class HomeController extends Controller
 
       $feed = News::get()->first();
       $vessels = Vessel::get();
+      $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
+      $allSailingOrders = Schedule::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->get();
+
+      $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
+      $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
+
+      $rawDates = [];
+      while ($start->lte($end)) {
+         $rawDates[] = $start->copy();
+         $start->addDay();
+      }
+      
+      $dates = array();
+      $values = array();
+      foreach($rawDates as $d){
+         $dates[] = $d->format('l, d/m/Y');
+         $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
+         $values[] = count($totalRequests);
+         // dd($d->format('l'));
+      }
+
+      
+      // foreach($allSailingOrders as $schedule){
+      //    $scheduleRequests = ModelsRequest::where('schedule_id', $schedule->id)->get();
+      //    $totalRequest = count($scheduleRequests);
+
+      //    // dd($operatings);
+      //    // $dates[] = formatDayName($schedule->date);
+      //    $values[] = $totalRequest;
+      // }
+      // dd($dates);
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,
@@ -438,8 +469,16 @@ class HomeController extends Controller
          'vdr' => $vdr,
          'requests' => $requests,
          'docs' => $docs,
-         'vessels' => $vessels
-      ]);
+         'vessels' => $vessels,
+
+         'allRequests' => $allRequests,
+         'dates' => $dates,
+         'values' => $values
+      ])->with('i');
+   }
+
+   public function indexFilter(Request $req){
+      dd('ok');
    }
 
    public function indexold()

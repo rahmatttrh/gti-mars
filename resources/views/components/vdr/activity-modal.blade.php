@@ -91,7 +91,7 @@
 
 @foreach ($activities as $activity)
    <div class="modal fade" id="deleteActivity-{{$activity->id}}" tabindex="1" role="dialog"  aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-sm" role="document">
          <form action="{{route('vdr.delete.activity')}}" method="POST">
             @csrf
             @method('DELETE')
@@ -108,7 +108,7 @@
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Delete</button>
+                  <button type="submit" class="btn btn-danger">Delete</button>
                </div>
             </div>
          </form>
@@ -196,7 +196,7 @@
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Update</button>
+                  <button type="submit" class="btn btn-info">Update</button>
                </div>
             </div>
          </form>

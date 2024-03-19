@@ -64,7 +64,7 @@
         <!-- Modal Delete -->
 
         <div class="modal modal-blur fade" id="deleteAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                 <div class="modal-content">
 
                     <form action="{{route('vdr.delete.activity')}}" method="POST">
@@ -82,7 +82,7 @@
                                     </ul>
                                 </div>
                                 @endif
-                                <h4 class="text-center"> Anda yakin ingin menghapus activity {{$activity->activity}} ?</h4>
+                                <h4 class="text-center"> Anda yakin ingin menghapussss activity {{$activity->activity}} ?</h4>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
