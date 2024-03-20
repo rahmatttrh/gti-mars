@@ -95,22 +95,22 @@ class MarineRequestController extends Controller
 
       if ($today == 'Friday') {
          // dd('Friday');
-         $start = $now->addDay(-3);
+         $start = $now->addDay(-4);
          $end = Carbon::now()->addDays(3);
       }
       if ($today == 'Saturday') {
          // dd('Monday');
-         $start = $now->addDay(-4);
+         $start = $now->addDay(-5);
          $end = Carbon::now()->addDays(2);
       }
       if ($today == 'Sunday') {
          // dd('Monday');
-         $start = $now->addDay(-5);
+         $start = $now->addDay(-6);
          $end = Carbon::now()->addDays(1);
       }
       if ($today == 'Monday') {
          // dd('Monday');
-         $start = $now->addDay(+1);
+         $start = $now->addDay(+0);
          $end = Carbon::now()->addDays(7);
       }
       if ($today == 'Tuesday') {
@@ -120,12 +120,12 @@ class MarineRequestController extends Controller
       }
       if ($today == 'Wednesday') {
          // dd('Monday');
-         $start = $now->addDays(-1);
+         $start = $now->addDays(-2);
          $end = Carbon::now()->addDays(5);
       }
       if ($today == 'Thursday') {
          // dd('Monday');
-         $start = $now->addDays(-2);
+         $start = $now->addDays(-3);
          $end = Carbon::now()->addDays(4);
       }
       
