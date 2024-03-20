@@ -228,6 +228,18 @@
                <small class="text-muted">Tab ini berisi data Request Activity dari User yang otomatis masuk ke Schedule lain</small><br>
                <small class="text-muted">Hanya bisa di lihat oleh pihak Fleet Control</small>
             </div>
+            @else
+            <div class="tab-pane fade" id="incoming" role="tabpanel" aria-labelledby="incoming-tab">
+               
+               
+               
+               <small class="text-muted">Empty</small><br>
+               <small class="text-muted"></small>
+            </div>
+
+            <div class="tab-pane fade" id="other" role="tabpanel" aria-labelledby="other-tab">
+               <small class="text-muted">Empty</small>
+            </div>
             @endif
          @endif
       </div>
