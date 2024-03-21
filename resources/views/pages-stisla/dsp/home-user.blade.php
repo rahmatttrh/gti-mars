@@ -49,11 +49,12 @@
                   @foreach ($titip->cargoItems as $item)
                       {{$item->desc}}
                   @endforeach
-                  Tgl {{formatDate($titip->date)}} </b> tujuan {{$titip->request->origin->name}} - {{$titip->request->titip->name}} telah dititipkan di <b>{{$titip->request->destination->name}}</b> oleh Fleet Control.
+                  Tgl {{formatDate($titip->date)}} </b> tujuan {{$titip->request->origin->name}} - {{$titip->request->destination->name}} telah dititipkan di <b>{{$titip->request->destination->name}}</b> oleh Fleet Control.
                   Silahkan <b>Release Request Ulang</b> dengan rute baru {{$titip->origin->name}} - {{$titip->destination->name}}
+                  <br>
+                  <hr>
                @endforeach
-               <br>
-               <hr>
+               
             @endif
             @if ($confirms->count() > 0)
                @foreach ($confirms as $confirm)

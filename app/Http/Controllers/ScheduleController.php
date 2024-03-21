@@ -185,7 +185,7 @@ class ScheduleController extends Controller
 
       $ports = Port::get();
       $scheduleRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->orderBy('rank', 'asc')->get();
-      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
+      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->paginate('3');
       $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
       $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
@@ -289,6 +289,11 @@ class ScheduleController extends Controller
       // dd(round($persenWeight));
       // dd(count($recentCrewChangeRequests));
       // dd(count($requests));
+      $activities = Activity::get();
+      $types = Type::get();
+      $allPorts = Port::where('type', '!=', 'platform')->get();
+      $platforms = Port::where('type', 'platform')->get();
+      $barges = Port::where('type', 'Barge')->get();
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,
@@ -315,8 +320,13 @@ class ScheduleController extends Controller
             'scheduleRoutes' => $scheduleRoutes,
             'recentCrewChangeRequests' => $recentCrewChangeRequests,
             'totalDeparture' => $totalDeparture,
-            'totalReturn' => $totalReturn
+            'totalReturn' => $totalReturn,
             // 'report' => $requests
+            'activities' => $activities,
+            'allPorts' => $ports,
+            'platforms' => $platforms,
+            'barges' => $barges,
+            'types' => $types,
          ]);
       } else {
          return view('pages-stisla.schedule.detail', [
@@ -344,8 +354,13 @@ class ScheduleController extends Controller
             'scheduleRoutes' => $scheduleRoutes,
             'recentCrewChangeRequests' => $recentCrewChangeRequests,
             'totalDeparture' => $totalDeparture,
-            'totalReturn' => $totalReturn
+            'totalReturn' => $totalReturn,
             // 'report' => $requests
+            'activities' => $activities,
+            'allPorts' => $ports,
+            'platforms' => $platforms,
+            'barges' => $barges,
+            'types' => $types,
          ]);
       }
    }

@@ -5,7 +5,7 @@
       </button>
       <hr>
       @else
-      @if ($schedule->status == 0 || $schedule->status == 5 )
+      @if ($schedule->status == 0 || $schedule->status == 5  )
       {{-- @if ($schedule->requests()->count() > 0) --}}
       <div class="d-flex">
          <button class="btn btn-info mr-1" data-toggle="modal" data-target="#schedule-send">
@@ -17,6 +17,11 @@
       </div>
       
       
+      <hr>
+      @elseif($schedule->status == 1 )
+      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
+         Select Vessel
+      </button>
       <hr>
       @elseif($schedule->status == 2 || $schedule->status == 3)
       {{-- <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#schedule-add-deviation">

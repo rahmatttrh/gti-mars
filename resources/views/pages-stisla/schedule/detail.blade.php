@@ -147,9 +147,9 @@
                               
                         @endforeach
                         <br>
-                        @if (auth()->user()->hasRole('marine'))
+                        {{-- @if (auth()->user()->hasRole('marine'))
                         <a href="#" data-toggle="modal" data-target="#add-schedule-route" class="" add-schedule-route>add more</a>
-                        @endif
+                        @endif --}}
                         @if (auth()->user()->hasRole('marine'))
                                  {{$schedule->remark}}
                               @else
@@ -224,22 +224,36 @@
                   
                </div>
                <div class="card-footer bg-whitesmoke">
-                  @if ($report)
+                  {{-- @foreach ($reports as $report)
+                     @if ($report)
                      <small class="text-primary"><b>{{formatDateTime($report->created_at)}}</b></small><br>
-                     <small>{{$report->status->name}}  {{$report->port->name ?? ''}} {{$report->anchor ?? ''}}</small><br>
+                     <small class="border-bottom">{{$report->status->name}}  {{$report->port->name ?? ''}} {{$report->anchor ?? ''}}</small><br>
                      @if ($report->status_id == 6)
                         <small >ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</small> <br>
                      @endif
                      @if ($report->status_id == 9)
                         <a href=""  data-toggle="modal" data-target="#report-evidance-{{$report->id}}"><small>Evidance</small></a> <br>
                      @endif
-                     <hr>
-                     <div class="d-flex justify-content-between">
-                        <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}"><small>Timeline</small></a> <br>
-                        <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
-                     </div>
-                     
                   @endif
+                  <span class="mb-2"></span>
+                  
+                  
+                  @endforeach --}}
+                  @if ($report)
+                     <small class="text-primary"><b>{{formatDateTime($report->created_at)}}</b></small><br>
+                     <small class="">{{$report->status->name}}  {{$report->port->code ?? ''}} {{$report->anchor ?? ''}}</small><br>
+                     @if ($report->status_id == 6)
+                        <small >ETA : {{formatDateTime($report->eta)}} at {{$report->destination->code}}</small> <br>
+                     @endif
+                     @if ($report->status_id == 9)
+                        <a href=""  data-toggle="modal" data-target="#report-evidance-{{$report->id}}"><small>Evidance</small></a> <br>
+                     @endif
+                  @endif
+                  <div class="d-flex justify-content-between mt-2">
+                     <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}"><small>Timeline</small></a> <br>
+                     <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
+                  </div>
+                  
                </div>
             </div>
             {{-- @if ($schedule->class == 'Crew Change')
@@ -299,7 +313,7 @@
             @endif --}}
 
             @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
-               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" />
+               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
             @elseif($schedule->class == 'Moving')
             <div class="card border">
                <div class="card-header">
@@ -436,7 +450,7 @@
             @elseif($schedule->class == 'Crew Change')
             {{-- <h1>OK</h1> --}}
                {{-- {{count($recentCrewChangeRequests)}} --}}
-               <x-schedule.crew-change :requests="$requests" :schedule="$schedule" :recents="$recentCrewChangeRequests"/>
+               <x-schedule.crew-change :requests="$requests" :schedule="$schedule" :recents="$recentCrewChangeRequests" />
             @endif
          </div>
       </div>
@@ -687,32 +701,54 @@
   @foreach ($recentRequests as $req)
     
 
-    <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+   {{-- <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog modal-sm" role="document">
-        <form action="{{route('request.select.schedule')}}" method="POST">
-          @csrf
-          @method('PUT')
-          <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
-          <input type="number" name="schedule" id="schedule" value="{{$thisSchedule->id}}" hidden>
-          <div class="modal-content">
+         <form action="{{route('request.select.schedule')}}" method="POST">
+            @csrf
+            @method('PUT')
+            <input type="number" name="request_id" id="request_id" value="{{$req->id}}" hidden>
+            <input type="number" name="schedule" id="schedule" value="{{$thisSchedule->id}}" hidden>
+            <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" ">Approve </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
+               <h5 class="modal-title" ">Approve </h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
             </div>
             <div class="modal-body">
-              Add {{$req->activity->name}} {{$req->description}} {{$req->origin->name}} - {{$req->destination->name}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
-              
+               Add {{$req->activity->name}} {{$req->description}} {{$req->origin->name}} - {{$req->destination->name}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
+               
             </div>
             <div class="modal-footer bg-whitesmoke">
-              <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-info">Approve</button>
+               <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info">Approve</button>
             </div>
-          </div>
-        </form>
+            </div>
+         </form>
       </div>
-    </div>
+   </div> --}}
+
+   <div class="modal fade" id="req-app-{{$req->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title" ">Approve </h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               Add {{$req->activity->name}} {{$req->description}} {{$req->origin->name}} - {{$req->destination->name}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
+               
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
+               <a href="{{route('request.select.schedule', [enkripRambo($req->id), enkripRambo($thisSchedule->id)])}}" class="btn btn-info">Approve</a>
+            </div>
+         </div>
+      </div>
+   </div>
 
     <div class="modal fade" id="req-change-{{$req->id}}" tabindex="1" role="dialog" aria-labelledby="req-change-{{$req->id}}" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -983,11 +1019,10 @@
                   {{-- Change {{$req->activity->name}} {{$req->description}} to  ...
                   <hr> --}}
                      <div class="form-row">
-                        <div class="form-group col-md-12">
+                        {{-- <div class="form-group col-md-6">
                            <label for="after">Destination</label>
                            <select id="after" disabled name="after" class="form-control">
-                           {{-- <option selected>Choose...</option>
-                           <option>...</option> --}}
+                           
                            @foreach ($fixRoutes as $fr)
                              
                               <option {{$fr->id == $route->id ? 'selected' : ''}}  value="{{$fr->id}}"> {{$fr->port->name}}</option>
@@ -995,7 +1030,7 @@
                               
                            @endforeach
                            </select>
-                        </div>
+                        </div> --}}
                         <div class="form-group col-md-12">
                            <label for="after">Move {{$route->port->name}} After</label>
                            <select id="after" name="after" class="form-control">
@@ -1017,7 +1052,7 @@
                      </div>
                      
 
-                     <a href="{{route('schedule.delete.route', enkripRambo($route->id))}}">Delete</a>
+                     {{-- <a href="{{route('schedule.delete.route', enkripRambo($route->id))}}">Delete</a> --}}
                   
                   </div>
                   <div class="modal-footer bg-whitesmoke">

@@ -367,6 +367,8 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       });
 
       Route::prefix("request")->group(function () {
+         Route::post('store', [MarineRequestController::class, "store"])->name('marine.request.store');
+
          Route::get("/user", [MarineRequestController::class, "index",])->name('marine.request');
          Route::post("/filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
       });
@@ -475,7 +477,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
 
    Route::prefix('request')->group(function () {
       Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
-      Route::put('select/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
+      Route::get('select/schedule/{request}/{schedule}', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
       Route::put('change/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.change.schedule');
       Route::post('change/destination', [MarineRequestController::class, 'changeDestination'])->name('request.change.destination');
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
@@ -647,7 +649,7 @@ Route::group(['middleware' => ['role:logistic|department|marine']], function () 
    });
 });
 
-Route::group(['middleware' => ['role:drilling|department']], function () {
+Route::group(['middleware' => ['role:drilling|department|marine']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
       Route::post('import', [PassengerItemController::class, 'storeImport'])->name('crew.import');

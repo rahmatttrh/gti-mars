@@ -27,7 +27,7 @@
                   @endif
                   
                </div>
-               
+               <hr>
                <div class="card border shadow-sm">
                   {{-- @if ($request->activity_id == 1 || $request->activity_id == 2)
                      @if ($request->status >= 1 && $request->status != 404)
@@ -282,25 +282,106 @@
                @if ($request->activity_id == 1 || $request->activity_id == 2 )
               
                      @if ($request->status >= 1 && $request->status != 404)
-                        <div class=" text-center">
+                        <div class="">
                         
-                        <h4> {{$request->schedule->vessel->name ?? 'Menunggu Kapal'}} </h4>
+                        <h4><a href="{{route('schedule.detail', enkripRambo($request->schedule->id))}}"> {{$request->schedule->vessel->name ?? 'Menunggu Kapal'}} - {{$request->schedule->code}}</a></h4>
                         <small>{{formatDate($request->schedule->date)}}</small>
                         
                         </div>
                         <hr>
                      @endif
                      <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        @if ($request->activity_id == 1)
                         <li class="nav-item">
-                        <a class="nav-link {{$request->activity_id == 1 ? 'active' : ''}}" id="cargo-tab" data-toggle="tab" href="#cargo" role="tab" aria-controls="cargo" aria-selected="true">Cargo</a>
+                           <a class="nav-link {{$request->activity_id == 1 ? 'active' : ''}}" id="cargo-tab" data-toggle="tab" href="#cargo" role="tab" aria-controls="cargo" aria-selected="true">Cargo</a>
                         </li>
+                        @endif
+                        @if ($request->activity_id == 2)
                         <li class="nav-item">
-                        <a class="nav-link {{$request->activity_id == 2 ? 'active' : ''}}" id="passenger-tab" data-toggle="tab" href="#passenger" role="tab" aria-controls="passenger" aria-selected="false">Passenger </a>
+                           <a class="nav-link {{$request->activity_id == 2 ? 'active' : ''}}" id="passenger-tab" data-toggle="tab" href="#passenger" role="tab" aria-controls="passenger" aria-selected="false">Passenger </a>
                         </li>
+                        @endif
+                        
+                        
                      </ul>
                      <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade {{$request->activity_id == 1 ? 'show active' : ''}}" id="cargo" role="tabpanel" aria-labelledby="cargo-tab">
                            @if ($request->status == 0)
+                           <form action="{{route('cargo.item.store')}}" method="POST">
+                              @csrf
+                              <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
+                              <div class="form-row">
+                                 <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">MTD</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="mtd" name="mtd" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-5">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Desc</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="desc" name="desc" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">PO</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="contract" name="contract" >
+                                    </div>
+                                 </div>
+                                 {{-- <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">MTD</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div> --}}
+                                 {{-- <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">Material Name</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div>
+                                 <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">PO/Contract</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div> --}}
+                              </div>
+                              <div class="form-row">
+                                 <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">QTY</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="qty" name="qty" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Unit</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="unit" name="unit" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Weight</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="weight" name="weight" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <button type="submit" class="btn btn-info btn-block">Add</button>
+                                 </div>
+                                 
+                              </div>
+                           </form>
+                           @endif
+
+                           @if (auth()->user()->hasRole('marine'))
                            <form action="{{route('cargo.item.store')}}" method="POST">
                               @csrf
                               <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
@@ -423,6 +504,75 @@
                         </div>
                         <div class="tab-pane fade {{$request->activity_id == 2 ? 'show active' : ''}}" id="passenger" role="tabpanel" aria-labelledby="passenger-tab">
                            @if ($request->status == 0)
+                           <form action="{{route('passenger.item.store')}}" method="POST">
+                              @csrf
+                              <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
+                              {{-- <input type="text" id="type" name="type" value="Departure" hidden> --}}
+                              <div class="form-row">
+                                 <div class="form-group col-md-6">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Name </div>
+                                      </div>
+                                      <input type="text" class="form-control" id="name" name="name" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Barcode</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="barcode" name="barcode" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-2">
+                                    <div class="input-group">
+                                      
+                                      <select class="custom-select" name="type" id="type">
+                                          <option value="Departure">Departure</option>
+                                          <option value="Return">Return</option>
+                                      </select>
+                                      {{-- <input type="text" class="form-control" id="desc" name="desc" > --}}
+                                    </div>
+                                 </div>
+                                 
+                                 
+                              </div>
+                              <div class="form-row">
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Comp</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="company" name="company" placeholder="Company">
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Dept</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="department" name="department" placeholder="Department">
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-3">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">Desc</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="desc" name="desc" >
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="form-group col-md-1">
+                                    <button type="submit" class="btn btn-info btn-block">Add</button>
+                                 </div>
+                                 
+                              </div>
+                           </form>
+                           @endif
+
+                           @if (auth()->user()->hasRole('marine'))
                            <form action="{{route('passenger.item.store')}}" method="POST">
                               @csrf
                               <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>

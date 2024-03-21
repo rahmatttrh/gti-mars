@@ -1016,6 +1016,8 @@ class HomeController extends Controller
       // dd($vesselLastUpdates);
       $nav = 'dashboard';
       // dd($nav);
+
+      // $routes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
       return view('pages-stisla.dsp.home-stisla', [
          'nav' => $nav,
          'today' => $today,

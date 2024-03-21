@@ -122,11 +122,12 @@
                            #
                         </th> --}}
                         <th>Vessel</th>
-                        <th>Date</th>
+                        {{-- <th>Date</th> --}}
                         {{-- <th>ID</th> --}}
                         {{-- <th>Type</th> --}}
                         
                         <th>Desc</th>
+                        <th>Route</th>
                         <th class="text-center">Status</th>
                         {{-- <th></th> --}}
                         </tr>
@@ -136,27 +137,12 @@
                         {{-- @if (count($schedule->requests) > 0) --}}
                            <tr>
                               
-                              <td>
+                              <td rowspan="">
                                  <span><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a></span><br>
-                                 {{-- <small>
-                                    @if ($schedule->class == 'Cargo')
-                                       @foreach ($schedule->requests as $req)
-                                          @foreach ($req->cargoItems as $item)
-                                              {{$item->desc}},
-                                          @endforeach
-                                       @endforeach
-
-                                       @else
-                                       {{$schedule->requests->first()->desc}}
-                                    @endif
-                                 </small> --}}
+                                 <small>{{formatDate($schedule->date)}}</small>
+                                
+                              </td>
                               
-                              </td>
-                              <td>
-                                 {{formatDate($schedule->date)}}
-                                 {{-- <br>
-                                    <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small> --}}
-                              </td>
                               {{-- <td>
                                  <span>{{$schedule->class}}</span>
                               </td> --}}
@@ -166,24 +152,35 @@
                               @if ($schedule->class == 'Crew' || $schedule->class == 'Cargo')
                                  <td class="">
                                     @if (count($schedule->requests->where('activity_id', 1)) > 0)
-                                        Cargo,
+                                        Cargo |
                                     @endif
                                     @if (count($schedule->requests->where('activity_id', 2)) > 0)
-                                        Crew,
+                                        Crew |
                                     @endif
                                     {{-- {{count($schedule->requests)}} Request --}}
-                                    {{-- @foreach ($schedule->routes as $route)
-                                    <span>{{$route->port->name}} </span>
-                                    @endforeach --}}
+                                    
+                                 </td>
+                                 <td>
+                                    @foreach ($schedule->routes as $route)
+                                    <span>{{$route->port->code}} - </span>
+                                    @endforeach
                                  </td>
                                  @elseif($schedule->class == 'Moving')
                                  <td>
                                     {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->bargeItem->barge->name}} <br>
                                     
                                  </td>
+                                 <td>
+                                    
+                                    <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
+                                 </td>
                                  @elseif(($schedule->class == 'Fuel Oil'))
                                  <td>
                                     {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->fuel->qty}} KL  
+                                 </td>
+                                 <td>
+                                    
+                                    <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
                                  </td>
                                  @elseif(($schedule->class == 'Fresh Water'))
                                  <td>
@@ -193,6 +190,10 @@
                                        {{$schedule->date}}
                                        {{-- Request by {{$schedule->requests->first()->user->name}} --}}
                                     </small>
+                                 </td>
+                                 <td>
+                                    
+                                    <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
                                  </td>
                                  @else
                                  <td></td>
@@ -210,6 +211,7 @@
                                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
                               </td> --}}
                            </tr>
+                           
                            
                            
                            

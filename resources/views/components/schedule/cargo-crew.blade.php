@@ -29,6 +29,9 @@
             </li>
             @endif
          @endif
+         <li class="nav-item">
+            <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">Add Activity </a>
+         </li>
       </ul>
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -50,7 +53,12 @@
                <tbody>
                   @foreach ($requests->where('activity_id', 1) as $request)
                      <tr>
-                        <td colspan="6"><b> {{$request->origin->name}} - {{$request->destination->name}}</b> [{{$request->code}}]</td>
+                        <td colspan="6">
+                           <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                           <b> {{$request->origin->name}} - {{$request->destination->name}} | {{$request->desc}}</b> 
+                           </a>
+                        </td>
+                        {{-- <td>{{$request->code}}</td> --}}
                         <td class="text-center">
                            @if (auth()->user()->hasRole('marine'))
                               @if ($schedule->status == 0 || $schedule->status == 5)
@@ -186,12 +194,13 @@
                </thead>
                <tbody>
                   @foreach ($requests->where('activity_id', 2) as $requests)
+
                      {{-- <tr>
                         <td>{{$requests->id}}</td>
                      </tr> --}}
-                     {{-- <tr>
-                     <td colspan="7">{{$requests->origin->name}} - {{$requests->destination->name}}</td>
-                     </tr> --}}
+                     <tr>
+                     <td colspan="7"><a href="{{route('request.detail.new', enkripRambo($requests->id))}}"><b>{{$requests->origin->name}} - {{$requests->destination->name}}</b></a></td>
+                     </tr>
                      @foreach ($requests->passengerItems as $passenger)
                      <tr>
                         <td>{{$passenger->type}}</td>
@@ -242,6 +251,168 @@
             </div>
             @endif
          @endif
+
+         @if (auth()->user()->hasRole('marine'))
+         <div class="tab-pane fade " id="add" role="tabpanel" aria-labelledby="add-tab">
+            <div class="row">
+               <div class="col-md-5">
+                  <form action="{{route('marine.request.store')}}" method="POST">
+                     @csrf
+                     <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+                     <div class="form-row">
+                        <div class="form-group col-md-6">
+                           <label>Type*</label>
+                           {{-- style="background-color: lightgrey" --}}
+                           <select class="custom-select" id="activity"  required name="activity">
+                              <option disabled selected>Choose one</option>
+                              <option value="1">Cargo</option>
+                              <option value="2">Crew</option>
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>User</label>
+                           <select class="custom-select " id="user"  name="user">
+                              <option disabled selected>Choose one</option>
+                              @foreach ($ports as $port)
+                                 <option {{ old('user') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                     </div>
+                     
+                     <div class="form-row port">
+                        <div class="form-group col-md-6">
+                           <label>Origin/From</label>
+                           <select class="custom-select origin" id="origin"  name="origin">
+                              <option disabled selected>Choose one</option>
+                              @foreach ($ports as $port)
+                                 <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6 destination">
+                           <label>Destination</label>
+                           <select class="custom-select " id="destination"  name="destination">
+                              <option disabled selected>Choose one</option>
+                              @foreach ($ports as $port)
+                                 <option {{ old('destination') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6 file-cargo">
+                           <label for="file-cargo">File Excel Cargo</label>
+                           <input class="form-control mb-2" id="file-cargo" type="file"  value="{{ old('file') }}" name="file-cargo">
+                           
+                        </div>
+                     </div>
+                     <div class="form-row file-crew">
+                        <div class="form-group col-md-12">
+                           <label for="file-passenger">File Excel Crew</label>
+                           <input class="form-control mb-1" id="file-passenger" type="file"  value="{{ old('file') }}" name="file-passenger">
+                           
+                        </div>
+                     </div>
+
+                     <div class="form-group">
+                        <label for="desc">Description</label>
+                        <input class="form-control " id="desc" type="text"  value="{{ old('desc') }}" name="desc">
+                     </div>
+                     <button type="submit" class="btn btn-info">Submit</button>
+                  </form>
+               </div>
+            </div>
+            
+         </div>
+         @endif
       </div>
    {{-- </div>
 </div> --}}
+
+
+@push('get_schedules')
+   <script>
+      console.log('get_schedules function');
+      $(".file-cargo").hide();
+      $(".file-crew").hide();
+      $(".barge").hide();
+      $(".platform").hide();
+      $(".qty").hide();
+      $('#activity').change(function() {
+         var activity = $(this).val();
+         console.log(activity)
+         if (activity == 1) {
+            $(".file-cargo").hide();
+            $(".file-crew").hide();
+            $(".barge").hide();
+            $(".destination").show();
+            $(".qty").hide();
+         } else if (activity == 2) {
+            $(".barge").hide();
+            $(".file-cargo").hide();
+            $(".file-crew").hide();
+            $(".destination").show();
+            $(".platform").hide();
+            $(".port").show();
+            $(".qty").hide();
+         } else if (activity == 3) {
+            $(".file-cargo").hide();
+            $(".file-crew").hide();
+            $(".barge").show();
+            $(".destination").show();
+            $(".platform").show();
+            $(".port").hide();
+            $(".qty").hide();
+         } else if (activity == 5 || activity == 6) {
+            $(".file-cargo").hide();
+            $(".file-crew").hide();
+            $(".barge").hide();
+            $(".route").hide();
+            $(".platform").hide();
+            $(".port").hide();
+            $(".qty").show();
+         }else {
+            $(".file-cargo").hide();
+            $(".file-crew").hide();
+            $(".barge").hide();
+            $(".destination").show();
+         }
+      })
+
+
+      $(document).ready(function() {
+         $('.origin').change(function() {
+            $('.result').empty()
+            $('.near').empty()
+            var origin = $('#origin').val();
+            var date = $('#date').val();
+            var _token = $('meta[name="csrf-token"]').attr('content');
+
+            console.log('origin:' + origin + ' date:' + date);
+
+            $.ajax({
+               url: "/fetch/schedule/" + date + "/" + origin,
+               method: "GET",
+               dataType: 'json',
+
+               success: function(result) {
+                  console.log('near :' + result.near);
+                  console.log('result :' + result.result);
+                  console.log('log :' + result.log);
+                  $.each(result.result, function(i, index) {
+                     $('.result').html(result.result);
+
+                  });
+                  $.each(result.near, function(i, index) {
+
+                     $('.near').html(result.near);
+                  });
+               },
+               error: function(error) {
+                  console.log(error)
+               }
+
+            })
+         })
+      })
+   </script>
+@endpush

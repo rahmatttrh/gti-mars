@@ -323,18 +323,20 @@ class MarineRequestController extends Controller
 
 
 
-   public function selectSchedule(Request $req)
+   public function selectSchedule($request, $schedule)
    {
       // dd($req->request_id);
       // dd('ok');
-      $request = ModelsRequest::find($req->request_id);
-      $schedule = Schedule::find($req->schedule);
+
+
+      $request = ModelsRequest::find(dekripRambo($request));
+      $schedule = Schedule::find(dekripRambo($schedule));
       // dd($req->schedule);
       if (!$schedule->vessel_id) {
          // dd('ok');
          return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');
       }
-
+      // dd( $request);
 
       $vessel = Vessel::find($schedule->vessel_id);
       $weight = $schedule->total_weight + $request->total_weight;
@@ -435,27 +437,27 @@ class MarineRequestController extends Controller
       if ($request->class == 'main') {
          $request->update([
             'status' => 02,
-            'schedule_id' => $req->schedule,
-            'remark' => $req->remark
+            'schedule_id' => $request->schedule_id,
+            
          ]);
          RequestHistory::create([
             'request_id' => $request->id,
             'date' => $now,
             'type' => 'validated',
-            'desc' => $req->desc
+            // 'desc' => $req->desc
 
          ]);
       } elseif ($request->class == 'additional') {
          $request->update([
             'status' => 04,
-            'schedule_id' => $req->schedule,
-            'remark' => $req->remark
+            'schedule_id' => $request->schedule_id,
+            // 'remark' => $req->remark
          ]);
          RequestHistory::create([
             'request_id' => $request->id,
             'date' => $now,
             'type' => 'validated',
-            'desc' => $req->desc
+            // 'desc' => $req->desc
          ]);
          ReportRequest::create([
             'request_id' => $request->id,
@@ -467,7 +469,7 @@ class MarineRequestController extends Controller
          $request->update([
             'status' => 02,
             'schedule_id' => $schedule->id,
-            'remark' => $req->remark
+            // 'remark' => $req->remark
          ]);
       }
 
@@ -796,5 +798,40 @@ class MarineRequestController extends Controller
          'date' => $dekripDate,
          'from' => $dekripFrom
       ]);
+   }
+
+
+
+   public function store(Request $req){
+      $now = Carbon::today();
+      $schedule = Schedule::find($req->schedule)->first();
+      // dd($schedule->id);
+      $request = ModelsRequest::orderBy("created_at", "desc")->first();
+      if (isset($request)) {
+         $code =
+            "R/M/" . $now->format("dmy") . '/' . ($request->id + 1);
+      } else {
+         $code = "R/M/" . $now->format("dmy") . '/' . 1;
+      }
+
+      $requestMarine = ModelsRequest::create([
+         'code' => $code,
+         'schedule_id' => $schedule->id,
+         'type' => 2,
+         'class' => 'main',
+         'user_id' => auth()->user()->id,
+         'user_name' => auth()->user()->name,
+         'desc' => $req->desc,
+         'description' => $req->desc,
+         'activity_id' => $req->activity,
+         'date' => $req->date,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'total_weight' => 0,
+         'total_size' => 0,
+         'status' => 0
+      ]);
+
+      return redirect()->route('request.select.schedule', [enkripRambo($requestMarine->id), enkripRambo($schedule->id)])->with('success', "Request Activity sucessfully added");
    }
 }

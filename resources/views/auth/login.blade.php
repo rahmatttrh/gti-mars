@@ -65,9 +65,11 @@
                   </div>
                   <div class="col-5">
                      <div class="p-5">
-                        <div class="text-center">
+                        <div class="">
                            
-                           <h1 class="font-weight-bold"><img src="{{asset('img/flaticon/neptune.png')}}" style="width: 60px" class="mr-2" alt=""><i>MAR<span class="text-primary">S</span></i></h1>
+                           <h3 class="font-weight-bold">
+                              {{-- <img src="{{asset('img/flaticon/neptune.png')}}" style="width: 60px" class="mr-2" alt=""> --}}
+                              <i>MAR<span class="text-primary">S</span></i></h3>
                            
                            <span>Marine Advanced Reporting System </span>
                            
