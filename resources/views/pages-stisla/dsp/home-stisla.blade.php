@@ -195,6 +195,19 @@
                                     
                                     <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
                                  </td>
+                                 @elseif(($schedule->class == 'Crew Change'))
+                                 <td>
+                                    {{-- {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br> --}}
+                                    <small>
+                                       
+                                       {{$schedule->date}}
+                                       {{-- Request by {{$schedule->requests->first()->user->name}} --}}
+                                    </small>
+                                 </td>
+                                 <td>
+                                    
+                                    <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
+                                 </td>
                                  @else
                                  <td></td>
                               @endif
