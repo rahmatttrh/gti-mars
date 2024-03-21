@@ -122,7 +122,7 @@
                            #
                         </th> --}}
                         <th>Vessel</th>
-                        {{-- <th>Date</th> --}}
+                        <th>Date</th>
                         {{-- <th>ID</th> --}}
                         {{-- <th>Type</th> --}}
                         
@@ -139,13 +139,11 @@
                               
                               <td rowspan="">
                                  <span><a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a></span><br>
-                                 <small>{{formatDate($schedule->date)}}</small>
+                                 {{-- <small>{{formatDate($schedule->date)}}</small> --}}
                                 
                               </td>
                               
-                              {{-- <td>
-                                 <span>{{$schedule->class}}</span>
-                              </td> --}}
+                              <td>{{formatDate($schedule->date)}}</td>
                               
                               
                               
@@ -184,12 +182,7 @@
                                  </td>
                                  @elseif(($schedule->class == 'Fresh Water'))
                                  <td>
-                                    {{-- {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br> --}}
-                                    <small>
-                                       
-                                       {{$schedule->date}}
-                                       {{-- Request by {{$schedule->requests->first()->user->name}} --}}
-                                    </small>
+                                    {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->fuel->qty}} KL  
                                  </td>
                                  <td>
                                     
@@ -197,12 +190,7 @@
                                  </td>
                                  @elseif(($schedule->class == 'Crew Change'))
                                  <td>
-                                    {{-- {{$schedule->requests->first()->qty}} / {{$schedule->requests->first()->qty_approve}} KL <br> --}}
-                                    <small>
-                                       
-                                       {{$schedule->date}}
-                                       {{-- Request by {{$schedule->requests->first()->user->name}} --}}
-                                    </small>
+                                    {{$schedule->requests->first()->desc}}
                                  </td>
                                  <td>
                                     
