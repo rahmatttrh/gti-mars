@@ -29,9 +29,12 @@
             </li>
             @endif
          @endif
+         @if (auth()->user()->hasRole('marine'))
          <li class="nav-item">
             <a class="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="false">Add Activity </a>
          </li>
+         @endif
+         
       </ul>
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -47,17 +50,27 @@
                      <th class="text-center">Weight(ton)</th>
                      <th class="text-center">Drop</th>
                      {{-- <th class="text-center">Size (m<sup>2</sup>)</th> --}}
+                     @if ($schedule->status == 3 && auth()->user()->hasRole('department'))
+                     <th>Confirmation Action</th>
+                     @else
                      <th></th>
+                     @endif
                   </tr>
                </thead>
                <tbody>
                   @foreach ($requests->where('activity_id', 1) as $request)
                      <tr>
-                        <td colspan="6">
+                        <td colspan="1">
                            <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
-                           <b> {{$request->origin->name}} - {{$request->destination->name}} | {{$request->desc}}</b> 
+                              <b> {{$request->origin->code}} - {{$request->destination->code}} </b> 
                            </a>
                         </td>
+                        <td colspan="5">
+                           <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                              <b>{{formatDate($request->date)}} - {{$request->desc}}</b> 
+                           </a>
+                        </td>
+                        
                         {{-- <td>{{$request->code}}</td> --}}
                         <td class="text-center">
                            @if (auth()->user()->hasRole('marine'))
@@ -77,13 +90,11 @@
                            {{-- <td>{{$item->request->origin->name}} - {{$item->request->destination->name}}</td> --}}
                            <td class=" text-truncate ">
                            {{$item->desc}} <br>
-                           {{-- <small>{{$item->contract}}</small> --}}
                            </td>
                            <td class=" text-truncate">{{$item->contract}}</td>
                            <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
                            <td class=" text-center">{{$item->weight}}</td>
                            <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                           {{-- <td class=" text-center">{{$item->size}}</td> --}}
                         
                            @if ($request->status == 10 && auth()->user()->hasRole('department'))
                            <td class="text-center">
@@ -128,7 +139,14 @@
                            @endif
                      </tr>
                      @endforeach
+                     <tr>
+                        <td colspan="6"></td>
+                     </tr>
                   @endforeach
+                  <tr>
+                     <td colspan="4" class="text-right pr-2">Total Weight</td>
+                     <td class="text-center">{{$schedule->total_weight}}</td>
+                  </tr>
                </tbody>
                </table>
             </div>

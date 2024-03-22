@@ -409,7 +409,8 @@ class HomeController extends Controller
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          
-         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
+         // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
+         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->take(3)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $nowSchedule = Schedule::find($currentVessel->schedule_id);
          // dd($schedules);
