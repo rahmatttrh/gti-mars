@@ -48,6 +48,7 @@ class CreateRequestsTable extends Migration
          $table->string('reason')->nullable();
          $table->integer('request_id')->nullable();
          $table->string('remark')->nullable();
+         $table->integer('titip_id')->nullable();
 
          $table->timestamps();
       });

@@ -1431,7 +1431,7 @@ class DepartmentRequestController extends Controller
          $scheduleCode =
             "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
       } else {
-         $scheduleCode = "SO/"   . '/' . $now->format("dmy") . '/' . 1;
+         $scheduleCode = "SO"   . '/' . $now->format("dmy") . '/' . 1;
       }
 
       // if ($request->activity_id == 7) {

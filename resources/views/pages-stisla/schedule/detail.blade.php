@@ -106,10 +106,12 @@
             </div>
             <hr> --}}
             <div class="card shadow- border">
-               <div class="card-header">
+               {{-- <div class="card-header">
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
-               </div>
+               </div> --}}
                <div class="card-body">
+                  <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
+                  <hr>
                   {{-- <div class="mb-2">
                      <div class="d-flex">
                         <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
@@ -168,9 +170,9 @@
                   
                   
                   
-                  @if ($schedule->status == 0)
+                  {{-- @if ($schedule->status == 0)
                   <a href="{{route('schedule.delete', enkripRambo($schedule->id))}}"><small>Delete</small></a>
-                  @endif
+                  @endif --}}
                   
                   {{-- <hr> --}}
                   {{-- <div class="row">
@@ -180,6 +182,10 @@
                      </div>
                   </div> --}}
                   <hr>
+                  <div class="d-flex justify-content-between">
+                     <span>Day</span>
+                     <span>{{formatDayName($schedule->date)}}</span>
+                  </div>
                   <div class="d-flex justify-content-between">
                      <span>Date</span>
                      <span>{{formatDate($schedule->date)}}</span>

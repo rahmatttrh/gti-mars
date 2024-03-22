@@ -67,7 +67,7 @@
                         </td>
                         <td colspan="5">
                            <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
-                              <b>{{formatDate($request->date)}} - {{$request->desc}}</b> 
+                              <b>{{formatDayName($request->date)}},{{formatDate($request->date)}} - {{$request->desc}}</b> 
                            </a>
                         </td>
                         
