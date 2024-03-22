@@ -184,6 +184,9 @@
                         @if ($request->status <= 1)
                         <a href="{{route('request.delete', enkripRambo($request->id))}}" class="btn btn-light border">Delete</a>
                         @endif
+                        @if (auth()->user()->hasRole('marine'))
+                        <button class="btn btn-light border" type="submit">Update</button>
+                        @endif
                         
                         
                         

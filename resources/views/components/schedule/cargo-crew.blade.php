@@ -67,7 +67,7 @@
                         </td>
                         <td colspan="5">
                            <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
-                              <b>{{formatDayName($request->date)}},{{formatDate($request->date)}} - {{$request->desc}}</b> 
+                              <b>{{formatDayName($request->date)}}, {{formatDate($request->date)}} - {{$request->desc}}</b> 
                            </a>
                         </td>
                         
@@ -217,7 +217,8 @@
                         <td>{{$requests->id}}</td>
                      </tr> --}}
                      <tr>
-                     <td colspan="7"><a href="{{route('request.detail.new', enkripRambo($requests->id))}}"><b>{{$requests->origin->name}} - {{$requests->destination->name}}</b></a></td>
+                     <td colspan="2"><a href="{{route('request.detail.new', enkripRambo($requests->id))}}"><b>{{$requests->origin->name}} - {{$requests->destination->name}}</b></a></td>
+                     <td colspan="5">{{$requests->desc}}</td>
                      </tr>
                      @foreach ($requests->passengerItems as $passenger)
                      <tr>
@@ -337,6 +338,9 @@
                      </div>
                      <button type="submit" class="btn btn-info">Submit</button>
                   </form>
+               </div>
+               <div class="col-md-7">
+                  <p class="text-muted">Form ini digunakan untuk menambah activity (Deviasi) dan akan merubah urutan rute kapal</p>
                </div>
             </div>
             
