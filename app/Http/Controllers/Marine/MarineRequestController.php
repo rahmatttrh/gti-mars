@@ -804,8 +804,8 @@ class MarineRequestController extends Controller
 
    public function store(Request $req){
       $now = Carbon::today();
-      $schedule = Schedule::find($req->schedule)->first();
-      // dd($schedule->id);
+      $schedule = Schedule::find($req->schedule);
+      // dd($schedule->vessel->name);
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       if (isset($request)) {
          $code =

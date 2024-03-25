@@ -93,14 +93,18 @@
             Timeline Activity
          </div>
          <hr> --}}
-         <h1 class="text-center mt-4">Timeline</h1>
+         <div class="text-center">
+            <h4 class="text-center">Timeline</h4>
+            <a href="" class="btn btn-sm btn-light border">Export PDF</a>
+         </div>
+         
          <div class="row mt-4">
             <div class="col">
                 <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
                     <div class="timeline-step">
                         <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
                             <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">2003</p>
+                            <p class="h6 mt-3 mb-1">START</p>
                             <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p>
                         </div>
                     </div>
