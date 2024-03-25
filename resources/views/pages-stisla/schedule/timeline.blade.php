@@ -94,73 +94,89 @@
          </div>
          <hr> --}}
          <div class="text-center">
-            <h4 class="text-center">Timeline</h4>
+            <h4 class="text-center">Timeline {{$schedule->vessel->name}} {{$schedule->code}}</h4>
             <a href="" class="btn btn-sm btn-light border">Export PDF</a>
          </div>
          
          <div class="row mt-4">
             <div class="col">
-                <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
-                    <div class="timeline-step">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
-                            <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">START</p>
-                            <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p>
-                        </div>
-                    </div>
-                    <div class="timeline-step">
+               <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+                  <div class="timeline-step">
+                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">START</p>
+                           {{-- <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p> --}}
+                     </div>
+                  </div>
+                  @if ($reports->count() > 0)
+                     @foreach ($reports as $report)
+                     <div class="timeline-step">
                         <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2004">
-                            <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">2004</p>
-                            <p class="h6 text-muted mb-0 mb-lg-0">Launched Trello</p>
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</p>
+                           <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
+                           @if ($report->status_id == 9)
+                              <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
+                           @endif
+               
+                           @if ($report->status_id == 6)
+                              <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
+                           @endif
+               
+                           @if ($report->status_id > 27 && $report->status_id < 32)
+                              <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
+                           @endif
                         </div>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
-                            <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">2005</p>
-                            <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
-                        </div>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
-                            <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">2010</p>
-                            <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
-                        </div>
-                    </div>
-                    <div class="timeline-step mb-0">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
-                            <div class="inner-circle"></div>
-                            <p class="h6 mt-3 mb-1">2020</p>
-                            <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
-                        </div>
-                    </div>
-                    <div class="timeline-step">
+                     </div>
+                     @endforeach
+                  @endif
+                  
+                  {{-- <div class="timeline-step">
                      <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
-                         <div class="inner-circle"></div>
-                         <p class="h6 mt-3 mb-1">2005</p>
-                         <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">2005</p>
+                           <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
                      </div>
-                 </div>
-                 <div class="timeline-step">
+                  </div>
+                  <div class="timeline-step">
                      <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
-                         <div class="inner-circle"></div>
-                         <p class="h6 mt-3 mb-1">2010</p>
-                         <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">2010</p>
+                           <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
                      </div>
-                 </div>
-                 <div class="timeline-step mb-0">
+                  </div>
+                  <div class="timeline-step mb-0">
                      <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
-                         <div class="inner-circle"></div>
-                         <p class="h6 mt-3 mb-1">2020</p>
-                         <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">2020</p>
+                           <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
                      </div>
-                 </div>
-                </div>
+                  </div>
+                  <div class="timeline-step">
+                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
+                        <div class="inner-circle"></div>
+                        <p class="h6 mt-3 mb-1">2005</p>
+                        <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
+                     </div>
+                  </div>
+                  <div class="timeline-step">
+                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">2010</p>
+                           <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
+                        </div>
+                  </div>
+                  <div class="timeline-step mb-0">
+                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">2020</p>
+                           <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
+                        </div>
+                  </div> --}}
+               </div>
             </div>
-        </div>
-         <div class="row">
+         </div>
+         {{-- <div class="row">
             <div class="col-md-6">
                <div class="card border shadow-sm">
                   <div class="card-header">
@@ -169,7 +185,6 @@
                   </div>
                   <div class="card-body" id="top-5-scroll">
                      <div  class="activities " >
-                        {{-- <div class="activities" style="height: 350px; overflow-y: scroll"> --}}
                         @if ($reports->count() > 0)
                            @foreach ($reports as $report)
                            <div class="activity">
@@ -209,24 +224,11 @@
                         </div>
                   </div>
                   <div class="card-footer pt-3 d-flex justify-content-center">
-                  {{-- <div class="budget-price justify-content-center">
-                     <div
-                        class="budget-price-square bg-primary"
-                        data-width="20"
-                     ></div>
-                     <div class="budget-price-label">Selling Price</div>
-                  </div>
-                  <div class="budget-price justify-content-center">
-                     <div
-                        class="budget-price-square bg-danger"
-                        data-width="20"
-                     ></div>
-                     <div class="budget-price-label">Budget Price</div>
-                  </div> --}}
+               
                   </div>
                </div>
             </div>
-         </div>
+         </div> --}}
 
 
       </div>
