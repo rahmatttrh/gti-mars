@@ -74,9 +74,9 @@
                         {{-- <td>{{$request->code}}</td> --}}
                         <td class="text-center">
                            @if (auth()->user()->hasRole('marine'))
-                              @if ($schedule->status == 0 || $schedule->status == 5)
+                              {{-- @if ($schedule->status == 0 || $schedule->status == 5) --}}
                                  <a href="{{route('request.undo.approve', enkripRambo($request->id))}}" class="btn btn-sm btn-light border shadow-none">Undo</a>
-                              @endif
+                              {{-- @endif --}}
                            @endif
                         </td>
                      </tr>
