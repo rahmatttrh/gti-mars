@@ -48,4 +48,8 @@ class Port extends Model
    {
       return $this->hasMany(Report::class);
    }
+
+   public function port(){
+      return $this->belongsTo(Port::class);
+   }
 }

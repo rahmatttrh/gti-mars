@@ -44,6 +44,18 @@ class EmployeeSeeder extends Seeder
          'status' => 1,
          'department_id' => 2,
          'port_id' => 1,
+         'name' => 'adm_logistic',
+         'email' => 'adm_logistic@pertamina.com',
+         'username' => 'adm_logistic',
+         'ekstensi' => '111',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('employees')->insert([
+         'status' => 1,
+         'department_id' => 2,
+         'port_id' => 1,
          'name' => 'Kalijapat 4',
          'email' => 'kj4@pertamina.com',
          'username' => 'kj4',

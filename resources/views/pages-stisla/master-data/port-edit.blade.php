@@ -35,7 +35,7 @@
                         </div>
                      </div>
                      <div class="form-row">
-                        <div class="form-group col-md-7">
+                        <div class="form-group col-md-6">
                            <label>Type*</label>
                            <select  class="custom-select" id="type" name="type">
                               <option  disabled selected>Choose one</option>
@@ -46,7 +46,16 @@
                               <option {{$port->type == 'Platform' ? 'selected' : ''}} value="Platform">Platform</option>
                            </select>
                         </div>
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-6">
+                           <label>Platform</label>
+                           <select  class="custom-select" id="platform" name="platform">
+                              <option  disabled selected>Choose one</option>
+                              @foreach ($platforms as $platform)
+                                  <option {{$port->port_id  == $platform->id ? 'selected' : ''}} value="{{$platform->id}}">{{$platform->name}}</option>
+                              @endforeach
+                           </select>
+                        </div>
+                        {{-- <div class="form-group col-md-5">
                            <label>Region</label>
                            <select  class="custom-select" id="region" name="region">
                               <option  disabled selected>Choose one</option>
@@ -54,7 +63,7 @@
                               <option {{$port->region == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                               <option {{$port->region == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                            </select>
-                        </div>
+                        </div> --}}
                      </div>
                      <button class="btn btn-info">Update</button>
                   </form>
@@ -79,7 +88,12 @@
                   @foreach ($ports as $port)
                      <tr>
                         {{-- <td class="text-center">{{++$i}}</td> --}}
-                        <td>{{$port->name}}</td>
+                        <td>
+                           {{$port->name}}
+                           @if ($port->port_id)
+                                 (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
+                           @endif
+                        </td>
                         
                         <td>{{$port->region}}</td>
                         <td>{{$port->email}}</td>

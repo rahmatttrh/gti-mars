@@ -95,7 +95,7 @@
          <hr> --}}
          <div class="text-center">
             <h4 class="text-center">Timeline {{$schedule->vessel->name}} {{$schedule->code}}</h4>
-            <a href="" class="btn btn-sm btn-light border">Export PDF</a>
+            <a href="{{route('document.timeline', enkripRambo($schedule->id))}}" class="btn btn-sm btn-light border">Export PDF</a>
          </div>
          
          <div class="row mt-4">
@@ -111,7 +111,16 @@
                   @if ($reports->count() > 0)
                      @foreach ($reports as $report)
                      <div class="timeline-step">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2004">
+                        @php
+                           if ($report->status_id == 6){
+                              $desc = 'ETA : ' . formatDateTime($report->eta) . ' at '.$report->destination->name;
+                           }
+                              else {
+                                 $desc ='-';
+                              }
+                           
+                        @endphp
+                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="{{$desc}}" data-original-title="INFO">
                            <div class="inner-circle"></div>
                            <p class="h6 mt-3 mb-1">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</p>
                            <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
@@ -119,9 +128,9 @@
                               <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
                            @endif
                
-                           @if ($report->status_id == 6)
+                           {{-- @if ($report->status_id == 6)
                               <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
-                           @endif
+                           @endif --}}
                
                            @if ($report->status_id > 27 && $report->status_id < 32)
                               <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>

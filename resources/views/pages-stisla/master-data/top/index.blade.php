@@ -78,7 +78,7 @@
       </div>
       <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
          <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                <b>Form Add Port</b>
                <hr>
                <form action="{{route('port.store')}}" method="POST">
@@ -120,16 +120,16 @@
                         </select>
                      </div>
                   </div>
-                  <button class="btn btn-primary">Submit</button>
+                  <button class="btn btn-info">Submit</button>
                </form>
             </div>
-            <div class="col-8">
+            <div class="col-md-9">
                <div class="table-responsive">
-                  <table class=" table-striped" id="table-1">
+                  <table class="table-sm table-striped" id="table-1">
                      <thead>
                      <tr>
                         {{-- <th class="text-center">No.</th> --}}
-                        <th>Name</th>
+                        <th >Name</th>
                         <th>Region</th>
                         <th>Email</th>
                         <th>Type</th>
@@ -140,7 +140,11 @@
                      @foreach ($ports as $port)
                         <tr>
                            {{-- <td class="text-center">{{++$i}}</td> --}}
-                           <td>{{$port->name}}</td>
+                           <td>{{$port->name}}   
+                              @if ($port->port_id)
+                                  (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
+                              @endif
+                           </td>
                            
                            <td>{{$port->region}}</td>
                            <td>{{$port->email}}</td>

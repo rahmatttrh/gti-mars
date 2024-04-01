@@ -85,4 +85,8 @@ class Schedule extends Model
    {
       return $this->hasMany(Revision::class);
    }
+
+   public function docs(){
+      return $this->hasMany(ScheduleDocument::class);
+   }
 }

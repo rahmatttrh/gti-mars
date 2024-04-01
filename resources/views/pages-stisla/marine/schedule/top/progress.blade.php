@@ -1,264 +1,144 @@
 @extends('layouts.stisla.app')
 @section('title')
-   DSP Progress Sailing Order
+   DSP Report
 @endsection
 
 @section('content')
-
-
-   <ul class="nav nav-tabs" id="myTab" role="tablist">
-      <li class="nav-item">
-         <a class="nav-link active" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="true">Porgress</a>
-      </li>
-      {{-- <li class="nav-item">
-         <a class="nav-link" id="inbox-tab" data-toggle="tab" href="#inbox" role="tab" aria-controls="inbox" aria-selected="false">Inbox</a>
-      </li> --}}
-      
-      <li class="nav-item">
-         <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">History </a>
-      </li>
-
-   </ul>
-   <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
-         <div class="table-responsive">
-            <table class="table-striped" id="table-8">
-               <thead>     
-                                             
-               <tr>
-                  {{-- <th class="text-center">
-                     #
-                  </th> --}}
-                  <th>ID</th>
-                  <th>Vessel</th>
-                  <th>Date</th>
-                  <th>Type</th>
-                  
-                  <th>Route</th>
-                  <th>Request</th>
-                  
-                  {{-- <th>Capacity</th> --}}
-                  <th>Status</th>
-                  {{-- <th></th> --}}
-               </tr>
-               </thead>
-               <tbody>     
-               @foreach ($schedules->where('status', '!=', 11) as $schedule)
+   <div class="section">
+      <div class="section-body">
+         <div class="row">
+            <div class="col-md-9">
+               <h5>ACTIVITY</h5>
+               <hr>
+               <div class="table-responsive">
+                  <table class="table-sm table-striped" id="table-17">
+                     <thead>     
+                                                   
                      <tr>
-                        {{-- <td class="text-center">
-                        {{++$i}}
-                        </td> --}}
-                        <td>
-                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}}</a> 
-                           
-                        </td>
-                        <td>
-                           {{$schedule->vessel->name ?? '-'}} 
-                        </td>
-                        <td>
-                              
-                           {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                        </td>
-                        <td>{{$schedule->class}}</td>
-                        
-                        <td>
-                           @foreach ($schedule->routes as $route)
-                                 {{$route->port->code}} - 
-                              @endforeach
-                           {{-- @if (count($schedule->routes) > 0)
-                           {{$schedule->routes->where('rank', 1)->first()->port->name}}
-                           @endif --}}
-                        </td>
-                        <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
-                        
-                        {{-- <td>
-                           {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
-                        </td> --}}
-                        <td>
-                           <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                        </td>
-                        {{-- <td>
-                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                        </td> --}}
+                        {{-- <th class="text-center">
+                           #
+                        </th> --}}
+                        <th>ID</th>
+                        <th>Vessel</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Route</th>
+                        <th>Status</th>
+                        {{-- <th></th> --}}
                      </tr>
-               @endforeach   
-               </tbody>
-            </table>
-         </div>
-      </div>
-      <div class="tab-pane fade" id="inbox" role="tabpanel" aria-labelledby="inbox-tab">
-         <b>Inbox</b>
-         <div class="table-responsive">
-            <table class=" table-striped" id="">
-            <thead>   
-               <tr>
-                  <th colspan="7">Cargo/Crew</th>
-               </tr>                              
-               <tr>
-                  <th class="text-center">
-                  #
-                  </th>
-                  <th>ID</th>
-                  <th>Vessel</th>
-                  <th>Route</th>
-                  <th>Activity</th>
-                  <th>Date</th>
-                  <th>Capacity</th>
-                  <th style="width: 100px">Status</th>
-               </tr>
-            </thead>
-            <tbody>     
-               @foreach ($cargoSchedules as $schedule)
-                  <tr>
-                        <td class="text-center">
-                        {{++$i}}
-                        </td>
-                        <td>
-                        {{$schedule->code}}
-                        <br>
-                        <small>{{$schedule->class}}</small>
-                     </td>
-                        <td>
-                           <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Empty'}}</a> <br>
-                           <small>{{$schedule->vessel->type ?? '-'}}</small>
-                        </td>
-                        <td>
-                        @foreach ($schedule->routes as $route)
-                              {{$route->port->code}} - 
-                        @endforeach
-                           {{-- @if (count($schedule->routes) > 0)
-                           {{$schedule->routes->where('rank', 1)->first()->port->name}}
-                           @endif --}}
-                        </td>
-                        <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
-                        <td>
-                           
-                           {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                           <br>
-                           <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small>
-                        </td>
-                        <td>
-                           {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
-                        </td>
-                        <td>
-                           <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
-                        </td>
-                     
-                  </tr>
-               @endforeach   
-            </tbody>
-            </table>
-         </div>
+                     </thead>
+                     <tbody>     
 
-         <div class="table-responsive mt-3">
-            <table class=" table-striped " id="">
-               <thead>       
-               <tr>
-                  <th colspan="6">Moving,Lifting</th>
-               </tr>                          
-                  <tr>
-                  <th class="text-center">
-                     #
-                  </th>
-                  <th>Type</th>
-                  <th>Description</th>
-                  <th>Date</th>
-                  <th>Request by</th>
-                  <th>Status</th>
-                  <th></th>
-                  </tr>
-               </thead>
-               <tbody>     
-                  @foreach ($movingSchedules as $schedule)
-                  <tr>
-                     <td class="text-center">{{++$i}}</td>
-                     <td>{{$schedule->class}}</td>
-                     <td>{{$schedule->requests()->first()->bargeItem->barge->name ?? ''}} {{$schedule->requests()->first()->desc ?? ''}}</td>
-                     <td>{{formatDate($schedule->date)}}</td>
-                     <td>{{$schedule->requests()->first()->employee->name ?? ''}}</td>
-                     <td><x-status-stisla.schedule :schedule="$schedule" /></td>
-                     <td>
-                        <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                     </td>
-                  </tr>
-                  @endforeach   
-               </tbody>
-            </table>
-         </div>
-      </div>
-      
-      <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
-         {{-- <b>history</b> --}}
-         <div class="table-responsive ">
-            <table class="" id="table-3">
-               <thead>     
-                                             
-                  <tr>
-                     {{-- <th class="text-center">
-                        #
-                     </th> --}}
-                     <th>ID</th>
-                     <th>Vessel</th>
-                     <th>Date</th>
-                     <th>Type</th>
-                     
-                     <th>Route</th>
-                     <th>Request</th>
-                     
-                     {{-- <th>Capacity</th> --}}
-                     <th>Status</th>
-                     {{-- <th></th> --}}
-                  </tr>
-                  </thead>
-                  <tbody>     
-                  @foreach ($schedules->where('status', 11) as $schedule)
+                     @foreach ($requests as $req)
+                        
                         <tr>
-                           {{-- <td class="text-center">
-                           {{++$i}}
-                           </td> --}}
                            <td>
-                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->code}}</a> 
+                              {{-- @if ($req->schedule_id) --}}
+                              <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{$req->code}}</a> 
+                              {{-- @else
+                              -
+                              @endif --}}
+                              
                               
                            </td>
                            <td>
-                              {{$schedule->vessel->name}} 
+                              @if ($req->schedule_id)
+                              <a href="{{route('schedule.detail', enkripRambo($req->schedule_id))}}">{{$req->schedule->vessel->name ?? 'Vessel Empty'}} </a>
+                              
+                              @else
+                              -
+                              @endif
                            </td>
                            <td>
-                                 
-                              {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
-                              {{-- <br>
-                              <small>{{\Carbon\Carbon::parse($schedule->date)->format('l')}}</small> --}}
-                           </td>
-                           <td>{{$schedule->class}}</td>
-                           
-                           <td>
-                              @foreach ($schedule->routes as $route)
-                                    {{$route->port->code}} - 
-                                 @endforeach
-                              {{-- @if (count($schedule->routes) > 0)
-                              {{$schedule->routes->where('rank', 1)->first()->port->name}}
+                              {{-- @if ($req->schedule_id) --}}
+                              {{\Carbon\Carbon::parse($req->date)->format('d/m/Y')}}
+                              {{-- @else
+                              -
                               @endif --}}
                            </td>
-                           <td>{{$schedule->requests()->where('status', 1)->count()}} / {{$schedule->requests()->count()}}</td>
+                           <td>{{$req->desc}}</td>
+                           <td>{{$req->origin->code}} - {{$req->destination->code}}</td>
                            
-                           {{-- <td>
-                              {{$schedule->total_size ?? '-'}} m<sup>2</sup> / {{$schedule->total_weight ?? '-'}} ton
-                           </td> --}}
                            <td>
-                              <x-status-stisla.schedule :schedule="$schedule" :lastreport="$schedule->lastreport()" />
+                              <x-status-stisla.request-plain :request="$req" />
                            </td>
-                           {{-- <td>
-                              <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-sm btn-primary">Detail</a>
-                           </td> --}}
                         </tr>
-                  @endforeach   
+                     @endforeach   
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="badge badge-info mb-2">Form Filter</div>
+               <form action="{{route('schedule.progress.filter')}}" method="POST">
+                  @csrf
+                  {{-- <div class="form-group"> --}}
+                     {{-- <input type="date" name="start" id="start" value="{{$start}}" hidden> --}}
+                     {{-- <input type="date" name="end" id="end" value="{{$end}}" hidden> --}}
+                     <select name="vessel" id="vessel" required class="form-control mb-2">
+                        <option value="" selected disabled>Select Vessel</option>
+                        @foreach ($vessels as $vessel)
+                              <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                        @endforeach
+                     </select>
+                  {{-- </div> --}}
+                  {{-- <div class="form-group"> --}}
+                     {{-- <div class="form-group"> --}}
+                        <div class="input-group mb-2">
+                           <input type="date" required class="form-control" name="start" id="start" value="">
+                           {{-- <span class="mx-2 mt-3">To</span> --}}
+                           <input type="date" required class="form-control" name="end" id="end" value="">
+                           
+                        </div>
+                     {{-- </div> --}}
+                     <div class="input-group mb-3">
+                        <select name="activity" id="activity" required class="form-control">
+                           <option value="" selected disabled>Select Activity</option>
+                           @foreach ($activities as $act)
+                                 <option value="{{$act->id}}">{{$act->name}}</option>
+                           @endforeach
+                        </select>
+                        <div class="input-group-append">
+                           <button class="btn btn-light border btn-block " type="submit">Create</button>
+                        </div>
+                     </div>
+                  {{-- </div> --}}
+               </form>
+
+               <hr>
+               <table>
+                  <tbody>
+                     <tr>
+                        <th colspan="2">Result</th>
+                     </tr>
+                     <tr>
+                        <td class="">Vessel</td>
+                        <td>{{$vesselName}}</td>
+                     </tr>
+                     <tr>
+                        <td class="">Date</td>
+                        <td>{{$date}}</td>
+                     </tr>
+                     <tr>
+                        <td class="">Activity</td>
+                        <td>{{$activity}}</td>
+                     </tr>
+                     <tr>
+                        <td class="">Qty</td>
+                        <td>{{$qty}}</td>
+                     </tr>
+                     
                   </tbody>
-            </table>
+               </table>
+               <hr>
+               {{-- <a href="" class="btn btn-light shadow-none border btn-sm">
+                  <i class="fa fa-print"></i> Export PDF
+               </a> --}}
+            </div>
          </div>
       </div>
-
-      
-   
    </div>
    
- @endsection
+   
+   
+@endsection

@@ -62,10 +62,12 @@ class PortController extends Controller
       $dekripId = dekripRambo($id);
       $port = Port::find($dekripId);
       $ports = Port::orderBy('updated_at', 'desc')->get();
+      $platforms = Port::where('type', 'Platform')->get();
 
       return view('pages-stisla.master-data.port-edit', [
          'port' => $port,
-         'ports' => $ports
+         'ports' => $ports,
+         'platforms' => $platforms
       ])->with('i');
    }
 
@@ -78,12 +80,13 @@ class PortController extends Controller
          'name' => $req->name,
          'email' => $req->email,
          'type' => $req->type,
-         'region' => $req->region
+         'region' => $req->region,
+         'port_id' => $req->platform
          // 'latitude' => $req->latitude,
          // 'longitude' => $req->longitude
       ]);
 
-      return redirect()->route('port')->with('success', 'Port successfully updated');
+      return redirect()->back()->with('success', 'Port successfully updated');
    }
 
    public function detail($id)

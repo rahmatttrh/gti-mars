@@ -1194,6 +1194,10 @@
               $('#foto').show();
               $('.eta').hide();
               $('.anchor').hide();
+            } else if(status == 3) {
+              $('#foto').show();
+              $('.eta').hide();
+              $('.anchor').hide();
             } else if(status == 6) {
               $('#foto').hide();
               $('.anchor').hide();

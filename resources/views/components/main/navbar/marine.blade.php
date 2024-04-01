@@ -33,7 +33,8 @@
             <div class="dropdown-list-content dropdown-list-icons">
                @if (count($notifrequests) > 0)
                   @foreach ($notifrequests as $req)
-                     <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread">
+                     <a href="#" class="dropdown-item dropdown-item-unread">
+                        {{-- <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread"> --}}
                         
                         <div class="dropdown-item-desc">
                            {{$req->description }}

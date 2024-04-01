@@ -1,4 +1,5 @@
-@if ($request->schedule->vessel_id == 7)
+@if ($request->schedule_id != null)
+   @if ($request->schedule->vessel_id == 7)
    {{-- Triton Jawara --}}
    <td class="text-center" style="background-color: rgb(255, 231, 16)">A</td>
    @elseif($request->schedule->vessel_id == 2)
@@ -26,5 +27,9 @@
    {{-- Transko Moloko --}}
    <td class="text-center" style="background-color: rgb(213, 226, 131)">G</td>
    @else
-   <td>-</td>
+   <td class="text-center" style="background-color: rgb(248, 154, 87)"></td>
+   @endif
+
+   @else
+   <td class="text-center" style="background-color: rgb(248, 154, 87)"></td>
 @endif

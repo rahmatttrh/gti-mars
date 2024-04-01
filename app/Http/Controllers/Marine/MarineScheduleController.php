@@ -40,7 +40,10 @@ class MarineScheduleController extends Controller
 
       $vessels = Vessel::get();
       $ports = Port::get();
-      // dd($schedules);
+      $activities = Activity::get();
+
+      $requests = ModelsRequest::orderBy('date', 'asc')->get();
+      // dd($activities);
 
      
       return view('pages-stisla.marine.schedule.top.progress',[
@@ -49,7 +52,56 @@ class MarineScheduleController extends Controller
          'cargoSchedules' => $cargoSchedules,
          'movingSchedules' => $movingSchedules,
          'vessels' => $vessels,
-         'ports' => $ports
+         'ports' => $ports,
+         'requests' => $requests,
+         'activities' => $activities,
+
+         'vesselId' => null,
+         'vesselName' => 'All',
+         'date' => 'All',
+         'activity' => 'All',
+         'qty' => count($requests)
+      ])->with('i');
+   }
+
+   public function progressFilter(Request $req){
+      // dd('filter');
+
+      $vessels = Vessel::get();
+      $activities = Activity::get();
+      $vessel = Vessel::find($req->vessel);
+      $activity = Activity::find($req->activity);
+
+      // if ($req->vessel == 'all' && $req->activity == 'all') {
+      //    $requests = ModelsRequest::orderBy('date', 'asc')->get();
+      //    $vesselName ='All';
+      //    $activity = 'All';
+      // }
+      $startDate = $req->start;
+      $endDate = $req->end;
+
+      $requests = ModelsRequest::where('activity_id', $req->activity)->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+      $finalReqs = array();
+
+      foreach($requests as $req){
+         if ($req->schedule_id != null && $req->schedule->vessel_id == $vessel->id) {
+            $finalReqs[] = $req;
+         }
+      }
+
+      // dd(count($finalReqs));
+     
+      return view('pages-stisla.marine.schedule.top.progress',[
+        
+         'vessels' => $vessels,
+         'requests' => $finalReqs,
+         'activities' => $activities,
+
+         // 'vesselId' => $vessel->id,
+         'vesselName' => $vessel->name,
+         'date' => formatDate($startDate) . ' - ' . formatDate($endDate),
+         'activity' => $activity->name,
+         'qty' => count($finalReqs)
       ])->with('i');
    }
    public function inbox()
@@ -695,7 +747,7 @@ class MarineScheduleController extends Controller
 
       
 
-      return redirect()->route('intermilan.filter.get', [enkripRambo($req->start), enkripRambo($req->end)])->with('success', 'Sailing Order successfully added');
+      return redirect()->back()->with('success', 'Sailing Order successfully added');
    }
 
    public function storeCrewChangeSchedule(Request $req){

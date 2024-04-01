@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class ReportController extends Controller
 {
+   public function index(){
+      return view('pages-stisla.report.index');
+   }
+
    public function departure($id)
    {
       $dekripId = dekripRambo($id);

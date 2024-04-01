@@ -68,8 +68,9 @@
               </div>
               
             </div>
-            
+            <input type="text" name="desc" id="desc" class="form-control mt-2" placeholder="Description...">
          </div>
+         
          
       </form>
       

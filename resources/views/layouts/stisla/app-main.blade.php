@@ -82,6 +82,8 @@
             <x-main.navbar.admin-dsp />
             @elseif(auth()->user()->hasRole('admin-vdr'))
             <x-main.navbar.admin-vdr />
+            @elseif(auth()->user()->hasRole('admin-logistic'))
+            <x-main.navbar.admin-logistic />
          @endif
        
          

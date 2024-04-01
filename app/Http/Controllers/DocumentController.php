@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Report;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
@@ -142,8 +143,6 @@ class DocumentController extends Controller
       ])->with('i');
    }
 
-
-
    public function add(Request $req){
       $vessel = Vessel::find($req->vessel);
       // dd($vessel->name);
@@ -201,6 +200,20 @@ class DocumentController extends Controller
       }
 
       return redirect()->back()->with('success', 'Document Alert updated');
+   }
+
+   public function timeline($id){
+      $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($dekripId);
+      // dd($schedule->vessel->name);
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->get();
+      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'asc')->get();
+      return view('pages.document.timeline', [
+         'schedule' => $schedule,
+         'reports' => $reports,
+         'requests' => $requests
+      ]);
+
    }
 
 

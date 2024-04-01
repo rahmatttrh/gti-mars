@@ -18,6 +18,7 @@ class CreateVesselsTable extends Migration
          $table->smallInteger('status')->nullable();
          $table->integer('schedule_id')->nullable();
          $table->mediumInteger('port_id')->nullable();
+         $table->string('func')->nullable();
          $table->string('txid')->nullable();
          $table->string('mmsi')->nullable();
          // $table->string('port')->nullable();

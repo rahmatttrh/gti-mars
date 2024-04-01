@@ -166,6 +166,9 @@
             @elseif(auth()->user()->hasRole('chief'))
             {{-- <x-navbar.chief /> --}}
             <x-navbar.dsp.chief  />
+            @elseif(auth()->user()->hasRole('admin-logistic'))
+            {{-- <x-navbar.chief /> --}}
+            <x-navbar.dsp.logistic  />
             @endif
 
 

@@ -30,6 +30,12 @@ function formatDateTime($data)
    return $date;
 }
 
+function formatTime($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('H:i');
+   return $date;
+}
+
 function formatDayName($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('l');

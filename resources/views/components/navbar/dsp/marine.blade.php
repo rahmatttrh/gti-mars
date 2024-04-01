@@ -35,7 +35,8 @@
             <div class="dropdown-list-content dropdown-list-icons">
                @if (count($notifrequests) > 0)
                   @foreach ($notifrequests as $req)
-                     <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread">
+                     <a href="#" class="dropdown-item dropdown-item-unread">
+                        {{-- <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread"> --}}
                         {{-- <div class="dropdown-item-icon border text-danger">
                            <i class="fas fa-exclamation"></i>
                         </div> --}}
@@ -148,7 +149,7 @@
             </a>
          </li> --}}
 
-         <li class="nav-item dropdown {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
+         {{-- <li class="nav-item dropdown {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/m/schedule/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('dsp/m/schedule/*'))
                <i class="text-primary fas fa-fire ml-3"></i>
@@ -161,6 +162,15 @@
             <li class="nav-item"><a href="{{route('schedule.progress')}}" class="nav-link">Progress Sailing Order</a></li>
             <li class="nav-item"><a href="{{route('schedule.plan', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link">Plan Sailing Order</a></li>
             </ul>
+         </li> --}}
+
+         <li class="nav-item pr-2 {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
+            <a href="{{route('schedule.progress')}}" class="nav-link {{ (request()->is('dsp/m/schedule/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/m/schedule/*'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               <span>Report</span>
+            </a>
          </li>
          
 
@@ -178,14 +188,28 @@
                <span>Log</span>
             </a>
          </li>
-         <li class="nav-item pr-3 {{ (request()->is('master/data')) ? 'active' : '' }}">
-            <a href="{{route('master.data')}}" class="nav-link {{ (request()->is('master/data')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('master/data'))
+         {{-- <li class="nav-item {{ (request()->is('dsp/m/report')) ? 'active' : '' }}">
+            <a href="{{route('report')}}" class="nav-link {{ (request()->is('dsp/m/report')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/m/report'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               <span>Report</span>
+            </a>
+         </li> --}}
+
+         <li class="nav-item dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
+            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
+               @if (request()->is('master/data/*'))
                <i class="text-primary fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Master Data</span>
+               <span >Master Data </span>
             </a>
+            
+            <ul class="dropdown-menu">
+            <li class="nav-item"><a href="{{route('port')}}" class="nav-link">Port</a></li>
+            <li class="nav-item"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            </ul>
          </li>
       </ul>
    </div>

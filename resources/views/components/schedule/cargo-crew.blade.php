@@ -42,7 +42,7 @@
                <table class="" id="table-1">
                <thead>
                   <tr>
-                     <th>MTD</th>
+                     <th>BCM/MTD</th>
                      {{-- <th>Route</th> --}}
                      <th>Descriptive</th>
                      <th>Contract</th>
@@ -60,42 +60,81 @@
                <tbody>
                   @foreach ($requests->where('activity_id', 1) as $request)
                      <tr>
+                        <form action="{{route('request.update.bcm')}}" method="POST">
+                           @csrf
+                           @method('PUT')
+                           <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+                        <td>
+                           @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
+                           <input type="text" name="bcm" id="bcm" style="width: 120px" value="{{$request->bcm}}">
+                           @else
+                           {{$request->bcm}}
+                           @endif
+                        </td>
                         <td colspan="1">
                            <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
                               <b> {{$request->origin->code}} - {{$request->destination->code}} </b> 
                            </a>
                         </td>
-                        <td colspan="5">
+                        <td colspan="4">
                            <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
                               <b>{{formatDayName($request->date)}}, {{formatDate($request->date)}} - {{$request->desc}}</b> 
                            </a>
                         </td>
-                        
+                        <td>
+                           @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
+                           <button type="submit" class="btn btn-light btn-sm">Submit</button>
+                           @endif
+                           
+                        </td>
                         {{-- <td>{{$request->code}}</td> --}}
                         <td class="text-center">
-                           @if (auth()->user()->hasRole('marine'))
+                           @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
                               {{-- @if ($schedule->status == 0 || $schedule->status == 5) --}}
                                  <a href="{{route('request.undo.approve', enkripRambo($request->id))}}" class="btn btn-sm btn-light border shadow-none">Undo</a>
                               {{-- @endif --}}
                            @endif
                         </td>
+                        </form>
                      </tr>
                      @foreach ($request->cargoItems as $item)
                         <tr>
-                           <td class=" text-truncate">
-                           <div class="dropdown">
-                              {{$item->mtd}}
-                           </div>
+                           <form action="{{route('cargo.update.logistic')}}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <input type="text" name="cargoId" id="cargoId" value="{{$item->id}}" hidden>
+                           <td class="">
+                           {{-- <div class="dropdown"> --}}
+                              
+                              @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
+                              <input type="text" name="mtd" id="mtd" style="width: 120px" value="{{$item->mtd}}">
+                              @else
+                              {{-- {{$item->mtd}}  --}}
+                              @endif
+                           {{-- </div> --}}
                            </td>
                            {{-- <td>{{$item->request->origin->name}} - {{$item->request->destination->name}}</td> --}}
                            <td class=" text-truncate ">
                            {{$item->desc}} <br>
                            </td>
-                           <td class=" text-truncate">{{$item->contract}}</td>
+                           <td class=" text-truncate">
+                              
+                              @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
+                              <input type="text" name="contract" id="contract" style="width: 120px" value="{{$item->contract}}">
+                              @else
+                              {{-- {{$item->contract}} --}}
+                              @endif
+                           </td>
                            <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
                            <td class=" text-center">{{$item->weight}}</td>
                            <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
-                        
+                           @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-logistic'))
+                              <td>
+                                 <button type="submit" class="btn btn-sm btn-light ">Submit</button>
+                              </td>
+                           @endif
+                           </form>
+
                            @if ($request->status == 10 && auth()->user()->hasRole('department'))
                            <td class="text-center">
                                  @if ($item->status == 0)
@@ -137,7 +176,7 @@
                            @else
                            <td></td>
                            @endif
-                     </tr>
+                        </tr>
                      @endforeach
                      <tr>
                         <td colspan="6"></td>

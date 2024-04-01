@@ -10,6 +10,8 @@
             <x-main.vessel :nowschedule="$nowSchedule" :schedules="$schedules" :vdr="$vdr" :requests="$requests" :vessel="$currentVessel" :docs="$docs" />
             @elseif(auth()->user()->hasRole('marine'))
             <x-main.marine :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray" :tactivity="$totalActivity" :tschedule="$totalSchedule" :tactiveschedule="$totalActiveSchedule" />
+            @elseif(auth()->user()->hasRole('admin-logistic'))
+            <x-main.logistic :schedules="$logisticSchedules" />
             @else
             
             <div class="row">

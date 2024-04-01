@@ -134,7 +134,7 @@ class MarineRequestController extends Controller
       // dd($start);
       $end = $end->format('Y-m-d');
       $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$start, $end])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 1)->where('activity_id', '!=', 7)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
       // $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
@@ -147,6 +147,8 @@ class MarineRequestController extends Controller
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
+
+      $vessels = Vessel::get();
 
 
 
@@ -161,6 +163,7 @@ class MarineRequestController extends Controller
          'weekSchedules' => $weekSchedules,
          'start' => $start,
          'end' => $end,
+         'vessels' => $vessels,
          'now' => Carbon::now()
       ])->with('i');
    }
@@ -168,7 +171,7 @@ class MarineRequestController extends Controller
    public function filter(Request $req){
       // $requests = ModelsRequest::where('status','=', 1)->get();
 
-      
+      // dd('ok');
       // $users = User::get();
       $vessels = Vessel::get();
       $startDate = new Carbon($req->start);
@@ -186,7 +189,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = $req->end;
       $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 1)->where('activity_id', '!=', 7)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
       $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
@@ -211,7 +214,7 @@ class MarineRequestController extends Controller
       // $requests = ModelsRequest::where('status','=', 1)->get();
       $dekripStart = dekripRambo($start);
       $dekripEnd = dekripRambo($end);
-      
+      // dd('ok');
       // $users = User::get();
       $vessels = Vessel::get();
       $startDate = new Carbon($dekripStart);
@@ -229,7 +232,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = $dekripEnd;
       $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->where('activity_id', '!=', 7)->get()->groupBy('user_name');
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->whereBetween('date', [$startDate, $endDate])->where('activity_id', '!=', 7)->get()->groupBy('user_name');
       // dd(count($requests));
       $weekSchedules = Schedule::whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
       $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
@@ -350,7 +353,7 @@ class MarineRequestController extends Controller
       }
 
       if ($totalReturn > 150) {
-         return redirect()->back()->with('error', 'Total Pax Return ' . $totalReturns . ' melebihi Kapasitas (15
+         return redirect()->back()->with('error', 'Total Pax Return ' . $totalReturn . ' melebihi Kapasitas (15
          )');
       }
 
@@ -833,5 +836,21 @@ class MarineRequestController extends Controller
       ]);
 
       return redirect()->route('request.select.schedule', [enkripRambo($requestMarine->id), enkripRambo($schedule->id)])->with('success', "Request Activity sucessfully added");
+   }
+
+   public function selectVessel(Request $req){
+      // dd('ok');
+      // dd($req->requestId);
+      $request = ModelsRequest::find($req->requestId);
+      $schedule = Schedule::find($req->scheduleId);
+      // dd($schedule->date);
+      $schedule->update([
+         'vessel_id' => $req->vessel
+      ]);
+      $request->update([
+         'status' => 2
+      ]);
+
+      return redirect()->back()->with('success', 'Vessel assigned');
    }
 }

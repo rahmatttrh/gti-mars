@@ -24,6 +24,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\Marine\IntermilanController;
 use App\Http\Controllers\Marine\MarineAdditionalController;
 use App\Http\Controllers\Marine\MarineDeviationController;
 use App\Http\Controllers\Marine\MarineMasterController;
@@ -83,6 +84,9 @@ Route::middleware(["auth"])->group(function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //   });
    Route::put('request/update', [DepartmentRequestController::class, 'update'])->name('request.update');
+   Route::put('request/bcm/update', [DepartmentRequestController::class, 'updateBcm'])->name('request.update.bcm');
+   Route::put('cargo/update/logistic', [CargoItemController::class, 'updateLogistic'])->name('cargo.update.logistic');
+   
    Route::prefix('news')->group(function () {
       
       Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
@@ -292,6 +296,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix('document')->group(function () {
       Route::get('/manifest/{schedule:id}', [DocumentController::class, 'manifest'])->name('document.manifest');
+      Route::get('/timeline/{schedule:id}', [DocumentController::class, 'timeline'])->name('document.timeline');
       Route::get('/intermilan/{month}', [DocumentController::class, 'intermilan'])->name('document.intermilan');
       Route::get('/export/intermilan/{start}/{end}', [DocumentController::class, 'intermilanExport'])->name('document.intermilan.export');
       Route::get('/export/cc/{month}/{year}', [DocumentController::class, 'crewChangeExport'])->name('document.crew.change.export');
@@ -339,10 +344,14 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
       Route::get("surveillance", [SurveillanceController::class, "marine",])->name('surveillance.marine');
       Route::post("intermilan/filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
       Route::get("intermilan/filter/{start}/{end}", [MarineRequestController::class, "filterGet",])->name('intermilan.filter.get');
+
+      Route::put('intermilan/select/vessel', [MarineRequestController::class, 'selectVessel'])->name('intermilan.marine.select.vessel');
+      Route::put('intermilan/select/schedule', [IntermilanController::class, 'selectSchedule'])->name('intermilan.marine.select.schedule');
        
 
       Route::prefix('schedule')->group(function () {
          Route::get('progress', [MarineScheduleController::class, 'progress'])->name('schedule.progress');
+         Route::post('progress/filter', [MarineScheduleController::class, 'progressFilter'])->name('schedule.progress.filter');
          Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
    
          Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
@@ -378,6 +387,12 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          Route::post('filter', [MarineRequestController::class, 'filterCrewChange'])->name('marine.crew.change.filter');
          Route::post('store/', [MarineScheduleController::class, 'storeCrewChangeSchedule'])->name('schedule.store.crew.change');
          Route::post('import/', [MarineScheduleController::class, 'importCrewChange'])->name('marine.crew.change.import');
+      });
+
+      Route::prefix("report")->group(function () {
+         Route::get('/', [ReportController::class, "index"])->name('report');
+
+         
       });
 
    });
@@ -440,7 +455,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    });
    
 
-   Route::prefix('port')->group(function () {
+   Route::prefix('master/data/port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
       Route::post('store', [PortController::class, 'store'])->name('port.store');
       Route::get('edit/{id}', [PortController::class, 'edit'])->name('port.edit');
@@ -507,7 +522,7 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    //    Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
    //    Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
    // });
-   Route::prefix('vessel')->group(function () {
+   Route::prefix('master/data/vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
       Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');

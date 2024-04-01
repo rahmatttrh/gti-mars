@@ -4,13 +4,13 @@
 @endsection
 @section('content')
 <section class="section">
-    <div class="section-header">
+    {{-- <div class="section-header">
       <h1 class="section-title">Vessel</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
+        <div class="breadcrumb-item ">Dashboard</div>
         <div class="breadcrumb-item active">Vessel</div>
       </div>
-    </div>
+    </div> --}}
 
     <div class="section-body">
       {{-- <h2 class="section-title">Schedule Plan</h2>
@@ -19,44 +19,63 @@
       </p> --}}
 
       <div class="row">
-        <div class="col-12">
-          <div class="card">
-            {{-- <div class="card-header">
-              <h4>Basic DataTables</h4>
-            </div> --}}
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-striped table-sm" id="table-1">
-                  <thead>
-                    <tr>
-                        <th class="text-center">No.</th>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    @foreach ($vessels as $vessel)
-                    <tr>
-                      <td class="text-center">{{++$i}}</td>
-                      <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
-                      <td>{{$vessel->type}}</td>
-                      <td>
-                          @if ($vessel->status == 0)
-                             <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
-                             @elseif($vessel->status == 1)
-                             <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
-                          @endif
-                      </td>
-                    </tr>
-                    @endforeach
-                    
-                  </tbody>
-                </table>
-              </div>
+         <div class="col-md-3">
+            <b>Form Add Vessel</b>
+               <hr>
+            @if ($errors->any())
+               <div class="alert alert-danger">
+                  <ul>
+                        @foreach ($errors->all() as $error)
+                           <li>{{ $error }}</li>
+                        @endforeach
+                  </ul>
+               </div>
+            @endif
+            <form action="{{route('vessel.store')}}" method="POST">
+               @csrf
+               <input type="text" name="name" id="name" class="form-control mb-2" placeholder="Vessel name...">
+               <input type="text" name="type" id="type" class="form-control mb-2" placeholder="Vessel type...">
+               <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Email...">
+               <input type="text" name="username" id="username" class="form-control" placeholder="Username...">
+               <hr>
+               <button type="submit" class="btn btn-info">Create New</button>
+            </form>
+         </div>
+         <div class="col-md-9">
+            <div class="table-responsive">
+               <table class=" table-striped " id="table-4">
+               <thead>
+                  <tr>
+                     {{-- <th class="text-center">No.</th> --}}
+                     <th>Name</th>
+                     <th>TXID</th>
+                     <th>Email</th>
+                     <th>Type</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($vessels as $vessel)
+                  <tr>
+                     {{-- <td class="text-center">{{++$i}}</td> --}}
+                     <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
+                     <td>{{$vessel->txid }}</td>
+                     <td>{{$vessel->email}}</td>
+                     <td>{{$vessel->type}}</td>
+                     <td>
+                        @if ($vessel->status == 0)
+                           <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
+                           @elseif($vessel->status == 1)
+                           <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
+                        @endif
+                     </td>
+                  </tr>
+                  @endforeach
+                  
+               </tbody>
+               </table>
             </div>
-          </div>
-        </div>
+         </div>
       </div>
     </div>
   </section>

@@ -97,6 +97,16 @@ class UserSeeder extends Seeder
       ]);
       $yoyo->assignRole('department');
 
+      $adm_logistic = User::create([
+         'name' => 'Admin Logistic',
+         'username' => 'adm_logistic',
+         'email' => 'adm_logistic@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $adm_logistic->assignRole('admin-logistic');
+
       // $dimaz = User::create([
       //    'name' => 'Dimaz',
       //    'username' => 'dimaz',

@@ -15,6 +15,8 @@ class CreatePortsTable extends Migration
    {
       Schema::create('ports', function (Blueprint $table) {
          $table->smallIncrements('id');
+         $table->string('func')->nullable();
+         // $table->integer('port_id')->nullable();
          $table->string('code')->nullable();
          $table->string('name');
          $table->string('email');
@@ -25,6 +27,9 @@ class CreatePortsTable extends Migration
          $table->string('mmsi')->nullable();
          $table->string('latitude')->nullable();
          $table->string('longitude')->nullable();
+
+         $table->integer('port_id')->nullable();
+         $table->string('platform')->nullable();
          $table->timestamps();
       });
    }

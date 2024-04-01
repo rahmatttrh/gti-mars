@@ -79,6 +79,18 @@ class CargoItemController extends Controller
       return redirect()->back()->with('success', 'Cargo Updated');
    }
 
+   public function updateLogistic(Request $req){
+      // dd('ok');
+      $cargoItem = CargoItem::find($req->cargoId);
+      // dd($cargoItem->desc);
+      $cargoItem->update([
+         'mtd' => $req->mtd,
+         'contract' => $req->contract
+      ]);
+      return redirect()->back()->with('success', 'Data updated');
+
+   }
+
    public function offloading(Request $req)
    {
       $req->validate([]);

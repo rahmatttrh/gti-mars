@@ -863,14 +863,29 @@ class DepartmentRequestController extends Controller
 
    public function update(Request $req)
    {
+      // dd($req->bcm);
       $request = ModelsRequest::find($req->requestId);
 
       $request->update([
          // 'activity_id' => $req->activity,
+         'bcm' => $req->bcm,
          'date' => $req->date,
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
          'desc' => $req->desc
+      ]);
+
+      return redirect()->back()->with('success', 'Request Activity successfully updated');
+   }
+
+   public function updateBcm(Request $req)
+   {
+      // dd($req->bcm);
+      $request = ModelsRequest::find($req->requestId);
+
+      $request->update([
+         // 'activity_id' => $req->activity,
+         'bcm' => $req->bcm,
       ]);
 
       return redirect()->back()->with('success', 'Request Activity successfully updated');
@@ -1575,21 +1590,20 @@ class DepartmentRequestController extends Controller
          // dd('tidak ada schedule');
          // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
          
-         $schedule = Schedule::create([
-            'code' => $scheduleCode,
-            'class' => $request->activity->name,
-            // 'vessel_id' => $vessel->id,
-            'by' => 'user',
-            'type' => 2,
-            'status' => 0,
-            'date' => $request->date,
-         ]);
+         // $schedule = Schedule::create([
+         //    'code' => $scheduleCode,
+         //    'class' => $request->activity->name,
+         //    'by' => 'user',
+         //    'type' => 2,
+         //    'status' => 0,
+         //    'date' => $request->date,
+         // ]);
          $request->update([
             'status' => 404,
-            'schedule_id' => $schedule->id,
+            // 'schedule_id' => $schedule->id,
          ]);
          // dd($request->schedule_id);
-         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
+         return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($request->date)->format('d/m/Y'));
       }
 
    }
@@ -1598,10 +1612,14 @@ class DepartmentRequestController extends Controller
       // dd('ok');
       $request = ModelsRequest::find($req->requestId);
       $schedule = Schedule::find($request->schedule_id);
-      $schedule->update([
-         'vessel_id' => $req->vessel,
-         'class' => $request->activity->name
-      ]);
+
+      if ($schedule) {
+         $schedule->update([
+            'vessel_id' => $req->vessel,
+            'class' => $request->activity->name
+         ]);
+      }
+      
       // dd($parent->origin->name);
 
       $request->update([

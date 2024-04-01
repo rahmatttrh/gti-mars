@@ -212,7 +212,8 @@ class VesselScheduleController extends Controller
          'port_id' => $req->port,
          'destination_id' => $req->destination,
          'eta' => $req->eta,
-         'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : ''
+         'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : '',
+         'desc' => $req->desc
       ]);
 
       ReportVessel::create([
@@ -223,7 +224,7 @@ class VesselScheduleController extends Controller
 
 
 
-      if ($req->status == 12) {
+      if ($req->status == 13) {
          $schedule->update([
             'status' => 11
          ]);

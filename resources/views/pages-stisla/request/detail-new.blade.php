@@ -48,7 +48,7 @@
                         <div class="form-group">
                            <div class="input-group">
                               <select class="custom-select" id="vessel" name="vessel">
-                              @if ($request->schedule->vessel_id != null)
+                              @if ($request->schedule_id != null)
                               <option value="{{$request->schedule->vessel_id}}" selected>{{$request->schedule->vessel->name}} / {{$request->schedule->vessel->type}}</option>
                               @else
                               <option value="" selected disabled>Kapal belum tersedia</option>
@@ -286,9 +286,14 @@
               
                      @if ($request->status >= 1 && $request->status != 404)
                         <div class="">
-                        
-                        <h4><a href="{{route('schedule.detail', enkripRambo($request->schedule->id))}}"> {{$request->schedule->vessel->name ?? 'Menunggu Kapal'}} - {{$request->schedule->code}}</a></h4>
-                        <small>{{formatDate($request->schedule->date)}}</small>
+                           @if ($request->schedule_id != null)
+                              <h4><a href="{{route('schedule.detail', enkripRambo($request->schedule->id))}}"> {{$request->schedule->vessel->name ?? 'Menunggu Kapal'}} - {{$request->schedule->code}}</a></h4>
+                              <small>{{formatDate($request->schedule->date)}}</small>
+                              @else
+                              <h4>Menunggu Kapal</h4>
+                              <small>{{formatDate($request->date)}}</small>
+                           @endif
+                           
                         
                         </div>
                         <hr>
@@ -314,15 +319,7 @@
                               @csrf
                               <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
                               <div class="form-row">
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">MTD</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="mtd" name="mtd" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-5">
+                                 <div class="form-group col-md-4">
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">Desc</div>
@@ -330,29 +327,7 @@
                                       <input type="text" class="form-control" id="desc" name="desc" >
                                     </div>
                                  </div>
-                                 <div class="form-group col-md-4">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">PO</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="contract" name="contract" >
-                                    </div>
-                                 </div>
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">MTD</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">Material Name</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div>
-                                 <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">PO/Contract</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                              </div>
-                              <div class="form-row">
-                                 <div class="form-group col-md-3">
+                                 <div class="form-group col-md-2">
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">QTY</div>
@@ -376,9 +351,44 @@
                                       <input type="text" class="form-control" id="weight" name="weight" >
                                     </div>
                                  </div>
-                                 <div class="form-group col-md-3">
+
+
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">MTD</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="mtd" name="mtd" >
+                                    </div>
+                                 </div>
+                                 
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <div class="input-group-text">PO</div>
+                                      </div>
+                                      <input type="text" class="form-control" id="contract" name="contract" >
+                                    </div>
+                                 </div>
+                                 <div class="form-group col-md-2">
                                     <button type="submit" class="btn btn-info btn-block">Add</button>
                                  </div>
+                                 {{-- <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">MTD</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div> --}}
+                                 {{-- <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">Material Name</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div>
+                                 <div class="form-group col-md-4 mtd">
+                                    <label for="file-cargo">PO/Contract</label>
+                                    <input class="form-control " id="mtd" type="text" name="mtd">
+                                 </div> --}}
+                              </div>
+                              <div class="form-row">
+                                 
+                                 
                                  
                               </div>
                            </form>
@@ -484,7 +494,7 @@
                                         <tr>
                                           <td>{{$cargo->mtd ?? '-'}}</td>
                                           <td>{{$cargo->desc}}</td>
-                                          <td>{{$cargo->contract}}</td>
+                                          <td>{{$cargo->contract ?? '-'}}</td>
                                           <td class="text-center">{{$cargo->qty}}</td>
                                           <td class="text-center">{{$cargo->unit}}</td>
                                           <td class="text-center">{{$cargo->weight}}</td>

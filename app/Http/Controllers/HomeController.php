@@ -481,6 +481,8 @@ class HomeController extends Controller
       $thisMonthActivities = ModelsRequest::whereMonth('date', $today->format('m'))->get();
       $thisMonthSchedules = Schedule::whereMonth('date', $today->format('m'))->get();
       $thisMonthActiveSchedule = Schedule::whereMonth('date', $today->format('m'))->where('status', '!=', 11)->get();
+      $logisticSchedules = Schedule::where('class', 'Cargo')->get();
+      // dd($logisticSchedules);
 
       return view('main', [
          'feed' => $feed,
@@ -499,7 +501,8 @@ class HomeController extends Controller
          'vdrsArray' => $vdrsArray,
          'totalActivity' => count($thisMonthActivities),
          'totalSchedule' => count($thisMonthSchedules),
-         'totalActiveSchedule' => count($thisMonthActiveSchedule)
+         'totalActiveSchedule' => count($thisMonthActiveSchedule),
+         'logisticSchedules' => $logisticSchedules
       ])->with('i');
    }
 
