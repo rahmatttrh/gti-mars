@@ -136,6 +136,6 @@ $("#table-16").dataTable({
 
 $("#table-17").dataTable({
    columnDefs: [{ sortable: false, targets: [2, 3] }],
-   pageLength : 15,
+   pageLength : 10,
    lengthMenu: [[10, 15, 20, -1], [5, 10, 15, 20, 'Todos']]
 });

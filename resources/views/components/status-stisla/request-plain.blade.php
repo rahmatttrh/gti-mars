@@ -8,7 +8,7 @@
       @elseif($request->status == 3)
       Waiting Vessel
       @elseif($request->status == 4)
-        {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->name}}
+        {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->code}}
       @elseif($request->status == 5)
       Validasi Fleet Control
       @elseif($request->status == 10)
