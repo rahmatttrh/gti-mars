@@ -125,7 +125,7 @@
                      </tr>
                      <tr>
                         <td class="">Qty</td>
-                        <td>{{$qty}}</td>
+                        <td>{{$qty}} Activity</td>
                      </tr>
                      
                   </tbody>
