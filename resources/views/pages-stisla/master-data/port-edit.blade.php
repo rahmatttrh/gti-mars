@@ -13,64 +13,60 @@
          </p> --}}
 
          <div class="row">
-         <div class="col-md-4">
-            <div class="card border shadow-sm">
-               <div class="card-header">
-                  <b>Form Edit</b>
+         <div class="col-md-3">
+            <b>Form Edit</b>
+            <hr>
+            <form action="{{route('port.update')}}" method="POST">
+               @csrf
+               @method('PUT')
+               <input type="number" name="port" id="port" value="{{$port->id}}" hidden>
+               <div class="form-row">
+                  
+                  <div class="form-group col-md-12">
+                     <label for="name">Location Name*</label>
+                     <input type="text" class="form-control " id="name" name="name" value="{{$port->name}}">
+                  </div>
+                  <div class="form-group col-md-12">
+                     <label for="email">Email</label>
+                     <input type="text" class="form-control " id="email" name="email" value="{{$port->email}}">
+                  </div>
                </div>
-               <div class="card-body">
-                  <form action="{{route('port.update')}}" method="POST">
-                     @csrf
-                     @method('PUT')
-                     <input type="number" name="port" id="port" value="{{$port->id}}" hidden>
-                     <div class="form-row">
-                        
-                        <div class="form-group col-md-12">
-                           <label for="name">Location Name*</label>
-                           <input type="text" class="form-control " id="name" name="name" value="{{$port->name}}">
-                        </div>
-                        <div class="form-group col-md-12">
-                           <label for="email">Email</label>
-                           <input type="text" class="form-control " id="email" name="email" value="{{$port->email}}">
-                        </div>
-                     </div>
-                     <div class="form-row">
-                        <div class="form-group col-md-6">
-                           <label>Type*</label>
-                           <select  class="custom-select" id="type" name="type">
-                              <option  disabled selected>Choose one</option>
-                              <option {{$port->type == 'Port' ? 'selected' : ''}} value="Port">Port</option>
-                              <option {{$port->type == 'Barge' ? 'selected' : ''}} value="Barge">Barge</option>
-                              <option {{$port->type == 'Island' ? 'selected' : ''}} value="Island">Island</option>
-                              <option {{$port->type == 'Rig/Barge/Tanker' ? 'selected' : ''}} value="Rig/Barge/Tanker">Rig/Barge/Tanker</option>
-                              <option {{$port->type == 'Platform' ? 'selected' : ''}} value="Platform">Platform</option>
-                           </select>
-                        </div>
-                        <div class="form-group col-md-6">
-                           <label>Platform</label>
-                           <select  class="custom-select" id="platform" name="platform">
-                              <option  disabled selected>Choose one</option>
-                              @foreach ($platforms as $platform)
-                                  <option {{$port->port_id  == $platform->id ? 'selected' : ''}} value="{{$platform->id}}">{{$platform->name}}</option>
-                              @endforeach
-                           </select>
-                        </div>
-                        {{-- <div class="form-group col-md-5">
-                           <label>Region</label>
-                           <select  class="custom-select" id="region" name="region">
-                              <option  disabled selected>Choose one</option>
-                              <option {{$port->region == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
-                              <option {{$port->region == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
-                              <option {{$port->region == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
-                           </select>
-                        </div> --}}
-                     </div>
-                     <button class="btn btn-info">Update</button>
-                  </form>
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label>Type*</label>
+                     <select  class="custom-select" id="type" name="type">
+                        <option  disabled selected>Choose one</option>
+                        <option {{$port->type == 'Port' ? 'selected' : ''}} value="Port">Port</option>
+                        <option {{$port->type == 'Barge' ? 'selected' : ''}} value="Barge">Barge</option>
+                        <option {{$port->type == 'Island' ? 'selected' : ''}} value="Island">Island</option>
+                        <option {{$port->type == 'Rig/Barge/Tanker' ? 'selected' : ''}} value="Rig/Barge/Tanker">Rig/Barge/Tanker</option>
+                        <option {{$port->type == 'Platform' ? 'selected' : ''}} value="Platform">Platform</option>
+                     </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label>Platform</label>
+                     <select  class="custom-select" id="platform" name="platform">
+                        <option  disabled selected>Choose one</option>
+                        @foreach ($platforms as $platform)
+                            <option {{$port->port_id  == $platform->id ? 'selected' : ''}} value="{{$platform->id}}">{{$platform->name}}</option>
+                        @endforeach
+                     </select>
+                  </div>
+                  {{-- <div class="form-group col-md-5">
+                     <label>Region</label>
+                     <select  class="custom-select" id="region" name="region">
+                        <option  disabled selected>Choose one</option>
+                        <option {{$port->region == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                        <option {{$port->region == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                        <option {{$port->region == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                     </select>
+                  </div> --}}
                </div>
-            </div>
+               <button class="btn btn-light">Update</button>
+            </form>
+            
          </div>
-         <div class="col-8">
+         <div class="col-9">
             
             <div class="table-responsive">
                <table class="table-sm table-striped " id="table-1">

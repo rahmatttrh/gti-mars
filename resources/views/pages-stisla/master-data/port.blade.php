@@ -55,7 +55,7 @@
                         </select>
                      </div>
                   </div>
-                  <button class="btn btn-info">Submit</button>
+                  <button class="btn btn-info">Add</button>
                </form>
             </div>
          <div class="col-9">

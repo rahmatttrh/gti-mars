@@ -148,7 +148,12 @@
                                  @else
                                  
                                  @endif --}}
-                                 {{$request->origin->code}} to {{$request->destination->code}}
+                                 {{$request->origin->code}}
+                                 {{-- @if ($request->origin->port_id != null)
+                                    ({{$request->origin->port->code}})
+                                     
+                                 @endif --}}
+                                  to {{$request->destination->code}}
                               </td>
                               <td class="d-flex align-items-center">
                                  @if ($request->activity_id == 1 || $request->activity_id == 2)
