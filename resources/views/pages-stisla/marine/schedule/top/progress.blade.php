@@ -8,7 +8,7 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-9">
-               <h5>ACTIVITY</h5>
+               <h3>REPORT ACTIVITY</h3>
                <hr>
                <div class="table-responsive">
                   <table class="table-sm table-striped" id="table-17">
@@ -99,7 +99,7 @@
                            @endforeach
                         </select>
                         <div class="input-group-append">
-                           <button class="btn btn-light border btn-block " type="submit">Create</button>
+                           <button class="btn btn-light border btn-block " type="submit">Filter</button>
                         </div>
                      </div>
                   {{-- </div> --}}
