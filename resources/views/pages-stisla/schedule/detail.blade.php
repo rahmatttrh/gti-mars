@@ -136,6 +136,10 @@
                                  
                               @endif 
                               {{$route->port->code}} 
+                              @if ($route->port->port_id != null)
+                                 ({{$route->port->port->code}})
+
+                              @endif
                               </a>
                            @else
                               @if ($route->rank > 1)
