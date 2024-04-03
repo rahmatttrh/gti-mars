@@ -1108,7 +1108,7 @@
 
       $(document).ready(function() {
          // console.log('report function');
-         $('#foto').hide();
+         // $('#foto').hide();
          $('.eta').hide();
          $('.anchor').hide();
 
@@ -1116,23 +1116,23 @@
             // console.log('okeee');
             var status = $(this).val();
             if (status == 9) {
-              $('#foto').show();
+            //   $('#foto').show();
               $('.eta').hide();
               $('.anchor').hide();
             } else if(status == 3) {
-              $('#foto').show();
+            //   $('#foto').show();
               $('.eta').hide();
               $('.anchor').hide();
             } else if(status == 6) {
-              $('#foto').hide();
+            //   $('#foto').hide();
               $('.anchor').hide();
               $('.eta').show();
             } else if (status > 27 && status < 32) {
-              $('#foto').hide();
+            //   $('#foto').hide();
               $('.anchor').show();
               $('.eta').hide();
             } else {
-              $('#foto').hide();
+            //   $('#foto').hide();
               $('.eta').hide();
               $('.anchor').hide();
             }

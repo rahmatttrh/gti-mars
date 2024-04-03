@@ -224,6 +224,7 @@ class VesselScheduleController extends Controller
          'date' => $date,
          'eta' => $req->eta,
          'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : '',
+         'doc' => request('doc') ? request()->file('doc')->store('report/doc') : '',
          'desc' => $req->desc
       ]);
 
@@ -292,7 +293,7 @@ class VesselScheduleController extends Controller
       Report::create([
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
-         'doc' => request('doc') ? request()->file('doc')->store('schedule/doc') : '',
+         'doc' => request('doc') ? request()->file('doc')->store('report/doc') : '',
          'status_id' => 13
       ]);
 

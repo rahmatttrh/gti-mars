@@ -31,6 +31,7 @@
                     @endif
                  @endforeach
                </select>
+               <input type="datetime-local"  name="date" id="date" class="form-control">
                @if ($schedule->class == 'Cargo' || $schedule->class == 'Cargo')
                <select class="form-control" name="port" id="port">
                   <option selected disabled>Location</option>
@@ -40,7 +41,7 @@
                </select>
                @endif
                
-               <input type="file" class="form-control foto" name="foto" id="foto">
+               
                
                <select class="form-control eta" name="destination" id="destination">
                   <option selected disabled>Destination...</option>
@@ -60,7 +61,7 @@
                   <option value="7">7</option>  
                   <option value="8">8</option>   
                </select>
-               <input type="datetime-local"  name="date" id="date" class="form-control">
+               
               {{-- <div class="input-group-append">
                 <button class="btn btn-info  px-4" type="submit">Add Report</button>
                 @if ($schedule->status > 1 && $schedule->status < 11 )
@@ -72,16 +73,30 @@
             
             <div class="input-group mt-2">
                   {{-- <input type="datetime-local" style="width: 150px" name="date" id="date" class=""> --}}
-                  <input type="text" name="desc" id="desc" class="form-control" placeholder="Description...">
-                  <div class="input-group-append">
-                     <button class="btn btn-info  px-4" type="submit">Add Report</button>
-                     @if ($schedule->status > 1 && $schedule->status < 11 )
-                     <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
-                     @endif
-                   </div>
+                  
+               <input type="text" class="form-control" name="desc" id="desc" placeholder="Description">
+               <div class="input-group-append">
+                  <button class="btn btn-info  px-4" type="submit">Add Report</button>
+                  @if ($schedule->status > 1 && $schedule->status < 11 )
+                  <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
+                  @endif
+               </div>
             </div>
             
          </div>
+         
+         <div class="form-row mt--4">
+            <div class="form-group col-md-3">
+               <label for="file">Select Image</label>
+               <input type="file" name="foto" id="foto" class="form-control" >
+            </div>
+            <div class="form-group col-md-3">
+               <label for="doc">Select Document</label>
+               <input type="file" class="form-control" name="doc" id="doc" >
+            </div>
+            
+         </div>
+         
          {{-- <div class="row">
             <div class="col-md-4">
                <input type="datetime-local" name="date" id="date" class="form-control ">
