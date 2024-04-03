@@ -54,13 +54,16 @@ class MarineScheduleController extends Controller
          'vessels' => $vessels,
          'ports' => $ports,
          'requests' => $requests,
+         'activityId' => null,
          'activities' => $activities,
 
          'vesselId' => null,
          'vesselName' => 'All',
          'date' => 'All',
          'activity' => 'All',
-         'qty' => count($requests)
+         'qty' => count($requests),
+         'totalFuel' => null,
+         'totalWater' => null
       ])->with('i');
    }
 
@@ -82,14 +85,24 @@ class MarineScheduleController extends Controller
 
       $requests = ModelsRequest::where('activity_id', $req->activity)->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
       $finalReqs = array();
+      $totalFuel = null;
+      $totalWater = null;
 
       foreach($requests as $req){
          if ($req->schedule_id != null && $req->schedule->vessel_id == $vessel->id) {
             $finalReqs[] = $req;
+            if ($req->activity_id == 5) {
+               $totalFuel += $req->qty_approve;
+            }
+
+            if ($req->activity_id == 6) {
+               $totalWater += $req->qty_approve;
+            }
+             
          }
       }
 
-      // dd(count($finalReqs));
+      // dd($activity->id);
      
       return view('pages-stisla.marine.schedule.top.progress',[
         
@@ -100,8 +113,11 @@ class MarineScheduleController extends Controller
          // 'vesselId' => $vessel->id,
          'vesselName' => $vessel->name,
          'date' => formatDate($startDate) . ' - ' . formatDate($endDate),
+         'activityId' => $activity->id,
          'activity' => $activity->name,
-         'qty' => count($finalReqs)
+         'qty' => count($finalReqs),
+         'totalFuel' => $totalFuel,
+         'totalWater' => $totalWater
       ])->with('i');
    }
    public function inbox()
@@ -922,7 +938,7 @@ class MarineScheduleController extends Controller
 
       $schedule->delete();
 
-      return redirect()->route('schedule.plan', enkripRambo($month))->with('success', 'Schedule deleted');
+      return redirect()->route('marine.request')->with('success', 'Schedule deleted');
    }
 
    public function send($id)

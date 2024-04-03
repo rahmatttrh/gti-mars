@@ -4,34 +4,12 @@
 @endsection
 @section('content')
 <section class="section">
-   {{-- <div class="section-header">
-      <h1 class="section-title">Detail Sailing Order {{$schedule->code}}</h1>
-      <div class="section-header-breadcrumb">
-         @if (auth()->user()->hasRole('marine'))
-            <div class="breadcrumb-item "><a href="{{route('dsp.marine')}}">Dashboard</a></div>
-            @elseif(auth()->user()->hasRole('vessel'))
-            <div class="breadcrumb-item "><a href="{{route('dsp.vessel')}}">Dashboard</a></div>
-            @elseif(auth()->user()->hasRole('user'))
-            <div class="breadcrumb-item "><a href="{{route('dsp.user')}}">Dashboard</a></div>
-         @endif
-         
-         <div class="breadcrumb-item active">Schedule Detail</div>
-      </div>
-   </div> --}}
-
    <div class="section-body">
-   {{-- <h2 class="section-title">Schedule Plan</h2>
-   <p class="section-lead">
-      We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-   </p> --}}
-
-      
       <div class="row">
          <div class="col-md-3">
             {{-- {{$schedule->status}} --}}
             @if (auth()->user()->hasRole('marine'))
                <x-schedule-stisla.action-marine :schedule="$schedule" class="" />
-               
             @endif
             @if (auth()->user()->hasRole('vessel') && $schedule->status == 1)
                <x-schedule-stisla.action-vessel :schedule="$schedule" />
@@ -40,71 +18,6 @@
             @if (auth()->user()->hasRole('department'))
                <x-schedule-stisla.action-department :schedule="$schedule" />
             @endif
-            {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1 && $schedule->status < 11 )
-               <a href="" class="btn  btn-info btn-block" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</a>
-               <div class="mb-3"></div>
-            @endif --}}
-            
-            {{-- <div class="table-responsive">
-               <table class="table-sm">
-                  <thead>
-                     <tr>
-                        <th>{{$schedule->code}}ee</th>
-                        <th><x-status-stisla.schedule-plain :schedule="$schedule" :lastreport="$lastreport" /></th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     
-                     <tr>
-                        <td colspan="2">{{formatDate($schedule->date)}}</td>
-                        
-                     </tr>
-                     <tr>
-                        <td colspan="2" class="text-uppercase">{{$schedule->class}}</td>
-                     </tr>
-                     <tr>
-                        <td colspan="2">{{$schedule->vessel->name ?? 'Vessel Empty'}}</td>
-                     </tr>
-                     <tr>
-                        <td>
-                           @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' || $schedule->class == 'Crew Change')
-                              <span>
-                              @foreach ($fixRoutes as  $route)
-                                    
-                                 @if (auth()->user()->hasRole('marine'))
-                                    <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
-                                    @if ($route->rank > 1)
-                                       -
-                                       @else
-                                       
-                                    @endif 
-                                    {{$route->port->code}} 
-                                    </a>
-                                 @else
-                                    @if ($route->rank > 1)
-                                    -
-                                    @else
-                                    @endif 
-                                    {{$route->port->code}} 
-                                 @endif
-                                 
-                              
-                                    
-                                    @endforeach
-                                 </span>  
-                           @endif
-                        </td>
-
-                        <td>
-                           @if (auth()->user()->hasRole('marine'))
-                           <a href="#" data-toggle="modal" data-target="#add-schedule-route" class="" add-schedule-route>Add route</a>
-                           @endif
-                        </td>
-                     </tr>
-                  </tbody>
-               </table>
-            </div>
-            <hr> --}}
             <div class="card shadow- border">
                {{-- <div class="card-header">
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
@@ -112,15 +25,6 @@
                <div class="card-body">
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
                   <hr>
-                  {{-- <div class="mb-2">
-                     <div class="d-flex">
-                        <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
-                     </div>
-                  </div> --}}
-                  
-                  {{-- <span>{{formatDate($schedule->date)}} </span><br>
-                  <span>{{$schedule->code}}</span> - <span class="text-uppercase">{{$schedule->class }}</span> <br> --}}
-                   
                   <h5><b>{{$schedule->vessel->name ?? 'Vessel Empty'}}</b></h5>
                   
                   
@@ -167,24 +71,6 @@
                       <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
                   @endif
                   
-                  {{-- @if ($schedule->class != 'Crew Change')
-                  <br>
-                  <small>Deadweight {{$persenWeight}}%</small>
-                  @endif --}}
-                  
-                  
-                  
-                  {{-- @if ($schedule->status == 0)
-                  <a href="{{route('schedule.delete', enkripRambo($schedule->id))}}"><small>Delete</small></a>
-                  @endif --}}
-                  
-                  {{-- <hr> --}}
-                  {{-- <div class="row">
-                     <div class="col"><a href="{{route('document.manifest', enkripRambo($schedule->id))}}" class=" ">Preview PDF</a></div>
-                     <div class="col">
-                        <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}" class=" ">Timeline</a>
-                     </div>
-                  </div> --}}
                   <hr>
                   <div class="d-flex justify-content-between">
                      <span>Day</span>
@@ -250,7 +136,7 @@
                   
                   @endforeach --}}
                   @if ($report)
-                     <small class="text-primary"><b>{{formatDateTime($report->created_at)}}</b></small><br>
+                     <small class="text-primary"><b>{{formatDateTime($report->date)}}</b></small><br>
                      <small class="">{{$report->status->name}}  {{$report->port->code ?? ''}} {{$report->anchor ?? ''}}</small><br>
                      @if ($report->status_id == 6)
                         <small >ETA : {{formatDateTime($report->eta)}} at {{$report->destination->code}}</small> <br>
@@ -263,6 +149,11 @@
                      <a href="{{route('schedule.timeline', enkripRambo($schedule->id))}}"><small>Timeline</small></a> <br>
                      <a href="{{route('document.manifest', enkripRambo($schedule->id))}}" target="_blank" class=""><small>Export PDF</small></a> 
                   </div>
+                  @if (auth()->user()->hasRole('marine'))
+                  <hr>
+                  <a href="#" data-toggle="modal" data-target="#schedule-delete"><small>Delete</small></a>
+                  @endif
+                  
                   
                </div>
             </div>
@@ -466,8 +357,37 @@
       </div>
    </div>
 </section>
+   
    <div class="modal fade" id="schedule-vessel-complete" tabindex="-1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-sm" role="document">
+         <form action="{{route('schedule.vessel.complete')}}" method="POST" enctype="multipart/form-data">
+         @csrf
+         @method('PUT')
+         <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Complete Schedule</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     <label for="desc">Document</label>
+                     <input type="file" class="form-control" id="doc" name="doc" >
+                  </div>
+                  
+               </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info">Complete</button>
+            </div>
+         </div>
+         </form>
+      </div>
+      {{-- <div class="modal-dialog" role="document">
          <div class="modal-content">
             <div class="modal-header">
                <h5 class="modal-title">Confirm Complete</h5>
@@ -483,7 +403,7 @@
                <a href="{{route('schedule.vessel.complete', enkripRambo($schedule->id))}}" class="btn btn-success">Complete</a>
             </div>
          </div>
-      </div>
+      </div> --}}
    </div>
 
   {{-- Modal Send Schedule --}}
@@ -492,13 +412,14 @@
       <div class="modal-dialog modal-sm" role="document">
          <div class="modal-content">
             <div class="modal-header">
-               <h5 class="modal-title">Send Schedule</h5>
+               <h5 class="modal-title">Confirm</h5>
                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
             <div class="modal-body">
-               Send this schedule to {{$schedule->vessel->name}}?
+               Send schedule to <br>
+                {{$schedule->vessel->name}}?
             </div>
             <div class="modal-footer bg-whitesmoke">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -569,13 +490,13 @@
     <div class="modal-dialog modal-sm" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title">Confirm Delete</h5>
+          <h5 class="modal-title">Confirm</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-          Delete this Schedule?
+          Delete Schedule <br> {{$schedule->vessel->name}} on {{formatDate($schedule->date)}}?
         </div>
         <div class="modal-footer bg-whitesmoke">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -1158,7 +1079,7 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title">Evidance Anchored at Secure Area</span>
+            <span class="modal-title">Detail Report</span>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>

@@ -851,6 +851,6 @@ class MarineRequestController extends Controller
          'status' => 2
       ]);
 
-      return redirect()->back()->with('success', 'Vessel assigned');
+      return redirect()->route('marine.request')->with('success', 'Vessel assigned');
    }
 }

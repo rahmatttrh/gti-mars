@@ -166,7 +166,7 @@
                                           {{-- <option value=""><a href="/">OK</a></option> --}}
                                           @foreach ($schedules as $sche)
                                              @if ($sche->class == 'Cargo' || $sche->class == 'Crew')
-                                             <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name}}</option>
+                                             <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name}} - {{formatDate($sche->date)}}</option>
                                              @endif
                                              
                                           @endforeach

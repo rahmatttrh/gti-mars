@@ -482,8 +482,8 @@ class HomeController extends Controller
       $thisMonthSchedules = Schedule::whereMonth('date', $today->format('m'))->get();
       $thisMonthActiveSchedule = Schedule::whereMonth('date', $today->format('m'))->where('status', '!=', 11)->get();
       $logisticSchedules = Schedule::where('class', 'Cargo')->get();
-      // dd($logisticSchedules);
-
+      // dd(count($thisMonthActivities));
+      
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,

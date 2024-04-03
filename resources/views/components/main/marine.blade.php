@@ -15,12 +15,12 @@
 </style>
    <div class="row"> 
       <div class="col-md-8">
-         <div class="badge badge-info mb-3">12 Activity</div>
+         <div class="badge badge-info mb-3">{{$tactivity}} Activity</div>
          <div class="" style="height: 150px">
             <canvas id="myChart2"></canvas>
          </div>
          <hr>
-         <div class="badge badge-info mb-3">230 Lt Fuel Consumption</div>
+         <div class="badge badge-info mb-3">0 Lt Fuel Consumption</div>
          <div class="c" style="height: 150px">
             <canvas id="myChart"></canvas>
           </div>
@@ -92,7 +92,10 @@
                   @foreach ($allreqs as $req)
                       <tr>
                         {{-- <td>{{++$i}}</td> --}}
-                        <td>{{formatDate($req->date)}}</td>
+                        <td>
+                           {{-- {{formatDate($req->date)}} --}}
+                           <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{formatDate($req->date)}}</a>
+                        </td>
                         <td>{{$req->schedule->vessel->name ?? '-'}}</td>
                         <td>{{$req->destination->code}}</td>
                         {{-- <td>{{$req->desc}}</td> --}}

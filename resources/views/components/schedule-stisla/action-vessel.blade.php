@@ -60,16 +60,38 @@
                   <option value="7">7</option>  
                   <option value="8">8</option>   
                </select>
-              <div class="input-group-append">
+               <input type="datetime-local"  name="date" id="date" class="form-control">
+              {{-- <div class="input-group-append">
                 <button class="btn btn-info  px-4" type="submit">Add Report</button>
                 @if ($schedule->status > 1 && $schedule->status < 11 )
                 <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
                 @endif
-              </div>
+              </div> --}}
               
             </div>
-            <input type="text" name="desc" id="desc" class="form-control mt-2" placeholder="Description...">
+            
+            <div class="input-group mt-2">
+                  {{-- <input type="datetime-local" style="width: 150px" name="date" id="date" class=""> --}}
+                  <input type="text" name="desc" id="desc" class="form-control" placeholder="Description...">
+                  <div class="input-group-append">
+                     <button class="btn btn-info  px-4" type="submit">Add Report</button>
+                     @if ($schedule->status > 1 && $schedule->status < 11 )
+                     <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
+                     @endif
+                   </div>
+            </div>
+            
          </div>
+         {{-- <div class="row">
+            <div class="col-md-4">
+               <input type="datetime-local" name="date" id="date" class="form-control ">
+            </div>
+            <div class="col-md-8">
+               <input type="text" name="desc" id="desc" class="form-control" placeholder="Description...">
+            </div>
+         </div> --}}
+         
+         
          
          
       </form>

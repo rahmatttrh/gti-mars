@@ -79,13 +79,15 @@ table {
                <table class="table mt-2">
                   <thead>
                      <tr>
-                        <th colspan="5">{{formatDate($schedule->date)}}</th>
+                        <th colspan="7">{{formatDate($schedule->date)}}</th>
                      </tr>
                      <tr>
-                        <th colspan="5">{{$schedule->code}}</th>
+                        <th colspan="7">{{$schedule->code}}</th>
                      </tr>
                      <tr>
                         <th class="">Activity</th>
+                        <th>Location</th>
+                        <th>Day</th>
                         <th class="text-center">Date</th>
                         <th class="text-center">Time</th>
                         <th class="text-center">ETA</th>
@@ -101,9 +103,11 @@ table {
                                   / Departure
                               @endif
 
-                              {{$report->port->name ?? ''}}
+                              {{$report->desc ?? ''}}
                            </td>
-                           <td class="text-center">{{formatDayname($report->created_at)}}, {{formatDate($report->created_at)}}</td>
+                           <td>{{$report->port->name ?? ''}}</td>
+                           <td>{{formatDayname($report->created_at)}}</td>
+                           <td class="text-center">{{formatDate($report->created_at)}}</td>
                            <td class="text-center"> {{formatTime($report->created_at)}}</td>
                            <td class="text-center">
                               @if ($report->status_id == 6)

@@ -11,6 +11,7 @@ use App\Models\ReportRequest;
 use App\Models\ReportVessel;
 use App\Models\Revision;
 use App\Models\Schedule;
+use App\Models\ScheduleDocument;
 use App\Models\Status;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -149,6 +150,7 @@ class VesselScheduleController extends Controller
          'status' => 'required'
       ]);
       // dd($req->status);
+      
       if ($req->status == 9) {
          $req->validate([
             'foto' => 'required|image|mimes:jpg,jpeg,png|max:5120'
@@ -204,6 +206,14 @@ class VesselScheduleController extends Controller
          }
       }
 
+      if ($req->date != null) {
+         $date = $req->date;
+         // dd('ada date');
+      } else {
+         $date = Carbon::now();
+         // dd('tida ada date');
+      }
+
       Report::create([
          'schedule_id' => $req->schedule,
          'vessel_id' => $schedule->vessel_id,
@@ -211,6 +221,7 @@ class VesselScheduleController extends Controller
          'anchor' => $req->anchor,
          'port_id' => $req->port,
          'destination_id' => $req->destination,
+         'date' => $date,
          'eta' => $req->eta,
          'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : '',
          'desc' => $req->desc
@@ -252,11 +263,10 @@ class VesselScheduleController extends Controller
       return redirect()->back()->with('success', "Schedule Status successfully updated");
    }
 
-   public function complete($id){
+   public function complete(Request $req){
       // dd('ok');
-      $dekripId = dekripRambo($id);
-      $schedule = Schedule::find($dekripId);
-      // dd($schedule->vessel->name);
+      // $dekripId = dekripRambo($id);
+      $schedule = Schedule::find($req->schedule);
       $vessel = Vessel::find($schedule->vessel_id);
       $vessel->update([
          'schedule_id' => null
@@ -265,6 +275,11 @@ class VesselScheduleController extends Controller
       $schedule->update([
          'status' => 11
       ]);
+
+      // ScheduleDocument::create([
+      //    'schedule_id' => $schedule->id,
+      //    'doc' => request('doc') ? request()->file('doc')->store('schedule/doc') : '',
+      // ]);
 
       // dd($schedule->status);
 
@@ -277,6 +292,7 @@ class VesselScheduleController extends Controller
       Report::create([
          'schedule_id' => $schedule->id,
          'vessel_id' => $schedule->vessel_id,
+         'doc' => request('doc') ? request()->file('doc')->store('schedule/doc') : '',
          'status_id' => 13
       ]);
 

@@ -175,6 +175,6 @@ class IntermilanController extends Controller
       ]);
 
 
-      return redirect()->back()->with('success', 'Request Activity assigned');
+      return redirect()->route('marine.request')->with('success', 'Request Activity assigned');
    }
 }

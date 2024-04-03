@@ -101,13 +101,7 @@
          <div class="row mt-4">
             <div class="col">
                <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
-                  <div class="timeline-step">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">START</p>
-                           {{-- <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p> --}}
-                     </div>
-                  </div>
+                  
                   @if ($reports->count() > 0)
                      @foreach ($reports as $report)
                      <div class="timeline-step">
@@ -116,16 +110,18 @@
                               $desc = 'ETA : ' . formatDateTime($report->eta) . ' at '.$report->destination->name;
                            }
                               else {
-                                 $desc ='-';
+                                 $desc = $report->desc;
                               }
                            
                         @endphp
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="{{$desc}}" data-original-title="INFO">
+                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="{{$desc}}" data-original-title="">
                            <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</p>
-                           <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
-                           @if ($report->status_id == 9)
-                              <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
+                           <p class="h6 mt-3 mb-1">{{  \Carbon\Carbon::parse($report->date)->format('d-m-y H:i ')}}</p>
+                           {{-- <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p> --}}
+                           @if ($report->status_id > 2)
+                              <a href="" class="" data-toggle="modal" data-target="#report-evidance-{{$report->id}}"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</a>
+                              @else
+                              <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
                            @endif
                
                            {{-- @if ($report->status_id == 6)
@@ -139,6 +135,13 @@
                      </div>
                      @endforeach
                   @endif
+                  <div class="timeline-step">
+                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
+                           <div class="inner-circle"></div>
+                           <p class="h6 mt-3 mb-1">START</p>
+                           {{-- <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p> --}}
+                     </div>
+                  </div>
                   
                   {{-- <div class="timeline-step">
                      <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
@@ -248,13 +251,29 @@
       <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <span class="modal-title">Evidance Anchored at Secure Area</span>
+            <span class="modal-title">Report Detail</span>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <img src="{{asset('storage/' .$report->foto)}}" class="img-fluid" alt="Responsive image">
+            <p>Photo</p>  
+            {{-- <hr> --}}
+               @if ($report->foto)
+               <img src="{{asset('storage/' .$report->foto)}}" class="img-fluid" alt="Responsive image">
+               @else
+               <small class="text-muted">Empty</small>
+               @endif
+            
+            <hr>
+            <p>Document</p>
+            {{-- <hr> --}}
+            @if ($report->doc)
+            <embed  style="width: 100%; height:500px;overflow:hidden" class="text-center" id="preview-pdf" src="{{asset('storage/' . $report->doc)}}" frameborder="0"></embed>
+            @else
+            <small class="text-muted">Empty</small>
+            @endif
+            
             {{-- <img width="100vh" src="" alt=""> --}}
             {{-- {{$report->foto}} --}}
           </div>

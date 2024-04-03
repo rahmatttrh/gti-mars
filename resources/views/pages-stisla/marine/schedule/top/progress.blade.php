@@ -56,7 +56,19 @@
                               -
                               @endif --}}
                            </td>
-                           <td>{{$req->desc}}</td>
+                           <td>
+                              {{$req->desc}}
+                              @if ($req->activity_id == 5 || $req->activity_id == 6)
+                                  [{{$req->qty_approve}} KL]
+                              @endif
+
+                              @if ($req->activity_id = 1)
+                              
+                                  @foreach ($req->cargoItems as $item)
+                                      {{$item->desc}}
+                                  @endforeach
+                              @endif
+                           </td>
                            <td>{{$req->origin->code}} - {{$req->destination->code}}</td>
                            
                            <td>
@@ -127,6 +139,18 @@
                         <td class="">Qty</td>
                         <td>{{$qty}} Activity</td>
                      </tr>
+                     @if ($activityId == 5 )
+                     <tr>
+                        <td>Fuel</td>
+                        <td>{{$totalFuel}} KL</td>
+                     </tr>
+                     @endif
+                     @if ($activityId == 6 )
+                     <tr>
+                        <td>Water</td>
+                        <td>{{$totalWater}} KL</td>
+                     </tr>
+                     @endif
                      
                   </tbody>
                </table>

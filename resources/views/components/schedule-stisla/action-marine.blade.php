@@ -9,9 +9,9 @@
       {{-- @if ($schedule->requests()->count() > 0) --}}
       <div class="d-flex">
          <button class="btn btn-info mr-1" data-toggle="modal" data-target="#schedule-send">
-            Send to vessel
+            Send
          </button>
-         <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
+         <button class="btn btn-light border btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
             Select Vessel
          </button>
       </div>
@@ -19,7 +19,7 @@
       
       <hr>
       @elseif($schedule->status == 1 )
-      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
+      <button class="btn btn-light border btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
          Select Vessel
       </button>
       <hr>

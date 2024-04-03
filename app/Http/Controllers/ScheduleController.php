@@ -369,7 +369,7 @@ class ScheduleController extends Controller
    {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
-      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'asc')->get();
+      $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
 
       return view('pages-stisla.schedule.timeline', [
          'schedule' => $schedule,

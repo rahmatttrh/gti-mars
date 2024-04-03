@@ -558,7 +558,8 @@ Route::group(['middleware' => ['role:vessel']], function () {
          Route::get('all', [VesselScheduleController::class, 'all'])->name('schedule.vessel.all');
          Route::get('progress', [VesselScheduleController::class, 'progress'])->name('schedule.progress.vessel');
          Route::get('history', [VesselScheduleController::class, 'history'])->name('schedule.history.vessel');
-         Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+         // Route::get('complete/{id}', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
+         Route::put('complete', [VesselScheduleController::class, 'complete'])->name('schedule.vessel.complete');
          Route::put('revision', [VesselScheduleController::class, 'revision'])->name('schedule.revision');
       });
    });
