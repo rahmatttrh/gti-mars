@@ -86,6 +86,7 @@ Route::middleware(["auth"])->group(function () {
    Route::put('request/update', [DepartmentRequestController::class, 'update'])->name('request.update');
    Route::put('request/bcm/update', [DepartmentRequestController::class, 'updateBcm'])->name('request.update.bcm');
    Route::put('cargo/update/logistic', [CargoItemController::class, 'updateLogistic'])->name('cargo.update.logistic');
+   Route::get('crew/drop/{id}', [RequestController::class, 'crewDrop'])->name('crew.drop');
    
    Route::prefix('news')->group(function () {
       

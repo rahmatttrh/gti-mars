@@ -309,4 +309,15 @@ class RequestController extends Controller
 
       return redirect()->back()->with('success', 'Request Activity successfully approved');
    }
+
+   public function crewDrop($id){
+      $dekripId = dekripRambo($id);
+      $request = ModelsRequest::find($dekripId);
+
+      $request->update([
+         'status' => 12
+      ]);
+
+      return redirect()->back()->with('success', 'Crew dropped');
+   }
 }

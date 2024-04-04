@@ -225,7 +225,9 @@ class VesselScheduleController extends Controller
          'eta' => $req->eta,
          'foto' => request('foto') ? request()->file('foto')->store('report/evidance') : '',
          'doc' => request('doc') ? request()->file('doc')->store('report/doc') : '',
-         'desc' => $req->desc
+         'desc' => $req->desc,
+         'cob' => $req->cob,
+         'pob' => $req->pob
       ]);
 
       ReportVessel::create([

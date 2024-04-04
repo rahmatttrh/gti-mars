@@ -102,8 +102,12 @@
                   
                   @if ($schedule->class != 'Crew Change')
                   <div class="d-flex justify-content-between">
-                     <span>Occupied</span>
-                     <span class="">{{$persenWeight}}% [{{$schedule->total_weight}} Ton]</span>
+                     <span>COB</span>
+                     <span class="">{{$persenWeight ?? '0'}}% [{{$schedule->total_weight}} Ton]</span>
+                  </div>
+                  <div class="d-flex justify-content-between">
+                     <span>POB</span>
+                     <span class="">{{$totalDeparture ?? '0'}}</span>
                   </div>
                   @endif
                   @if ($schedule->class == 'Crew Change')

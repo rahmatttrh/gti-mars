@@ -86,13 +86,21 @@
          </div>
          
          <div class="form-row mt--4">
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                <label for="file">Select Image</label>
                <input type="file" name="foto" id="foto" class="form-control" >
             </div>
-            <div class="form-group col-md-3">
+            <div class="form-group col-md-4">
                <label for="doc">Select Document</label>
                <input type="file" class="form-control" name="doc" id="doc" >
+            </div>
+            <div class="form-group col-md-2">
+               <label for="cob">COB</label>
+               <input type="number" class="form-control" name="cob" id="cob" >
+            </div>
+            <div class="form-group col-md-2">
+               <label for="pob">POB</label>
+               <input type="number" class="form-control" name="pob" id="pob" >
             </div>
             
          </div>

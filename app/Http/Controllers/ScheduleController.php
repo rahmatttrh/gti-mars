@@ -162,7 +162,10 @@ class ScheduleController extends Controller
       } else {
          $totalDeparture = null;
          $totalReturn = null;
-
+         foreach($schedule->requests->where('activity_id', 2)->where('status', '!=', 12) as $req){
+            // dd(count($req->passengerItems->where('type', 'Departure')));
+            $totalDeparture += count($req->passengerItems->where('type', 'Departure'));
+         }
       }
       
 

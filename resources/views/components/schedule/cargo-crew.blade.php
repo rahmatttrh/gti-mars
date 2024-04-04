@@ -50,11 +50,11 @@
                      <th class="text-center">Weight(ton)</th>
                      <th class="text-center">Drop</th>
                      {{-- <th class="text-center">Size (m<sup>2</sup>)</th> --}}
-                     @if ($schedule->status == 3 && auth()->user()->hasRole('department'))
-                     <th>Confirmation Action</th>
-                     @else
+                     {{-- @if ($schedule->status == 3 && auth()->user()->hasRole('department')) --}}
                      <th></th>
-                     @endif
+                     {{-- @else
+                     <th></th>
+                     @endif --}}
                   </tr>
                </thead>
                <tbody>
@@ -135,7 +135,7 @@
                            @endif
                            </form>
 
-                           @if ($request->status == 10 && auth()->user()->hasRole('department'))
+                           {{-- @if ($request->status == 10 && auth()->user()->hasRole('department')) --}}
                            <td class="text-center">
                                  @if ($item->status == 0)
                                  <form action="{{route('cargo.item.offloading')}}" method="POST" class="d-flex">
@@ -148,7 +148,7 @@
                                           <option value="{{$route->port->id}}">{{$route->port->code}}</option>  
                                        @endforeach
                                     </select>
-                                    <button type="submit" class="btn btn-info">Confirm</button>
+                                    <button type="submit" class="btn btn-info btn-sm">Confirm</button>
                                  </form>
                                  {{-- <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#confirmCargo">Confirm</a> --}}
                                  {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
@@ -173,9 +173,9 @@
                               </div>
                               </form> --}}
                            </td>
-                           @else
+                           {{-- @else
                            <td></td>
-                           @endif
+                           @endif --}}
                         </tr>
                      @endforeach
                      <tr>
@@ -203,6 +203,7 @@
                      <th class="text-center">Qty</th>
                      
                      <th class="">Desc</th>
+                     {{-- <th></th> --}}
                      {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
                      <th class="text-center">Weight (ton)</th> --}}
                      </tr>
@@ -225,7 +226,6 @@
                            {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
                            <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
                            
-                        
                         </tr>
                      @endforeach
                      @endif
@@ -241,12 +241,13 @@
                   
                   <tr>
                      <th>Type </th>
-                     <th>Route</th>
+                     {{-- <th>Route</th> --}}
                      <th>Name</th>
                      <th>Barcode</th>
                      <th>Department</th>
                      <th>Company</th>
                      <th>Desc</th>
+                     {{-- <th></th> --}}
                   </tr>
                </thead>
                <tbody>
@@ -256,13 +257,21 @@
                         <td>{{$requests->id}}</td>
                      </tr> --}}
                      <tr>
-                     <td colspan="2"><a href="{{route('request.detail.new', enkripRambo($requests->id))}}"><b>{{$requests->origin->name}} - {{$requests->destination->name}}</b></a></td>
-                     <td colspan="5">{{$requests->desc}}</td>
+                        <td colspan="2"><a href="{{route('request.detail.new', enkripRambo($requests->id))}}"><b>{{$requests->origin->code}} - {{$requests->destination->code}}</b></a></td>
+                        <td colspan="3">{{$requests->desc}}</td>
+                        <td>
+                           @if ($requests->status != 12)
+                           <a href="{{route('crew.drop', enkripRambo($requests->id))}}" class="btn btn-sm btn-info">Drop</a>
+                           @else
+                           <x-status-stisla.request :request="$requests" />
+                           @endif
+                           
+                        </td>
                      </tr>
                      @foreach ($requests->passengerItems as $passenger)
                      <tr>
                         <td>{{$passenger->type}}</td>
-                        <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td>
+                        {{-- <td class="text-truncate">{{$passenger->request->origin->name}} - {{$passenger->request->destination->name}}</td> --}}
                         <td class="text-truncate">{{$passenger->name}}</td>
                         <td class="text-truncate">{{$passenger->barcode}}</td>
                         <td class="text-truncate">{{$passenger->department}}</td>
