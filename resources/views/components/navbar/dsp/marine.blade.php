@@ -172,6 +172,15 @@
                <span>Report</span>
             </a>
          </li>
+
+         <li class="nav-item pr-2 {{ (request()->is('dsp/m/tracking/*')) ? 'active' : '' }}">
+            <a href="{{route('tracking')}}" class="nav-link {{ (request()->is('dsp/m/tracking/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/m/tracking/*'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               <span>Tracking</span>
+            </a>
+         </li>
          
 
          <li class="nav-item {{ (request()->is('dsp/m/surveillance')) ? 'active' : '' }}">

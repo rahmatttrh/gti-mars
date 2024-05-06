@@ -131,7 +131,7 @@
                            @if ($request->user->getPort()->func == 'DWI')
                            <tr style="background-color: rgb(242, 248, 221)">
                               @else
-                              <tr style="background-color: rgb(214, 200, 252)">
+                              <tr style="background-color: rgb(230, 221, 252)">
                            @endif
                            
                               <td style="width:220px">
@@ -321,7 +321,8 @@
                {{-- </div> --}}
                {{-- <div class="form-group"> --}}
                   <div class="input-group mb-3">
-                     <input type="date" class="form-control" name="date" id="date" value="{{$now->format('Y-m-d')}}"  min="{{$start}}" max="{{$end}}">
+                     {{-- min="{{$start}}" max="{{$end}}" --}}
+                     <input type="date" class="form-control" name="date" id="date" value="{{$now->format('Y-m-d')}}"  >
                      <div class="input-group-append">
                         <button class="btn btn-light border btn-block " type="submit">Create</button>
                      </div>

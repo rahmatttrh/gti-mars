@@ -44,6 +44,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SurveillanceCargoController;
 use App\Http\Controllers\SurveillanceController;
 use App\Http\Controllers\SurveillanceCrewController;
+use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VdrController;
 use App\Http\Controllers\VdrCrewController;
@@ -374,6 +375,12 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
          Route::post('reorder/route', [MarineScheduleController::class, 'reorderRoute'])->name('schedule.reorder.route');
          Route::get('delete/route/{id}', [MarineScheduleController::class, 'deleteRoute'])->name('schedule.delete.route');
          Route::post('add/cargo', [MarineScheduleController::class, 'addCargo'])->name('schedule.add.cargo');
+      });
+
+      Route::prefix("tracking")->group(function () {
+         Route::get('index', [TrackingController::class, "index"])->name('tracking');
+         Route::get("user", [MarineRequestController::class, "index",])->name('marine.request');
+         Route::post("filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
       });
 
       Route::prefix("request")->group(function () {

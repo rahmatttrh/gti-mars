@@ -277,6 +277,16 @@ class UserSeeder extends Seeder
       ]);
       $cosl225->assignRole('department');
 
+      $gnjati = User::create([
+         'name' => 'Gunung Jati',
+         'username' => 'gnjati',
+         'email' => 'gnjati@pertamina.com',
+         'password' => Hash::make('12345678'),
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+      $gnjati->assignRole('department');
+
       // $felix = User::create([
       //    'name' => 'Felix',
       //    'username' => 'felix',

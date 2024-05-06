@@ -13,7 +13,7 @@
          </p> --}}
 
          <div class="row">
-         <div class="col-md-3">
+         <div class="col-md-4">
             <b>Form Edit</b>
             <hr>
             <form action="{{route('port.update')}}" method="POST">
@@ -22,17 +22,35 @@
                <input type="number" name="port" id="port" value="{{$port->id}}" hidden>
                <div class="form-row">
                   
-                  <div class="form-group col-md-12">
+                  <div class="mb-2 col-md-8">
                      <label for="name">Location Name*</label>
                      <input type="text" class="form-control " id="name" name="name" value="{{$port->name}}">
                   </div>
-                  <div class="form-group col-md-12">
+                  <div class="mb-2 col-md-4">
+                     <label for="code">Code*</label>
+                     <input type="text" class="form-control " id="code" name="code" value="{{$port->code}}" >
+                  </div>
+
+                  <div class="mb-2 col-md-12">
                      <label for="email">Email</label>
                      <input type="text" class="form-control " id="email" name="email" value="{{$port->email}}">
                   </div>
+                  
                </div>
                <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="mb-3 col-md-6">
+                     <label>Region</label>
+                     <select  class="custom-select" id="region" name="region">
+                        <option  disabled selected>Choose one</option>
+                        <option {{$port->region == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                        <option {{$port->region == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                        <option {{$port->region == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                        <option {{$port->region == 'DWI' ? 'selected' : ''}} value="DWI">DWI</option>
+                        <option {{$port->region == 'PGPI' ? 'selected' : ''}} value="PGPI">PGPI</option>
+                        <option {{$port->region == 'LIMO' ? 'selected' : ''}} value="LIMO">LIMO</option>
+                     </select>
+                  </div>
+                  <div class="mb-2 col-md-6">
                      <label>Type*</label>
                      <select  class="custom-select" id="type" name="type">
                         <option  disabled selected>Choose one</option>
@@ -43,7 +61,7 @@
                         <option {{$port->type == 'Platform' ? 'selected' : ''}} value="Platform">Platform</option>
                      </select>
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="mb-3 col-md-12">
                      <label>Platform</label>
                      <select  class="custom-select" id="platform" name="platform">
                         <option  disabled selected>Choose one</option>
@@ -52,6 +70,7 @@
                         @endforeach
                      </select>
                   </div>
+                  
                   {{-- <div class="form-group col-md-5">
                      <label>Region</label>
                      <select  class="custom-select" id="region" name="region">
@@ -66,7 +85,7 @@
             </form>
             
          </div>
-         <div class="col-9">
+         <div class="col-md-8">
             
             <div class="table-responsive">
                <table class="table-sm table-striped " id="table-1">

@@ -30,7 +30,9 @@ class PortController extends Controller
          'name' => $req->name,
          'email' => $req->email,
          'type' => $req->type,
-         'region' => $req->region
+         'region' => $req->region,
+         'func' => $req->region,
+         'code' => $req->code
          // 'latitude' => $req->latitude,
          // 'longitude' => $req->longitude
       ]);
@@ -81,7 +83,9 @@ class PortController extends Controller
          'email' => $req->email,
          'type' => $req->type,
          'region' => $req->region,
-         'port_id' => $req->platform
+         'func' => $req->region,
+         'port_id' => $req->platform,
+         'code' => $req->code
          // 'latitude' => $req->latitude,
          // 'longitude' => $req->longitude
       ]);

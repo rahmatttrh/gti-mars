@@ -13,28 +13,32 @@
          </p> --}}
 
          <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                <b>Form Add Port</b>
                <hr>
                <form action="{{route('port.store')}}" method="POST">
                   @csrf
                   <div class="form-row">
                      
-                     <div class="form-group col-md-12">
+                     <div class="mb-2 col-md-8">
                         <label for="name">Location Name*</label>
                         <input type="text" class="form-control " id="name" name="name" >
                      </div>
-                     <div class="form-group col-md-6">
+                     <div class="mb-2 col-md-4">
+                        <label for="code">Code*</label>
+                        <input type="text" class="form-control " id="code" name="code" >
+                     </div>
+                     <div class="mb-2 col-md-6">
                         <label for="email">Email</label>
                         <input type="text" class="form-control " id="email" name="email" >
                      </div>
-                     <div class="form-group col-md-6">
+                     <div class="mb-2 col-md-6">
                         <label for="username">Username</label>
                         <input type="text" class="form-control " id="username" name="username" >
                      </div>
                   </div>
                   <div class="form-row">
-                     <div class="form-group col-md-7">
+                     <div class="mb-3 col-md-6">
                         <label>Type*</label>
                         <select  class="custom-select" id="type" name="type">
                            <option  disabled selected>Choose one</option>
@@ -45,60 +49,63 @@
                            <option value="Platform">Platform</option>
                         </select>
                      </div>
-                     <div class="form-group col-md-5">
+                     <div class="mb-3 col-md-6">
                         <label>Region</label>
                         <select  class="custom-select" id="region" name="region">
                            <option  disabled selected>Choose one</option>
                            <option value="NBU">NBU</option>
                            <option value="CBU">CBU</option>
                            <option value="SBU">SBU</option>
+                           <option value="DWI">DWI</option>
+                           <option value="PGPI">PGPI</option>
+                           <option value="LIMO">LIMO</option>
                         </select>
                      </div>
                   </div>
                   <button class="btn btn-info">Add</button>
                </form>
             </div>
-         <div class="col-9">
-            
-            <div class="table-responsive">
-               <table class="table-sm table-striped " id="table-1">
-                  <thead>
-                  <tr>
-                     {{-- <th class="text-center">No.</th> --}}
-                     <th>Name</th>
-                     <th>Region</th>
-                     <th>Email</th>
-                     <th>Type</th>
-                     <th></th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  @foreach ($ports as $port)
+            <div class="col-8">
+               
+               <div class="table-responsive">
+                  <table class="table-sm table-striped " id="table-1">
+                     <thead>
                      <tr>
-                        {{-- <td class="text-center">{{++$i}}</td> --}}
-                        <td>
-                           {{$port->name}}
-                           @if ($port->port_id)
-                                 (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
-                           @endif
-                        </td>
-                        
-                        <td>{{$port->region}}</td>
-                        <td>{{$port->email}}</td>
-                        <td>{{$port->type}}</td>
-                        <td>
-                           
-                           <a href="{{route('port.edit', enkripRambo($port->id))}}" class="">Edit</a>
-                           <a href="" class="">Delete</a>
-                        </td>
+                        {{-- <th class="text-center">No.</th> --}}
+                        <th>Name</th>
+                        <th>Region</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th></th>
                      </tr>
-                  @endforeach
-                  
-                  </tbody>
-               </table>
+                     </thead>
+                     <tbody>
+                     @foreach ($ports as $port)
+                        <tr>
+                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td>
+                              {{$port->name}}
+                              @if ($port->port_id)
+                                    (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
+                              @endif
+                           </td>
+                           
+                           <td>{{$port->region}}</td>
+                           <td>{{$port->email}}</td>
+                           <td>{{$port->type}}</td>
+                           <td>
+                              
+                              <a href="{{route('port.edit', enkripRambo($port->id))}}" class="">Edit</a>
+                              <a href="" class="">Delete</a>
+                           </td>
+                        </tr>
+                     @endforeach
+                     
+                     </tbody>
+                  </table>
+               </div>
+               
             </div>
-              
-         </div>
          </div>
       </div>
    </section>

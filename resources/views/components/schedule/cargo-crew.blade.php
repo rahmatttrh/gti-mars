@@ -137,6 +137,9 @@
 
                            {{-- @if ($request->status == 10 && auth()->user()->hasRole('department')) --}}
                            <td class="text-center">
+                              @if ($request->status > 2)
+                                  
+                              
                                  @if ($item->status == 0)
                                  <form action="{{route('cargo.item.offloading')}}" method="POST" class="d-flex">
                                     @csrf
@@ -155,7 +158,7 @@
                                  @else
                                  -
                                  @endif
-                                 
+                              @endif
                               {{-- <form action="">
                                  <div class="form-group">
                                  <div class="input-group">

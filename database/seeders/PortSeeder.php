@@ -102,6 +102,7 @@ class PortSeeder extends Seeder
       DB::table('ports')->insert([
          'code' => '221',
          'name' => 'COSL 221',
+         'func' => 'DWI',
          'email' => 'c221@pertamina.com',
          'type' => 'Barge',
          'created_at' => NOW(),
@@ -111,6 +112,7 @@ class PortSeeder extends Seeder
       DB::table('ports')->insert([
          'code' => '222',
          'name' => 'COSL 222',
+         'func' => 'DWI',
          'email' => 'c222@pertamina.com',
          'type' => 'Barge',
          'created_at' => NOW(),
@@ -120,6 +122,7 @@ class PortSeeder extends Seeder
       DB::table('ports')->insert([
          'code' => '223',
          'name' => 'COSL 223',
+         'func' => 'DWI',
          'email' => 'c223@pertamina.com',
          'type' => 'Barge',
          'txid' => '01157764SKY52D1',
@@ -132,6 +135,7 @@ class PortSeeder extends Seeder
       DB::table('ports')->insert([
          'code' => '225',
          'name' => 'COSL 225',
+         'func' => 'DWI',
          'email' => 'c225@pertamina.com',
          'type' => 'Barge',
          'txid' => '01143850SKYDB0F',
@@ -144,11 +148,22 @@ class PortSeeder extends Seeder
       DB::table('ports')->insert([
          'code' => 'WINNER',
          'name' => 'Petroleum Winner',
+         'func' => 'DWI',
          'email' => 'winner@pertamina.com',
          'type' => 'Barge',
          'txid' => '01143661SKY635E',
          'imo' => '8767800',
          'mmsi' => '525019624',
+         'created_at' => NOW(),
+         'updated_at' => NOW()
+      ]);
+
+      DB::table('ports')->insert([
+         'code' => 'GN-JATI',
+         'name' => 'Gunung Jati',
+         'email' => 'gnjati@pertamina.com',
+         'type' => 'Barge',
+         'func' => 'DWI',
          'created_at' => NOW(),
          'updated_at' => NOW()
       ]);
