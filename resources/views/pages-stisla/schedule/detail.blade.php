@@ -18,6 +18,14 @@
             @if (auth()->user()->hasRole('department'))
                <x-schedule-stisla.action-department :schedule="$schedule" />
             @endif
+
+            @if (auth()->user()->hasRole('admin-logistic') && $schedule->status == 0)
+            <button class="btn btn-info btn-block mb-2" data-toggle="modal" data-target="#schedule-send">
+               Send
+            </button>
+            @endif
+            
+
             <div class="card shadow- border">
                {{-- <div class="card-header">
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
@@ -193,9 +201,9 @@
             <x-schedule-stisla.timeline :reports="$reports" /> --}}
          </div>
          <div class="col-md-9">
-            @if (auth()->user()->hasRole('vessel') && $schedule->status > 1)
+            {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1)
                <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixRoutes" />
-            @endif
+            @endif --}}
 
             
   
@@ -216,151 +224,157 @@
                   @endif
                @endif
             @endif --}}
-
-            @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
-               <x-schedule.cargo-crew :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
-            @elseif($schedule->class == 'Moving')
-            <div class="card border">
-               <div class="card-header">
-                  <b>Moving Barge</b>
-               </div>
-               <div class="card-body">
-                  <div class="d-flex align-items-center">
-                     <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
-                     <div>
-                        <h5>{{$schedule->requests()->first()->bargeItem->barge->name}}</h5>
-                        <span>{{$schedule->requests()->first()->code}}</span>
+            @if (auth()->user()->hasRole('admin-logistic'))
+               <x-schedule.logistic :requests="$requests" :schedule="$schedule" :cargos="$cargos" :items="$items" />
+                  @else
+                  @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
+                  <x-schedule.cargo-crew :statuses="$statuses" :fixroutes="$fixRoutes" :cargos="$cargos" :items="$items" :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
+                  @elseif($schedule->class == 'Moving')
+                  <div class="card border">
+                     <div class="card-header">
+                        <b>Moving Barge</b>
                      </div>
-                  </div>
-                  <br>
-                  Requested by {{$schedule->requests()->first()->user->name}}
-               </div>
-            </div>
-            @elseif($schedule->class == 'Lifting')
-            <div class="card border">
-               <div class="card-header">
-                  <b>Lifting Tanker</b>
-               </div>
-               <div class="card-body">
-                  <div class="d-flex align-items-center">
-                     <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
-                     <div>
-                        <h5>{{$schedule->requests()->first()->desc}}</h5>
-                        <span>{{$schedule->requests()->first()->code}}</span>
-                     </div>
-                  </div>
-                  <br>
-                  Requested by {{$schedule->requests()->first()->user->name}}
-               </div>
-            </div>
-            
-            @elseif($schedule->class == 'Fuel Oil' )
-            <div class="card border">
-               <div class="card-header">
-                  <b>Fuel Oil</b>
-               </div>
-               <div class="card-body">
-                  <div class="d-flex align-items-center">
-                     <img width="100" src="{{asset('img/flaticon/oil-barrel.png')}}" alt="" class="img-thumbnail mr-4">
-                     <div>
-                        <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
-                        
+                     <div class="card-body">
+                        <div class="d-flex align-items-center">
+                           <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
+                           <div>
+                              <h5>{{$schedule->requests()->first()->bargeItem->barge->name}}</h5>
+                              <span>{{$schedule->requests()->first()->code}}</span>
+                           </div>
+                        </div>
+                        <br>
                         Requested by {{$schedule->requests()->first()->user->name}}
                      </div>
                   </div>
-               </div>
-               <div class="card-footer bg-whitesmoke">
-                  @if (auth()->user()->hasRole('marine'))
-                     @if ($schedule->status == 0)
-                     <form action="{{route('schedule.jetty.update')}}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-
-                        <div class="form-row">
-                           <div class="form-group col-md-4">
-                              <div class="input-group">
-                                 <select id="jetty" class="form-control" name="jetty" id="jetty">
-                                    <option selected disabled>Choose one...</option>
-                                    <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
-                                    <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
-                                    <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
-                                    <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
-                                 </select>
-                                 <div class="input-group-append">
-                                    <button class="btn btn-info" type="submit">Submit</button>
-                                 </div>
-                              </div>
+                  @elseif($schedule->class == 'Lifting')
+                  <div class="card border">
+                     <div class="card-header">
+                        <b>Lifting Tanker</b>
+                     </div>
+                     <div class="card-body">
+                        <div class="d-flex align-items-center">
+                           <img width="70" src="{{asset('img/flaticon/oil-platform.png')}}" alt="" class="img-thumbnail mr-4">
+                           <div>
+                              <h5>{{$schedule->requests()->first()->desc}}</h5>
+                              <span>{{$schedule->requests()->first()->code}}</span>
                            </div>
                         </div>
-                     </form>
-                     @else
-                     <span>{{$schedule->remark}}</span>
-                     @endif
-                     
-                     @elseif(auth()->user()->hasRole('vessel'))
-                     <span>{{$schedule->remark}}</span>
-                  @endif
-               </div>
-            </div>
-            @elseif($schedule->class == 'Fresh Water')
-            <div class="card border">
-               <div class="card-header">
-                  <b>Fresh Water</b>
-               </div>
-               <div class="card-body">
-                  <div class="d-flex align-items-center">
-                     <img width="100" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
-                     <div>
-                        <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
-                        
+                        <br>
                         Requested by {{$schedule->requests()->first()->user->name}}
                      </div>
                   </div>
-               </div>
-               <div class="card-footer bg-whitesmoke">
-                  @if (auth()->user()->hasRole('marine'))
-                     @if ($schedule->status == 0)
-                     <form action="{{route('schedule.jetty.update')}}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-
-                        <div class="form-row">
-                           <div class="form-group col-md-4">
-                              <div class="input-group">
-                                 <select id="jetty" class="form-control" name="jetty" id="jetty">
-                                    <option selected disabled>Choose one...</option>
-                                    <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
-                                    <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
-                                    <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
-                                    <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
-                                 </select>
-                                 <div class="input-group-append">
-                                    <button class="btn btn-info" type="submit">Submit</button>
-                                 </div>
-                              </div>
+                  
+                  @elseif($schedule->class == 'Fuel Oil' )
+                  <div class="card border">
+                     <div class="card-header">
+                        <b>Fuel Oil</b>
+                     </div>
+                     <div class="card-body">
+                        <div class="d-flex align-items-center">
+                           <img width="100" src="{{asset('img/flaticon/oil-barrel.png')}}" alt="" class="img-thumbnail mr-4">
+                           <div>
+                              <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
+                              
+                              Requested by {{$schedule->requests()->first()->user->name}}
                            </div>
                         </div>
-                     </form>
-                     @else
-                     <span>{{$schedule->remark}}</span>
-                     @endif
-                     
-                     @elseif(auth()->user()->hasRole('vessel'))
-                     <span>{{$schedule->remark}}</span>
-                  @endif
-               </div>
-            </div>
-            @elseif($schedule->class == 'Crew Change')
-            {{-- <h1>OK</h1> --}}
-               {{-- {{count($recentCrewChangeRequests)}} --}}
-               <x-schedule.crew-change :requests="$requests" :schedule="$schedule" :recents="$recentCrewChangeRequests" />
+                     </div>
+                     <div class="card-footer bg-whitesmoke">
+                        @if (auth()->user()->hasRole('marine'))
+                           @if ($schedule->status == 0)
+                           <form action="{{route('schedule.jetty.update')}}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+   
+                              <div class="form-row">
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                       <select id="jetty" class="form-control" name="jetty" id="jetty">
+                                          <option selected disabled>Choose one...</option>
+                                          <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
+                                          <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
+                                          <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
+                                          <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
+                                       </select>
+                                       <div class="input-group-append">
+                                          <button class="btn btn-info" type="submit">Submit</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                           @else
+                           <span>{{$schedule->remark}}</span>
+                           @endif
+                           
+                           @elseif(auth()->user()->hasRole('vessel'))
+                           <span>{{$schedule->remark}}</span>
+                        @endif
+                     </div>
+                  </div>
+                  @elseif($schedule->class == 'Fresh Water')
+                  <div class="card border">
+                     <div class="card-header">
+                        <b>Fresh Water</b>
+                     </div>
+                     <div class="card-body">
+                        <div class="d-flex align-items-center">
+                           <img width="100" src="{{asset('img/flaticon/crude.png')}}" alt="" class="img-thumbnail mr-4">
+                           <div>
+                              <h5>{{$schedule->requests()->first()->qty}} / {{$schedule->requests()->first()->qty_approve ?? '0'}} Approved (KL)</h5>
+                              
+                              Requested by {{$schedule->requests()->first()->user->name}}
+                           </div>
+                        </div>
+                     </div>
+                     <div class="card-footer bg-whitesmoke">
+                        @if (auth()->user()->hasRole('marine'))
+                           @if ($schedule->status == 0)
+                           <form action="{{route('schedule.jetty.update')}}" method="POST">
+                              @csrf
+                              @method('PUT')
+                              <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+   
+                              <div class="form-row">
+                                 <div class="form-group col-md-4">
+                                    <div class="input-group">
+                                       <select id="jetty" class="form-control" name="jetty" id="jetty">
+                                          <option selected disabled>Choose one...</option>
+                                          <option {{$schedule->remark == 'Jetty 1' ? 'selected' : ''}} value="Jetty 1">Jetty 1</option>
+                                          <option {{$schedule->remark == 'Jetty 2' ? 'selected' : ''}}  value="Jetty 2">Jetty 2</option>
+                                          <option {{$schedule->remark == 'Jetty 3' ? 'selected' : ''}}  value="Jetty 3">Jetty 3</option>
+                                          <option {{$schedule->remark == 'Jetty 4' ? 'selected' : ''}}  value="Jetty 4">Jetty 4</option>
+                                       </select>
+                                       <div class="input-group-append">
+                                          <button class="btn btn-info" type="submit">Submit</button>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </form>
+                           @else
+                           <span>{{$schedule->remark}}</span>
+                           @endif
+                           
+                           @elseif(auth()->user()->hasRole('vessel'))
+                           <span>{{$schedule->remark}}</span>
+                        @endif
+                     </div>
+                  </div>
+                  @elseif($schedule->class == 'Crew Change')
+                  {{-- <h1>OK</h1> --}}
+                  {{-- {{count($recentCrewChangeRequests)}} --}}
+                  <x-schedule.crew-change :requests="$requests" :schedule="$schedule" :recents="$recentCrewChangeRequests" />
+               @endif
             @endif
+           
          </div>
       </div>
    </div>
 </section>
+
+
    
    <div class="modal fade" id="schedule-vessel-complete" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm" role="document">
@@ -486,6 +500,41 @@
          </form>
       </div>
    </div>
+
+   {{-- Modal Reject Request  --}}
+   @foreach ($requests->where('activity_id', 1) as $request)
+   <div class="modal fade" id="cargo-takeout-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog" role="document">
+            <form action="{{route('request.undo.approve')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+            <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Takeout Cargo {{$request->code}} </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <div class="form-row">
+                     <div class="form-group col-md-12">
+                        <label for="desc">Reason</label>
+                        <input type="text" required class="form-control" id="reason" name="reason" >
+                     </div>
+                     
+                  </div>
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger">Takeout</button>
+               </div>
+            </div>
+            </form>
+         </div>
+      </div>
+   @endforeach
 
   
 
@@ -1102,6 +1151,99 @@
     </div>
     @endforeach
   @endif
+
+  
+
+   {{-- <div class="modal modal-blur fade" id="edit-item" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered modal-dialog-scrollable" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Add Cargo Item</h5>
+               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{route('cargo.item.store')}}" method="POST">
+               @csrf
+               
+               <input type="number" name="req" id="req" value="{{$request->id}}" hidden>
+               <div class="modal-body">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                           <input type="text" class="form-control" id="no_document" name="no_document" >
+                           <label for="no_document">MTD</label>
+                        </div>
+                     </div>
+                     <div class="col-md-8">
+                        <div class="form-floating mb-3">
+                           <input type="text" required class="form-control" id="contract" name="contract" >
+                           <label for="contract">Contract Name</label>
+                        </div>
+                     </div>
+                  </div>
+               
+                  <div class="form-floating mb-3">
+                     <input type="text" required class="form-control" id="desc" name="desc" >
+                     <label for="desc">Description</label>
+                  </div>
+                  <div class="row">
+                     <div class="col-md-3">
+                        <div class="form-floating mb-3">
+                           <input type="number" required class="form-control" id="qty" name="qty" >
+                           <label for="qty">Qty</label>
+                        </div>
+                     </div>
+                     <div class="col-md-9">
+                        <div class="form-floating mb-3">
+                           <select required name="unit" id="unit" class="form-select">
+                              <option value="" selected disabled >Choose</option>
+                              <option value="Container">Container</option>
+                              <option value="Pallet">Pallet</option>
+                              <option value="Box">Box</option>
+                              <option value="Unit">Unit</option>
+                              <option value="Rack">Rack</option>
+                              <option value="Bundle">Bundle</option>
+                              <option value="Lot">Lot</option>
+                              <option value="Piece">Piece</option>
+                              <option value="Trafo">Trafo</option>
+                           </select>
+                           <label for="unit">Unit</label>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-floating">
+                           <input type="text"  class="form-control" id="size" name="size" >
+                           <label for="size">Size (m<sup>2</sup>)</label>
+                           <small class="text-muted mb-3">example : 3 or 3.5</small>
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-floating ">
+                           <input type="text"  class="form-control" id="weight" name="weight" >
+                           <label for="weight">Weight (ton)</label>
+                           <small class="text-muted mb-3">example : 1 or 0.4</small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="form-floating mb-3 mt-3">
+                     <input type="text"  class="form-control" id="remark" name="remark" >
+                     <label for="remark">Remark</label>
+                  </div>
+                  
+               </div>
+               
+               <div class="modal-footer">
+                  <a href="#" class="btn btn-link link-secondary" data-bs-dismiss="modal">
+                  Cancel
+                  </a>
+                  <button type="submit" class="btn btn-primary ms-auto" data-bs-dismiss="modal">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 4h10l4 4v10a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2" /><circle cx="12" cy="14" r="2" /><polyline points="14 4 14 8 8 8 8 4" /></svg>
+                     Add
+                  </button>
+               </div>
+            </form>
+         </div>
+      </div>
+   </div> --}}
   
   
     

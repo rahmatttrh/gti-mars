@@ -165,7 +165,9 @@ class IntermilanController extends Controller
       }
 
       $request->update([
-         'schedule_id' => $schedule->id
+         'schedule_id' => $schedule->id,
+         'undo' => null,
+         'reason' => null
       ]);
 
 

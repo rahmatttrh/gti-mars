@@ -14,102 +14,92 @@
    
 </style>
    <div class="row"> 
-      <div class="col-md-8">
-         <div class="badge badge-info mb-3">{{$tactivity}} Activity</div>
-         <div class="" style="height: 150px">
-            <canvas id="myChart2"></canvas>
-         </div>
+      <div class="col-md-5">
+         <table >
+            <thead>
+               <tr>
+                  <th>Vessel</th>
+                  <th>Code</th>
+                  {{-- <th>Date</th> --}}
+                  <th>Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach ($schedules as $sche)
+                   <tr>
+                     <td>{{$sche->vessel->name}}</td>
+                     {{-- <td>{{$sche->code}}</td> --}}
+                     <td>{{formatDate($sche->date)}}</td>
+                     <td>
+                        <x-status-stisla.schedule-plain :schedule="$sche"/>
+                     </td>
+                   </tr>
+               @endforeach
+            </tbody>
+         </table>
          <hr>
-         <div class="badge badge-info mb-3">0 Lt Fuel Consumption</div>
-         <div class="c" style="height: 150px">
-            <canvas id="myChart"></canvas>
-          </div>
-          <div class="statistic-details mt-sm-4">
-            
-            <div class="statistic-details-item">
-              {{-- <span class="text-muted"><span class="text-danger"><i class="fas fa-caret-down"></i></span> 23%</span> --}}
-              <div class="detail-value">{{$tactivity}}</div>
-              <div class="detail-name">Total Activity</div>
-            </div>
-            <div class="statistic-details-item">
-               {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span> 7%</span> --}}
-               <div class="detail-value">{{$tschedule}}</div>
-               <div class="detail-name">Total Sailing Order</div>
-             </div>
-            <div class="statistic-details-item">
-              {{-- <span class="text-muted"><span class="text-primary"><i class="fas fa-caret-up"></i></span>9%</span> --}}
-              <div class="detail-value">{{$tactiveschedule}}</div>
-              <div class="detail-name">Active Sailing Order</div>
-            </div>
-            
-          </div>
-      </div>
-      <div class="col-md-4">
-         <form action="{{route('statistic.filter')}}" method="POST">
-            @csrf
-           <div class="form-group">
-            <div class="input-group">
-               <input type="date" class="form-control" name="start" id="start" >
-               <span class="mx-2 mt-3">To</span>
-               <input type="date" class="form-control" name="end" id="end" >
-               
-            </div>
-           </div>
-            <div class="form-group">
-               <div class="input-group">
-                  
-                  <select class="form-control " required name="vessel" id="vessel">
-                     <option value="all">All Vessel</option>
-                     @foreach ($vessels as $vess)
-                        <option  value="{{$vess->id}}">{{$vess->name}}</option> 
-                     @endforeach
-                     
-                  </select>
-                  <div class="input-group-append">
-                     <button class="btn btn-light border px-4" type="submit">Filter</button>
-                     
-                   </div>
-               </div>
-            </div>
-            {{-- <button class="btn btn-primary btn-block" type="submit">Filter</button> --}}
-         </form>
-         <div class="table-responsive mb-3">
-            <table class="" id="table-14">
-               <thead >
-                  {{-- <tr>
-                     <th colspan="4" class="py-1">Activity</th>
-                  </tr> --}}
-                  <tr>
-                     {{-- <th class="text-center">No</th> --}}
-                     {{-- <th>#</th> --}}
-                     <th>Date</th>
-                     <th>Vessel</th>
-                     <th>Loc</th>
-                     {{-- <th>Desc</th> --}}
-                  </tr>
-               </thead>
+         {{ $schedules->links() }}
+         <hr>
+         @if ($takeouts)
+            <table>
                <tbody>
-                  @foreach ($allreqs as $req)
-                      <tr>
-                        {{-- <td>{{++$i}}</td> --}}
+                  <tr class="bg-danger text-white">
+                     <th colspan="3">Cargo takeout by OPS</th>
+                  </tr>
+                  @foreach ($takeouts as $out)
+                     <tr>
                         <td>
-                           {{-- {{formatDate($req->date)}} --}}
-                           <a href="{{route('request.detail.new', enkripRambo($req->id))}}">{{formatDate($req->date)}}</a>
+                           {{-- {{$out->code}} --}}
+                           {{-- <a href=""></a> --}}
+                           @foreach ($out->cargoItems as $item)
+                              {{$item->desc}}
+                               
+                           @endforeach
                         </td>
-                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
-                        <td>{{$req->destination->code}}</td>
-                        {{-- <td>{{$req->desc}}</td> --}}
-                      </tr>
+                        <td>from {{$out->schedule->vessel->name}}</td>
+                        <td>{{$out->reason}}</td>
+                     </tr>
                   @endforeach
-
-                  
+                  <tr>
+                     <td>
+                        <a href="{{route('marine.request')}}">Open Intermilan</a>
+                     </td>
+                  </tr>
                </tbody>
             </table>
-            
-         </div>
-         {!! $allreqs->links() !!}
+             
+         @endif
+
       </div>
-      
+      <div class="col-md-7">
+         
+         <table class="" style="border: none" id="table-5" >
+            <thead>
+               <tr>
+                  <th>BCM</th>
+                  <th>MTD</th>
+                  <th>Desc</th>
+                  <th>Qty</th>
+                  <th>Vessel</th>
+                  <th>Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach ($items as $item)
+                   <tr>
+                     <td>{{$item->cargo->code}}</td>
+                     <td>{{$item->mtd}}</td>
+                     <td>{{$item->desc}}</td>
+                     <td>{{$item->qty}} {{$item->unit}}</td>
+                     <td>{{$item->request->schedule->vessel->name}}</td>
+                     <td>
+                        <x-status-stisla.request-plain :request="$item->request"/>
+                     </td>
+                   </tr>
+               @endforeach
+            </tbody>
+         </table>
+      </div>
    </div>
    @push('chart')
       <script>

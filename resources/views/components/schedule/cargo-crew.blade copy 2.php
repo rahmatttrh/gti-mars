@@ -8,11 +8,6 @@
          <li class="nav-item">
             <a class="nav-link  {{$schedule->class == 'Crew' ? 'active' : ''}}" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew </a>
          </li>
-         @if (auth()->user()->hasRole('vessel') && $schedule->status != 11)
-         <li class="nav-item">
-            <a class="nav-link" id="report-tab" data-toggle="tab" href="#report" role="tab" aria-controls="report" aria-selected="false">Add Report</a>
-         </li>
-         @endif
          @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
             @if ($recents->where('schedule_id', $schedule->id)->count() > 0)
             <li class="nav-item">
@@ -44,7 +39,51 @@
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="table-responsive">
-               @if ($schedule->status == 0)
+               <table>
+                  @foreach ($cargos as $cargo)
+                  <thead>
+                     <tr>
+                        <th colspan="8" class="py-1">BOAT CARGO MANIFEST</th>
+                     </tr>
+                     <tr class="bg-info text-white">
+                        <th colspan="2">BCM No. {{$cargo->code}}</th>
+                        <th colspan="4">{{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
+                        <th></th>
+                        <th></th>
+                        <th class="bg-white">
+                           <a href="{{route('document.bcm', enkripRambo($cargo->id))}}">Export BCM</a>
+                        </th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($items->where('cargo_id', $cargo->id) as $item)
+                     <tr>
+                        <td></td>
+                        <td>MTD No. {{$item->mtd}}</td>
+                        <td>{{$item->desc}}</td>
+                        <td>{{$item->contract ?? '-'}}</td>
+                        <td>{{$item->qty}} {{$item->unit}}</td>
+                        <td>{{$item->weight}} KG</td>
+                        <td>
+                           <a href="{{route('logistic.edit.mtd', enkripRambo($item->id))}}">Edit</a>
+                        </td>
+                        <td>
+                           @if ($item->request->status > 2 || $item->status == 0)
+                                  <a href="">Drop</a>
+                              
+                           @endif
+                        </td>
+                        <td>
+                           <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
+                        </td>
+                     </tr>
+                     @endforeach
+                     
+                  </tbody>
+                  @endforeach
+                  
+               </table>
+
                <table class="" id="table-1">
                   @foreach ($requests->where('activity_id', 1) as $request)
                   
@@ -64,7 +103,10 @@
                                  <b>{{formatDayName($request->date)}}, {{formatDate($request->date)}} - {{$request->desc}}</b> 
                               </a>
                            </td>
-                           
+                           <td>
+                              
+                              
+                           </td>
                            
                         </tr>
                         
@@ -85,6 +127,34 @@
                            </td>
                            <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
                            <td class=" text-center">{{$item->weight}} Ton</td>
+                           <td class=" text-center">{{$item->offloading ? $item->offloading->offloading : '-'}}</td>
+                           <td><a href="">Drop</a></td>
+
+                           {{-- @if ($request->status == 10 && auth()->user()->hasRole('department')) --}}
+                           <td class="text-center">
+                              @if ($request->status > 2)
+                                  
+                              
+                                 @if ($item->status == 0)
+                                 <form action="{{route('cargo.item.offloading')}}" method="POST" class="d-flex">
+                                    @csrf
+                                    <input type="number" name="cargoItem" id="cargoItem" value="{{$item->id}}" hidden>
+                                    <input style="width: 70px" required type="number" name="offloading" id="offloading">
+                                    <select style="width: 120px" required class="form-control" name="destination" id="destination">
+                                       <option selected disabled>Choose</option>
+                                       @foreach ($routes as $route)
+                                          <option value="{{$route->port->id}}">{{$route->port->code}}</option>  
+                                       @endforeach
+                                    </select>
+                                    <button type="submit" class="btn btn-info btn-sm">Confirm</button>
+                                 </form>
+                                 {{-- <a href="#" class="btn btn-sm btn-info" data-toggle="modal" data-target="#confirmCargo">Confirm</a> --}}
+                                 {{-- <x-modal.cargo.confirm :cargo="$item" :routes="$routes" :schedule="$request->schedule" /> --}}
+                                 @else
+                                 -
+                                 @endif
+                              @endif
+                           </td>
                         </tr>
                      @endforeach
                      <tr>
@@ -95,114 +165,51 @@
                   
                   @endforeach
                </table>
-               @endif
-
-               @if ($schedule->status > 0)
-               <table>
-                  <thead>
-                     <tr>
-                        <tr>
-                           <th colspan="8" class="py-1">BOAT CARGO MANIFEST</th>
-                        </tr>
-                     </tr>
-                  </thead>
-                  @foreach ($cargos as $cargo)
-                  <thead>
-                     
-                     <tr class="bg-info text-white">
-                        <th colspan="2">BCM No. {{$cargo->code}}</th>
-                        <th colspan="4">{{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
-                        <th></th>
-                        <th></th>
-                        <th class="bg-white">
-                           <a href="{{route('document.bcm', enkripRambo($cargo->id))}}" target="_blank">Export BCM</a>
-                        </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($items->where('cargo_id', $cargo->id) as $item)
-                     <tr>
-                        <td></td>
-                        <td>MTD No. {{$item->mtd}}</td>
-                        <td>{{$item->desc}}</td>
-                        <td>{{$item->contract ?? '-'}}</td>
-                        <td>{{$item->qty}} {{$item->unit}} / {{$item->offloading ? $item->offloading->offloading . ' Drop' : '-'}}</td>
-                        <td>{{$item->weight}} KG</td>
-                        
-                        <td>
-                           @if ($item->request->status > 2 && $item->status == 0)
-                                  <a href="{{route('cargo.drop', enkripRambo($item->id))}}">Drop</a>
-                              @else
-                              -
-                           @endif
-                        </td>
-                        <td>
-                           <a href="{{route('logistic.edit.mtd', enkripRambo($item->id))}}">Edit</a>
-                        </td>
-                        <td>
-                           <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
-                        </td>
-                     </tr>
-                     @endforeach
-                     
-                  </tbody>
-                  @endforeach
-                  
-               </table>
-               @endif
-               
-               <hr>
-               
-               <div class="table-responsive">
-                  <table class="">
-                  <thead>
-                        <tr>
-                        <th colspan="7" class="text-info">Deflection</th>
-                        </tr>
-                        <tr>
-                        <th>MTD</th>
-                        <th>Descriptive</th>
-                        <th>Destination</th>
-                        <th class="text-center">Qty</th>
-                        
-                        <th class="">Desc</th>
-                        {{-- <th></th> --}}
-                        {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
-                        <th class="text-center">Weight (ton)</th> --}}
-                        </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($requests->where('activity_id', '!=', 2) as $request)
-                        @if ($request->class == 'main' && $request->deflections->count() > 0)
-                        @foreach ($request->deflections as $deflection)
-                           <tr>
-                              <td class="">{{$deflection->cargoitem->mtd}}</td>
-                              
-                              <td class="  text-nowrap">
-                                 {{$deflection->cargoitem->desc}}
-                              </td>
-                              <td class="">{{$deflection->port->name}}</td>
-                              <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
-                              <td class="  text-nowrap">
-                                 {{$deflection->desc}} 
-                              </td>
-                              {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
-                              <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
-                              
-                           </tr>
-                        @endforeach
-                        @endif
-                     @endforeach
-                  </tbody>
-                  </table>
-               </div>
-               <br><br><br>
-               <hr>
-
-               
             </div>
             <hr>
-            
+            <div class="table-responsive">
+               <table class="">
+               <thead>
+                     <tr>
+                     <th colspan="7" class="text-info">Deflection</th>
+                     </tr>
+                     <tr>
+                     <th>MTD</th>
+                     <th>Descriptive</th>
+                     <th>Destination</th>
+                     <th class="text-center">Qty</th>
+                     
+                     <th class="">Desc</th>
+                     {{-- <th></th> --}}
+                     {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
+                     <th class="text-center">Weight (ton)</th> --}}
+                     </tr>
+               </thead>
+               <tbody>
+                  @foreach ($requests->where('activity_id', '!=', 2) as $request)
+                     @if ($request->class == 'main' && $request->deflections->count() > 0)
+                     @foreach ($request->deflections as $deflection)
+                        <tr>
+                           <td class="">{{$deflection->cargoitem->mtd}}</td>
+                           
+                           <td class="  text-nowrap">
+                              {{$deflection->cargoitem->desc}}
+                           </td>
+                           <td class="">{{$deflection->port->name}}</td>
+                           <td class=" text-center">{{$deflection->qty}} {{$deflection->cargoitem->unit}}</td>
+                           <td class="  text-nowrap">
+                              {{$deflection->desc}} 
+                           </td>
+                           {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
+                           <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
+                           
+                        </tr>
+                     @endforeach
+                     @endif
+                  @endforeach
+               </tbody>
+               </table>
+            </div>
          </div>
          <div class="tab-pane fade {{$schedule->class == 'Crew' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="table-responsive ">
@@ -255,9 +262,6 @@
                </tbody>
                </table>
             </div>
-         </div>
-         <div class="tab-pane fade " id="report" role="tabpanel" aria-labelledby="report-tab">
-            <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixroutes" />
          </div>
          @if (auth()->user()->hasRole('marine') && $schedule->status != 11)
             @if ($recents->count() > 0)

@@ -313,14 +313,33 @@ class MarineRequestController extends Controller
    //    return redirect()->to('/')->with('success', 'Cancel Request successfully approved');
    // }
 
-   public function undoApprove($id){
-      $dekripId = dekripRambo($id);
-      $request = ModelsRequest::find($dekripId);
+   // public function undoApprove($id){
+   //    $dekripId = dekripRambo($id);
+   //    $request = ModelsRequest::find($dekripId);
+   //    $request->update([
+   //       'status' => 1
+   //    ]);
+
+   //    return redirect()->back()->with('success', 'Undo Request Successfully');
+   // }
+
+
+   public function undoApprove(Request $req)
+   {
+      // dd($req->requestId);
+      $now = Carbon::now();
+      $request = ModelsRequest::find($req->requestId);
+      // dd($request->id);
+
+   
       $request->update([
-         'status' => 1
+         'status' => 1,
+         // 'schedule_id' => null,
+         'undo' => $now,
+         'reason' => $req->reason
       ]);
 
-      return redirect()->back()->with('success', 'Undo Request Successfully');
+      return redirect()->back()->with('success', 'Cancel Request successfully approved');
    }
 
 

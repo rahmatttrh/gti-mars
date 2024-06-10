@@ -24,18 +24,30 @@ class CreateCargosTable extends Migration
          // $table->decimal('m3', $precision =  6, $scale = 2);
          // $table->string('status', '3')->default('0');
          // $table->timestamps();
+
+
+         // $table->id();
+         // $table->mediumInteger('request_id');
+         // $table->string('type');
+         // $table->integer('offloading_id')->nullable();
+         // $table->string('status');
+         // $table->string('no_doc');
+         // $table->string('desc');
+         // $table->string('unit')->nullable();
+         // $table->decimal('size', 6, 2)->nullable();
+         // $table->decimal('weight', 6, 2)->nullable();
+         // $table->smallInteger('qty');
+         // $table->string('remark')->nullable();
+
          $table->id();
-         $table->mediumInteger('request_id');
-         $table->string('type');
-         $table->integer('offloading_id')->nullable();
-         $table->string('status');
-         $table->string('no_doc');
-         $table->string('desc');
-         $table->string('unit')->nullable();
-         $table->decimal('size', 6, 2)->nullable();
-         $table->decimal('weight', 6, 2)->nullable();
-         $table->smallInteger('qty');
+         $table->string('code');
+         $table->integer('status');
+         $table->integer('schedule_id');
+         $table->integer('origin_id');
+         $table->integer('destination_id');
          $table->string('remark')->nullable();
+
+
          $table->timestamps();
       });
    }

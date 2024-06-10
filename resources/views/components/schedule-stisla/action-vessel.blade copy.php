@@ -1,0 +1,123 @@
+
+   @if ($schedule->status == 1 )
+   <div class="btn-group " role="group" aria-label="Basic example">
+      <button type="button" class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">Accept</button>
+      <button type="button" class="btn btn-light border" data-toggle="modal" data-target="#schedule-revision">Revision</button>
+    </div>
+    <hr>
+      {{-- <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
+         Accept
+      </button>
+      <button class="btn btn-info btn-block " data-toggle="modal" data-target="#schedule-accept">
+         Revision
+      </button> --}}
+      @elseif($schedule->status == 2 || $schedule->status == 10)
+      <form action="{{route('schedule.update.status')}}" method="POST" enctype="multipart/form-data">
+         @csrf
+         <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
+         <div class="form-group">
+            <div class="input-group">
+               <select class="form-control status" required name="status" id="status">
+                  <option selected disabled>Activity</option>
+                  @foreach ($statuses as $status)
+                  {{-- <option value="{{$status->id}}">{{$status->name}} </option> --}}
+                     @if ($status->id == 1 || $status->id == 13)
+                     @else
+                        @if ($status->code == '09' || $status->code == '11' || $status->code == '12')
+                           <option value="{{$status->id}}">{{$status->name}}</option>
+                           @else
+                           <option value="{{$status->id}}">{{$status->name}} </option>
+                        @endif
+                    @endif
+                 @endforeach
+               </select>
+               <input type="datetime-local"  name="date" id="date" class="form-control">
+               @if ($schedule->class == 'Cargo' || $schedule->class == 'Cargo')
+               <select class="form-control" name="port" id="port">
+                  <option selected disabled>Location</option>
+                  @foreach ($fixroutes as $route)
+                     <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
+                  @endforeach
+               </select>
+               @endif
+               
+               
+               
+               <select class="form-control eta" name="destination" id="destination">
+                  <option selected disabled>Destination...</option>
+                  @foreach ($fixroutes as $route)
+                     <option value="{{$route->port->id}}">{{$route->port->name}}</option>  
+                  @endforeach
+               </select>
+               <input style="width: 70px" type="datetime-local" class="form-control eta" name="eta" id="eta">
+               <select class="form-control anchor" name="anchor" id="anchor">
+                  <option selected disabled>Anchor...</option>
+                  <option value="1">1</option> 
+                  <option value="2">2</option>  
+                  <option value="3">3</option>  
+                  <option value="4">4</option>  
+                  <option value="5">5</option>  
+                  <option value="6">6</option>  
+                  <option value="7">7</option>  
+                  <option value="8">8</option>   
+               </select>
+               
+              {{-- <div class="input-group-append">
+                <button class="btn btn-info  px-4" type="submit">Add Report</button>
+                @if ($schedule->status > 1 && $schedule->status < 11 )
+                <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
+                @endif
+              </div> --}}
+              
+            </div>
+            
+            <div class="input-group mt-2">
+                  {{-- <input type="datetime-local" style="width: 150px" name="date" id="date" class=""> --}}
+                  
+               <input type="text" class="form-control" name="desc" id="desc" placeholder="Description">
+               <div class="input-group-append">
+                  <button class="btn btn-info  px-4" type="submit">Add Report</button>
+                  @if ($schedule->status > 1 && $schedule->status < 11 )
+                  <span class="btn btn-light border  pt-2" data-toggle="modal" data-target="#schedule-vessel-complete">Complete</span>
+                  @endif
+               </div>
+            </div>
+            
+         </div>
+         
+         <div class="form-row mt--4">
+            <div class="form-group col-md-4">
+               <label for="file">Select Image</label>
+               <input type="file" name="foto" id="foto" class="form-control" >
+            </div>
+            <div class="form-group col-md-4">
+               <label for="doc">Select Document</label>
+               <input type="file" class="form-control" name="doc" id="doc" >
+            </div>
+            <div class="form-group col-md-2">
+               <label for="cob">COB</label>
+               <input type="number" class="form-control" name="cob" id="cob" >
+            </div>
+            <div class="form-group col-md-2">
+               <label for="pob">POB</label>
+               <input type="number" class="form-control" name="pob" id="pob" >
+            </div>
+            
+         </div>
+         
+         {{-- <div class="row">
+            <div class="col-md-4">
+               <input type="datetime-local" name="date" id="date" class="form-control ">
+            </div>
+            <div class="col-md-8">
+               <input type="text" name="desc" id="desc" class="form-control" placeholder="Description...">
+            </div>
+         </div> --}}
+         
+         
+         
+         
+      </form>
+      
+   @endif
+

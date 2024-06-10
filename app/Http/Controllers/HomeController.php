@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 use App\Http\Controllers\GeofenceController;
+use App\Models\CargoItem;
 use App\Models\Document;
 use App\Models\News;
 use App\Models\Surveillance;
@@ -386,6 +387,11 @@ class HomeController extends Controller
    }
 
    public function index(){
+
+      
+
+
+
       $today = Carbon::now();
       $docs = Document::get();
       foreach ($docs as $doc) {
@@ -420,12 +426,13 @@ class HomeController extends Controller
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
       } else {
          $currentVessel = null;
-         $schedules = null;
+         $schedules = Schedule::paginate(5);
          $requests = null;
          $nowSchedule = null;
          $vdr = null;
          $requests = null;
          $docs = null;
+         
       }
 
       $feed = News::get()->first();
@@ -483,6 +490,9 @@ class HomeController extends Controller
       $thisMonthActiveSchedule = Schedule::whereMonth('date', $today->format('m'))->where('status', '!=', 11)->get();
       $logisticSchedules = Schedule::where('class', 'Cargo')->get();
       // dd(count($thisMonthActivities));
+
+      $takeouts = ModelsRequest::where('undo', '!=', null)->get();
+      $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->paginate(10);
       
       return view('main', [
          'feed' => $feed,
@@ -502,7 +512,10 @@ class HomeController extends Controller
          'totalActivity' => count($thisMonthActivities),
          'totalSchedule' => count($thisMonthSchedules),
          'totalActiveSchedule' => count($thisMonthActiveSchedule),
-         'logisticSchedules' => $logisticSchedules
+         'logisticSchedules' => $logisticSchedules,
+
+         'cargoItems' => $cargoItems,
+         'takeouts' => $takeouts
       ])->with('i');
    }
 

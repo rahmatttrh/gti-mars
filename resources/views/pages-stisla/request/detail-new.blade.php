@@ -319,7 +319,7 @@
                               @csrf
                               <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
                               <div class="form-row">
-                                 <div class="form-group col-md-4">
+                                 <div class="form-group col-md-7">
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">Desc</div>
@@ -353,16 +353,16 @@
                                  </div>
 
 
-                                 <div class="form-group col-md-4">
+                                 {{-- <div class="form-group col-md-4">
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">MTD</div>
                                       </div>
                                       <input type="text" class="form-control" id="mtd" name="mtd" >
                                     </div>
-                                 </div>
+                                 </div> --}}
                                  
-                                 <div class="form-group col-md-4">
+                                 <div class="form-group col-md-7">
                                     <div class="input-group">
                                       <div class="input-group-prepend">
                                         <div class="input-group-text">PO</div>
@@ -500,9 +500,11 @@
                                           <td class="text-center">{{$cargo->weight}}</td>
                                           <td>
                                              @if ($request->status == 0)
-                                             <a href="">Edit</a>
-                                             <a href="">Delete</a>
+                                             {{-- <a href="">Edit</a> | --}}
+                                             <a href="{{route('cargo.delete', enkripRambo($cargo->id))}}">Delete</a> |
+                                             
                                              @endif
+                                             <a href="{{route('document.mtd', enkripRambo($cargo->id))}}">MTD</a>
                                           </td>
                                         </tr>
                                     @endforeach

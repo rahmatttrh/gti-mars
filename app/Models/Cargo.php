@@ -10,6 +10,10 @@ class Cargo extends Model
    use HasFactory;
    protected $guarded = [];
 
+   public function schedule(){
+      return $this->belongsTo(Schedule::class);
+   }
+
    public function origin()
    {
       return $this->belongsTo(Port::class);
@@ -19,4 +23,10 @@ class Cargo extends Model
    {
       return $this->belongsTo(Port::class);
    }
+
+   public function items(){
+      return $this->hasMany(CargoItem::class);
+   }
+
+
 }

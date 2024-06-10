@@ -240,6 +240,11 @@ Route::middleware(["auth"])->group(function () {
       Route::post('store', [LogisticController::class, 'store'])->name('logistic.store');
       Route::put('update', [LogisticController::class, 'update'])->name('logistic.update');
    });
+
+   Route::get('request/log/app/{id}', [RequestController::class, 'logApprove'])->name('request.logistic.approve');
+   Route::get('log/edit/mtd/{id}', [ScheduleController::class, 'editMtd'])->name('logistic.edit.mtd');
+   Route::get('log/edit/bcm/{id}', [ScheduleController::class, 'editBcm'])->name('logistic.edit.bcm');
+
    Route::prefix('cargo')->group(function () {
       Route::get('create', [CargoController::class, 'create'])->name('cargo.create');
       Route::post('check', [CargoController::class, 'check'])->name('cargo.check');
@@ -303,6 +308,9 @@ Route::middleware(["auth"])->group(function () {
       Route::get('/export/intermilan/{start}/{end}', [DocumentController::class, 'intermilanExport'])->name('document.intermilan.export');
       Route::get('/export/cc/{month}/{year}', [DocumentController::class, 'crewChangeExport'])->name('document.crew.change.export');
       Route::get('/vdr/{vdr:id}', [DocumentController::class, 'vdr'])->name('document.vdr');
+
+      Route::get('/mtd/{id}', [DocumentController::class, 'mtd'])->name('document.mtd');
+      Route::get('/bcm/{id}', [DocumentController::class, 'bcm'])->name('document.bcm');
    });
 
    Route::prefix('user')->group(function () {
@@ -332,7 +340,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 // Level Admin
-Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
 
@@ -499,13 +507,13 @@ Route::group(['middleware' => ['role:marine|admin-dsp|superadmin-dsp|admin-vdr|s
    });
 
    Route::prefix('request')->group(function () {
-      Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
+      // Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
       Route::get('select/schedule/{request}/{schedule}', [MarineRequestController::class, 'selectSchedule'])->name('request.select.schedule');
       Route::put('change/schedule', [MarineRequestController::class, 'selectSchedule'])->name('request.change.schedule');
       Route::post('change/destination', [MarineRequestController::class, 'changeDestination'])->name('request.change.destination');
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
-      // Route::post('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
-      Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
+      Route::put('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
+      // Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
 
    // Route::prefix('schedule')->group(function () {
@@ -663,12 +671,14 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
    });
 });
 
-Route::group(['middleware' => ['role:logistic|department|marine']], function () {
+Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|vessel']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::post('import', [CargoItemController::class, 'storeImport'])->name('cargo.import');
       Route::get('delete/{id}', [CargoItemController::class, 'delete'])->name('cargo.delete');
       Route::put('update', [CargoItemController::class, 'update'])->name('cargo.update');
+
+      Route::get('drop/{id}', [CargoItemController::class, 'drop'])->name('cargo.drop');
       Route::post('offloading', [CargoItemController::class, 'offloading'])->name('cargo.item.offloading');
    });
 });

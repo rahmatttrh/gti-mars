@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Cargo;
+use App\Models\CargoItem;
 use App\Models\Deviation;
 use App\Models\Offloading;
 use App\Models\Port;
@@ -297,6 +299,8 @@ class ScheduleController extends Controller
       $allPorts = Port::where('type', '!=', 'platform')->get();
       $platforms = Port::where('type', 'platform')->get();
       $barges = Port::where('type', 'Barge')->get();
+      $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+      $items = CargoItem::get();
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,
@@ -330,6 +334,8 @@ class ScheduleController extends Controller
             'platforms' => $platforms,
             'barges' => $barges,
             'types' => $types,
+            'cargos' => $cargos,
+            'items' => $items
          ]);
       } else {
          return view('pages-stisla.schedule.detail', [
@@ -364,6 +370,8 @@ class ScheduleController extends Controller
             'platforms' => $platforms,
             'barges' => $barges,
             'types' => $types,
+            'cargos' => $cargos,
+            'items' => $items
          ]);
       }
    }
@@ -373,10 +381,58 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
+      
 
       return view('pages-stisla.schedule.timeline', [
          'schedule' => $schedule,
-         'reports' => $reports
+         'reports' => $reports,
+        
       ]);
+   }
+
+   public function editMtd($id){
+      $cargoItem = CargoItem::find(dekripRambo($id));
+      $schedule = Schedule::find($cargoItem->request->schedule_id);
+      $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+      $items = CargoItem::get();
+      $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
+      $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+
+      return view('pages-stisla.schedule.mtd-edit', [
+         'schedule' => $schedule,
+         'item' => $cargoItem,
+         'cargos' => $cargos,
+         'items' => $items,
+         'lastreport' => $lastreport,
+         'fixRoutes' => $fixRoutes,
+         'report' => $report,
+         'requests' => $requests
+      ]);
+
+   }
+
+   public function editBcm($id){
+      $cargo = Cargo::find(dekripRambo($id));
+      $schedule = Schedule::find($cargo->schedule_id);
+      $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+      $items = CargoItem::get();
+      $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
+      $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+
+      return view('pages-stisla.schedule.bcm-edit', [
+         'schedule' => $schedule,
+         'cargo' => $cargo,
+         'cargos' => $cargos,
+         'items' => $items,
+         'lastreport' => $lastreport,
+         'fixRoutes' => $fixRoutes,
+         'report' => $report,
+         'requests' => $requests
+      ]);
+
    }
 }

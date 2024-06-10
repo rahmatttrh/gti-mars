@@ -161,7 +161,7 @@
                                        @csrf
                                        @method('PUT')
                                        <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
-                                       <select style="width: 150px" name="schedule" id="schedule">
+                                       <select style="width: 150px" name="schedule" id="schedule" required>
                                           <option value="" selected disabled>Select Schedule</option>
                                           {{-- <option value=""><a href="/">OK</a></option> --}}
                                           @foreach ($schedules as $sche)

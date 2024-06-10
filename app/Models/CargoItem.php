@@ -15,6 +15,10 @@ class CargoItem extends Model
       return $this->belongsTo(Request::class);
    }
 
+   public function cargo(){
+      return $this->belongsTo(Cargo::class);
+   }
+
    public function offloading()
    {
       return $this->belongsTo(Offloading::class);

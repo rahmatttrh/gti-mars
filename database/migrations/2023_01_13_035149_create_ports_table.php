@@ -18,6 +18,7 @@ class CreatePortsTable extends Migration
          $table->string('func')->nullable();
          // $table->integer('port_id')->nullable();
          $table->string('code')->nullable();
+         $table->string('mtd')->nullable();
          $table->string('name');
          $table->string('email');
          $table->string('type');

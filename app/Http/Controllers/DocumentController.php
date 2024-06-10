@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cargo;
+use App\Models\CargoItem;
 use App\Models\Document;
 use App\Models\Report;
 use App\Models\Request as ModelsRequest;
@@ -218,5 +220,24 @@ class DocumentController extends Controller
 
 
 
+   public function mtd($id)
+   {
+      $dekripId = dekripRambo($id);
+      $cargo = CargoItem::find($dekripId);
+      // dd($schedule->code);
+      return view('pages.document.mtd', [
+         'cargo' => $cargo
+      ]);
+   }
+
+   public function bcm($id){
+
+      $cargo = Cargo::find(dekripRambo($id));
+      $cargoItems = CargoItem::where('cargo_id', $cargo->id)->get();
+      return view('pages.document.bcm', [
+         'cargo' => $cargo,
+         'cargoItems' => $cargoItems
+      ])->with('i');
+   }
 
 }

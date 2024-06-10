@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Vessel;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cargo;
 use App\Models\Deviation;
 use App\Models\DeviationReport;
 use App\Models\Port;
@@ -150,6 +151,8 @@ class VesselScheduleController extends Controller
          'status' => 'required'
       ]);
       // dd($req->status);
+
+      
       
       if ($req->status == 9) {
          $req->validate([
@@ -172,6 +175,62 @@ class VesselScheduleController extends Controller
      
       $schedule = Schedule::find($req->schedule);
       $vessel = Vessel::find($schedule->vessel_id);
+
+      // Update BCM
+      if ($req->status == 3) {
+         $port = Port::find($req->port);
+         // dd($port->name);
+         $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+         foreach($cargos as $cargo){
+            if ($cargo->origin_id == $port->id) {
+               $cargo->update([
+                  'along' => $req->date
+               ]);
+            }
+         }
+         
+      }
+      if ($req->status == 4) {
+         $port = Port::find($req->port);
+         // dd($port->name);
+         $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+         foreach($cargos as $cargo){
+            if ($cargo->origin_id == $port->id) {
+               $cargo->update([
+                  'start' => $req->date
+               ]);
+            }
+         }
+         
+      }
+      if ($req->status == 5) {
+         $port = Port::find($req->port);
+         // dd($port->name);
+         $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+         foreach($cargos as $cargo){
+            if ($cargo->origin_id == $port->id) {
+               $cargo->update([
+                  'finish' => $req->date
+               ]);
+            }
+         }
+         
+      }
+      if ($req->status == 6) {
+         $port = Port::find($req->port);
+         // dd($port->name);
+         $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+         foreach($cargos as $cargo){
+            if ($cargo->origin_id == $port->id) {
+               $cargo->update([
+                  'depart' => $req->date
+               ]);
+            }
+         }
+         
+      }
+      // dd('ok');
+
       foreach ($schedule->requests->where('status', '!=', 505) as $request) {
 
          if ($req->status == 10 && $request->destination_id == $req->port) {
@@ -261,6 +320,9 @@ class VesselScheduleController extends Controller
             'port_id' => $req->port
          ]);
       }
+
+
+      
 
 
       return redirect()->back()->with('success', "Schedule Status successfully updated");

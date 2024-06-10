@@ -16,6 +16,7 @@ class CreateCargoItemsTable extends Migration
       Schema::create('cargo_items', function (Blueprint $table) {
          $table->id();
          $table->mediumInteger('request_id');
+         $table->mediumInteger('cargo_id')->nullable();
          $table->string('type')->nullable();
          $table->integer('offloading_id')->nullable();
          $table->string('status')->nullable();

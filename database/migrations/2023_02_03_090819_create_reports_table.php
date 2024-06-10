@@ -25,6 +25,11 @@ class CreateReportsTable extends Migration
          $table->string('desc')->nullable();
          $table->dateTime('eta')->nullable();
          $table->string('foto')->nullable();
+
+         $table->dateTime('date')->nullable();
+         $table->string('doc')->nullable();
+         $table->string('cob')->nullable();
+         $table->string('pob')->nullable();
          // $table->dateTime('assign')->nullable();
          // $table->dateTime('standby')->nullable();
          // $table->dateTime('loading_start')->nullable();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Crew;
 use App\Models\Department;
@@ -319,5 +320,52 @@ class RequestController extends Controller
       ]);
 
       return redirect()->back()->with('success', 'Crew dropped');
+   }
+
+
+   public function logApprove($id){
+      $req = ModelsRequest::find(dekripRambo($id));
+      // dd($req->id);
+
+      $cargo = Cargo::where('schedule_id', $req->schedule_id)->where('origin_id', $req->origin_id)->where('destination_id', $req->destination_id)->first();
+
+      if ($cargo) {
+         // dd('ada yg sama');
+         $bcm = $cargo;
+
+
+      } else {
+
+         // dd('tidak ada yg sama');
+         $cargo = Cargo::orderBy("created_at", "desc")->first();
+
+         
+
+         if (isset($cargo)) {
+            $code = 'B00' . ($cargo->id + 1);
+         } else {
+            $code =  'B00'  . 1;
+         }
+         
+         $bcm = Cargo::create([
+            'code' => $code,
+            'status' => 1,
+            'schedule_id' => $req->schedule_id,
+            'origin_id' => $req->origin_id,
+            'destination_id' => $req->destination_id
+         ]);
+
+         
+      }
+
+      foreach($req->cargoItems as $item){
+         $item->update([
+            'cargo_id' => $bcm->id
+         ]);
+      } 
+
+      return redirect()->back()->with('success', 'BCM Created');
+
+      
    }
 }

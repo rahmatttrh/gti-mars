@@ -4,13 +4,17 @@ namespace App\Http\Controllers\Department;
 
 use App\Http\Controllers\Controller;
 use App\Imports\CargosImport;
+use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Deflection;
 use App\Models\Offloading;
+use App\Models\Port;
 use App\Models\Report;
 use App\Models\ReportRequest;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
+use App\Models\ScheduleRoute;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -20,13 +24,34 @@ class CargoItemController extends Controller
    {
       // dd($r->qty);
       $request = ModelsRequest::find($r->requestId);
+      $user = User::find($request->user_id);
+      $port = Port::where('email', $user->email)->first();
+      $cargoItem = CargoItem::orderBy("created_at", "desc")->first();
+
+      // dd($request->)
+      // dd($port->name);
+      if ($port) {
+         $mtdThis = $port->mtd;
+      } else {
+         $mtdThis = '011';
+      }
+
+      if (isset($cargoItem)) {
+         $mtd = $mtdThis . ($cargoItem->id + 1);
+      } else {
+         $mtd =  $mtdThis  . 1;
+      }
+
+      
+
+      // dd($mtd);
 
       CargoItem::create([
          'type' => 'main',
          'status' => 0,
          'request_id' => $r->requestId,
          'no_doc' => $r->no_document,
-         'mtd' => $r->mtd,
+         'mtd' => $mtd,
          'contract' => $r->contract,
          'desc' => $r->desc,
          'qty' => $r->qty,
@@ -53,6 +78,8 @@ class CargoItemController extends Controller
 
    public function delete($id)
    {
+
+      // dd('ok');
       $dekripId = dekripRambo($id);
       $cargoItem = CargoItem::find($dekripId);
       $request = ModelsRequest::find($cargoItem->request_id);
@@ -66,14 +93,16 @@ class CargoItemController extends Controller
    }
 
    public function update(Request $req){
+      // dd('ok');
       $cargo = CargoItem::find($req->cargo);
       $cargo->update([
-         'mtd' => $req->mtd,
+         // 'mtd' => $req->mtd,
          'desc' => $req->desc,
          'contract' => $req->contract,
          'qty' => $req->qty,
          'unit' => $req->unit,
-         'weight' => $req->weight
+         'weight' => $req->weight,
+         'remark' => $req->note
       ]);
 
       return redirect()->back()->with('success', 'Cargo Updated');
@@ -89,6 +118,30 @@ class CargoItemController extends Controller
       ]);
       return redirect()->back()->with('success', 'Data updated');
 
+   }
+
+   public function drop($id){
+      $cargoItem = CargoItem::find(dekripRambo($id));
+      $schedule = Schedule::find($cargoItem->request->schedule_id);
+      $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
+      $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
+      $requests = ModelsRequest::where('schedule_id', $schedule->id)->where('status', '>=', 2)->where('status', '!=', 505)->orderBy('rank', 'asc')->get();
+      $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+      $items = CargoItem::get();
+      $routes = ScheduleRoute::where('schedule_id', $schedule->id)->get();
+
+      return view('pages-stisla.schedule.drop', [
+         'item' => $cargoItem,
+         'schedule' => $schedule,
+         'lastreport' => $lastreport,
+         'fixRoutes' => $fixRoutes,
+         'report' => $report,
+         'cargos' => $cargos,
+         'items' => $items,
+         'requests' => $requests,
+         'routes' => $routes
+      ]);
    }
 
    public function offloading(Request $req)
@@ -111,7 +164,8 @@ class CargoItemController extends Controller
          'schedule_id' => $schedule->id,
          'request_id' => $request->id,
          'cargoitem_id' => $cargoItem->id,
-         'employee_id' => auth()->user()->getEmployeeId(),
+         // 'employee_id' => auth()->user()->getEmployeeId(),
+         'user_id' => auth()->user()->id,
          'qty' => $qty,
          'offloading' => $offloading,
          'onboard' => $onboard,
@@ -138,9 +192,11 @@ class CargoItemController extends Controller
          Report::create([
             'schedule_id' => $schedule->id,
             'vessel_id' => $schedule->vessel_id,
-            'employee_id' => auth()->user()->getEmployeeId(),
+            // 'employee_id' => auth()->user()->getEmployeeId(),
+            'user_id' => auth()->user()->id,
             'status_id' => 17,
-            'port_id' => auth()->user()->getPort()
+            'port_id' => $cargoItem->request->destination_id
+            // 'port_id' => auth()->user()->getPort()
          ]);
 
          $offloading->update([
@@ -175,9 +231,9 @@ class CargoItemController extends Controller
 
          ReportRequest::create([
             'request_id' => $request->id,
-            'employee_id' => auth()->user()->getEmployeeId(),
+            // 'employee_id' => auth()->user()->getEmployeeId(),
             'status_id' => 13,
-            'port_id' => auth()->user()->getPort()
+            'port_id' => $req->port
          ]);
       } else {
          Report::create([
@@ -188,6 +244,6 @@ class CargoItemController extends Controller
          ]);
       }
 
-      return redirect()->back()->with('success', 'Item successfully confirmed');
+      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Item successfully confirmed');
    }
 }
