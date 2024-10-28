@@ -44,134 +44,74 @@
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="table-responsive">
-               @php
-                   $bcmNull = false
-               @endphp
-               {{-- @foreach ($requests->where('activity_id', 1) as $request) --}}
-                  @foreach ($schedule->items as $item)
+               @if ($schedule->status == 0)
+               @foreach ($requests->where('activity_id', 1) as $request)
+                  @foreach ($request->cargoItems as $item)
                      @if ($item->cargo_id == null)
-                        @php
-                            $bcmNull = true
-                        @endphp
-                         {{-- <div class="alert alert-primary" role="alert">
-                           Menunggu Validasi Cargo oleh tim Logistic
-                         </div> --}}
+                         <span>Menunggu Validasi Tim Logistic</span>
                      @endif
                      
                   @endforeach
-               {{-- @endforeach --}}
-
-               @if ($bcmNull == true)
-                   <div class="alert alert-info" role="alert">
-                           Menunggu Validasi Cargo oleh tim Logistic
-                         </div>
-                         @else
-               @endif
-
-
-
-               @if ($schedule->status == 0)
-               
-               
-               <table class=" table table-sm border" style="" id="">
-                  
+               @endforeach
+               <table class="" id="table-1">
+                  @foreach ($requests->where('activity_id', 1) as $request)
                   
                      <thead>
-                        <tr>
-                           <th>Status</th>
-                           <th>BCM</th>
-                           <th>MTD</th>
-                           <th>Desc</th>
-                           <th>Contract</th>
-                           <th>Qty</th>
-                           <th>Weight</th>
-                           <th>Route</th>
+                        <tr style="background-color: rgb(217, 210, 210)" >
+                           
+                           <td>
+                              {{$request->bcm ?? 'BCM No. Empty'}}
+                           </td>
+                           <td colspan="1">
+                              <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                                 <b> {{$request->origin->code}} - {{$request->destination->code}} </b> 
+                              </a>
+                           </td>
+                           <td colspan="4">
+                              <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                                 <b>{{formatDayName($request->date)}}, {{formatDate($request->date)}} - {{$request->desc}}</b> 
+                              </a>
+                           </td>
+                           
+                           
                         </tr>
                         
                      </thead>
                      <tbody>
                      
-                     @foreach ($schedule->items as $item)
-                        <tr class="border">
+                     @foreach ($request->cargoItems as $item)
+                        <tr>
                            <td>
                               @if ($item->cargo_id)
                                   <span class="text-info">Approved</span>
                                   @else
-                                  <span>Waiting Validation</span>
+                                  <span>Menunggu Validasi Logistic</span>
                               @endif
                            </td>
-                           <td>{{$item->cargo->bcm ?? '-'}}</td>
-                           <td style="">
-                              {{$item->mtd ?? 'MTD No. Empty'}} 
+                           <td style="width: 120px">
+                             MTD No. {{$item->mtd ?? 'MTD No. Empty'}} 
                            </td>
                            <td class=" text-truncate ">
-                           {{$item->description}} <br>
+                           {{$item->desc}} <br>
                            </td>
                            <td class=" text-truncate">
                               {{$item->contract ?? 'Contract Empty'}}
                            </td>
                            <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
                            <td class=" text-center">{{$item->weight}} Ton</td>
-                           <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
                         </tr>
                      @endforeach
-                     
+                     <tr>
+                        <td colspan="6"></td>
+                     </tr>
                      
                   </tbody>
+                  
+                  @endforeach
                </table>
                @endif
 
                @if ($schedule->status > 0)
-
-               @if ($bcmNull == true)
-                  <table class=" table table-sm border" style="" id="">
-                     
-                     
-                     <thead>
-                        <tr>
-                           <th>Status</th>
-                           <th>BCM</th>
-                           <th>MTD</th>
-                           <th>Desc</th>
-                           <th>Contract</th>
-                           <th>Qty</th>
-                           <th>Weight</th>
-                           <th>Route</th>
-                        </tr>
-                        
-                     </thead>
-                     <tbody>
-                     
-                        @foreach ($schedule->items->where('cargo_id', null) as $item)
-                           <tr class="border">
-                              <td>
-                                 @if ($item->cargo_id)
-                                    <span class="text-info">Approved</span>
-                                    @else
-                                    <span>Waiting Validation</span>
-                                 @endif
-                              </td>
-                              <td>{{$item->cargo->bcm ?? '-'}}</td>
-                              <td style="">
-                                 {{$item->mtd ?? 'MTD No. Empty'}} 
-                              </td>
-                              <td class=" text-truncate ">
-                              {{$item->description}} <br>
-                              </td>
-                              <td class=" text-truncate">
-                                 {{$item->contract ?? 'Contract Empty'}}
-                              </td>
-                              <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                              <td class=" text-center">{{$item->weight}} Ton</td>
-                              <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
-                           </tr>
-                        @endforeach
-                        
-                        
-                     </tbody>
-                  </table>
-                  @else
-               @endif
                <table class="border" >
                   <thead class="border">
                      <tr>
@@ -198,22 +138,16 @@
                      <tr class="border">
                         <td></td>
                         <td>MTD No. {{$item->mtd}}</td>
-                        <td>{{$item->description}}</td>
+                        <td>{{$item->desc}}</td>
                         <td>{{$item->contract ?? '-'}}</td>
                         <td>{{$item->qty}} {{$item->unit}} / {{$item->offloading ? $item->offloading->offloading . ' Drop' : '-'}}</td>
                         <td>{{$item->weight}} KG</td>
                         
                         <td>
-                           {{-- @if ($item->request->status > 2 && $item->status == 0) --}}
-                                  
-                              {{-- @else
+                           @if ($item->request->status > 2 && $item->status == 0)
+                                  <a href="{{route('cargo.drop', enkripRambo($item->id))}}">Drop</a>
+                              @else
                               -
-                           @endif --}}
-
-                           @if ($item->status == 4)
-                              <span class="text-info">Arrived</span>
-                               @else
-                               <a href="{{route('cargo.drop', enkripRambo($item->id))}}">Drop</a>
                            @endif
                         </td>
                         <td>
@@ -234,7 +168,7 @@
                <hr>
                
                <div class="table-responsive">
-                  <table class="table table-sm border">
+                  <table class="">
                   <thead>
                         <tr>
                         <th colspan="7" class="text-info">Deflection</th>
@@ -255,7 +189,7 @@
                      @foreach ($requests->where('activity_id', '!=', 2) as $request)
                         @if ($request->class == 'main' && $request->deflections->count() > 0)
                         @foreach ($request->deflections as $deflection)
-                           <tr class="border-bottom">
+                           <tr>
                               <td class="">{{$deflection->cargoitem->mtd}}</td>
                               
                               <td class="  text-nowrap">
@@ -337,7 +271,6 @@
             </div>
          </div>
          <div class="tab-pane fade " id="report" role="tabpanel" aria-labelledby="report-tab">
-            
             <x-schedule-stisla.action-vessel :schedule="$schedule" :statuses="$statuses" :fixroutes="$fixroutes" />
          </div>
          @if (auth()->user()->hasRole('marine') && $schedule->status != 11)

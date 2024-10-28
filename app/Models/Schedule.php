@@ -10,6 +10,11 @@ class Schedule extends Model
    use HasFactory;
    protected $guarded = [];
 
+
+   public function items(){
+      return $this->hasMany(CargoItem::class);
+   }
+
    public function vessel()
    {
       return $this->belongsTo(Vessel::class);
@@ -88,5 +93,9 @@ class Schedule extends Model
 
    public function docs(){
       return $this->hasMany(ScheduleDocument::class);
+   }
+
+   public function cargos(){
+      return $this->hasMany(Cargo::class);
    }
 }

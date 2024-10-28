@@ -242,6 +242,7 @@ Route::middleware(["auth"])->group(function () {
    });
 
    Route::get('request/log/app/{id}', [RequestController::class, 'logApprove'])->name('request.logistic.approve');
+   Route::get('item/log/app/{id}', [CargoItemController::class, 'logApprove'])->name('item.logistic.approve');
    Route::get('log/edit/mtd/{id}', [ScheduleController::class, 'editMtd'])->name('logistic.edit.mtd');
    Route::get('log/edit/bcm/{id}', [ScheduleController::class, 'editBcm'])->name('logistic.edit.bcm');
 
@@ -357,6 +358,7 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
 
       Route::put('intermilan/select/vessel', [MarineRequestController::class, 'selectVessel'])->name('intermilan.marine.select.vessel');
       Route::put('intermilan/select/schedule', [IntermilanController::class, 'selectSchedule'])->name('intermilan.marine.select.schedule');
+      Route::put('request/select/schedule', [IntermilanController::class, 'selectScheduleList'])->name('intermilan.marine.select.schedule.list');
        
 
       Route::prefix('schedule')->group(function () {
@@ -395,6 +397,7 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
          Route::post('store', [MarineRequestController::class, "store"])->name('marine.request.store');
 
          Route::get("/user", [MarineRequestController::class, "index",])->name('marine.request');
+         Route::get("/list", [MarineRequestController::class, "indexList",])->name('marine.request.list');
          Route::post("/filter", [MarineRequestController::class, "filter",])->name('intermilan.filter');
       });
 
@@ -624,7 +627,7 @@ Route::group(['middleware' => ['role:vessel']], function () {
 
 
 // Level User Field
-Route::group(['middleware' => ['role:logistic|drilling|department']], function () {
+Route::group(['middleware' => ['role:logistic|drilling|department|mm']], function () {
    Route::prefix('dsp/u/')->group(function () {
       Route::get("dash/main/{month}/{year}", [HomeController::class, "dspUser",])->name('dsp.user');
 
@@ -671,7 +674,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department']], function (
    });
 });
 
-Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|vessel']], function () {
+Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|vessel|mm']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::post('import', [CargoItemController::class, 'storeImport'])->name('cargo.import');

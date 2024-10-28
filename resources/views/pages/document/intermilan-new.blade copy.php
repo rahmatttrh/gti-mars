@@ -103,7 +103,7 @@ table {
                               <td >
                                  {{$request->description}}
                                  @foreach ($request->cargoItems as $item)
-                                       {{$item->description}},
+                                       {{$item->desc}},
                                  @endforeach
                               </td>
                               <td >

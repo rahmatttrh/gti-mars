@@ -1,59 +1,70 @@
-<div class="card ">
+{{-- <style>
+   table{
+      'border' : 1px solid;
+      ''
+   }
+</style> --}}
+
+<div class="card">
    {{-- <div class="card-header px-2"><h4>CARGO BOAT MANIFEST</h4></div> --}}
-   <div class="card-body p-0">
+   <div class="card-body p-0 pb-0">
       <div class="table-responsive">
-      <table>
-         <thead>
-            <tr>
+         <table class="table table-sm border">
+            <thead>
                <tr>
-                  <th colspan="8" class="py-2">BOAT CARGO MANIFEST</th>
+                  <tr>
+                     <th colspan="8" class="py-2">BOAT CARGO MANIFEST</th>
+                  </tr>
                </tr>
-            </tr>
-         </thead>
-         @foreach ($cargos as $cargo)
-         <thead>
-            
-            <tr class="bg-info text-white">
-               <th colspan="2">BCM No. {{$cargo->code}}</th>
-               <th colspan="4">{{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
-               <th class="bg-white">
-                  <a href="{{route('logistic.edit.bcm', enkripRambo($cargo->id))}}">Edit</a>
-               </th>
-               <th class="bg-white">
-                  <a href="{{route('document.bcm', enkripRambo($cargo->id))}}">Export BCM</a>
-               </th>
-            </tr>
-         </thead>
-         <tbody>
-            @foreach ($items->where('cargo_id', $cargo->id) as $item)
-            <tr>
-               <td></td>
-               <td>MTD No. {{$item->mtd}}</td>
-               <td>{{$item->desc}}</td>
-               <td>{{$item->contract ?? '-'}}</td>
-               <td>{{$item->qty}} {{$item->unit}}</td>
-               <td>{{$item->weight}} KG</td>
-               <td>
-                  <a href="{{route('logistic.edit.mtd', enkripRambo($item->id))}}">Edit</a>
-               </td>
-               <td>
-                  <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
-               </td>
-            </tr>
+            </thead>
+            @foreach ($cargos as $cargo)
+            <thead>
+               
+               <tr class="bg-info text-white">
+                  <th colspan="2">BCM No. {{$cargo->code}}</th>
+                  <th colspan="4">{{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
+                  <th class="bg-white">
+                     <a href="{{route('logistic.edit.bcm', enkripRambo($cargo->id))}}">Edit</a>
+                  </th>
+                  <th class="bg-white">
+                     <a href="{{route('document.bcm', enkripRambo($cargo->id))}}">Export BCM</a>
+                  </th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach ($items->where('cargo_id', $cargo->id)->where('status', 1) as $item)
+               <tr class="border-bottom">
+                  <td></td>
+                  <td>MTD No. {{$item->mtd}}</td>
+                  <td>{{$item->description}}</td>
+                  <td>{{$item->contract ?? '-'}}</td>
+                  <td>{{$item->qty}} {{$item->unit}}</td>
+                  <td>{{$item->weight}} KG</td>
+                  <td>
+                     <a href="{{route('logistic.edit.mtd', enkripRambo($item->id))}}">Edit</a>
+                  </td>
+                  <td>
+                     <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
+                  </td>
+               </tr>
+               @endforeach
+               
+            </tbody>
             @endforeach
             
-         </tbody>
-         @endforeach
-         
-      </table>
-   </div>
+         </table>
+      </div>
    </div>
 </div>
+
+@if (count($schedule->items->where('status', 0)) > 0)
+    
+
 <hr>
-<table class="" id="">
+<table class="table table-sm border"  id="">
    <thead>
       <tr>
-         <th colspan="2" class="text-center">Action</th>
+         <th colspan="" >Action</th>
          {{-- <td></td> --}}
          <th>Route</th>
          
@@ -67,29 +78,21 @@
       </tr>
    </thead>
    <tbody>
-@foreach ($requests->where('activity_id', 1) as $request)
+      {{-- @foreach ($requests->where('activity_id', 1) as $request) --}}
 
-      @if ($request->cargoItems->first()->cargo_id == null)
-      <tr>
-         <td rowspan="{{count($request->cargoItems) + 1}}">
-            <a href="#" data-toggle="modal" data-target="#cargo-takeout-{{$request->id}}" class="">REJECT</a> 
-            
-            {{-- <a href="{{route('document.bcm')}}" class="">BCM</a> --}}
-         </td>
-         <td rowspan="{{count($request->cargoItems) + 1}}">
-            <a href="{{route('request.logistic.approve', enkripRambo($request->id))}}" class="">APPROVE</a>
-         </td>
-         <td rowspan="{{count($request->cargoItems) + 1}}">{{$request->origin->code}} - {{$request->destination->code}} {{$request->code}}</td>
-         
-      </tr>
-      @foreach ($request->cargoItems as $item)
-         <tr>
-            
-            <td class="">{{$item->mtd}}
+      
+      @foreach ($schedule->items->where('status', 0) as $item)
+         <tr class="border-bottom">
+            <td >
+               <a href="#" data-toggle="modal" data-target="#cargo-takeout-{{$item->id}}" class="text-danger">REJECT</a> | 
+               <a href="{{route('item.logistic.approve', enkripRambo($item->id))}}" class="text-primary">APPROVE</a>
+               
             </td>
-            {{-- <td>{{$item->request->origin->name}} - {{$item->request->destination->name}}</td> --}}
+            <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
+            <td class="">{{$item->mtd}}</td>
+            
             <td class=" text-truncate ">
-            {{$item->desc}}
+            {{$item->description}}
             </td>
             <td class=" text-truncate">
                {{$item->contract}}
@@ -105,14 +108,14 @@
             
          </tr>
       @endforeach
-         @else
-      @endif
+         
    
       
    
-@endforeach
-</tbody>
+   {{-- @endforeach --}}
+   </tbody>
 </table>
+@endif
 
 
 

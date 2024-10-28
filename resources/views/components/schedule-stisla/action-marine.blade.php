@@ -8,12 +8,40 @@
       @if ($schedule->status == 0 || $schedule->status == 5  )
       {{-- @if ($schedule->requests()->count() > 0) --}}
       <div class="d-flex">
-         <button class="btn btn-info mr-1" data-toggle="modal" data-target="#schedule-send">
+         {{-- @foreach ($requests->where('activity_id', 1) as $request)
+            @foreach ($request->cargoItems as $item)
+               @if ($item->cargo_id == null)
+                     <span>Menunggu Validasi Tim Logistic</span>
+               @endif
+            @endforeach
+         @endforeach --}}
+         @php
+            $bcmNull = false
+         @endphp
+         @foreach ($schedule->items as $item)
+            @if ($item->cargo_id == null)
+               @php
+                     $bcmNull = true
+               @endphp
+                  {{-- <div class="alert alert-primary" role="alert">
+                  Menunggu Validasi Cargo oleh tim Logistic
+                  </div> --}}
+            @endif
+         @endforeach
+
+         @if ($bcmNull == true)
+         <button class="btn btn-light border btn-block " >
             Send
          </button>
-         <button class="btn btn-light border btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
+                     @else
+                     <button class="btn btn-info btn-block" data-toggle="modal" data-target="#schedule-send">
+                        Send
+                     </button>
+         @endif
+         
+         {{-- <button class="btn btn-light border btn-block " data-toggle="modal" data-target="#schedule-select-vessel">
             Select Vessel
-         </button>
+         </button> --}}
       </div>
       
       

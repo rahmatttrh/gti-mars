@@ -97,6 +97,8 @@ table {
             <x-main.navbar.admin-vdr />
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.navbar.admin-logistic />
+            @elseif(auth()->user()->hasRole('mm'))
+            <x-main.navbar.admin-logistic />
          @endif
        
          

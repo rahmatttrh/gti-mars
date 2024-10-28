@@ -12,6 +12,8 @@
             <x-main.marine :schedules="$schedules" :items="$cargoItems" :takeouts="$takeouts" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray" :tactivity="$totalActivity" :tschedule="$totalSchedule" :tactiveschedule="$totalActiveSchedule" />
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.logistic :schedules="$logisticSchedules" :items="$cargoItems" />
+            @elseif(auth()->user()->hasRole('mm'))
+            <x-main.mm :mm="$mm" :cargos="$cargos" :schedules="$logisticSchedules" :items="$cargoItems" />
             @else
             
             <div class="row">

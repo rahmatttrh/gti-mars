@@ -309,6 +309,17 @@ class VesselScheduleController extends Controller
          $schedule->update([
             'status' => 3
          ]);
+
+         foreach($schedule->cargos->where('destination_id', $req->port) as $cargo){
+            $cargo->update([
+               'status' => 3
+            ]);
+            foreach($cargo->items as $item){
+               $item->update([
+                  'status' => 3
+               ]);
+            }
+         }
       } else {
          $schedule->update([
             'status' => 2

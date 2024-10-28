@@ -4,67 +4,215 @@
 @endsection
 @section('content')
    <style>
-      
-.timeline-steps {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap
-}
+      body {
+            background-color: #f9f9fa
+         }
 
-.timeline-steps .timeline-step {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    margin: 1rem
-}
+         @media (min-width:992px) {
+            .page-container {
+               max-width: 1140px;
+               margin: 0 auto
+            }
 
-@media (min-width:768px) {
-    .timeline-steps .timeline-step:not(:last-child):after {
-        content: "";
-        display: block;
-        border-top: .25rem dotted #3b82f6;
-        width: 3.46rem;
-        position: absolute;
-        left: 7.5rem;
-        top: .3125rem
-    }
-    .timeline-steps .timeline-step:not(:first-child):before {
-        content: "";
-        display: block;
-        border-top: .25rem dotted #3b82f6;
-        width: 3.8125rem;
-        position: absolute;
-        right: 7.5rem;
-        top: .3125rem
-    }
-}
+            .page-sidenav {
+               display: block !important
+            }
+         }
 
-.timeline-steps .timeline-content {
-    width: 10rem;
-    text-align: center
-}
+         .padding {
+            padding: 2rem
+         }
 
-.timeline-steps .timeline-content .inner-circle {
-    border-radius: 1.5rem;
-    height: 1rem;
-    width: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #3b82f6
-}
+         .w-32 {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: .85em
+         }
 
-.timeline-steps .timeline-content .inner-circle:before {
-    content: "";
-    background-color: #3b82f6;
-    display: inline-block;
-    height: 3rem;
-    width: 3rem;
-    min-width: 3rem;
-    border-radius: 6.25rem;
-    opacity: .5
-}
+         .tl-item .avatar {
+            z-index: 2
+         }
+
+         .circle {
+            border-radius: 500px
+         }
+
+         .gd-warning {
+            color: #fff;
+            border: none;
+            background: #f4c414 linear-gradient(45deg, #f4c414, #f45414)
+         }
+
+         .timeline {
+            position: relative;
+            border-color: rgba(160, 175, 185, .15);
+            padding: 0;
+            margin: 0
+         }
+
+         .p-4 {
+            padding: 1.5rem !important
+         }
+
+         .block,
+         .card {
+            background: #fff;
+            border-width: 0;
+            border-radius: .25rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .05);
+            margin-bottom: 1.5rem
+         }
+
+         .mb-4,
+         .my-4 {
+            margin-bottom: 1.5rem !important
+         }
+
+         .tl-item {
+            border-radius: 3px;
+            position: relative;
+            display: -ms-flexbox;
+            display: flex
+         }
+
+         .tl-item>* {
+            padding: 10px
+         }
+
+         .tl-item .avatar {
+            z-index: 2
+         }
+
+         .tl-item:last-child .tl-dot:after {
+            display: none
+         }
+
+         .tl-item.active .tl-dot:before {
+            border-color: #448bff;
+            box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+         }
+
+         .tl-item:last-child .tl-dot:after {
+            display: none
+         }
+
+         .tl-item.active .tl-dot:before {
+            border-color: #448bff;
+            box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+         }
+
+         .tl-dot {
+            position: relative;
+            border-color: rgba(160, 175, 185, .15)
+         }
+
+         .tl-dot:after,
+         .tl-dot:before {
+            content: '';
+            position: absolute;
+            border-color: inherit;
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%)
+         }
+
+         .tl-dot:after {
+            width: 0;
+            height: auto;
+            top: 25px;
+            bottom: -15px;
+            border-right-width: 0;
+            border-top-width: 0;
+            border-bottom-width: 0;
+            border-radius: 0
+         }
+
+         tl-item.active .tl-dot:before {
+            border-color: #448bff;
+            box-shadow: 0 0 0 4px rgba(68, 139, 255, .2)
+         }
+
+         .tl-dot {
+            position: relative;
+            border-color: rgba(160, 175, 185, .15)
+         }
+
+         .tl-dot:after,
+         .tl-dot:before {
+            content: '';
+            position: absolute;
+            border-color: inherit;
+            border-width: 2px;
+            border-style: solid;
+            border-radius: 50%;
+            width: 10px;
+            height: 10px;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%)
+         }
+
+         .tl-dot:after {
+            width: 0;
+            height: auto;
+            top: 25px;
+            bottom: -15px;
+            border-right-width: 0;
+            border-top-width: 0;
+            border-bottom-width: 0;
+            border-radius: 0
+         }
+
+         .tl-content p:last-child {
+            margin-bottom: 0
+         }
+
+         .tl-date {
+            font-size: .85em;
+            margin-top: 2px;
+            min-width: 100px;
+            max-width: 100px
+         }
+
+         .avatar {
+            position: relative;
+            line-height: 1;
+            border-radius: 500px;
+            white-space: nowrap;
+            font-weight: 700;
+            border-radius: 100%;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -ms-flex-negative: 0;
+            flex-shrink: 0;
+            border-radius: 500px;
+            box-shadow: 0 5px 10px 0 rgba(50, 50, 50, .15)
+         }
+
+         .b-warning {
+            border-color: #f4c414!important;
+         }
+
+         .b-primary {
+            border-color: #4e91fc!important;
+         }
+
+         .b-info {
+            border-color: #4bc3fa!important;
+         }
+
+         .b-danger {
+            border-color: #f54394!important;
+         }
    </style>
    <section class="section">
       {{-- <div class="section-header">
@@ -84,167 +232,140 @@
       </div> --}}
 
       <div class="section-body">
-         {{-- <h2 class="section-title">Schedule Plan</h2>
-         <p class="section-lead">
-         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-         </p> --}}
-
-         {{-- <div class="badge badge-info">
-            Timeline Activity
-         </div>
-         <hr> --}}
-         <div class="text-center">
-            <h4 class="text-center">Timeline {{$schedule->vessel->name}} {{$schedule->code}}</h4>
-            <a href="{{route('document.timeline', enkripRambo($schedule->id))}}" class="btn btn-sm btn-light border">Export PDF</a>
-         </div>
          
-         <div class="row mt-4">
-            <div class="col">
-               <div class="timeline-steps aos-init aos-animate" data-aos="fade-up">
+         <div class="page-content page-container" id="page-content">
+            <div class="row">
+               <div class="col">
+                  <h4>Timeline of {{$schedule->code}}</h4>
+                  <hr>
+                  {{formatDate($schedule->date)}} <br>
+                  <span>{{$schedule->vessel->name}}</span> <br>
                   
-                  @if ($reports->count() > 0)
-                     @foreach ($reports as $report)
-                     <div class="timeline-step">
-                        @php
-                           if ($report->status_id == 6){
-                              $desc = 'ETA : ' . formatDateTime($report->eta) . ' at '.$report->destination->name;
-                           }
-                              else {
-                                 $desc = $report->desc;
-                              }
-                           
-                        @endphp
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="{{$desc}}" data-original-title="">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">{{  \Carbon\Carbon::parse($report->date)->format('d-m-y H:i ')}}</p>
-                           {{-- <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p> --}}
-                           @if ($report->status_id > 2)
-                              <a href="" class="" data-toggle="modal" data-target="#report-evidance-{{$report->id}}"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</a>
-                              @else
-                              <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
-                           @endif
-               
-                           {{-- @if ($report->status_id == 6)
-                              <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
-                           @endif --}}
-               
-                           @if ($report->status_id > 27 && $report->status_id < 32)
-                              <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
-                           @endif
-                        </div>
-                     </div>
-                     @endforeach
-                  @endif
-                  <div class="timeline-step">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2003">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">START</p>
-                           {{-- <p class="h6 text-muted mb-0 mb-lg-0">Favland Founded</p> --}}
-                     </div>
-                  </div>
-                  
-                  {{-- <div class="timeline-step">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">2005</p>
-                           <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
-                     </div>
-                  </div>
-                  <div class="timeline-step">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">2010</p>
-                           <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
-                     </div>
-                  </div>
-                  <div class="timeline-step mb-0">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">2020</p>
-                           <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
-                     </div>
-                  </div>
-                  <div class="timeline-step">
-                     <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2005">
-                        <div class="inner-circle"></div>
-                        <p class="h6 mt-3 mb-1">2005</p>
-                        <p class="h6 text-muted mb-0 mb-lg-0">Launched Messanger</p>
-                     </div>
-                  </div>
-                  <div class="timeline-step">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2010">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">2010</p>
-                           <p class="h6 text-muted mb-0 mb-lg-0">Open New Branch</p>
-                        </div>
-                  </div>
-                  <div class="timeline-step mb-0">
-                        <div class="timeline-content" data-toggle="popover" data-trigger="hover" data-placement="top" title="" data-content="And here's some amazing content. It's very engaging. Right?" data-original-title="2020">
-                           <div class="inner-circle"></div>
-                           <p class="h6 mt-3 mb-1">2020</p>
-                           <p class="h6 text-muted mb-0 mb-lg-0">In Fortune 500</p>
-                        </div>
-                  </div> --}}
-               </div>
-            </div>
-         </div>
-         {{-- <div class="row">
-            <div class="col-md-6">
-               <div class="card border shadow-sm">
-                  <div class="card-header">
-                  <h4>SCHEDULE TIMELINE {{$schedule->code}}</h4>
-                  
-                  </div>
-                  <div class="card-body" id="top-5-scroll">
-                     <div  class="activities " >
-                        @if ($reports->count() > 0)
-                           @foreach ($reports as $report)
-                           <div class="activity">
-                              <div class="activity-icon bg-info text-white shadow-primary">
-                              <i class="fas fa-comment-alt"></i>
-                              </div>
-                              <div class="activity-detail">
-                              <div class="mb-2">
-                                 <span class="text-job text-primary">{{  \Carbon\Carbon::parse($report->created_at)->format('d-m-y H:i ')}}</span>
-                                 <span class="bullet"></span>
+                  @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' || $schedule->class == 'Crew Change')
+                     <span>
+                        @foreach ($fixRoutes as  $route)
                               
-                              </div>
-                              <p>{{$report->vessel->name}} {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->name}} {{$report->anchor ?? ''}}</p>
-                              @if ($report->status_id == 9)
-                                    <a href="" class="btn btn-sm btn-primary shadow-none" data-toggle="modal" data-target="#report-evidance-{{$report->id}}">Evidance</a>
+                           @if (auth()->user()->hasRole('marine'))
+                              <a href="#" data-toggle="modal" data-target="#reorder-route-{{$route->id}}">
+                              @if ($route->rank > 1)
+                                 -
+                                 @else
+                                 
+                              @endif 
+                              {{$route->port->code}} 
+                              @if ($route->port->port_id != null)
+                                 ({{$route->port->port->code}})
+
                               @endif
+                              </a>
+                           @else
+                              @if ($route->rank > 1)
+                              -
+                              @else
+                              @endif 
+                              {{$route->port->code}} 
+                           @endif
+                           
+                          
+                              
+                        @endforeach
+                        <br>
+                        {{-- @if (auth()->user()->hasRole('marine'))
+                        <a href="#" data-toggle="modal" data-target="#add-schedule-route" class="" add-schedule-route>add more</a>
+                        @endif --}}
+                        @if (auth()->user()->hasRole('marine'))
+                                 {{$schedule->remark}}
+                              @else
+                              {{$schedule->remark}}
+                              @endif
+                     </span>  
+                  @endif
+                  @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting' || $schedule->class == 'Fuel Oil' || $schedule->class == 'Fresh Water')
+                      <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
+                  @endif
+                  <hr>
+
+                  <span class="badge badge-info mb-2">Boat Cargo Manifest</span> <br>
+
+                  <table class="border">
+                     <thead>
+                        <tr class="border">
+                           <th>No. BCM</th>
+                           <th>Route</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($schedule->cargos as $cargo)
+                           <tr class="border">
+                              <td>{{$cargo->code}}</td>
+                              <td>{{$cargo->origin->code}} - {{$cargo->destination->code}}</td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
                   
-                              @if ($report->status_id == 6)
-                                    <span class="btn btn-primary btn-sm shadow-none">ETA : {{formatDateTime($report->eta)}} at {{$report->destination->name}}</span>
+                  {{-- <h2>{{$schedule->vessel->name}}</h2> --}}
+               </div>
+               <div class="col-lg-8">
+                  <div class="timeline  ">
+                     
+                        @foreach ($reports as $report)
+                           <div class="tl-item">
+                              @if ($report->status_id == 10)
+                              <div class="tl-dot b-warning"></div>
+                              @elseif($report->status_id <= 2)
+                              <div class="tl-dot b-info"></div>
+                                  @else
+                                  <div class="tl-dot b-primary"></div>
                               @endif
-                  
-                              @if ($report->status_id > 27 && $report->status_id < 32)
-                                    <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
-                              @endif
+                              
+                              <div class="tl-content">
+                                 <div class="">
+                                    @php
+                                        
+                                    
+                                    if ($report->status_id == 6){
+                                       $desc = 'ETA : ' . formatDateTime($report->eta) . ' at '.$report->destination->name;
+                                    }
+                                       else {
+                                          $desc = $report->desc ;
+                                       }
+                                       @endphp
+                                        
+                                       @if ($report->status_id > 2)
+                                          <a href="" class="" data-toggle="modal" data-target="#report-evidance-{{$report->id}}"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}} [{{$desc}}]</a>
+                                          @else
+                                          <p class=" text-muted mb-0 mb-lg-0"> {{$report->status->name}}  {{$report->port_id == null ? '' :  'at ' .$report->port->code}} {{$report->anchor ?? ''}}</p>
+                                       @endif
+                                       @if ($report->status_id > 27 && $report->status_id < 32)
+                                          <span class="btn btn-primary btn-sm shadow-none">Anchor {{$report->anchor}}</span>
+                                       @endif
+                                 </div>
+                                 <div class="tl-date text-muted mt-1">{{  \Carbon\Carbon::parse($report->date)->format('d-m-y H:i ')}}</div>
                               </div>
                            </div>
-                           
-                              @endforeach
-                              @else
-                              <div class="row">
-                              <div class="col">
-                                    <small class="text-center text-muted">Empty</small>
-                              </div>
-                              </div>
-                        @endif
+                        @endforeach
                         
-                        </div>
-                  </div>
-                  <div class="card-footer pt-3 d-flex justify-content-center">
-               
+                       
+                        {{-- <div class="tl-item">
+                           <div class="tl-dot b-warning"></div>
+                           <div class="tl-content">
+                              <div class="">Learn how to use <a href="#" data-abc="true">Google Analytics</a> to discover vital information about your readers.</div>
+                              <div class="tl-date text-muted mt-1">3 days ago</div>
+                           </div>
+                        </div> --}}
                   </div>
                </div>
+               
+               
+            
             </div>
-         </div> --}}
-
+         </div>
 
       </div>
    </section>
+
+   
   @if ($reports->count() > 0)
     @foreach ($reports as $report)
     <div class="modal fade" id="report-evidance-{{$report->id}}" tabindex="-1" role="dialog" aria-hidden="true">

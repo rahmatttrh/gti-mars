@@ -93,12 +93,21 @@ class DocumentController extends Controller
 
       // dd( $startDate->format('F'));
 
+      // $users = CargoItem::selectRaw('id, date, status,user_id , user_name , description, schedule_id')   ->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+
+      $users = Cargo::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+
+      $cargoItems = CargoItem::whereBetween('date', [$dekripStart, $dekripEnd])->get();
+
+      // $cargos = Cargo::where()
+      // dd($users);
       return view('pages.document.intermilan-new', [
          'users' => $users,
          'dates' => $dates,
          'start' => $dekripStart,
          'end' => $dekripEnd,
-         'monthName' => $startDate->format('F Y')
+         'monthName' => $startDate->format('F Y'),
+         'cargoItems' => $cargoItems
       ])->with('i');
    }
 

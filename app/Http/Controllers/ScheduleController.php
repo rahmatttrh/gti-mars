@@ -128,6 +128,7 @@ class ScheduleController extends Controller
 
    public function detail($id)
    {
+      // dd('ok');
       $now = Carbon::now();
       // dd($now->addDay(1));
       $dekripId = dekripRambo($id);
@@ -301,6 +302,9 @@ class ScheduleController extends Controller
       $barges = Port::where('type', 'Barge')->get();
       $cargos = Cargo::where('schedule_id', $schedule->id)->get();
       $items = CargoItem::get();
+
+      // dd($items);
+
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
          return view('pages-stisla.schedule.detail', [
             'schedules' => $schedules,
@@ -381,11 +385,12 @@ class ScheduleController extends Controller
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       $reports = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->get();
-      
+      $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
 
       return view('pages-stisla.schedule.timeline', [
          'schedule' => $schedule,
          'reports' => $reports,
+         'fixRoutes' => $fixRoutes
         
       ]);
    }

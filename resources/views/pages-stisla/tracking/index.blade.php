@@ -36,7 +36,15 @@
                </thead>
                <tbody>     
                   @foreach ($cargos as $cargo)
+                  <tr>
                      <th>{{$cargo->mtd}}</th>
+                     <th>{{$cargo->desc}}</th>
+                     <th>{{$cargo->contract}}</th>
+                     <th>{{$cargo->unit}}</th>
+                     <th>{{$cargo->weight}}</th>
+                     <th>{{$cargo->}}</th>
+                  </tr>
+                     
                   @endforeach
                </tbody>
             </table>

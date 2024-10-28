@@ -19,11 +19,11 @@
                <x-schedule-stisla.action-department :schedule="$schedule" />
             @endif
 
-            @if (auth()->user()->hasRole('admin-logistic') && $schedule->status == 0)
+            {{-- @if (auth()->user()->hasRole('admin-logistic') && $schedule->status == 0)
             <button class="btn btn-info btn-block mb-2" data-toggle="modal" data-target="#schedule-send">
                Send
             </button>
-            @endif
+            @endif --}}
             
 
             <div class="card shadow- border">
@@ -228,6 +228,7 @@
                <x-schedule.logistic :requests="$requests" :schedule="$schedule" :cargos="$cargos" :items="$items" />
                   @else
                   @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
+                  
                   <x-schedule.cargo-crew :statuses="$statuses" :fixroutes="$fixRoutes" :cargos="$cargos" :items="$items" :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
                   @elseif($schedule->class == 'Moving')
                   <div class="card border">

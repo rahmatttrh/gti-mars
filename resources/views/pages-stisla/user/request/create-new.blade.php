@@ -56,6 +56,9 @@
                                  @foreach ($ports as $port)
                                     <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
                                  @endforeach
+                                 {{-- @foreach ($platforms as $plat)
+                                    <option {{ old('origin') == $plat->id ? 'selected' : '' }} value="{{ $plat->id }}">{{ $plat->name }}</option>
+                                 @endforeach --}}
                               </select>
                            </div>
                            <div class="form-group col-md-6 destination">
@@ -65,6 +68,9 @@
                                  @foreach ($ports as $port)
                                     <option {{ old('destination') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
                                  @endforeach
+                                 {{-- @foreach ($platforms as $plat)
+                                    <option {{ old('origin') == $plat->id ? 'selected' : '' }} value="{{ $plat->id }}">{{ $plat->name }}</option>
+                                 @endforeach --}}
                               </select>
                            </div>
                            <div class="form-group col-md-6 file-cargo">

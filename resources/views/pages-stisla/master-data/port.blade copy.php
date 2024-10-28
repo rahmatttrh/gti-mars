@@ -87,7 +87,7 @@
                            @foreach ($ports as $port)
                               <tr>
                                  <td class="text-center">{{++$i}}</td>
-                                 <td>{{$port->name}} {{$port->port_id}}</td>
+                                 <td>{{$port->name}} </td>
                                  
                                  <td>{{$port->region}}</td>
                                  <td>{{$port->email}}</td>

@@ -13,28 +13,28 @@
             
             <div class="row">
                <div class="col-md-6">
-                  <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-light border  mb-2">
+                  {{-- <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}" class="btn btn-light border  mb-2">
                      <i class="fa fa-backward"></i>
                      Back
-                  </a>
-                  <table>
+                  </a> --}}
+                  <table class="border">
                      <thead>
-                        <tr>
+                        <tr class="border">
                            <th colspan="2" class="py-1 bg-grey text-white">DROP CARGO</th>
                            {{-- <th><a href="">BACK</a></th> --}}
                         </tr>
                      </thead>
                      <tbody>
-                        <tr>
+                        <tr class="border">
                            <td colspan="2">MTD No. {{$item->mtd}}</td>
                         </tr>
-                        <tr>
-                           <td colspan="2">{{$item->desc}}</td>
+                        <tr class="border">
+                           <td colspan="2">{{$item->description}}</td>
                         </tr>
-                        <tr>
+                        <tr class="border">
                            <td colspan="2">PO {{$item->contract}}</td>
                         </tr>
-                        <tr>
+                        <tr class="border">
                            <td colspan="">{{$item->qty}} {{$item->unit}}</td>
                            <td>{{$item->weight}} Ton</td>
                         </tr>

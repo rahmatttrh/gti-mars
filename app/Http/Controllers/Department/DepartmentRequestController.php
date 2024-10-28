@@ -16,6 +16,7 @@ use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
 use App\Models\FuelItem;
+use App\Models\MaterialMan;
 use App\Models\ParentRequest;
 use App\Models\PassengerItem;
 use App\Models\Port;
@@ -45,6 +46,8 @@ class DepartmentRequestController extends Controller
       // } else {
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
+
+      
       
       $employee = Employee::where('email', auth()->user()->email)->first();
       if ($employee) {
@@ -110,6 +113,10 @@ class DepartmentRequestController extends Controller
       // } else {
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
+      // dd('ok');
+      // if (auth()->) {
+      //    # code...
+      // }
       
       $employee = Employee::where('email', auth()->user()->email)->first();
       if ($employee) {
@@ -118,6 +125,7 @@ class DepartmentRequestController extends Controller
          $port = Port::where('email', auth()->user()->email)->first();
          $portId = $port->id;
       }
+
       $now = Carbon::now();
       $acts = Activity::get();
       $activities = $acts;
@@ -125,6 +133,8 @@ class DepartmentRequestController extends Controller
       $ports = Port::where('type', '!=', 'platform')->get();
       $platforms = Port::where('type', 'platform')->get();
       $barges = Port::where('type', 'Barge')->get();
+
+      // dd($platforms);
 
       // $schedules = Schedule::where('date', '>=', $now)->get();
       // dd($schedules);
@@ -427,25 +437,29 @@ class DepartmentRequestController extends Controller
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       $employee = Employee::where('email', auth()->user()->email)->first();
+      // dd($employee->id);
+
+      // dd($employee->department_id);
       if ($employee) {
          $department = Department::find($employee->department->id);
       } else {
          $department = null;
       }
 
-      
 
       if (auth()->user()->hasRole('vessel')) {
          $level = 'V';
       } else if(auth()->user()->hasRole('department')){
          $level = 'U';
       }
+
       if (isset($request)) {
          $code =
             "R/" . $level . '/' . $now->format("dmy") . '/' . ($request->id + 1);
       } else {
          $code = "R/"  . $level . '/' . $now->format("dmy") . '/' . 1;
       }
+
       if (isset($lastSchedule)) {
          $scheduleCode =
             "SO"  . '/' . $now->format("dmy") . '/' . ($lastSchedule->id + 1);
@@ -904,6 +918,17 @@ class DepartmentRequestController extends Controller
 
    public function progress()
    {
+
+      // $mms = MaterialMan::get();
+      // foreach ($mms as $mm) {
+      //    Employee::create([
+      //       'status' => 1,
+      //       'port_id' => 
+      //    ]);
+      // }
+      // if (auth()->user()->hasRole('mm')) {
+      //    # code...
+      // }
       $employee = Employee::where('email', auth()->user()->email)->first();
       
       $today = Carbon::now();

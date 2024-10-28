@@ -60,7 +60,7 @@
               <div class="input-group-prepend">
                 <div class="input-group-text">Desc</div>
               </div>
-              <input type="text" class="form-control" id="desc" name="desc" value="{{$item->desc}}">
+              <input type="text" class="form-control" id="desc" name="desc" value="{{$item->description}}">
             </div>
          </div>
       </div>

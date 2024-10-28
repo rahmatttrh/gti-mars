@@ -1,5 +1,5 @@
 <style>
-   table {
+   /* table {
       width: 100%;
    }
 
@@ -9,26 +9,26 @@
    }
    th, td {
       padding-left: 5px
-   }
+   } */
 
    
 </style>
    <div class="row"> 
-      <div class="col-md-5">
-         <table >
+      <div class="col-md-6">
+         <table class="border">
             <thead>
                <tr>
                   <th>Vessel</th>
                   <th>Code</th>
-                  {{-- <th>Date</th> --}}
+                  <th>Date</th>
                   <th>Status</th>
                </tr>
             </thead>
             <tbody>
                @foreach ($schedules as $sche)
-                   <tr>
-                     <td>{{$sche->vessel->name}}</td>
-                     {{-- <td>{{$sche->code}}</td> --}}
+                   <tr class="border">
+                     <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
+                     <td>{{$sche->code}}</td>
                      <td>{{formatDate($sche->date)}}</td>
                      <td>
                         <x-status-stisla.schedule-plain :schedule="$sche"/>
@@ -71,27 +71,27 @@
          @endif
 
       </div>
-      <div class="col-md-7">
+      <div class="col-md-6">
          
-         <table class="" style="border: none" id="table-5" >
+         <table class="border"  id="table-5" >
             <thead>
                <tr>
                   <th>BCM</th>
                   <th>MTD</th>
                   <th>Desc</th>
-                  <th>Qty</th>
-                  <th>Vessel</th>
+                  {{-- <th>Qty</th> --}}
+                  {{-- <th>Vessel</th> --}}
                   <th>Status</th>
                </tr>
             </thead>
             <tbody>
                @foreach ($items as $item)
-                   <tr>
+                   <tr class="border">
                      <td>{{$item->cargo->code}}</td>
                      <td>{{$item->mtd}}</td>
-                     <td>{{$item->desc}}</td>
-                     <td>{{$item->qty}} {{$item->unit}}</td>
-                     <td>{{$item->request->schedule->vessel->name}}</td>
+                     <td>{{$item->description}}</td>
+                     {{-- <td>{{$item->qty}} {{$item->unit}}</td> --}}
+                     {{-- <td>{{$item->schedule->vessel->name}}</td> --}}
                      <td>
                         <x-status-stisla.request-plain :request="$item->request"/>
                      </td>

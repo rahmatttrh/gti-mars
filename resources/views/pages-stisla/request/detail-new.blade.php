@@ -3,6 +3,12 @@
 		DSP Detail Request
 @endsection
 @section('content')
+<style>
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+   }
+</style>
    <section class="section">
       {{-- <div class="section-header">
          <h1 class="section-title">Create Request Activity</h1>

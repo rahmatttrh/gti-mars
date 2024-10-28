@@ -50,6 +50,7 @@
    } */
    th, td {
       padding-left: 5px
+      
    }
 
    .bg-complete {
@@ -171,6 +172,9 @@
             {{-- <x-navbar.chief /> --}}
             <x-navbar.dsp.chief  />
             @elseif(auth()->user()->hasRole('admin-logistic'))
+            {{-- <x-navbar.chief /> --}}
+            <x-navbar.dsp.logistic  />
+            @elseif(auth()->user()->hasRole('mm'))
             {{-- <x-navbar.chief /> --}}
             <x-navbar.dsp.logistic  />
             @endif

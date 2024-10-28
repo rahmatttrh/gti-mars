@@ -53,12 +53,13 @@ class CargoItemController extends Controller
          'no_doc' => $r->no_document,
          'mtd' => $mtd,
          'contract' => $r->contract,
-         'desc' => $r->desc,
+         'description' => $r->desc,
          'qty' => $r->qty,
          'unit' => $r->unit,
          'size' => $r->size,
          'weight' => $r->weight,
-         'remark' => $r->remark
+         'remark' => $r->remark,
+         'date' => $request->date
       ]);
 
       $request->update([
@@ -67,7 +68,6 @@ class CargoItemController extends Controller
       ]);
       return redirect()->back()->with('success', 'Cargo Item successfully added.');
    }
-
 
    public function storeImport(Request $req){
       // dd($req->requestId);
@@ -97,7 +97,7 @@ class CargoItemController extends Controller
       $cargo = CargoItem::find($req->cargo);
       $cargo->update([
          // 'mtd' => $req->mtd,
-         'desc' => $req->desc,
+         'description' => $req->desc,
          'contract' => $req->contract,
          'qty' => $req->qty,
          'unit' => $req->unit,
@@ -121,6 +121,7 @@ class CargoItemController extends Controller
    }
 
    public function drop($id){
+      // dd('ok');
       $cargoItem = CargoItem::find(dekripRambo($id));
       $schedule = Schedule::find($cargoItem->request->schedule_id);
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
@@ -158,8 +159,6 @@ class CargoItemController extends Controller
 
       $onboard = $qty - $offloading;
 
-
-
       $offloading = Offloading::create([
          'schedule_id' => $schedule->id,
          'request_id' => $request->id,
@@ -173,7 +172,7 @@ class CargoItemController extends Controller
       ]);
 
       $cargoItem->update([
-         'status' => 2,
+         'status' => 4,
          'offloading_id' => $offloading->id,
          // 'onboard' => $onboard
       ]);
@@ -244,6 +243,52 @@ class CargoItemController extends Controller
          ]);
       }
 
-      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Item successfully confirmed');
+      return redirect()->to('/')->with('success', 'Item successfully confirmed');
+   }
+
+   public function logApprove($id){
+      // dd('ok');
+      $item = CargoItem::find(dekripRambo($id));
+      // dd($req->id);
+
+      $cargo = Cargo::where('schedule_id', $item->schedule_id)->where('origin_id', $item->request->origin_id)->where('destination_id', $item->request->destination_id)->first();
+
+      if ($cargo) {
+         // dd('ada yg sama');
+         $bcm = $cargo;
+
+      } else {
+
+         // dd('tidak ada yg sama');
+         $cargo = Cargo::orderBy("created_at", "desc")->first();
+
+      
+         if (isset($cargo)) {
+            $code = 'B00' . ($cargo->id + 1);
+         } else {
+            $code =  'B00'  . 1;
+         }
+         
+         $bcm = Cargo::create([
+            'code' => $code,
+            'status' => 1,
+            'schedule_id' => $item->schedule_id,
+            'origin_id' => $item->request->origin_id,
+            'destination_id' => $item->request->destination_id
+         ]);
+
+         
+      }
+
+      
+         $item->update([
+            'cargo_id' => $bcm->id,
+            'status' => 1
+         ]);
+      
+
+      return redirect()->back()->with('success', 'BCM Created');
+
+      
    }
 }
