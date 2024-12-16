@@ -448,7 +448,7 @@ class HomeController extends Controller
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          
          // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
-         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->take(3)->get();
+         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->take(3)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $nowSchedule = Schedule::find($currentVessel->schedule_id);
          // dd($schedules);
@@ -458,7 +458,7 @@ class HomeController extends Controller
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
       } else {
          $currentVessel = null;
-         $schedules = Schedule::paginate(5);
+         $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $requests = null;
          $nowSchedule = null;
          $vdr = null;
@@ -525,6 +525,7 @@ class HomeController extends Controller
 
       $takeouts = ModelsRequest::where('undo', '!=', null)->get();
       $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->paginate(10);
+      $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
       
       if (auth()->user()->hasRole('mm')) {
         $mm = MaterialMan::where('email', auth()->user()->email)->first();
@@ -533,6 +534,8 @@ class HomeController extends Controller
          $mm = null;
          $cargos = null;
       }
+
+      
       
       return view('main', [
          'feed' => $feed,
@@ -556,6 +559,7 @@ class HomeController extends Controller
 
          'cargoItems' => $cargoItems,
          'takeouts' => $takeouts,
+         'itemRejects' => $itemRejects,
 
          'mm' => $mm,
          'cargos' => $cargos

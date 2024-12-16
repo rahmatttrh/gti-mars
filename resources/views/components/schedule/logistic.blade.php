@@ -55,6 +55,7 @@
          </table>
       </div>
    </div>
+   
 </div>
 
 @if (count($schedule->items->where('status', 0)) > 0)
@@ -116,7 +117,13 @@
    </tbody>
 </table>
 @endif
-
+<h4>STOWAGE PLAN</h4>
+{{-- doc/stowage-plan.pdf --}}
+@if ($schedule->vessel->stowage_plan)
+   <embed  style="width: 100%; height:700px;overflow:hidden" class="text-center" id="preview-pdf" src="{{asset('storage/' . $schedule->vessel->stowage_plan)}}" frameborder="0"></embed>
+      @else
+      <p>Data Empty</p>
+@endif
 
 
 

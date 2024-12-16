@@ -74,7 +74,7 @@
               
             </div>
             <div class="dropdown-footer text-center">
-            <a href="{{route('marine.request')}}">View Intermilan <i class="fas fa-chevron-right"></i></a>
+            <a href="{{route('marine.request.list')}}">View Intermilan <i class="fas fa-chevron-right"></i></a>
             {{-- <a href="#">View Crew Change <i class="fas fa-chevron-right"></i></a> --}}
             </div>
          </div>

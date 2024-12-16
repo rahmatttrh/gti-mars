@@ -108,6 +108,8 @@ Route::middleware(["auth"])->group(function () {
    Route::get("map/dashboard", [HomeController::class, "mapp",])->name('map');
    Route::get("fms/dashboard", [HomeController::class, "fms",])->name('fms');
    Route::get("hse/dashboard", [HomeController::class, "hse",])->name('hse');
+
+   Route::put("vessel/stowage/update", [VesselController::class, "updateStowage",])->name('vessel.stowage.update');
    
    
    Route::prefix('user')->group(function () {
@@ -243,6 +245,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::get('request/log/app/{id}', [RequestController::class, 'logApprove'])->name('request.logistic.approve');
    Route::get('item/log/app/{id}', [CargoItemController::class, 'logApprove'])->name('item.logistic.approve');
+   Route::put('item/log/reject', [CargoItemController::class, 'logReject'])->name('item.logistic.reject');
    Route::get('log/edit/mtd/{id}', [ScheduleController::class, 'editMtd'])->name('logistic.edit.mtd');
    Route::get('log/edit/bcm/{id}', [ScheduleController::class, 'editBcm'])->name('logistic.edit.bcm');
 
@@ -517,6 +520,8 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
       Route::get('schedule/create/{date}/{from}', [MarineRequestController::class, 'createSchedule'])->name('request.schedule.create');
       Route::put('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
       // Route::get('undo/approve/{id}', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
+
+      // Route::put('undo-approve', [MarineRequestController::class, 'undoApprove'])->name('request.undo.approve');
    });
 
    // Route::prefix('schedule')->group(function () {

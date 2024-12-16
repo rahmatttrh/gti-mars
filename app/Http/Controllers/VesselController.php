@@ -11,6 +11,7 @@ use App\Models\VesselHistory;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class VesselController extends Controller
 {
@@ -203,6 +204,30 @@ class VesselController extends Controller
          'email' => $req->email
       ]);
       return redirect()->back()->with('success', 'Vessel successfuly updated');
+   }
+
+
+   public function updateStowage(Request $req){
+      $req->validate([
+         'stowage_plan' => 'required'
+      ]);
+      $vessel = Vessel::find($req->vessel);
+      // dd('ok');
+      // dd(request('doc'));
+      if (request('stowage_plan')) {
+         Storage::delete($vessel->stowage_plan);
+         $stowage_plan = request()->file('stowage_plan')->store('stowage/plan');
+      } elseif ($vessel->stowage_plan) {
+         $stowage_plan = $vessel->stowage_plan;
+      } else {
+         $stowage_plan = null;
+      }
+
+      $vessel->update([
+         'stowage_plan' => $stowage_plan
+      ]);
+
+      return redirect()->back()->with('success', 'Stowage Plan successfully updated');
    }
 
    public function detail($id)

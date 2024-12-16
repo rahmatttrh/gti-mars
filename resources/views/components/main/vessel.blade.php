@@ -15,7 +15,7 @@
 
       <div class="row">
          
-         <div class="col-md-8">
+         <div class="col-md-7">
             {{-- <div class="badge badge-info">DSP</div> --}}
             <div class="table-responsive">
                <table class="" id="table-6">
@@ -118,7 +118,8 @@
                </table>
             </div>
          </div>
-         <div class="col-md-4">
+         <div class="col-md-5">
+            
             <marquee  class="px-4 bgb-2  rounded text-white py-2 px-2 mb-2" >
                <i class="fa fa-bell"></i> Welcome to MARS, This main page contains summary data from several systems (Digital Smart Port, Vessel Daily Report) and Document Alert on the right side. 
             </marquee>
@@ -147,6 +148,25 @@
                   </tbody>
                </table>
             </div>
+            <hr>
+            <form action="{{route('vessel.stowage.update')}}" method="POST" enctype="multipart/form-data">
+               @csrf
+               @method('PUT')
+               <input type="number" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
+               <div class="form-group">
+                  {{-- <label for="desc">Stowage Plan Doccc</label> --}}
+                  <input type="file" class="form-control" id="stowage_plan" required name="stowage_plan" >
+               </div>
+               <button type="submit" class="btn btn-primary">Update Stowage Plan</button>
+            </form>
+            {{-- <h4>STOWAGE PLAN</h4> --}}
+            {{-- doc/stowage-plan.pdf --}}
+            <hr>
+            @if ($vessel->stowage_plan)
+               <embed  style="width: 100%; height:500px;overflow:hidden" class="text-center" id="preview-pdf" src="{{asset('storage/' . $vessel->stowage_plan)}}" frameborder="0"></embed>
+                @else
+                <p>Stowage Plan Document Empty</p>
+            @endif
          </div>
       </div>
    <hr>

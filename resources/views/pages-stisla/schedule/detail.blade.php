@@ -199,6 +199,18 @@
                </div>
             </div>
             <x-schedule-stisla.timeline :reports="$reports" /> --}}
+            <form action="{{route('vessel.stowage.update')}}" method="POST" enctype="multipart/form-data">
+               @csrf
+               @method('PUT')
+               <input type="number" name="vessel" id="vessel" value="{{$schedule->vessel_id}}" hidden>
+               <div class="form-group">
+                  {{-- <label for="desc">Stowage Plan Doccc</label> --}}
+                  <input type="file" class="form-control" id="stowage_plan" required name="stowage_plan" >
+               </div>
+
+               
+               <button type="submit" class="btn btn-primary">Update Stowage Plan</button>
+            </form>
          </div>
          <div class="col-md-9">
             {{-- @if (auth()->user()->hasRole('vessel') && $schedule->status > 1)
@@ -370,6 +382,8 @@
                @endif
             @endif
            
+
+            
          </div>
       </div>
    </div>
@@ -503,17 +517,17 @@
    </div>
 
    {{-- Modal Reject Request  --}}
-   @foreach ($requests->where('activity_id', 1) as $request)
-   <div class="modal fade" id="cargo-takeout-{{$request->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+   @foreach ($schedule->items->where('status', 0) as $item)
+   <div class="modal fade" id="cargo-takeout-{{$item->id}}" tabindex="-1" role="dialog" aria-hidden="true">
          <div class="modal-dialog" role="document">
-            <form action="{{route('request.undo.approve')}}" method="POST" enctype="multipart/form-data">
+            <form action="{{route('item.logistic.reject')}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden>
-            <input type="number" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+            <input type="number" name="itemId" id="itemId" value="{{$item->id}}" hidden>
             <div class="modal-content">
                <div class="modal-header">
-                  <h5 class="modal-title">Takeout Cargo {{$request->code}} </h5>
+                  <h5 class="modal-title">Takeout Cargo {{$item->description}} </h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                   </button>

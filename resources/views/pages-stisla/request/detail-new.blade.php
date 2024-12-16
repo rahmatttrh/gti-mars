@@ -499,7 +499,7 @@
                                     @foreach ($cargos as $cargo)
                                         <tr>
                                           <td>{{$cargo->mtd ?? '-'}}</td>
-                                          <td>{{$cargo->desc}}</td>
+                                          <td>{{$cargo->description}}</td>
                                           <td>{{$cargo->contract ?? '-'}}</td>
                                           <td class="text-center">{{$cargo->qty}}</td>
                                           <td class="text-center">{{$cargo->unit}}</td>

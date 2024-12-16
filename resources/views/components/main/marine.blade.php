@@ -40,29 +40,22 @@
          <hr>
          {{ $schedules->links() }}
          <hr>
-         @if ($takeouts)
+         @if ($itemrejects)
             <table>
                <tbody>
                   <tr class="bg-danger text-white">
                      <th colspan="3">Cargo takeout by OPS</th>
                   </tr>
-                  @foreach ($takeouts as $out)
+                  @foreach ($itemrejects as $rej)
                      <tr>
-                        <td>
-                           {{-- {{$out->code}} --}}
-                           {{-- <a href=""></a> --}}
-                           @foreach ($out->cargoItems as $item)
-                              {{$item->desc}}
-                               
-                           @endforeach
-                        </td>
-                        <td>from {{$out->schedule->vessel->name}}</td>
-                        <td>{{$out->reason}}</td>
+                        <td>{{$rej->description}}</td>
+                        <td>{{formatDate($rej->undo)}}</td>
+                        <td>{{$rej->reason}}</td>
                      </tr>
                   @endforeach
                   <tr>
                      <td>
-                        <a href="{{route('marine.request')}}">Open Intermilan</a>
+                        <a href="{{route('marine.request.list')}}">Open Intermilan</a>
                      </td>
                   </tr>
                </tbody>

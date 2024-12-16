@@ -276,12 +276,16 @@
                   </tbody>
                   </table>
                </div>
-               <br><br><br>
-               <hr>
-
                
             </div>
             <hr>
+            <h4>STOWAGE PLAN</h4>
+            {{-- doc/stowage-plan.pdf --}}
+            @if ($schedule->vessel->stowage_plan)
+               <embed  style="width: 100%; height:700px;overflow:hidden" class="text-center" id="preview-pdf" src="{{asset('storage/' . $schedule->vessel->stowage_plan)}}" frameborder="0"></embed>
+                @else
+                <p>Data Empty</p>
+            @endif
             
          </div>
          <div class="tab-pane fade {{$schedule->class == 'Crew' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">

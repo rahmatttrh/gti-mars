@@ -265,6 +265,7 @@ class IntermilanController extends Controller
                'status' => 1
             ]);
             $cargoItem->update([
+               'schedule_id' => $schedule->id,
                'rank' => $lastScheduleRoutes->rank + 1
             ]);
          }

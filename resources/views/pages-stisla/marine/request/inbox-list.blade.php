@@ -101,7 +101,7 @@
                                        @method('PUT')
                                        <input type="text" name="cargoItemId" id="cargoItemId" value="{{$item->id}}" hidden>
                                        <select style="width: 150px" name="schedule" id="schedule" required>
-                                          <option value="" selected disabled>Select Schedule</option>
+                                          <option value="" selected disabled>Select Schedule {{$item->schedule_id}}</option>
                                           {{-- <option value=""><a href="/">OK</a></option> --}}
                                           @foreach ($schedules as $sche)
                                              @if ($sche->class == 'Cargo' || $sche->class == 'Crew')

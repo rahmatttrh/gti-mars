@@ -15,6 +15,7 @@ use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\ScheduleRoute;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -281,14 +282,27 @@ class CargoItemController extends Controller
       }
 
       
-         $item->update([
-            'cargo_id' => $bcm->id,
-            'status' => 1
-         ]);
+      $item->update([
+         'cargo_id' => $bcm->id,
+         'status' => 1
+      ]);
       
 
-      return redirect()->back()->with('success', 'BCM Created');
+      return redirect()->back()->with('success', 'BCM Created');      
+   }
 
-      
+   public function logReject(Request $req){
+      $now = Carbon::now();
+      $item = CargoItem::find($req->itemId);
+      $vessel = $item->schedule->vessel->name;
+      $item->update([
+         'status' => 0,
+         'schedule_id' => null,
+         'cargo_id' => null,
+         'undo' => $now,
+         'reason' => $req->reason . ' ' . $vessel
+      ]);
+
+      return redirect()->back()->with('success', 'Cargo successfully rejected');
    }
 }

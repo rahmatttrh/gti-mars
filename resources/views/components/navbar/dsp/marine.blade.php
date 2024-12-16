@@ -60,7 +60,8 @@
               
             </div>
             <div class="dropdown-footer text-center">
-               <a href="{{route('marine.request')}}">View Intermilan <i class="fas fa-chevron-right"></i></a>
+               <a href="{{route('marine.request.list')}}">View Intermilan <i class="fas fa-chevron-right"></i></a>
+               {{-- <a href="{{route('marine.request')}}">View Intermilan <i class="fas fa-chevron-right"></i></a> --}}
             </div>
          </div>
       </li>
@@ -121,7 +122,7 @@
             </ul>
          </li>
          <li class="nav-item {{ (request()->is('dsp/m/request/*')) ? 'active' : '' }}">
-            <a href="{{route('marine.request')}}" class="nav-link {{ (request()->is('dsp/m/request/*')) ? 'text-dark' : 'text-white' }}">
+            <a href="{{route('marine.request.list')}}" class="nav-link {{ (request()->is('dsp/m/request/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/request/*'))
                <i class="text-primary fas fa-calendar ml-3"></i>
                @endif
