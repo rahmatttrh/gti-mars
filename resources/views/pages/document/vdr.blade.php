@@ -734,16 +734,17 @@ table {
                               @else
                               <small>{{$operating->daily}}</small>
                               @endif
+                              Ltrs
                         </td>
                      </tr>
                      @endforeach
                      <tr>
                         <td>Total Daily</td>
-                        <td>
+                        <td class="text-center">
                               <small>{{$totaljam}}</small>
                         </td>
                         <td colspan="2"></td>
-                        <td>
+                        <td class="text-center">
                               <small>{{round($totaldaily)}} Ltrs</small>
                         </td>
                      </tr>
