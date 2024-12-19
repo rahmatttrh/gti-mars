@@ -6,16 +6,19 @@
       <table class=" table-striped ">
          <thead>
             <tr class="text-center align-middle">
-               <th rowspan="2">Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</th>
+               <th rowspan="2" style="min-width: 100px">Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</th>
                <th>Activity</th>
                <th>ROB <br> <small>Check Time</small>   </th>
                <th>ROB by VDR <br> <small>at Check Time</small></th>
                <th>Actual ROB <br><small>at Check Time</small></th>
-               <th>ROB Different</th>
+               {{-- <th>ROB Different</th> --}}
+               <th>Fuel Cons. by Remuneration</th>
+               <th>Fuel Cons. Corrected</th>
+               <th>Fuel Cons. Actual</th>
             </tr>
             <tr>
                <th class="text-center">
-                  <select name="activity" id="actitivy">
+                  <select name="activity" style="width: 150px" id="actitivy">
                      <option {{$periodic->activity == 'Spot Check' ? 'selected' : '-'}} value="Spot Check">Spot Check</option>
                      <option {{$periodic->activity == 'Pre-Bunker Check' ? 'selected' : '-'}} value="Pre-Bunker Check">Pre-Bunker Check</option>
                      <option {{$periodic->activity == 'Not Applicable' ? 'selected' : '-'}} value="Not Applicable">Not Applicable</option>
@@ -23,9 +26,14 @@
                   {{-- <input style="width: 110px" type="number" name="opening[]"  > --}}
                </th>
                <th class="text-center"><input   type="time" name="rob_time" id="rob_time" value="{{$periodic->rob_time}}"></th>
-               <th class="text-center"><input  type="number" name="rob_value" id="rob_value" value="{{$periodic->rob_value}}" ></th>
-               <th class="text-center"><input  type="number" name="rob_actual" id="rob_actual" value="{{$periodic->rob_actual}}"></th>
-               <th class="text-center"><input  type="number" name="rob_diff" id="rob_diff" value="{{$periodic->rob_diff}}"></th>
+               <th class="text-center"><input style="width: 100px"  type="number" name="rob_value" id="rob_value" value="{{$periodic->rob_value}}" ></th>
+               <th class="text-center"><input style="width: 100px"  type="number" name="rob_actual" id="rob_actual" value="{{$periodic->rob_actual}}"></th>
+               
+               <th class="text-center"><input style="width: 100px" type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></th>
+               <th class="text-center"><input style="width: 100px" type="number" name="fuel_cons_correct" id="fuel_cons_correct" value="{{$periodic->fuel_cons_correct}}"></th>
+               <th class="text-center"><input style="width: 100px" type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></th>
+               
+               
             </tr>
          </thead>
          <tbody>

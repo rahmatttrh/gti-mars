@@ -769,62 +769,102 @@ table {
             </div>
          </div>
          <div class="col">
-            <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
-            <table class="mb-1">
-               <thead>
-                  {{-- <tr>
-                     <th colspan="2" class="text-center">TIME</th>
-                     <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
-                     <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
-                  </tr> --}}
-                  <tr>
-                     <td class="title">Type</td>
-                     <td class="text-truncate text-center title">OPENING</td>
-                     <td class="text-center title">CONSUMPTION</td>
-                     <td class="text-center title">RECEIVED</td>
-                     <td class="text-center title">TRANSFERRED</td>
-                     <td class="text-center title">CLOSING</td>
-                     <td>REMARKS</td>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach ($vdrCargos as $vdrCargo)
-                  <tr>
-                     <td>{{$vdrCargo->heading->description}}</td>
-                     <td class="text-center bg-yellow">{{$vdrCargo->opening}}</td>
-                     <td class="text-center bg-yellow">{{$vdrCargo->consumption}}</td>
-                     <td class="text-center bg-yellow">{{$vdrCargo->received}}</td>
-                     <td class="text-center bg-yellow">{{$vdrCargo->transferred}}</td>
-                     <td class="text-center">{{$vdrCargo->closing}}</td>
-                     <td class="bg-yellow">{{$vdrCargo->remark}}</td>
-                  </tr>
-                  @endforeach
-                  <tr>
-                     <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
-                     {{-- <td><small><b></b></small></td> --}}
-                  </tr>
-                  <tr>
-                     <td class="text-center"><b>Activity</b></td>
-                     <td class="text-center"><b>ROB Check Time</b></td>
-                     <td class="text-center"><b>ROB by VDR at Check Time</b></td>
-                     <td class="text-center"><b>Actual ROB at Check Time</b></td>
-                     <td class="text-center"><b>ROB Different</b></td>
-                     <td rowspan="3">
-                        ROB Correction Rule <br>
-                        <small>* Positive Diff -> Correction Applied</small><br>
-                        <small>* Negative Diff -> Correction Not-Applied</small>
-                     </td>
-                  </tr>
-                  <tr>
-                     <td>{{$vdrPeriodic->activity}}</td>
-                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time}}</td>
-                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_value}}</td>
-                     <td class="text-center bg-yellow">{{$vdrPeriodic->rob_actual}}</td>
-                     <td class="text-center">{{$vdrPeriodic->rob_diff}}</td>
-                  </tr>
-               </tbody>
+            <div class="d-flex">
+               <div>
+                  <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
+                     <table class="mb-1" style="width: 500px">
+                        <thead>
+                           {{-- <tr>
+                              <th colspan="2" class="text-center">TIME</th>
+                              <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
+                              <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
+                           </tr> --}}
+                           <tr>
+                              <td class="title">Type</td>
+                              <td class="text-truncate text-center title">OPENING</td>
+                              <td class="text-center title">CONSUMPTION</td>
+                              <td class="text-center title">RECEIVED</td>
+                              <td class="text-center title">TRANSFERRED</td>
+                              <td class="text-center title">CLOSING</td>
+                              <td>REMARKS</td>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach ($vdrCargos as $vdrCargo)
+                           <tr>
+                              <td>{{$vdrCargo->heading->description}}</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->opening}} Ltrs</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->consumption}} Ltrs</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->received}} Ltrs</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->transferred}} Ltrs</td>
+                              <td class="text-center">{{$vdrCargo->closing}} Ltrs</td>
+                              <td class="bg-yellow">{{$vdrCargo->remark}}</td>
+                              
+                           </tr>
+                           @endforeach
+                           <tr>
+                              <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                              {{-- <td><small><b></b></small></td> --}}
+                           </tr>
+                           <tr>
+                              <td class="text-center" colspan="2"><b>Activity</b></td>
+                              <td class="text-center"><b>ROB Check Time</b></td>
+                              <td class="text-center"><b>ROB by VDR at Check Time</b></td>
+                              <td class="text-center"><b>Actual ROB at Check Time</b></td>
+                              <td class="text-center"><b>ROB Different</b></td>
+                              
+                           </tr>
+                           <tr>
+                              <td colspan="2">{{$vdrPeriodic->activity ?? ''}} </td>
+                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
+                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_value ?? '0'}}</td>
+                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_actual ?? '0'}}</td>
+                              <td class="text-center" colspan="">{{$vdrPeriodic->rob_diff ?? '0'}}</td>
+                              
+                           </tr>
+                        </tbody>
+                        
+                     </table>
+               </div>
+               <div>
+                  <small class="title">-</small>
+                  <table class=" ml--4">
+                     <thead>
+                        <tr>
+                           <td colspan="2">SPECIAL CALCULATION</td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)</td>
+                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_remu}} Ltrs</td>
+                        </tr>
+                        <tr>
+                           <td>Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)</td>
+                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_correct}} Ltrs</td>
+                        </tr>
+                        <tr>
+                           <td>Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)</td>
+                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_actual}} Ltrs</td>
+                        </tr>
+                        <tr>
+                           <td>Total Actual Daily Fuel Cons. = (Part 1 + Part 2)</td>
+                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_total}} Ltrs</td>
+                        </tr>
+                        <tr>
+                           <td rowspan="3" colspan="">
+                              ROB Correction Rule <br>
+                              <small>* Positive Diff -> Correction Applied</small><br>
+                              <small>* Negative Diff -> Correction Not-Applied</small>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
                
-            </table>
+            </div>
+            
+            
             <div class="row ttd">
                <div class="col pt-1">
                   <small>Acknowledged by,</small>
@@ -867,6 +907,7 @@ table {
                
             </div>
          </div>
+         
          {{-- <div class="col-2">
             <small class="title">QRCODE</small>
             <table>
