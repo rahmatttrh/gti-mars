@@ -202,7 +202,15 @@ table {
          
                         @endif
                         <tr>
-                           <td class="text-center "><small>{{ $no++}}</small></td>
+                           <td class="text-center ">
+                                 <small>
+                                    @if ($hse->header->description == 'Lost Time Injury' || $hse->header->description == 'Medical Treatment Case' || $hse->header->description == 'First Aid Case' || $hse->header->description == 'Others')
+                                        @else
+                                        {{ $no++}}
+                                    @endif
+                                 
+                              </small>
+                           </td>
                            <td><small>{{$hse->header->description}}</small></td>
                            @if($hse->header_id != 8)
                            <td class="text-center bg-yellow">
@@ -684,7 +692,7 @@ table {
                <thead>
                   <tr class="text-center ">
                      <td class="title">Operating Mode</td>
-                     <td class="title">Total Time</td>
+                     <td class="title">Total Time hh:mm</td>
                      <td class="title">Min. Speed as Contract (Knots) <br> </td>
                      <td class="title">Contractual Fuel Cons. </td>
                      <td class="title">Daily Fuel Cons. </td>
@@ -721,6 +729,7 @@ table {
                               @else
                               <small>{{$operating->contractual_fuel}}</small>
                               @endif
+                              L/H
                         </td>
                         <td class="text-center">
    
