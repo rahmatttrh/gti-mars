@@ -567,7 +567,7 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
    });
 });
 
-Route::group(['middleware' => ['role:vessel']], function () {
+Route::group(['middleware' => ['role:vessel|marine']], function () {
    Route::get("v/newsfeed", [HomeController::class, "newsVessel",])->name('vessel.newsfeed');
    Route::prefix('dsp/v/')->group(function () {
       Route::get("dash/main", [HomeController::class, "dspVessel",])->name('dsp.vessel');
