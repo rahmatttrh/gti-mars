@@ -204,6 +204,145 @@
       </form>
    </div>
 </div>
+
+@push('get_schedules')
+<script>
+    $('.box-rank').hide();
+    $('.box-company').hide();
+
+
+    $(".waktu").on("input", function() {
+        // Mengambil nilai dari input
+        var inputValue = $(this).val();
+
+        // Validasi hanya angka dan maksimal dua digit di belakang koma
+        var regex = /^\d{0,2}(\.\d{0,2})?$/;
+
+        if (!regex.test(inputValue)) {
+            alert("Input tidak valid. Hanya angka dengan maksimal dua digit di belakang koma.");
+            // Mengosongkan nilai input jika tidak valid
+            $(this).val("");
+            return;
+        }
+
+        // Konversi nilai input menjadi float
+        var floatValue = parseFloat(inputValue);
+
+        // Paksa nilai desimal menjadi 59 jika lebih besar dari 59
+        if (floatValue > 59) {
+            floatValue = 59;
+        }
+
+        //  Mengambil nilai di belakang koma
+        var nilaiDiBelakangKoma = (floatValue % 1).toFixed(2);
+
+        if (nilaiDiBelakangKoma > 0.59) {
+            alert("Input tidak valid. Maksimal desimal 59.");
+            // Mengosongkan nilai input jika tidak valid
+            $(this).val("");
+        }
+
+        // Validasi maksimal 24.00
+        if (floatValue > 24) {
+            alert("Input tidak valid. Maksimal 24.00.");
+            // Mengosongkan nilai input jika tidak valid
+            $(this).val("");
+        }
+    });
+
+
+    // Fungsi untuk menghitung dan menampilkan nilai di kolom Closing
+    function calculateClosing(id) {
+
+        // Ambil nilai dari masing-masing input
+        var opening = parseInt($("#opening-" + id).val()) || 0;
+        var consumption = parseInt($("#consumption-" + id).val()) || 0;
+        var received = parseInt($("#received-" + id).val()) || 0;
+        var transferred = parseInt($("#transferred-" + id).val()) || 0;
+
+        // Hitung nilai Closing berdasarkan rumus
+        var closing = (opening + received) - (consumption + transferred);
+
+        // Tampilkan hasil perhitungan di kolom Closing
+        $(".closing").val(closing);
+    }
+
+    // Panggil fungsi ketika nilai input berubah
+    // $(".hitung-closing").on("input", function() {
+    //     var cargoId = $(".hitung-closing ").data("id");
+    //     console.log(cargoId);
+    //     calculateClosing();
+    // });
+
+    // function myFunction(id) {
+    //     console.log("Nilai Input: " + inputValue); 
+    // }
+
+    // Panggil fungsi saat halaman dimuat
+    // calculateClosing();
+    $("input[name='is_crew']").change(function() {
+        if ($(this).is(":checked")) {
+            // Radio button dicentang
+            var selectedValue = $(this).val();
+            console.log("Selected Option: " + selectedValue);
+
+            visibilityBox(selectedValue);
+            // if (selectedValue == '1') {
+            //     $('#box-rank').show();
+            //     $('#box-company').hide();
+            // } else {
+            //     $('#box-rank').hide();
+            //     $('#box-company').show();
+            // }
+        }
+    });
+
+    function visibilityBox(value) {
+        if (value == '1') {
+            $('.box-rank').show();
+            $('.box-company').hide();
+
+            $(".crew").prop("checked", true);
+            $(".passenger").prop("checked", false);
+        } else {
+            $('.box-rank').hide();
+            $('.box-company').show();
+
+            $(".crew").prop("checked", false);
+            $(".passenger").prop("checked", true);
+        }
+    }
+
+
+    // Perhitungan Operating Mode
+    // Tangkap perubahan pada input time[] dan contractual_fuel[]
+    $('input[name^="time[]"], input[name^="contractual_fuel[]"]').on('input', function() {
+        // Dapatkan ID baris
+        var rowId = $(this).closest('tr').attr('id');
+
+        // Dapatkan nilai dari input time[]
+        var timeValue = parseFloat($('input[name="time[]"]', '#' + rowId).val()) || 0;
+
+        let bulat = Math.floor(timeValue);
+
+        let desimal = timeValue - bulat;
+
+
+        console.log((desimal * 100) / 60);
+
+        // Dapatkan nilai dari input contractual_fuel[]
+        var contractualFuelValue = parseFloat($('input[name="contractual_fuel[]"]', '#' + rowId).val()) || 0;
+
+        let a = bulat * contractualFuelValue;
+        let b = ((desimal * 100) / 60) * contractualFuelValue;
+        // Hitung hasil perkalian
+        var result = Math.round(a + b);
+
+        // Set hasil perkalian ke input daily[]
+        $('input[name="daily[]"]', '#' + rowId).val(result);
+    });
+</script>
+@endpush
 @endsection
 
 

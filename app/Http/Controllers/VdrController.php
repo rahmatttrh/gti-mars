@@ -44,6 +44,8 @@ class VdrController extends Controller
 
       $vdrs = Vdr::where('vessel_id', $vessel->id)->orderby('date', 'desc')->get();
 
+      // dd($vdrs);
+
       //   return view('pages.vdr.history-vdr', [
       return view('pages-stisla.vessel.vdr.history', [
          'vdrs' => $vdrs
