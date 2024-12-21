@@ -621,6 +621,7 @@ Route::group(['middleware' => ['role:vessel|marine']], function () {
 
       Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
       Route::put('update/periodic', [VdrPeriodicController::class, 'update'])->name('vdr.update.periodic');
+      Route::put('update/special', [VdrPeriodicController::class, 'updateSpecial'])->name('vdr.update.special');
 
       // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
       Route::get('release/{id}', [VesselVdrController::class, 'release'])->name('vdr.release');

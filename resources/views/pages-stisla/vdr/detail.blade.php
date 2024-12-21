@@ -56,14 +56,18 @@
          <li class="nav-item">
             <a class="nav-link" id="cargo-tab" data-toggle="tab" href="#cargo" role="tab" aria-controls="cargo" aria-selected="false">Fuel, Water and Cargoes </a>
          </li>
-         <li class="nav-item">
-            <a class="nav-link" id="periodic-tab" data-toggle="tab" href="#periodic" role="tab" aria-controls="periodic" aria-selected="false">Periodical Fuel </a>
-         </li>
+         
          <li class="nav-item">
             <a class="nav-link" id="crew-tab" data-toggle="tab" href="#crew" role="tab" aria-controls="crew" aria-selected="false">Crew & Passanger </a>
          </li>
          <li class="nav-item">
             <a class="nav-link" id="engine-tab" data-toggle="tab" href="#engine" role="tab" aria-controls="engine" aria-selected="false">Engine Parameter Log </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" id="periodic-tab" data-toggle="tab" href="#periodic" role="tab" aria-controls="periodic" aria-selected="false">Periodical Fuel ROB Check</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" id="special-tab" data-toggle="tab" href="#special" role="tab" aria-controls="special" aria-selected="false">Special Calculation </a>
          </li>
       </ul>
       <div class="tab-content" id="myTabContent">
@@ -153,6 +157,9 @@
          </div>
          <div class="tab-pane fade" id="periodic" role="tabpanel" aria-labelledby="periodic-tab">
             <x-vdr.periodic :periodic="$periodic" :vdr="$vdr" />
+         </div>
+         <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">
+            <x-vdr.special :periodic="$periodic" :vdr="$vdr" />
          </div>
          <div class="tab-pane fade" id="crew" role="tabpanel" aria-labelledby="crew-tab">
             <x-vdr.crew :crews="$crews" :vdr="$vdr" />

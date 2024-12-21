@@ -801,13 +801,20 @@ table {
                         </thead>
                         <tbody>
                            @foreach ($vdrCargos as $vdrCargo)
+                           @php
+                               if ($vdrCargo->heading_id <= 3) {
+                                 $satuan = 'Ltrs';
+                               } else {
+                                 $satuan = 'cuft';
+                               }
+                           @endphp
                            <tr>
                               <td>{{$vdrCargo->heading->description}}</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->opening}} Ltrs</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->consumption}} Ltrs</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->received}} Ltrs</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->transferred}} Ltrs</td>
-                              <td class="text-center">{{$vdrCargo->closing}} Ltrs</td>
+                              <td class="text-center bg-yellow text-truncate">{{$vdrCargo->opening}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->consumption}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->received}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{$vdrCargo->transferred}} {{$satuan}}</td>
+                              <td class="text-center">{{$vdrCargo->closing}} {{$satuan}}</td>
                               <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                               
                            </tr>

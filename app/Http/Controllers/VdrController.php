@@ -999,8 +999,16 @@ class VdrController extends Controller
 
                $cargo = VdrCargo::find($cargoId);
 
-               $closing = ($req->opening[$key] + $req->received[$key]) - ($req->consumption[$key] + $req->transferred[$key]);
+               
 
+               if($cargo->heading_id == 1){
+                  $closing = $req->closing[$key];
+               } elseif($cargo->heading_id == 2){
+                  $closing = $req->closing[$key];
+                  
+               } else {
+                  $closing = ($req->opening[$key] + $req->received[$key]) - ($req->consumption[$key] + $req->transferred[$key]);
+               }
                $updateCargo = $cargo->update([
                   'opening' => $req->opening[$key],
                   'consumption' => $req->consumption[$key],
@@ -1009,6 +1017,13 @@ class VdrController extends Controller
                   'closing' => $closing,
                   'remarks' => $req->remarks[$key]
                ]);
+
+               if ($cargo->heading_id == 2) {
+                  $actualWater = ($cargo->opening + $cargo->received) - ($cargo->transferred + $cargo->closing);
+                  $cargo->update([
+                     'consumption' => $actualWater
+                  ]);
+               }
          }
 
 
