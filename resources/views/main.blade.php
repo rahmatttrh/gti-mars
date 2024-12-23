@@ -7,7 +7,7 @@
    <section class="section">
       <div class="section-body">
          @if (auth()->user()->hasRole('vessel'))
-            <x-main.vessel :nowschedule="$nowSchedule" :schedules="$schedules" :vdr="$vdr" :requests="$requests" :vessel="$currentVessel" :docs="$docs" />
+            <x-main.vessel :nowschedule="$nowSchedule" :myvdr="$myVdr" :myrecentvdrs="$myRecentVdrs" :schedules="$schedules" :vdr="$vdr" :requests="$requests" :vessel="$currentVessel" :docs="$docs" :rejectvdrs="$rejectVdrs" />
             @elseif(auth()->user()->hasRole('marine'))
             <x-main.marine :schedules="$schedules" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray" :tactivity="$totalActivity" :tschedule="$totalSchedule" :tactiveschedule="$totalActiveSchedule" />
             @elseif(auth()->user()->hasRole('admin-logistic'))

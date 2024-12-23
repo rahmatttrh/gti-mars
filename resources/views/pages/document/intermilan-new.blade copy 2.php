@@ -93,8 +93,6 @@ table {
                               <td class="text-center " rowspan="{{count($reqs)+1}}">{{$user}}</td>
                            </tr>
                            @foreach ($reqs as $request)
-
-                           
                            <tr style="background-color: rgb(242, 248, 221)">
                            {{-- @if ($request->user->getPort()->func == 'DWI')
                               <tr style="background-color: rgb(242, 248, 221)">
@@ -105,9 +103,9 @@ table {
                            @endif --}}
                               <td >
                                  {{$request->description}}
-                                 {{-- @foreach ($request->cargoItems as $item)
+                                 @foreach ($request->cargoItems as $item)
                                        {{$item->description}},
-                                 @endforeach --}}
+                                 @endforeach
                               </td>
                               <td >
                                  {{-- @if ($request->activity_id < 5)
@@ -115,7 +113,7 @@ table {
                                  @else
                                  
                                  @endif --}}
-                                 {{$request->getRequest($request->request_id)->origin->code}} to {{$request->getRequest($request->request_id)->destination->code}}
+                                 {{$request->origin->code}} to {{$request->destination->code}}
                               </td>
                               <td>
                                  {{$request->schedule->vessel->name ?? 'Not Available'}}

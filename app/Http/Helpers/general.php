@@ -6,6 +6,12 @@ function formatRupiah($data)
    return $rupiah;
 }
 
+function formatRibuan($data)
+{
+   $ribuan =  number_format($data, 0, ",", ".");
+   return $ribuan;
+}
+
 function formatDate($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('d/m/Y');

@@ -239,7 +239,51 @@
                               </tr>
                            </thead>
                            <tbody>
-                              @foreach ($allRequests as $req)
+                              @foreach ($cargoItems as $cargo)
+                                 @if ($cargo->date == $date->format('Y-m-d'))
+                                    <tr>
+                                       <td>
+                                          {{-- <a href="{{route('request.detail.new', enkripRambo($cargo->id))}}"> --}}
+                                             {{$cargo->description}}
+                                             {{-- @foreach ($req->cargoItems as $item)
+                                              {{$item->desc}}
+                                             @endforeach --}}
+                                             {{-- @if (count($req->passengerItems) >  0)
+                                                {{count($req->passengerItems)}} Total Passenger
+                                             @endif --}}
+                                          {{-- </a> --}}
+                                       </td>
+                                       <td>
+                                          {{-- @if ($req->activity_id == 5)
+                                             {{$req->employee->name}}
+                                              @else --}}
+                                              {{$cargo->request->origin->code ?? '-'}} - {{$cargo->request->destination->code ?? '-'}}
+                                          {{-- @endif --}}
+                                          
+                                       </td>
+                                       
+                                       <td>
+                                          @if ($cargo->schedule_id != null)
+                                              <a href="{{route('schedule.detail', enkripRambo($cargo->schedule_id))}}">{{$cargo->schedule->vessel->name ?? '-'}}</a>
+
+                                          @endif
+                                          </td>
+                                       <td>{{$cargo->user_name ?? '-'}}</td>
+                                       @if ($cargo->schedule_id == null)
+                                       <td><x-status-stisla.request :request="$cargo->request" /> </td>
+                                          @else
+                                          <td><x-status-stisla.schedule :schedule="$cargo->schedule" /> </td>
+                                       @endif
+                                       
+                                    </tr>
+                                   
+                                    
+                                    
+                                    @else
+                                    
+                                 @endif
+                              @endforeach
+                              {{-- @foreach ($allRequests as $req)
                                  @if ($req->date == $date->format('Y-m-d'))
                                     <tr>
                                        <td>
@@ -262,48 +306,20 @@
                                           
                                        </td>
                                        
-                                       {{-- <td>{{$req->activity->name}}</td> --}}
-                                       
-                                       {{-- <td>{{$req->schedule->vessel->type ?? '-'}}</td> --}}
                                        <td>{{$req->schedule->vessel->name ?? '-'}}</td>
                                        <td>{{$req->employee->name ?? '-'}}</td>
-                                       <td><x-status-stisla.request-plain :request="$req" /></td>
+                                       @if ($req->schedule)
+                                       <td><x-status-stisla.schedule :schedule="$req->schedule" /> {{$req->schedule_id}}</td>
+                                       @endif
+                                       
                                     </tr>
-                                    {{-- @if ($req->activity_id == 1)
-                                    <tr>
-                                       <td colspan="7">
-                                          <small>
-                                          @foreach ($req->cargoItems as $item)
-                                              {{$item->desc}},
-                                          @endforeach
-                                          @if (count($req->passengerItems) >  0)
-                                          {{count($req->passengerItems)}} Total Passenger
-                                          @endif
-                                          </small>
-                                       </td>
-                                    </tr>
-                                 
-                                    @endif
-                                    @if ($req->activity_id == 2)
-                                    <tr>
-                                       <td colspan="7">
-                                          <small>
-                                             @if (count($req->passengerItems) >  0)
-                                             {{count($req->passengerItems)}} Total Passenger (
-                                             {{count($req->passengerItems->where('type', 'Departure'))}} Berangkat, {{count($req->passengerItems->where('type', 'Return'))}} Pulang)
-                                             @endif
-                                          
-                                          </small>
-                                       </td>
-                                    </tr>
-                                 
-                                    @endif --}}
+                                   
                                     
                                     
                                     @else
                                     
                                  @endif
-                              @endforeach
+                              @endforeach --}}
                            </tbody>
                         </table>
                      </div>

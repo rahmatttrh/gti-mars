@@ -76,13 +76,7 @@
                <div class="col-md-9">
                   
    
-                  @if ($vdr->status == 2 && auth()->user()->hasRole('suptent'))
-                  <a href="{{route('vdr.approve.suptent', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Approve Superintendent</a>
-                  @endif
-   
-                  @if ($vdr->status == 3 && auth()->user()->hasRole('chief'))
-                  <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}" class="btn btn-sm btn-light text-primary border shadow-none">Approve Mr. Luthfi</a>
-                  @endif
+                  
                   
                   
                   
@@ -121,6 +115,13 @@
                  
                </div>
                <div class="col">
+                  @if ($vdr->status == 2 && auth()->user()->hasRole('suptent'))
+                  <a href="{{route('vdr.approve.suptent', enkripRambo($vdr->id))}}" class="btn btn-block btn-primary  shadow-none">Approve Superintendent</a>
+                  @endif
+   
+                  @if ($vdr->status == 3 && auth()->user()->hasRole('chief'))
+                  <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}" class="btn btn-block btn-primary  shadow-none">Approve Mr. Luthfi</a>
+                  @endif
                   @if (auth()->user()->hasRole('vessel'))
                      @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                         <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>

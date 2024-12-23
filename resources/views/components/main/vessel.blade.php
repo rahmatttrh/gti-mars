@@ -17,6 +17,16 @@
          
          <div class="col-md-7">
             {{-- <div class="badge badge-info">DSP</div> --}}
+            @if (count($rejectvdrs) > 0)
+            <div class="alert bg-danger">
+               VDR Reject by Marine
+               <hr>
+               @foreach ($rejectvdrs as $rejectvdr)
+                  <a href="{{route('vdr.show', enkripRambo($rejectvdr->id))}}">{{$rejectvdr->code}} {{$rejectvdr->date}}</a>  - {{$rejectvdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}
+               @endforeach
+            </div>
+            @endif
+            
             <div class="table-responsive">
                <table class="" id="table-6">
                   <thead >
@@ -52,7 +62,7 @@
                <table class="" id="table-6">
                   <thead >
                      <tr>
-                        <th colspan="4" class="py-1">Vessel Daily Report</th>
+                        <th colspan="4" class="py-1">Recent Vessel Daily Report</th>
                      </tr>
                      <tr>
                         {{-- <th class="text-center">No</th> --}}
@@ -63,22 +73,27 @@
                      </tr>
                   </thead>
                   <tbody>
-                     @if ($vdr)
-                        <tr>
-                           <td><a href="{{route('vdr.show', $vdr->id)}}">{{$vdr->code}}</a> </td>
-                           <td>{{formatDate($vdr->date)}}</td>
-                           <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                           <td>
-                              @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
-                              <small>Draft</small>
-                              @else
-                              <small>Release</small>
-                              @endif
-                           </td>
-                        </tr>
+                     @foreach ($myrecentvdrs as $myvdr)
+                     <tr>
+                        <td><a href="{{route('vdr.show', enkripRambo($myvdr->id))}}">{{$myvdr->code}}</a> </td>
+                        <td>{{formatDate($myvdr->date)}}</td>
+                        <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td>
+                        <td class="text-truncate">
+                           {{-- @if(date('Y-m-d', strtotime($myvdr->date)) == date('Y-m-d'))
+                           <small>Draft</small>
+                           @else
+                           <small>Release</small>
+                           @endif --}}
+                           <x-status-stisla.vdr :vdr="$myvdr" />
+                        </td>
+                     </tr>
+                     @endforeach
+                     {{-- @if ($myvdr)
+                        
+                        
                         @else
                         <tr><td colspan="4" class="text-center py-3">Anda belum membuat VDR hari ini</td></tr>
-                     @endif
+                     @endif --}}
                      
                   </tbody>
                </table>

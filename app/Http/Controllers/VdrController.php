@@ -174,6 +174,7 @@ class VdrController extends Controller
       $vdr = Vdr::find($dekripId);
       // dd($vdr->id);
       $user = auth()->user();
+      
 
       # code...
       $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
@@ -187,7 +188,9 @@ class VdrController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-
+      $vdrs = Vdr::get();
+ 
+      // dd('ok');
       return view('pages-stisla.vdr.detail', [
       //   return view('pages.vdr.show-vdr', [
          'vessel' => $vdr->vessel,
@@ -202,7 +205,8 @@ class VdrController extends Controller
          'crews' => $crews,
          'operatings' => $operatings,
          'totalJam' => $totalJam,
-         'totalDaily' => $totalDaily
+         'totalDaily' => $totalDaily,
+         'vdrs' => $vdrs
       ])->with('i');
 
       // return view('pages.vdr.create-vdr', [

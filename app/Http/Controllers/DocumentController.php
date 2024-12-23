@@ -88,15 +88,18 @@ class DocumentController extends Controller
          $startDate->addDay();
       }
 
-      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+      // $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
       // dd($users);
 
       // dd( $startDate->format('F'));
 
-      // $users = CargoItem::selectRaw('id, date, status,user_id , user_name , description, schedule_id')   ->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+      $users = CargoItem::selectRaw('id, date, status,user_id , user_name , description, schedule_id, request_id')   ->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
 
-      $users = Cargo::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
 
+      // dd($users);
+      // $users = Cargo::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+
+      // dd($users);
       $cargoItems = CargoItem::whereBetween('date', [$dekripStart, $dekripEnd])->get();
 
       // $cargos = Cargo::where()

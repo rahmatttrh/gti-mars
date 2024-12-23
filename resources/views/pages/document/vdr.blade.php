@@ -810,11 +810,11 @@ table {
                            @endphp
                            <tr>
                               <td>{{$vdrCargo->heading->description}}</td>
-                              <td class="text-center bg-yellow text-truncate">{{$vdrCargo->opening}} {{$satuan}}</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->consumption}} {{$satuan}}</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->received}} {{$satuan}}</td>
-                              <td class="text-center bg-yellow">{{$vdrCargo->transferred}} {{$satuan}}</td>
-                              <td class="text-center">{{$vdrCargo->closing}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
+                              <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
                               <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                               
                            </tr>
@@ -834,9 +834,9 @@ table {
                            <tr>
                               <td colspan="2">{{$vdrPeriodic->activity ?? ''}} </td>
                               <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
-                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_value ?? '0'}}</td>
-                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_actual ?? '0'}}</td>
-                              <td class="text-center" colspan="">{{$vdrPeriodic->rob_diff ?? '0'}}</td>
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
+                              <td class="text-center" colspan="">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
                               
                            </tr>
                         </tbody>
@@ -854,19 +854,19 @@ table {
                      <tbody>
                         <tr>
                            <td>Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)</td>
-                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_remu}} Ltrs</td>
+                           <td class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
                         </tr>
                         <tr>
                            <td>Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)</td>
-                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_correct}} Ltrs</td>
+                           <td class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}} Ltrs</td>
                         </tr>
                         <tr>
                            <td>Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)</td>
-                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_actual}} Ltrs</td>
+                           <td class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
                         </tr>
                         <tr>
                            <td>Total Actual Daily Fuel Cons. = (Part 1 + Part 2)</td>
-                           <td class="text-truncate px-3">{{$vdrPeriodic->fuel_cons_total}} Ltrs</td>
+                           <td class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
                         </tr>
                         <tr>
                            <td rowspan="3" colspan="">

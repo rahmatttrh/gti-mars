@@ -64,18 +64,38 @@ class VdrPeriodicController extends Controller
 
       if ($periodic->fuel_cons_total > 0) {
          $actualFuel = $periodic->fuel_cons_total + $cargoFuel->received - $cargoFuel->transferred - $cargoFuel->closing;
-      }
+      } 
+      // else {
+      //    // $actualFuel = 0 ;
+      //    $actualFuel = 0 + $cargoFuel->received - $cargoFuel->transferred - $cargoFuel->closing;
+      // }
+
+      
 
       $actualWater = ($cargoWater->opening + $cargoWater->received) - ($cargoWater->transferred + $cargoWater->closing);
 
-      $cargoFuel->update([
-         'consumption' => $periodic->fuel_cons_total
-      ]);
+      
 
       // dd($cargoWater->transferred + $cargoWater->closing);
 
       $cargoWater->update([
          'consumption' => $actualWater
+      ]);
+
+      if ($periodic->rob_diff < 0) {
+         $periodic->update([
+            'fuel_cons_correct' => $periodic->fuel_cons_remu,
+            'fuel_cons_total' => $periodic->fuel_cons_remu + $req->fuel_cons_actual
+         ]);
+
+        
+         // $cargoFuel->update([
+         //    'consumption' => $periodic->fuel_cons_correct
+         // ]);
+      }
+
+      $cargoFuel->update([
+         'consumption' => $periodic->fuel_cons_total
       ]);
 
       return redirect()->back()->with('success', 'Data VDR successfully updated');

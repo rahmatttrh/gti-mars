@@ -44,12 +44,14 @@ class AppServiceProvider extends ServiceProvider
                   $notif = 'true';
                } 
             }
+            $vdrs = Vdr::orderBy('created_at', 'desc')->get();
             // dd($notif);
             $view->with([
                'allSchedules' => $schedules,
                'notifRequests' => $notifRequests,
                'notifVesselSchedules' => $notifVesselSchedules,
                'notif' => $notif,
+               'vdrs' => $vdrs
             ]);
          }
       );

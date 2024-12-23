@@ -397,6 +397,8 @@ class HomeController extends Controller
 
    public function index(){
 
+
+      // dd('ok');
       
       // $ports = Port::get();
       // foreach($ports as $port){
@@ -448,14 +450,18 @@ class HomeController extends Controller
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          
          // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
-         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->take(3)->get();
+         $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $nowSchedule = Schedule::find($currentVessel->schedule_id);
          // dd($schedules);
 
-         $vdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
+         $myVdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
+         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->orderBy('date', 'desc')->paginate(3);
+         // dd($vdr);
+
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
+         $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->where('status', 101)->get();
       } else {
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
@@ -464,7 +470,9 @@ class HomeController extends Controller
          $vdr = null;
          $requests = null;
          $docs = null;
-         
+         $rejectVdrs = null;
+         $myVdr = null;
+         $myRecentVdrs = null;
       }
 
       $feed = News::get()->first();
@@ -535,11 +543,16 @@ class HomeController extends Controller
          $cargos = null;
       }
 
+      // dd($vdr);
+
+     
+
       
       
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,
+         'rejectVdrs' => $rejectVdrs,
          'schedules' => $schedules,
          'requests' => $requests,
          'nowSchedule' => $nowSchedule,
@@ -547,6 +560,8 @@ class HomeController extends Controller
          'requests' => $requests,
          'docs' => $docs,
          'vessels' => $vessels,
+         'myVdr' => $myVdr,
+         'myRecentVdrs' => $myRecentVdrs,
 
          'allRequests' => $allRequests,
          'dates' => $dates,
@@ -1418,6 +1433,8 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
       }
 
+      $cargoItems = CargoItem::where('user_id', auth()->user()->id)->get();
+
       $allRequests = ModelsRequest::get();
 
       // dd(auth()->user()->getPort());
@@ -1437,7 +1454,8 @@ class HomeController extends Controller
          'schedules' => $schedules,
          'confirms' => $confirms,
          'dates' => $dates,
-         'titipRequests' => $titipRequests
+         'titipRequests' => $titipRequests,
+         'cargoItems' => $cargoItems
 
          // 'schedulesFix' => $schedulesFix
       ])->with('i');

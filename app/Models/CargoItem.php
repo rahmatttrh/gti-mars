@@ -32,4 +32,10 @@ class CargoItem extends Model
    {
       return $this->belongsTo(Deflection::class);
    }
+
+   public function getRequest($id){
+      $request = Request::find($id);
+
+      return $request;
+   }
 }

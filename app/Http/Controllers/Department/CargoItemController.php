@@ -46,6 +46,7 @@ class CargoItemController extends Controller
       
 
       // dd($mtd);
+      // $user = User::find()
 
       CargoItem::create([
          'type' => 'main',
@@ -60,7 +61,9 @@ class CargoItemController extends Controller
          'size' => $r->size,
          'weight' => $r->weight,
          'remark' => $r->remark,
-         'date' => $request->date
+         'date' => $request->date,
+         'user_id' => auth()->user()->id,
+         'user_name' => auth()->user()->username
       ]);
 
       $request->update([
