@@ -24,6 +24,8 @@ class MarineRequestController extends Controller
    public function indexCrewChange($month, $year){
       $dekripMonth = dekripRambo($month);
       $dekripYear = dekripRambo($year);
+      // dd('ok');
+
 
       if ($dekripMonth == 1) {
          $monthName = 'Januari';
@@ -51,7 +53,7 @@ class MarineRequestController extends Controller
          $monthName = 'Desember';
       }
 
-      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear  ('date', $dekripYear)->get();
+      $requests = ModelsRequest::where('activity_id', 2)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear  ('date', $dekripYear)->get();
       $schedules = Schedule::where('class', 'Crew Change')->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->orderBy('date', 'asc')->get();
 
       foreach($schedules as $sche){
@@ -170,7 +172,7 @@ class MarineRequestController extends Controller
 
    public function indexList(){
       
-      
+      // dd('ok'
       // $users = User::get();
       $vessels = Vessel::get();
 

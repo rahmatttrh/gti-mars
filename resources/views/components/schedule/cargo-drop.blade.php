@@ -51,7 +51,7 @@
                            <div class="input-group-prepend">
                               <div class="input-group-text">Drop Value</div>
                            </div>
-                           <input type="number" class="form-control" id="offloading" name="offloading" >
+                           <input type="number" class="form-control" id="offloading" name="offloading" max="{{$item->qty}}" >
                         </div>
                      </div>
                      <div class="form-group">
