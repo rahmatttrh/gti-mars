@@ -241,7 +241,7 @@
                   @else
                   @if ($schedule->class == 'Cargo' || $schedule->class == 'Crew' )
                   
-                  <x-schedule.cargo-crew :statuses="$statuses" :fixroutes="$fixRoutes" :cargos="$cargos" :items="$items" :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
+                  <x-schedule.cargo-crew :deflections="$deflections" :statuses="$statuses" :fixroutes="$fixRoutes" :cargos="$cargos" :items="$items" :requests="$requests" :schedule="$schedule" :recents="$recentRequests" :incomings="$schedule->requests->where('status', 1)" :routes="$routes" :activities="$activities" :ports="$allPorts" :platforms="$platforms" :types="$types" :barges="$barges" />
                   @elseif($schedule->class == 'Moving')
                   <div class="card border">
                      <div class="card-header">

@@ -69,7 +69,7 @@ class MarineRequestController extends Controller
             'total_return' => $totalReturn
          ]);
       }
-      return view('pages-stisla.marine.request.crew-change', [
+      return view('pages-stisla.marine.request.crewchange', [
          'year' => $dekripYear,
          'month' => $dekripMonth,
          'monthName' => $monthName,
@@ -302,6 +302,100 @@ class MarineRequestController extends Controller
          'dates' => $dates,
          'start' => $startDate,
          'end' => $endDate,
+         'now' => Carbon::now()
+      ])->with('i');
+   }
+
+   public function indexListCrew(){
+      
+      // dd('ok'
+      // $users = User::get();
+      $vessels = Vessel::get();
+
+      
+
+      // dd($users);
+
+      $now = Carbon::now();
+      $today = $now->format('l');
+      // dd($today);
+
+      if ($today == 'Friday') {
+         // dd('Friday');
+         $start = $now->addDay(-4);
+         $end = Carbon::now()->addDays(3);
+      }
+      if ($today == 'Saturday') {
+         // dd('Monday');
+         $start = $now->addDay(-5);
+         $end = Carbon::now()->addDays(2);
+      }
+      if ($today == 'Sunday') {
+         // dd('Monday');
+         $start = $now->addDay(-6);
+         $end = Carbon::now()->addDays(1);
+      }
+      if ($today == 'Monday') {
+         // dd('Monday');
+         $start = $now->addDay(+0);
+         $end = Carbon::now()->addDays(7);
+      }
+      if ($today == 'Tuesday') {
+         // dd('Monday');
+         $start = $now;
+         $end = Carbon::now()->addDays(8);
+      }
+      if ($today == 'Wednesday') {
+         // dd('Monday');
+         $start = $now->addDays(-2);
+         $end = Carbon::now()->addDays(5);
+      }
+      if ($today == 'Thursday') {
+         // dd('Monday');
+         $start = $now->addDays(-3);
+         $end = Carbon::now()->addDays(4);
+      }
+
+      // dd($start);
+
+      
+
+      $start = $start->format('Y-m-d');
+      // dd($start);
+      $end = $end->format('Y-m-d');
+      $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$start, $end])->get();
+      $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
+      // dd(count($requests));
+      $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
+      // $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
+      $schedules = Schedule::orderBy('date', 'asc')->get();
+
+      $startDate = new Carbon($start);
+      $endDate = new Carbon($end);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
+      }
+
+      $vessels = Vessel::get();
+      $cargoItems = CargoItem::whereBetween('date', [$start, $end])->get();
+
+
+
+      
+
+      return view('pages-stisla.marine.request.crewchange', [
+         'vessels' => $vessels,
+         'requests' => $requests,
+         'schedules' => $schedules,
+         'users' => $users,
+         'dates' => $dates,
+         'weekSchedules' => $weekSchedules,
+         'start' => $start,
+         'end' => $end,
+         'vessels' => $vessels,
+         'cargoItems' => $cargoItems,
          'now' => Carbon::now()
       ])->with('i');
    }

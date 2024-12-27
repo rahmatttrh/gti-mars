@@ -158,6 +158,12 @@ class CargoItemController extends Controller
       $request = ModelsRequest::find($cargoItem->request_id);
       $schedule = Schedule::find($cargoItem->schedule_id);
 
+      // if ($req->offloading > $cargoItem->qty) {
+      //    dd('error');
+      // }
+
+      // dd('ok');
+
       $offloading = $req->offloading;
       $qty = $cargoItem->qty;
 
@@ -247,7 +253,7 @@ class CargoItemController extends Controller
          ]);
       }
 
-      return redirect()->to('/')->with('success', 'Item successfully confirmed');
+      return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Item successfully confirmed');
    }
 
    public function logApprove($id){

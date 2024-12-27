@@ -10,7 +10,7 @@
          <div class="col-md-9">
             <div class="row">
                <div class="col-md-4">
-                  <h3>INTERMILANDD</h3>
+                  <h3>INTERMILAN CREW</h3>
                   <a href="{{route('marine.request.list')}}">Detail</a>
                   <hr>
                </div>
@@ -125,16 +125,16 @@
 
                      @if ($users->count() > 0)
                         @foreach ($users as $user => $reqs)
-                           <tr>
-                              <td class="text-center text-muted" rowspan="{{count($reqs)+1}}">{{$user}}</td>
-                           </tr>
-                           @foreach ($reqs as $request)
-                           @if ($request->user->getPort()->func == 'DWI')
-                           <tr style="background-color: rgb(242, 248, 221)">
-                              @else
-                              <tr style="background-color: rgb(230, 221, 252)">
-                           @endif
                            
+                           
+                           @foreach ($reqs as $request)
+                           @if ($request->activity_id == 2)
+                              @if ($request->user->getPort()->func == 'DWI')
+                              <tr style="background-color: rgb(242, 248, 221)">
+                                 @else
+                                 <tr style="background-color: rgb(230, 221, 252)">
+                              @endif
+                                    <td>{{$request->user_name}}</td>
                               <td style="width:220px">
                                  <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
                                  {{$request->description}}
@@ -157,7 +157,7 @@
                                   to {{$request->destination->code}}
                               </td>
                               <td class="d-flex align-items-center">
-                                 @if ($request->activity_id == 1 || $request->activity_id == 2)
+                                 
                                     <form action="{{route('intermilan.marine.select.schedule')}}" method="POST" class="d-flex">
                                        @csrf
                                        @method('PUT')
@@ -183,29 +183,8 @@
                                           Assign
                                        </button>
                                     </form>
-                                     @else
-                                     {{-- <a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}"> {{$request->schedule->vessel->name ?? 'Not Available'}}</a> --}}
-                                     <form action="{{route('intermilan.marine.select.vessel')}}" method="POST" class="d-flex">
-                                       @csrf
-                                       @method('PUT')
-                                       <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
-                                       <input type="text" name="scheduleId" id="scheduleId" value="{{$request->schedule->id}}" hidden>
-                                       <select style="width: 150px" name="vessel" id="vessel">
-                                          <option value="" selected disabled>Select Vessel</option>
-                                          @foreach ($vessels as $vessel)
-
-                                             <option {{$request->schedule->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name ?? '-'}}</option>
-                                          @endforeach
-                                          
-                                       </select>
-                                       @if ($request->schedule->vessel_id != null)
-                                          <button type="submit" class="btn btn-sm border">Assign</button>
-                                          @else
-                                          <button type="submit" class="btn btn-sm border btn-info">Assign</button>
-                                       @endif
-                                       
-                                    </form>
-                                 @endif
+                                    
+                                 
                                  
                                  
                                  
@@ -248,6 +227,7 @@
                                  
                               @endforeach
                            </tr>
+                           @endif
                            @endforeach
                         @endforeach
                         @else

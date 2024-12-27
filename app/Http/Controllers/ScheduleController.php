@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Activity;
 use App\Models\Cargo;
 use App\Models\CargoItem;
+use App\Models\Deflection;
 use App\Models\Deviation;
 use App\Models\Offloading;
 use App\Models\Port;
@@ -303,6 +304,8 @@ class ScheduleController extends Controller
       $cargos = Cargo::where('schedule_id', $schedule->id)->get();
       $items = CargoItem::get();
 
+      $deflections = Deflection::get();
+
       // dd($items);
 
       if (auth()->user()->hasRole('vessel') || auth()->user()->hasRole('department')) {
@@ -339,7 +342,8 @@ class ScheduleController extends Controller
             'barges' => $barges,
             'types' => $types,
             'cargos' => $cargos,
-            'items' => $items
+            'items' => $items,
+            'deflections' => $deflections
          ]);
       } else {
          return view('pages-stisla.schedule.detail', [
@@ -375,7 +379,8 @@ class ScheduleController extends Controller
             'barges' => $barges,
             'types' => $types,
             'cargos' => $cargos,
-            'items' => $items
+            'items' => $items,
+            'deflections' => $deflections
          ]);
       }
    }

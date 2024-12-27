@@ -405,7 +405,7 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
       });
 
       Route::prefix("crew/change")->group(function () {
-         Route::get("/index/{month}/{year}", [MarineRequestController::class, "indexCrewChange",])->name('marine.crew.change');
+         Route::get("/index/{month}/{year}", [MarineRequestController::class, "indexListCrew",])->name('marine.crew.change');
          Route::post('filter', [MarineRequestController::class, 'filterCrewChange'])->name('marine.crew.change.filter');
          Route::post('store/', [MarineScheduleController::class, 'storeCrewChangeSchedule'])->name('schedule.store.crew.change');
          Route::post('import/', [MarineScheduleController::class, 'importCrewChange'])->name('marine.crew.change.import');

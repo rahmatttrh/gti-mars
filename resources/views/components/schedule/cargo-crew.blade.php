@@ -223,6 +223,28 @@
                            <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
                         </td>
                      </tr>
+
+                     @foreach ($deflections as $def)
+                         @if ($def->cargoitem_id == $item->id)
+                         <tr class="border-bottom">
+                           <td class="" colspan="4"></td>
+                        
+                           {{-- <td class="  text-nowrap">
+                              {{$def->cargoitem->desc}}
+                           </td> --}}
+                           
+                           <td class=" text-center">{{$def->qty}} {{$def->cargoitem->unit}}</td>
+                           <td class="  text-nowrap">
+                              {{$def->desc}} 
+                           </td>
+                           <td class="">{{$def->port->name}}</td>
+
+                           {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
+                           <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
+                           
+                        </tr>
+                         @endif
+                     @endforeach
                      @endforeach
                      
                   </tbody>
@@ -231,7 +253,7 @@
                </table>
                @endif
                
-               <hr>
+               {{-- <hr>
                
                <div class="table-responsive">
                   <table class="table table-sm border">
@@ -246,9 +268,6 @@
                         <th class="text-center">Qty</th>
                         
                         <th class="">Desc</th>
-                        {{-- <th></th> --}}
-                        {{-- <th class="text-center">Size (m<sup>2</sup>)</th>
-                        <th class="text-center">Weight (ton)</th> --}}
                         </tr>
                   </thead>
                   <tbody>
@@ -266,16 +285,13 @@
                               <td class="  text-nowrap">
                                  {{$deflection->desc}} 
                               </td>
-                              {{-- <td class="text-muted text-center">{{$deflection->size}}</td>
-                              <td class="text-muted text-center">{{$deflection->weight}}</td> --}}
-                              
                            </tr>
                         @endforeach
                         @endif
                      @endforeach
                   </tbody>
                   </table>
-               </div>
+               </div> --}}
                
             </div>
             <hr>
