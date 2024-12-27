@@ -498,7 +498,15 @@
                                  <tbody>
                                     @foreach ($cargos as $cargo)
                                         <tr>
-                                          <td>{{$cargo->mtd ?? '-'}}</td>
+
+                                          <td>
+                                             @if ($cargo->status == 0)
+                                                -
+                                                 @else
+                                                 {{$cargo->mtd ?? '-'}}
+                                             @endif
+                                             
+                                          </td>
                                           <td>{{$cargo->description}}</td>
                                           <td>{{$cargo->contract ?? '-'}}</td>
                                           <td class="text-center">{{$cargo->qty}}</td>
@@ -510,7 +518,12 @@
                                              <a href="{{route('cargo.delete', enkripRambo($cargo->id))}}">Delete</a> |
                                              
                                              @endif
-                                             <a href="{{route('document.mtd', enkripRambo($cargo->id))}}">MTD</a>
+                                             @if ($cargo->status == 0)
+                                                -
+                                                 @else
+                                                 <a href="{{route('document.mtd', enkripRambo($cargo->id))}}">MTD</a>
+                                             @endif
+                                             
                                           </td>
                                         </tr>
                                     @endforeach

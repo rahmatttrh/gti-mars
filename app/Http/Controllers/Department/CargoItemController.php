@@ -127,7 +127,7 @@ class CargoItemController extends Controller
    public function drop($id){
       // dd('ok');
       $cargoItem = CargoItem::find(dekripRambo($id));
-      $schedule = Schedule::find($cargoItem->request->schedule_id);
+      $schedule = Schedule::find($cargoItem->schedule_id);
       $lastreport = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
       $report = Report::where('schedule_id', $schedule->id)->orderBy('created_at', 'desc')->first();
@@ -156,7 +156,7 @@ class CargoItemController extends Controller
       $cargoItem = CargoItem::find($req->cargoItem);
       // dd($cargoItem->id);
       $request = ModelsRequest::find($cargoItem->request_id);
-      $schedule = Schedule::find($request->schedule_id);
+      $schedule = Schedule::find($cargoItem->schedule_id);
 
       $offloading = $req->offloading;
       $qty = $cargoItem->qty;
