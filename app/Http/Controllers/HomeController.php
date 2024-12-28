@@ -1200,6 +1200,7 @@ class HomeController extends Controller
 
    public function dspVessel()
    {
+      // dd('ok');
 
       $today = Carbon::now();
       $month = $today->format('m');
@@ -1235,7 +1236,7 @@ class HomeController extends Controller
       }
       $currentVessel = Vessel::where('email', auth()->user()->email)->first();
       // dd($vessel->name);
-      $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
+      $schedules = Schedule::orderBy('date', 'desc')->where('vessel_id', $currentVessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
       $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
       $nowSchedule = Schedule::find($currentVessel->schedule_id);
       if ($nowSchedule) {
