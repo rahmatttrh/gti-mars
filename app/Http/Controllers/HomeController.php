@@ -425,6 +425,13 @@ class HomeController extends Controller
          
       // }
 
+      // $users = User::get();
+      // foreach($users as $user){
+      //    $user->update([
+      //       'password' => Hash::make('oses@2025'),
+      //    ]);
+      // }
+
       
       $today = Carbon::now();
       $docs = Document::get();
@@ -1236,7 +1243,7 @@ class HomeController extends Controller
       }
       $currentVessel = Vessel::where('email', auth()->user()->email)->first();
       // dd($vessel->name);
-      $schedules = Schedule::orderBy('date', 'desc')->where('vessel_id', $currentVessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
+      $schedules = Schedule::orderBy('date', 'asc')->where('vessel_id', $currentVessel->id)->where('status', '>', 1)->where('status', '!=', 101)->get();
       $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
       $nowSchedule = Schedule::find($currentVessel->schedule_id);
       if ($nowSchedule) {
