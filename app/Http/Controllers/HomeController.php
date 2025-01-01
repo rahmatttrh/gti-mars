@@ -115,6 +115,9 @@ class HomeController extends Controller
 
    public function map()
    {
+
+      // dd('ok');
+
       $today = Carbon::now();
       $month = $today->format('m');
       
@@ -168,56 +171,55 @@ class HomeController extends Controller
 
 
       // Get API Data
-      try {
-         $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
-      $token = '73ob73y64nt3n63MP4tk4l1';
-      $response = Http::withHeaders([
-         'Authorization' => 'Bearer ' . $token,
-      ])->post($url, []);
+      // try {
+      //    $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+      // $token = '73ob73y64nt3n63MP4tk4l1';
+      // $response = Http::withHeaders([
+      //    'Authorization' => 'Bearer ' . $token,
+      // ])->post($url, []);
 
-      $responseBody = json_decode($response->getBody());
-      // dd($responseBody->data);
+      // $responseBody = json_decode($response->getBody());
 
-      foreach ($responseBody->data as $res) {
-         // dd($vessel->IMO);
-         // if ($res->name == 'WINNER') {
-         //    dd($res->name);
-         // }
-         if ($res->MMSI) {
-            // dd('ok');
-            $vessel = Vessel::where('mmsi', $res->MMSI)->first();
-            $barge = Port::where('mmsi', $res->MMSI)->first();
+      // foreach ($responseBody->data as $res) {
+      //    // dd($vessel->IMO);
+      //    // if ($res->name == 'WINNER') {
+      //    //    dd($res->name);
+      //    // }
+      //    if ($res->MMSI) {
+      //       // dd('ok');
+      //       $vessel = Vessel::where('mmsi', $res->MMSI)->first();
+      //       $barge = Port::where('mmsi', $res->MMSI)->first();
 
-            if ($vessel) {
-               $vessel->update([
-                  'latitude' => $res->lat,
-                  'longitude' => $res->lon,
-                  'speed' => $res->speed,
-                  'calcspeed' => $res->calcspeed,
-                  'heading' => $res->heading
-               ]);
-            }
+      //       if ($vessel) {
+      //          $vessel->update([
+      //             'latitude' => $res->lat,
+      //             'longitude' => $res->lon,
+      //             'speed' => $res->speed,
+      //             'calcspeed' => $res->calcspeed,
+      //             'heading' => $res->heading
+      //          ]);
+      //       }
 
-            if ($barge) {
-               $barge->update([
-                  'latitude' => $res->lat,
-                  'longitude' => $res->lon
-               ]);
-            }
-         }
-      }
-      } catch (Throwable $e) {
-            report($e);
+      //       if ($barge) {
+      //          $barge->update([
+      //             'latitude' => $res->lat,
+      //             'longitude' => $res->lon
+      //          ]);
+      //       }
+      //    }
+      // }
+      // } catch (Throwable $e) {
+      //       report($e);
    
-            return false;
-      }
+      //       return false;
+      // }
 
       
       
 
-      // $acc = Vessel::find(27);
-      // $kj4 = Port::find(1);
-      // $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
+      $acc = Vessel::find(27);
+      $kj4 = Port::find(1);
+      $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
       // dd($acc->name . ' ke ' . $kj4->name . ': ' .$tesDis);
       // dd(count($ports));
 
@@ -399,6 +401,12 @@ class HomeController extends Controller
 
 
       // dd('ok');
+      // $parakan = User::where('username', 'parakan')->first();
+      // $parakan->assignRole('vessel');
+
+      // $harrier = User::where('username', 'harrier')->first();
+      // $harrier->assignRole('vessel');
+
       
       // $ports = Port::get();
       // foreach($ports as $port){
@@ -992,44 +1000,44 @@ class HomeController extends Controller
       // $elok = Vessel::where('imo', '9543483')->first();
       // dd($elok->name);
 
-      $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
-      $token = '73ob73y64nt3n63MP4tk4l1';
-      $response = Http::withHeaders([
-         'Authorization' => 'Bearer ' . $token,
-      ])->post($url, []);
+      // $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+      // $token = '73ob73y64nt3n63MP4tk4l1';
+      // $response = Http::withHeaders([
+      //    'Authorization' => 'Bearer ' . $token,
+      // ])->post($url, []);
 
-      $responseBody = json_decode($response->getBody());
-      if($responseBody){
-         foreach ($responseBody->data as $res) {
+      // $responseBody = json_decode($response->getBody());
+      // if($responseBody){
+      //    foreach ($responseBody->data as $res) {
            
-            if ($res->MMSI) {
-               $vessel = Vessel::where('mmsi', $res->MMSI)->first();
-               $barge = Port::where('mmsi', $res->MMSI)->first();
+      //       if ($res->MMSI) {
+      //          $vessel = Vessel::where('mmsi', $res->MMSI)->first();
+      //          $barge = Port::where('mmsi', $res->MMSI)->first();
    
-               if ($vessel) {
-                  if ($vessel->latitude != $res->lat) {
-                     $vessel->update([
-                        'latitude' => $res->lat,
-                        'longitude' => $res->lon,
-                        'speed' => $res->speed,
-                        'calcspeed' => $res->calcspeed,
-                        'heading' => $res->heading,
-                        'last_update' => $res->date
-                     ]);
-                  }
-               }
+      //          if ($vessel) {
+      //             if ($vessel->latitude != $res->lat) {
+      //                $vessel->update([
+      //                   'latitude' => $res->lat,
+      //                   'longitude' => $res->lon,
+      //                   'speed' => $res->speed,
+      //                   'calcspeed' => $res->calcspeed,
+      //                   'heading' => $res->heading,
+      //                   'last_update' => $res->date
+      //                ]);
+      //             }
+      //          }
    
-               if ($barge) {
-                  $barge->update([
-                     'latitude' => $res->lat,
-                     'longitude' => $res->lon
-                  ]);
-               }
-            }
-         }
-      } else {
+      //          if ($barge) {
+      //             $barge->update([
+      //                'latitude' => $res->lat,
+      //                'longitude' => $res->lon
+      //             ]);
+      //          }
+      //       }
+      //    }
+      // } else {
          
-      }
+      // }
 
       
 
