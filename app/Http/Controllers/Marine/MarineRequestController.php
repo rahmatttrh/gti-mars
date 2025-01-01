@@ -265,6 +265,7 @@ class MarineRequestController extends Controller
    }
 
    public function filter(Request $req){
+      // dd('ok');
       // $requests = ModelsRequest::where('status','=', 1)->get();
 
       // dd('ok');
@@ -291,9 +292,11 @@ class MarineRequestController extends Controller
       $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
       // dd(count($requests));
 
+      $cargoItems = CargoItem::whereBetween('date', [$startDate, $endDate])->get();
+
       
 
-      return view('pages-stisla.marine.request.inbox', [
+      return view('pages-stisla.marine.request.inbox-list', [
          'vessels' => $vessels,
          'requests' => $requests,
          'schedules' => $schedules,
@@ -302,6 +305,7 @@ class MarineRequestController extends Controller
          'dates' => $dates,
          'start' => $startDate,
          'end' => $endDate,
+         'cargoItems' => $cargoItems,
          'now' => Carbon::now()
       ])->with('i');
    }
