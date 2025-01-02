@@ -80,7 +80,7 @@
                         {{$item->desc}} ,
                      @endforeach
                   </span></td>
-                  <td>{{$req->origin->code}} - {{$req->destination->code}}
+                  <td>{{$req->origin->code ?? ''}} - {{$req->destination->code ?? ''}}
                      @if ($req->titip_id != null)
                          ({{$req->titip->code}})
                      @endif
