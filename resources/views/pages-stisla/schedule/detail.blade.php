@@ -75,9 +75,9 @@
                               @endif
                      </span>  
                   @endif
-                  @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting' || $schedule->class == 'Fuel Oil' || $schedule->class == 'Fresh Water')
+                  {{-- @if ($schedule->class == 'Moving' || $schedule->class == 'Lifting' || $schedule->class == 'Fuel Oil' || $schedule->class == 'Fresh Water')
                       <span><b>{{$schedule->requests()->first()->origin->name}}</b> to <b>{{$schedule->requests()->first()->destination->name}}</b></span>
-                  @endif
+                  @endif --}}
                   
                   <hr>
                   <div class="d-flex justify-content-between">
@@ -738,7 +738,7 @@
                </button>
             </div>
             <div class="modal-body">
-               Add {{$req->activity->name}} {{$req->description}} {{$req->origin->name}} - {{$req->destination->name}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
+               Add {{$req->activity->name ?? ''}} {{$req->description}} {{$req->origin->name ?? ''}} - {{$req->destination->name ?? ''}} into {{$thisSchedule->vessel->name ?? '-'}} Schedule ?
                
             </div>
             <div class="modal-footer bg-whitesmoke">
@@ -771,7 +771,11 @@
                [{{$req->total_weight}} ton]
                <hr>
                @if ($req->schedule_id != null)
-                   From {{$req->schedule->code}} {{$req->schedule->vessel->name ?? ''}} {{formatDate($req->schedule->date)}}
+                  @if ($req->activity_id == 5)
+                      @else
+                      {{-- From {{$req->schedule->code}} {{$req->schedule->vessel->name ?? ''}} {{formatDate($req->schedule->date)}} --}}
+                  @endif
+                   
                    @else
                    -
                @endif

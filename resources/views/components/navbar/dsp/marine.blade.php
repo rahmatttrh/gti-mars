@@ -35,18 +35,34 @@
             <div class="dropdown-list-content dropdown-list-icons">
                @if (count($notifrequests) > 0)
                   @foreach ($notifrequests as $req)
-                     <a href="#" class="dropdown-item dropdown-item-unread">
-                        {{-- <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread"> --}}
-                        {{-- <div class="dropdown-item-icon border text-danger">
-                           <i class="fas fa-exclamation"></i>
-                        </div> --}}
-                        <div class="dropdown-item-desc">
-                           {{$req->description }}
-                           
-                           on {{formatDate($req->date)}} from {{$req->user->name}}
-                           <div class="time text-primary">{{$req->created_at->diffForHumans()}}</div>
-                        </div>
-                     </a>
+                     @if ($req->activity_id == 5)
+                        {{-- <a href="#" class="dropdown-item dropdown-item-unread"> --}}
+                           <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread">
+                           {{-- <div class="dropdown-item-icon border text-danger">
+                              <i class="fas fa-exclamation"></i>
+                           </div> --}}
+                           <div class="dropdown-item-desc">
+                              {{$req->activity->name }}
+                              
+                              on {{formatDate($req->date)}} from {{$req->user->name}} 
+                              <div class="time text-primary">{{$req->created_at->diffForHumans()}}</div>
+                           </div>
+                        </a> 
+                        @else
+                        <a href="#" class="dropdown-item dropdown-item-unread">
+                           {{-- <a href="{{route('schedule.detail', enkripRambo($req->schedule->id))}}" class="dropdown-item dropdown-item-unread"> --}}
+                           {{-- <div class="dropdown-item-icon border text-danger">
+                              <i class="fas fa-exclamation"></i>
+                           </div> --}}
+                           <div class="dropdown-item-desc">
+                              {{$req->description }}
+                              
+                              on {{formatDate($req->date)}} from {{$req->user->name}} 
+                              <div class="time text-primary">{{$req->created_at->diffForHumans()}}</div>
+                           </div>
+                        </a>
+                     @endif
+                    
                   @endforeach
                   @else
                   <small class="dropdown-item dropdown-item-unread text-muted">Tidak ada Request dari User Field </small>

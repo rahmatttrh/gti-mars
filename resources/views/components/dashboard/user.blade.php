@@ -21,7 +21,7 @@
          </div> --}}
          <div class="card">
             <div class="card-header bg-primary text-white">
-               <h3 class="card-title">{{$user->name}}</h3>
+               <h3 class="card-title">{{$user->name}} </h3>
             </div>
             <table class="table card-table table-vcenter">
                <thead>
