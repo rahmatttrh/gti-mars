@@ -159,7 +159,7 @@
                               </td>
                               <td>
                                  
-                                 <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
+                                 <span>{{$schedule->requests->first()->origin->code ?? ''}} - {{$schedule->requests->first()->destination->code ?? ''}}</span>
                               </td>
                               @elseif(($schedule->class == 'Fresh Water'))
                               <td>
