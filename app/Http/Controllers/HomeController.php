@@ -451,16 +451,49 @@ class HomeController extends Controller
       //    ]);
       //    $user->assignRole('vessel');
       // }
-      
-      if (auth()->user()->hasRole('vessel')) {
-         
-         
+      if(auth()->user()->hasRole('marine')){
+         $vdrValidations = Vdr::where('status', 1)->get();
+         $cargoValidations = ModelsRequest::where('status', 1)->get();
+         $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
+         $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
+         $takeouts = ModelsRequest::where('undo', '!=', null)->get();
+         $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
+         $vessels = Vessel::get();
+         $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
 
-         // $users = User::where('type', 'office')->get();
-         // foreach($users as $user){
-         //    $user->assignRole('vessel');
-         // }
+         $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
+         $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
+   
+         $rawDates = [];
+         while ($start->lte($end)) {
+            $rawDates[] = $start->copy();
+            $start->addDay();
+         }
+         $dates = array();
+         $values = array();
+         $vdrsArray = array();
+         foreach($rawDates as $d){
+            $dates[] = $d->format('l, d/m/Y');
+            $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
+            $values[] = count($totalRequests);
+            // dd($d->format('l'));
+         }
+         return view('main', [
+            'vdrValidations' => $vdrValidations,
+            'cargoValidations' => $cargoValidations,
+            'schedules' => $schedules,
+            'cargoItems' => $cargoItems,
+            'takeouts' => $takeouts,
+            'itemRejects' => $itemRejects,
+            'vessels' => $vessels,
+            'allRequests' => $allRequests,
+            'dates' => $dates,
+            'values' => $values,
+            'vdrsArray' => $vdrsArray,
 
+         ])->with('i');
+      } else if (auth()->user()->hasRole('vessel')) {
+         
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          if ($currentVessel == null) {
@@ -481,6 +514,16 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
          $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->where('status', 101)->get();
+         return view('main', [
+            'myVdr' => $myVdr,
+            'myRecentVdrs' =>  $myRecentVdrs,
+            'currentVessel' => $currentVessel,
+            'rejectVdrs' => $rejectVdrs,
+            'schedules' => $schedules,
+            'requests' => $requests,
+            'nowSchedule' => $nowSchedule,
+            'docs' => $docs
+         ])->with('i');
       } else {
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
@@ -495,8 +538,8 @@ class HomeController extends Controller
       }
 
       $feed = News::get()->first();
-      $vessels = Vessel::get();
-      $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
+      
+      
       $allSailingOrders = Schedule::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->get();
 
       $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
@@ -550,9 +593,9 @@ class HomeController extends Controller
       $logisticSchedules = Schedule::where('class', 'Cargo')->get();
       // dd(count($thisMonthActivities));
 
-      $takeouts = ModelsRequest::where('undo', '!=', null)->get();
-      $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->paginate(10);
-      $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
+      
+      
+      
       
       if (auth()->user()->hasRole('mm')) {
         $mm = MaterialMan::where('email', auth()->user()->email)->first();

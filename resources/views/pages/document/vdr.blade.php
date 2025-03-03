@@ -146,10 +146,10 @@ table {
                <thead>
                   <tr>
                      <td class="title">Wheather</td>
-                     <td class="text-center title">00 - 06</td>
-                     <td class="text-center title">06 - 12</td>
-                     <td class="text-center title">12 - 18</td>
-                     <td class="text-center title">18 - 24</td>
+                     <td class="text-center title">00 - 06 hrs</td>
+                     <td class="text-center title">06 - 12 hrs</td>
+                     <td class="text-center title">12 - 18 hrs</td>
+                     <td class="text-center title">18 - 24 hrs</td>
                   </tr>
                </thead>
                <tbody>
@@ -271,16 +271,16 @@ table {
                <tbody>
                   @foreach ($vdrActivities as $vdrActivity)
                   <tr>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->start}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->finish}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->high}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->normal}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->slow}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->manu}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->idle}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->tow}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->ah}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{$vdrActivity->sb}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{substr($vdrActivity->start, 0, 5)}} </small></td>
+                     <td class="text-center bg-yellow"><small>{{substr($vdrActivity->finish, 0, 5)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->high)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->normal)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->slow)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->manu)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->idle)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->tow)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->ah)}}</small></td>
+                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->sb)}}</small></td>
                      <td class="bg-yellow"><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
                   
@@ -713,7 +713,7 @@ table {
                        
                         <td> <small>{{$operating->heading->description}} </small></td>
                         <td class="text-center">
-                           <small>{{$operating->time}}</small>
+                           <small>{{getTotalHours($operating->time)}}</small>
                         </td>
                         <td class="text-center bg-yellow">
                            @if($operating->heading->speed == '1')

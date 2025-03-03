@@ -27,12 +27,17 @@
             </div>
             @endif
             
-            <div class="table-responsive">
-               <table class="" id="table-6">
+            <table class="display  border">
+               <tbody>
+                  <tr>
+                     <th>Sailing Order</th>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="table-responsive overflow-auto" style="height: 120px">
+               <table class="" >
                   <thead >
-                     <tr>
-                        <th colspan="4" class="py-1">Digital Smart Port</th>
-                     </tr>
+                     
                      <tr>
                         {{-- <th class="text-center">No</th> --}}
                         <th>ID</th>
@@ -58,12 +63,17 @@
                </table>
             </div>
             
-            <div class="table-responsive mt-4">
-               <table class="" id="table-6">
+            <table class="display  border">
+               <tbody>
+                  <tr>
+                     <th>Vessel Daily Report</th>
+                  </tr>
+               </tbody>
+            </table>
+            <div class="table-responsive overflow-auto" style="height: 120px">
+               <table class="" >
                   <thead >
-                     <tr>
-                        <th colspan="4" class="py-1">Recent Vessel Daily Report</th>
-                     </tr>
+                     
                      <tr>
                         {{-- <th class="text-center">No</th> --}}
                         <th>ID</th>

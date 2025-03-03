@@ -7,9 +7,9 @@
    <section class="section">
       <div class="section-body">
          @if (auth()->user()->hasRole('vessel'))
-            <x-main.vessel :nowschedule="$nowSchedule" :myvdr="$myVdr" :myrecentvdrs="$myRecentVdrs" :schedules="$schedules" :vdr="$vdr" :requests="$requests" :vessel="$currentVessel" :docs="$docs" :rejectvdrs="$rejectVdrs" />
+            <x-main.vessel :nowschedule="$nowSchedule"  :myvdr="$myVdr" :myrecentvdrs="$myRecentVdrs" :schedules="$schedules"  :requests="$requests" :vessel="$currentVessel" :docs="$docs" :rejectvdrs="$rejectVdrs" />
             @elseif(auth()->user()->hasRole('marine'))
-            <x-main.marine :schedules="$schedules" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray" :tactivity="$totalActivity" :tschedule="$totalSchedule" :tactiveschedule="$totalActiveSchedule" />
+            <x-main.marine :schedules="$schedules" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.logistic :schedules="$logisticSchedules" :items="$cargoItems" />
             @elseif(auth()->user()->hasRole('mm'))

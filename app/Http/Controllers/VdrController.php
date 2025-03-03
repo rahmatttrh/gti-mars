@@ -31,6 +31,7 @@ class VdrController extends Controller
 {
    public function index()
    {
+      // dd('ok');
       return view('pages.vdr.vdr', [])->with('i');
    }
 
@@ -86,7 +87,7 @@ class VdrController extends Controller
 
    public function vdrVessel()
    {
-
+      // dd('ok');
       $user = auth()->user();
 
       // Opsi 1 
@@ -189,6 +190,37 @@ class VdrController extends Controller
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
       $vdrs = Vdr::get();
+
+      $totalHours = '';
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get() ;
+      foreach($ops as $op){
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+         
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
  
       // dd('ok');
       return view('pages-stisla.vdr.detail', [
@@ -204,7 +236,7 @@ class VdrController extends Controller
          'engines' => $engines,
          'crews' => $crews,
          'operatings' => $operatings,
-         'totalJam' => $totalJam,
+         'totalJam' =>  $debugHours . ':'. $debugMinutes,
          'totalDaily' => $totalDaily,
          'vdrs' => $vdrs
       ])->with('i');
@@ -277,7 +309,8 @@ class VdrController extends Controller
          ]);
 
          $periodic = VdrPeriodic::create([
-            'vdr_id' => $vdr->id
+            'vdr_id' => $vdr->id,
+            'activity' => 'Not Applicable'
          ]);
 
          $cargoHeadings = VdrCargoHeading::get();
@@ -470,6 +503,47 @@ class VdrController extends Controller
          // Handle atau laporkan kesalahan
          // return response()->json(['message' => 'Failed to create order'], 500);
       }
+   }
+
+
+   public function delete(Request $req){
+      $vdr = Vdr::find($req->id);
+      $vdrWeathers =  VdrWeather::where('vdr_id', $vdr->id)->get();
+      $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
+      $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->get();
+      $vdrEngines = VdrEngine::where('vdr_id', $vdr->id)->get();
+      $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
+
+      foreach($vdrWeathers as $vdrW){
+         $vdrW->delete();
+      }
+      foreach($vdrHses as $vdrH){
+         $vdrH->delete();
+      }
+      foreach($vdrOperatings as $vdrO){
+         $vdrO->delete();
+      }
+      foreach($vdrCrews as $vdrC){
+         $vdrC->delete();
+      }
+      foreach($vdrEngines as $vdrE){
+         $vdrE->delete();
+      }
+      foreach($vdrCargos as $vdrCargo){
+         $vdrCargo->delete();
+      }
+      foreach($vdrActivities as $vdrAct){
+         $vdrAct->delete();
+      }
+      
+      $vdr->delete();
+
+      return redirect()->to('/')->with('success', 'VDR deleted');
+
+
+
    }
 
    public function edit($id)
@@ -763,6 +837,7 @@ class VdrController extends Controller
          foreach ($operatings as $operating) {
             $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
             $totalHigh = $activities->sum('high');
+            $totalHigh = $operating->getSumHigh();
             $totalNormal = $activities->sum('normal');
             $totalSlow = $activities->sum('slow');
             $totalManu = $activities->sum('manu');

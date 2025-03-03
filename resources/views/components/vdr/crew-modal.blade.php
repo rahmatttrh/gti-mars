@@ -62,6 +62,56 @@
    </div>
 </div>
 
+<div class="modal fade" id="modalReleaseVdr" tabindex="1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Release VDR {{formatDate($vdr->date)}} ?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            {{-- <span>Release VDR {{formatDate($vdr->date)}} ?</span> --}}
+            <hr>
+            <span>Pastikan semua data sudah terisi dengan benar. Data akan terkirim ke Marine Department PHE OSES untuk dilakukan validasi.</span>
+         </div>
+         <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" type="submit" class="btn btn-info">Release</a>
+            {{-- <button type="submit" class="btn btn-danger">Delete</button> --}}
+         </div>
+      </div>
+      
+   </div>
+</div>
+
+<div class="modal fade" id="modalDeleteVdr" tabindex="1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{route('vdr.delete')}}" method="POST">
+         @csrf
+         <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Delete VDR {{formatDate($vdr->date)}} ?</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <hr>
+               <span>Data akan dihapus secara permanen dari sistem.</span>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
 
 <div class="modal fade" id="modalImport" tabindex="1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog" role="document">

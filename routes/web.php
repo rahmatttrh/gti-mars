@@ -609,6 +609,7 @@ Route::group(['middleware' => ['role:vessel|marine']], function () {
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
+      Route::post('delete', [VdrController::class, 'delete'])->name('vdr.delete');
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');

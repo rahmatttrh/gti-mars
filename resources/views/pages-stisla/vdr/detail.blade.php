@@ -35,6 +35,19 @@
    </div> --}}
 
    <div class="section-body">
+      
+         {{-- @if (auth()->user()->hasRole('vessel'))
+
+               @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+               <div class="btn btn-group">
+                  <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn  btn-info border shadow-none">Release</a>
+                  <a href="#" class="btn   btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                  <a href="#" class="btn   btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
+               </div>
+               @endif
+            @endif --}}
+      
+      
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item">
             <a class="nav-link active" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="true">VDR {{$vessel->name}}  {{formatDate($vdr->date)}}</a>
@@ -72,6 +85,7 @@
       </ul>
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
+            
             <div class="row mt-2">
                <div class="col-md-9">
                   
@@ -154,8 +168,15 @@
                   @endif
                   @if (auth()->user()->hasRole('vessel'))
                      @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                        <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>
-                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                     <div class="d-flex">
+                        <a href="#" class="btn btn-block btn-info border shadow-none" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                        <div class="btn btn-group p-0">
+                           
+                           <a href="#" class="btn btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                           <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
+                        </div>
+                     </div>
+                     
                         
                      @endif
                   @endif
@@ -168,8 +189,10 @@
                   {{-- </div> --}}
                   
                   @endif
+                  <hr>
                   <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-block btn-light border shadow-none">Export PDF</a>
-                  
+                  <hr>
+                  <span class="text-muted">Setiap Tab terdapat tombol Save yang harus di klik ketika ada perubahan data pada Tab tersebut.</span>
                </div>
             </div>
          </div>
