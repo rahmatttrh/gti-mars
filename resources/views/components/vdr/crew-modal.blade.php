@@ -94,7 +94,7 @@
 </div>
 
 <div class="modal fade" id="modalEdit" tabindex="1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog" role="document">
+   <div class="modal-dialog modal-lg" role="document">
       <form action="{{route('vdr.update')}}" method="POST" enctype="multipart/form-data">
          @csrf
          @method('PUT')
@@ -108,7 +108,7 @@
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
-            <div class="modal-body">
+            <!-- <div class="modal-body">
                <div class="form-group">
                   <label for="vessel">Vessel Name</label>
                   <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" readonly>
@@ -149,6 +149,121 @@
                      @enderror
                   </div>
                </div>
+            </div> -->
+            <div class="modal-body">
+               <div class="row">
+                  <div class="col-md-8">
+                     <div class="form-group">
+                        <label for="vessel">Vessel Name</label>
+                        <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" readonly>
+                        @error('vessel')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="form-group">
+                        <label for="date">Date</label>
+                        <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" readonly>
+                        @error('date')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="contract">Contract No.</label>
+                        <input class="form-control" id="contract" name="contract" type="text" value="{{$vdr->contract}}">
+                        @error('contract')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="contract_start">Contract Start</label>
+                        <input class="form-control" id="contract_start" name="contract_start" required type="date" value="{{$vdr->contract_start }}" >
+                        @error('contract_start')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="contract_end">Contract End</label>
+                        <input class="form-control" id="contract_end" name="contract_end" required type="date" value="{{$vdr->contract_end }}" >
+                        @error('contract_end')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+               </div>
+
+               <div class="form-group">
+                  <label for="owner">Owner</label>
+                  <input class="form-control" id="owner" name="owner" type="text" value="{{$vdr->owner}}">
+                  @error('owner')
+                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                  @enderror
+               </div>
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="location_midnight">Location</label>
+                        <input class="form-control" id="location_midnight" name="location_midnight" required type="text"  value="{{$vdr->location_midnight}}" >
+                        @error('location_midnight')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="max">Pax</label>
+                        <input class="form-control" id="max" name="max" type="text" value="{{$vdr->crew_max}}" >
+                        @error('max')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="form-group">
+                        <label for="onduty">Crew</label>
+                        <input class="form-control" id="onduty" name="onduty" type="number" value="{{$vdr->crew_onduty}}">
+                        @error('onduty')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  
+               </div>
+               <hr>
+
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="master">Master</label>
+                        <input class="form-control" id="master" name="master" type="text" value="{{$vdr->master}}" >
+                        @error('master')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <div class="form-group">
+                        <label for="ce">Chief Engineer</label>
+                        <input class="form-control" id="ce" name="ce" type="text" value="{{$vdr->ce}}" >
+                        @error('ce')
+                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                        @enderror
+                     </div>
+                  </div>
+               </div>
+               
+               
             </div>
             <div class="modal-footer bg-whitesmoke">
                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

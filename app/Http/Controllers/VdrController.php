@@ -189,8 +189,40 @@ class VdrController extends Controller
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
       $vdrs = Vdr::get();
+
+      $totalHours = '';
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get() ;
+      foreach($ops as $op){
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+         
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+      // dd($debugMinutes);
  
-      // dd('ok');
+      // dd($totalJam);
       return view('pages-stisla.vdr.detail', [
       //   return view('pages.vdr.show-vdr', [
          'vessel' => $vdr->vessel,
@@ -204,7 +236,7 @@ class VdrController extends Controller
          'engines' => $engines,
          'crews' => $crews,
          'operatings' => $operatings,
-         'totalJam' => $totalJam,
+         'totalJam' => $debugHours . ':'. $debugMinutes,
          'totalDaily' => $totalDaily,
          'vdrs' => $vdrs
       ])->with('i');
@@ -424,7 +456,13 @@ class VdrController extends Controller
          $updateVdr = $vdr->update([
                'crew_onduty' => $req->onduty,
                'crew_max' => $req->max,
-               'location_midnight' => $req->location_midnight
+               'location_midnight' => $req->location_midnight,
+               'contract' => $req->contract,
+               'contract_start' => $req->contract_start,
+               'contract_end' => $req->contract_end,
+               'owner' => $req->owner,
+               'master' => $req->master,
+               'ce' => $req->ce
          ]);
 
 
@@ -1022,7 +1060,7 @@ class VdrController extends Controller
                   'remarks' => $req->remarks[$key]
                ]);
 
-               if ($cargo->heading_id == 2) {
+               if ($cargo->heading_id == 2 || $cargo->heading_id == 1) {
                   $actualWater = ($cargo->opening + $cargo->received) - ($cargo->transferred + $cargo->closing);
                   $cargo->update([
                      'consumption' => $actualWater

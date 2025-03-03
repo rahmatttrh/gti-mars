@@ -84,9 +84,9 @@ table {
                <dd class="col-3">Vessel</dd>
                <dd class="col-9">: {{$vdr->vessel->name}}</dd>
                <dd class="col-3">Contract</dd>
-               <dd class="col-9">:  {{$vdr->vessel->contract_no}}</dd>
+               <dd class="col-9">:  {{$vdr->contract}}</dd>
                <dd class="col-3">Contract Period</dd>
-               <dd class="col-9">:  {{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</dd>
+               <dd class="col-9">:  {{\Carbon\Carbon::parse($vdr->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->contract_end)->format('d/m/Y')}}</dd>
                
             </dl>
          </div>
@@ -95,9 +95,9 @@ table {
                <dd class="col-4">Location</dd>
                <dd class="col-8">: {{$vdr->location_midnight}}</dd>
                <dd class="col-4">Owner</dd>
-               <dd class="col-8">: {{$vdr->vessel->owner}}</dd>
+               <dd class="col-8">: {{$vdr->owner}}</dd>
                <dd class="col-4">Master</dd>
-               <dd class="col-8">:  {{$vdr->vessel->master}}</dd>
+               <dd class="col-8">:  {{$vdr->master}}</dd>
                <dd class="col-4 text-truncate">Number of Crew</dd>
                <dd class="col-8">:  {{$vdr->crew_onduty}} / {{$vdr->crew_max}}</dd>
                
@@ -123,17 +123,17 @@ table {
                      <td><small>Vessel Name</small></td>
                      <td class="bg-yellow"><small>{{$vdr->vessel->name}}</small></td>
                      <td><small>Owner Opt</small></td>
-                     <td class="bg-yellow"><small>{{$vdr->vessel->owner ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->owner ?? '-'}}</small></td>
                   </tr>
                   <tr>
                      <td><small>Contract No.</small></td>
-                     <td class="bg-yellow"><small>{{$vdr->vessel->contract_no ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->contract ?? '-'}}</small></td>
                      <td><small>Master Name</small></td>
-                     <td class="bg-yellow"><small>{{$vdr->vessel->master ?? '-'}}</small></td>
+                     <td class="bg-yellow"><small>{{$vdr->master ?? '-'}}</small></td>
                   </tr>
                   <tr>
                      <td><small>Contract Periode</small></td>
-                     <td class="bg-yellow"><small>{{\Carbon\Carbon::parse($vdr->vessel->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->vessel->contract_end)->format('d/m/Y')}}</small></td>
+                     <td class="bg-yellow"><small>{{\Carbon\Carbon::parse($vdr->contract_start)->format('d/m/Y')}} - {{\Carbon\Carbon::parse($vdr->contract_end)->format('d/m/Y')}}</small></td>
                      <td><small>Number of Crew/Pax</small></td>
                      <td class="bg-yellow"><small>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</small></td>
                   </tr>
@@ -764,12 +764,12 @@ table {
             <div class="row ttd">
                <div class="col">
                   <small>Prepared by,</small><br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->co}}</u></span></small><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->ce}}</u></span></small><br>
                   <small>Title : Chief Engineer</small>
                </div>
                <div class="col">
                   <br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vessel->master}}</u></span></small><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->master}}</u></span></small><br>
                   <small>Title : Master</small>
                </div>
                

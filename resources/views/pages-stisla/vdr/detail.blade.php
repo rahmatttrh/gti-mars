@@ -80,7 +80,7 @@
                   
                   
                   
-                  <table>
+               <table>
                      <tbody>
                         <tr>
                            <td style="width: 250px"><x-status-stisla.vdr :vdr="$vdr" /></td>
@@ -88,11 +88,11 @@
                         </tr>
                         <tr>
                            <td>Contract No.</td>
-                           <td>{{$vessel->contract_no ?? '-'}}</td>
+                           <td>{{$vdr->contract ?? '-'}}</td>
                         </tr>
                         <tr>
                            <td>Contract Period</td>
-                           <td>{{$vessel->contract_start ?? '-'}} - {{$vessel->contract_end ?? '-'}}</td>
+                           <td>{{formatDate($vdr->contract_start) ?? '-'}} - {{formatDate($vdr->contract_end) ?? '-'}}</td>
                         </tr>
                         <tr>
                            <td>Location</td>
@@ -100,15 +100,23 @@
                         </tr>
                         <tr>
                            <td>Owner</td>
-                           <td> {{$vessel->owner ?? '-'}} / {{$vessel->operator ?? '-'}}</td>
+                           <td> {{$vdr->owner }}</td>
                         </tr>
-                        <tr>
-                           <td>Master Name</td>
-                           <td>{{$vessel->master ?? '-'}}</td>
-                        </tr>
+                        
                         <tr>
                            <td>Num of Crew</td>
                            <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}} Person</td>
+                        </tr>
+                        <tr>
+                           <td></td>
+                        </tr>
+                        <tr>
+                           <td>Master</td>
+                           <td>{{$vdr->master ?? '-'}}</td>
+                        </tr>
+                        <tr>
+                           <td>Chief Engineer</td>
+                           <td>{{$vdr->ce ?? '-'}}</td>
                         </tr>
                      </tbody>
                   </table>
@@ -124,6 +132,7 @@
                   @endif
                   @if (auth()->user()->hasRole('vessel'))
                      @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+
                         <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>
                         <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
                      @endif

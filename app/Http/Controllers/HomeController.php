@@ -219,7 +219,7 @@ class HomeController extends Controller
 
       $acc = Vessel::find(27);
       $kj4 = Port::find(1);
-      $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
+      // $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
       // dd($acc->name . ' ke ' . $kj4->name . ': ' .$tesDis);
       // dd(count($ports));
 
@@ -459,11 +459,27 @@ class HomeController extends Controller
             ]);
          }
       }
+
+      // $vessels = Vessel::get();
+      // foreach($vessels as $vessel){
+      //    $user = User::create([
+      //       'name' => $vessel->name . ' Office',
+      //       'username' => $vessel->username . '_office',
+      //       'email' => 'office_'.$vessel->email,
+      //       'password' => Hash::make('oses@2025'),
+      //       'type' => 'office',
+      //       'vessel_id' => $vessel->id
+      //    ]);
+      //    $user->assignRole('vessel');
+      // }
       
       if (auth()->user()->hasRole('vessel')) {
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
-         
+         if ($currentVessel == null) {
+            
+            $currentVessel = Vessel::find(auth()->user()->vessel_id);
+         }
          // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
          $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
