@@ -764,12 +764,12 @@ table {
             <div class="row ttd">
                <div class="col">
                   <small>Prepared by,</small><br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->ce}}</u></span></small><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->ce ?? '-'}}</u></span></small><br>
                   <small>Title : Chief Engineer</small>
                </div>
                <div class="col">
                   <br>
-                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->master}}</u></span></small><br>
+                  <small>Name : <span class="text-primary px-2"><u>{{$vdr->master ?? '-'}}</u></span></small><br>
                   <small>Title : Master</small>
                </div>
                
@@ -883,7 +883,7 @@ table {
             
             
             <div class="row ttd">
-               <div class="col pt-1">
+               {{-- <div class="col pt-1">
                   <small>Acknowledged by,</small>
                   <br>
                   <small>Name : PHE OSES Representative</small><br>
@@ -917,7 +917,56 @@ table {
                   <small>Status : ____________</small>
                   @endif
                   
-               </div>
+               </div> --}}
+
+               @if ($vdr->title1 != null)
+                  <div class="col pt-1">
+                     <small>Acknowledged by,</small>
+                     <br>
+                     <small>{{$vdr->title1 ?? '-'}} : {{$vdr->name1 ?? '-'}}</small><br>
+                     @if ($vdr->title1 != null)
+                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                     {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 2)->first()->created_at)}}</small><br> --}}
+                     @else
+                     <small>Status : ____________</small>
+                     @endif
+                     
+                     
+                  </div>
+               
+                   
+               @endif
+
+
+               @if ($vdr->title2 != null)
+                  <div class="col pt-1">
+                     <br>
+                     <small>{{$vdr->title2 ?? '-'}} : {{$vdr->name2 ?? '-'}}</small><br>
+                     @if ($vdr->title2 != null)
+                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                     {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 3)->first()->created_at)}}</small><br> --}}
+                     @else
+                     <small>Status : ____________</small>
+                     @endif
+                     
+                  </div>
+               @endif
+              
+
+               @if ($vdr->title3 != null)
+                  <div class="col pt-1">
+                     <br>
+                     <small>{{$vdr->title3 ?? '-'}} : {{$vdr->name3 ?? '-'}}</small><br>
+                     @if ($vdr->title3 != null)
+                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                     {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 4)->first()->created_at)}}</small><br> --}}
+                     @else
+                     <small>Status : ____________</small>
+                     @endif
+                     
+                  </div>
+               @endif
+               
                <div class="col text-end pt-1">
                   {!! QrCode::size(100)->generate(Request::url()); !!}
                </div>

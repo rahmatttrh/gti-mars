@@ -14,7 +14,7 @@
 
 
       <div class="row">
-         {{-- <h1>ok</h1> --}}
+         
          <div class="col-md-7">
             {{-- <div class="badge badge-info">DSP</div> --}}
             @if (count($rejectvdrs) > 0)

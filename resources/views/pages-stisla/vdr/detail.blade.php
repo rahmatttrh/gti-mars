@@ -120,6 +120,28 @@
                         </tr>
                      </tbody>
                   </table>
+
+                  <hr>
+                  <table>
+                     <tbody>
+                        <tr>
+                           <th colspan="2">Approval Detail</th>
+                        </tr>
+                        <tr>
+                           <td style="width: 250px">{{$vdr->title1 ?? '-'}}</td>
+                           <td>{{$vdr->name1 ?? '-'}}</td>
+                        </tr>
+                        <tr>
+                           <td>{{$vdr->title2 ?? '-'}}</td>
+                           <td>{{$vdr->name2 ?? '-'}}</td>
+                        </tr>
+                        <tr>
+                           <td>{{$vdr->title3 ?? '-'}}</td>
+                           <td>{{$vdr->name3 ?? '-'}}</td>
+                        </tr>
+                        
+                     </tbody>
+                  </table>
                  
                </div>
                <div class="col">
@@ -135,12 +157,14 @@
 
                         <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>
                         <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval</a>
                      @endif
                   @endif
                   @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
                   {{-- <div class="btn-group mr-2"> --}}
                      <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
                      <a href="" class="btn btn-danger btn-block " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
                   {{-- </div> --}}
                   
                   @endif

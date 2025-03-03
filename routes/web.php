@@ -54,6 +54,7 @@ use App\Http\Controllers\Vessel\VesselRequestController;
 use App\Http\Controllers\Vessel\VesselScheduleController;
 use App\Http\Controllers\Vessel\VesselVdrController;
 use App\Http\Controllers\VesselController;
+use App\Http\Controllers\VesselCrewController;
 use App\Models\Activity;
 use App\Models\Document;
 use App\Models\ParentRequest;
@@ -62,6 +63,7 @@ use App\Models\Request;
 use App\Models\Schedule;
 use App\Models\Surveillance;
 use App\Models\VdrPeriodic;
+use App\Models\VesselCrew;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -77,6 +79,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(["auth"])->group(function () {
+   Route::get('phpinfo', fn () => phpinfo());
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //    Route::group(['middleware' => ['role:marine']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
@@ -553,6 +556,8 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
+
+      Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
    });
    Route::prefix('deviation')->group(function () {
       Route::get('send/{request:id}', [MarineDeviationController::class, 'send'])->name('schedule.send.deviation');
@@ -568,6 +573,13 @@ Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-
 });
 
 Route::group(['middleware' => ['role:vessel|marine']], function () {
+   Route::prefix('master/data/vessel')->group(function () {
+      
+
+      Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
+      Route::get('crew/add', [VesselCrewController::class, 'add'])->name('vessel.crew.add');
+      Route::post('crew/store', [VesselCrewController::class, 'store'])->name('vessel.crew.store');
+   });
    Route::get("v/newsfeed", [HomeController::class, "newsVessel",])->name('vessel.newsfeed');
    Route::prefix('dsp/v/')->group(function () {
       Route::get("dash/main", [HomeController::class, "dspVessel",])->name('dsp.vessel');
@@ -600,6 +612,7 @@ Route::group(['middleware' => ['role:vessel|marine']], function () {
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+      Route::put('update/approval', [VdrController::class, 'updateApproval'])->name('vdr.update.approval');
 
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');

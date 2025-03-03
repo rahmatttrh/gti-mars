@@ -41,6 +41,7 @@
          @endif
          
       </ul>
+      {{-- <h1>OK</h1> --}}
       <div class="tab-content" id="myTabContent">
          <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="table-responsive">
@@ -72,77 +73,26 @@
 
                @if ($schedule->status == 0)
                
-               
-               <table class=" table table-sm border" style="" id="">
-                  
-                  
-                     <thead>
-                        <tr>
-                           <th>Status</th>
-                           <th>BCM</th>
-                           <th>MTD</th>
-                           <th>Desc</th>
-                           <th>Contract</th>
-                           <th>Qty</th>
-                           <th>Weight</th>
-                           <th>Route</th>
-                        </tr>
-                        
-                     </thead>
-                     <tbody>
-                     
-                     @foreach ($schedule->items as $item)
-                        <tr class="border">
-                           <td>
-                              @if ($item->cargo_id)
-                                  <span class="text-info">Approved</span>
-                                  @else
-                                  <span>Waiting Validation</span>
-                              @endif
-                           </td>
-                           <td>{{$item->cargo->bcm ?? '-'}}</td>
-                           <td style="">
-                              {{$item->mtd ?? 'MTD No. Empty'}} 
-                           </td>
-                           <td class=" text-truncate ">
-                           {{$item->description}} <br>
-                           </td>
-                           <td class=" text-truncate">
-                              {{$item->contract ?? 'Contract Empty'}}
-                           </td>
-                           <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                           <td class=" text-center">{{$item->weight}} Ton</td>
-                           <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
-                        </tr>
-                     @endforeach
-                     
-                     
-                  </tbody>
-               </table>
-               @endif
-
-               @if ($schedule->status > 0)
-
-               @if ($bcmNull == true)
+                  {{-- <h1>OK</h1> --}}
                   <table class=" table table-sm border" style="" id="">
                      
                      
-                     <thead>
-                        <tr>
-                           <th>Status</th>
-                           <th>BCM</th>
-                           <th>MTD</th>
-                           <th>Desc</th>
-                           <th>Contract</th>
-                           <th>Qty</th>
-                           <th>Weight</th>
-                           <th>Route</th>
-                        </tr>
+                        <thead>
+                           <tr>
+                              <th>Status</th>
+                              <th>BCM</th>
+                              <th>MTD</th>
+                              <th>Desc</th>
+                              <th>Contract</th>
+                              <th>Qty</th>
+                              <th>Weight</th>
+                              <th>Route</th>
+                           </tr>
+                           
+                        </thead>
+                        <tbody>
                         
-                     </thead>
-                     <tbody>
-                     
-                        @foreach ($schedule->items->where('cargo_id', null) as $item)
+                        @foreach ($schedule->items as $item)
                            <tr class="border">
                               <td>
                                  @if ($item->cargo_id)
@@ -153,7 +103,12 @@
                               </td>
                               <td>{{$item->cargo->bcm ?? '-'}}</td>
                               <td style="">
-                                 {{$item->mtd ?? 'MTD No. Empty'}} 
+                                 @if ($item->cargo_id)
+                                    {{$item->mtd ?? 'MTD No. Empty'}} 
+                                       @else
+                                       -
+                                 @endif
+                              
                               </td>
                               <td class=" text-truncate ">
                               {{$item->description}} <br>
@@ -170,8 +125,65 @@
                         
                      </tbody>
                   </table>
-                  @else
                @endif
+
+               @if ($schedule->status > 0)
+
+                  @if ($bcmNull == true)
+                     <table class=" table table-sm border" style="" id="">
+                        
+                        
+                        <thead>
+                           <tr>
+                              <th>Status</th>
+                              <th>BCM</th>
+                              <th>MTD</th>
+                              <th>Desc</th>
+                              <th>Contract</th>
+                              <th>Qty</th>
+                              <th>Weight</th>
+                              <th>Route</th>
+                           </tr>
+                           
+                        </thead>
+                        <tbody>
+                        
+                           @foreach ($schedule->items->where('cargo_id', null) as $item)
+                              <tr class="border">
+                                 <td>
+                                    @if ($item->cargo_id)
+                                       <span class="text-info">Approved</span>
+                                       @else
+                                       <span>Waiting Validation</span>
+                                    @endif
+                                 </td>
+                                 <td>{{$item->cargo->bcm ?? '-'}}</td>
+                                 <td style="">
+                                    @if ($item->cargo_id)
+                                    {{$item->mtd ?? 'MTD No. Empty'}} 
+                                       @else
+                                       <span>-</span>
+                                    @endif
+                                    
+                                    
+                                 </td>
+                                 <td class=" text-truncate ">
+                                 {{$item->description}} <br>
+                                 </td>
+                                 <td class=" text-truncate">
+                                    {{$item->contract ?? 'Contract Empty'}}
+                                 </td>
+                                 <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                                 <td class=" text-center">{{$item->weight}} Ton</td>
+                                 <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
+                              </tr>
+                           @endforeach
+                           
+                           
+                        </tbody>
+                     </table>
+                     @else
+                  @endif
                <table class="border" >
                   <thead class="border">
                      <tr>
@@ -221,6 +233,8 @@
                         </td>
                         <td>
                            <a href="{{route('document.mtd', enkripRambo($item->id))}}" target="_blank">Export MTD</a>
+                           |
+                           <a href="#" data-toggle="modal" data-target="#modal-undo-mtd">Undo</a>
                         </td>
                      </tr>
 

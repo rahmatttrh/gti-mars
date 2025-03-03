@@ -53,7 +53,7 @@
                             <input type="number" class="form-control" id="onduty" name="onduty" >
                             </div>
                             <div class="form-group col-md-6">
-                            <label for="max">Max</label>
+                            <label for="max">Pax</label>
                             <input type="number" class="form-control" id="max" name="max" >
                             </div>
                             

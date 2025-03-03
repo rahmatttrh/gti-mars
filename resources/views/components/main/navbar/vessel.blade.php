@@ -68,6 +68,16 @@
                <span class="">Home Page</span>
             </a>
          </li>
+
+         <li class="nav-item {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
+            <a href="{{route('vessel.crew')}}" class="nav-link {{ (request()->is('master/data/vessel/crew')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('master/data/vessel/crew'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Crew List</span>
+            </a>
+         </li>
          <li class="nav-item pr-3 {{ (request()->is('v/newsfeed')) ? 'active' : '' }}">
             <a href="{{route('vessel.newsfeed')}}" class="nav-link {{ (request()->is('v/newsfeed')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('v/newsfeed'))

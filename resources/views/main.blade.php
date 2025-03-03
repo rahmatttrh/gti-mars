@@ -16,6 +16,7 @@
             <x-main.mm :mm="$mm" :cargos="$cargos" :schedules="$logisticSchedules" :items="$cargoItems" />
             @else
             
+            
             <div class="row">
                <div class="col-md-8">
                   <div class="row">

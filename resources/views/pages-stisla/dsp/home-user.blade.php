@@ -203,15 +203,19 @@
                      @foreach ($dates as $date)
                      <li class="nav-item">
                         @if ($allRequests->where('date', $date->format('Y-m-d'))->first() != null)
-                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-danger">
-                           {{$date->format('d')}}
-                           {{-- {{$date->format('Y-m-d')}} --}}
-                        </div></a>
+                        <a class="nav-link btn btn-sm btn-danger text-white mx-1 my-1"  id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true">
+                           {{-- <div class="" > --}}
+                              {{$date->format('l d')}}
+                              {{-- {{$date->format('Y-m-d')}} --}}
+                           {{-- </div> --}}
+                        </a>
                         @else 
-                        <a class="nav-link" id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true"><div class="badge badge-info">
-                           {{$date->format('d')}}
-                           {{-- {{$date->format('Y-m-d')}} --}}
-                        </div></a>
+                        <a class="nav-link btn btn-sm btn-info text-white mx-1 my-1"  id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true">
+                           {{-- <div class="btn btn-sm btn-info"> --}}
+                              {{$date->format('l d')}}
+                              {{-- {{$date->format('Y-m-d')}} --}}
+                           {{-- </div> --}}
+                        </a>
                         @endif
                      </li>
                      @endforeach
@@ -223,25 +227,29 @@
                      </div>
                      @foreach ($dates as $date)
                      <div class="tab-pane fade " id="date-{{$date->format('d')}}" role="tabpanel" aria-labelledby="date-{{$date->format('d')}}-tab">
-                        <table>
-                           <thead>
-                              <tr>
-                                 <td colspan="6">{{$date->format('d F Y')}}</td>
+                        <div class="table-responsive">
+                        <table class="border">
+                           <thead class="">
+                              <tr class="border bg-danger text-white ">
+                                 <td colspan="6">{{$date->format('l, d F Y')}}</td>
                               </tr>
                               <tr>
-                                 <td>ID</td>
-                                 <td>Location</td>
+                                 <td>MTD</td>
+                                 <td>Desc</td>
+                                 <td>Destination</td>
                                  {{-- <td>Activity</td> --}}
                                  {{-- <td>Required Boat</td> --}}
-                                 <td>Boat Assigned</td>
+                                 
                                  <td>User</td>
                                  <td>Status</td>
+                                 <td>Vessel</td>
                               </tr>
                            </thead>
                            <tbody>
                               @foreach ($cargoItems as $cargo)
                                  @if ($cargo->date == $date->format('Y-m-d'))
                                     <tr>
+                                       <td>{{$cargo->mtd}}</td>
                                        <td>
                                           {{-- <a href="{{route('request.detail.new', enkripRambo($cargo->id))}}"> --}}
                                              {{$cargo->description}}
@@ -262,18 +270,19 @@
                                           
                                        </td>
                                        
-                                       <td>
-                                          @if ($cargo->schedule_id != null)
-                                              <a href="{{route('schedule.detail', enkripRambo($cargo->schedule_id))}}">{{$cargo->schedule->vessel->name ?? '-'}}</a>
-
-                                          @endif
-                                          </td>
+                                       
                                        <td>{{$cargo->user_name ?? '-'}}</td>
                                        @if ($cargo->schedule_id == null)
                                        <td><x-status-stisla.request :request="$cargo->request" /> </td>
                                           @else
                                           <td><x-status-stisla.schedule :schedule="$cargo->schedule" /> </td>
                                        @endif
+                                       <td>
+                                          @if ($cargo->schedule_id != null)
+                                              <a href="{{route('schedule.detail', enkripRambo($cargo->schedule_id))}}">{{$cargo->schedule->vessel->name ?? '-'}}</a>
+
+                                          @endif
+                                          </td>
                                        
                                     </tr>
                                    
@@ -322,6 +331,7 @@
                               @endforeach --}}
                            </tbody>
                         </table>
+                        </div>
                      </div>
                      @endforeach
                      

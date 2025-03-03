@@ -399,48 +399,7 @@ class HomeController extends Controller
 
    public function index(){
 
-
       // dd('ok');
-      // $parakan = User::where('username', 'parakan')->first();
-      // $parakan->assignRole('vessel');
-
-      // $harrier = User::where('username', 'harrier')->first();
-      // $harrier->assignRole('vessel');
-
-      
-      // $ports = Port::get();
-      // foreach($ports as $port){
-      //    $mm = MaterialMan::create([
-      //       'port_id' => $port->id,
-      //       'name' => 'Material Man ' . $port->name,
-      //       'email' => 'mm_' . $port->email,
-      //    ]);
-
-      //    $user = User::where('email', $port->email)->first();
-
-      //    // dd($user);
-         
-      //    if ($user) {
-      //       $mmUser = User::create([
-      //          'name' => $mm->name,
-      //          'username' => 'mm_' . $user->username ?? '',
-      //          'email' => $mm->email,
-      //          'password' => Hash::make('12345678')
-      //       ]);
-   
-      //       $mmUser->assignRole('mm');
-      //    }
-         
-      // }
-
-      // $users = User::get();
-      // foreach($users as $user){
-      //    $user->update([
-      //       'password' => Hash::make('oses@2025'),
-      //    ]);
-      // }
-
-      
       $today = Carbon::now();
       $docs = Document::get();
       foreach ($docs as $doc) {
@@ -474,6 +433,14 @@ class HomeController extends Controller
       // }
       
       if (auth()->user()->hasRole('vessel')) {
+         
+         
+
+         // $users = User::where('type', 'office')->get();
+         // foreach($users as $user){
+         //    $user->assignRole('vessel');
+         // }
+
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          if ($currentVessel == null) {

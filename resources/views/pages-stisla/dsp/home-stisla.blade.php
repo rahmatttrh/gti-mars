@@ -171,11 +171,11 @@
                               </td>
                               @elseif(($schedule->class == 'Crew Change'))
                               <td>
-                                 {{$schedule->requests->first()->desc}}
+                                 {{$schedule->requests->first()->desc ?? ''}}
                               </td>
                               <td>
                                  
-                                 <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
+                                 <span>{{$schedule->requests->first()->origin->code ?? ''}} - {{$schedule->requests->first()->destination->code ?? ''}}</span>
                               </td>
                               @else
                               <td></td>

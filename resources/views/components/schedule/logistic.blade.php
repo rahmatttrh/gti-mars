@@ -90,7 +90,10 @@
                
             </td>
             <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
-            <td class="">{{$item->mtd}}</td>
+            <td class="">
+               -
+               {{-- {{$item->mtd}} --}}
+            </td>
             
             <td class=" text-truncate ">
             {{$item->description}}
