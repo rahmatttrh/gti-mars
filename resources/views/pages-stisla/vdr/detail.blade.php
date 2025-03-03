@@ -157,13 +157,14 @@
 
                         <a href="{{route('vdr.release', enkripRambo($vdr->id))}}" class="btn btn-block btn-info border shadow-none">Release</a>
                         <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
-                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval</a>
+                        
                      @endif
                   @endif
                   @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
                   {{-- <div class="btn-group mr-2"> --}}
                      <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
                      <a href="" class="btn btn-danger btn-block " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval</a>
                      <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
                   {{-- </div> --}}
                   
