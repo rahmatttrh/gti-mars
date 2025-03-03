@@ -14,7 +14,7 @@
 
 
 <div class="row"> 
-   <div class="col-md-7">
+   <div class="col-md-6">
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item">
             <a class="nav-link active"  id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Validation</a>
@@ -111,7 +111,7 @@
       
       
    </div>
-   <div class="col-md-5">
+   <div class="col-md-6">
       {{-- <div class="card border">
          <div class="card-body p-2"> --}}
             {{-- <b>Tracking</b> --}}
@@ -120,9 +120,11 @@
                <table class="table table-sm border " id="table-12">
                   <thead>
                      <tr>
+                        <th>Schedule</th>
                         <th>BCM</th>
                         <th>MTD</th>
                         <th>Desc</th>
+
                         {{-- <th>Weight</th> --}}
                         {{-- <th>Qty</th> --}}
                         <th>Status</th>
@@ -131,6 +133,7 @@
                   <tbody>
                      @foreach ($items as $item)
                            <tr class="border">
+                              <td> <a href="{{route('schedule.detail', enkripRambo($item->schedule_id))}}">{{$item->schedule->vessel->name}}</a> </td>
                            <td>{{$item->cargo->code ?? '-'}}</td>
                            <td>{{$item->mtd}}</td>
                            <td>{{$item->description}}</td>

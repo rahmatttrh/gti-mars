@@ -27,6 +27,7 @@ class CargoItemController extends Controller
       $request = ModelsRequest::find($r->requestId);
       $user = User::find($request->user_id);
       $port = Port::where('email', $user->email)->first();
+      // dd($port->region);
       $cargoItem = CargoItem::orderBy("created_at", "desc")->first();
 
       // dd($request->)
@@ -34,13 +35,23 @@ class CargoItemController extends Controller
       if ($port) {
          $mtdThis = $port->mtd;
       } else {
-         $mtdThis = '011';
+         $mtdThis = '1';
       }
 
       if (isset($cargoItem)) {
          $mtd = $mtdThis . ($cargoItem->id + 1);
       } else {
          $mtd =  $mtdThis  . 1;
+      }
+
+      if ($port->region == 'SBU') {
+         $mtd = 'S' . $mtd;
+      } elseif($port->region == 'CBU'){
+         $mtd = 'C' . $mtd;
+      } elseif($port->region == 'NBU'){
+         $mtd = 'N' . $mtd;
+      } else {
+         $mtd = '0' . $mtd;
       }
 
       
@@ -57,6 +68,7 @@ class CargoItemController extends Controller
          'contract' => $r->contract,
          'description' => $r->desc,
          'qty' => $r->qty,
+         'qty_package' => $r->qty_package,
          'unit' => $r->unit,
          'size' => $r->size,
          'weight' => $r->weight,

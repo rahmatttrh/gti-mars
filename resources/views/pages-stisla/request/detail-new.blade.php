@@ -315,165 +315,16 @@
                            <a class="nav-link {{$request->activity_id == 2 ? 'active' : ''}}" id="passenger-tab" data-toggle="tab" href="#passenger" role="tab" aria-controls="passenger" aria-selected="false">Passenger </a>
                         </li>
                         @endif
+
+                        <li class="nav-item">
+                           <a class="nav-link " id="form-tab" data-toggle="tab" href="#form" role="tab" aria-controls="form" aria-selected="false">Form </a>
+                        </li>
                         
                         
                      </ul>
                      <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade {{$request->activity_id == 1 ? 'show active' : ''}}" id="cargo" role="tabpanel" aria-labelledby="cargo-tab">
-                           @if ($request->status == 0)
-                           <form action="{{route('cargo.item.store')}}" method="POST">
-                              @csrf
-                              <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
-                              <div class="form-row">
-                                 <div class="form-group col-md-7">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Desc</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="desc" name="desc" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-2">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">QTY</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="qty" name="qty" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Unit</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="unit" name="unit" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Weight</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="weight" name="weight" >
-                                    </div>
-                                 </div>
-
-
-                                 {{-- <div class="form-group col-md-4">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">MTD</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="mtd" name="mtd" >
-                                    </div>
-                                 </div> --}}
-                                 
-                                 <div class="form-group col-md-7">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">PO</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="contract" name="contract" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-2">
-                                    <button type="submit" class="btn btn-info btn-block">Add</button>
-                                 </div>
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">MTD</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">Material Name</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div>
-                                 <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">PO/Contract</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                              </div>
-                              <div class="form-row">
-                                 
-                                 
-                                 
-                              </div>
-                           </form>
-                           @endif
-
-                           @if (auth()->user()->hasRole('marine'))
-                           <form action="{{route('cargo.item.store')}}" method="POST">
-                              @csrf
-                              <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
-                              <div class="form-row">
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">MTD</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="mtd" name="mtd" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-5">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Desc</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="desc" name="desc" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-4">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">PO</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="contract" name="contract" >
-                                    </div>
-                                 </div>
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">MTD</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                                 {{-- <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">Material Name</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div>
-                                 <div class="form-group col-md-4 mtd">
-                                    <label for="file-cargo">PO/Contract</label>
-                                    <input class="form-control " id="mtd" type="text" name="mtd">
-                                 </div> --}}
-                              </div>
-                              <div class="form-row">
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">QTY</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="qty" name="qty" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Unit</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="unit" name="unit" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <div class="input-group">
-                                      <div class="input-group-prepend">
-                                        <div class="input-group-text">Weight</div>
-                                      </div>
-                                      <input type="text" class="form-control" id="weight" name="weight" >
-                                    </div>
-                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <button type="submit" class="btn btn-info btn-block">Add</button>
-                                 </div>
-                                 
-                              </div>
-                           </form>
-                           @endif
+                           
       
                            <div class="table-responsive">
                               <table class="" id="">
@@ -484,9 +335,9 @@
                                     <th>MTD</th>
                                     {{-- <th>Destination</th> --}}
                                     <th>Descriptive</th>
-                                    <th>Contract</th>
+                                    <th>Contract/PO</th>
                                     <th class="text-center">Qty</th>
-                                    <th class="text-center">Unit</th>
+                                    {{-- <th class="text-center">Unit</th> --}}
                                     <th class="text-center">Weight</th>
                                     
                                     <th></th>
@@ -500,18 +351,20 @@
                                         <tr>
 
                                           <td>
-                                             @if ($cargo->status == 0)
+                                             {{-- @if ($cargo->status == 0)
                                                 -
                                                  @else
                                                  {{$cargo->mtd ?? '-'}}
-                                             @endif
+                                             @endif --}}
+
+                                             {{$cargo->mtd ?? '-'}}
                                              
                                           </td>
                                           <td>{{$cargo->description}}</td>
                                           <td>{{$cargo->contract ?? '-'}}</td>
-                                          <td class="text-center">{{$cargo->qty}}</td>
-                                          <td class="text-center">{{$cargo->unit}}</td>
-                                          <td class="text-center">{{$cargo->weight}}</td>
+                                          <td class="text-center">{{$cargo->qty}} {{$cargo->unit}} ({{$cargo->qty_package}})</td>
+                                          {{-- <td class="text-center">{{$cargo->unit}}</td> --}}
+                                          <td class="text-center">{{$cargo->weight ?? '-'}}</td>
                                           <td>
                                              @if ($request->status == 0)
                                              {{-- <a href="">Edit</a> | --}}
@@ -528,7 +381,7 @@
                                         </tr>
                                     @endforeach
                                     <tr>
-                                       <td colspan="5" class="text-right pr-2">Total Weight</td>
+                                       <td colspan="4" class="text-right pr-2">Total Weight</td>
                                        <td colspan="" class="text-center">{{$request->total_weight}}</td>
                                        <td></td>
                                     </tr>
@@ -735,6 +588,200 @@
                                  </tbody>
                               </table>
                            </div>
+                        </div>
+
+
+                        <div class="tab-pane fade " id="form" role="tabpanel" aria-labelledby="form-tab">
+                           @if ($request->status == 0)
+                              {{-- <h1>OK</h1> --}}
+                              <form action="{{route('cargo.item.store')}}" method="POST">
+                                 @csrf
+                                 <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
+                                 <div class="row">
+                                    <div class="col-md-6">
+                                       <div class="form-group">
+                                          <label for="desc">Material Name</label>
+                                          <input type="text" class="form-control" id="desc" name="desc">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="contract">PO/Contract</label>
+                                          <input type="text" class="form-control" id="contract" name="contract">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="remark">Remark</label>
+                                          <input type="text" class="form-control" id="remark" name="remark">
+                                       </div>
+
+                                       <hr>
+                                       <button type="submit" class="btn btn-info ">Add</button>
+                                    </div>
+                                    <div class="col-md-6">
+                                       <div class="row">
+                                          <div class="col">
+                                             <div class="form-group">
+                                                <label for="qty">Qty</label>
+                                                <input type="text" class="form-control" id="qty" name="qty">
+                                             </div>
+                                             <div class="form-group">
+                                                <label for="qty_package">Satuan Package</label>
+                                                <input type="text" class="form-control" id="qty_package" name="qty_package">
+                                             </div>
+                                          </div>
+                                          <div class="col">
+                                             <div class="form-group">
+                                                <label for="unit">Unit</label>
+                                                <input type="text" class="form-control" id="unit" name="unit">
+                                             </div>
+                                             <div class="form-group">
+                                                <label for="weight">Weight</label>
+                                                <input type="text" class="form-control" id="weight" name="weight">
+                                             </div>
+                                          </div>
+                                       </div>
+                                       
+                                    </div>
+                                 </div>
+                                 {{-- <hr> --}}
+                                 
+
+                                 {{-- <hr>
+                                 <div class="form-row">
+                                    <div class="form-group col-md-7">
+                                       <div class="input-group">
+                                          <div class="input-group-prepend">
+                                             <div class="input-group-text">Desc</div>
+                                          </div>
+                                          <input type="text" class="form-control" id="desc" name="desc" >
+                                       </div>
+                                       <div class="input-group mt-3">
+                                          <div class="input-group-prepend">
+                                             <div class="input-group-text">PO</div>
+                                          </div>
+                                          <input type="text" class="form-control" id="contract" name="contract" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                       <div class="input-group">
+                                          <div class="input-group-prepend">
+                                             <div class="input-group-text">QTY</div>
+                                          </div>
+                                          <input type="text" class="form-control" id="qty" name="qty" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                          <div class="input-group-prepend">
+                                             <div class="input-group-text">Unit</div>
+                                          </div>
+                                          <input type="text" class="form-control" id="unit" name="unit" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                          <div class="input-group-prepend">
+                                             <div class="input-group-text">Weight</div>
+                                          </div>
+                                          <input type="text" class="form-control" id="weight" name="weight" >
+                                       </div>
+                                    </div>
+
+
+                                    <div class="form-group col-md-4">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">MTD</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="mtd" name="mtd" >
+                                       </div>
+                                    </div>
+                                    
+                                    <div class="form-group col-md-7">
+                                      
+                                    </div>
+                                    <div class="form-group col-md-2">
+                                       <button type="submit" class="btn btn-info btn-block">Add</button>
+                                    </div>
+                                    <div class="form-group col-md-4 mtd">
+                                       <label for="file-cargo">MTD</label>
+                                       <input class="form-control " id="mtd" type="text" name="mtd">
+                                    </div>
+                                    <div class="form-group col-md-4 mtd">
+                                       <label for="file-cargo">Material Name</label>
+                                       <input class="form-control " id="mtd" type="text" name="mtd">
+                                    </div>
+                                    <div class="form-group col-md-4 mtd">
+                                       <label for="file-cargo">PO/Contract</label>
+                                       <input class="form-control " id="mtd" type="text" name="mtd">
+                                    </div>
+                                 </div> --}}
+                                 
+                              </form>
+                           @endif
+
+                           {{-- @if (auth()->user()->hasRole('marine'))
+                              <form action="{{route('cargo.item.store')}}" method="POST">
+                                 @csrf
+                                 <input type="text" id="requestId" name="requestId" value="{{$request->id}}" hidden>
+                                 <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">MTD</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="mtd" name="mtd" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-5">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">Desc</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="desc" name="desc" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-4">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">PO</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="contract" name="contract" >
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-row">
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">QTY</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="qty" name="qty" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">Unit</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="unit" name="unit" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                       <div class="input-group">
+                                       <div class="input-group-prepend">
+                                          <div class="input-group-text">Weight</div>
+                                       </div>
+                                       <input type="text" class="form-control" id="weight" name="weight" >
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                       <button type="submit" class="btn btn-info btn-block">Add</button>
+                                    </div>
+                                    
+                                 </div>
+                              </form>
+                           @endif --}}
+      
+                           
                         </div>
                      </div>
                      

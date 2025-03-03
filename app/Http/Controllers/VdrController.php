@@ -231,6 +231,9 @@ class VdrController extends Controller
          'location_midnight' => 'required'
       ]);
 
+
+
+
       // dd($req);
       $cek = Vdr::where('vessel_id', $req->vessel_id)->where('date', $req->date)->first();
 
@@ -238,6 +241,15 @@ class VdrController extends Controller
          # code...
          return redirect()->back()->with('warning', 'VDR gagal Disimpan, karena sudah ada pada hari ini!');
       }
+
+      $lastVdr = Vdr::where('vessel_id', $req->vessel_id)->orderBy('date', 'desc')->first();
+      $lastVdrWeathers =  VdrWeather::where('vdr_id', $lastVdr->id)->get();
+      $lastVdrHses = VdrHse::where('vdr_id', $lastVdr->id)->get();
+      // dd($lastVdr->id);
+      $lastVdrOperatings = VdrOperating::where('vdr_id', $lastVdr->id)->get();
+      $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
+
+      // dd($lastVdr->date);
 
       DB::beginTransaction();
 
@@ -251,6 +263,12 @@ class VdrController extends Controller
                'crew_max' => $req->max,
                'location_midnight' => $req->location_midnight,
                'created_by' => $req->created_by,
+               'contract' => $lastVdr->contract,
+               'contract_start' => $lastVdr->contract_start,
+               'contract_end' => $lastVdr->contract_end,
+               'owner' => $lastVdr->owner,
+               'master' => $lastVdr->master,
+               'ce' => $lastVdr->ce,
                'status' => 0
          ]);
 
@@ -297,9 +315,29 @@ class VdrController extends Controller
                      'created_at' => NOW(),
                      'updated_at' => NOW()
                   ]);
+                  
                }
          }
+         $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+         if (count($lastVdrWeathers) > 0) {
+            foreach($vdrWeathers as $vdrWeather){
+               foreach($lastVdrWeathers as $lastWeather){
+                  if ($lastWeather->heading_id == $vdrWeather->heading_id) {
+                     $vdrWeather->update([
+                        't_0006' => $lastWeather->t_0006,
+                        't_0612' => $lastWeather->t_0612,
+                        't_1218' => $lastWeather->t_1218,
+                        't_1824' => $lastWeather->t_1824,
+                     ]);
+                  }
+               }
+            }
+         }
+         
 
+
+
+         // HSE
          $hseHeadings = VdrHseHeader::get();
          foreach ($hseHeadings as $key => $heading) {
                # code...
@@ -308,8 +346,7 @@ class VdrController extends Controller
                   ->first();
 
                if (!$vdrHse) {
-                  # code...
-                  $createVdrWeather = VdrHse::create([
+                  $createVdrHse = VdrHse::create([
                      'vdr_id' => $vdr->id,
                      'header_id' => $heading->id,
                      'created_at' => NOW(),
@@ -317,6 +354,28 @@ class VdrController extends Controller
                   ]);
                }
          }
+         $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
+         // Generate value hse from last VDR
+         if (count($lastVdrHses) > 0) {
+            // dd('oke');
+            foreach($vdrHses as $vdrHse){
+               // dd($vdrHse->id);
+               foreach($lastVdrHses as $lastHse){
+                  if ($lastHse->header_id == $vdrHse->header_id) {
+                     // dd( $lastHse->heading_id);
+                     $vdrHse->update([
+                        'previous' => $lastHse->previous,
+                        'today' => $lastHse->today,
+                     ]);
+                  }
+               }
+            }
+         }
+
+        
+         
+
+
 
          $engineHeadings = VdrEngineHeading::get();
          foreach ($engineHeadings as $key => $heading) {
@@ -353,6 +412,37 @@ class VdrController extends Controller
                   ]);
                }
          }
+         $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+         if (count($lastVdrOperatings) > 0) {
+            foreach($vdrOperatings as $vdrOperating){
+               foreach($lastVdrOperatings as $lastOperating){
+                  if ($lastOperating->heading_id == $vdrOperating->heading_id) {
+                     $vdrOperating->update([
+                        'speed' => $lastOperating->speed,
+                        'contractual_fuel' => $lastOperating->contractual_fuel,
+                        // 'daily' => $lastOperating->daily,
+                     ]);
+                  }
+               }
+            }
+         }
+
+
+
+         foreach($lastVdrCrews as $lastCrew){
+            $createVdrCrew = VdrCrew::create([
+               'vdr_id' => $vdr->id,
+               'is_crew' => $lastCrew->is_crew,
+               'name' => $lastCrew->name,
+               'rank' => $lastCrew->rank,
+               'company' => $lastCrew->company,
+               'created_at' => NOW(),
+               'updated_at' => NOW()
+            ]);
+         }
+         
+
+
 
 
          // Jika semuanya berhasil, kita commit transaksi
@@ -424,7 +514,14 @@ class VdrController extends Controller
          $updateVdr = $vdr->update([
                'crew_onduty' => $req->onduty,
                'crew_max' => $req->max,
-               'location_midnight' => $req->location_midnight
+               'location_midnight' => $req->location_midnight,
+               'contract' => $req->contract,
+               'contract_start' => $req->contract_start,
+               'contract_end' => $req->contract_end,
+               'owner' => $req->owner,
+               'master' => $req->master,
+               'ce' => $req->ce
+
          ]);
 
 
@@ -442,6 +539,21 @@ class VdrController extends Controller
          // Handle atau laporkan kesalahan
          // return response()->json(['message' => 'Failed to create order'], 500);
       }
+   }
+
+   public function updateApproval(Request $req){
+      $vdr = Vdr::find($req->id);
+
+      $vdr->update([
+         'title1' => $req->title1,
+         'name1' => $req->name1,
+         'title2' => $req->title2,
+         'name2' => $req->name2,
+         'title3' => $req->title3,
+         'name3' => $req->name3,
+      ]);
+
+      return back()->with('success', 'VDR data successfully updated.');
    }
 
    public function hitungTime($cumValue, $currentValue)
@@ -1022,7 +1134,7 @@ class VdrController extends Controller
                   'remarks' => $req->remarks[$key]
                ]);
 
-               if ($cargo->heading_id == 2) {
+               if ($cargo->heading_id == 2 || $cargo->heading_id == 1) {
                   $actualWater = ($cargo->opening + $cargo->received) - ($cargo->transferred + $cargo->closing);
                   $cargo->update([
                      'consumption' => $actualWater

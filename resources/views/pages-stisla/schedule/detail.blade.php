@@ -19,6 +19,10 @@
                <x-schedule-stisla.action-department :schedule="$schedule" />
             @endif
 
+            @if (auth()->user()->hasRole('admin-logistic'))
+               <a href="" class="btn btn-primary btn-block mb-2" >Send to Marine</a>
+            @endif
+
             {{-- @if (auth()->user()->hasRole('admin-logistic') && $schedule->status == 0)
             <button class="btn btn-info btn-block mb-2" data-toggle="modal" data-target="#schedule-send">
                Send
@@ -389,6 +393,30 @@
    </div>
 </section>
 
+<div class="modal fade" id="modal-undo-mtd" tabindex="-1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog modal-sm" role="document">
+      <form action="{{route('schedule.vessel.complete')}}" method="POST" enctype="multipart/form-data">
+      @csrf
+      @method('PUT')
+      {{-- <input type="number" name="schedule" id="schedule" value="{{$schedule->id}}" hidden> --}}
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Undo MTD</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </div>
+         <div class="modal-body">
+            <span>Undo  MTD from this Sailing Order?</span>
+         </div>
+         <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-info">Undo</button>
+         </div>
+      </div>
+      </form>
+   </div>
+</div>
 
    
    <div class="modal fade" id="schedule-vessel-complete" tabindex="-1" role="dialog" aria-hidden="true">

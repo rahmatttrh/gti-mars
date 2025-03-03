@@ -94,7 +94,7 @@
 </div>
 
 <div class="modal fade" id="modalEdit" tabindex="1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
+   <div class="modal-dialog" role="document">
       <form action="{{route('vdr.update')}}" method="POST" enctype="multipart/form-data">
          @csrf
          @method('PUT')
@@ -131,7 +131,7 @@
                </div>
 
                <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-8">
                      <div class="form-group">
                         <label for="contract">Contract No.</label>
                         <input class="form-control" id="contract" name="contract" type="text" value="{{$vdr->contract}}">
@@ -140,32 +140,15 @@
                         @enderror
                      </div>
                   </div>
-                  <div class="col-md-3">
+                  <div class="col-md-4">
                      <div class="form-group">
-                        <label for="contract_start">Contract Start</label>
-                        <input class="form-control" id="contract_start" name="contract_start" required type="date" value="{{$vdr->contract_start }}" >
-                        @error('contract_start')
+                        <label for="contract_date">Contract Period</label>
+                        <input class="form-control" id="contract_date" name="contract_date" required type="date" value="{{$vdr->contract_date }}" >
+                        @error('contract_date')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
                      </div>
                   </div>
-                  <div class="col-md-3">
-                     <div class="form-group">
-                        <label for="contract_end">Contract End</label>
-                        <input class="form-control" id="contract_end" name="contract_end" required type="date" value="{{$vdr->contract_end }}" >
-                        @error('contract_end')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-               </div>
-
-               <div class="form-group">
-                  <label for="owner">Owner</label>
-                  <input class="form-control" id="owner" name="owner" type="text" value="{{$vdr->owner}}">
-                  @error('owner')
-                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                  @enderror
                </div>
 
                <div class="row">
@@ -220,129 +203,6 @@
                      </div>
                   </div>
                </div>
-               
-               
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-primary">Update</button>
-            </div>
-         </div>
-      </form>
-   </div>
-</div>
-
-
-<div class="modal fade" id="modalEditApproval" tabindex="1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog modal-lg" role="document">
-      <form action="{{route('vdr.update.approval')}}" method="POST" enctype="multipart/form-data">
-         @csrf
-         @method('PUT')
-         <input type="hidden" name="id" value="{{$vdr->id}}" id="">
-         <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
-         <input type="hidden" name="created_by" value="{{$user->name}}">
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">Form Edit VDR Approval</h5>
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-               
-
-               {{-- <div class="badge badge-info">Approval 1</div> --}}
-               <div class="row mb-2">
-                  <div class="col-md-2">
-                     
-                     <div class="form-group">
-                        <label for="level1">Level </label>
-                        <input class="form-control" id="level1" name="level1" type="text" value="1" readonly >
-                        
-                     </div>
-                  </div>
-                  <div class="col-md-4">
-                     
-                     <div class="form-group">
-                        <label for="title1">Title </label>
-                        <input class="form-control" id="title1" name="title1" type="text" value="{{$vdr->title1}}" >
-                        @error('title1')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label for="name1">Name </label>
-                        <input class="form-control" id="name1" name="name1" type="text" value="{{$vdr->name1}}" >
-                        @error('name1')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-               </div>
-
-               {{-- <div class="badge badge-info">Approval 2</div> --}}
-               <div class="row mb-2">
-                  <div class="col-md-2">
-                     
-                     <div class="form-group">
-                        <label for="level2">Level </label>
-                        <input class="form-control" id="level2" name="level2" type="text" value="2" readonly >
-                        
-                     </div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="form-group">
-                        <label for="title2">Title </label>
-                        <input class="form-control" id="title2" name="title2" type="text" value="{{$vdr->title2}}" >
-                        @error('title2')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label for="name2">Name </label>
-                        <input class="form-control" id="name2" name="name2" type="text" value="{{$vdr->name2}}" >
-                        @error('name2')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-               </div>
-
-               {{-- <div class="badge badge-info">Approval 3</div> --}}
-               <div class="row">
-                  <div class="col-md-2">
-                     
-                     <div class="form-group">
-                        <label for="level3">Level </label>
-                        <input class="form-control" id="level3" name="level3" type="text" value="3" readonly >
-                        
-                     </div>
-                  </div>
-                  <div class="col-md-4">
-                     <div class="form-group">
-                        <label for="title3">Title </label>
-                        <input class="form-control" id="title3" name="title3" type="text" value="{{$vdr->title3}}" >
-                        @error('title3')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="form-group">
-                        <label for="name3">Name </label>
-                        <input class="form-control" id="name3" name="name3" type="text" value="{{$vdr->name3}}" >
-                        @error('name3')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div>
-               </div>
-               <hr>
-
                
                
             </div>

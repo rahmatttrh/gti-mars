@@ -13,15 +13,16 @@ class VdrPeriodicController extends Controller
       // dd('ok');
       $req->validate([
          'activity' => 'required',
-         'rob_time' => 'required',
-         'rob_value' => 'required',
-         'rob_actual' => 'required'
+         // 'rob_time' => 'required',
+         // 'rob_value' => 'required',
+         // 'rob_actual' => 'required'
       ]);
       $vdr = Vdr::find($req->vdr_id);
       $periodic = VdrPeriodic::find($req->periodic);
       $rob_diff = $req->rob_actual - $req->rob_value;
       // dd($req->rob_value);
 
+      
       $periodic->update([
          'activity' => $req->activity,
          'rob_time' => $req->rob_time,

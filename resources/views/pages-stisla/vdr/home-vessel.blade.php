@@ -176,8 +176,8 @@
          {{-- FORM CREATE VDR --}}
          <div class="row">
             <div class="col-md-4">
-               <div class="card shadow-sm border">
-                  <div class="card-header">Form Create VDR</div>
+               <div class="card shadow-none border">
+                  <div class="card-header"><b>Form Create VDR</b></div>
                   <div class="card-body">
                      <form action="{{route('vdr.store')}}" method="POST" class="inline-form">
                         @csrf
@@ -220,21 +220,21 @@
                         <div class="form-row">
                            <div class="form-group col-md-6">
                               <label for="onduty">Number of Crew</label>
-                              <input class="form-control" id="onduty" name="onduty" type="number" value="1" >
+                              <input class="form-control" id="onduty" name="onduty" type="number" value="10" >
                               @error('onduty')
                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                               @enderror
                            </div>
                            <div class="form-group col-md-6">
-                              <label for="max">Max</label>
-                              <input class="form-control" id="max" name="max" type="text" value="20" >
+                              <label for="max">Pax</label>
+                              <input class="form-control" id="max" name="max" type="text" value="0" >
                               @error('max')
                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                               @enderror
                            </div>
                         </div>
    
-                        <button type="submit" class="btn btn-info">Submit</button>
+                        <button type="submit" class="btn btn-info">Create</button>
                      </form>
                   </div>
                </div>

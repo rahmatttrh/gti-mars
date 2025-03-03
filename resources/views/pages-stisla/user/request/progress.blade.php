@@ -73,11 +73,12 @@
                               {{-- <td>{{formatDateTime($request->created_at)}}</td> --}}
                               <td>
                                  {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
-                                    @if ($request->status < 3)
+                                    {{-- @if ($request->status < 3)
                                        <x-status-stisla.request :request="$request" :lastreport="null"/>
                                        @else
                                        <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                                    @endif
+                                    @endif --}}
+                                    <div class="badge badge-info">Waiting Vessel</div>
                               </td>
                               {{-- <td>
                               <a href="{{route('request.detail', enkripRambo($request->id))}}" class="btn btn-sm btn-primary">Detail</a>
@@ -129,11 +130,11 @@
                               
                               <td>
                                  {{-- <x-status.request :request="$request" :lastreport="$request->schedule->lastreport()" /> --}}
-                                    @if ($request->status < 3)
+                                    {{-- @if ($request->status < 3)
                                        <x-status-stisla.request :request="$request" :lastreport="null"/>
                                        @else
                                        <x-status-stisla.request :request="$request" :lastreport="$request->schedule->lastreport()"/>
-                                    @endif
+                                    @endif --}}
                               </td>
                            </tr>
                         @endforeach

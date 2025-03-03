@@ -399,48 +399,7 @@ class HomeController extends Controller
 
    public function index(){
 
-
       // dd('ok');
-      // $parakan = User::where('username', 'parakan')->first();
-      // $parakan->assignRole('vessel');
-
-      // $harrier = User::where('username', 'harrier')->first();
-      // $harrier->assignRole('vessel');
-
-      
-      // $ports = Port::get();
-      // foreach($ports as $port){
-      //    $mm = MaterialMan::create([
-      //       'port_id' => $port->id,
-      //       'name' => 'Material Man ' . $port->name,
-      //       'email' => 'mm_' . $port->email,
-      //    ]);
-
-      //    $user = User::where('email', $port->email)->first();
-
-      //    // dd($user);
-         
-      //    if ($user) {
-      //       $mmUser = User::create([
-      //          'name' => $mm->name,
-      //          'username' => 'mm_' . $user->username ?? '',
-      //          'email' => $mm->email,
-      //          'password' => Hash::make('12345678')
-      //       ]);
-   
-      //       $mmUser->assignRole('mm');
-      //    }
-         
-      // }
-
-      // $users = User::get();
-      // foreach($users as $user){
-      //    $user->update([
-      //       'password' => Hash::make('oses@2025'),
-      //    ]);
-      // }
-
-      
       $today = Carbon::now();
       $docs = Document::get();
       foreach ($docs as $doc) {
@@ -459,10 +418,55 @@ class HomeController extends Controller
             ]);
          }
       }
+
+
+      $debug = Carbon::make(1,10);
+      // dd(gmdate('H:i:s', 1.10 * 3600 ));
+      // $value = 15.45;
+      // $array = explode('.', $value);
+      // $hours = floor($value);
+      // $minutes = intval($array[1]);
+
+      
+
+      // dd($hours . ':' . $minutes);
+      
+      
+      // dd($array[1]);
+      // $seconds = ($value * 3600);
+      
+      // $minutes = floor($seconds / 60);
+      // dd($hours  . ':' . $minutes);
+
+
+      // $vessels = Vessel::get();
+      // foreach($vessels as $vessel){
+      //    $user = User::create([
+      //       'name' => $vessel->name . ' Office',
+      //       'username' => $vessel->username . '_office',
+      //       'email' => 'office_'.$vessel->email,
+      //       'password' => Hash::make('oses@2025'),
+      //       'type' => 'office',
+      //       'vessel_id' => $vessel->id
+      //    ]);
+      //    $user->assignRole('vessel');
+      // }
       
       if (auth()->user()->hasRole('vessel')) {
+         
+         
+
+         // $users = User::where('type', 'office')->get();
+         // foreach($users as $user){
+         //    $user->assignRole('vessel');
+         // }
+
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
+         if ($currentVessel == null) {
+            
+            $currentVessel = Vessel::find(auth()->user()->vessel_id);
+         }
          
          // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
          $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->get();
