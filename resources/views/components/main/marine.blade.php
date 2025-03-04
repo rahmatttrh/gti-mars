@@ -1,5 +1,5 @@
 <style>
-   /* table {
+   table {
       width: 100%;
    }
 
@@ -9,37 +9,87 @@
    }
    th, td {
       padding-left: 5px
-   } */
+   }
 
    
 </style>
+
+
    <div class="row"> 
       <div class="col-md-6">
-         <table class="border">
-            <thead>
-               <tr>
-                  <th>Vessel</th>
-                  <th>Code</th>
-                  <th>Date</th>
-                  <th>Status</th>
-               </tr>
-            </thead>
+         <div class="row">
+            <div class="col-md-6">
+               <div class="card card-statistic-1 border">
+                  <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-primary">
+                    <i class="far fa-user"></i>
+                  </div>
+                  <div class="card-wrap">
+                    <div class="card-header">
+                     
+                      <h4>VDR Validation</h4>
+                    </div>
+                    <div class="card-body">
+                      {{count($vdrvalids)}}
+                    </div>
+                  </div>
+               </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+               <div class="card card-statistic-1 border">
+                  <a href="{{route('marine.request.list')}}">
+                     <div class="card-icon bg-info">
+                     <i class="far fa-user"></i>
+                     </div>
+                     <div class="card-wrap">
+                     <div class="card-header">
+                        <h4>Cargo Validation</h4>
+                     </div>
+                     <div class="card-body">
+                        {{count($cargovalids)}}
+                     </div>
+                     </div>
+                  </a>
+                </div>
+            </div>
+         </div>
+         {{-- <span class="btn btn-light border">Sailing Order</span> --}}
+         <table class="display  border">
             <tbody>
-               @foreach ($schedules as $sche)
-                   <tr class="border">
-                     <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
-                     <td>{{$sche->code}}</td>
-                     <td>{{formatDate($sche->date)}}</td>
-                     <td>
-                        <x-status-stisla.schedule-plain :schedule="$sche"/>
-                     </td>
-                   </tr>
-               @endforeach
+               <tr>
+                  <th>Sailing Order</th>
+               </tr>
             </tbody>
          </table>
+         <div class="table-responsive overflow-auto" style="height: 120px">
+            <table class="display  border">
+               
+               <thead>
+                  
+                  <tr>
+                     <th>Vessel</th>
+                     <th>Code</th>
+                     <th>Date</th>
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach ($schedules->where('status', '>', 0) as $sche)
+                     <tr class="border" style="border: 1px black">
+                        <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
+                        <td>{{$sche->code}}</td>
+                        <td>{{formatDate($sche->date)}}</td>
+                        <td>
+                           <x-status-stisla.schedule-plain :schedule="$sche"/>
+                        </td>
+                     </tr>
+                  @endforeach
+               </tbody>
+            </table>
+         </div>
          <hr>
-         {{ $schedules->links() }}
-         <hr>
+         
          @if ($itemrejects)
             <table>
                <tbody>
@@ -66,7 +116,7 @@
       </div>
       <div class="col-md-6">
          
-         <table class="border"  id="table-5" >
+         <table class="border display table-sm"  id="table-5" >
             <thead>
                <tr>
                   <th>BCM</th>

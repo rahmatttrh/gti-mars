@@ -37,7 +37,6 @@ class DocumentController extends Controller
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
-      $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
       $ops = VdrOperating::where('vdr_id', $vdr->id)->get() ;
@@ -67,6 +66,7 @@ class DocumentController extends Controller
             $debugHours += 1;
          }
       }
+
       return view('pages.document.vdr', [
          'vdr' => $vdr,
          'vessel' => $vdr->vessel,
@@ -76,7 +76,7 @@ class DocumentController extends Controller
          'vdrWheathers' => $vdrWheathers,
          'hses' => $hses,
          'operatings' => $operatings,
-         'totaljam' => $debugHours . ':' . $debugMinutes,
+         'totaljam' => $debugHours . ':'. $debugMinutes,
          'totaldaily' => $totalDaily
       ]);
    }

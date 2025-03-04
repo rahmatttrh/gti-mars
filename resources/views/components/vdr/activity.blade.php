@@ -42,16 +42,16 @@
         @endphp
         @foreach ($activities as $activity)
         <tr>
-            <td class="text-info">{{substr($activity->start, 0, 5)}}</td>
+            <td class="text-info">{{substr($activity->start, 0, 5)}}  </td>
             <td class="text-danger">{{substr($activity->finish, 0, 5)}}</td>
-            <td>{{floatToTime($activity->high)}}</td>
-            <td>{{floatToTime($activity->normal)}}</td>
-            <td>{{floatToTime($activity->slow)}}</td>
-            <td>{{floatToTime($activity->manu)}}</td>
-            <td>{{floatToTime($activity->idle)}}</td>
-            <td>{{floatToTime($activity->tow)}}</td>
-            <td>{{floatToTime($activity->ah)}}</td>
-            <td>{{floatToTime($activity->sb)}}</td>
+            <td>{{getTotalHours($activity->high)}}</td>
+            <td>{{getTotalHours($activity->normal)}}</td>
+            <td>{{getTotalHours($activity->slow)}}</td>
+            <td>{{getTotalHours($activity->manu)}}</td>
+            <td>{{getTotalHours($activity->idle)}}</td>
+            <td>{{getTotalHours($activity->tow)}}</td>
+            <td>{{getTotalHours($activity->ah)}}</td>
+            <td>{{getTotalHours($activity->sb)}}</td>
             <td>
                {{$activity->activity}}
             </td>
@@ -246,7 +246,7 @@
             <td colspan="2" class="text-center">Total</td>
             @foreach ($operatings as $operating)
             @if($operating->heading->field)
-            <td>{{floatToTime($operating->time)}}</td>
+            <td>{{getTotalHours($operating->time)}}</td>
             @endif
             @endforeach
         </tr>

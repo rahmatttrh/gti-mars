@@ -63,6 +63,13 @@ function floatToTime($floatValue)
 
    // Menambahkan angka 0 di depan jika hanya satu digit
    $hours = sprintf('%02d', floor($floatValue));
+   $finalMinutes = sprintf('%02d', $minutes);
+
+   // if ($minutes < 10) {
+   //    $finalMinutes = '0' . $minutes;
+   // } else {
+   //    $finalMinutes = $minutes;
+   // }
 
    // Format waktu dengan angka nol di depan jika diperlukan
    // $formattedTime = sprintf('%02d:%02d', $hours, $minutes);
@@ -123,4 +130,47 @@ function getRoleName($user){
    }
 
    return $roleName;
+}
+
+
+function getTotalHours($value){
+      
+   $totalHours = '';
+   $debugHours = 0;
+   $debugMinutes = 0;
+  
+   $array = explode('.', $value);
+   $hours = floor($value);
+   $minutes = intval($array[1]);
+   
+   $debugHours += $hours;
+   $debugMinutes += $minutes;
+   // dd($debugHours);
+
+   if ($debugMinutes >= 60) {
+      $minLeft = $debugMinutes - 60;
+      $debugMinutes = $minLeft;
+      $debugHours += 1;
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+      }
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+      }
+   }
+
+   if ($debugMinutes < 10) {
+      $finalMinutes = '0' . $debugMinutes;
+   } else {
+      $finalMinutes = $debugMinutes;
+   }
+   $finalHours  = sprintf('%02d', floor($debugHours));
+
+   $final = $finalHours . ':' . $finalMinutes;
+
+   return $final;
 }

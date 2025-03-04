@@ -25,7 +25,7 @@ class MarineVdrController extends Controller
       // dd($today->month);
       $vessels = Vessel::get();
       // $vessel = Vessel::find(11);
-      $vdrs = Vdr::where('status', '>=', 1)->whereMonth('date', $today->month)->whereYear('date', $today->year)->orderBy('date', 'asc')->get();
+      $vdrs = Vdr::where('status', '>=', 1)->orderBy('status', 'desc')->get();
       // dd($vdrs);
 
       // $operatingHeaders = VdrOperatingHeader::get();

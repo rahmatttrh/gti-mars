@@ -151,5 +151,18 @@ table {
   <script src="{{asset('stisla/js/custom.js')}}"></script>
 
   @stack('chart')
+
+  @if (session('success'))
+         <script>
+               $(document).ready(function() {
+                  iziToast.success({
+                  title: 'Success!',
+                  message: "{{ Session::get('success') }}",
+                  position: 'topRight'
+               });
+                  
+               });
+         </script>
+      @endif
 </body>
 </html>

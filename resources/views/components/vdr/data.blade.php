@@ -24,7 +24,7 @@
                      <!-- </td> -->
                      <td> {{$operating->heading->description}} </td>
                      <td class="text-center align-middle">
-                        {{$operating->time}}
+                        {{getTotalHours($operating->time)}}
                            <input type="text" name="time[]" readonly hidden  value="{{$operating->time}}">
                      </td>
                      <td class="text-center align-middle">
@@ -55,7 +55,7 @@
                   @endforeach
                   <tr>
                      <th>Total Daily</th>
-                     <th>
+                     <th class="text-center">
                            {{$totaljam}}
                      </th>
                      <th colspan="2"></th>
