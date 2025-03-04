@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{{asset('stisla/modules/datatables/datatables.min.css')}}">
    <link rel="stylesheet" href="{{asset('stisla/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
    <link rel="stylesheet" href="{{asset('stisla/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css')}}">
+   <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
   
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
@@ -141,6 +142,10 @@ table {
       <script src="{{asset('stisla/modules/jquery-ui/jquery-ui.min.js')}}"></script>
 
    <script src="{{asset('stisla/js/page/modules-datatables.js')}}"></script>
+   <script src="{{asset('stisla/modules/izitoast/js/iziToast.min.js')}}"></script>
+
+      <!-- Page Specific JS File -->
+      <script src="{{asset('stisla/js/page/modules-toastr.js')}}"></script>
   
 
   <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
@@ -151,5 +156,17 @@ table {
   <script src="{{asset('stisla/js/custom.js')}}"></script>
 
   @stack('chart')
+  @if (session('success'))
+  <script>
+        $(document).ready(function() {
+           iziToast.success({
+           title: 'Success!',
+           message: "{{ Session::get('success') }}",
+           position: 'topRight'
+        });
+           
+        });
+  </script>
+@endif
 </body>
 </html>
