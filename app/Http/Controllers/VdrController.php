@@ -221,6 +221,14 @@ class VdrController extends Controller
             $debugHours += 1;
          }
       }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
  
       // dd('ok');
       return view('pages-stisla.vdr.detail', [
@@ -236,7 +244,7 @@ class VdrController extends Controller
          'engines' => $engines,
          'crews' => $crews,
          'operatings' => $operatings,
-         'totalJam' =>  $debugHours . ':'. $debugMinutes,
+         'totalJam' =>  $final,
          'totalDaily' => $totalDaily,
          'vdrs' => $vdrs
       ])->with('i');
