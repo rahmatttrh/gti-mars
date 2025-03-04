@@ -836,14 +836,22 @@ class VdrController extends Controller
 
          foreach ($operatings as $operating) {
             $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
-            $totalHigh = $activities->sum('high');
+            // $totalHigh = $activities->sum('high');
+            // $totalNormal = $operating->getSumNormal();
+            // $totalSlow = $activities->sum('slow');
+            // $totalManu = $activities->sum('manu');
+            // $totalIdle = $activities->sum('idle');
+            // $totalTow = $activities->sum('tow');
+            // $totalAh = $activities->sum('ah');
+            // $totalSb = $activities->sum('sb');
+            $totalHigh = $operating->getSumHigh();
             $totalNormal = $operating->getSumNormal();
-            $totalSlow = $activities->sum('slow');
-            $totalManu = $activities->sum('manu');
-            $totalIdle = $activities->sum('idle');
-            $totalTow = $activities->sum('tow');
-            $totalAh = $activities->sum('ah');
-            $totalSb = $activities->sum('sb');
+            $totalSlow = $operating->getSumSlow();
+            $totalManu = $operating->getSumManu();
+            $totalIdle = $operating->getSumIdle();
+            $totalTow = $operating->getSumTow();
+            $totalAh = $operating->getSumAh();
+            $totalSb = $operating->getSumSb();
 
             if ($operating->heading_id == 1) {
                $operating->update([
