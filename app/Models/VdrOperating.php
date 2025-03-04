@@ -170,6 +170,13 @@ class VdrOperating extends Model
          }
       }
 
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      // $finalHours  = sprintf('%02d', floor($debugHours));
+
       
    
       $final = $debugHours . '.' . $debugMinutes;
