@@ -837,8 +837,7 @@ class VdrController extends Controller
          foreach ($operatings as $operating) {
             $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
             $totalHigh = $activities->sum('high');
-            $totalHigh = $operating->getSumHigh();
-            $totalNormal = $activities->sum('normal');
+            $totalNormal = $operating->getSumNormal();
             $totalSlow = $activities->sum('slow');
             $totalManu = $activities->sum('manu');
             $totalIdle = $activities->sum('idle');

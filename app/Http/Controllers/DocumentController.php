@@ -67,6 +67,18 @@ class DocumentController extends Controller
          }
       }
 
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+
+
       return view('pages.document.vdr', [
          'vdr' => $vdr,
          'vessel' => $vdr->vessel,
@@ -76,7 +88,7 @@ class DocumentController extends Controller
          'vdrWheathers' => $vdrWheathers,
          'hses' => $hses,
          'operatings' => $operatings,
-         'totaljam' => $debugHours . ':'. $debugMinutes,
+         'totaljam' => $final,
          'totaldaily' => $totalDaily
       ]);
    }

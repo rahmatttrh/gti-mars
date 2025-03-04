@@ -306,23 +306,6 @@ table {
                      @endfor
                   @endif
                   @if (count($vdrActivities) == 1)
-                     @for ($i = 0; $i < 22; $i++)
-                        <tr>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
-                        </tr>
-                     @endfor
-                  @endif
-                  @if (count($vdrActivities) == 2)
                      @for ($i = 0; $i < 21; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -339,7 +322,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 3)
+                  @if (count($vdrActivities) == 2)
                      @for ($i = 0; $i < 20; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -356,7 +339,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 4)
+                  @if (count($vdrActivities) == 3)
                      @for ($i = 0; $i < 19; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -373,7 +356,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 5)
+                  @if (count($vdrActivities) == 4)
                      @for ($i = 0; $i < 18; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -390,7 +373,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 6)
+                  @if (count($vdrActivities) == 5)
                      @for ($i = 0; $i < 17; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -407,7 +390,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 7)
+                  @if (count($vdrActivities) == 6)
                      @for ($i = 0; $i < 16; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -424,7 +407,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 8)
+                  @if (count($vdrActivities) == 7)
                      @for ($i = 0; $i < 15; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -441,7 +424,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 9)
+                  @if (count($vdrActivities) == 8)
                      @for ($i = 0; $i < 14; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -458,7 +441,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 10)
+                  @if (count($vdrActivities) == 9)
                      @for ($i = 0; $i < 13; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -475,7 +458,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 11)
+                  @if (count($vdrActivities) == 10)
                      @for ($i = 0; $i < 12; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -492,7 +475,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 12)
+                  @if (count($vdrActivities) == 11)
                      @for ($i = 0; $i < 11; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -509,7 +492,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 13)
+                  @if (count($vdrActivities) == 12)
                      @for ($i = 0; $i < 10; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -526,7 +509,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 14)
+                  @if (count($vdrActivities) == 13)
                      @for ($i = 0; $i < 9; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -543,7 +526,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 15)
+                  @if (count($vdrActivities) == 14)
                      @for ($i = 0; $i < 8; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -560,7 +543,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 16)
+                  @if (count($vdrActivities) == 15)
                      @for ($i = 0; $i < 7; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -577,7 +560,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 17)
+                  @if (count($vdrActivities) == 16)
                      @for ($i = 0; $i < 6; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -594,7 +577,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 18)
+                  @if (count($vdrActivities) == 17)
                      @for ($i = 0; $i < 5; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -611,7 +594,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 19)
+                  @if (count($vdrActivities) == 18)
                      @for ($i = 0; $i < 4; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -628,7 +611,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 20)
+                  @if (count($vdrActivities) == 19)
                      @for ($i = 0; $i < 3; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -645,7 +628,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 21)
+                  @if (count($vdrActivities) == 20)
                      @for ($i = 0; $i < 2; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -662,7 +645,7 @@ table {
                         </tr>
                      @endfor
                   @endif
-                  @if (count($vdrActivities) == 22)
+                  @if (count($vdrActivities) == 21)
                      @for ($i = 0; $i < 1; $i++)
                         <tr>
                            <td class="bg-yellow"></td>
@@ -679,6 +662,22 @@ table {
                         </tr>
                      @endfor
                   @endif
+                  <tr>
+                     <td class=" text-center" colspan="2">Total</td>
+                     @foreach ($operatings->where('heading_id', '<', 9) as $operating)
+                     
+                     <td class=" text-center">{{getTotalHours($operating->time)}} </td>
+                     @endforeach
+                     
+                     {{-- <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td>
+                     <td class="bg-yellow"></td> --}}
+                     <td class=""></td>
+                  </tr>
                </tbody>
                
             </table>
@@ -717,17 +716,17 @@ table {
                         </td>
                         <td class="text-center bg-yellow">
                            @if($operating->heading->speed == '1')
-                           <small>{{$operating->speed}}</small>
+                           <small>{{$operating->speed ?? '0.00'}}</small>
                            @else
-                           <small>{{$operating->speed}}</small>
+                           <small>{{$operating->speed ?? '0.00'}}</small>
                            @endif
                         </td>
    
                         <td class="text-center bg-yellow">
                               @if($operating->heading->contractual == '1')
-                              <small>{{$operating->contractual_fuel}}</small>
+                              <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @else
-                              <small>{{$operating->contractual_fuel}}</small>
+                              <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @endif
                               L/H
                         </td>
@@ -750,7 +749,7 @@ table {
                      <tr>
                         <td>Total Daily</td>
                         <td class="text-center">
-                              <small>{{$totaljam}}</small>
+                              <small>{{$totaljam ?? '00:00'}}</small>
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
@@ -791,12 +790,12 @@ table {
                            </tr> --}}
                            <tr>
                               <td class="title">Type</td>
-                              <td class="text-truncate text-center title">OPENING</td>
-                              <td class="text-center title">CONSUMPTION</td>
-                              <td class="text-center title">RECEIVED</td>
-                              <td class="text-center title">TRANSFERRED</td>
-                              <td class="text-center title">CLOSING</td>
-                              <td>REMARKS</td>
+                              <td class="text-truncate text-center "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
+                              <td class="text-center "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
+                              <td class="text-center "><b>Received</b></td>
+                              <td class="text-center "><b>Transferred</b></td>
+                              <td class="text-center "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
+                              <td class="text-center "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
                            </tr>
                         </thead>
                         <tbody>
