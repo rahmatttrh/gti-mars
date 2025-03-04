@@ -215,7 +215,7 @@
                   <div class="col-md-4">
                      <div class="form-group">
                         <label for="date">Date</label>
-                        <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" readonly>
+                        <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" >
                         @error('date')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror

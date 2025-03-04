@@ -44,17 +44,17 @@
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="location_midnight">Location (Midnight)</label>
-                                <input type="text" class="form-control" id="location_midnight" name="location_midnight">
+                                <input type="text" class="form-control" required id="location_midnight" name="location_midnight">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                             <label for="onduty">On Duty</label>
-                            <input type="number" class="form-control" id="onduty" name="onduty" >
+                            <input type="number" class="form-control" required id="onduty" name="onduty" >
                             </div>
                             <div class="form-group col-md-6">
                             <label for="max">Pax</label>
-                            <input type="number" class="form-control" id="max" name="max" >
+                            <input type="number" class="form-control" required id="max" name="max" >
                             </div>
                             
                         </div>

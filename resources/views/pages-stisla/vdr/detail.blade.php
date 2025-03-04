@@ -234,9 +234,9 @@
    </div>
 </section>
 
-
-<x-vdr.crew-modal :crews="$crews" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
 <x-vdr.activity-modal :activities="$activities" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
+<x-vdr.crew-modal :crews="$crews" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
+
 
 {{-- Modal Revision Schedule --}}
 <div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
