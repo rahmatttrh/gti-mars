@@ -419,17 +419,11 @@ class HomeController extends Controller
          }
       }
 
-      // $vessels = Vessel::get();
-      // foreach($vessels as $vessel){
-      //    $user = User::create([
-      //       'name' => $vessel->name . ' Office',
-      //       'username' => $vessel->username . '_office',
-      //       'email' => 'office_'.$vessel->email,
-      //       'password' => Hash::make('oses@2025'),
-      //       'type' => 'office',
-      //       'vessel_id' => $vessel->id
+      // $users = User::get();
+      // foreach($users as $u){
+      //    $u->update([
+      //       'password' => Hash::make('oses@2025')
       //    ]);
-      //    $user->assignRole('vessel');
       // }
       if(auth()->user()->hasRole('marine')){
          $vdrValidations = Vdr::where('status', 1)->get();
@@ -1606,7 +1600,7 @@ class HomeController extends Controller
 
    public function vdrMarineTable()
    {
-      $vdrs = Vdr::where('status', '>=', 1)->get();
+      $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
       return view('pages-stisla.marine.vdr.history', [
          'vdrs' => $vdrs
       ])->with('i');

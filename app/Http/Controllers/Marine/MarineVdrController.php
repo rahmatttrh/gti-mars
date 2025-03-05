@@ -25,7 +25,7 @@ class MarineVdrController extends Controller
       // dd($today->month);
       $vessels = Vessel::get();
       // $vessel = Vessel::find(11);
-      $vdrs = Vdr::where('status', '>=', 1)->orderBy('status', 'desc')->get();
+      $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
       // dd($vdrs);
 
       // $operatingHeaders = VdrOperatingHeader::get();
@@ -95,7 +95,7 @@ class MarineVdrController extends Controller
 
 
    public function validation(){
-      $vdrs = Vdr::where('status', 1)->get();
+      $vdrs = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrs
       ])->with('i');

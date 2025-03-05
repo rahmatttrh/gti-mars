@@ -49,7 +49,7 @@ class PortController extends Controller
          'name' => $employee->name,
          'username' => $employee->username,
          'email' => $employee->email,
-         'password' => Hash::make('12345678'),
+         'password' => Hash::make('oses@2025'),
       ]);
       $user->assignRole('department');
 

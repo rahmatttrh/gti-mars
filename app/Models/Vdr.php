@@ -23,12 +23,15 @@ class Vdr extends Model
       return $this->hasMany(VdrTimestamp::class);
    }
 
+
    public function getTotalHours(){
       
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
       $ops = VdrOperating::where('vdr_id', $this->id)->get() ;
+      // VdrOperating::where('vdr_id', $this->id)->sum('time')
+
       foreach($ops as $op){
          $time = $op->time;
          $array = explode('.', $op->time);
@@ -55,9 +58,14 @@ class Vdr extends Model
             $debugHours += 1;
          }
       }
-
-      $final = $debugHours . ':' . $debugMinutes;
-
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+   
+      $final = $finalHours . '.' . $finalMinutes;
       return $final;
    }
 
