@@ -182,10 +182,19 @@
                   @endif
                   @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
                   {{-- <div class="btn-group mr-2"> --}}
-                     <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
-                     <a href="" class="btn btn-danger btn-block " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval</a>
-                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
+                     <div class="btn btn-block btn-group p-0">
+                        <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
+                        <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     </div>
+                     
+                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval Level</a>
+                     <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span>
+                     
+                     <hr>
+                     <div class="btn btn-block btn-group p-0">
+                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
+                     <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
+                     </div>
                   {{-- </div> --}}
                   
                   @endif

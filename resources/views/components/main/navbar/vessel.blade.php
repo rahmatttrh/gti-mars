@@ -36,10 +36,10 @@
          </a>
          <a href="features-activities.html" class="dropdown-item has-icon">
            <i class="fas fa-bolt"></i> Activities
-         </a>
-         <a href="features-settings.html" class="dropdown-item has-icon">
+         </a>--}}
+         {{-- <a href="{{route('user.setting')}}" class="dropdown-item has-icon">
            <i class="fas fa-cog"></i> Settings
-         </a> --}}
+         </a>  --}}
          <div class="dropdown-divider"></div>
          <a class="dropdown-item has-icon" href="{{ route('logout') }}"
             onclick="event.preventDefault();
