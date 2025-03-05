@@ -115,7 +115,7 @@
                               <tr>
                                  {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
                                  <td>
-                                    <a href="{{route('vdr.show', enkripRambo($vdr->id))}}">{{vdrId($vdr->id)}}</a>
+                                    <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a>
       
                                  </td>
                                  <td>{{$vdr->vessel->name}}</td>

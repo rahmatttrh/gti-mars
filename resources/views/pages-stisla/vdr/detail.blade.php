@@ -50,41 +50,41 @@
       
       <ul class="nav nav-tabs" id="myTab" role="tablist">
          <li class="nav-item">
-            <a class="nav-link active" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="true">VDR {{$vessel->name}}  {{formatDate($vdr->date)}}</a>
+            <a class="nav-link {{$tab == 'index' ? 'active' : ''}}" id="progress-tab" data-toggle="tab" href="#progress" role="tab" aria-controls="progress" aria-selected="true">VDR {{$vessel->name}}  {{formatDate($vdr->date)}}</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="weather-tab" data-toggle="tab" href="#weather" role="tab" aria-controls="weather" aria-selected="false">Weather Condition</a>
-         </li>
-         
-         <li class="nav-item">
-            <a class="nav-link" id="hse-tab" data-toggle="tab" href="#hse" role="tab" aria-controls="hse" aria-selected="false">HSE </a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" id="operating-tab" data-toggle="tab" href="#operating" role="tab" aria-controls="operating" aria-selected="false">Operating Data </a>
-         </li>
-         <li class="nav-item">
-            <a class="nav-link" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Operational Activities </a>
+            <a class="nav-link {{$tab == 'weathers' ? 'active' : ''}}" id="weather-tab" data-toggle="tab" href="#weather" role="tab" aria-controls="weather" aria-selected="false">Weather Condition</a>
          </li>
          
          <li class="nav-item">
-            <a class="nav-link" id="cargo-tab" data-toggle="tab" href="#cargo" role="tab" aria-controls="cargo" aria-selected="false">Fuel, Water and Cargoes </a>
+            <a class="nav-link {{$tab == 'hse' ? 'active' : ''}}" id="hse-tab" data-toggle="tab" href="#hse" role="tab" aria-controls="hse" aria-selected="false">HSE </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link {{$tab == 'operating' ? 'active' : ''}}" id="operating-tab" data-toggle="tab" href="#operating" role="tab" aria-controls="operating" aria-selected="false">Operating Data </a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link {{$tab == 'activity' ? 'active' : ''}}" id="activity-tab" data-toggle="tab" href="#activity" role="tab" aria-controls="activity" aria-selected="false">Operational Activities </a>
          </li>
          
          <li class="nav-item">
-            <a class="nav-link" id="crew-tab" data-toggle="tab" href="#crew" role="tab" aria-controls="crew" aria-selected="false">Crew & Passanger </a>
+            <a class="nav-link {{$tab == 'cargo' ? 'active' : ''}}" id="cargo-tab" data-toggle="tab" href="#cargo" role="tab" aria-controls="cargo" aria-selected="false">Fuel, Water and Cargoes </a>
+         </li>
+         
+         <li class="nav-item">
+            <a class="nav-link {{$tab == 'crew' ? 'active' : ''}}" id="crew-tab" data-toggle="tab" href="#crew" role="tab" aria-controls="crew" aria-selected="false">Crew & Passanger </a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="engine-tab" data-toggle="tab" href="#engine" role="tab" aria-controls="engine" aria-selected="false">Engine Parameter Log </a>
+            <a class="nav-link {{$tab == 'engine' ? 'active' : ''}}" id="engine-tab" data-toggle="tab" href="#engine" role="tab" aria-controls="engine" aria-selected="false">Engine Parameter Log </a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="periodic-tab" data-toggle="tab" href="#periodic" role="tab" aria-controls="periodic" aria-selected="false">Periodical Fuel ROB Check</a>
+            <a class="nav-link {{$tab == 'periodic' ? 'active' : ''}}" id="periodic-tab" data-toggle="tab" href="#periodic" role="tab" aria-controls="periodic" aria-selected="false">Periodical Fuel ROB Check</a>
          </li>
          <li class="nav-item">
-            <a class="nav-link" id="special-tab" data-toggle="tab" href="#special" role="tab" aria-controls="special" aria-selected="false">Special Calculation </a>
+            <a class="nav-link {{$tab == 'special' ? 'active' : ''}}" id="special-tab" data-toggle="tab" href="#special" role="tab" aria-controls="special" aria-selected="false">Special Calculation </a>
          </li>
       </ul>
       <div class="tab-content" id="myTabContent">
-         <div class="tab-pane fade show active" id="progress" role="tabpanel" aria-labelledby="progress-tab">
+         <div class="tab-pane fade {{$tab == 'index' ? 'show active' : ''}}" id="progress" role="tabpanel" aria-labelledby="progress-tab">
             
             <div class="row mt-2">
                <div class="col-md-9">
@@ -196,32 +196,32 @@
                </div>
             </div>
          </div>
-         <div class="tab-pane fade" id="weather" role="tabpanel" aria-labelledby="weather-tab">
+         <div class="tab-pane fade {{$tab == 'weathers' ? 'show active' : ''}}" id="weather" role="tabpanel" aria-labelledby="weather-tab">
             {{-- <b>Inbox</b> --}}
             <x-vdr.weather :weathers="$weathers" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="hse" role="tabpanel" aria-labelledby="hse-tab">
+         <div class="tab-pane fade {{$tab == 'hse' ? 'show active' : ''}}" id="hse" role="tabpanel" aria-labelledby="hse-tab">
             <x-vdr.hsse :hses="$hses" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="activity" role="tabpanel" aria-labelledby="activity-tab">
+         <div class="tab-pane fade {{$tab == 'activity' ? 'show active' : ''}}" id="activity" role="tabpanel" aria-labelledby="activity-tab">
             <x-vdr.activity :activities="$activities" :operatings="$operatings" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="operating" role="tabpanel" aria-labelledby="operating-tab">
+         <div class="tab-pane fade {{$tab == 'operating' ? 'show active' : ''}}" id="operating" role="tabpanel" aria-labelledby="operating-tab">
             <x-vdr.data :operatings="$operatings" :totaljam="$totalJam" :totaldaily="$totalDaily" :vdr="$vdr"/>
          </div>
-         <div class="tab-pane fade" id="cargo" role="tabpanel" aria-labelledby="cargo-tab">
+         <div class="tab-pane fade {{$tab == 'cargo' ? 'show active' : ''}}" id="cargo" role="tabpanel" aria-labelledby="cargo-tab">
             <x-vdr.fuel :cargos="$cargos" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="periodic" role="tabpanel" aria-labelledby="periodic-tab">
+         <div class="tab-pane fade {{$tab == 'periodic' ? 'show active' : ''}}" id="periodic" role="tabpanel" aria-labelledby="periodic-tab">
             <x-vdr.periodic :periodic="$periodic" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="special" role="tabpanel" aria-labelledby="special-tab">
+         <div class="tab-pane fade {{$tab == 'special' ? 'show active' : ''}}" id="special" role="tabpanel" aria-labelledby="special-tab">
             <x-vdr.special :periodic="$periodic" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="crew" role="tabpanel" aria-labelledby="crew-tab">
+         <div class="tab-pane fade {{$tab == 'crew' ? 'show active' : ''}}" id="crew" role="tabpanel" aria-labelledby="crew-tab">
             <x-vdr.crew :crews="$crews" :vdr="$vdr" />
          </div>
-         <div class="tab-pane fade" id="engine" role="tabpanel" aria-labelledby="engine-tab">
+         <div class="tab-pane fade {{$tab == 'engine' ? 'show active' : ''}}" id="engine" role="tabpanel" aria-labelledby="engine-tab">
             <x-vdr.engine :engines="$engines" :vdr="$vdr" />
          </div>
          

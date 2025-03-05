@@ -22,7 +22,7 @@ class VdrPeriodicController extends Controller
       $rob_diff = $req->rob_actual - $req->rob_value;
       // dd($req->rob_value);
 
-      
+
       $periodic->update([
          'activity' => $req->activity,
          'rob_time' => $req->rob_time,
@@ -32,7 +32,7 @@ class VdrPeriodicController extends Controller
 
       ]);
 
-      return redirect()->back()->with('success', 'Data VDR successfully updated');
+      return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('periodic')])->with('success', 'Data VDR successfully updated');
    }
 
    public function updateSpecial(Request $req){
@@ -99,6 +99,6 @@ class VdrPeriodicController extends Controller
          'consumption' => $periodic->fuel_cons_total
       ]);
 
-      return redirect()->back()->with('success', 'Data VDR successfully updated');
+      return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('special')])->with('success', 'Data VDR successfully updated');
    }
 }

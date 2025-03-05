@@ -32,7 +32,7 @@
             <div class="dropdown-list-content dropdown-list-icons">
                @if (count($notifvdrs) > 0)
                   @foreach ($notifvdrs as $vdr)
-                     <a href="{{route('vdr.show', enkripRambo($vdr->id))}}" class="dropdown-item dropdown-item-unread">
+                     <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}" class="dropdown-item dropdown-item-unread">
                         {{-- <div class="dropdown-item-icon bg-danger text-white">
                            <i class="fas fa-exclamation"></i>
                         </div> --}}
