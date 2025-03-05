@@ -170,7 +170,7 @@ class VdrController extends Controller
         ])->with('i');
    }
 
-   public function show($id)
+   public function show($id, $enkripTab)
    {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
@@ -230,10 +230,17 @@ class VdrController extends Controller
       }
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
+
+      if ($enkripTab != null) {
+         $tab = dekripRambo($enkripTab);
+      } else {
+         $tab = 'index';
+      }
  
       // dd('ok');
       return view('pages-stisla.vdr.detail', [
       //   return view('pages.vdr.show-vdr', [
+         'tab' => $tab,
          'vessel' => $vdr->vessel,
          'user' => $user,
          'vdr' => $vdr,
@@ -960,7 +967,7 @@ class VdrController extends Controller
             'table' => 'vdr_activities'
          ]);
 
-         return back()->with('success', 'Activity data successfully saved.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1003,7 +1010,7 @@ class VdrController extends Controller
             'desc' => 'on VDR ' . $vdr->code,
             'table' => 'vdr_crews'
          ]);
-         return redirect()->back()->with('success', 'Crew / Passenger data successfully saved');
+         return redirect()->route('vdr.show', [enkripRambo($vdr->id), enkripRambo('crew')])->with('success', 'Crew / Passenger data successfully saved');
       } else {
          return redirect()->back()->with('warning', 'Crew / Passenger gagal Disimpan!');
       }
@@ -1128,7 +1135,7 @@ class VdrController extends Controller
             'table' => 'vdr_activities'
          ]);
 
-         return back()->with('success', 'Activity data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1187,7 +1194,7 @@ class VdrController extends Controller
             'desc' => 'on VDR ' . $vdr->code,
             'table' => 'vdr_activities'
          ]);
-         return redirect()->back()->with('success', 'Activity data successfully deleted');
+         return redirect()->route('vdr.show', [enkripRambo($vdrActivity->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully deleted');
       } else {
          return redirect()->back()->with('warning', 'Activity gagal di delete!');
       }
@@ -1213,7 +1220,7 @@ class VdrController extends Controller
             'desc' => 'on VDR ' . $vdrCrew->vdr->code,
             'table' => 'vdr_crews'
          ]);
-         return redirect()->back()->with('success', 'VDR Crew data successfully deleted');
+         return redirect()->route('vdr.show', [enkripRambo($vdrCrew->vdr->id), enkripRambo('crew')])->with('success', 'VDR Crew data successfully deleted');
       } else {
          return redirect()->back()->with('warning', 'VDR Crew gagal di delete!');
       }
@@ -1267,7 +1274,7 @@ class VdrController extends Controller
          // Jika semuanya berhasil, kita commit transaksi
          DB::commit();
 
-         return back()->with('success', 'VDR Cargo data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('cargo')])->with('success', 'VDR Cargo data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1347,7 +1354,7 @@ class VdrController extends Controller
             'desc' => 'on VDR ' . $weather->vdr->code,
             'table' => 'vdr_crews'
          ]);
-         return back()->with('success', 'VDR Weather data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('weathers')])->with('success', 'VDR Weather data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1390,7 +1397,7 @@ class VdrController extends Controller
          // Jika semuanya berhasil, kita commit transaksi
          DB::commit();
 
-         return back()->with('success', 'VDR HSE data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('hse')])->with('success', 'VDR HSE data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1439,7 +1446,7 @@ class VdrController extends Controller
          // Jika semuanya berhasil, kita commit transaksi
          DB::commit();
 
-         return back()->with('success', 'VDR Engine data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('engine')])->with('success', 'VDR Engine data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1498,7 +1505,7 @@ class VdrController extends Controller
             'table' => 'vdr_operating'
          ]);
 
-         return back()->with('success', 'VDR Engine data successfully updated.');
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('operating')])->with('success', 'VDR Engine data successfully updated.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1540,7 +1547,7 @@ class VdrController extends Controller
             'desc' => 'on VDR ' . $vdrCrew->vdr->code,
             'table' => 'vdr_crews'
          ]);
-         return redirect()->back()->with('success', 'Crew data successfully updated');
+         return redirect()->route('vdr.show', [enkripRambo($vdrCrew->vdr->id), enkripRambo('crew')])->with('success', 'Crew data successfully updated');
       } else {
          return redirect()->back()->with('warning', 'Crew gagal di update!');
       }
@@ -1559,7 +1566,7 @@ class VdrController extends Controller
 
          $count = Session::get('count', 0);
 
-         return back()->with('success', "$count crew berhasil di tambah.", Session::forget('count'));
+         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('crew')])->with('success', "$count crew berhasil di tambah.", Session::forget('count'));
       } catch (\Exception $e) {
          Session::forget('count');
          // 

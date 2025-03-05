@@ -85,7 +85,7 @@
                   <tbody>
                      @foreach ($myrecentvdrs as $myvdr)
                      <tr>
-                        <td><a href="{{route('vdr.show', enkripRambo($myvdr->id))}}">{{$myvdr->code}}</a> </td>
+                        <td><a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> </td>
                         <td>{{formatDate($myvdr->date)}}</td>
                         <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td>
                         <td class="text-truncate">

@@ -124,7 +124,7 @@ Route::middleware(["auth"])->group(function () {
       Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
    });
 
-   Route::get('vdr/detail/{id}', [VdrController::class, 'show'])->name('vdr.show');
+   Route::get('vdr/detail/{id}/{tab}', [VdrController::class, 'show'])->name('vdr.show');
 
    Route::prefix('fuel')->group(function () {
       Route::put('approve', [FuelController::class, 'approve'])->name('fuel.approve');
