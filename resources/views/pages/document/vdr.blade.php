@@ -211,7 +211,7 @@ table {
                                  
                               </small>
                            </td>
-                           <td><small>{{$hse->header->description}}</small></td>
+                           <td><small>{{$hse->header->description}} </small></td>
                            @if($hse->header_id != 8)
                            <td class="text-center bg-yellow">
                               <small>{{$hse->previous}}</small>
@@ -224,7 +224,7 @@ table {
                            </td>
                            @else
                            
-                           <td colspan="3"></td>
+                           <td colspan="3" class="text-center" style="background-color: rgb(186, 186, 186)"></td>
                            @endif
                         </tr>
          
@@ -676,7 +676,7 @@ table {
                      <td class="bg-yellow"></td>
                      <td class="bg-yellow"></td>
                      <td class="bg-yellow"></td> --}}
-                     <td class=""></td>
+                     <td class="" style="background-color: rgb(186, 186, 186)"></td>
                   </tr>
                </tbody>
                
@@ -714,15 +714,26 @@ table {
                         <td class="text-center">
                            <small>{{getTotalHours($operating->time)}}</small>
                         </td>
-                        <td class="text-center bg-yellow">
-                           @if($operating->heading->speed == '1')
-                           <small>{{$operating->speed ?? '0.00'}}</small>
+                        @if ($operating->heading_id > 3)
+                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           </td>
                            @else
-                           <small>{{$operating->speed ?? '0.00'}}</small>
-                           @endif
-                        </td>
+                           
+                           <td class="text-center bg-yellow">
+                              @if($operating->heading->speed == '1')
+                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              
+                              @else
+                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              @endif
+                           </td>
+                        @endif
    
-                        <td class="text-center bg-yellow">
+                        @if ($operating->heading_id > 8)
+                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           </td>
+                           @else
+                           <td class="text-center bg-yellow">
                               @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @else
@@ -730,20 +741,27 @@ table {
                               @endif
                               L/H
                         </td>
-                        <td class="text-center">
-   
-   
-                              @if($operating->heading->daily == '1')
-                              <small>{{round($operating->daily)}}</small>
-                              {{-- <div class="input-group ">
-                                 <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
-                                 
-                              </div> --}}
-                              @else
-                              <small>{{$operating->daily}}</small>
-                              @endif
-                              Ltrs
-                        </td>
+                        @endif
+                        
+                        @if ($operating->heading_id > 8)
+                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           </td>
+                           @else
+                           <td class="text-center">
+      
+      
+                                 @if($operating->heading->daily == '1')
+                                 <small>{{number_format($operating->daily, 2)}}</small>
+                                 {{-- <div class="input-group ">
+                                    <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                    
+                                 </div> --}}
+                                 @else
+                                 <small>{{$operating->daily}}</small>
+                                 @endif
+                                 Ltrs
+                           </td>
+                           @endif
                      </tr>
                      @endforeach
                      <tr>
@@ -753,7 +771,7 @@ table {
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
-                              <small>{{round($totaldaily)}} Ltrs</small>
+                              <small>{{formatRupiah(round($totaldaily))}} Ltrs</small>
                         </td>
                      </tr>
    
@@ -810,7 +828,13 @@ table {
                            <tr>
                               <td>{{$vdrCargo->heading->description}}</td>
                               <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              @if ($vdrCargo->heading_id > 2)
+                                 <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                                 </td>
+                                 @else
+                                 <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              @endif
+                              
                               <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
                               <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
                               <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
@@ -831,7 +855,7 @@ table {
                               
                            </tr>
                            <tr>
-                              <td colspan="2">{{$vdrPeriodic->activity ?? ''}} </td>
+                              <td colspan="2" class="text-center">{{$vdrPeriodic->activity ?? ''}} </td>
                               <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
                               <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
                               <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>

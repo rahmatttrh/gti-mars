@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app-vdr')
 @section('title')
-   History
+   VDR Validation
 @endsection
 @section('content')
 <section class="section">

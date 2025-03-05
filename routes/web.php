@@ -80,6 +80,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());
+
+   Route::get('user/setting', [HomeController::class, 'setting'])->name('user.setting');
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //    Route::group(['middleware' => ['role:marine']], function () {
    //       Route::get('/', [App\Http\Controllers\HomeController::class, 'map'])->name('home');
