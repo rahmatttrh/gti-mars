@@ -232,7 +232,8 @@ class MarineRequestController extends Controller
       // dd(count($requests));
       $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
       // $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
-      $schedules = Schedule::orderBy('date', 'asc')->get();
+      $today = Carbon::today();
+      $schedules = Schedule::orderBy('date', 'desc')->whereMonth('date', $today)->get();
 
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);

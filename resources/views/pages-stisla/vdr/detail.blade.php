@@ -183,7 +183,7 @@
                   @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
                   {{-- <div class="btn-group mr-2"> --}}
                      <div class="btn btn-block btn-group p-0">
-                        <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
+                        <a href="" class="btn btn-info btn-block" data-toggle="modal" data-target="#vdr-approve-marine">Approve </a>
                         <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                      </div>
                      
@@ -192,7 +192,7 @@
                      
                      <hr>
                      <div class="btn btn-block btn-group p-0">
-                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
+                        
                      <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
                      </div>
                   {{-- </div> --}}
@@ -243,40 +243,279 @@
    </div>
 </section>
 
+
+
+@if (auth()->user()->hasRole('marine'))
+   <div class="modal fade" id="modalEditApproval" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+         <form action="{{route('vdr.update.approval')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Form Edit VDR Approval</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  
+
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <div class="row mb-2">
+                     <div class="col-md-2">
+                        
+                        <div class="form-group">
+                           <label for="level1">Level </label>
+                           <input class="form-control" id="level1" name="level1" type="text" value="1" readonly >
+                           
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        
+                        <div class="form-group">
+                           <label for="title1">Title </label>
+                           <input class="form-control" id="title1" name="title1" type="text" value="{{$vdr->title1}}" >
+                           @error('title1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="name1">Name </label>
+                           <input class="form-control" id="name1" name="name1" type="text" value="{{$vdr->name1}}" >
+                           @error('name1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                  </div>
+
+                  {{-- <div class="badge badge-info">Approval 2</div> --}}
+                  <div class="row mb-2">
+                     <div class="col-md-2">
+                        
+                        <div class="form-group">
+                           <label for="level2">Level </label>
+                           <input class="form-control" id="level2" name="level2" type="text" value="2" readonly >
+                           
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="title2">Title </label>
+                           <input class="form-control" id="title2" name="title2" type="text" value="{{$vdr->title2}}" >
+                           @error('title2')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="name2">Name </label>
+                           <input class="form-control" id="name2" name="name2" type="text" value="{{$vdr->name2}}" >
+                           @error('name2')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                  </div>
+
+                  {{-- <div class="badge badge-info">Approval 3</div> --}}
+                  <div class="row">
+                     <div class="col-md-2">
+                        
+                        <div class="form-group">
+                           <label for="level3">Level </label>
+                           <input class="form-control" id="level3" name="level3" type="text" value="3" readonly >
+                           
+                        </div>
+                     </div>
+                     <div class="col-md-4">
+                        <div class="form-group">
+                           <label for="title3">Title </label>
+                           <input class="form-control" id="title3" name="title3" type="text" value="{{$vdr->title3}}" >
+                           @error('title3')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="name3">Name </label>
+                           <input class="form-control" id="name3" name="name3" type="text" value="{{$vdr->name3}}" >
+                           @error('name3')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                  </div>
+                  <hr>
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Update</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.reject.marine')}}" method="POST">
+         @csrf
+         <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Reject VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     <label for="desc">Description</label>
+                     <input type="text" class="form-control" id="desc" name="desc" >
+                  </div>
+                  
+               </div>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-danger">Reject</button>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="vdr-approve-marine" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Approve this VDR ?</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <hr>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
+            </div>
+         </div>
+      </div>
+   </div>
+    @else
+      @foreach ($crews as $crew)
+         <div class="modal fade" id="deleteAct-{{$crew->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+               <form action="{{route('vdr.delete.crew')}}" method="POST">
+                  @csrf
+                  @method('DELETE')
+                  <input type="hidden" name="id" value="{{$crew->id}}" id="">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">Delete Crew </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <span>Anda yakin ingin menghapus crew <span class="text-danger">{{$crew->name}} </span> ?</span>
+                     </div>
+                     <div class="modal-footer bg-whitesmoke">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+
+         <div class="modal fade" id="editCrew-{{$crew->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+            <div class="modal-dialog" role="document">
+               <form action="{{route('vdr.update.crew')}}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <input type="hidden" name="id" value="{{$crew->id}}" id="">
+                  <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+                  <div class="modal-content">
+                     <div class="modal-header">
+                        <h5 class="modal-title">Delete Crew </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                     </div>
+                     <div class="modal-body">
+                        <div class="form-group">
+                           <label for="name">Name</label>
+                           <input class="form-control" id="name" name="name" type="text" value="{{$crew->name}}" >
+                           @error('name')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+
+                        <div class="row">
+                           <div class="col-md-6">
+                              <div class="form mb-3">
+                                 <input type="radio" id="is_crew" {{$crew->is_crew == 1 ? 'checked' : ''}} value="1" class="crew" name="is_crew"> Crew
+                              </div>
+                           </div>
+                           <div class="col-md-6">
+                              <div class="form mb-3">
+                                 <input type="radio" id="is_crew" {{$crew->is_crew == 0 ? 'checked' : ''}} class="passenger" name="is_crew"> Passenger
+                              </div>
+                           </div>
+                        </div>
+                        <div class="form-row">
+                           <div class="form-group col-md-12">
+                              <label for="rank">Rank</label>
+                              <input class="form-control" id="rank" name="rank" type="text" value="{{$crew->rank}}">
+                              @error('rank')
+                                 <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                              @enderror
+                           </div>
+                           <div class="form-group col-md-12">
+                              <label for="company">Company</label>
+                              <input class="form-control" id="company" name="company" type="text" value="{{$crew->company}}">
+                              @error('company')
+                                 <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                              @enderror
+                           </div>
+                        </div>
+                     </div>
+                     <div class="modal-footer bg-whitesmoke">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                     </div>
+                  </div>
+               </form>
+            </div>
+         </div>
+      @endforeach
+
+    
+@endif
+
 <x-vdr.activity-modal :activities="$activities" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
 <x-vdr.crew-modal :crews="$crews" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
 
 
+
 {{-- Modal Revision Schedule --}}
-<div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <form action="{{route('vdr.reject.marine')}}" method="POST">
-      @csrf
-      <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title">Form Reject VDR</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </div>
-         <div class="modal-body">
-            <div class="form-row">
-               <div class="form-group col-md-12">
-                  <label for="desc">Description</label>
-                  <input type="text" class="form-control" id="desc" name="desc" >
-               </div>
-               
-            </div>
-         </div>
-         <div class="modal-footer bg-whitesmoke">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-danger">Reject</button>
-         </div>
-      </div>
-      </form>
-   </div>
-</div>
+
 
 @push('get_schedules')
 <script>

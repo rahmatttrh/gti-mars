@@ -557,6 +557,7 @@ class HomeController extends Controller
          $rejectVdrs = null;
          $myVdr = null;
          $myRecentVdrs = null;
+         $vessels = null;
       }
 
       $feed = News::get()->first();
@@ -628,6 +629,7 @@ class HomeController extends Controller
       }
 
       // dd($vdr);
+      $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
 
      
 
@@ -647,7 +649,7 @@ class HomeController extends Controller
          'myVdr' => $myVdr,
          'myRecentVdrs' => $myRecentVdrs,
 
-         'allRequests' => $allRequests,
+         // 'allRequests' => $allRequests,
          'dates' => $dates,
          'values' => $values,
          'vdrsArray' => $vdrsArray,
@@ -657,8 +659,8 @@ class HomeController extends Controller
          'logisticSchedules' => $logisticSchedules,
 
          'cargoItems' => $cargoItems,
-         'takeouts' => $takeouts,
-         'itemRejects' => $itemRejects,
+         // 'takeouts' => $takeouts,
+         // 'itemRejects' => $itemRejects,
 
          'mm' => $mm,
          'cargos' => $cargos

@@ -159,6 +159,38 @@ table td {
                   </tr> --}}
                </table>
             @endif
+
+            @foreach ($cargos as $cargo)
+            <thead>
+               
+               <tr class="">
+                  <th colspan="">BCM No. {{$cargo->code}} {{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
+                  <th colspan="4"></th>
+                  <th></th>
+                  <th></th>
+                 
+               </tr>
+            </thead>
+            <tbody>
+               @foreach ($items->where('cargo_id', $cargo->id) as $item)
+               <tr class="border">
+                  <td></td>
+                  <td>MTD No. {{$item->mtd}}</td>
+                  <td>{{$item->description}}</td>
+                  <td>{{$item->contract ?? '-'}}</td>
+                  <td>{{$item->qty}} {{$item->unit}} / {{$item->offloading ? $item->offloading->offloading . ' Drop' : '-'}}</td>
+                  <td>{{$item->weight}} KG</td>
+                  
+                  
+                  
+               </tr>
+
+               
+               @endforeach
+               
+            </tbody>
+         @endforeach
+
             @foreach ($schedule->requests->where('status', '>=', 2) as $req)
                @if ($req->activity_id == 1)
                   <div class="">

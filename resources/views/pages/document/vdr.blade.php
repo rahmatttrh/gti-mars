@@ -751,7 +751,7 @@ table {
       
       
                                  @if($operating->heading->daily == '1')
-                                 <small>{{number_format($operating->daily, 2)}}</small>
+                                 <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
                                  {{-- <div class="input-group ">
                                     <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
                                     
@@ -771,7 +771,7 @@ table {
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
-                              <small>{{formatRupiah(round($totaldaily))}} Ltrs</small>
+                              <small>{{number_format($totaldaily, 2, ',' , '.')}} Ltrs</small>
                         </td>
                      </tr>
    

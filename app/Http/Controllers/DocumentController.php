@@ -100,10 +100,14 @@ class DocumentController extends Controller
       // dd($schedule->code);
       $destinations = ModelsRequest::selectRaw('destination_name')->where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get()->groupBy('destination_name');
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
+      $cargos = Cargo::where('schedule_id', $schedule->id)->get();
+      $items = CargoItem::get();
       return view('pages.document.manifest', [
          'schedule' => $schedule,
          'destinations' => $destinations,
-         'routes' => $fixRoutes
+         'routes' => $fixRoutes,
+         'cargos' => $cargos,
+         'items' => $items
       ]);
    }
 
