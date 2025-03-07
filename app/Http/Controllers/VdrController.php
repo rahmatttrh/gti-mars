@@ -506,15 +506,18 @@ class VdrController extends Controller
 
          if ($lastVdr) {
             foreach($lastVdrCrews as $lastCrew){
-               $createVdrCrew = VdrCrew::create([
-                  'vdr_id' => $vdr->id,
-                  'is_crew' => $lastCrew->is_crew,
-                  'name' => $lastCrew->name,
-                  'rank' => $lastCrew->rank,
-                  'company' => $lastCrew->company,
-                  'created_at' => NOW(),
-                  'updated_at' => NOW()
-               ]);
+               if ($lastCrew->is_crew == 1) {
+                  $createVdrCrew = VdrCrew::create([
+                     'vdr_id' => $vdr->id,
+                     'is_crew' => $lastCrew->is_crew,
+                     'name' => $lastCrew->name,
+                     'rank' => $lastCrew->rank,
+                     'company' => $lastCrew->company,
+                     'created_at' => NOW(),
+                     'updated_at' => NOW()
+                  ]);
+               }
+               
             }
          }
          
