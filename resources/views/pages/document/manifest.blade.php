@@ -159,6 +159,61 @@ table td {
                   </tr> --}}
                </table>
             @endif
+            <table class="table table-sm table-transparent table-responsive   mb-2">
+               <thead>
+                  <tr>
+                     {{-- <th class="text-center" style="width: 1%"></th> --}}
+                     
+                     <th>Description</th>
+                     <th>Doc Number</th>
+                     <th>Contract</th>
+                     <th class="text-center" style="width: 1%">Qnt</th>
+                     <th class="text-center" style="width: 1%">Unit</th>
+                     <th class="text-center" style="width: 10%">Size (m<sup>2</sup>)</th>
+                     <th class="text-center" style="width: 10%">Weight (ton)n</th>
+                     
+                  </tr>
+               </thead>
+               @foreach ($cargos as $cargo)
+                  <thead>
+                     
+                     <tr class="">
+                        <th colspan="">BCM No. {{$cargo->code}} {{$cargo->origin->code}} - {{$cargo->destination->code}}</th>
+                        <th colspan="4"></th>
+                        <th></th>
+                        <th></th>
+                       
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($items->where('cargo_id', $cargo->id) as $item)
+                     <tr class="border">
+                        <td></td>
+                        <td>MTD No. {{$item->mtd}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->contract ?? '-'}}</td>
+                        <td>{{$item->qty}} {{$item->unit}} / {{$item->offloading ? $item->offloading->offloading . ' Drop' : '-'}}</td>
+                        <td>{{$item->weight}} KG</td>
+                        
+                        
+                        
+                     </tr>
+
+                     
+                     @endforeach
+                     
+                  </tbody>
+                  @endforeach
+               {{-- <tr>
+                  <td colspan="5" class="text-end strong">Total</td>
+                  <td class="text-center">
+                     {{$req->cargoItems->sum('size')}}
+                  </td>
+                  <td class="text-center">
+                     {{$req->cargoItems->sum('weight')}}
+                  </td>
+               </tr> --}}
+            </table>
             @foreach ($schedule->requests->where('status', '>=', 2) as $req)
                @if ($req->activity_id == 1)
                   <div class="">
@@ -192,7 +247,7 @@ table td {
                            
                         </tr>
                      </thead>
-                     @foreach ($req->cargoItems as $cargo)
+                     @foreach ($cargos as $cargo)
                      <tr>
                         {{-- <td class="text-center">{{++$i}}</td> --}}
                         <td>

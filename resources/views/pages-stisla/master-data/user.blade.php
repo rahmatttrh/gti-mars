@@ -38,21 +38,16 @@
    </nav>
 
    <div class="section-body">
-      {{-- <h2 class="section-title">Schedule Plan</h2>
-      <p class="section-lead">
-         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-      </p> --}}
+     
 
       <div class="row">
          <div class="col-md-4">
             <div class="card border shadow-sm">
-               {{-- <div class="card-header">
-                  <b>Form Add</b>
-               </div> --}}
+              
                <div class="card-body">
                   <form action="{{route('user.store')}}" method="POST">
                      @csrf
-                     <label class="d-block"><b>Choose app</b></label>
+                     {{-- <label class="d-block"><b>Choose app</b></label>
                      <div class="d-flex mb-3">
                         <div class="form-check mr-3">
                            <input class="form-check-input" type="checkbox" name="dsp" id="dsp" value="dsp">
@@ -78,7 +73,7 @@
                              MAP
                            </label>
                         </div>
-                     </div>
+                     </div> --}}
                      
                      {{-- <div class="form-group">
                         <label class="d-block">Choose app</label>
@@ -100,13 +95,7 @@
                         </div>
                      </div> --}}
                      <div class="form-row">
-                        {{-- <div class="form-group col-md-5">
-                           <label>Role *</label>
-                           <select  class="custom-select" id="role" name="role">
-                              <option value="admin" selected>Admin</option>
-                              <option value="superadmin">Super Admin</option>
-                           </select>
-                        </div> --}}
+                       
                         <div class="form-group col-md-12">
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
@@ -128,30 +117,11 @@
                         
                         
                         
-                        {{-- <div class="form-group col-md-6">
-                           <label>Location*</label>
-                           <select  class="custom-select" id="port" name="port">
-                              <option  disabled selected>Choose one</option>
-                              @foreach ($ports as $port)
-                                  <option value="{{$port->id}}">{{$port->name}}</option>
-                              @endforeach
-                           </select>
-                        </div> --}}
+                       
                         
                      </div>
                      
-                     {{-- <div class="form-row">
-                        <div class="form-group col-md-12">
-                           <label>Location*</label>
-                           <select  class="custom-select" id="port" name="port">
-                              <option  disabled selected>Choose one</option>
-                              @foreach ($ports as $port)
-                                  <option value="{{$port->id}}">{{$port->name}}</option>
-                              @endforeach
-                           </select>
-                        </div>
-                        
-                     </div> --}}
+                    
                      <button class="btn btn-primary mr-2">Submit</button>
                      <a href="{{route('user')}}" class="btn btn-light border">Reset</a>
                   </form>

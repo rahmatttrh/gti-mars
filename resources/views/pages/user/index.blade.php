@@ -36,23 +36,7 @@
    <div class="page-body" >
       <div class="container-xl">
          <div class="card">
-            {{-- <div class="card-body border-bottom py-3">
-               <div class="d-flex">
-                 <div class="text-muted ">
-                  Page
-                   <div class="mx-2 d-inline-block">
-                     <input type="text" class="form-control form-control-sm" value="{{$users->currentPage()}}" size="3" aria-label="Invoices count" disabled>
-                   </div>
-                 </div>
-                 <div class="ms-auto text-muted">
-                   Search:
-                   <div class="ms-2 d-inline-block">
-                     <input type="text" class="form-control form-control-sm" aria-label="Search invoice">
-                   </div>
-                 </div>
-               </div>
-            </div> --}}
-            {{-- <div class="card-body"> --}}
+           {{-- <h1>OK</h1> --}}
                <div class="table-responsive my-4">
                   {{-- <table class="table card-table table-vcenter " > --}}
                      <table id="example"  class="table" >
@@ -108,16 +92,7 @@
                      </tbody>
                   </table>
                </div>
-            {{-- </div> --}}
-            {{-- <div class="card-footer d-flex align-items-center">
-               <small>
-                  <p class="m-0 text-muted">Showing <span>{{$users->firstItem()}}</span> to <span>{{$users->lastItem()}}</span> of <span>{{$totalUser}}</span> entries</p>
-               </small>
-               <div class="pagination m-0 ms-auto">
-                  {{$users->links()}}
-               </div>
             
-            </div> --}}
          </div>
       </div>
    </div>

@@ -192,7 +192,7 @@
                      
                      <hr>
                      <div class="btn btn-block btn-group p-0">
-                        <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a>
+                        {{-- <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a> --}}
                      <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
                      </div>
                   {{-- </div> --}}

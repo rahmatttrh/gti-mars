@@ -80,7 +80,7 @@ table {
       <div class="main-wrapper container">
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
          <div class="navbar-bg" ></div>
-         @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
+         @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
             <x-main.navbar.marine :notifrequests="$notifRequests" :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif (auth()->user()->hasRole('vessel'))
             <x-main.navbar.vessel />
