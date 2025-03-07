@@ -155,7 +155,7 @@
             <div class="navbar-bg bgb-1"></div>
             
             {{-- NAVBAR --}}
-            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
+            @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
             
             <x-navbar.dsp.marine :allschedules="$allSchedules" :notif="$notif" :notifrequests="$notifRequests" />
             {{-- <x-navbar.marine :allschedules="$allSchedules" :notif="$notif" /> --}}
