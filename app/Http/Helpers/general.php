@@ -32,7 +32,7 @@ function formatDateName($data)
 
 function formatDateTime($data)
 {
-   $date = \Carbon\Carbon::parse($data)->format('d-m-Y H:i');
+   $date = \Carbon\Carbon::parse($data)->format('H:i d-m-Y ');
    return $date;
 }
 

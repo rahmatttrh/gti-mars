@@ -7,7 +7,7 @@
    <section class="section">
       <div class="section-body">
          <div class="row"> 
-            <div class="col-md-7">
+            <div class="col-md-9">
                <div class="row">
                   <div class="col-md-6">
                      <div class="card card-statistic-1 border">
@@ -48,78 +48,81 @@
                {{-- <span class="btn btn-light border">Sailing Order</span> --}}
                <div class="row">
                   <div class="col-6">
-                     
+                     <table class="display  border">
+                        <tbody>
+                           <tr>
+                              <th>All Vessel Daily Report</th>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <div class="table-responsive overflow-auto" style="height: 185px">
+                        <table class="display  border">
+                           
+                           <thead>
+                              
+                              <tr>
+                                 <th>Vessel</th>
+                                 <th>Date</th>
+                                 {{-- <th>Date</th> --}}
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($allVdrs as $vdr)
+                                 <tr class="border" style="border: 1px black">
+                                    <td class="text-truncate" style="max-width: 120px"><a href="{{route('schedule.detail', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a></td>
+                                    <td>{{formatDate($vdr->date)}}</td>
+                                    {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                                    <td class="text-truncate" style="max-width: 100px">
+                                       <x-status-stisla.vdr :vdr="$vdr" />
+                                    </td>
+                                 </tr>
+                              @endforeach
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                  <div class="col-6">
+                     <table class="display  border">
+                        <tbody>
+                           <tr>
+                              <th>All Sailing Order</th>
+                           </tr>
+                        </tbody>
+                     </table>
+                     <div class="table-responsive overflow-auto" style="height: 185px">
+                        <table class="display  border">
+                           
+                           <thead>
+                              
+                              <tr>
+                                 <th>Vessel</th>
+                                 <th>Code</th>
+                                 {{-- <th>Date</th> --}}
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($allSchedules as $sche)
+                                 <tr class="border" style="border: 1px black">
+                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
+                                    <td>{{$sche->code}}</td>
+                                    {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                                    <td>
+                                       <x-status-stisla.schedule-plain :schedule="$sche"/>
+                                    </td>
+                                 </tr>
+                              @endforeach
+                           </tbody>
+                        </table>
+                     </div>
                   </div>
                </div>
-               <table class="display  border">
-                  <tbody>
-                     <tr>
-                        <th>All Vessel Daily Report</th>
-                     </tr>
-                  </tbody>
-               </table>
-               <div class="table-responsive overflow-auto" style="height: 120px">
-                  <table class="display  border">
-                     
-                     <thead>
-                        
-                        <tr>
-                           <th>Vessel</th>
-                           <th>Date</th>
-                           {{-- <th>Date</th> --}}
-                           <th>Status</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($allVdrs as $vdr)
-                           <tr class="border" style="border: 1px black">
-                              <td><a href="{{route('schedule.detail', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a></td>
-                              <td>{{formatDate($vdr->date)}}</td>
-                              {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                              <td>
-                                 <x-status-stisla.vdr :vdr="$vdr" />
-                              </td>
-                           </tr>
-                        @endforeach
-                     </tbody>
-                  </table>
-               </div>
-               <table class="display  border">
-                  <tbody>
-                     <tr>
-                        <th>All Sailing Order</th>
-                     </tr>
-                  </tbody>
-               </table>
-               <div class="table-responsive overflow-auto" style="height: 120px">
-                  <table class="display  border">
-                     
-                     <thead>
-                        
-                        <tr>
-                           <th>Vessel</th>
-                           <th>Code</th>
-                           {{-- <th>Date</th> --}}
-                           <th>Status</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($allSchedules as $sche)
-                           <tr class="border" style="border: 1px black">
-                              <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
-                              <td>{{$sche->code}}</td>
-                              {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                              <td>
-                                 <x-status-stisla.schedule-plain :schedule="$sche"/>
-                              </td>
-                           </tr>
-                        @endforeach
-                     </tbody>
-                  </table>
-               </div>
+               
+               
                <hr>
                
-               @if ($itemRejects)
+               {{-- @if ($itemRejects)
                   <table>
                      <tbody>
                         <tr class="bg-danger text-white">
@@ -140,10 +143,10 @@
                      </tbody>
                   </table>
                    
-               @endif
+               @endif --}}
       
             </div>
-            <div class="col-md-5">
+            <div class="col-md-3">
                <table class="display  border">
                   <tbody>
                      <tr>
@@ -153,23 +156,23 @@
                </table>
                <div class="table-responsive overflow-auto" style="height: 320px">
                 <table class="border display "   >
-                  <thead>
+                  {{-- <thead>
                      <tr>
                         <th>Time</th>
                         <th>User</th>
                         <th>Action</th>
-                        {{-- <th>Desc</th> --}}
-                        {{-- <th>Table</th> --}}
                      </tr>
-                  </thead>
+                  </thead> --}}
                   <tbody>
                      @foreach ($logs as $log)
                         <tr class="border">
-                           <td class="text-truncate">{{formatDateTime($log->created_at)}}</td>
-                           <td class="text-truncate" style="max-width: 100px">{{$log->user->name}}</td>
-                           <td>{{$log->action}}</td>
-                           {{-- <td>{{$log->desc}}</td> --}}
-                           {{-- <td>{{$log->table}}</td> --}}
+                           <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name}}
+                              <br>
+                              {{$log->action}} </small>
+                           </td>
+                           {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
+                           {{-- <td></td> --}}
+                           
                         </tr>
                      @endforeach
                   </tbody>
