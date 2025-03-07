@@ -70,7 +70,7 @@
                            <tbody>
                               @foreach ($allVdrs as $vdr)
                                  <tr class="border" style="border: 1px black">
-                                    <td class="text-truncate" style="max-width: 120px"><a href="{{route('schedule.detail', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a></td>
+                                    <td class="text-truncate" style="max-width: 120px"><a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
                                     <td>{{formatDate($vdr->date)}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                     <td class="text-truncate" style="max-width: 100px">

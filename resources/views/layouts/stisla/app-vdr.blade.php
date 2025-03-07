@@ -106,7 +106,7 @@
             <div class="navbar-bg bgb-1"></div>
             
             {{-- NAVBAR --}}
-            @if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
+            @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
             <x-navbar.vdr.marine :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.vdr.department />
