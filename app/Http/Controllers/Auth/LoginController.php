@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -43,6 +44,23 @@ class LoginController extends Controller
    // {
    //    dd($user);
    // }
+
+   protected function authenticated($user)
+   {
+      if (auth()->user()->hasRole('superuser')) {
+         
+      } else {
+         
+         Log::create([
+            'system' => 'MARS',
+            'user_id' => auth()->user()->id,
+            // 'vessel_id' => $vdr->vessel_id,
+            'action' => 'Login',
+            
+         ]);
+      }
+      
+   }
 
    public function username()
    {

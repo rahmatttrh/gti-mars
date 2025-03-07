@@ -224,7 +224,7 @@ table td {
                            
                         </tr>
                      </thead>
-                     @foreach ($req->cargoItems as $cargo)
+                     @foreach ($cargos as $cargo)
                      <tr>
                         {{-- <td class="text-center">{{++$i}}</td> --}}
                         <td>

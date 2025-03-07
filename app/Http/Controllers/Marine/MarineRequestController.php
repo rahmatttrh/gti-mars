@@ -172,7 +172,7 @@ class MarineRequestController extends Controller
 
    public function indexList(){
       
-      // dd('ok'
+      
       // $users = User::get();
       $vessels = Vessel::get();
 

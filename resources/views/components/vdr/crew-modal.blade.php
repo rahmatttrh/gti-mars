@@ -144,7 +144,7 @@
    </div>
 </div>
 
-<div class="modal fade" id="modalEdit" tabindex="1" role="dialog"  aria-hidden="true">
+<div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg" role="document">
    <div class="modal-dialog modal-lg" role="document">
       <form action="{{route('vdr.update')}}" method="POST" enctype="multipart/form-data">

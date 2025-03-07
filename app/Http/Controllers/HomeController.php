@@ -22,6 +22,7 @@ use App\Http\Controllers\GeofenceController;
 use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Document;
+use App\Models\Log;
 use App\Models\MaterialMan;
 use App\Models\News;
 use App\Models\Surveillance;
@@ -425,24 +426,69 @@ class HomeController extends Controller
          }
       }
 
+      // $user = User::create([
+      //    'name' => 'Administrator',
+      //    'username' => 'admin',
+      //    'email' => 'admin@pertamina.com',
+      //    'password' => Hash::make('12345678')
+      // ]);
+
+      // $user->assignRole('superuser');
+
+
+
       // $users = User::get();
-      // foreach($users as $u){
-      //    $u->update([
-      //       'password' => Hash::make('oses@2025')
+      // foreach($users as $user){
+      //    $user->update([
+      //       'password' => Hash::make('12345678')
       //    ]);
       // }
 
 
-      if(auth()->user()->hasRole('administrator')){
+      $debug = Carbon::make(1,10);
+      // dd(gmdate('H:i:s', 1.10 * 3600 ));
+      // $value = 15.45;
+      // $array = explode('.', $value);
+      // $hours = floor($value);
+      // $minutes = intval($array[1]);
+
+      
+
+      // dd($hours . ':' . $minutes);
+      
+      
+      // dd($array[1]);
+      // $seconds = ($value * 3600);
+      
+      // $minutes = floor($seconds / 60);
+      // dd($hours  . ':' . $minutes);
+
+
+      // $vessels = Vessel::get();
+      // foreach($vessels as $vessel){
+      //    $user = User::create([
+      //       'name' => $vessel->name . ' Office',
+      //       'username' => $vessel->username . '_office',
+      //       'email' => 'office_'.$vessel->email,
+      //       'password' => Hash::make('oses@2025'),
+      //       'type' => 'office',
+      //       'vessel_id' => $vessel->id
+      //    ]);
+      // }
+
+
+      if(auth()->user()->hasRole('superuser')){
          $vdrValidations = Vdr::where('status', 1)->get();
          $cargoValidations = ModelsRequest::where('status', 1)->get();
-         $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
+         $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(25);
          $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
          $takeouts = ModelsRequest::where('undo', '!=', null)->get();
          $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
          $vessels = Vessel::get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
-
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+         $allSchedules = Schedule::orderBy('updated_at', 'desc')->get();
+         $logs = Log::orderBy('created_at', 'desc')->get();
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
          $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
    
@@ -460,7 +506,7 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
             // dd($d->format('l'));
          }
-         return view('main', [
+         return view('main-superuser', [
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
             'schedules' => $schedules,
@@ -472,6 +518,11 @@ class HomeController extends Controller
             'dates' => $dates,
             'values' => $values,
             'vdrsArray' => $vdrsArray,
+
+            'allSchedules' => $allSchedules,
+            'allVdrs' => $allVdrs,
+
+            'logs' => $logs
 
          ])->with('i');
       } else if(auth()->user()->hasRole('marine')){
@@ -629,6 +680,7 @@ class HomeController extends Controller
       }
 
       // dd($vdr);
+
       $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
 
      
@@ -645,7 +697,7 @@ class HomeController extends Controller
          'vdr' => $vdr,
          'requests' => $requests,
          'docs' => $docs,
-         'vessels' => $vessels,
+         // 'vessels' => $vessels,
          'myVdr' => $myVdr,
          'myRecentVdrs' => $myRecentVdrs,
 

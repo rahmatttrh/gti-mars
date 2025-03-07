@@ -95,6 +95,7 @@ class DocumentController extends Controller
 
    public function manifest($id)
    {
+      // dd('ok');
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       // dd($schedule->code);
@@ -103,6 +104,7 @@ class DocumentController extends Controller
       $cargos = Cargo::where('schedule_id', $schedule->id)->get();
       $items = CargoItem::get();
       return view('pages.document.manifest', [
+         'cargos' => $cargos,
          'schedule' => $schedule,
          'destinations' => $destinations,
          'routes' => $fixRoutes,

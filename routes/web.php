@@ -349,7 +349,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 // Level Admin
-Route::group(['middleware' => ['role:marine|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
 
