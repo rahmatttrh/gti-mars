@@ -771,7 +771,7 @@ table {
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
-                              <small>{{formatRupiah(round($totaldaily))}} Ltrs</small>
+                              <small>{{$totaldaily}} Ltrs</small>
                         </td>
                      </tr>
    
