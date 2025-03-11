@@ -14,7 +14,12 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
-         <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
+         @if (auth()->user()->username == 'pet')
+            <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
+             @else
+             <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
+         @endif
+         
          <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
@@ -25,6 +30,8 @@
    
    <ul class="navbar-nav navbar-right ml-auto">
       
+      @if (auth()->user()->username == 'pet')
+      @else
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($notifrequests) > 0  ? 'beep' : ''}} {{count($notifvdrs) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
          <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
             <div class="dropdown-header">NOTIFICATIONS
@@ -79,6 +86,7 @@
             </div>
          </div>
       </li>
+      @endif
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
          <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
          <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
@@ -125,6 +133,14 @@
             </a>
          </li>
         
+         @if (auth()->user()->username == 'pet')
+         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}">
+            <div class="nav-link text-white">
+               
+               <span class="mr-3">Pertamina Energy Terminal</span>
+            </div>
+         </li>
+         @else
          <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}">
             <a href="{{route('news.edit')}}" class="nav-link {{ (request()->is('news/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('news/*'))
@@ -141,6 +157,7 @@
                <span class="mr-3">Images Feed</span>
             </a>
          </li>
+         @endif
         
       </ul>
    </div>
