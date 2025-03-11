@@ -577,7 +577,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
    });
 });
 
-Route::group(['middleware' => ['role:vessel|marine']], function () {
+Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
    Route::prefix('master/data/vessel')->group(function () {
       
 
@@ -652,7 +652,7 @@ Route::group(['middleware' => ['role:vessel|marine']], function () {
 
 
 // Level User Field
-Route::group(['middleware' => ['role:logistic|drilling|department|mm']], function () {
+Route::group(['middleware' => ['role:logistic|drilling|department|mm|superuser']], function () {
    Route::prefix('dsp/u/')->group(function () {
       Route::get("dash/main/{month}/{year}", [HomeController::class, "dspUser",])->name('dsp.user');
 
@@ -699,7 +699,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department|mm']], functio
    });
 });
 
-Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|vessel|mm']], function () {
+Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|vessel|mm|superuser']], function () {
    Route::prefix('cargo/item')->group(function () {
       Route::post('store', [CargoItemController::class, 'store'])->name('cargo.item.store');
       Route::post('import', [CargoItemController::class, 'storeImport'])->name('cargo.import');
@@ -711,7 +711,7 @@ Route::group(['middleware' => ['role:logistic|department|marine|admin-logistic|v
    });
 });
 
-Route::group(['middleware' => ['role:drilling|department|marine']], function () {
+Route::group(['middleware' => ['role:drilling|department|marine|superuser']], function () {
    Route::prefix('passenger/item')->group(function () {
       Route::post('store', [PassengerItemController::class, 'store'])->name('passenger.item.store');
       Route::post('import', [PassengerItemController::class, 'storeImport'])->name('crew.import');
@@ -721,7 +721,7 @@ Route::group(['middleware' => ['role:drilling|department|marine']], function () 
    });
 });
 
-Route::group(['middleware' => ['role:vessel']], function () {
+Route::group(['middleware' => ['role:vessel|superuser']], function () {
    Route::prefix('schedule')->group(function () {
       Route::get('vessel/{month}', [VesselScheduleController::class, 'index'])->name('schedule.vessel');
       Route::get('vessel/history/{month}', [VesselScheduleController::class, 'history'])->name('schedule.vessel.history');
