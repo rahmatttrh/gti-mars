@@ -12,15 +12,15 @@
 }
 
 .ttd {
-   font-size: 9px;
+   font-size: 5px;
 }
 
 table td {
-  font-size: 7px
+  font-size: 6px
 }
 
 .title {
-  font-size: 7px;
+  font-size: 6px;
   font-weight: bold;
 }
 
@@ -892,11 +892,12 @@ table {
                            <td class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
                         </tr>
                         <tr>
-                           <td rowspan="3" colspan="">
+                           <td rowspan="3" colspan="2">
                               ROB Correction Rule <br>
                               <small>* Positive Diff -> Correction Applied</small><br>
                               <small>* Negative Diff -> Correction Not-Applied</small>
                            </td>
+                           
                         </tr>
                      </tbody>
                   </table>
@@ -991,7 +992,7 @@ table {
                @endif
                
                <div class="col text-end pt-1">
-                  {!! QrCode::size(100)->generate(Request::url()); !!}
+                  {!! QrCode::size(75)->generate(Request::url()); !!}
                </div>
                
             </div>

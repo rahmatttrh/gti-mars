@@ -95,7 +95,12 @@ class MarineVdrController extends Controller
 
 
    public function validation(){
-      $vdrs = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
+      if (auth()->user()->username == 'pet') {
+         $vdrs = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
+      } else if(auth()->user()->username == 'marine'){
+         $vdrs = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
+      }
+      
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrs
       ])->with('i');

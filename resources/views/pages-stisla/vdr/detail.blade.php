@@ -648,7 +648,7 @@
         let a = bulat * contractualFuelValue;
         let b = ((desimal * 100) / 60) * contractualFuelValue;
         // Hitung hasil perkalian
-        var result = Math.round(a + b);
+        var result = a + b;
 
         // Set hasil perkalian ke input daily[]
         $('input[name="daily[]"]', '#' + rowId).val(result);

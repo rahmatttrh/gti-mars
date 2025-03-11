@@ -46,7 +46,7 @@
 
 
                            @if($operating->heading->daily == '1')
-                           <input type="text" readonly name="daily[]"  value="{{round($operating->daily)}}">
+                           <input type="text" readonly name="daily[]"  value="{{$operating->daily}}">
                            @else
                            <input type="hidden" readonly name="daily[]"  value="{{$operating->daily}}">
                            @endif
@@ -60,7 +60,7 @@
                      </th>
                      <th colspan="2"></th>
                      <th>
-                           {{round($totaldaily)}} Ltrs
+                           {{$totaldaily}} Ltrs
                      </th>
                   </tr>
 

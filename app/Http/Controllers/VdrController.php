@@ -540,7 +540,7 @@ class VdrController extends Controller
             'table' => 'vdrs'
          ]);
 
-         return redirect()->route('vdr.show', enkripRambo($vdr->id))->with('success', 'VDR data successfully saved.');
+         return redirect()->route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR data successfully saved.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
@@ -1105,19 +1105,77 @@ class VdrController extends Controller
          $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
 
 
+         $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+         $vdr = Vdr::find($req->vdr_id);
+
          foreach ($operatings as $operating) {
+            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+            // $totalHigh = $activities->sum('high');
+            // $totalNormal = $operating->getSumNormal();
+            // $totalSlow = $activities->sum('slow');
+            // $totalManu = $activities->sum('manu');
+            // $totalIdle = $activities->sum('idle');
+            // $totalTow = $activities->sum('tow');
+            // $totalAh = $activities->sum('ah');
+            // $totalSb = $activities->sum('sb');
+            $totalHigh = $operating->getSumHigh();
+            $totalNormal = $operating->getSumNormal();
+            $totalSlow = $operating->getSumSlow();
+            $totalManu = $operating->getSumManu();
+            $totalIdle = $operating->getSumIdle();
+            $totalTow = $operating->getSumTow();
+            $totalAh = $operating->getSumAh();
+            $totalSb = $operating->getSumSb();
 
-               $field = $operating->heading->field;
+            if ($operating->heading_id == 1) {
+               $operating->update([
+                  'time' => floatval($totalHigh)
+               ]);
+            } elseif ($operating->heading_id == 2) {
+               $operating->update([
+                  'time' => floatval($totalNormal)
+               ]);
+            } elseif ($operating->heading_id == 3) {
+               $operating->update([
+                  'time' => floatval($totalSlow)
+               ]);
+            } elseif ($operating->heading_id == 4) {
+               $operating->update([
+                  'time' => floatval($totalManu)
+               ]);
+            } elseif ($operating->heading_id == 5) {
+               $operating->update([
+                  'time' => floatval($totalIdle)
+               ]);
+            } elseif ($operating->heading_id == 6) {
+               $operating->update([
+                  'time' => floatval($totalTow)
+               ]);
+            } elseif ($operating->heading_id == 7) {
+               $operating->update([
+                  'time' => floatval($totalAh)
+               ]);
+            } elseif ($operating->heading_id == 8) {
+               $operating->update([
+                  'time' => floatval($totalSb)
+               ]);
+            } 
+            
 
 
-               if ($field) {
-                  # code...
-                  $totalWaktu = $totalMode[$field];
 
-                  $updateOperating = $operating->update([
-                     'time' => floatval($totalWaktu)
-                  ]);
-               }
+
+               // $field = $operating->heading->field;
+
+
+               // if ($field) {
+               //    $totalWaktu = $totalMode[$field];
+               //    $updateOperating = $operating->update([
+               //       'time' => floatval($totalWaktu)
+               //    ]);
+               // }
+
+               // dd('not ok');
          }
 
 
@@ -1189,6 +1247,78 @@ class VdrController extends Controller
       if ($deleteActivity) {
          # code...
          // $vdr = Vdr::find($req->vdr_id);
+         $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+         // $vdr = Vdr::find($req->vdr_id);
+
+         foreach ($operatings as $operating) {
+            $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+            // $totalHigh = $activities->sum('high');
+            // $totalNormal = $operating->getSumNormal();
+            // $totalSlow = $activities->sum('slow');
+            // $totalManu = $activities->sum('manu');
+            // $totalIdle = $activities->sum('idle');
+            // $totalTow = $activities->sum('tow');
+            // $totalAh = $activities->sum('ah');
+            // $totalSb = $activities->sum('sb');
+            $totalHigh = $operating->getSumHigh();
+            $totalNormal = $operating->getSumNormal();
+            $totalSlow = $operating->getSumSlow();
+            $totalManu = $operating->getSumManu();
+            $totalIdle = $operating->getSumIdle();
+            $totalTow = $operating->getSumTow();
+            $totalAh = $operating->getSumAh();
+            $totalSb = $operating->getSumSb();
+
+            if ($operating->heading_id == 1) {
+               $operating->update([
+                  'time' => floatval($totalHigh)
+               ]);
+            } elseif ($operating->heading_id == 2) {
+               $operating->update([
+                  'time' => floatval($totalNormal)
+               ]);
+            } elseif ($operating->heading_id == 3) {
+               $operating->update([
+                  'time' => floatval($totalSlow)
+               ]);
+            } elseif ($operating->heading_id == 4) {
+               $operating->update([
+                  'time' => floatval($totalManu)
+               ]);
+            } elseif ($operating->heading_id == 5) {
+               $operating->update([
+                  'time' => floatval($totalIdle)
+               ]);
+            } elseif ($operating->heading_id == 6) {
+               $operating->update([
+                  'time' => floatval($totalTow)
+               ]);
+            } elseif ($operating->heading_id == 7) {
+               $operating->update([
+                  'time' => floatval($totalAh)
+               ]);
+            } elseif ($operating->heading_id == 8) {
+               $operating->update([
+                  'time' => floatval($totalSb)
+               ]);
+            } 
+            
+
+
+
+
+               // $field = $operating->heading->field;
+
+
+               // if ($field) {
+               //    $totalWaktu = $totalMode[$field];
+               //    $updateOperating = $operating->update([
+               //       'time' => floatval($totalWaktu)
+               //    ]);
+               // }
+
+               // dd('not ok');
+         }
 
          ModelsLog::create([
             'system' => 'VDR',

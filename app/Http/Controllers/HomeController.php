@@ -426,14 +426,7 @@ class HomeController extends Controller
          }
       }
 
-      // $user = User::create([
-      //    'name' => 'Administrator',
-      //    'username' => 'admin',
-      //    'email' => 'admin@pertamina.com',
-      //    'password' => Hash::make('12345678')
-      // ]);
-
-      // $user->assignRole('superuser');
+      
 
 
 
@@ -478,6 +471,13 @@ class HomeController extends Controller
 
 
       if(auth()->user()->hasRole('superuser')){
+         // $user = User::create([
+         //    'name' => 'PET',
+         //    'username' => 'pet',
+         //    'email' => 'pet@pertamina.com',
+         //    'password' => Hash::make('oses@2025')
+         // ]);
+         // $user->assignRole('marine');
          $vdrValidations = Vdr::where('status', 1)->get();
          $cargoValidations = ModelsRequest::where('status', 1)->get();
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(25);
@@ -526,7 +526,13 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if(auth()->user()->hasRole('marine')){
-         $vdrValidations = Vdr::where('status', 1)->get();
+         
+         if (auth()->user()->username == 'pet') {
+            $vdrValidations = Vdr::where('status', 1)->get();
+         } else if(auth()->user()->username == 'marine'){
+            $vdrValidations = Vdr::where('status', 2)->get();
+         }
+         
          $cargoValidations = ModelsRequest::where('status', 1)->get();
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
@@ -1703,7 +1709,12 @@ class HomeController extends Controller
 
    public function vdrMarineTable()
    {
-      $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+      if (auth()->user()->username == 'pet') {
+         $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+      } elseif(auth()->user()->username == 'marine'){
+         $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
+      }
+      
       return view('pages-stisla.marine.vdr.history', [
          'vdrs' => $vdrs
       ])->with('i');

@@ -21,9 +21,9 @@
             <div class="alert bg-danger">
                VDR Reject by Marine
                <hr>
-               @foreach ($rejectvdrs as $rejectvdr)
+               {{-- @foreach ($rejectvdrs as $rejectvdr)
                   <a href="{{route('vdr.show', enkripRambo($rejectvdr->id))}}">{{$rejectvdr->code}} {{$rejectvdr->date}}</a>  - {{$rejectvdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}
-               @endforeach
+               @endforeach --}}
             </div>
             @endif
             
