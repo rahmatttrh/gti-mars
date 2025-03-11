@@ -434,7 +434,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
          // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
          // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
 
-         Route::post('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
+         Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
