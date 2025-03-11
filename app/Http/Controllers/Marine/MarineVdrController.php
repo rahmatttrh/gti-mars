@@ -132,7 +132,7 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      return redirect()->back()->with('success', 'VDR Marine Approved');
+      return redirect()->back()->with('success', 'VDR PET Approved');
    }
 
    public function approveMarine(Request $req){
