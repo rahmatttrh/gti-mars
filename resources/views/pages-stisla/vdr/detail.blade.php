@@ -91,7 +91,7 @@
                   <table>
                      <tbody>
                         <tr>
-                           <td style="width: 250px"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           <td style="width: 250px" class="bg-primary text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
                            <td>{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}</td>
                         </tr>
                         <tr>
@@ -154,24 +154,24 @@
                </div>
                <div class="col">
                   @if (auth()->user()->hasRole('superuser'))
-                  Vessel
-                  <div class="d-flex">
-                     <a href="#" class="btn btn-block btn-info border shadow-none" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                     <div class="btn btn-group p-0">
-                        
-                        <a href="#" class="btn btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
-                        <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
+                     Vessel
+                     <div class="d-flex">
+                        <a href="#" class="btn btn-block btn-info border shadow-none" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                        <div class="btn btn-group p-0">
+                           
+                           <a href="#" class="btn btn-light border shadow-none" data-toggle="modal" data-target="#modalEdit">Edit</a>
+                           <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
+                        </div>
                      </div>
-                  </div>
-                  <hr>
-                  Marine
-                  <div class="btn btn-block btn-group p-0">
-                     <a href="" class="btn btn-info btn-block" data-toggle="modal" data-target="#vdr-approve-marine">Approve </a>
-                     <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                  </div>
-                  
-                  <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval Level</a>
-                  <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span>
+                     <hr>
+                     Marine
+                     <div class="btn btn-block btn-group p-0">
+                        <a href="" class="btn btn-info btn-block" data-toggle="modal" data-target="#vdr-approve-marine">Approve </a>
+                        <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     </div>
+                     
+                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval Level</a>
+                     <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span>
                   @endif
 
                   @if ($vdr->status == 2 && auth()->user()->hasRole('suptent'))
@@ -195,28 +195,36 @@
                         
                      @endif
                   @endif
-                  @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
+
+                  {{-- @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
+                  @endif --}}
+                  @if ($vdr->status == 1 && auth()->user()->hasRole('marine') && auth()->user()->username == 'pet')
                   {{-- <div class="btn-group mr-2"> --}}
                      <div class="btn btn-block btn-group p-0">
-                        <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a>
+                        {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                        <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve</a>
                         <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                      </div>
                      
-                     <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Approval Level</a>
-                     <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span>
+                     
+                     {{-- <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span> --}}
                      
                      <hr>
-                     <div class="btn btn-block btn-group p-0">
+                     {{-- <div class="btn btn-block btn-group p-0"> --}}
                         {{-- <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a> --}}
-                     <a href="#" class="btn btn-danger  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
-                     </div>
+                     {{-- <a href="#" class="btn btn-light border  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a> --}}
+                     {{-- </div> --}}
                   {{-- </div> --}}
                   
                   @endif
-                  <hr>
+                  {{-- <hr> --}}
                   <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-block btn-light border shadow-none">Export PDF</a>
                   <hr>
+                  
                   <span class="text-muted">Setiap Tab terdapat tombol Save yang harus di klik ketika ada perubahan data pada Tab tersebut.</span>
+                  <br>
+                  <br>
+                  <a href="#" class="" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
                </div>
             </div>
          </div>
@@ -375,6 +383,62 @@
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-primary">Update</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="modalAppPet" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+         <form action="{{route('vdr.approve.pet')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Approve VDR</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  
+
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <div class="row mb-2">
+                     
+                     <div class="col-12">
+                        
+                        <div class="form-group">
+                           <label for="title1">Title </label>
+                           <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" >
+                           @error('title1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                     <div class="col-12">
+                        <div class="form-group">
+                           <label for="name1">Name </label>
+                           <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
+                           @error('name1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div>
+                  </div>
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Approve</button>
                </div>
             </div>
          </form>

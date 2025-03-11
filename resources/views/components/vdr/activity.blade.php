@@ -6,6 +6,12 @@
    @endif
 @endif
 
+@if (auth()->user()->hasRole('administrator'))
+<a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalAddActivity">
+   <i class="fa fa-plus"></i> Add
+</a>
+@endif
+
 
 <table class=" table-striped  mt-2">
     <thead>
@@ -56,8 +62,11 @@
                {{$activity->activity}}
             </td>
             <td>
+               @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                <a href="#" data-toggle="modal" data-target="#editActivity-{{$activity->id}}"> Edit </a>
-                <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivity-{{$activity->id}}"> Delete </a>
+               <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivity-{{$activity->id}}"> Delete </a>
+               @endif
+               
             </td>
         </tr>
 
