@@ -16,7 +16,7 @@
 
 
    <div class="row"> 
-      <div class="col-md-8">
+      <div class="col-md-9">
          <div class="row">
             <div class="col-md-12">
                <div class="card card-statistic-1 border">
@@ -39,45 +39,85 @@
             
          </div>
          {{-- <span class="btn btn-light border">Sailing Order</span> --}}
-         <table class="display  border">
-            <tbody>
-               <tr>
-                  <th>Vessel Daily Report</th>
-               </tr>
-            </tbody>
-         </table>
-         <div class="table-responsive overflow-auto" style="height: 120px">
-            <table class="display  border">
-               
-               <thead>
-                  
-                  <tr>
-                     <th>Vessel</th>
-                     <th>Code</th>
-                     <th>Date</th>
-                     <th>Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach ($vdrs as $vdr)
-                     <tr class="border" style="border: 1px black">
-                        <td><a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
-                        <td>{{$vdr->code}}</td>
-                        <td>{{formatDate($vdr->date)}}</td>
-                        <td>
-                           <x-status-stisla.vdr :vdr="$vdr" />
-                        </td>
+         
+         <div class="row">
+            <div class="col-6">
+               <table class="display  border">
+                  <tbody>
+                     <tr>
+                        <th>VDR Validation</th>
                      </tr>
-                  @endforeach
-               </tbody>
-            </table>
+                  </tbody>
+               </table>
+               <div class="table-responsive overflow-auto" style="height: 310px">
+                  <table class="display  border">
+                     
+                     <thead>
+                        
+                        <tr>
+                           <th>Vessel</th>
+                           {{-- <th>Code</th> --}}
+                           <th>Date</th>
+                           <th>Status</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vdrvalids as $vdr)
+                           <tr class="border" style="border: 1px black">
+                              <td><a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
+                              {{-- <td>{{$vdr->code}}</td> --}}
+                              <td>{{formatDate($vdr->date)}}</td>
+                              <td>
+                                 <x-status-stisla.vdr :vdr="$vdr" />
+                              </td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <div class="col-6">
+               <table class="display  border">
+                  <tbody>
+                     <tr>
+                        <th>VDR History</th>
+                     </tr>
+                  </tbody>
+               </table>
+               <div class="table-responsive overflow-auto" style="height: 310px">
+                  <table class="display  border">
+                     
+                     <thead>
+                        
+                        <tr>
+                           <th>Vessel</th>
+                           {{-- <th>Code</th> --}}
+                           <th>Date</th>
+                           <th>Status</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vdrs->where('status', '>', 1) as $vdr)
+                           <tr class="border" style="border: 1px black">
+                              <td><a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
+                              {{-- <td>{{$vdr->code}}</td> --}}
+                              <td>{{formatDate($vdr->date)}}</td>
+                              <td>
+                                 <x-status-stisla.vdr :vdr="$vdr" />
+                              </td>
+                           </tr>
+                        @endforeach
+                     </tbody>
+                  </table>
+               </div>
+            </div>
          </div>
          <hr>
          
          
 
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
          
             <table class="display  border">
                <tbody>
