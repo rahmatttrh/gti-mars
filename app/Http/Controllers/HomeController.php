@@ -471,6 +471,7 @@ class HomeController extends Controller
 
 
       if(auth()->user()->hasRole('superuser')){
+
          // $user = User::create([
          //    'name' => 'PET',
          //    'username' => 'pet',
@@ -478,6 +479,7 @@ class HomeController extends Controller
          //    'password' => Hash::make('oses@2025')
          // ]);
          // $user->assignRole('marine');
+
          $vdrValidations = Vdr::where('status', 1)->get();
          $cargoValidations = ModelsRequest::where('status', 1)->get();
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(25);
@@ -526,11 +528,13 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if(auth()->user()->hasRole('marine')){
-         
+
          if (auth()->user()->username == 'pet') {
             $vdrValidations = Vdr::where('status', 1)->get();
-         } else if(auth()->user()->username == 'marine'){
+            $vdrs = Vdr::where('status', '>=', 1)->get();
+         } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->get();
+            $vdrs = Vdr::where('status', '>=', 2)->get();
          }
          
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -556,9 +560,11 @@ class HomeController extends Controller
             $dates[] = $d->format('l, d/m/Y');
             $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
             $values[] = count($totalRequests);
-            // dd($d->format('l'));
          }
+
+         $logs = Log::get();
          return view('main', [
+            'vdrs' => $vdrs,
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
             'schedules' => $schedules,
@@ -570,6 +576,8 @@ class HomeController extends Controller
             'dates' => $dates,
             'values' => $values,
             'vdrsArray' => $vdrsArray,
+
+            'logs' => $logs
 
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {

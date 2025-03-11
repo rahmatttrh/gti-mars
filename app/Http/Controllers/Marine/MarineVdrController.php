@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Marine;
 
 use App\Http\Controllers\Controller;
+use App\Models\Log;
 use App\Models\Vdr;
 use App\Models\VdrOperating;
 use App\Models\VdrTimestamp;
@@ -106,6 +107,93 @@ class MarineVdrController extends Controller
       ])->with('i');
    }
 
+   public function approvePet(Request $req){
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($req->id);
+      $vdr->update([
+         'status' => 2,
+         'title1' => $req->title1,
+         'name1' => $req->name1,
+      ]);
+
+      
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Approve VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'PET',
+         'table' => 'vdrs'
+      ]);
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 2,
+         'user_id' => auth()->user()->id
+      ]);
+      // dd()
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
+   public function approveMarine(Request $req){
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($req->id);
+      $vdr->update([
+         'status' => 3,
+         'title1' => $req->title2,
+         'name1' => $req->name2,
+      ]);
+
+      
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Approve VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Marine',
+         'table' => 'vdrs'
+      ]);
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 3,
+         'user_id' => auth()->user()->id
+      ]);
+      // dd()
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
+   public function approveSuptent(Request $req){
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($req->id);
+      $vdr->update([
+         'status' => 4,
+         'title1' => $req->title3,
+         'name1' => $req->name3,
+      ]);
+
+      
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Approve VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Superintendent',
+         'table' => 'vdrs'
+      ]);
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 4,
+         'user_id' => auth()->user()->id
+      ]);
+      // dd()
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
 
    public function approve($id){
       $dekripId = dekripRambo($id);
@@ -141,21 +229,20 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
    }
 
-   public function approveSuptent($id){
-      $dekripId = dekripRambo($id);
-      $vdr = Vdr::find($dekripId);
-      $vdr->update([
-         'status' => 3
-      ]);
-      // dd()
-      VdrTimestamp::create([
-         'vdr_id' => $vdr->id,
-         'status' => 3,
-         'user_id' => auth()->user()->id
-      ]);
+   // public function approveSuptent($id){
+   //    $dekripId = dekripRambo($id);
+   //    $vdr = Vdr::find($dekripId);
+   //    $vdr->update([
+   //       'status' => 3
+   //    ]);
+   //    VdrTimestamp::create([
+   //       'vdr_id' => $vdr->id,
+   //       'status' => 3,
+   //       'user_id' => auth()->user()->id
+   //    ]);
 
-      return redirect()->back()->with('success', 'VDR Suptent Approved');
-   }
+   //    return redirect()->back()->with('success', 'VDR Suptent Approved');
+   // }
 
    public function approveLuthfi($id){
       $dekripId = dekripRambo($id);

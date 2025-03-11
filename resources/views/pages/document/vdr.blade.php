@@ -12,7 +12,7 @@
 }
 
 .ttd {
-   font-size: 5px;
+   font-size: 7px;
 }
 
 table td {
@@ -771,7 +771,7 @@ table {
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
-                              <small>{{number_format($totaldaily, 2, ',' , '.')}} Ltrs</small>
+                              <small>{{$totaldaily}} Ltrs</small>
                         </td>
                      </tr>
    
@@ -799,74 +799,110 @@ table {
             <div class="d-flex">
                <div>
                   <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
-                     <table class="mb-1" style="width: 500px">
-                        <thead>
-                           {{-- <tr>
-                              <th colspan="2" class="text-center">TIME</th>
-                              <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
-                              <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
-                           </tr> --}}
-                           <tr>
-                              <td class="title">Type</td>
-                              <td class="text-truncate text-center "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
-                              <td class="text-center "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
-                              <td class="text-center "><b>Received</b></td>
-                              <td class="text-center "><b>Transferred</b></td>
-                              <td class="text-center "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
-                              <td class="text-center "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @foreach ($vdrCargos as $vdrCargo)
-                           @php
-                               if ($vdrCargo->heading_id <= 3) {
-                                 $satuan = 'Ltrs';
-                               } else {
-                                 $satuan = 'cuft';
-                               }
-                           @endphp
-                           <tr>
-                              <td>{{$vdrCargo->heading->description}}</td>
-                              <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
-                              @if ($vdrCargo->heading_id > 2)
-                                 <td class="text-center" style="background-color: rgb(186, 186, 186)">
-                                 </td>
-                                 @else
-                                 <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
-                              @endif
-                              
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
-                              <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
-                              <td class="bg-yellow">{{$vdrCargo->remark}}</td>
-                              
-                           </tr>
-                           @endforeach
-                           <tr>
-                              <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
-                              {{-- <td><small><b></b></small></td> --}}
-                           </tr>
-                           <tr>
-                              <td class="text-center" colspan="2"><b>Activity</b></td>
-                              <td class="text-center"><b>ROB Check Time</b></td>
-                              <td class="text-center"><b>ROB by VDR at Check Time</b></td>
-                              <td class="text-center"><b>Actual ROB at Check Time</b></td>
-                              <td class="text-center"><b>ROB Different</b></td>
-                              
-                           </tr>
-                           <tr>
-                              <td colspan="2" class="text-center">{{$vdrPeriodic->activity ?? ''}} </td>
-                              <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                              <td class="text-center" colspan="">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
-                              
-                           </tr>
-                        </tbody>
-                        
-                     </table>
+                  <table class="mb-1" style="width: 100%">
+                     <thead>
+                        {{-- <tr>
+                           <th colspan="2" class="text-center">TIME</th>
+                           <th colspan="8" class="text-center">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</th>
+                           <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
+                        </tr> --}}
+                        <tr>
+                           <td class="title">Type</td>
+                           <td class="text-truncate text-center "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
+                           <td class="text-center "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
+                           <td class="text-center "><b>Received</b></td>
+                           <td class="text-center "><b>Transferred</b></td>
+                           <td class="text-center "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
+                           <td class="text-center "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
+                           <td class="text-center " colspan="2"><b>Special Calculation</b>  </td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vdrCargos as $vdrCargo)
+                        @php
+                              if ($vdrCargo->heading_id <= 3) {
+                              $satuan = 'Ltrs';
+                              } else {
+                              $satuan = 'cuft';
+                              }
+                        @endphp
+                        <tr>
+                           <td>{{$vdrCargo->heading->description}}</td>
+                           <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
+                           @if ($vdrCargo->heading_id > 2)
+                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                           @endif
+                           
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
+                           <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
+                           <td class="bg-yellow">{{$vdrCargo->remark}}</td>
+                           @if ($vdrCargo->heading_id == 1)
+                           <td rowspan="2">
+                              Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
+                           </td>
+                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
+                           @endif
+                           @if ($vdrCargo->heading_id == 3)
+                           <td rowspan="3">
+                              Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)
+                           </td>
+                           <td rowspan="3" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}} Ltrs</td>
+                           @endif
+                           @if ($vdrCargo->heading_id == 6)
+                           <td rowspan="2">
+                              Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)
+                           </td>
+                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
+                           @endif
+
+                           @if ($vdrCargo->heading_id == 8)
+                           <td rowspan="2">
+                              Total Actual Daily Fuel Cons. = (Part 1 + Part 2)
+                           </td>
+                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
+                           @endif
+                           @if ($vdrCargo->heading_id == 10)
+                           <td rowspan="2">
+                              ROB Correction Rule <br>
+                              <small>* Positive Diff -> Correction Applied</small><br>
+                              <small>* Negative Diff -> Correction Not-Applied</small>
+                           </td>
+                           @endif
+                        </tr>
+                        @endforeach
+                        <tr>
+                           <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                           {{-- <td><small><b></b></small></td> --}}
+                        </tr>
+                        <tr>
+                           <td class="text-center" colspan="2"><b>Activity</b></td>
+                           <td class="text-center"><b>ROB Check Time</b></td>
+                           <td class="text-center"><b>ROB by VDR at Check Time</b></td>
+                           <td class="text-center"><b>Actual ROB at Check Time</b></td>
+                           <td class="text-center"><b>ROB Different</b></td>
+                           <td rowspan="2">
+                              ROB Correction Rule <br>
+                              <small>* Positive Diff -> Correction Applied</small><br>
+                              <small>* Negative Diff -> Correction Not-Applied</small>
+                           </td>
+                        </tr>
+                        <tr>
+                           <td colspan="2" class="text-center">{{$vdrPeriodic->activity ?? ''}} </td>
+                           <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
+                           <td class="text-center" colspan="">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
+                           
+                        </tr>
+                     </tbody>
+                     
+                  </table>
                </div>
-               <div>
+               {{-- <div>
                   <small class="title">-</small>
                   <table class=" ml--4">
                      <thead>
@@ -901,7 +937,7 @@ table {
                         </tr>
                      </tbody>
                   </table>
-               </div>
+               </div> --}}
                
             </div>
             
@@ -992,7 +1028,7 @@ table {
                @endif
                
                <div class="col text-end pt-1">
-                  {!! QrCode::size(75)->generate(Request::url()); !!}
+                  {!! QrCode::size(50)->generate(Request::url()); !!}
                </div>
                
             </div>
