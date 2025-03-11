@@ -152,8 +152,8 @@ class VdrOperating extends Model
       $debugMinutes = 0;
       $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
       foreach($ops as $op){
-         $time = $op->normal;
-         $array = explode('.', $op->normal);
+         $time = $op->slow;
+         $array = explode('.', $op->slow);
          $hours = floor($time);
          $minutes = intval($array[1]);
          

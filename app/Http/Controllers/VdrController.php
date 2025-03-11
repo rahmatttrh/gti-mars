@@ -507,7 +507,7 @@ class VdrController extends Controller
             'table' => 'vdrs'
          ]);
 
-         return redirect()->route('vdr.show', enkripRambo($vdr->id))->with('success', 'VDR data successfully saved.');
+         return redirect()->route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR data successfully saved.');
       } catch (\Exception $e) {
          // Jika terjadi kesalahan, kita rollback transaksi
          DB::rollback();
