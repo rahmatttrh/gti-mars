@@ -75,7 +75,7 @@
          @endif
 
 
-         @if (auth()->user()->hasRole('administrator'))
+         @if (auth()->user()->hasRole('superuser'))
          <hr>
             <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
          @endif
