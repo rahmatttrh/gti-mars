@@ -60,7 +60,7 @@
                      </th>
                      <th colspan="2"></th>
                      <th>
-                           {{$totaldaily}} Ltrs
+                           {{round($totaldaily)}} Ltrs
                      </th>
                   </tr>
 

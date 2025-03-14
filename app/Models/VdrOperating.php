@@ -76,12 +76,53 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                                 if ($debugMinutes >= 60) {
+                                    $minLeft = $debugMinutes - 60;
+                                    $debugMinutes = $minLeft;
+                                    $debugHours += 1;
+                                    if ($debugMinutes >= 60) {
+                                       $minLeft = $debugMinutes - 60;
+                                       $debugMinutes = $minLeft;
+                                       $debugHours += 1;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       if ($debugMinutes < 10) {
@@ -124,12 +165,54 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                                 if ($debugMinutes >= 60) {
+                                    $minLeft = $debugMinutes - 60;
+                                    $debugMinutes = $minLeft;
+                                    $debugHours += 1;
+                                    if ($debugMinutes >= 60) {
+                                       $minLeft = $debugMinutes - 60;
+                                       $debugMinutes = $minLeft;
+                                       $debugHours += 1;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+                  
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       if ($debugMinutes < 10) {
@@ -170,12 +253,58 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                                 if ($debugMinutes >= 60) {
+                                    $minLeft = $debugMinutes - 60;
+                                    $debugMinutes = $minLeft;
+                                    $debugHours += 1;
+                                    if ($debugMinutes >= 60) {
+                                       $minLeft = $debugMinutes - 60;
+                                       $debugMinutes = $minLeft;
+                                       $debugHours += 1;
+                                       if ($debugMinutes >= 60) {
+                                          $minLeft = $debugMinutes - 60;
+                                          $debugMinutes = $minLeft;
+                                          $debugHours += 1;
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       if ($debugMinutes < 10) {
@@ -217,12 +346,43 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       if ($debugMinutes < 10) {
@@ -262,12 +422,43 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       
@@ -309,12 +500,43 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       
@@ -356,12 +578,43 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       
@@ -403,12 +656,53 @@ class VdrOperating extends Model
             $minLeft = $debugMinutes - 60;
             $debugMinutes = $minLeft;
             $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                                 if ($debugMinutes >= 60) {
+                                    $minLeft = $debugMinutes - 60;
+                                    $debugMinutes = $minLeft;
+                                    $debugHours += 1;
+                                    if ($debugMinutes >= 60) {
+                                       $minLeft = $debugMinutes - 60;
+                                       $debugMinutes = $minLeft;
+                                       $debugHours += 1;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
          }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
+         
       }
 
       

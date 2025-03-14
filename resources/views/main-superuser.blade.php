@@ -55,7 +55,7 @@
                            </tr>
                         </tbody>
                      </table>
-                     <div class="table-responsive overflow-auto" style="height: 185px">
+                     <div class="table-responsive overflow-auto" style="height: 340px">
                         <table class="display  border">
                            
                            <thead>
@@ -90,7 +90,7 @@
                            </tr>
                         </tbody>
                      </table>
-                     <div class="table-responsive overflow-auto" style="height: 185px">
+                     <div class="table-responsive overflow-auto" style="height: 340px">
                         <table class="display  border">
                            
                            <thead>
@@ -154,7 +154,7 @@
                      </tr>
                   </tbody>
                </table>
-               <div class="table-responsive overflow-auto" style="height: 320px">
+               <div class="table-responsive overflow-auto" style="height: 460px">
                 <table class="border display "   >
                   {{-- <thead>
                      <tr>

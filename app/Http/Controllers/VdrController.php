@@ -793,11 +793,11 @@ class VdrController extends Controller
          $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb;
          // dd($totalMinute);
          // dd($req->sb);
-         if ($totalMinute > 0) {
-            $grandMinute = explode('.', "$sum", 2)[1];
-         } else {
-            $grandMinute = 0;
-         }
+         // if ($totalMinute > 0) {
+         //    $grandMinute = explode('.', "$sum", 2)[1];
+         // } else {
+         //    $grandMinute = 0;
+         // }
          // dd($sum);
          
 
@@ -1226,7 +1226,7 @@ class VdrController extends Controller
 
          $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
 
-         $daily = round($a + $b);
+         $daily = $a + $b;
          // dd($daily);
 
          $operatingUpdate = $operating->update([

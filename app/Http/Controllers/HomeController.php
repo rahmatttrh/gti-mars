@@ -530,11 +530,11 @@ class HomeController extends Controller
       } else if(auth()->user()->hasRole('marine')){
 
          if (auth()->user()->username == 'pet') {
-            $vdrValidations = Vdr::where('status', 1)->get();
-            $vdrs = Vdr::where('status', '>=', 1)->get();
+            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
-            $vdrValidations = Vdr::where('status', 2)->get();
-            $vdrs = Vdr::where('status', '>=', 2)->get();
+            $vdrValidations = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
          }
          
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -562,7 +562,7 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
          }
 
-         $logs = Log::get();
+         $logs = Log::orderBy('created_at', 'desc')->get();
          return view('main', [
             'vdrs' => $vdrs,
             'vdrValidations' => $vdrValidations,

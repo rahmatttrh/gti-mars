@@ -771,7 +771,7 @@ table {
                         </td>
                         <td colspan="2"></td>
                         <td class="text-center">
-                              <small>{{$totaldaily}} Ltrs</small>
+                              <small>{{formatRibuan(round($totaldaily))}} Ltrs</small>
                         </td>
                      </tr>
    
@@ -1028,7 +1028,7 @@ table {
                @endif
                
                <div class="col text-end pt-1">
-                  {!! QrCode::size(50)->generate(Request::url()); !!}
+                  {!! QrCode::size(65)->generate(Request::url()); !!}
                </div>
                
             </div>
@@ -1049,7 +1049,7 @@ table {
 
      
       
-      <hr>
+      
 
       
       

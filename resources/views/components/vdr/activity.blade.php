@@ -6,11 +6,11 @@
    @endif
 @endif
 
-@if (auth()->user()->hasRole('administrator'))
+{{-- @if (auth()->user()->hasRole('administrator'))
 <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalAddActivity">
    <i class="fa fa-plus"></i> Add
 </a>
-@endif
+@endif --}}
 
 
 <table class=" table-striped  mt-2">
