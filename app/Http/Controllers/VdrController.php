@@ -736,9 +736,9 @@ class VdrController extends Controller
 
 
 
-      DB::beginTransaction();
-      // dd($req->sb);
-      try {
+      // DB::beginTransaction();
+      // // dd($req->sb);
+      // try {
          $createVdr = VdrActivity::create([
                'vdr_id' => $req->id,
                'created_by' => $req->created_by,
@@ -799,15 +799,78 @@ class VdrController extends Controller
          //    $grandMinute = 0;
          // }
          // dd($sum);
+         $totalHours = '';
+         $debugHours = 0;
+         $debugMinutes = 0;
+
+         $hourHigh = floor($req->high) ;
+         $arrayHigh = explode('.', $req->high);
+         $minuteHigh = intval($arrayHigh[1]);
+         
+         $hourNormal = floor($req->normal);
+         $arrayNormal = explode('.', $req->normal);
+         $minuteNormal = intval($arrayNormal[1]);
+
+         $hourSlow =  floor($req->slow);
+         $arraySlow = explode('.', $req->slow);
+         $minuteSlow = intval($arraySlow[1]);
+
+         $hourManu =  floor($req->manu);
+         $arrayManu = explode('.', $req->manu);
+         $minuteManu = intval($arrayManu[1]);
+
+         $hourIdle =  floor($req->idle);
+         $arrayIdle = explode('.', $req->idle);
+         $minuteIdle = intval($arrayIdle[1]);
+
+         $hourTow =  floor($req->tow);
+         $arrayTow = explode('.', $req->tow);
+         $minuteTow = intval($arrayTow[1]);
+
+         $hourAh =  floor($req->ah);
+         $arrayAh = explode('.', $req->ah);
+         $minuteAh = intval($arrayAh[1]);
+
+         $hourSb =  floor($req->sb);
+         $arraySb = explode('.', $req->high);
+         $minuteSb = intval($arraySb[1]);
+
+
+         $debugHour = $hourHigh + $hourNormal + $hourSlow + $hourManu + $hourIdle + $hourTow + $hourAh + $hourSb;
+         $debugMinute = $minuteHigh + $minuteNormal + $minuteSlow + $minuteManu + $minuteIdle + $minuteTow + $minuteAh + $minuteSb;
+
+         if ($debugMinute >= 60) {
+            $minLeft = $debugMinute - 60;
+            $debugMinute = $minLeft;
+            $debugHour += 1;
+            if ($debugMinute >= 60) {
+               $minLeft = $debugMinute - 60;
+               $debugMinute = $minLeft;
+               $debugHour += 1;
+               if ($debugMinute >= 60) {
+                  $minLeft = $debugMinute - 60;
+                  $debugMinute = $minLeft;
+                  $debugHour += 1;
+                  if ($debugMinute >= 60) {
+                     $minLeft = $debugMinute - 60;
+                     $debugMinute = $minLeft;
+                     $debugHour += 1;
+                  }
+               }
+            }
+         }
+
+
+         
          
 
          // dd(intval($totalMinute));
          $currentStart = new Carbon($req->start);
          // dd($currentStart);
          $start = $currentStart;
-         $grandTotal = $currentStart->addHours($totalHour);
+         $grandTotal = $currentStart->addHours($debugHour);
          // dd($sum);
-         $grandFinal = $grandTotal->addMinutes(intval($totalMinute));
+         $grandFinal = $grandTotal->addMinutes(intval($debugMinute));
          // dd('start:' . $start . ' normal:'. $normal . ' final:'. $grandFinal);
          // dd($grandFinal);
          $createVdr->update([
@@ -971,16 +1034,16 @@ class VdrController extends Controller
          ]);
 
          return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
-      } catch (\Exception $e) {
-         // Jika terjadi kesalahan, kita rollback transaksi
-         DB::rollback();
-         Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
-         return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
+      // } catch (\Exception $e) {
+      //    // Jika terjadi kesalahan, kita rollback transaksi
+      //    DB::rollback();
+      //    Log::error('Kesalahan saat menjalankan transaksi: ' . $e->getMessage());
+      //    return back()->with('warning', 'Terjadi kesalahan: ' . $e->getMessage());
 
-         return back()->with('warning', 'Failed, Data gagal di Update!');
-         // Handle atau laporkan kesalahan
-         // return response()->json(['message' => 'Failed to create order'], 500);
-      }
+      //    return back()->with('warning', 'Failed, Data gagal di Update!');
+      //    // Handle atau laporkan kesalahan
+      //    // return response()->json(['message' => 'Failed to create order'], 500);
+      // }
    }
 
    public function storeCrew(Request $req)
