@@ -100,6 +100,8 @@ class MarineVdrController extends Controller
          $vdrValidations = Vdr::where('status', 1)->get();
       } elseif (auth()->user()->username == 'marine') {
          $vdrValidations = Vdr::where('status', 2)->get();
+      } elseif (auth()->user()->username == 'lutfi') {
+         $vdrValidations = Vdr::where('status', 3)->get();
       }
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -198,12 +200,12 @@ class MarineVdrController extends Controller
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdr->update([
-         'status' => 2
+         'status' => 3
       ]);
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
-         'status' => 2,
+         'status' => 3,
          'user_id' => auth()->user()->id
       ]);
       // dd()

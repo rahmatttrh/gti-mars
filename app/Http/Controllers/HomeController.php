@@ -470,6 +470,10 @@ class HomeController extends Controller
       //    $user->assignRole('vessel');
       // }
 
+      $user = User::where('username', auth()->user()->username)->first();
+      $user->assignRole('marine');
+      // dd($user->name);
+
 
       if(auth()->user()->hasRole('superuser')){
 
@@ -536,6 +540,9 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->get();
             $vdrs = Vdr::where('status', '>=', 2)->get();
+         } elseif (auth()->user()->username == 'lutfi') {
+            $vdrValidations = Vdr::where('status', 3)->get();
+            $vdrs = Vdr::where('status', '>=', 3)->get();
          }
          
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -614,6 +621,7 @@ class HomeController extends Controller
             'docs' => $docs
          ])->with('i');
       } else {
+         
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $requests = null;

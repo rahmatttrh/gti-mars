@@ -189,6 +189,12 @@ class VdrController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = 2687.49;
+      // dd($totalDaily);
+      $decimal = $totalDaily - floor($totalDaily);
+
+      
+
       $vdrs = Vdr::get();
 
       $totalHours = '';
@@ -235,6 +241,8 @@ class VdrController extends Controller
       } else {
          $tab = 'index';
       }
+
+
  
       // dd('ok');
       return view('pages-stisla.vdr.detail', [
@@ -1509,6 +1517,7 @@ class VdrController extends Controller
 
                $operating = VdrOperating::find($operatingId);
 
+               // dd($req->contractual_fuel[$key]);
 
                // if ($operating->heading->field != null) {
 
