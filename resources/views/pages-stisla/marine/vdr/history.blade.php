@@ -76,7 +76,7 @@
                   <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
                   <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td>
                   <td>{{$vdr->getTotalHours()}}</td>
-                  <td>{{$vdr->operatings->sum('daily')}}</td>
+                  <td>{{ceil($vdr->operatings->sum('daily'))}}</td>
                </tr>
                @endforeach
             </tbody>

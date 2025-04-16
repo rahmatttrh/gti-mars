@@ -61,6 +61,7 @@
                            <thead>
                               
                               <tr>
+                                 <th>ID</th>
                                  <th>Vessel</th>
                                  <th>Date</th>
                                  {{-- <th>Date</th> --}}
@@ -70,6 +71,7 @@
                            <tbody>
                               @foreach ($allVdrs as $vdr)
                                  <tr class="border" style="border: 1px black">
+                                    <td>{{$vdr->id}}</td>
                                     <td class="text-truncate" style="max-width: 120px"><a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
                                     <td>{{formatDate($vdr->date)}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}

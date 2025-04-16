@@ -273,14 +273,72 @@ table {
                   <tr>
                      <td class="text-center bg-yellow"><small>{{substr($vdrActivity->start, 0, 5)}} </small></td>
                      <td class="text-center bg-yellow"><small>{{substr($vdrActivity->finish, 0, 5)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->high)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->normal)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->slow)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->manu)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->idle)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->tow)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->ah)}}</small></td>
-                     <td class="text-center bg-yellow"><small>{{getTotalHours($vdrActivity->sb)}}</small></td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->high == 0.00)
+   
+                           @else
+                           {{getTotalHours($vdrActivity->high)}}
+                           @endif
+                        
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->normal == 0.00)
+                               @else
+                               {{getTotalHours($vdrActivity->normal)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->slow == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->slow)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->manu == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->manu)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->idle == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->idle)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->tow == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->tow)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->ah == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->ah)}}
+                           @endif
+                        </small>
+                     </td>
+                     <td class="text-center bg-yellow">
+                        <small>
+                           @if ($vdrActivity->sb == 0.00)
+                           @else
+                           {{getTotalHours($vdrActivity->sb)}}
+                           @endif
+                        </small>
+                     </td>
                      <td class="bg-yellow"><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
                   
@@ -301,7 +359,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -318,7 +376,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -335,7 +393,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -352,7 +410,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -369,7 +427,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -386,7 +444,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -403,7 +461,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -420,7 +478,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -437,7 +495,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -454,7 +512,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -471,7 +529,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -488,7 +546,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -505,7 +563,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -522,7 +580,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -539,7 +597,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -556,7 +614,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -573,7 +631,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -590,7 +648,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -607,7 +665,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -624,7 +682,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -641,7 +699,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -658,7 +716,7 @@ table {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
-                           <td class="bg-yellow">-</td>
+                           <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
                   @endif
@@ -734,11 +792,17 @@ table {
                            </td>
                            @else
                            <td class="text-center bg-yellow">
-                              @if($operating->heading->contractual == '1')
+                              {{-- @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel ?? '0'}}</small>
-                              @else
-                              <small>{{$operating->contractual_fuel ?? '0'}}</small>
-                              @endif
+                              @else --}}
+                              <small>
+                                 @if ($operating->contractual_fuel)
+                                     {{round($operating->contractual_fuel)}}
+                                     @else
+                                     0
+                                 @endif
+                                 {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
+                              {{-- @endif --}}
                               L/H
                         </td>
                         @endif
@@ -903,7 +967,7 @@ table {
                   </table>
                </div>
                {{-- <div>
-                  <small class="title">-</small>
+                  <small class="title"> &nbsp;</small>
                   <table class=" ml--4">
                      <thead>
                         <tr>

@@ -37,7 +37,7 @@
 
                      <td class="text-center align-middle">
                            @if($operating->heading->contractual == '1')
-                           <input type="number" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                           <input type="text" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                            @else
                            <input type="hidden" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                            @endif
@@ -59,9 +59,15 @@
                            {{$totaljam}}
                      </th>
                      <th colspan="2"></th>
-                     <th>
-                           {{round($totaldaily)}} Ltrs
-                     </th>
+                     <td class="text-center">
+                           <b>{{round($totaldaily)}} Ltrs</b> 
+                           @if (auth()->user()->hasRole('vessel'))
+                               @else
+                               {{-- ({{$vdr->operatings->sum('daily')}}) --}}
+                           @endif
+                           
+                           {{-- {{$totaldaily}} Ltrs --}}
+                     </td>
                   </tr>
 
                
@@ -72,6 +78,11 @@
             <hr>
             <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
             @endif
+         @endif
+
+         @if (auth()->user()->hasRole('marine|superuser'))
+         <hr>
+            <button type="submit" class="btn btn-info"> <i class="fa fa-save"></i> Save</button>
          @endif
 
 

@@ -91,7 +91,12 @@
                   <table>
                      <tbody>
                         <tr>
-                           <td style="width: 250px" class="bg-primary text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           @if ($vdr->status == 101)
+                           <td style="width: 250px" class="bg-danger text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                               @else
+                               <td style="width: 250px" class="bg-info text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           @endif
+                           
                            <td>{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}</td>
                         </tr>
                         <tr>
@@ -217,7 +222,7 @@
                   {{-- </div> --}}
                   
                   @endif
-                  {{-- <hr> --}}
+                  <hr>
                   <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-block btn-light border shadow-none">Export PDF</a>
                   <hr>
                   
