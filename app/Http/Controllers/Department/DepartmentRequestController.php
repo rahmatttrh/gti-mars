@@ -123,7 +123,12 @@ class DepartmentRequestController extends Controller
          $portId = $employee->port_id;
       } else {
          $port = Port::where('email', auth()->user()->email)->first();
-         $portId = $port->id;
+         if ($port == null) {
+            $portId = auth()->user()->port_id;
+         } else {
+            $portId = $port->id;
+         }
+         
       }
 
       $now = Carbon::now();
@@ -936,16 +941,18 @@ class DepartmentRequestController extends Controller
       $vessels = Vessel::get();
       $schedules = Schedule::get();
       // $depart = Department::where('email', auth()->user()->email)->first();
-      if ($employee) {
+      if ($employee != null) {
          $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
          $progress = ModelsRequest::where('status', '>', 0)->where('employee_id', $employee->id)->orderBy('updated_at', 'desc')->get();
+         $drafts = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
       } else {
          $departs = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $progress = ModelsRequest::where('status', '>', 0)->where('user_id', auth()->user()->id)->orderBy('updated_at', 'desc')->get();
+         $drafts =  ModelsRequest::where('status', 978)->orderBy('parent_id', 'asc')->get();
       }
       // $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
       
-      $drafts = ModelsRequest::where('status', 0)->where('employee_id', $employee->id)->orderBy('parent_id', 'asc')->get();
+      
       return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,

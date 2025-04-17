@@ -56,6 +56,10 @@ class User extends Authenticatable
       return $employee;
    }
 
+   public function port(){
+      return $this->belongsTo(Port::class);
+   }
+
    public function getVesselId()
    {
       $vessel = Vessel::where('email', auth()->user()->email)->first();

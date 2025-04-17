@@ -471,19 +471,110 @@ class HomeController extends Controller
       // }
 
       $user = User::where('username', auth()->user()->username)->first();
-      $user->assignRole('marine');
+      $user->roles()->detach();
+      $user->assignRole('department');
       // dd($user->name);
 
+      // dd('ok');
 
       if(auth()->user()->hasRole('superuser')){
 
-         // $user = User::create([
-         //    'name' => 'PET',
-         //    'username' => 'pet',
-         //    'email' => 'pet@pertamina.com',
-         //    'password' => Hash::make('oses@2025')
+         // $sburadop = User::create([
+         //    'name' => 'Radio Operator SBU',
+         //    'username' => 'sburadop',
+         //    'email' => 'sburadop@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 13,
          // ]);
-         // $user->assignRole('marine');
+         // $sbusupt = User::create([
+         //    'name' => 'Superintendent SBU',
+         //    'username' => 'sbusupt',
+         //    'email' => 'sbusupt@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 13,
+         // ]);
+         // $sbusupt->assignRole('department');
+         // $sburadop->assignRole('department');
+
+         // $cburadop = User::create([
+         //    'name' => 'Radio Operator CBU',
+         //    'username' => 'cburadop',
+         //    'email' => 'cburadop@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 111,
+         // ]);
+         // $cbusupt = User::create([
+         //    'name' => 'Superintendent CBU',
+         //    'username' => 'cbusupt',
+         //    'email' => 'cbusupt@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 111,
+         // ]);
+         // $cburadop->assignRole('department');
+         // $cbusupt->assignRole('department');
+
+         
+
+         // $nburadop = User::create([
+         //    'name' => 'Radio Operator NBU',
+         //    'username' => 'nburadop',
+         //    'email' => 'nburadop@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 14,
+         // ]);
+         // $nbusupt = User::create([
+         //    'name' => 'Superintendent NBU',
+         //    'username' => 'nbusupt',
+         //    'email' => 'nbusupt@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 14,
+         // ]);
+         // $nbusupt->assignRole('department');
+         // $nburadop->assignRole('department');
+
+         // $federalradop = User::create([
+         //    'name' => 'Radio Operator Terminal Federal',
+         //    'username' => 'federalradop',
+         //    'email' => 'federalradop@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 18,
+         // ]);
+         // $federalsupt = User::create([
+         //    'name' => 'Superintendent Terminal Federal',
+         //    'username' => 'federalsupt',
+         //    'email' => 'federalsupt@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 18,
+         // ]);
+         // $federalsupt->assignRole('department');
+         // $federalradop->assignRole('department');
+
+         // $_114radop = User::create([
+         //    'name' => 'Radio Operator Terminal 114',
+         //    'username' => '114radop',
+         //    'email' => '114radop@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 17,
+         // ]);
+         // $_114supt = User::create([
+         //    'name' => 'Superintendent Terminal 114',
+         //    'username' => '114supt',
+         //    'email' => '114supt@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'port_id' => 17,
+         // ]);
+         // $_114supt->assignRole('department');
+         // $_114radop->assignRole('department');
+
+         // $comandwi = User::create([
+         //    'name' => 'Company Man DWI',
+         //    'username' => 'comandwi',
+         //    'email' => 'comandwi@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
+            
+         // ]);
+         // $comandwi->assignRole('marine');
+         
 
          $vdrValidations = Vdr::where('status', 1)->get();
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -1590,7 +1681,12 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
       } else {
          $user = User::where('email', auth()->user()->email)->first();
-         $portId = Port::where('email', auth()->user()->email)->first()->id;
+         $port = Port::where('email', auth()->user()->email)->first();
+         if ($port == null) {
+            $portId = auth()->user()->port_id;
+         } else {
+            $portId = $port->id;
+         }
          $confirms = ModelsRequest::where('destination_id', $portId)->where('status', 10)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
       }
