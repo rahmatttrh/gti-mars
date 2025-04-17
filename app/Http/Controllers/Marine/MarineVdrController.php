@@ -35,37 +35,37 @@ class MarineVdrController extends Controller
       // foreach($operatingHeaders as $head){
 
       // }
-      
+
       if ($today->month == 1) {
          $monthName = 'Januari';
-      } else if ($today->month == 2){
+      } else if ($today->month == 2) {
          $monthName = 'Februari';
-      } else if ($today->month == 3){
+      } else if ($today->month == 3) {
          $monthName = 'Maret';
-      } else if ($today->month == 4){
+      } else if ($today->month == 4) {
          $monthName = 'April';
-      } else if ($today->month == 5){
+      } else if ($today->month == 5) {
          $monthName = 'Mei';
-      } else if ($today->month == 6){
+      } else if ($today->month == 6) {
          $monthName = 'Juni';
-      }  else if ($today->month == 7){
+      } else if ($today->month == 7) {
          $monthName = 'Juli';
-      } else if ($today->month == 8){
+      } else if ($today->month == 8) {
          $monthName = 'Agustus';
-      } else if ($today->month == 9){
+      } else if ($today->month == 9) {
          $monthName = 'September';
-      } else if ($today->month == 10){
+      } else if ($today->month == 10) {
          $monthName = 'Oktober';
-      } else if ($today->month == 11){
+      } else if ($today->month == 11) {
          $monthName = 'November';
-      } else if ($today->month == 12){
+      } else if ($today->month == 12) {
          $monthName = 'Desember';
       }
 
       $date = array();
       $value = array();
       $fuel = array();
-      foreach($vdrs as $vdr){
+      foreach ($vdrs as $vdr) {
          $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
          $totalTime = $operatings->sum('time');
          $totalFuel = $operatings->sum('daily');
@@ -76,7 +76,7 @@ class MarineVdrController extends Controller
          $fuel[] = $totalFuel;
       }
 
-      
+
 
       // dd($value);
       return view('pages-stisla.vdr.home-marine', [
@@ -95,19 +95,23 @@ class MarineVdrController extends Controller
    }
 
 
-   public function validation(){
+   public function validation()
+   {
       if (auth()->user()->username == 'pet') {
-         $vdrs = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
-      } else if(auth()->user()->username == 'marine'){
-         $vdrs = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
+         $vdrValidations = Vdr::where('status', 1)->get();
+      } elseif (auth()->user()->username == 'marine') {
+         $vdrValidations = Vdr::where('status', 2)->get();
+      } elseif (auth()->user()->username == 'lutfi') {
+         $vdrValidations = Vdr::where('status', 3)->get();
       }
-      
+
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrs
       ])->with('i');
    }
 
-   public function approvePet(Request $req){
+   public function approvePet(Request $req)
+   {
       // $dekripId = dekripRambo($id);
       $vdr = Vdr::find($req->id);
       $vdr->update([
@@ -116,7 +120,7 @@ class MarineVdrController extends Controller
          'name1' => $req->name1,
       ]);
 
-      
+
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
@@ -136,7 +140,8 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR PET Approved');
    }
 
-   public function approveMarine(Request $req){
+   public function approveMarine(Request $req)
+   {
       // $dekripId = dekripRambo($id);
       $vdr = Vdr::find($req->id);
       $vdr->update([
@@ -145,7 +150,7 @@ class MarineVdrController extends Controller
          'name1' => $req->name2,
       ]);
 
-      
+
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
@@ -165,7 +170,8 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
-   public function approveSuptent(Request $req){
+   public function approveSuptent(Request $req)
+   {
       // $dekripId = dekripRambo($id);
       $vdr = Vdr::find($req->id);
       $vdr->update([
@@ -174,7 +180,7 @@ class MarineVdrController extends Controller
          'name1' => $req->name3,
       ]);
 
-      
+
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
@@ -195,16 +201,17 @@ class MarineVdrController extends Controller
    }
 
 
-   public function approve($id){
+   public function approve($id)
+   {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdr->update([
-         'status' => 2
+         'status' => 3
       ]);
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
-         'status' => 2,
+         'status' => 3,
          'user_id' => auth()->user()->id
       ]);
       // dd()
@@ -212,7 +219,8 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
-   public function reject(Request $req){
+   public function reject(Request $req)
+   {
       $vdr = Vdr::find($req->vdr);
       $vdr->update([
          'status' => 101
@@ -244,7 +252,8 @@ class MarineVdrController extends Controller
    //    return redirect()->back()->with('success', 'VDR Suptent Approved');
    // }
 
-   public function approveLuthfi($id){
+   public function approveLuthfi($id)
+   {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdr->update([

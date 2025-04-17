@@ -30,7 +30,7 @@
             
             </div>
             <div class="dropdown-list-content dropdown-list-icons">
-               @if (count($vdrs->where('status', 2)) > 0)
+               {{-- @if (count($vdrs->where('status', 2)) > 0)
                   @foreach ($vdrs->where('status', 2) as $vdr)
                   <a href="{{route('vdr.show', enkripRambo($vdr->id))}}" class="dropdown-item dropdown-item-unread">
                     
@@ -42,7 +42,7 @@
                   @endforeach
                   @else
                   <small class="dropdown-item dropdown-item-unread text-muted">Tidak ada VDR dari vessel </small>
-               @endif
+               @endif --}}
               
             </div>
             <div class="dropdown-footer text-center"></div>

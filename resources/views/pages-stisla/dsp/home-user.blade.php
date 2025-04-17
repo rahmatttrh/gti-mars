@@ -24,8 +24,8 @@
                <div class="card border shadow-sm">
                   <div class="card-body">
                      {{-- <small>Name</small> --}}
-                     <small >{{$user->port->type}} - {{$user->port->region ?? ''}}</small><br>
-                     <b class="text-dark">{{$user->port->name}}</b>
+                     <small >{{$user->port->type ?? ''}} - {{$user->port->region ?? ''}}</small><br>
+                     <b class="text-dark">{{$user->port->name ?? ''}}</b>
                      
                   </div>
                   <div class="card-footer">

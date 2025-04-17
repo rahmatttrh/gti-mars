@@ -36,6 +36,7 @@
                      </td>
 
                      <td class="text-center align-middle">
+                        <!-- {{$operating->contractual_fuel}} -->
                            @if($operating->heading->contractual == '1')
                            <input type="text" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                            @else

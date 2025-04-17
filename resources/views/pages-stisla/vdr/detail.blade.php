@@ -184,7 +184,7 @@
                   @endif
    
                   @if ($vdr->status == 3 && auth()->user()->hasRole('chief'))
-                  <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}" class="btn btn-block btn-primary  shadow-none">Approve Mr. Luthfi</a>
+                  <a href="" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-marine">Approve </a>
                   @endif
                   @if (auth()->user()->hasRole('vessel'))
                      @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
@@ -203,7 +203,7 @@
 
                   {{-- @if ($vdr->status == 1 && auth()->user()->hasRole('marine'))
                   @endif --}}
-                  @if ($vdr->status == 1 && auth()->user()->hasRole('marine') && auth()->user()->username == 'pet')
+                  @if ($vdr->status == 1  && auth()->user()->username == 'pet')
                   {{-- <div class="btn-group mr-2"> --}}
                      <div class="btn btn-block btn-group p-0">
                         {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
@@ -222,7 +222,27 @@
                   {{-- </div> --}}
                   
                   @endif
-                  <hr>
+                  @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                  {{-- <div class="btn-group mr-2"> --}}
+                     <div class="btn btn-block btn-group p-0">
+                        {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                        <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
+                        {{-- <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a> --}}
+                     </div>
+                     
+                     
+                     {{-- <span class="text-muted">Approval Level wajib diisi sebelum klik Approve</span> --}}
+                     
+                     <hr>
+                     {{-- <div class="btn btn-block btn-group p-0"> --}}
+                        {{-- <a href="#" class="btn  btn-block btn-light border shadow-none" data-toggle="modal" data-target="#modalEditApproval">Edit</a> --}}
+                     {{-- <a href="#" class="btn btn-light border  shadow-none" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a> --}}
+                     {{-- </div> --}}
+                  {{-- </div> --}}
+                  
+                  @endif
+                  {{-- <h1>{{$vdr->status}}</h1> --}}
+                  {{-- <hr> --}}
                   <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="btn btn-block btn-light border shadow-none">Export PDF</a>
                   <hr>
                   
@@ -271,7 +291,7 @@
    </div>
 </section>
 
-@if (auth()->user()->hasRole('marine'))
+@if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
    <div class="modal fade" id="modalEditApproval" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
          <form action="{{route('vdr.update.approval')}}" method="POST" enctype="multipart/form-data">
@@ -479,7 +499,7 @@
       </div>
    </div>
    <div class="modal fade" id="vdr-approve-marine" tabindex="1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-sm" role="document">
          
          
          <div class="modal-content">
@@ -499,6 +519,28 @@
          </div>
       </div>
    </div>
+   <div class="modal fade" id="vdr-approve-marine" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Approve this VDR ?</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <hr>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
+            </div>
+         </div>
+      </div>
+   </div>
+   
     @else
       @foreach ($crews as $crew)
          <div class="modal fade" id="deleteAct-{{$crew->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -726,6 +768,7 @@
         // Dapatkan nilai dari input contractual_fuel[]
         var contractualFuelValue = parseFloat($('input[name="contractual_fuel[]"]', '#' + rowId).val()) || 0;
 
+         console.log(contractualFuelValue);
         let a = bulat * contractualFuelValue;
         let b = ((desimal * 100) / 60) * contractualFuelValue;
         // Hitung hasil perkalian

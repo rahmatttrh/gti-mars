@@ -1675,6 +1675,7 @@ class VdrController extends Controller
 
             $operating = VdrOperating::find($operatingId);
 
+            // dd($req->contractual_fuel[$key]);
 
             // if ($operating->heading->field != null) {
 
