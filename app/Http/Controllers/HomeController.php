@@ -470,15 +470,16 @@ class HomeController extends Controller
       //    $user->assignRole('vessel');
       // }
 
-      $user = User::where('username', auth()->user()->username)->first();
-      $user->roles()->detach();
-      $user->assignRole('department');
+      // $user = User::where('username', auth()->user()->username)->first();
+      // $user->roles()->detach();
+      // $user->assignRole('superuser');
       // dd($user->name);
 
       // dd('ok');
 
       if(auth()->user()->hasRole('superuser')){
 
+         // dd('ok');
          // $sburadop = User::create([
          //    'name' => 'Radio Operator SBU',
          //    'username' => 'sburadop',
@@ -1681,8 +1682,10 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
       } else {
          $user = User::where('email', auth()->user()->email)->first();
+         // dd($user->port_id);
          $port = Port::where('email', auth()->user()->email)->first();
          if ($port == null) {
+            // dd('ok');
             $portId = auth()->user()->port_id;
          } else {
             $portId = $port->id;
