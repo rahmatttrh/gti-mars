@@ -25,6 +25,7 @@ use App\Models\Document;
 use App\Models\Log;
 use App\Models\MaterialMan;
 use App\Models\News;
+use App\Models\Office;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
@@ -479,6 +480,22 @@ class HomeController extends Controller
 
       if(auth()->user()->hasRole('superuser')){
 
+         // $offices = Office::get();
+         // foreach($offices as $office){
+         //    $user =User::create([
+         //       'name' => $office->name,
+         //       'username' => $office->username,
+         //       'email' =>  $office->code .'@oses.com',
+         //       'password' => Hash::make('oses@2025'),
+         //       'created_at' => NOW(),
+         //       'updated_at' => NOW()
+         //    ]);
+         //    $user->assignRole('office');
+         
+         // }
+
+
+
          // dd('ok');
          // $sburadop = User::create([
          //    'name' => 'Radio Operator SBU',
@@ -679,6 +696,25 @@ class HomeController extends Controller
 
             'logs' => $logs
 
+         ])->with('i');
+      } else if (auth()->user()->hasRole('office')) {
+         // dd('ok');
+         $now = Carbon::now();
+         $office = Office::where('username', auth()->user()->username)->first();
+         $vessels = Vessel::where('office_id', $office->id)->get();
+         $vesselId = [];
+
+         foreach($vessels as $vessel){
+            $vesselId[] = $vessel->id;
+         }
+         $vdrs = Vdr::whereIn('vessel_id', $vesselId)->get();
+
+         // dd($vdrs);
+
+         return view('main', [
+            'office' => $office,
+            'vessels' => $vessels,
+            'vdrs' => $vdrs
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {
          

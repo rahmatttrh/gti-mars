@@ -177,6 +177,10 @@
             @elseif(auth()->user()->hasRole('mm'))
             {{-- <x-navbar.chief /> --}}
             <x-navbar.dsp.logistic  />
+            @elseif(auth()->user()->hasRole('office'))
+            {{-- <x-navbar.chief /> --}}
+            {{-- <h1>OK</h1> --}}
+            <x-navbar.dsp.logistic  />
             @endif
 
 

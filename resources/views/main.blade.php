@@ -17,6 +17,8 @@
             
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.logistic :schedules="$logisticSchedules" :items="$cargoItems" />
+            @elseif(auth()->user()->hasRole('office'))
+            <x-main.office :office="$office" :vessels="$vessels" :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('mm'))
             <x-main.mm :mm="$mm" :cargos="$cargos" :schedules="$logisticSchedules" :items="$cargoItems" />
             @else
