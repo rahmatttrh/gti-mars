@@ -29,8 +29,11 @@
     <!-- App Css-->
     <link href="{{asset('urbix/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css">
 
-
-    <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.6.0/fonts/remixicon.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" integrity="sha512-dPXYcDub/aeb08c63jRq/k6GaKccl256JQy/AnOq7CAnEZ9FzSL9wSbcZkMp4R26vBsMLFYH4kQ67/bbV8XaCQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {{-- <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}"> --}}
 </head>
 <body>
 <!-- begin::App -->
@@ -42,7 +45,7 @@
                 <div class="d-inline-flex align-items-center gap-2">
                     <a href="index.html" class="align-items-end logo-main d-none me-5">
                         <img height="35" width="34" class="logo-dark" alt="Dark Logo" src="{{asset('urbix/images/logo-md.png')}}">
-                        <h3 class="text-body-emphasis fw-bolder mb-0 ms-1">MARSsss</h3>
+                        <h3 class="text-body-emphasis fw-bolder mb-0 ms-1">MARS</h3>
                     </a>
                     <button type="button" class="vertical-toggle btn header-btn" id="toggleSidebar" aria-label="Toggle Sidebar">
                         <i class="bi bi-arrow-bar-left header-icon"></i>
