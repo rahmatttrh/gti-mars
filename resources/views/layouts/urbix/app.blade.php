@@ -208,12 +208,40 @@
                     
                 </ul>
                 <!-- Widgets -->
-                <div class="sidebar-widget text-center">
+                
+               <div class="sidebar-widget text-center">
+                  <div class="card shadow-none">
+                     <div class="card-body p-0">
+                         <div class="d-flex justify-content-between align-items-center">
+                             <div class="d-flex align-items-center">
+                                 <img src="{{asset('urbix/flaticon/ship.png')}}" class="h-32px w-32px me-3" alt="Instagram">
+                                 <p class="mb-0 fw-semibold">Vessel Overview</p>
+                             </div>
+                             
+                         </div>
+                         <div class="row mt-6 g-0">
+                             <div class="col-xxl-6">
+                                 <div class="border-end-xxl border-bottom border-bottom-xxl-0 pb-4 pb-xxl-0">
+                                     <h2 class="mb-0">17</h2>
+                                     <p class="mb-0 fw-semibold">On Hire</p>
+                                 </div>
+                             </div>
+                             <div class="col-xxl-6">
+                                 <div class="text-xxl-end mb-0 pt-4 pt-xxl-0">
+                                     <h4 class="mb-0">2</h4>
+                                     <p class="mb-0">Maintenance</p>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                  </div>
+               </div>
+                {{-- <div class="sidebar-widget text-center">
                     <img src="{{asset('urbix/images/sidebar-widget.png')}}" alt="Widget Image"> <br>
                     <small class="text-muted ">You can choose what kind data that you want to see</small>
                     <br> <br>
                     <button class="btn btn-primary rounded-pill w-100">Read Documentation</button>
-                </div>
+                </div> --}}
             </div>
         </nav>
     </aside>    <aside class="pe-app-sidebar horizontal-sidebar" id="horizontal-aside">
