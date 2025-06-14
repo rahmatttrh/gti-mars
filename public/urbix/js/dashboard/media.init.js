@@ -6,6 +6,65 @@ File: Media init js
 */
 
 function renderCharts() {
+
+   // var options = {
+   //    series: [70],
+   //    chart: {
+   //      height: 295,
+   //      type: 'radialBar',
+   //    },
+   //    colors: ['#5b66eb'],
+   //    plotOptions: {
+   //      radialBar: {
+   //        hollow: {
+   //          size: '70%',
+   //        }
+   //      },
+   //    },
+   //    labels: ['$500.45'],
+   //  };
+  
+   //  var chart = new ApexCharts(document.querySelector("#overview"), options);
+   //  chart.render();
+
+
+
+
+   var options = {
+      series: [{
+        name: 'series1',
+        data: [0, 60, 50, 65, 55, 75, 35, 70, 85, 65, 85, 85, 20, 90, 100]
+      }],
+      chart: {
+        height: 252,
+        type: 'area',
+        toolbar: {
+          show: false
+        },
+      },
+      colors: ['#5b66eb'],
+      dataLabels: {
+        enabled: false
+      },
+      stroke: {
+        curve: 'straight'
+      },
+      xaxis: {
+        tooltip: {
+          enabled: false
+        }
+      },
+      tooltip: {
+        x: {
+          format: 'dd/MM/yy HH:mm'
+        },
+      },
+    };
+  
+    var chart = new ApexCharts(document.querySelector("#overall"), options);
+    chart.render();
+
+
     // Engagement
     var options = {
         series: [{
@@ -18,7 +77,7 @@ function renderCharts() {
             data: [223, 642, 335, 727, 343, 152, 417, 300, 322, 22, 100, 20]
         }],
         chart: {
-            height: 328,
+            height: 230,
             type: 'line',
             toolbar: {
                 show: false
@@ -57,7 +116,7 @@ function renderCharts() {
         chart: {
             id: 'sparkline1',
             type: 'line',
-            height: 60,
+            height: 40,
             sparkline: {
                 enabled: true
             },
@@ -134,6 +193,7 @@ function renderCharts() {
             },
         }
     };
+    
     new ApexCharts(document.querySelector("#spark1"), spark1).render();
     new ApexCharts(document.querySelector("#spark2"), spark2).render();
 
@@ -495,13 +555,13 @@ function renderCharts() {
 
     // DonutChart
     var options = {
-        series: [70, 30],
+        series: [70, 20, 10],
         chart: {
             type: 'donut',
-            height: 205,
+            height: 100,
         },
-        labels: ['Male', 'Female'],
-        colors: ['#5b66eb', '#d6d9fa'],
+        labels: ['Onhire', 'Offhire', 'Maintenance'],
+        colors: ['#5b66eb', '#d6d9fa', '#e07d68'],
         legend: {
             show: false
         },
@@ -519,6 +579,32 @@ function renderCharts() {
 
     var chart = new ApexCharts(document.querySelector("#donutChart"), options);
     chart.render();
+
+    var options = {
+      series: [70, 20, 10],
+      chart: {
+          type: 'donut',
+          height: 100,
+      },
+      labels: ['Onhire', 'Offhire', 'Maintenance'],
+      colors: ['#5b66eb', '#d6d9fa', '#e07d68'],
+      legend: {
+          show: false
+      },
+      dataLabels: {
+          enabled: false // disable default data labels
+      },
+      plotOptions: {
+          pie: {
+              donut: {
+                  size: '30%'
+              }
+          }
+      }
+  };
+
+  var chart2 = new ApexCharts(document.querySelector("#donutChart2"), options);
+  chart2.render();
 
     function generateData(count, yrange) {
         var i = 0;
