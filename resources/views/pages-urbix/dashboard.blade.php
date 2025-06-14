@@ -7,7 +7,17 @@
         <div class="container-fluid">
 
             <div class="main-breadcrumb d-flex align-items-center my-3 position-relative">
-                <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">Analytics</h2>
+                {{-- <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">June</h2> --}}
+                <div class="dropdown breadcrumb-title mb-0 flex-grow-1 fs-14">
+                  <a href="#" class=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    June
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="javascript:void(0)">May</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)">April</a></li>
+                    <li><a class="dropdown-item" href="javascript:void(0)">March</a></li>
+                  </ul>
+                </div>
                 <div class="flex-shrink-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-end mb-0">
@@ -36,7 +46,7 @@
                                          <p class="mb-1 fs-18">Cargo Moving</p>
                                          <h3 class="fw-semibold">12.2k</h3>
                                          <div id="spark1"></div>
-                                         <p class="mb-0"><span class="fw-medium text-success"><i class="ri-arrow-up-fill"></i> </span>19%</p>
+                                         <p class="mb-4"><span class="fw-medium text-success"><i class="ri-arrow-up-fill"></i> </span>19%</p>
                                      </div>
                                  </div>
                              </div>
@@ -55,7 +65,7 @@
                   </div>
                </div>
                <div class="col-md-4">
-                  <div class="card">
+                  {{-- <div class="card">
                      <div class="card-body">
                          <div class="d-flex justify-content-between align-items-center">
                              <div class="d-flex align-items-center">
@@ -76,6 +86,47 @@
                                      <h4 class="mb-0">2</h4>
                                      <p class="mb-0">Maintenance</p>
                                  </div>
+                             </div>
+                         </div>
+                     </div>
+                  </div> --}}
+
+                  <div id="productCarousel" class="card carousel-custom carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
+                     <div class="card-header d-flex justify-content-between align-items-center">
+                         <h5 class="card-title mb-0">Vessels</h5>
+                         <div class="carousel-indicators carousel-indicators-primary carousel-indicators-dots">
+                             <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                             <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                             <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                         </div>
+                     </div>
+                     <div class="card-body"><div id="carouselExample" class="carousel-inner">
+                             <div class="carousel-item active">
+                                 <div class="card card-primary">
+                                    <div class="card-header text-white"><b>Logindo Overcomer</b></div>
+                                    <div class="card-body">
+                                       Fuel Cons : 7000
+                                    </div>
+                                 </div>
+                                 {{-- <img src="{{asset('urbix/images/small/img-13.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
+                             </div>
+                             <div class="carousel-item">
+                              <div class="card card-primary">
+                                 <div class="card-header text-white"><b>Sigap Jaya</b></div>
+                                 <div class="card-body">
+                                    Fuel Cons : 14000
+                                 </div>
+                              </div>
+                                 {{-- <img src="{{asset('urbix/images/small/img-14.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
+                             </div>
+                             <div class="carousel-item">
+                              <div class="card card-primary">
+                                 <div class="card-header text-white"><b>Parakan</b></div>
+                                 <div class="card-body">
+                                    Fuel Cons : 5000
+                                 </div>
+                              </div>
+                                 {{-- <img src="{{asset('urbix/images/small/img-1.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
                              </div>
                          </div>
                      </div>
