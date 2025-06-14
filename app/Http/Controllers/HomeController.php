@@ -478,6 +478,16 @@ class HomeController extends Controller
 
       // dd('ok');
 
+      // $user = User::create([
+      //          'name' => 'Riko',
+      //          'username' => 'riko',
+      //          'email' => 'riko@test.com',
+      //          'password' => Hash::make('oses@2025'),
+      //          'type' => 'bod',
+      //          // 'vessel_id' => $vessel->id
+      //       ]);
+      // $user->assignRole('bod');
+
       if(auth()->user()->hasRole('superuser')){
 
          // $offices = Office::get();
@@ -641,6 +651,10 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
+      }  else if(auth()->user()->hasRole('bod')){
+         return view('pages-urbix.dashboard', [
+
+         ]);
       } else if(auth()->user()->hasRole('marine')){
 
          if (auth()->user()->username == 'pet') {
@@ -680,7 +694,10 @@ class HomeController extends Controller
          }
 
          $logs = Log::get();
+
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
          return view('main', [
+            'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,

@@ -47,7 +47,7 @@
             
             <hr>
             <div class="table-responsive">
-               <table class=" table-striped display " id="table-1">
+               <table class=" table-striped display border " id="table-1">
                   <thead>
                      <tr>
                         {{-- <th class="text-center">No.</th> --}}
@@ -62,7 +62,7 @@
                   <tbody>
       
                         @foreach($vdrs as $vdr)
-                        <tr class="">
+                        <tr class="border">
                            {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
                            <td>
                               <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a>

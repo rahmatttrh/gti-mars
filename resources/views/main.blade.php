@@ -12,7 +12,7 @@
                @if (auth()->user()->username == 'pet')
                   <x-main.pet :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
                    @else
-                   <x-main.marine :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
+                   <x-main.marine :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :allvdrs="$allVdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
                @endif
             
             @elseif(auth()->user()->hasRole('admin-logistic'))
