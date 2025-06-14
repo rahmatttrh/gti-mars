@@ -106,7 +106,7 @@ class MarineVdrController extends Controller
       }
 
       return view('pages-stisla.marine.vdr.validation', [
-         'vdrs' => $vdrs
+         'vdrs' => $vdrValidations
       ])->with('i');
    }
 

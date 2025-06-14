@@ -48,6 +48,7 @@ class DatabaseSeeder extends Seeder
          CrewSeeder::class,
          // VesselStatusSeeder::class
          NewsSeeder::class,
+         OfficeSeeder::class
       ]);
 
       // Crew::factory(30)->create();

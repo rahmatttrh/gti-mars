@@ -12,11 +12,13 @@
                @if (auth()->user()->username == 'pet')
                   <x-main.pet :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
                    @else
-                   <x-main.marine :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
+                   <x-main.marine :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :allvdrs="$allVdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
                @endif
             
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.logistic :schedules="$logisticSchedules" :items="$cargoItems" />
+            @elseif(auth()->user()->hasRole('office'))
+            <x-main.office :office="$office" :vessels="$vessels" :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('mm'))
             <x-main.mm :mm="$mm" :cargos="$cargos" :schedules="$logisticSchedules" :items="$cargoItems" />
             @else

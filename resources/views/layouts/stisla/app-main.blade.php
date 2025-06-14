@@ -100,6 +100,8 @@ table {
             <x-main.navbar.admin-logistic />
             @elseif(auth()->user()->hasRole('mm'))
             <x-main.navbar.admin-logistic />
+            @elseif(auth()->user()->hasRole('office'))
+            <x-main.navbar.office />
          @endif
        
          

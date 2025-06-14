@@ -118,6 +118,8 @@
             <x-navbar.vdr.suptent :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('chief'))
             <x-navbar.vdr.chief  />
+            @elseif(auth()->user()->hasRole('office'))
+            <x-navbar.vdr.office  />
             @endif
             
 

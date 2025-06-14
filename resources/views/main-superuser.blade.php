@@ -107,7 +107,7 @@
                            <tbody>
                               @foreach ($allSchedules as $sche)
                                  <tr class="border" style="border: 1px black">
-                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
+                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name ?? ''}}</a></td>
                                     <td>{{$sche->code}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                     <td>

@@ -25,6 +25,7 @@ use App\Models\Document;
 use App\Models\Log;
 use App\Models\MaterialMan;
 use App\Models\News;
+use App\Models\Office;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
@@ -479,13 +480,29 @@ class HomeController extends Controller
 
       // $user = User::where('username', auth()->user()->username)->first();
       // $user->roles()->detach();
-      // $user->assignRole('department');
+      // $user->assignRole('superuser');
       // dd($user->name);
 
       // dd('ok');
 
       if (auth()->user()->hasRole('superuser')) {
 
+         // $offices = Office::get();
+         // foreach ($offices as $office) {
+         //    $user = User::create([
+         //       'name' => $office->name,
+         //       'username' => $office->username,
+         //       'email' =>  $office->code . '@oses.com',
+         //       'password' => Hash::make('oses@2025'),
+         //       'created_at' => NOW(),
+         //       'updated_at' => NOW()
+         //    ]);
+         //    $user->assignRole('office');
+         // }
+
+
+
+         // dd('ok');
          // $sburadop = User::create([
          //    'name' => 'Radio Operator SBU',
          //    'username' => 'sburadop',
@@ -669,7 +686,9 @@ class HomeController extends Controller
          }
 
          $logs = Log::orderBy('created_at', 'desc')->get();
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
          return view('main', [
+            'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
@@ -685,6 +704,25 @@ class HomeController extends Controller
 
             'logs' => $logs
 
+         ])->with('i');
+      } else if (auth()->user()->hasRole('office')) {
+         // dd('ok');
+         $now = Carbon::now();
+         $office = Office::where('username', auth()->user()->username)->first();
+         $vessels = Vessel::where('office_id', $office->id)->get();
+         $vesselId = [];
+
+         foreach ($vessels as $vessel) {
+            $vesselId[] = $vessel->id;
+         }
+         $vdrs = Vdr::whereIn('vessel_id', $vesselId)->get();
+
+         // dd($vdrs);
+
+         return view('main', [
+            'office' => $office,
+            'vessels' => $vessels,
+            'vdrs' => $vdrs
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {
 
@@ -1686,8 +1724,10 @@ class HomeController extends Controller
          $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
       } else {
          $user = User::where('email', auth()->user()->email)->first();
+         // dd($user->port_id);
          $port = Port::where('email', auth()->user()->email)->first();
          if ($port == null) {
+            // dd('ok');
             $portId = auth()->user()->port_id;
          } else {
             $portId = $port->id;
@@ -1831,7 +1871,9 @@ class HomeController extends Controller
       if (auth()->user()->username == 'pet') {
          $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
-         $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
+         $vdrs = Vdr::where('status', '>', 2)->orderBy('date', 'desc')->get();
+      } elseif (auth()->user()->username == 'lutfi') {
+         $vdrs = Vdr::where('status', '>', 3)->orderBy('date', 'desc')->get();
       }
 
       return view('pages-stisla.marine.vdr.history', [

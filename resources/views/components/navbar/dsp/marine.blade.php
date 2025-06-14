@@ -133,7 +133,7 @@
             
             <ul class="dropdown-menu">
             <li class="nav-item"><a href="{{route('dsp.marine')}}" class="nav-link">General Dashboard</a></li>
-            <li class="nav-item"><a href="{{route('dsp.marine.intermilan', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link">Intermilan Dashboard</a></li>
+            {{-- <li class="nav-item"><a href="{{route('dsp.marine.intermilan', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link">Intermilan Dashboard</a></li> --}}
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
          </li>
@@ -181,7 +181,7 @@
             </ul>
          </li> --}}
 
-         <li class="nav-item pr-2 {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
+         {{-- <li class="nav-item pr-2 {{ (request()->is('dsp/m/schedule/*')) ? 'active' : '' }}">
             <a href="{{route('schedule.progress')}}" class="nav-link {{ (request()->is('dsp/m/schedule/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/schedule/*'))
                <i class="text-primary fas fa-fire ml-3"></i>
@@ -197,10 +197,10 @@
                @endif
                <span>Tracking</span>
             </a>
-         </li>
+         </li> --}}
          
 
-         <li class="nav-item {{ (request()->is('dsp/m/surveillance')) ? 'active' : '' }}">
+         {{-- <li class="nav-item {{ (request()->is('dsp/m/surveillance')) ? 'active' : '' }}">
             <a href="{{route('surveillance.marine')}}" class="nav-link {{ (request()->is('dsp/m/surveillance')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/surveillance'))
                <i class="text-primary fas fa-fire ml-3"></i>
@@ -210,10 +210,9 @@
          </li>
          <li class="nav-item">
             <a href="{{route('log.dsp')}}" class="nav-link text-white">
-               {{-- <i class="far fa-heart"></i> --}}
                <span>Log</span>
             </a>
-         </li>
+         </li> --}}
          {{-- <li class="nav-item {{ (request()->is('dsp/m/report')) ? 'active' : '' }}">
             <a href="{{route('report')}}" class="nav-link {{ (request()->is('dsp/m/report')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/report'))
