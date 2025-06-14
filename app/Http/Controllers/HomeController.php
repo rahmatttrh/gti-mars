@@ -485,7 +485,19 @@ class HomeController extends Controller
 
       // dd('ok');
 
+
+
       if (auth()->user()->hasRole('superuser')) {
+
+         // $user = User::create([
+         //    'name' => 'Riko',
+         //    'username' => 'riko',
+         //    'email' => 'riko@test.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'type' => 'bod',
+         //    // 'vessel_id' => $vessel->id
+         // ]);
+         // $user->assignRole('bod');
 
          // $offices = Office::get();
          // foreach ($offices as $office) {
@@ -647,6 +659,8 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
+      } else if (auth()->user()->hasRole('bod')) {
+         return view('pages-urbix.dashboard', []);
       } else if (auth()->user()->hasRole('marine')) {
 
          if (auth()->user()->username == 'pet') {
@@ -685,7 +699,8 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
          }
 
-         $logs = Log::orderBy('created_at', 'desc')->get();
+         $logs = Log::get();
+
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
          return view('main', [
             'allVdrs' => $allVdrs,
