@@ -749,9 +749,9 @@ class HomeController extends Controller
          $vessels = Vessel::where('status', 1)->get();
          $lastActivity = [];
          foreach($vessels as $v){
-            $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'asc')->first();
+            $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'desc')->first();
             if ($lastVdr) {
-               $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'asc')->first();
+               $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'desc')->first();
                if ($lastAct) {
                   $lastActivity[] = $lastAct;
                }
