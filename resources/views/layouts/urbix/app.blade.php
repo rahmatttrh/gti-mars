@@ -234,8 +234,16 @@
                              </div>
                          </div>
                      </div>
+                     
+                  </div>
+                  <hr>
+                  <div class="card shadow-none" style="background-color: rgb(255, 255, 255)">
+                     <div class="card-body">
+                        <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" > 
+                     </div>
                   </div>
                </div>
+               
                 {{-- <div class="sidebar-widget text-center">
                     <img src="{{asset('urbix/images/sidebar-widget.png')}}" alt="Widget Image"> <br>
                     <small class="text-muted ">You can choose what kind data that you want to see</small>
@@ -767,9 +775,9 @@
     <footer class="footer">
         <div class="container-fluid">
             <div class="d-flex justify-content-between align-items-center gap-2">
-                <script>document.write(new Date().getFullYear())</script> © Urbix.
+                <script>document.write(new Date().getFullYear())</script> © MARS
                 <div class="text-sm-end d-none d-sm-block">
-                    Design & Develop by Pixeleyez
+                  PHE OSES & GRAHA TEKNOLOGI INDOTAMA
                 </div>
             </div>
         </div>
