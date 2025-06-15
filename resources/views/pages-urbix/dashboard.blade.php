@@ -33,7 +33,7 @@
                      <div class="col-xxl-9">
                          <div class="card">
                              <div class="card-header">
-                                 <h4>Monthly Fuel Consumption</h4>
+                                 <h4>Monthly Fuel & Fresh Water Consumption</h4>
                              </div>
                              <div class="card-body" id="engagement"></div>
                          </div>
@@ -90,44 +90,65 @@
                          </div>
                      </div>
                   </div> --}}
-
+                  @php
+                        $no = 0;
+                  @endphp
                   <div id="productCarousel" class="card carousel-custom carousel slide" data-bs-ride="carousel" data-bs-interval="4000">
                      <div class="card-header d-flex justify-content-between align-items-center">
-                         <h5 class="card-title mb-0">Vessels</h5>
-                         <div class="carousel-indicators carousel-indicators-primary carousel-indicators-dots">
+                         <h5 class="card-title mb-0">Last Activity Vessel</h5>
+                         {{-- <div class="carousel-indicators carousel-indicators-primary carousel-indicators-dots">
+                           @foreach ($lastActivity as $lAct)
+                           @php
+                                 $no += 1;
+                           @endphp
+                           @endforeach
                              <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                              <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
                              <button type="button" data-bs-target="#productCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                         </div>
+                         </div> --}}
                      </div>
                      <div class="card-body"><div id="carouselExample" class="carousel-inner">
-                             <div class="carousel-item active">
+                        
+                    
+                        @foreach ($lastActivity as $lAct)
+                           @php
+                               $no += 1;
+                           @endphp
+
+                           @if ($no == 1)
+                           <div class="carousel-item active">
+                              @else
+                              <div class="carousel-item ">
+                           @endif
+                          
+                              <div class="card card-primary">
+                                 <div class="card-header text-white"><b>{{$lAct->vdr->vessel->name}}</b> </div>
+                                 <div class="card-body">
+                                    {{$lAct->activity}} <br>
+                                    <small class="text-muted"> {{formatDate($lAct->vdr->date)}} {{$lAct->finish}}</small>
+                                 </div>
+                              </div>
+                              {{-- <img src="{{asset('urbix/images/small/img-13.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
+                        </div>
+                        @endforeach
+                             
+                             {{-- <div class="carousel-item">
                                  <div class="card card-primary">
-                                    <div class="card-header text-white"><b>Logindo Overcomer</b></div>
+                                    <div class="card-header text-white"><b>Sigap Jaya</b></div>
                                     <div class="card-body">
-                                       Fuel Cons : 7000
+                                       Fuel Cons : 14000
                                     </div>
                                  </div>
-                                 {{-- <img src="{{asset('urbix/images/small/img-13.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
-                             </div>
-                             <div class="carousel-item">
-                              <div class="card card-primary">
-                                 <div class="card-header text-white"><b>Sigap Jaya</b></div>
-                                 <div class="card-body">
-                                    Fuel Cons : 14000
-                                 </div>
                               </div>
-                                 {{-- <img src="{{asset('urbix/images/small/img-14.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
-                             </div>
                              <div class="carousel-item">
-                              <div class="card card-primary">
-                                 <div class="card-header text-white"><b>Parakan</b></div>
-                                 <div class="card-body">
-                                    Fuel Cons : 5000
+                                 <div class="card card-primary">
+                                    <div class="card-header text-white"><b>Parakan</b></div>
+                                    <div class="card-body">
+                                       Fuel Cons : 5000
+                                    </div>
                                  </div>
-                              </div>
-                                 {{-- <img src="{{asset('urbix/images/small/img-1.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
-                             </div>
+                                 
+                             </div> --}}
                          </div>
                      </div>
                  </div>

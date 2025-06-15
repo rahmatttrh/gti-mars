@@ -29,6 +29,7 @@ use App\Models\Office;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
+use App\Models\VdrActivity;
 use App\Models\VdrCargo;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
@@ -752,12 +753,33 @@ class HomeController extends Controller
          $waterArray = [round($janWater), round($febWater), round($marWater), round($aprWater), round($mayWater), round($junWater)];
          $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
          // dd($fuelArray);
+
+         $vessels = Vessel::where('status', 1)->get();
+         $lastActivity = [];
+         foreach($vessels as $v){
+            $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'asc')->first();
+            if ($lastVdr) {
+               $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'asc')->first();
+               if ($lastAct) {
+                  $lastActivity[] = $lastAct;
+               }
+               
+            }
+            
+         }
+
+         // dd($lastActivity);
+         // foreach($lastActivity as $lAct){
+         //    dd($lAct->vdr->id);
+         // }
          
 
          return view('pages-urbix.dashboard', [
             'fuelArray' => $fuelArray,
             'waterArray' => $waterArray,
-            'monthArray' => $monthArray
+            'monthArray' => $monthArray,
+
+            'lastActivity' => $lastActivity
 
          ]);
       } else if(auth()->user()->hasRole('marine')){
