@@ -660,6 +660,66 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if (auth()->user()->hasRole('bod')) {
+
+         $months = ['Jan', 'Mar', 'Apr', 'May'];
+         $today = Carbon::now();
+         // dd($today->format('Y'));
+
+         $jan = Carbon::createFromFormat('d/m/Y', '01/01/' . $today->format('Y'));
+         $feb = Carbon::createFromFormat('d/m/Y', '01/02/' . $today->format('Y'));
+         $mar = Carbon::createFromFormat('d/m/Y', '01/03/' . $today->format('Y'));
+         $apr = Carbon::createFromFormat('d/m/Y', '01/04/' . $today->format('Y'));
+         $may = Carbon::createFromFormat('d/m/Y', '01/05/' . $today->format('Y'));
+         $jun = Carbon::createFromFormat('d/m/Y', '01/06/' . $today->format('Y'));
+         // dd($jan);
+
+         $janVrds = Vdr::whereMonth('date', $jan)->get();
+         $janFuel = 0;
+         foreach ($janVrds as $janv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $janv->id)->sum('daily');
+            $janFuel += $vdrOperating;
+         }
+
+         $febVrds = Vdr::whereMonth('date', $feb)->get();
+         $febFuel = 0;
+         foreach ($febVrds as $febv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $febv->id)->sum('daily');
+            $febFuel += $vdrOperating;
+         }
+
+         $marVrds = Vdr::whereMonth('date', $mar)->get();
+         $marFuel = 0;
+         foreach ($marVrds as $marv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $marv->id)->sum('daily');
+            $marFuel += $vdrOperating;
+         }
+
+         $aprVrds = Vdr::whereMonth('date', $apr)->get();
+         $aprFuel = 0;
+         foreach ($aprVrds as $aprv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $aprv->id)->sum('daily');
+            $aprFuel += $vdrOperating;
+         }
+
+         $mayVrds = Vdr::whereMonth('date', $may)->get();
+         $mayFuel = 0;
+         foreach ($mayVrds as $mayv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $mayv->id)->sum('daily');
+            $mayFuel += $vdrOperating;
+         }
+
+         $junVrds = Vdr::whereMonth('date', $jun)->get();
+         $junFuel = 0;
+         foreach ($junVrds as $junv) {
+            $vdrOperating = VdrOperating::where('vdr_id', $junv->id)->sum('daily');
+            $junFuel += $vdrOperating;
+         }
+
+         $fuelArray = [$janFuel, $febFuel, $marFuel, $aprFuel, $mayFuel, $junFuel];
+         // dd($fuelArray);
+
+
+
          return view('pages-urbix.dashboard', []);
       } else if (auth()->user()->hasRole('marine')) {
 
