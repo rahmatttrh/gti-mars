@@ -10,6 +10,7 @@ use App\Http\Controllers\Department\DepartmentRequestController;
 use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\DirectorController;
 use App\Http\Controllers\DocController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
@@ -94,6 +95,16 @@ Route::middleware(["auth"])->group(function () {
    Route::put('cargo/update/logistic', [CargoItemController::class, 'updateLogistic'])->name('cargo.update.logistic');
    Route::get('crew/drop/{id}', [RequestController::class, 'crewDrop'])->name('crew.drop');
    
+
+
+   Route::group(['middleware' => ['role:bod']], function () {
+      Route::get('director/vessels', [DirectorController::class, 'vessels'])->name('bod.vessels');
+   });
+
+
+
+
+
    Route::prefix('news')->group(function () {
       
       Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
