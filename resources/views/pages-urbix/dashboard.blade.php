@@ -122,10 +122,11 @@
                            @endif
                           
                               <div class="card card-primary">
-                                 <div class="card-header text-white"><b>{{$lAct->vdr->vessel->name}}</b> </div>
+                                 {{-- <div class="card-header text-white"><b>{{$lAct->vdr->vessel->name}}</b> </div> --}}
                                  <div class="card-body">
+                                    <b>{{$lAct->vdr->vessel->name}}</b> <br>
                                     {{$lAct->activity}} <br>
-                                    <small class="text-muted"> {{formatDate($lAct->vdr->date)}} {{$lAct->finish}}</small>
+                                    <small class=""> {{formatDate($lAct->vdr->date)}} {{$lAct->finish}}</small>
                                  </div>
                               </div>
                               {{-- <img src="{{asset('urbix/images/small/img-13.jpg')}}" class="d-block w-100" alt="Product Image"> --}}
