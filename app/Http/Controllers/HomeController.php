@@ -29,6 +29,7 @@ use App\Models\Office;
 use App\Models\Surveillance;
 use App\Models\User;
 use App\Models\Vdr;
+use App\Models\VdrCargo;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
 use App\Models\VesselHistory;
@@ -673,55 +674,93 @@ class HomeController extends Controller
          $jun = Carbon::createFromFormat('d/m/Y', '01/06/' . $today->format('Y'));
          // dd($jan);
 
+
+         // Fuel
          $janVrds = Vdr::whereMonth('date', $jan)->get();
          $janFuel = 0;
-         foreach ($janVrds as $janv) {
+         $janWater = 0;
+         foreach($janVrds as $janv){
             $vdrOperating = VdrOperating::where('vdr_id', $janv->id)->sum('daily');
             $janFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $janv->id)->where('heading_id', 2)->sum('consumption');
+            $janWater += $vdrWater;
+
          }
 
          $febVrds = Vdr::whereMonth('date', $feb)->get();
          $febFuel = 0;
-         foreach ($febVrds as $febv) {
+         $febWater = 0;
+         foreach($febVrds as $febv){
             $vdrOperating = VdrOperating::where('vdr_id', $febv->id)->sum('daily');
             $febFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $febv->id)->where('heading_id', 2)->sum('consumption');
+            $febWater += $vdrWater;
          }
 
          $marVrds = Vdr::whereMonth('date', $mar)->get();
          $marFuel = 0;
-         foreach ($marVrds as $marv) {
+         $marWater = 0;
+         foreach($marVrds as $marv){
             $vdrOperating = VdrOperating::where('vdr_id', $marv->id)->sum('daily');
             $marFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $marv->id)->where('heading_id', 2)->sum('consumption');
+            $marWater += $vdrWater;
          }
 
          $aprVrds = Vdr::whereMonth('date', $apr)->get();
          $aprFuel = 0;
-         foreach ($aprVrds as $aprv) {
+         $aprWater = 0;
+         foreach($aprVrds as $aprv){
             $vdrOperating = VdrOperating::where('vdr_id', $aprv->id)->sum('daily');
             $aprFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $aprv->id)->where('heading_id', 2)->sum('consumption');
+            $aprWater += $vdrWater;
          }
 
          $mayVrds = Vdr::whereMonth('date', $may)->get();
          $mayFuel = 0;
-         foreach ($mayVrds as $mayv) {
+         $mayWater = 0;
+         foreach($mayVrds as $mayv){
             $vdrOperating = VdrOperating::where('vdr_id', $mayv->id)->sum('daily');
             $mayFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $mayv->id)->where('heading_id', 2)->sum('consumption');
+            $mayWater += $vdrWater;
          }
 
          $junVrds = Vdr::whereMonth('date', $jun)->get();
          $junFuel = 0;
-         foreach ($junVrds as $junv) {
+         $junWater = 0;
+         foreach($junVrds as $junv){
             $vdrOperating = VdrOperating::where('vdr_id', $junv->id)->sum('daily');
             $junFuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $junv->id)->where('heading_id', 2)->sum('consumption');
+            $junWater += $vdrWater;
          }
 
+
+
+        
+
+
          $fuelArray = [$janFuel, $febFuel, $marFuel, $aprFuel, $mayFuel, $junFuel];
+         $waterArray = [$janWater, $febWater, $marWater, $aprWater, $mayWater, $junWater];
+         $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
          // dd($fuelArray);
+         
 
+         return view('pages-urbix.dashboard', [
+            'fuelArray' => $fuelArray,
+            'waterArray' => $waterArray,
+            'monthArray' => $monthArray
 
-
-         return view('pages-urbix.dashboard', []);
-      } else if (auth()->user()->hasRole('marine')) {
+         ]);
+      } else if(auth()->user()->hasRole('marine')){
 
          if (auth()->user()->username == 'pet') {
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();

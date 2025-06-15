@@ -1,5 +1,9 @@
 <?php
 
+function customRound($number){
+   
+}
+
 function formatRupiah($data)
 {
    $rupiah = 'Rp ' . number_format($data, 0, ",", ".");
@@ -15,6 +19,13 @@ function formatRibuan($data)
 function formatDate($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('d/m/Y');
+   return $date;
+}
+
+
+function formatDateMonth($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('F');
    return $date;
 }
 
