@@ -740,8 +740,8 @@ class HomeController extends Controller
         
 
 
-         $fuelArray = [$janFuel, $febFuel, $marFuel, $aprFuel, $mayFuel, $junFuel];
-         $waterArray = [$janWater, $febWater, $marWater, $aprWater, $mayWater, $junWater];
+         $fuelArray = [round($janFuel), round($febFuel), round($marFuel), round($aprFuel), round($mayFuel), round($junFuel)];
+         $waterArray = [round($janWater), round($febWater), round($marWater), round($aprWater), round($mayWater), round($junWater)];
          $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
          // dd($fuelArray);
          
