@@ -128,6 +128,15 @@
                   <input type="text" class="form-control" id="depth" name="depth" value="{{$vessel->depth}}" >
                </div>
             </div>
+            <hr>
+            <div class="form-group">
+               <label for="status">Status</label>
+               <select  class="form-control" id="status" required name="status" >
+                  <option {{$vessel->status == 0 ? 'selected' : ''}} value="0">Offhire</option>
+                  <option {{$vessel->status == 1 ? 'selected' : ''}} value="1">Onhire</option>
+                  <option {{$vessel->status == 2 ? 'selected' : ''}} value="2">Maintenance</option>
+               </select>
+            </div>
             <button class="btn btn-info ">Update</button>
             <a href="{{route('vessel.delete', enkripRambo($vessel->id))}}" class="btn btn-danger" >Delete</a>
          </div>

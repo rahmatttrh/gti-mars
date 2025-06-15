@@ -760,6 +760,8 @@ class HomeController extends Controller
             
          }
 
+         $maintenanceVessels = Vessel::where('status', 2)->get();
+
          // dd($lastActivity);
          // foreach($lastActivity as $lAct){
          //    dd($lAct->vdr->id);
@@ -771,7 +773,10 @@ class HomeController extends Controller
             'waterArray' => $waterArray,
             'monthArray' => $monthArray,
 
-            'lastActivity' => $lastActivity
+            'lastActivity' => $lastActivity,
+
+            'vessels' => $vessels,
+            'maintenanceVessels' => $maintenanceVessels
 
          ]);
       } else if(auth()->user()->hasRole('marine')){

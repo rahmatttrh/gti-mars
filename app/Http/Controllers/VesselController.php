@@ -138,6 +138,7 @@ class VesselController extends Controller
       $vessel = Vessel::find($req->vessel);
       $user = User::where('email', $req->email)->first();
       $vessel->update([
+         'status' => $req->status,
          'name' => $req->name,
          'username' => $req->username,
          'email' => $req->email,

@@ -199,7 +199,7 @@
                             </li>
                             <li class="pe-slide-item">
                                 <a href="dashboard-analytics.html" class="pe-nav-link">
-                                    Annual
+                                    Vessel Data
                                 </a>
                             </li>
                             
@@ -222,13 +222,13 @@
                          <div class="row mt-6 g-0">
                              <div class="col-xxl-6">
                                  <div class="border-end-xxl border-bottom border-bottom-xxl-0 pb-4 pb-xxl-0">
-                                     <h2 class="mb-0">17</h2>
+                                     <h2 class="mb-0">{{count($vessels)}}</h2>
                                      <p class="mb-0 fw-semibold">On Hire</p>
                                  </div>
                              </div>
                              <div class="col-xxl-6">
                                  <div class="text-xxl-end mb-0 pt-4 pt-xxl-0">
-                                     <h4 class="mb-0">2</h4>
+                                     <h4 class="mb-0">{{count($maintenanceVessels)}}</h4>
                                      <p class="mb-0">Maintenance</p>
                                  </div>
                              </div>
@@ -269,7 +269,7 @@
                         </li>
                         <li class="pe-slide-item">
                             <a href="dashboard-analytics.html" class="pe-nav-link">
-                                Annual
+                                Vessel Data
                             </a>
                         </li>
                         
