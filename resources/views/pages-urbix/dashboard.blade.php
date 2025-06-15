@@ -7,8 +7,8 @@
         <div class="container-fluid">
 
             <div class="main-breadcrumb d-flex align-items-center my-3 position-relative">
-                {{-- <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">June</h2> --}}
-                <div class="dropdown breadcrumb-title mb-0 flex-grow-1 fs-14">
+                <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">Analytics</h2>
+                {{-- <div class="dropdown breadcrumb-title mb-0 flex-grow-1 fs-14">
                   <a href="#" class=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                     June
                   </a>
@@ -17,7 +17,7 @@
                     <li><a class="dropdown-item" href="javascript:void(0)">April</a></li>
                     <li><a class="dropdown-item" href="javascript:void(0)">March</a></li>
                   </ul>
-                </div>
+                </div> --}}
                 <div class="flex-shrink-0">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-end mb-0">

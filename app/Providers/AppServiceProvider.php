@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Request;
 use App\Models\Schedule;
 use App\Models\Vdr;
+use App\Models\Vessel;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -98,6 +99,19 @@ class AppServiceProvider extends ServiceProvider
                'notifVdrs' => $notifVdrs,
                'vdrs' => $vdrs,
                'notif' => $notif,
+            ]);
+         }
+      );
+
+      view()->composer(
+         'layouts.urbix.app',
+         function ($view) {
+            $vessels = Vessel::where('status', 1)->get();
+            $maintenanceVessels = Vessel::where('status', 2)->get();
+            $view->with([
+               'vessels' => $vessels,
+               'maintenanceVessels' => $maintenanceVessels,
+               
             ]);
          }
       );

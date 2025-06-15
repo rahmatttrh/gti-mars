@@ -64,10 +64,18 @@
                      <td>{{$vessel->type}}</td>
                      <td>
                         @if ($vessel->status == 0)
+                           <span class="badge badge-light">Off Hire</span>
+                           @elseif($vessel->status == 1)
+                           <span class="badge badge-primary" >On Hire</span>
+                           @elseif($vessel->status == 2)
+                           <span class="badge badge-warning" >Maintenance</span>
+                        @endif
+
+                        {{-- @if ($vessel->status == 0)
                            <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
                            @elseif($vessel->status == 1)
                            <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
-                        @endif
+                        @endif --}}
                      </td>
                   </tr>
                   @endforeach
