@@ -1,6 +1,6 @@
 @extends('layouts.urbix.app')
 @section('title')
-    Dashboard
+    Vessel Data
 @endsection
 
 @section('content')
