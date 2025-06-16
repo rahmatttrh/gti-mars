@@ -221,7 +221,7 @@
                      <div class="card-body p-0">
                          <div class="d-flex justify-content-between align-items-center">
                              <div class="d-flex align-items-center">
-                                 <img src="{{asset('urbix/flaticon/ship.png')}}" class="h-32px w-32px me-3" alt="Instagram">
+                                 <img src="{{asset('urbix/flaticon/ship.png')}}" class="h-32px w-32px me-3" alt="">
                                  <p class="mb-0 fw-semibold">Vessel Overview</p>
                              </div>
                              
@@ -764,9 +764,9 @@
                         <button type="button" class="btn btn-light" id="resetBtn">
                             <i class="ri-reset-right-line"></i> Reset Layouts
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        {{-- <button type="button" class="btn btn-danger">
                             <i class="ri-shopping-bag-3-line"></i> Buy Now
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
