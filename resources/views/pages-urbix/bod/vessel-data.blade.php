@@ -6,7 +6,7 @@
 @section('content')
    <div class="container-fluid">
       <div class="main-breadcrumb d-flex align-items-center my-3 position-relative">
-            <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">Analytics</h2>
+            <h2 class="breadcrumb-title mb-0 flex-grow-1 fs-14">Vessel Detail</h2>
             {{-- <div class="dropdown breadcrumb-title mb-0 flex-grow-1 fs-14">
             <a href="#" class=" dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                June
@@ -20,8 +20,9 @@
             <div class="flex-shrink-0">
                <nav aria-label="breadcrumb">
                   <ol class="breadcrumb justify-content-end mb-0">
-                        <li class="breadcrumb-item"><a href="javascript:void(0)">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Analytics</li>
+                        <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{route('bod.vessels')}}">Vessel</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Detail</li>
                   </ol>
                </nav>
             </div>
@@ -29,19 +30,22 @@
       <div class="d-flex">
          <img src="{{asset('urbix/flaticon/ship-side.png')}}" class="h-32px w-32px mt-1 me-2" alt=""> <h1>{{$vessel->name}}</h1>
       </div>
+
+      <div class="row">
+         <div class="col-12">
+            <div class="card">
+               <div class="card-header">
+                   <h4>{{$monthName}} Fuel & Fresh Water Consumption</h4>
+               </div>
+               <div class="card-body" id="engagement_month"></div>
+            </div>
+         </div>
+      </div>
       
       <div class="row">
          <div class="col-md-8">
             <div class="row">
-               <div class="col-xxl-9">
-                  <div class="card">
-                     <div class="card-header">
-                         <h4>{{$monthName}} Fuel & Fresh Water Consumption</h4>
-                     </div>
-                     <div class="card-body" id="engagement_month"></div>
-                  </div>
-                     
-               </div>
+               
                <div class="col-xxl-3">
                   <div class="card">
                      <div class="card-body">
@@ -263,7 +267,7 @@
          data: {!! json_encode($waterDateArray) !!}
      }],
      chart: {
-         height: 230,
+         height: 200,
          type: 'line',
          toolbar: {
              show: false

@@ -486,6 +486,27 @@
       chart.render();
 
 
+      // yaxis: {
+      // labels: {
+      //    formatter: function (value) {
+      //       return value.toLocaleString('id-ID');
+      //    }
+      // }
+      // },
+      // tooltip: {
+      // y: {
+      //    formatter: function (value) {
+      //       return value.toLocaleString('id-ID');
+      //    }
+      // }
+      // },
+      // dataLabels: {
+      // formatter: function (value) {
+      //    return value.toLocaleString('id-ID');
+      // }
+      // }
+
+
       // Engagement
       var options = {
          series: [{
