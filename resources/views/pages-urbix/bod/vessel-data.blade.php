@@ -43,7 +43,7 @@
                      
                </div>
                <div class="col-xxl-3">
-                  <div class="card card-h-100">
+                  <div class="card">
                      <div class="card-body">
          
                        <div id="spline_area_chart" class="apexcharts-container"></div>
