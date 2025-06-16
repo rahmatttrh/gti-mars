@@ -63,7 +63,7 @@
                         <input type="text" class="form-control form-control-icon bg-transparent rounded-pill min-w-300px" id="Search" placeholder="Search" required>
                         <div class="search-btn">
                             <div><i class="ri-search-line text-muted fs-16"></i></div>
-                            <div><span class="badge bg-light-subtle text-muted">CTRL D</span></div>
+                            {{-- <div><span class="badge bg-light-subtle text-muted">CTRL D</span></div> --}}
                         </div>
                     </div>
                 </div>
