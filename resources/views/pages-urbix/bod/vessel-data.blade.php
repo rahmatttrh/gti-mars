@@ -72,13 +72,13 @@
                </div>
                <div class="card-body">
                   <div id="existinglist">
-                       <div class="input-group">
+                       {{-- <div class="input-group">
                            <input class="search form-control" placeholder="Search" />
                            <button class="sort btn btn-light" data-sort="name">
                                <i class="ri-search-2-line"></i>
                            </button>
-                       </div>
-                       <div class=" overflow-auto" style="height: 200px">
+                       </div> --}}
+                       <div class=" overflow-auto" style="height: 210px">
                        
 
                         @if (count($activities) > 0)
