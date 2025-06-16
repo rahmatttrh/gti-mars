@@ -327,29 +327,29 @@ class DirectorController extends Controller
      
 
       if ($month == 1) {
-         $monthName = 'Januari';
+         $monthName = 'January';
       } elseif ($month == 2) {
-         $monthName = 'Februari';
+         $monthName = 'February';
       } elseif ($month == 3) {
-         $monthName = 'Maret';
+         $monthName = 'March';
       } elseif ($month == 4) {
          $monthName = 'April';
       } elseif ($month == 5) {
-         $monthName = 'Mei';
+         $monthName = 'May';
       } elseif ($month == 6) {
-         $monthName = 'Juni';
+         $monthName = 'June';
       } elseif ($month == 7) {
-         $monthName = 'Juli';
+         $monthName = 'July';
       } elseif ($month == 8) {
-         $monthName = 'Agustus';
+         $monthName = 'Augustus';
       } elseif ($month == 9) {
          $monthName = 'September';
       } elseif ($month == 10) {
-         $monthName = 'Oktober';
+         $monthName = 'October';
       } elseif ($month == 11) {
          $monthName = 'November';
       } elseif ($month == 12) {
-         $monthName = 'Desember';
+         $monthName = 'December';
       }
 
       $now = Carbon::now();
@@ -390,6 +390,7 @@ class DirectorController extends Controller
       }
 
          $lastVdr = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->first();
+
          
 
          return view('pages-urbix.bod.vessel-data', [
