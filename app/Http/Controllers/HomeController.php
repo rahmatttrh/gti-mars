@@ -34,6 +34,7 @@ use App\Models\VdrCargo;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
 use App\Models\VesselHistory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 
@@ -889,6 +890,16 @@ class HomeController extends Controller
             $headerArray[] = $head->description;
          }
          // dd($headerArray);
+
+         $vesselLists = DB::table('vessels')
+         ->select('type', DB::raw('count(*) as total') , 'type')
+         ->whereIn('status', [1,2])
+         ->groupBy('type')
+         ->orderBy('total', 'desc')
+         ->get();
+
+         // dd($vesselList);
+
          
 
          return view('pages-urbix.dashboard', [
@@ -914,6 +925,8 @@ class HomeController extends Controller
             'sbArray' => $sbArray,
             'maintenanceArray' => $maintenanceArray,
             'dtArray' => $dtArray,
+
+            'vesselLists' => $vesselLists
 
          ]);
       } else if(auth()->user()->hasRole('marine')){

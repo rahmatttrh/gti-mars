@@ -205,6 +205,43 @@
                   
                   <div class="row">
                      <div class="col-lg-12">
+                        <div class="card ">
+                           <!--start::card-->
+                           <div class="card-header">
+                               <h5 class="card-title mb-0"> Vessel List </h5>
+                           </div>
+                           <div class="card-body">
+                              <div class="table-responsive" data-simplebar>
+                                   <table class="table text-nowrap table-sm  mb-0">
+                                       {{-- <thead>
+                                           <tr>
+                                               <th scope="col">Vessel Type</th>
+                                               <th scope="col">Qty</th>
+                                               
+                                           </tr>
+                                       </thead> --}}
+                                       <tbody>
+                                          @foreach ($vesselLists as $vessel)
+                                          <tr>
+                                             <td class="fw-medium">{{$vessel->type}}</td>
+                                             <td class="text-end">{{$vessel->total}}</td>
+                                             
+                                         </tr>
+                                          @endforeach
+                                           
+                                           {{-- <tr>
+                                             <td class="fw-medium">Crew Boat</td>
+                                             <td class="text-end">3</td>
+                                             
+                                         </tr> --}}
+                                           
+                                       </tbody>
+                                   </table>
+   
+                               </div>
+                               <!-- end:: Bordered Table -->
+                           </div>
+                       </div>
                          <div class="card">
                              <div class="card-header">
                                  <h4>Lifting</h4>
@@ -316,7 +353,7 @@
                curve: 'smooth'
             },
             title: {
-               text: 'Spline Area Chart',
+               text: 'Operating Data',
                align: 'left'
             },
             xaxis: {
