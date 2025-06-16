@@ -374,7 +374,7 @@ class DirectorController extends Controller
       // dd($dates);
 
       foreach($dates as $date){
-         $vdrs = Vdr::whereDate('date', $date)->get();
+         $vdrs = Vdr::where('vessel_id', $vessel->id)->whereDate('date', $date)->get();
          $fuel = 0;
          $water = 0;
          foreach($vdrs as $v){
