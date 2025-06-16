@@ -83,7 +83,7 @@
 
                         @if (count($activities) > 0)
                            @foreach ($activities as $act)
-                           <ul class="list-group list fs-13 fw-medium mt-3">
+                           <ul class="list-group list fs-13 fw-medium">
                               <li class="list-group-item">
                                  <p class="m-0 name fw-semibold">{{$act->activity}}</p>
                                  <p class="m-0 email text-muted">{{$act->start}} - {{$act->finish}}</p>
@@ -92,7 +92,7 @@
                            @endforeach
                            @else
                            
-                           <ul class="list-group list no-results mt-2" >
+                           <ul class="list-group list no-results " >
                               <li class="list-group-item text-muted">No data found</li>
                            </ul>
                         @endif
