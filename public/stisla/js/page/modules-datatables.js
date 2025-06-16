@@ -41,7 +41,8 @@ $("[data-checkboxes]").each(function () {
 $("#table-1").dataTable({
     columnDefs: [{ sortable: false, targets: [2, 3] }],
     pageLength : 10,
-   lengthMenu: [[5, 10, 20, -1], [7, 10, 20, 'Todos']]
+   lengthMenu: [[5, 10, 20, -1], [7, 10, 20, 'Todos']],
+   order: false
 });
 $("#table-2").dataTable({
     columnDefs: [{ sortable: false, targets: [0, 2, 3] }],

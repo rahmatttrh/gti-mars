@@ -15,6 +15,7 @@ class MarineVdrController extends Controller
 {
    public function index()
    {
+      // dd('ok');
       if (auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp')) {
          return view('pages-stisla.forbidden');
       }

@@ -784,7 +784,7 @@
             <div class="d-flex justify-content-between align-items-center gap-2">
                 <script>document.write(new Date().getFullYear())</script> © MARS
                 <div class="text-sm-end d-none d-sm-block">
-                  PHE OSES & GRAHA TEKNOLOGI INDOTAMA
+                  PHE OSES
                 </div>
             </div>
         </div>
