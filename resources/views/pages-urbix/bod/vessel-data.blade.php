@@ -86,7 +86,7 @@
                            <ul class="list-group list fs-13 fw-medium">
                               <li class="list-group-item">
                                  <p class="m-0 name fw-semibold">{{$act->activity}}</p>
-                                 <p class="m-0 email text-muted">{{$act->start}} - {{$act->finish}}</p>
+                                 <p class="m-0 email text-muted">{{formatDate($act->vdr->date)}} - {{$act->start}}  {{$act->finish}}</p>
                               </li>
                            </ul>
                            @endforeach
