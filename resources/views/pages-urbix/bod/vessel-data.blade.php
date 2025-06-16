@@ -34,13 +34,39 @@
          <div class="col-md-8">
             <div class="row">
                <div class="col-xxl-9">
-                     <div class="card">
-                        <div class="card-header">
-                           <h4>Monthly Fuel & Fresh Water Consumption</h4>
-                        </div>
-                        <div class="card-body" id="engagement"></div>
+                  <div class="card">
+                     <div class="card-header">
+                         <h4>{{$monthName}} Fuel & Fresh Water Consumption</h4>
                      </div>
+                     <div class="card-body" id="engagement_month"></div>
+                  </div>
+                     
                </div>
+               <div class="col-xxl-3">
+                  <div class="card card-h-100">
+                     <div class="card-body">
+         
+                       <div id="spline_area_chart" class="apexcharts-container"></div>
+         
+                     </div>
+                     <!-- end card-body -->
+                   </div>
+                   <div class="card">
+                     <div class="card-header">
+                        <h4>Monthly Fuel & Fresh Water Consumption</h4>
+                     </div>
+                     <div class="card-body" id="engagement"></div>
+                  </div>
+                  {{-- <div class="card card-h-100">
+                     <div class="card-body">
+         
+                       <div id="basic_bar_chart" class="apexcharts-container"></div>
+         
+                     </div>
+                     <!-- end card-body -->
+                   </div> --}}
+               </div>
+               
                <div class="col-xxl-3">
                      <div class="row">
                         <div class="col-xxl-12 col-md-6">
@@ -68,6 +94,46 @@
             </div>
          </div>
          <div class="col-md-4">
+            <div class="card ">
+               <!--start::card-->
+               <div class="card-header">
+                   <h5 class="card-title mb-0">Current Contract</h5>
+               </div>
+               <div class="card-body">
+                  <div class="table-responsive" data-simplebar>
+                       <table class="table text-nowrap table-sm  mb-0">
+                           {{-- <thead>
+                               <tr>
+                                   <th scope="col">Vessel Type</th>
+                                   <th scope="col">Qty</th>
+                                   
+                               </tr>
+                           </thead> --}}
+                           <tbody>
+                              <tr>
+                                 <td>Number</td>
+                                 <td class="text-end">{{$lastVdr->contract}}</td>
+                             </tr>
+                              <tr>
+                                 <td>Period</td>
+                                 <td class="text-end">{{formatDate($lastVdr->contract_start)}} - {{formatDate($lastVdr->contract_end)}}</td>
+                              </tr>
+
+                              <tr>
+                                 <td>Loc</td>
+                                 <td class="text-end">{{$lastVdr->location_midnight}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Owner</td>
+                                 <td class="text-end">{{$lastVdr->owner}}</td>
+                              </tr>
+                           </tbody>
+                       </table>
+
+                   </div>
+                   <!-- end:: Bordered Table -->
+               </div>
+           </div>
             <div class="card">
                <!--start::card-->
                <div class="card-header">
@@ -81,7 +147,7 @@
                                <i class="ri-search-2-line"></i>
                            </button>
                        </div> --}}
-                       <div class=" overflow-auto" style="height: 210px">
+                       <div class=" overflow-auto" style="height: 180px">
                        
 
                         @if (count($activities) > 0)
@@ -181,8 +247,112 @@
 
                //  var chart = new ApexCharts(document.querySelector("#overview"), options);
                //  chart.render();
+               var options = {
+     series: [{
+         name: 'Fuel Consumption',
+         type: 'column',
+         data: {!! json_encode($fuelDateArray) !!}
+     }, {
+         name: 'Fresh Water Consumption',
+         type: 'line',
+         data: {!! json_encode($waterDateArray) !!}
+     }],
+     chart: {
+         height: 230,
+         type: 'line',
+         toolbar: {
+             show: false
+         }
+     },
+     colors: ['#5b66eb', '#68d3f8'],
+     legend: {
+         show: false
+     },
+     stroke: {
+         width: [0, 4]
+     },
+     dataLabels: {
+         enabled: true,
+         enabledOnSeries: [1]
+     },
+     labels: {!! json_encode($dateArray) !!},
+     yaxis: [{
+         title: {
+             text: '',
+         },
+     },
+     {
+         opposite: true,
+         title: {
+             text: ''
+         }
+     }]
+ };
+
+ var chart = new ApexCharts(document.querySelector("#engagement_month"), options);
+ chart.render();
 
 
+
+
+               var spline_area_chart = {
+            series: [{
+               name: 'High',
+               data: {!! json_encode($highArray) !!}
+            },{
+               name: 'Normal',
+               data: {!! json_encode($normalArray) !!}
+            }, {
+               name: 'Slow',
+               data: {!! json_encode($slowArray) !!}
+            }, {
+               name: 'Manu',
+               data: {!! json_encode($manuArray) !!}
+            }, {
+               name: 'Idle',
+               data: {!! json_encode($idleArray) !!}
+            }, {
+               name: 'Towing',
+               data: {!! json_encode($towArray) !!}
+            }, {
+               name: 'Anchor Handling',
+               data: {!! json_encode($ahArray) !!}
+            }, {
+               name: 'Standby',
+               data: {!! json_encode($sbArray) !!}
+            }, {
+               name: 'Maintenance',
+               data: {!! json_encode($maintenanceArray) !!}
+            }, {
+               name: 'Down Time',
+               data: {!! json_encode($dtArray) !!}
+            }],
+            chart: {
+               height: 240,
+               type: 'area'
+            },
+            dataLabels: {
+               enabled: false
+            },
+            stroke: {
+               curve: 'smooth'
+            },
+            title: {
+               text: 'Operating Data',
+               align: 'left'
+            },
+            xaxis: {
+               type: 'month',
+               categories: {!! json_encode($monthArray) !!}
+            },
+            tooltip: {
+               x: {
+                     format: 'MM'
+               },
+            },
+         };
+         var chart = new ApexCharts(document.querySelector("#spline_area_chart"), spline_area_chart);
+         chart.render();
 
 
 
@@ -235,7 +405,7 @@
                         data: {!! json_encode($waterArray) !!}
                   }],
                   chart: {
-                        height: 230,
+                        height: 150,
                         type: 'line',
                         toolbar: {
                            show: false

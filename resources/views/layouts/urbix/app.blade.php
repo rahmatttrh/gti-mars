@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
     
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{asset('urbix/images/favicon.png')}}">    
+    <link rel="shortcut icon" href="{{asset('urbix/flaticon/uranus.png')}}">    
     <!-- plugin css -->
     <link rel="stylesheet" type="text/css" href="{{asset('urbix/libs/jsvectormap/jsvectormap.min.css')}}">
 
@@ -49,7 +49,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-inline-flex align-items-center gap-2">
                     <a href="/" class="align-items-end logo-main d-none me-5">
-                        <img height="35" width="34" class="logo-dark" alt="Dark Logo" src="{{asset('urbix/images/logo-md.png')}}">
+                        <img height="35" width="34" class="logo-dark" alt="Dark Logo" src="{{asset('urbix/flaticon/uranus.png')}}">
                         <h3 class="text-body-emphasis fw-bolder mb-0 ms-1">MARS</h3>
                     </a>
                     <button type="button" class="vertical-toggle btn header-btn" id="toggleSidebar" aria-label="Toggle Sidebar">
@@ -173,8 +173,8 @@
         <div class="pe-app-sidebar-logo px-6 d-flex align-items-center position-relative">
             <!--begin::Brand Image-->
             <a href="/" class="d-flex align-items-end logo-main">
-                <img height="35" width="34" class="logo-dark" alt="Dark Logo" src="{{asset('urbix/images/logo-md.png')}}">
-                <img height="35" width="34" class="logo-light" alt="Light Logo" src="{{asset('urbix/images/logo-md-light.png')}}">
+                <img height="35" width="34" class="logo-dark" alt="Dark Logo" src="{{asset('urbix/flaticon/uranus.png')}}">
+                <img height="35" width="34" class="logo-light" alt="Light Logo" src="{{asset('urbix/flaticon/uranus.png')}}">
                 <h3 class="text-body-emphasis fw-bolder mb-0 ms-1">MARS</h3>
             </a>
             <button type="button" id="sidebarDefaultArrow" class="btn btn-sm p-0 fs-16 text-body-emphasis ms-auto float-end d-none icon-hover-btn d-none"><i class="ri-arrow-right-line fs-5"></i></button>
@@ -197,11 +197,11 @@
                                   Monthly
                               </a>
                           </li>
-                           <li class="pe-slide-item active">
+                           {{-- <li class="pe-slide-item active">
                               <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
                                   Daily
                               </a>
-                          </li>
+                          </li> --}}
                             
                             
                             <li class="pe-slide-item">
@@ -277,11 +277,11 @@
                                 Monthly
                             </a>
                         </li>
-                        <li class="pe-slide-item">
+                        {{-- <li class="pe-slide-item">
                             <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
                                 Daily
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="pe-slide-item">
                             <a href="{{route('bod.vessels')}}" class="pe-nav-link">
                                 Vessel Data
