@@ -49,7 +49,7 @@
                     <tbody>
                         @foreach ($vessels as $vessel)
                             <tr>
-                              <td><a href="/">{{$vessel->name}}</a></td>
+                              <td><a href="{{route('vessel.data', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
                               <td>{{$vessel->type}}</td>
                               <td>
                                  @if ($vessel->status == 0)
