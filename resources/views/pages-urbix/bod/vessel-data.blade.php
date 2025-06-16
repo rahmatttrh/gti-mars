@@ -325,64 +325,82 @@
 
 
 
+               // 
                var spline_area_chart = {
-            series: [{
-               name: 'High',
-               data: {!! json_encode($highArray) !!}
-            },{
-               name: 'Normal',
-               data: {!! json_encode($normalArray) !!}
-            }, {
-               name: 'Slow',
-               data: {!! json_encode($slowArray) !!}
-            }, {
-               name: 'Manu',
-               data: {!! json_encode($manuArray) !!}
-            }, {
-               name: 'Idle',
-               data: {!! json_encode($idleArray) !!}
-            }, {
-               name: 'Towing',
-               data: {!! json_encode($towArray) !!}
-            }, {
-               name: 'Anchor Handling',
-               data: {!! json_encode($ahArray) !!}
-            }, {
-               name: 'Standby',
-               data: {!! json_encode($sbArray) !!}
-            }, {
-               name: 'Maintenance',
-               data: {!! json_encode($maintenanceArray) !!}
-            }, {
-               name: 'Down Time',
-               data: {!! json_encode($dtArray) !!}
-            }],
-            chart: {
-               height: 220,
-               type: 'area'
-            },
-            dataLabels: {
-               enabled: false
-            },
-            stroke: {
-               curve: 'smooth'
-            },
-            title: {
-               text: 'Operating Data',
-               align: 'left'
-            },
-            xaxis: {
-               type: 'month',
-               categories: {!! json_encode($monthArray) !!}
-            },
-            tooltip: {
-               x: {
-                     format: 'MM'
-               },
-            },
-         };
-         var chart = new ApexCharts(document.querySelector("#spline_area_chart"), spline_area_chart);
-         chart.render();
+   series: [{
+      name: 'High',
+      data: {!! json_encode($highArray) !!}
+   },{
+      name: 'Normal',
+      data: {!! json_encode($normalArray) !!}
+   }, {
+      name: 'Slow',
+      data: {!! json_encode($slowArray) !!}
+   }, {
+      name: 'Manu',
+      data: {!! json_encode($manuArray) !!}
+   }, {
+      name: 'Idle',
+      data: {!! json_encode($idleArray) !!}
+   }, {
+      name: 'Towing',
+      data: {!! json_encode($towArray) !!}
+   }, {
+      name: 'Anchor Handling',
+      data: {!! json_encode($ahArray) !!}
+   }, {
+      name: 'Standby',
+      data: {!! json_encode($sbArray) !!}
+   }, {
+      name: 'Maintenance',
+      data: {!! json_encode($maintenanceArray) !!}
+   }, {
+      name: 'Down Time',
+      data: {!! json_encode($dtArray) !!}
+   }],
+   chart: {
+      height: 220,
+      type: 'area'
+   },
+   dataLabels: {
+      enabled: false,
+      formatter: function (value) {
+         return value.toLocaleString('id-ID');
+      }
+   },
+   stroke: {
+      curve: 'smooth'
+   },
+   title: {
+      text: 'Operating Data',
+      align: 'left'
+   },
+   xaxis: {
+      type: 'month',
+      categories: {!! json_encode($monthArray) !!}
+   },
+   yaxis: {
+      labels: {
+         formatter: function (value) {
+            return value.toLocaleString('id-ID');
+         }
+      }
+   },
+   tooltip: {
+      x: {
+         format: 'MM'
+      },
+      y: {
+         formatter: function (value) {
+            return value.toLocaleString('id-ID');
+         }
+      }
+   }
+};
+
+var chart = new ApexCharts(document.querySelector("#spline_area_chart"), spline_area_chart);
+chart.render();
+
 
 
 
