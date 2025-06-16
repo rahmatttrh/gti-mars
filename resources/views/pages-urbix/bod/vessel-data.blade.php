@@ -267,7 +267,7 @@
         data: {!! json_encode($waterDateArray) !!}
     }],
     chart: {
-        height: 230,
+        height: 200,
         type: 'line',
         toolbar: {
             show: false
