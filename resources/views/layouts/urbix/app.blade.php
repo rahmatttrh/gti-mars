@@ -120,8 +120,8 @@
                                 </div>
                             </div>
                             <ul class="list-unstyled mb-1 border-bottom pb-1">
-                                <li><a class="dropdown-item" href="pages-profile.html"><i class="bi bi-person me-2"></i> View Profile</a></li>
-                                <li><a class="dropdown-item" href="pages-profile.html"><i class="bi bi-gear me-2"></i> Settings</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-person me-2"></i> View Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2"></i> Settings</a></li>
                                 {{-- <li><a class="dropdown-item" href="pages-billing-subscription.html"><i class="bi bi-award me-2"></i> Subscription</a></li> --}}
                             </ul>
                             <ul class="list-unstyled mb-1 border-bottom pb-1">
