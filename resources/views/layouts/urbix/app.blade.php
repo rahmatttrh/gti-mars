@@ -10,6 +10,7 @@
     
     <!-- layout setup -->
     <script type="module" src="{{asset('urbix/js/layout-setup.js')}}"></script>
+    <link rel="stylesheet" href="{{asset('urbix/libs/leaflet/leaflet.css')}}">
 
     <!--datatable css-->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
@@ -824,6 +825,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+
+<script src="{{asset('urbix/libs/leaflet/leaflet.js')}}"></script>
+
+<script src="{{asset('urbix/js/map/leaflet-map.init.js')}}"></script>
 
 <script src="{{asset('urbix/js/table/datatable.init.js')}}"></script>
 
