@@ -101,7 +101,7 @@
                </div>
                <div class="card-body">
                   @if ($lastVdr)
-                     
+                     <div class="table-responsive">
                         <table class="table text-nowrap table-sm  mb-0">
                            {{-- <thead>
                               <tr>
@@ -131,7 +131,7 @@
                            </tbody>
                         </table>
 
-                     
+                     </div>
                      @else
                      <span>Empty</span>
                   @endif
