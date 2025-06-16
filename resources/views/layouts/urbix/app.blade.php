@@ -169,7 +169,8 @@
             </div>
           </div>
         </div>
-      </div>    <aside class="pe-app-sidebar" id="sidebar">
+      </div>    
+      <aside class="pe-app-sidebar" id="sidebar">
         <div class="pe-app-sidebar-logo px-6 d-flex align-items-center position-relative">
             <!--begin::Brand Image-->
             <a href="/" class="d-flex align-items-end logo-main">
@@ -197,11 +198,8 @@
                                   Monthly
                               </a>
                           </li>
-                           {{-- <li class="pe-slide-item active">
-                              <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
-                                  Daily
-                              </a>
-                          </li> --}}
+
+                           
                             
                             
                             <li class="pe-slide-item">
@@ -209,6 +207,14 @@
                                     Vessel Data
                                 </a>
                             </li>
+                            <hr>
+                            @foreach ($vessels as $ves)
+                            <li class="pe-slide-item d-none">
+                              <a href="{{route('vessel.data', enkripRambo($ves->id))}}" class="pe-nav-link">
+                                  {{$ves->name}}
+                              </a>
+                          </li>
+                            @endforeach
                             
                         </ul>
                     </li>
@@ -259,7 +265,8 @@
                 </div> --}}
             </div>
         </nav>
-    </aside>    <aside class="pe-app-sidebar horizontal-sidebar" id="horizontal-aside">
+    </aside>    
+    <aside class="pe-app-sidebar horizontal-sidebar" id="horizontal-aside">
         <!-- data-simplebar id="sidebar-simplebar" -->
         <nav class="pe-app-sidebar-menu nav nav-pills">
             <ul class="pe-horizontal-menu mb-0 list-unstyled" id="horizontal-menu">
@@ -278,7 +285,7 @@
                             </a>
                         </li>
                         {{-- <li class="pe-slide-item">
-                            <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
+                            <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link" >
                                 Daily
                             </a>
                         </li> --}}
@@ -296,6 +303,8 @@
     </aside>
     <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
     <main class="app-wrapper">
+      
+     
       @yield('content')
     </main><!--End app-wrapper-->
 
