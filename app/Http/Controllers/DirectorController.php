@@ -12,6 +12,169 @@ use Illuminate\Http\Request;
 
 class DirectorController extends Controller
 {
+
+   public function dashboardDaily(){
+      $today = Carbon::now();
+
+      $month = $today->format('m');
+      $year = $today->format('Y');
+      // dd($year);
+
+     
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+      $now = Carbon::now();
+      // dd($now->format('Y-m-d'));
+
+      // $yearMonth = $now->format('Y-m');
+      $yearMonth = $year . '-' . $month;
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      $dateArray = [];
+      foreach($dates as $d){
+         $dateArray[] = $d->format('d');
+      }
+      // dd($dates);
+
+      foreach($dates as $date){
+         $vdrs = Vdr::whereDate('date', $date)->get();
+         $fuel = 0;
+         $water = 0;
+         foreach($vdrs as $v){
+            $vdrOperating = VdrOperating::where('vdr_id', $v->id)->sum('daily');
+            $fuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $v->id)->where('heading_id', 2)->sum('consumption');
+            $water += $vdrWater;
+         }
+
+         $fuelArray[] = round($fuel);
+         $waterArray[] = round($water);
+      }
+
+      return view('pages-urbix.dashboard-daily', [
+         'monthName' => $monthName,
+         'dateArray' => $dateArray,
+         'today' => $today,
+         'fuelArray' => $fuelArray,
+         'waterArray' => $waterArray,
+      ]);
+   }
+
+   public function dashboardMonth($id){
+      $today = Carbon::now();
+
+      $month = dekripRambo($id);
+      $year = $today->format('Y');
+      // dd($year);
+
+      // dd($month);
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+      $now = Carbon::now();
+      // dd($now->format('Y-m-d'));
+
+      // $yearMonth = $now->format('Y-m');
+      $yearMonth = $year . '-' . $month;
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      $dateArray = [];
+      foreach($dates as $d){
+         $dateArray[] = $d->format('d');
+      }
+      // dd($dates);
+
+      foreach($dates as $date){
+         $vdrs = Vdr::whereDate('date', $date)->get();
+         $fuel = 0;
+         $water = 0;
+         foreach($vdrs as $v){
+            $vdrOperating = VdrOperating::where('vdr_id', $v->id)->sum('daily');
+            $fuel += $vdrOperating;
+
+            $vdrWater = VdrCargo::where('vdr_id', $v->id)->where('heading_id', 2)->sum('consumption');
+            $water += $vdrWater;
+         }
+
+         $fuelArray[] = round($fuel);
+         $waterArray[] = round($water);
+      }
+
+      return view('pages-urbix.dashboard-daily', [
+         'monthName' => $monthName,
+         'dateArray' => $dateArray,
+         'today' => $today,
+         'fuelArray' => $fuelArray,
+         'waterArray' => $waterArray,
+      ]);
+   }
+
    public function vessels(){
       $vessels = Vessel::get();
       return view('pages-urbix.bod.vessels', [

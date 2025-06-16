@@ -198,7 +198,7 @@
                               </a>
                           </li>
                            <li class="pe-slide-item active">
-                              <a href="#" class="pe-nav-link">
+                              <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
                                   Daily
                               </a>
                           </li>
@@ -278,7 +278,7 @@
                             </a>
                         </li>
                         <li class="pe-slide-item">
-                            <a href="#" class="pe-nav-link">
+                            <a href="{{route('bod.dashboard.daily')}}" class="pe-nav-link">
                                 Daily
                             </a>
                         </li>

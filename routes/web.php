@@ -98,6 +98,8 @@ Route::middleware(["auth"])->group(function () {
 
 
    Route::group(['middleware' => ['role:bod']], function () {
+      Route::get('director/dashboard/daily', [DirectorController::class, 'dashboardDaily'])->name('bod.dashboard.daily');
+      Route::get('director/dashboard/month/{id}', [DirectorController::class, 'dashboardMonth'])->name('bod.dashboard.month');
       Route::get('director/vessels', [DirectorController::class, 'vessels'])->name('bod.vessels');
       Route::get('director/vessel/data/{id}', [DirectorController::class, 'vesselData'])->name('vessel.data');
    });
