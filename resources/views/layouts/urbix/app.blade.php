@@ -102,7 +102,7 @@
                     <div class="dropdown pe-dropdown-mega d-none d-md-block">
                         <button class="header-profile-btn btn gap-1 text-start" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="d-none d-xl-block pe-2">
-                                <span class="d-block mb-0 fs-12 fw-semibold">Welocme back, Mr. {{auth()->user()->name}}</span>
+                                <span class="d-block mb-0 fs-12 fw-semibold">Welcome back, Mr. {{auth()->user()->name}}</span>
                                 <span class="d-block mb-0 fs-10 text-muted">{{auth()->user()->email}}</span>
                             </div>
                             <span class="header-btn btn position-relative">
