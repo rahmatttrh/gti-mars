@@ -253,46 +253,67 @@
                //  var chart = new ApexCharts(document.querySelector("#overview"), options);
                //  chart.render();
                var options = {
-     series: [{
-         name: 'Fuel Consumption',
-         type: 'column',
-         data: {!! json_encode($fuelDateArray) !!}
-     }, {
-         name: 'Fresh Water Consumption',
-         type: 'line',
-         data: {!! json_encode($waterDateArray) !!}
-     }],
-     chart: {
-         height: 230,
-         type: 'line',
-         toolbar: {
-             show: false
-         }
-     },
-     colors: ['#5b66eb', '#68d3f8'],
-     legend: {
-         show: false
-     },
-     stroke: {
-         width: [0, 4]
-     },
-     dataLabels: {
-         enabled: true,
-         enabledOnSeries: [1]
-     },
-     labels: {!! json_encode($dateArray) !!},
-     yaxis: [{
-         title: {
-             text: '',
-         },
-     },
-     {
-         opposite: true,
-         title: {
-             text: ''
-         }
-     }]
- };
+    series: [{
+        name: 'Fuel Consumption',
+        type: 'column',
+        data: {!! json_encode($fuelDateArray) !!}
+    }, {
+        name: 'Fresh Water Consumption',
+        type: 'line',
+        data: {!! json_encode($waterDateArray) !!}
+    }],
+    chart: {
+        height: 230,
+        type: 'line',
+        toolbar: {
+            show: false
+        }
+    },
+    colors: ['#5b66eb', '#68d3f8'],
+    legend: {
+        show: false
+    },
+    stroke: {
+        width: [0, 4]
+    },
+    dataLabels: {
+        enabled: true,
+        enabledOnSeries: [1],
+        formatter: function (value) {
+            return value.toLocaleString('id-ID');
+        }
+    },
+    labels: {!! json_encode($dateArray) !!},
+    yaxis: [{
+        title: {
+            text: '',
+        },
+        labels: {
+            formatter: function (value) {
+                return value.toLocaleString('id-ID');
+            }
+        }
+    },
+    {
+        opposite: true,
+        title: {
+            text: ''
+        },
+        labels: {
+            formatter: function (value) {
+                return value.toLocaleString('id-ID');
+            }
+        }
+    }],
+    tooltip: {
+        y: {
+            formatter: function (value) {
+                return value.toLocaleString('id-ID');
+            }
+        }
+    }
+};
+
 
  var chart = new ApexCharts(document.querySelector("#engagement_month"), options);
  chart.render();
