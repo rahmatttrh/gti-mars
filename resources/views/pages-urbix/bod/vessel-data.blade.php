@@ -70,6 +70,16 @@
                      <!-- end card-body -->
                    </div> --}}
                </div>
+
+               <div class="col-xxl-3">
+                  
+                  <div class="card">
+                      
+                      <div class="card-body p-0">
+                          <div class="w-100 min-h-320px" id="leaflet_map"></div>
+                      </div>
+                  </div>
+              </div>
                
                <div class="col-xxl-3">
                      <div class="row">
@@ -234,6 +244,16 @@
 
       @push('myjs')
          <script>
+
+            /*
+Template Name: Urbix - Admin & Dashboard Template
+Author: Pixeleyez
+Website: https://pixeleyez.com/
+File: Leaflet-maps File
+*/
+
+// Function to initialize maps
+
             
             function renderCharts() {
 
