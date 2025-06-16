@@ -28,7 +28,7 @@
             </div>
       </div>
       <div class="d-flex">
-         <img src="{{asset('urbix/flaticon/ship-side.png')}}" class="h-32px w-32px mt-1 me-2" alt=""> <h1>{{$vessel->name}}</h1>
+         <img src="{{asset('urbix/flaticon/ship-side.png')}}" class="h-32px w-32px mt-1 me-2" alt=""> <h1>{{$vessel->name}} {{$vessel->type}}</h1>
       </div>
 
       <div class="row">
