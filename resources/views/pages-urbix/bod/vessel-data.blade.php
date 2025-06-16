@@ -333,7 +333,7 @@
                data: {!! json_encode($dtArray) !!}
             }],
             chart: {
-               height: 240,
+               height: 220,
                type: 'area'
             },
             dataLabels: {
