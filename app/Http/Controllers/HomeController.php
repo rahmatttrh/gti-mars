@@ -666,93 +666,127 @@ class HomeController extends Controller
          $months = ['Jan', 'Mar', 'Apr', 'May'];
          $today = Carbon::now();
          // dd($today->format('Y'));
+         
 
-         $jan = Carbon::createFromFormat('d/m/Y', '01/01/' . $today->format('Y'));
-         $feb = Carbon::createFromFormat('d/m/Y', '01/02/' . $today->format('Y'));
-         $mar = Carbon::createFromFormat('d/m/Y', '01/03/' . $today->format('Y'));
-         $apr = Carbon::createFromFormat('d/m/Y', '01/04/' . $today->format('Y'));
-         $may = Carbon::createFromFormat('d/m/Y', '01/05/' . $today->format('Y'));
-         $jun = Carbon::createFromFormat('d/m/Y', '01/06/' . $today->format('Y'));
-         // dd($jan);
+         // dd(12 - $today->format('m'));
 
+         $qty = 12 - $today->format('m');
 
-         // Fuel
-         $janVrds = Vdr::whereMonth('date', $jan)->get();
-         $janFuel = 0;
-         $janWater = 0;
-         foreach($janVrds as $janv){
-            $vdrOperating = VdrOperating::where('vdr_id', $janv->id)->sum('daily');
-            $janFuel += $vdrOperating;
+         $allMonth = [];
+         $monthArray = [];
+         for ($x = 1; $x <= $qty; $x++) {
+            $month = Carbon::createFromFormat('d/m/Y', '01/' . $x . '/' . $today->format('Y'));
+            $allMonth[] = $month;
 
-            $vdrWater = VdrCargo::where('vdr_id', $janv->id)->where('heading_id', 2)->sum('consumption');
-            $janWater += $vdrWater;
-
+            $monthArray[] = formatDateMonth($month);
          }
 
-         $febVrds = Vdr::whereMonth('date', $feb)->get();
-         $febFuel = 0;
-         $febWater = 0;
-         foreach($febVrds as $febv){
-            $vdrOperating = VdrOperating::where('vdr_id', $febv->id)->sum('daily');
-            $febFuel += $vdrOperating;
+         $fuelArray = [];
+         $waterArray = [];
 
-            $vdrWater = VdrCargo::where('vdr_id', $febv->id)->where('heading_id', 2)->sum('consumption');
-            $febWater += $vdrWater;
+         foreach($allMonth as $m){
+            $vdrs = Vdr::whereMonth('date', $m)->get();
+            $fuel = 0;
+            $water = 0;
+            foreach($vdrs as $v){
+               $vdrOperating = VdrOperating::where('vdr_id', $v->id)->sum('daily');
+               $fuel += $vdrOperating;
+
+               $vdrWater = VdrCargo::where('vdr_id', $v->id)->where('heading_id', 2)->sum('consumption');
+               $water += $vdrWater;
+            }
+
+            $fuelArray[] = round($fuel);
+            $waterArray[] = round($water);
          }
+         //  dd($allMonth);
 
-         $marVrds = Vdr::whereMonth('date', $mar)->get();
-         $marFuel = 0;
-         $marWater = 0;
-         foreach($marVrds as $marv){
-            $vdrOperating = VdrOperating::where('vdr_id', $marv->id)->sum('daily');
-            $marFuel += $vdrOperating;
+         // $jan = Carbon::createFromFormat('d/m/Y', '01/01/' . $today->format('Y'));
+         // $feb = Carbon::createFromFormat('d/m/Y', '01/02/' . $today->format('Y'));
+         // $mar = Carbon::createFromFormat('d/m/Y', '01/03/' . $today->format('Y'));
+         // $apr = Carbon::createFromFormat('d/m/Y', '01/04/' . $today->format('Y'));
+         // $may = Carbon::createFromFormat('d/m/Y', '01/05/' . $today->format('Y'));
+         // $jun = Carbon::createFromFormat('d/m/Y', '01/06/' . $today->format('Y'));
+         // // dd($jan);
 
-            $vdrWater = VdrCargo::where('vdr_id', $marv->id)->where('heading_id', 2)->sum('consumption');
-            $marWater += $vdrWater;
-         }
 
-         $aprVrds = Vdr::whereMonth('date', $apr)->get();
-         $aprFuel = 0;
-         $aprWater = 0;
-         foreach($aprVrds as $aprv){
-            $vdrOperating = VdrOperating::where('vdr_id', $aprv->id)->sum('daily');
-            $aprFuel += $vdrOperating;
+         // // Fuel
+         // $janVrds = Vdr::whereMonth('date', $jan)->get();
+         // $janFuel = 0;
+         // $janWater = 0;
+         // foreach($janVrds as $janv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $janv->id)->sum('daily');
+         //    $janFuel += $vdrOperating;
 
-            $vdrWater = VdrCargo::where('vdr_id', $aprv->id)->where('heading_id', 2)->sum('consumption');
-            $aprWater += $vdrWater;
-         }
+         //    $vdrWater = VdrCargo::where('vdr_id', $janv->id)->where('heading_id', 2)->sum('consumption');
+         //    $janWater += $vdrWater;
 
-         $mayVrds = Vdr::whereMonth('date', $may)->get();
-         $mayFuel = 0;
-         $mayWater = 0;
-         foreach($mayVrds as $mayv){
-            $vdrOperating = VdrOperating::where('vdr_id', $mayv->id)->sum('daily');
-            $mayFuel += $vdrOperating;
+         // }
 
-            $vdrWater = VdrCargo::where('vdr_id', $mayv->id)->where('heading_id', 2)->sum('consumption');
-            $mayWater += $vdrWater;
-         }
+         // $febVrds = Vdr::whereMonth('date', $feb)->get();
+         // $febFuel = 0;
+         // $febWater = 0;
+         // foreach($febVrds as $febv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $febv->id)->sum('daily');
+         //    $febFuel += $vdrOperating;
 
-         $junVrds = Vdr::whereMonth('date', $jun)->get();
-         $junFuel = 0;
-         $junWater = 0;
-         foreach($junVrds as $junv){
-            $vdrOperating = VdrOperating::where('vdr_id', $junv->id)->sum('daily');
-            $junFuel += $vdrOperating;
+         //    $vdrWater = VdrCargo::where('vdr_id', $febv->id)->where('heading_id', 2)->sum('consumption');
+         //    $febWater += $vdrWater;
+         // }
 
-            $vdrWater = VdrCargo::where('vdr_id', $junv->id)->where('heading_id', 2)->sum('consumption');
-            $junWater += $vdrWater;
-         }
+         // $marVrds = Vdr::whereMonth('date', $mar)->get();
+         // $marFuel = 0;
+         // $marWater = 0;
+         // foreach($marVrds as $marv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $marv->id)->sum('daily');
+         //    $marFuel += $vdrOperating;
+
+         //    $vdrWater = VdrCargo::where('vdr_id', $marv->id)->where('heading_id', 2)->sum('consumption');
+         //    $marWater += $vdrWater;
+         // }
+
+         // $aprVrds = Vdr::whereMonth('date', $apr)->get();
+         // $aprFuel = 0;
+         // $aprWater = 0;
+         // foreach($aprVrds as $aprv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $aprv->id)->sum('daily');
+         //    $aprFuel += $vdrOperating;
+
+         //    $vdrWater = VdrCargo::where('vdr_id', $aprv->id)->where('heading_id', 2)->sum('consumption');
+         //    $aprWater += $vdrWater;
+         // }
+
+         // $mayVrds = Vdr::whereMonth('date', $may)->get();
+         // $mayFuel = 0;
+         // $mayWater = 0;
+         // foreach($mayVrds as $mayv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $mayv->id)->sum('daily');
+         //    $mayFuel += $vdrOperating;
+
+         //    $vdrWater = VdrCargo::where('vdr_id', $mayv->id)->where('heading_id', 2)->sum('consumption');
+         //    $mayWater += $vdrWater;
+         // }
+
+         // $junVrds = Vdr::whereMonth('date', $jun)->get();
+         // $junFuel = 0;
+         // $junWater = 0;
+         // foreach($junVrds as $junv){
+         //    $vdrOperating = VdrOperating::where('vdr_id', $junv->id)->sum('daily');
+         //    $junFuel += $vdrOperating;
+
+         //    $vdrWater = VdrCargo::where('vdr_id', $junv->id)->where('heading_id', 2)->sum('consumption');
+         //    $junWater += $vdrWater;
+         // }
 
 
 
         
 
 
-         $fuelArray = [round($janFuel), round($febFuel), round($marFuel), round($aprFuel), round($mayFuel), round($junFuel)];
-         $waterArray = [round($janWater), round($febWater), round($marWater), round($aprWater), round($mayWater), round($junWater)];
-         $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
-         // dd($fuelArray);
+         // $fuelArray = [round($janFuel), round($febFuel), round($marFuel), round($aprFuel), round($mayFuel), round($junFuel)];
+         // $waterArray = [round($janWater), round($febWater), round($marWater), round($aprWater), round($mayWater), round($junWater)];
+         // $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
+         // // dd($fuelArray);
 
          $vessels = Vessel::where('status', 1)->get();
          $lastActivity = [];
