@@ -100,20 +100,21 @@
                    <h5 class="card-title mb-0">Current Contract</h5>
                </div>
                <div class="card-body">
-                  <div class="table-responsive" data-simplebar>
-                       <table class="table text-nowrap table-sm  mb-0">
+                  @if ($lastVdr)
+                     <div class="table-responsive" data-simplebar>
+                        <table class="table text-nowrap table-sm  mb-0">
                            {{-- <thead>
-                               <tr>
-                                   <th scope="col">Vessel Type</th>
-                                   <th scope="col">Qty</th>
-                                   
-                               </tr>
+                              <tr>
+                                    <th scope="col">Vessel Type</th>
+                                    <th scope="col">Qty</th>
+                                    
+                              </tr>
                            </thead> --}}
                            <tbody>
                               <tr>
                                  <td>Number</td>
                                  <td class="text-end">{{$lastVdr->contract}}</td>
-                             </tr>
+                              </tr>
                               <tr>
                                  <td>Period</td>
                                  <td class="text-end">{{formatDate($lastVdr->contract_start)}} - {{formatDate($lastVdr->contract_end)}}</td>
@@ -128,9 +129,13 @@
                                  <td class="text-end">{{$lastVdr->owner}}</td>
                               </tr>
                            </tbody>
-                       </table>
+                        </table>
 
-                   </div>
+                     </div>
+                     @else
+                     <span>Empty</span>
+                  @endif
+                  
                    <!-- end:: Bordered Table -->
                </div>
            </div>
