@@ -676,21 +676,108 @@ class HomeController extends Controller
          $fuelArray = [];
          $waterArray = [];
 
+         $vdrOperatingHeaders = VdrOperatingHeader::get();
+         // $high = 0;
+         // $normal = 0;
+         // $slow = 0;
+         // $manu = 0;
+         // $idle = 0;
+         // $tow = 0;
+         // $ah = 0;
+         // $sb = 0;
+         // $maintenance = 0;
+         // $dt = 0;
+
+         $vdrOperating = [];
+
+         $highArray = [];
+         $normalArray = [];
+         $slowArray = [];
+         $manuArray = [];
+         $indleArray = [];
+         $towArray = [];
+         $ahArray = [];
+         $sbArray = [];
+         $maintenanceArray = [];
+         $dtArray = [];
+
          foreach($allMonth as $m){
             $vdrs = Vdr::whereMonth('date', $m)->get();
             $fuel = 0;
             $water = 0;
+
+            $high = 0;
+            $normal = 0;
+            $slow = 0;
+            $manu = 0;
+            $idle = 0;
+            $tow = 0;
+            $ah = 0;
+            $sb = 0;
+            $maintenance = 0;
+            $dt = 0;
+            
             foreach($vdrs as $v){
-               $vdrOperating = VdrOperating::where('vdr_id', $v->id)->sum('daily');
-               $fuel += $vdrOperating;
+               $vdrOperatings = VdrOperating::where('vdr_id', $v->id)->get();
+               $daily = VdrOperating::where('vdr_id', $v->id)->sum('daily');
+               $fuel += $daily;
 
                $vdrWater = VdrCargo::where('vdr_id', $v->id)->where('heading_id', 2)->sum('consumption');
                $water += $vdrWater;
+
+
+
+               
+               $vdrOperatingHigh = $vdrOperatings->where('heading_id', 1)->first()->daily;
+               $high += $vdrOperatingHigh;
+
+               $vdrOperatingNormal = $vdrOperatings->where('heading_id', 2)->first()->daily;
+               $normal += $vdrOperatingNormal;
+
+               $vdrOperatingSlow = $vdrOperatings->where('heading_id', 3)->first()->daily;
+               $slow += $vdrOperatingSlow;
+
+               $vdrOperatingManu = $vdrOperatings->where('heading_id', 4)->first()->daily;
+               $manu += $vdrOperatingManu;
+
+               $vdrOperatingIdle = $vdrOperatings->where('heading_id', 5)->first()->daily;
+               $idle += $vdrOperatingIdle;
+
+               $vdrOperatingTow = $vdrOperatings->where('heading_id', 6)->first()->daily;
+               $tow += $vdrOperatingTow;
+
+               $vdrOperatingAh = $vdrOperatings->where('heading_id', 7)->first()->daily;
+               $ah += $vdrOperatingAh;
+
+               $vdrOperatingSb = $vdrOperatings->where('heading_id', 8)->first()->daily;
+               $sb += $vdrOperatingSb;
+
+               $vdrOperatingMaintenance = $vdrOperatings->where('heading_id', 9)->first()->daily;
+               $maintenance += $vdrOperatingMaintenance;
+
+               $vdrOperatingDt = $vdrOperatings->where('heading_id', 10)->first()->daily;
+               $dt += $vdrOperatingDt;
             }
 
             $fuelArray[] = round($fuel);
             $waterArray[] = round($water);
+
+            $highArray[] = round($high);
+            $normalArray[] = round($normal);
+            $slowArray[] = round($slow);
+            $manuArray[] = round($manu);
+            $idleArray[] = round($idle);
+            $towArray[] = round($tow);
+            $ahArray[] = round($ah);
+            $sbArray[] = round($sb);
+            $maintenanceArray[] = round($maintenance);
+            $dtArray[] = round($dt);
          }
+
+         $operatingArray = [round($high), round($normal), round($slow), round($manu), round($idle), round($tow), round($ah), round($sb), round($maintenance), round($dt)];
+
+
+         
          //  dd($allMonth);
 
          // $jan = Carbon::createFromFormat('d/m/Y', '01/01/' . $today->format('Y'));
@@ -795,11 +882,13 @@ class HomeController extends Controller
          }
 
          $maintenanceVessels = Vessel::where('status', 2)->get();
+         
 
-         // dd($lastActivity);
-         // foreach($lastActivity as $lAct){
-         //    dd($lAct->vdr->id);
-         // }
+         $headerArray = [];
+         foreach($vdrOperatingHeaders as $head){
+            $headerArray[] = $head->description;
+         }
+         // dd($headerArray);
          
 
          return view('pages-urbix.dashboard', [
@@ -810,7 +899,21 @@ class HomeController extends Controller
             'lastActivity' => $lastActivity,
 
             'vessels' => $vessels,
-            'maintenanceVessels' => $maintenanceVessels
+            'maintenanceVessels' => $maintenanceVessels,
+
+            'operatingArray' => $operatingArray,
+            'operatingHeaders' => $headerArray,
+
+            'highArray' => $highArray,
+            'normalArray' => $normalArray,
+            'slowArray' => $slowArray,
+            'manuArray' => $manuArray,
+            'idleArray' => $idleArray,
+            'towArray' => $towArray,
+            'ahArray' => $ahArray,
+            'sbArray' => $sbArray,
+            'maintenanceArray' => $maintenanceArray,
+            'dtArray' => $dtArray,
 
          ]);
       } else if(auth()->user()->hasRole('marine')){

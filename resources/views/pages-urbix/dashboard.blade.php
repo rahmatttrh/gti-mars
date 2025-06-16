@@ -38,6 +38,54 @@
                              <div class="card-body" id="engagement"></div>
                          </div>
                      </div>
+
+                     <div class="col-xxl-3">
+                        <div class="card card-h-100">
+                           <div class="card-body">
+               
+                             <div id="spline_area_chart" class="apexcharts-container"></div>
+               
+                           </div>
+                           <!-- end card-body -->
+                         </div>
+                        {{-- <div class="card card-h-100">
+                           <div class="card-body">
+               
+                             <div id="basic_bar_chart" class="apexcharts-container"></div>
+               
+                           </div>
+                           <!-- end card-body -->
+                         </div> --}}
+                     </div>
+                     <div class="col-xxl-3">
+                        <div class="row">
+                            <div class="col-xxl-12 col-md-6">
+                              <div class="card card-h-100">
+                                 <div class="card-body">
+                     
+                                   <div id="basic_bar_chart" class="apexcharts-container"></div>
+                     
+                                 </div>
+                                 <!-- end card-body -->
+                               </div>
+                            </div>
+                            <div class="col-xxl-12 col-md-6">
+                              <div class="card card-h-100">
+                                 <div class="card-header">
+                                   <h6 class="card-title mb-0 fw-semibold">Basic Radar Chart</h6>
+                                 </div>
+                                 <div class="card-body px-0">
+                     
+                                   <div id="radar_charts" class="apexcharts-container"></div>
+                     
+                                 </div>
+                                 <!-- end card-body -->
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                     
                      <div class="col-xxl-3">
                          <div class="row">
                              <div class="col-xxl-12 col-md-6">
@@ -203,198 +251,333 @@
        @push('myjs')
            <script>
                
-function renderCharts() {
+      function renderCharts() {
 
-   // var options = {
-   //    series: [70],
-   //    chart: {
-   //      height: 295,
-   //      type: 'radialBar',
-   //    },
-   //    colors: ['#5b66eb'],
-   //    plotOptions: {
-   //      radialBar: {
-   //        hollow: {
-   //          size: '70%',
-   //        }
-   //      },
-   //    },
-   //    labels: ['$500.45'],
-   //  };
+         // var options = {
+         //    series: [70],
+         //    chart: {
+         //      height: 295,
+         //      type: 'radialBar',
+         //    },
+         //    colors: ['#5b66eb'],
+         //    plotOptions: {
+         //      radialBar: {
+         //        hollow: {
+         //          size: '70%',
+         //        }
+         //      },
+         //    },
+         //    labels: ['$500.45'],
+         //  };
 
-   //  var chart = new ApexCharts(document.querySelector("#overview"), options);
-   //  chart.render();
+         //  var chart = new ApexCharts(document.querySelector("#overview"), options);
+         //  chart.render();
+
+         var spline_area_chart = {
+            series: [{
+               name: 'High',
+               data: {!! json_encode($highArray) !!}
+            },{
+               name: 'Normal',
+               data: {!! json_encode($normalArray) !!}
+            }, {
+               name: 'Slow',
+               data: {!! json_encode($slowArray) !!}
+            }, {
+               name: 'Manu',
+               data: {!! json_encode($manuArray) !!}
+            }, {
+               name: 'Idle',
+               data: {!! json_encode($idleArray) !!}
+            }, {
+               name: 'Towing',
+               data: {!! json_encode($towArray) !!}
+            }, {
+               name: 'Anchor Handling',
+               data: {!! json_encode($ahArray) !!}
+            }, {
+               name: 'Standby',
+               data: {!! json_encode($sbArray) !!}
+            }, {
+               name: 'Maintenance',
+               data: {!! json_encode($maintenanceArray) !!}
+            }, {
+               name: 'Down Time',
+               data: {!! json_encode($dtArray) !!}
+            }],
+            chart: {
+               height: 240,
+               type: 'area'
+            },
+            dataLabels: {
+               enabled: false
+            },
+            stroke: {
+               curve: 'smooth'
+            },
+            title: {
+               text: 'Spline Area Chart',
+               align: 'left'
+            },
+            xaxis: {
+               type: 'month',
+               categories: {!! json_encode($monthArray) !!}
+            },
+            tooltip: {
+               x: {
+                     format: 'MM'
+               },
+            },
+         };
+         var chart = new ApexCharts(document.querySelector("#spline_area_chart"), spline_area_chart);
+         chart.render();
+
+
+
+         var basic_bar_chart = {
+            series: [{
+               data: {!! json_encode($operatingArray) !!}
+            }],
+            chart: {
+               type: 'bar',
+               height: 220
+            },
+            plotOptions: {
+               bar: {
+                     borderRadius: 4,
+                     borderRadiusApplication: 'end',
+                     horizontal: true,
+               }
+            },
+            dataLabels: {
+               enabled: false
+            },
+            title: {
+               text: 'Basic Bar Chart',
+               align: 'left'
+            },
+            xaxis: {
+               categories: {!! json_encode($operatingHeaders) !!},
+            }
+         };
+         var chart = new ApexCharts(document.querySelector("#basic_bar_chart"), basic_bar_chart);
+         chart.render();
+
+
+
+         var donut_chart = {
+            series: {!! json_encode($operatingArray) !!}, // Market share percentages
+            chart: {
+               type: 'donut',
+               height: 280,
+            },
+            labels: {!! json_encode($operatingHeaders) !!}, // Updated brand names
+            legend: {
+               position: 'bottom', // Positioning the legend at the bottom
+            },
+            dataLabels: {
+               enabled: true, // Enable data labels for clarity
+            },
+            colors: ['#FF4560', '#00E396', '#008FFB', '#FF4560', '#00E396', '#008FFB', '#FF4560', '#00E396', '#008FFB', '#00E396'], // Custom colors for each slice
+         };
+         var chart = new ApexCharts(document.querySelector("#donut_chart"), donut_chart);
+         chart.render();
+
+
+
+
+         var radar_charts = {
+            series: [{
+               name: 'Series 1',
+               data: {!! json_encode($operatingArray) !!},
+            }],
+            chart: {
+               height: 400,
+               type: 'radar',
+               toolbar: {
+                     show: false // Hide the toolbar
+               },
+            },
+            yaxis: {
+               stepSize: 20
+            },
+            xaxis: {
+               categories: {!! json_encode($operatingHeaders) !!}
+            }
+         };
+         var chart = new ApexCharts(document.querySelector("#radar_charts"), radar_charts);
+         chart.render();
 
 
 
 
 
 
-// Lifting
-var options = {
-   series: [{
-     name: 'series1',
-     data: [0, 60, 50, 65, 55, 75, 35, 70, 85, 65, 85, 85, 20, 90, 100]
-   }],
-   chart: {
-     height: 252,
-     type: 'area',
-     toolbar: {
-       show: false
-     },
-   },
-   colors: ['#5b66eb'],
-   dataLabels: {
-     enabled: false
-   },
-   stroke: {
-     curve: 'straight'
-   },
-   xaxis: {
-     tooltip: {
-       enabled: false
-     }
-   },
-   tooltip: {
-     x: {
-       format: 'dd/MM/yy HH:mm'
-     },
-   },
- };
-
- var chart = new ApexCharts(document.querySelector("#overall"), options);
- chart.render();
-
-
- // Engagement
- var options = {
-     series: [{
-         name: 'Fuel Consumption',
-         type: 'column',
-         data: {!! json_encode($fuelArray) !!}
-     }, {
-         name: 'Fresh Water Consumption',
-         type: 'line',
-         data: {!! json_encode($waterArray) !!}
-     }],
-     chart: {
-         height: 230,
-         type: 'line',
+      // Lifting
+      var options = {
+         series: [{
+         name: 'series1',
+         data: [0, 60, 50, 65, 55, 75, 35, 70, 85, 65, 85, 85, 20, 90, 100]
+         }],
+         chart: {
+         height: 252,
+         type: 'area',
          toolbar: {
-             show: false
-         }
-     },
-     colors: ['#5b66eb', '#68d3f8'],
-     legend: {
-         show: false
-     },
-     stroke: {
-         width: [0, 4]
-     },
-     dataLabels: {
-         enabled: true,
-         enabledOnSeries: [1]
-     },
-     labels: {!! json_encode($monthArray) !!},
-     yaxis: [{
-         title: {
-             text: '',
+            show: false
          },
-     },
-     {
-         opposite: true,
-         title: {
-             text: ''
+         },
+         colors: ['#5b66eb'],
+         dataLabels: {
+         enabled: false
+         },
+         stroke: {
+         curve: 'straight'
+         },
+         xaxis: {
+         tooltip: {
+            enabled: false
          }
-     }]
- };
+         },
+         tooltip: {
+         x: {
+            format: 'dd/MM/yy HH:mm'
+         },
+         },
+      };
 
- var chart = new ApexCharts(document.querySelector("#engagement"), options);
- chart.render();
+      var chart = new ApexCharts(document.querySelector("#overall"), options);
+      chart.render();
 
 
- // spark
- var spark1 = {
-   chart: {
-       id: 'sparkline1',
-       type: 'line',
-       height: 40,
-       sparkline: {
-           enabled: true
-       },
-       group: 'sparklines1'
-   },
-   series: [{
-       name: 'teal',
-       data: [2, 0, 5, 7, 6, 8, 9]
-   }],
-   stroke: {
-       curve: 'smooth',
-       width: 2,
-   },
-   markers: {
-       size: 0
-   },
-   tooltip: {
-       fixed: {
-           enabled: true,
-           position: 'right'
-       },
-       x: {
-           show: false
-       }
-   },
-   colors: ['#18a538'], // Solid color applied
-   fill: {
-       opacity: 1 // No gradient, just solid fill
-   },
-   xaxis: {
-       crosshairs: {
-           width: 1
-       },
-   }
-};
+      // Engagement
+      var options = {
+         series: [{
+               name: 'Fuel Consumption',
+               type: 'column',
+               data: {!! json_encode($fuelArray) !!}
+         }, {
+               name: 'Fresh Water Consumption',
+               type: 'line',
+               data: {!! json_encode($waterArray) !!}
+         }],
+         chart: {
+               height: 210,
+               type: 'line',
+               toolbar: {
+                  show: false
+               }
+         },
+         colors: ['#5b66eb', '#68d3f8'],
+         legend: {
+               show: false
+         },
+         stroke: {
+               width: [0, 4]
+         },
+         dataLabels: {
+               enabled: true,
+               enabledOnSeries: [1]
+         },
+         labels: {!! json_encode($monthArray) !!},
+         yaxis: [{
+               title: {
+                  text: '',
+               },
+         },
+         {
+               opposite: true,
+               title: {
+                  text: ''
+               }
+         }]
+      };
 
-var spark2 = {
-   chart: {
-       id: 'sparkline2',
-       type: 'line',
-       height: 60,
-       sparkline: {
-           enabled: true
-       },
-       group: 'sparklines2'
-   },
-   series: [{
-       name: 'teal',
-       data: [8, 0, 8, 0]
-   }],
-   stroke: {
-       curve: 'smooth',
-       width: 2,
-   },
-   markers: {
-       size: 0
-   },
-   tooltip: {
-       fixed: {
-           enabled: true,
-           position: 'right'
-       },
-       x: {
-           show: false
-       }
-   },
-   colors: ['#dc3545'], // Solid color applied
-   fill: {
-       opacity: 1 // No gradient, just solid fill
-   },
-   xaxis: {
-       crosshairs: {
-           width: 1
-       },
-   }
-};
+      var chart = new ApexCharts(document.querySelector("#engagement"), options);
+      chart.render();
+
+
+   // spark
+   var spark1 = {
+      chart: {
+         id: 'sparkline1',
+         type: 'line',
+         height: 40,
+         sparkline: {
+            enabled: true
+         },
+         group: 'sparklines1'
+      },
+      series: [{
+         name: 'teal',
+         data: [2, 0, 5, 7, 6, 8, 9]
+      }],
+      stroke: {
+         curve: 'smooth',
+         width: 2,
+      },
+      markers: {
+         size: 0
+      },
+      tooltip: {
+         fixed: {
+            enabled: true,
+            position: 'right'
+         },
+         x: {
+            show: false
+         }
+      },
+      colors: ['#18a538'], // Solid color applied
+      fill: {
+         opacity: 1 // No gradient, just solid fill
+      },
+      xaxis: {
+         crosshairs: {
+            width: 1
+         },
+      }
+   };
+
+   var spark2 = {
+      chart: {
+         id: 'sparkline2',
+         type: 'line',
+         height: 60,
+         sparkline: {
+            enabled: true
+         },
+         group: 'sparklines2'
+      },
+      series: [{
+         name: 'teal',
+         data: [8, 0, 8, 0]
+      }],
+      stroke: {
+         curve: 'smooth',
+         width: 2,
+      },
+      markers: {
+         size: 0
+      },
+      tooltip: {
+         fixed: {
+            enabled: true,
+            position: 'right'
+         },
+         x: {
+            show: false
+         }
+      },
+      colors: ['#dc3545'], // Solid color applied
+      fill: {
+         opacity: 1 // No gradient, just solid fill
+      },
+      xaxis: {
+         crosshairs: {
+            width: 1
+         },
+      }
+   };
 
 new ApexCharts(document.querySelector("#spark1"), spark1).render();
 new ApexCharts(document.querySelector("#spark2"), spark2).render();
