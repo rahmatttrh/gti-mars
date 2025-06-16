@@ -26,7 +26,10 @@
                </nav>
             </div>
       </div>
-      <h1>{{$vessel->name}}</h1>
+      <div class="d-flex">
+         <img src="{{asset('urbix/flaticon/ship-side.png')}}" class="h-32px w-32px mt-1 me-2" alt=""> <h1>{{$vessel->name}}</h1>
+      </div>
+      
       <div class="row">
          <div class="col-md-8">
             <div class="row">
@@ -68,7 +71,7 @@
             <div class="card">
                <!--start::card-->
                <div class="card-header">
-                   <h5 class="card-title mb-0"> Activity </h5>
+                   <h5 class="card-title mb-0">Recent Activity </h5>
                </div>
                <div class="card-body">
                   <div id="existinglist">

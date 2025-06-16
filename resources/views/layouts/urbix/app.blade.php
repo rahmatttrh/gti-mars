@@ -221,7 +221,7 @@
                      <div class="card-body p-0">
                          <div class="d-flex justify-content-between align-items-center">
                              <div class="d-flex align-items-center">
-                                 <img src="{{asset('urbix/flaticon/ship.png')}}" class="h-32px w-32px me-3" alt="Instagram">
+                                 <img src="{{asset('urbix/flaticon/ship.png')}}" class="h-32px w-32px me-3" alt="">
                                  <p class="mb-0 fw-semibold">Vessel Overview</p>
                              </div>
                              
