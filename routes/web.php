@@ -99,6 +99,7 @@ Route::middleware(["auth"])->group(function () {
 
    Route::group(['middleware' => ['role:bod']], function () {
       Route::get('director/vessels', [DirectorController::class, 'vessels'])->name('bod.vessels');
+      Route::get('director/vessel/data/{id}', [DirectorController::class, 'vesselData'])->name('vessel.data');
    });
 
 

@@ -192,16 +192,18 @@
                             <i class="ri-arrow-down-s-line pe-nav-arrow"></i>
                         </a>
                         <ul class="pe-slide-menu collapse" id="collapseDashboards">
-                            <li class="pe-slide-item">
-                                <a href="/" class="pe-nav-link">
-                                    Monthly
-                                </a>
-                            </li>
-                            <li class="pe-slide-item">
-                                <a href="dashboard-school.html" class="pe-nav-link">
-                                    Daily
-                                </a>
-                            </li>
+                           <li class="pe-slide-item">
+                              <a href="{{route('home')}}" class="pe-nav-link">
+                                  Monthly
+                              </a>
+                          </li>
+                           <li class="pe-slide-item active">
+                              <a href="#" class="pe-nav-link">
+                                  Daily
+                              </a>
+                          </li>
+                            
+                            
                             <li class="pe-slide-item">
                                 <a href="{{route('bod.vessels')}}" class="pe-nav-link">
                                     Vessel Data
@@ -262,7 +264,7 @@
         <nav class="pe-app-sidebar-menu nav nav-pills">
             <ul class="pe-horizontal-menu mb-0 list-unstyled" id="horizontal-menu">
                 <!-- Main Menu -->
-                <li class="pe-menu-title">Mainnnn</li>
+                <li class="pe-menu-title">Main</li>
                 <li class="pe-slide pe-has-sub">
                     <a href="#collapseDashboards" class="pe-nav-link" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseDashboards">
                         <i class="fa fa-home"></i>
@@ -271,17 +273,17 @@
                     </a>
                     <ul class="pe-slide-menu collapse" id="collapseDashboards">
                         <li class="pe-slide-item">
-                            <a href="index.html" class="pe-nav-link">
+                            <a href="/" class="pe-nav-link">
                                 Monthly
                             </a>
                         </li>
                         <li class="pe-slide-item">
-                            <a href="dashboard-school.html" class="pe-nav-link">
+                            <a href="#" class="pe-nav-link">
                                 Daily
                             </a>
                         </li>
                         <li class="pe-slide-item">
-                            <a href="dashboard-analytics.html" class="pe-nav-link">
+                            <a href="{{route('bod.vessels')}}" class="pe-nav-link">
                                 Vessel Data
                             </a>
                         </li>
