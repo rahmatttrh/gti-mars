@@ -101,8 +101,8 @@
                </div>
                <div class="card-body">
                   @if ($lastVdr)
-                     <div class="table-responsive">
-                        <table class="table text-nowrap table-sm  mb-0">
+                     {{-- <div class="table-responsive"> --}}
+                        <table class="table  table-sm  mb-0">
                            {{-- <thead>
                               <tr>
                                     <th scope="col">Vessel Type</th>
@@ -131,7 +131,7 @@
                            </tbody>
                         </table>
 
-                     </div>
+                     {{-- </div> --}}
                      @else
                      <span>Empty</span>
                   @endif
