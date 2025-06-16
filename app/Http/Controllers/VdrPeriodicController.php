@@ -40,12 +40,15 @@ class VdrPeriodicController extends Controller
       $req->validate([
          
          'fuel_cons_remu' => 'required',
-         // 'fuel_cons_actual' => 'required',
       ]);
       $vdr = Vdr::find($req->vdr_id);
 
 
       $periodic = VdrPeriodic::find($req->periodic);
+
+      // dd($vdr->cargos->where('heading_id', 1)->opening);
+      
+      // dd($cargoFuel->opening);
 
       if ($req->fuel_cons_actual == null) {
          $periodic->update([
@@ -63,7 +66,16 @@ class VdrPeriodicController extends Controller
             'fuel_cons_actual' => $req->fuel_cons_actual,
             'fuel_cons_total' => $corrected + $req->fuel_cons_actual
          ]);
+         $periodic->update([
+            
+            'fuel_cons_remu' => $req->fuel_cons_remu,
+            'fuel_cons_correct' => $corrected,
+            'fuel_cons_actual' => $req->fuel_cons_actual,
+            'fuel_cons_total' => $corrected + $req->fuel_cons_actual
+         ]);
 
+         $cargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
+         $cargoWater = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 2)->first();
          $cargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
          $cargoWater = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 2)->first();
 
@@ -74,15 +86,32 @@ class VdrPeriodicController extends Controller
          //    // $actualFuel = 0 ;
          //    $actualFuel = 0 + $cargoFuel->received - $cargoFuel->transferred - $cargoFuel->closing;
          // }
+         if ($periodic->fuel_cons_total > 0) {
+            $actualFuel = $periodic->fuel_cons_total + $cargoFuel->received - $cargoFuel->transferred - $cargoFuel->closing;
+         } 
+         // else {
+         //    // $actualFuel = 0 ;
+         //    $actualFuel = 0 + $cargoFuel->received - $cargoFuel->transferred - $cargoFuel->closing;
+         // }
 
          
+         
 
+         $actualWater = ($cargoWater->opening + $cargoWater->received) - ($cargoWater->transferred + $cargoWater->closing);
          $actualWater = ($cargoWater->opening + $cargoWater->received) - ($cargoWater->transferred + $cargoWater->closing);
 
          $cargoWater->update([
             'consumption' => $actualWater
          ]);
+         $cargoWater->update([
+            'consumption' => $actualWater
+         ]);
 
+         if ($periodic->rob_diff < 0) {
+            $periodic->update([
+               'fuel_cons_correct' => $periodic->fuel_cons_remu,
+               'fuel_cons_total' => $periodic->fuel_cons_remu + $req->fuel_cons_actual
+            ]);
          if ($periodic->rob_diff < 0) {
             $periodic->update([
                'fuel_cons_correct' => $periodic->fuel_cons_remu,
@@ -94,18 +123,16 @@ class VdrPeriodicController extends Controller
             //    'consumption' => $periodic->fuel_cons_correct
             // ]);
          }
+         
+            // $cargoFuel->update([
+            //    'consumption' => $periodic->fuel_cons_correct
+            // ]);
+         }
 
          $cargoFuel->update([
             'consumption' => $periodic->fuel_cons_total
          ]);
       }
-      // dd($rob_actual);
-
-      // dd($vdr->cargos->where('heading_id', 1)->opening);
-      
-      // dd($cargoFuel->opening);
-
-      
 
       return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('special')])->with('success', 'Data VDR successfully updated');
    }

@@ -55,12 +55,13 @@
                            </tr>
                         </tbody>
                      </table>
-                     <div class="table-responsive overflow-auto" style="height: 185px">
+                     <div class="table-responsive overflow-auto" style="height: 340px">
                         <table class="display  border">
                            
                            <thead>
                               
                               <tr>
+                                 <th>ID</th>
                                  <th>Vessel</th>
                                  <th>Date</th>
                                  {{-- <th>Date</th> --}}
@@ -70,6 +71,7 @@
                            <tbody>
                               @foreach ($allVdrs as $vdr)
                                  <tr class="border" style="border: 1px black">
+                                    <td>{{$vdr->id}}</td>
                                     <td class="text-truncate" style="max-width: 120px"><a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
                                     <td>{{formatDate($vdr->date)}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
@@ -90,7 +92,7 @@
                            </tr>
                         </tbody>
                      </table>
-                     <div class="table-responsive overflow-auto" style="height: 185px">
+                     <div class="table-responsive overflow-auto" style="height: 340px">
                         <table class="display  border">
                            
                            <thead>
@@ -105,7 +107,7 @@
                            <tbody>
                               @foreach ($allSchedules as $sche)
                                  <tr class="border" style="border: 1px black">
-                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
+                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name ?? ''}}</a></td>
                                     <td>{{$sche->code}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                     <td>
@@ -154,7 +156,7 @@
                      </tr>
                   </tbody>
                </table>
-               <div class="table-responsive overflow-auto" style="height: 320px">
+               <div class="table-responsive overflow-auto" style="height: 460px">
                 <table class="border display "   >
                   {{-- <thead>
                      <tr>

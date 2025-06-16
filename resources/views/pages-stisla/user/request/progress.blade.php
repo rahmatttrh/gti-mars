@@ -58,7 +58,7 @@
                               {{-- {{$request->origin->name}} to {{$request->destination->name}} --}}
                               {{-- @endif --}}
                               @if ($request->activity_id < 5)
-                              {{$request->origin->name}} to {{$request->destination->name}}
+                              {{$request->origin->name ?? ''}} to {{$request->destination->name ?? ''}}
                               @if ($request->titip_id)
                                     ({{$request->titip->name}})
                               @endif
@@ -124,7 +124,7 @@
                                  @endforeach
                               @endif
                               </td>
-                              <td>{{$request->origin->name}} - {{$request->destination->name}}</td>
+                              <td>{{$request->origin->name ?? ''}} - {{$request->destination->name ?? ''}}</td>
                               <td>{{$request->date}}</td>
                               
                               

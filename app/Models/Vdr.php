@@ -11,33 +11,37 @@ class Vdr extends Model
 
    protected $guarded = [];
 
-   public function vessel(){
+   public function vessel()
+   {
       return $this->belongsTo(Vessel::class);
    }
 
-   public function operatings(){
+   public function operatings()
+   {
       return $this->hasMany(VdrOperating::class);
    }
 
-   public function times(){
+   public function times()
+   {
       return $this->hasMany(VdrTimestamp::class);
    }
 
 
-   public function getTotalHours(){
-      
+   public function getTotalHours()
+   {
+
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrOperating::where('vdr_id', $this->id)->get() ;
+      $ops = VdrOperating::where('vdr_id', $this->id)->get();
       // VdrOperating::where('vdr_id', $this->id)->sum('time')
 
-      foreach($ops as $op){
+      foreach ($ops as $op) {
          $time = $op->time;
          $array = explode('.', $op->time);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -63,11 +67,20 @@ class Vdr extends Model
       } else {
          $finalMinutes = $debugMinutes;
       }
-      // $finalHours  = sprintf('%02d', floor($debugHours));
-   
-      $final = $debugHours . '.' . $finalMinutes;
+      $finalHours  = sprintf('%02d', floor($debugHours));
+
+      $final = $finalHours . '.' . $finalMinutes;
       return $final;
    }
 
-  
+
+   public function customRound($number)
+   {
+      $decimal = $number - floor($number);
+      if ($decimal >= 0.48) {
+         return  ceil($number);
+      } else {
+         return floor($number);
+      }
+   }
 }

@@ -91,7 +91,12 @@
                   <table>
                      <tbody>
                         <tr>
-                           <td style="width: 250px" class="bg-primary text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           @if ($vdr->status == 101)
+                           <td style="width: 250px" class="bg-danger text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                               @else
+                               <td style="width: 250px" class="bg-info text-white"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                           @endif
+                           
                            <td>{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}</td>
                         </tr>
                         <tr>
@@ -202,7 +207,7 @@
                   {{-- <div class="btn-group mr-2"> --}}
                      <div class="btn btn-block btn-group p-0">
                         {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
-                        <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve</a>
+                        <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
                         <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                      </div>
                      
@@ -624,13 +629,14 @@
             </div>
          </div>
       @endforeach
+      <x-vdr.activity-modal :activities="$activities" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
 
     
 @endif
 
 
 <x-vdr.crew-modal :crews="$crews" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
-<x-vdr.activity-modal :activities="$activities" :user="$user" :vdr="$vdr" :vessel="$vessel"/>
+
 
 
 

@@ -47,8 +47,8 @@ class DepartmentRequestController extends Controller
       //    $acts = Activity::orderBy('name', 'asc')->get();
       // }
 
-      
-      
+
+
       $employee = Employee::where('email', auth()->user()->email)->first();
       if ($employee) {
          $portId = $employee->port_id;
@@ -117,7 +117,7 @@ class DepartmentRequestController extends Controller
       // if (auth()->) {
       //    # code...
       // }
-      
+
       $employee = Employee::where('email', auth()->user()->email)->first();
       if ($employee) {
          $portId = $employee->port_id;
@@ -128,7 +128,6 @@ class DepartmentRequestController extends Controller
          } else {
             $portId = $port->id;
          }
-         
       }
 
       $now = Carbon::now();
@@ -202,7 +201,7 @@ class DepartmentRequestController extends Controller
          ]);
       }
 
-      
+
 
       // dd('ok');
       $employee = Employee::where('email', auth()->user()->email)->first();
@@ -214,17 +213,17 @@ class DepartmentRequestController extends Controller
 
       if (auth()->user()->hasRole('vessel')) {
          $level = 'V';
-      } else if(auth()->user()->hasRole('department')){
+      } else if (auth()->user()->hasRole('department')) {
          $level = 'U';
       }
-      
+
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       $date = Carbon::today();
       // dd($req->file('file-cargo'));
-      
-      
+
+
       if ($req->activity == 1 || $req->activity == 2) {
          if ($req->origin == $req->destination) {
             return redirect()->back()->with('warning', 'From and Destination has the same Value');
@@ -249,7 +248,7 @@ class DepartmentRequestController extends Controller
             'desc' => $req->desc
          ]);
       }
-      
+
 
       // if ($department->id == 2) {
       //    $type = 1;
@@ -367,7 +366,7 @@ class DepartmentRequestController extends Controller
             'activity_id' => $req->activity,
             'date' => $req->date,
             'desc' => $req->desc,
-            
+
             'employee_id' => $employee->id,
             'status' => 00
          ]);
@@ -437,7 +436,8 @@ class DepartmentRequestController extends Controller
       }
    }
 
-   public function storeNew(Request $req){
+   public function storeNew(Request $req)
+   {
       // dd('baru');
       $now = Carbon::today();
       $request = ModelsRequest::orderBy("created_at", "desc")->first();
@@ -446,15 +446,19 @@ class DepartmentRequestController extends Controller
 
       // dd($employee->department_id);
       if ($employee) {
-         $department = Department::find($employee->department->id);
+         $employeeId = $employee->id;
+         $departmentId = Department::find($employee->department->id)->id;
+         $departmentCode = Department::find($employee->department->id)->code;
       } else {
-         $department = null;
+         $departmentId = null;
+         $employeeId = null;
+         $departmentCode = null;
       }
 
 
       if (auth()->user()->hasRole('vessel')) {
          $level = 'V';
-      } else if(auth()->user()->hasRole('department')){
+      } else if (auth()->user()->hasRole('department')) {
          $level = 'U';
       }
 
@@ -478,16 +482,16 @@ class DepartmentRequestController extends Controller
          $status = 1;
       }
 
-      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 3 || $req->activity == 4 || $req->activity == 5 || $req->activity == 6 || $req->activity == 7){
+      if ($req->activity == 1 || $req->activity == 2 || $req->activity == 3 || $req->activity == 4 || $req->activity == 5 || $req->activity == 6 || $req->activity == 7) {
          $requestUser = ModelsRequest::create([
             'code' => $code,
             'type' => 2,
             'class' => 'main',
             'user_id' => auth()->user()->id,
             'user_name' => auth()->user()->name,
-            'employee_id' => $employee->id,
-            'department_id' => $department->id,
-            'func' => $department->code,
+            'employee_id' => $employeeId,
+            'department_id' => $departmentId,
+            'func' => $departmentCode,
             'desc' => $req->desc,
             'description' => $req->desc,
             'activity_id' => $req->activity,
@@ -526,7 +530,7 @@ class DepartmentRequestController extends Controller
             'status' => 0,
             'date' => $req->date,
          ]);
-         
+
          $requestUser->update([
             'schedule_id' => $schedule->id
          ]);
@@ -548,7 +552,7 @@ class DepartmentRequestController extends Controller
             'type' => 2,
             'status' => 101,
             'date' => $req->date,
-            
+
          ]);
 
          FuelItem::create([
@@ -572,7 +576,7 @@ class DepartmentRequestController extends Controller
          } else {
             $vesselId = null;
          }
-         
+
          $schedule = Schedule::create([
             'code' => $scheduleCode,
             'vessel_id' => $vesselId,
@@ -598,11 +602,11 @@ class DepartmentRequestController extends Controller
       }
 
       // if ($req->activity == 7) {
-         
-         
+
+
       //    $schedule = Schedule::create([
       //       'code' => $scheduleCode,
-            
+
       //       'by' => 'user',
       //       'class' => 'Crew Change',
       //       'type' => 2,
@@ -610,7 +614,7 @@ class DepartmentRequestController extends Controller
       //       'date' => $req->date,
       //    ]);
 
-        
+
 
       //    $requestUser->update([
       //       'schedule_id' => $schedule->id,
@@ -618,7 +622,7 @@ class DepartmentRequestController extends Controller
       //    ]);
       // }
 
-      
+
 
       return redirect()->route('request.detail.new', enkripRambo($requestUser->id))->with('success', 'Request Activity successfully submitted');
    }
@@ -935,7 +939,7 @@ class DepartmentRequestController extends Controller
       //    # code...
       // }
       $employee = Employee::where('email', auth()->user()->email)->first();
-      
+
       $today = Carbon::now();
       $month = $today->format('m');
       $vessels = Vessel::get();
@@ -951,8 +955,8 @@ class DepartmentRequestController extends Controller
          $drafts =  ModelsRequest::where('status', 978)->orderBy('parent_id', 'asc')->get();
       }
       // $departs = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status , description, schedule_id, activity_id')->where('employee_id', $employee->id)->where('status', '>', 0)->where('status', '<', 12)->orderBy('department_id', 'desc')->get()->groupBy('func');
-      
-      
+
+
       return view('pages-stisla.user.request.progress', [
          'title' => 'Progress',
          'departs' => $departs,
@@ -1001,7 +1005,7 @@ class DepartmentRequestController extends Controller
 
       // }
 
-      
+
 
 
       $nearestVessel = null;
@@ -1022,18 +1026,16 @@ class DepartmentRequestController extends Controller
                   $nearestVessel = $vessel;
                }
             } else {
-               if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel' ) {
+               if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel') {
                   $nearestVessel = $vessel;
                }
             }
-            
          }
          // dd($nearestVessel);
          // dd(count($nearestVessels) > 0);
          if ($nearestVessel) {
             // dd('ada kapal terdekat');
             if ($request->parent->activity_id == 2) {
-               
             }
 
             $nearVesselHasSchedule = $nearestVessel->schedules->where('status', '!=', 11)->where('date', $now)->first();
@@ -1109,11 +1111,11 @@ class DepartmentRequestController extends Controller
          //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
          //    // }
          //    // $schedule = Schedule::find($uncompleteRoute->schedule_id);
-               
+
          //    //    return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y') . ' by ' . $schedule->vessel->name);
-               
+
          // }
-         
+
       } else {
          // dd('tidak ada schedule');
          // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
@@ -1133,7 +1135,6 @@ class DepartmentRequestController extends Controller
          // dd($request->schedule_id);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
       }
-
    }
 
    public function releaseOld($id)
@@ -1464,14 +1465,14 @@ class DepartmentRequestController extends Controller
          // dd('cargo');
          $schedule = Schedule::where('date', $request->date)->where('class', 'Cargo')->first();
          // dd($schedule->vessel->name);
-      } elseif($request->activity_id == 7) {
+      } elseif ($request->activity_id == 7) {
          // dd('crew');
          $schedule = Schedule::where('date', $request->date)->where('class', 'Crew Change')->first();
       } else {
          // dd('crew');
          $schedule = Schedule::where('date', $request->date)->where('class', 'Crew')->first();
       }
-      
+
       // dd($schedules);
       $lastSchedule = Schedule::orderBy("created_at", "desc")->first();
       if (isset($lastSchedule)) {
@@ -1514,7 +1515,7 @@ class DepartmentRequestController extends Controller
 
       // jika request cargo
       $vessels = Vessel::where('latitude', '!=', null)->get();
-     
+
       $nearestVessel = null;
       $reqDate = \Carbon\Carbon::parse($request->date)->format('Y-m-d');
       // dd($now->format('Y-m-d'));
@@ -1535,24 +1536,22 @@ class DepartmentRequestController extends Controller
                      $nearestVessel = $vessel;
                   }
                } else {
-                  if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel' ) {
+                  if ($distance < 30000 && $vessel->type != 'Crew Boat' && $vessel->type != 'Diving & Support Vessel') {
                      $nearestVessel = $vessel;
                   }
                }
-               
             }
             // dd($nearestVessel);
             // dd(count($nearestVessels) > 0);
             if ($nearestVessel) {
                // dd('ada kapal terdekat');
                if ($request->activity_id == 2) {
-                  
                }
-   
+
                $nearVesselHasSchedule = $nearestVessel->schedules->where('status', '!=', 11)->where('date', $reqDate)->first();
-               
+
                // dd(count($nearestVessel->schedules->where('date', $reqDate)));
-      
+
                if ($nearVesselHasSchedule != null) {
                   // dd('kapal sudah ada schedule');
                   // dd($nearVesselHasSchedule->code);
@@ -1591,7 +1590,7 @@ class DepartmentRequestController extends Controller
             }
          }
       }
-      
+
 
 
 
@@ -1617,11 +1616,10 @@ class DepartmentRequestController extends Controller
             'schedule_id' => $schedule->id
          ]);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($schedule->date)->format('d/m/Y'));
-        
       } else {
          // dd('tidak ada schedule');
          // $vessel = Vessel::where('status', 1)->orderBy('updated_at', 'desc')->first();
-         
+
          // $schedule = Schedule::create([
          //    'code' => $scheduleCode,
          //    'class' => $request->activity->name,
@@ -1637,10 +1635,10 @@ class DepartmentRequestController extends Controller
          // dd($request->schedule_id);
          return redirect()->back()->with('success', 'Your request activity would be pick up at ' . \Carbon\Carbon::parse($request->date)->format('d/m/Y'));
       }
-
    }
 
-   public function changeVessel(Request $req){
+   public function changeVessel(Request $req)
+   {
       // dd('ok');
       $request = ModelsRequest::find($req->requestId);
       $schedule = Schedule::find($request->schedule_id);
@@ -1651,7 +1649,7 @@ class DepartmentRequestController extends Controller
             'class' => $request->activity->name
          ]);
       }
-      
+
       // dd($parent->origin->name);
 
       $request->update([

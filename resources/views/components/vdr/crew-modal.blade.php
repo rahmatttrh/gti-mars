@@ -62,6 +62,7 @@
    </div>
 </div>
 
+
 <div class="modal fade" id="modalReleaseVdr" tabindex="1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog" role="document">
       
@@ -145,6 +146,7 @@
 
 <div class="modal fade" id="modalEdit" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog modal-lg" role="document">
+   <div class="modal-dialog modal-lg" role="document">
       <form action="{{route('vdr.update')}}" method="POST" enctype="multipart/form-data">
          @csrf
          @method('PUT')
@@ -158,6 +160,48 @@
                   <span aria-hidden="true">&times;</span>
                </button>
             </div>
+            <!-- <div class="modal-body">
+               <div class="form-group">
+                  <label for="vessel">Vessel Name</label>
+                  <input class="form-control" id="vessel" name="vessel" type="text" value="{{$user->name}}" readonly>
+                  @error('vessel')
+                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                  @enderror
+               </div>
+               
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="date">Date</label>
+                     <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" readonly>
+                     @error('date')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="location_midnight">Location</label>
+                     <input class="form-control" id="location_midnight" name="location_midnight" required type="text"  value="{{$vdr->location_midnight}}" >
+                     @error('location_midnight')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+               </div>
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                     <label for="onduty">Number of Crew</label>
+                     <input class="form-control" id="onduty" name="onduty" type="number" value="{{$vdr->crew_onduty}}">
+                     @error('onduty')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  <div class="form-group col-md-6">
+                     <label for="max">Max</label>
+                     <input class="form-control" id="max" name="max" type="text" value="{{$vdr->crew_max}}" >
+                     @error('max')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+               </div>
+            </div> -->
             <div class="modal-body">
                <div class="row">
                   <div class="col-md-8">
@@ -172,7 +216,7 @@
                   <div class="col-md-4">
                      <div class="form-group">
                         <label for="date">Date</label>
-                        <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" readonly>
+                        <input class="form-control" id="date" name="date" required type="date" value="{{$vdr->date }}" >
                         @error('date')
                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                         @enderror
@@ -284,7 +328,6 @@
 
 
 
-
 {{-- <div class="modal modal-blur fade" id="modalEdit2" tabindex="-1" role="dialog" aria-hidden="true">
    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
        <div class="modal-content">
@@ -354,4 +397,6 @@
        </div>
    </div>
 </div> --}}
+
+
 

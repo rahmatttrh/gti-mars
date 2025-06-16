@@ -105,7 +105,7 @@ class VesselController extends Controller
          'name' => $req->name,
          'username' => $req->username,
          'email' => $req->email,
-         'password' => Hash::make('12345678')
+         'password' => Hash::make('oses@2025')
       ]);
 
       $user->assignRole('vessel');

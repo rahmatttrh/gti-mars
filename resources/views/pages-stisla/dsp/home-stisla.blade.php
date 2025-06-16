@@ -163,11 +163,11 @@
                               </td>
                               @elseif(($schedule->class == 'Fresh Water'))
                               <td>
-                                 {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->fuel->qty}} KL  
+                                 {{$schedule->requests->first()->desc}} {{$schedule->requests->first()->fuel->qty ?? ''}} KL  
                               </td>
                               <td>
                                  
-                                 <span>{{$schedule->requests->first()->origin->code}} - {{$schedule->requests->first()->destination->code}}</span>
+                                 <span>{{$schedule->requests->first()->origin->code ?? ''}} - {{$schedule->requests->first()->destination->code ?? ''}}</span>
                               </td>
                               @elseif(($schedule->class == 'Crew Change'))
                               <td>

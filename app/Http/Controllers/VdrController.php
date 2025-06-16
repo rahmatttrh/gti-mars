@@ -106,13 +106,14 @@ class VdrController extends Controller
       $periodic = $vdr ? VdrPeriodic::where('vdr_id', $vdr->id)->first() : null;
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-      
+
+
 
 
 
       //   pages.vdr.create-vdr
       return view('pages-stisla.vdr.home-vessel', [
-      //   return view('pages.vdr.create-vdr', [
+         //   return view('pages.vdr.create-vdr', [
          'user' => $user,
          'vessel' => $vessel,
          'vdr' => $vdr,
@@ -132,41 +133,41 @@ class VdrController extends Controller
    public function vdrCreate()
    {
 
-        $user = auth()->user();
+      $user = auth()->user();
 
-        // Opsi 1 
-        $vessel = Vessel::where('email', $user->email)->first();
+      // Opsi 1 
+      $vessel = Vessel::where('email', $user->email)->first();
 
-        $vdr = null;
+      $vdr = null;
 
-        $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
-        $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
-        $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
-        $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
-        $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
-        $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
-        $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
-        $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
-        $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
+      $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
+      $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
+      $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
+      $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
+      $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
+      $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
+      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
 
 
       //   pages.vdr.create-vdr
       return view('pages-stisla.vdr.home-vessel', [
-      //   return view('pages.vdr.create-vdr', [
-            'user' => $user,
-            'vessel' => $vessel,
-            'vdr' => $vdr,
-            'activities' => $activities,
-            'operatings' => $operatings,
-            'cargos' => $cargos,
-            'weathers' => $weathers,
-            'hses' => $hses,
-            'engines' => $engines,
-            'crews' => $crews,
-            'totalJam' => $totalJam,
-            'totalDaily' => $totalDaily
-        ])->with('i');
+         //   return view('pages.vdr.create-vdr', [
+         'user' => $user,
+         'vessel' => $vessel,
+         'vdr' => $vdr,
+         'activities' => $activities,
+         'operatings' => $operatings,
+         'cargos' => $cargos,
+         'weathers' => $weathers,
+         'hses' => $hses,
+         'engines' => $engines,
+         'crews' => $crews,
+         'totalJam' => $totalJam,
+         'totalDaily' => $totalDaily
+      ])->with('i');
    }
 
    public function show($id, $enkripTab)
@@ -175,7 +176,7 @@ class VdrController extends Controller
       $vdr = Vdr::find($dekripId);
       // dd($vdr->id);
       $user = auth()->user();
-      
+
 
       # code...
       $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
@@ -189,24 +190,19 @@ class VdrController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-      $totalDaily = 2687.49;
-      // dd($totalDaily);
-      $decimal = $totalDaily - floor($totalDaily);
-
-      
-
+      $totalDaily = $vdr->customRound($totalDaily);
       $vdrs = Vdr::get();
 
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrOperating::where('vdr_id', $vdr->id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
          $time = $op->time;
          $array = explode('.', $op->time);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -242,12 +238,15 @@ class VdrController extends Controller
          $tab = 'index';
       }
 
-
- 
+      $lastVdr = Vdr::where('vessel_id', $vdr->vessel_id)->orderBy('date', 'asc')->first();
+      // if (auth()->user()->hasRole('superuser')) {
+      //   dd($lastVdr);
+      // }
       // dd('ok');
       return view('pages-stisla.vdr.detail', [
-      //   return view('pages.vdr.show-vdr', [
+         //   return view('pages.vdr.show-vdr', [
          'tab' => $tab,
+         'lastVdr' => $lastVdr,
          'vessel' => $vdr->vessel,
          'user' => $user,
          'vdr' => $vdr,
@@ -298,11 +297,14 @@ class VdrController extends Controller
       }
 
       $lastVdr = Vdr::where('vessel_id', $req->vessel_id)->orderBy('date', 'desc')->first();
-      $lastVdrWeathers =  VdrWeather::where('vdr_id', $lastVdr->id)->get();
-      $lastVdrHses = VdrHse::where('vdr_id', $lastVdr->id)->get();
-      // dd($lastVdr->id);
-      $lastVdrOperatings = VdrOperating::where('vdr_id', $lastVdr->id)->get();
-      $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
+      if ($lastVdr) {
+         $lastVdrWeathers =  VdrWeather::where('vdr_id', $lastVdr->id)->get();
+         $lastVdrHses = VdrHse::where('vdr_id', $lastVdr->id)->get();
+         // dd($lastVdr->id);
+         $lastVdrOperatings = VdrOperating::where('vdr_id', $lastVdr->id)->get();
+         $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
+      }
+
 
       // dd($lastVdr->date);
 
@@ -310,8 +312,9 @@ class VdrController extends Controller
 
       try {
 
-         $vdr = Vdr::create([
-            
+         if ($lastVdr) {
+            $vdr = Vdr::create([
+
                'vessel_id' => $req->vessel_id,
                'date' => $req->date,
                'crew_onduty' => $req->onduty,
@@ -325,7 +328,21 @@ class VdrController extends Controller
                'master' => $lastVdr->master,
                'ce' => $lastVdr->ce,
                'status' => 0
-         ]);
+            ]);
+         } else {
+            $vdr = Vdr::create([
+
+               'vessel_id' => $req->vessel_id,
+               'date' => $req->date,
+               'crew_onduty' => $req->onduty,
+               'crew_max' => $req->max,
+               'location_midnight' => $req->location_midnight,
+               'created_by' => $req->created_by,
+
+               'status' => 0
+            ]);
+         }
+
 
          $vdr->update([
             'code' => vdrId($vdr->id)
@@ -338,146 +355,152 @@ class VdrController extends Controller
 
          $cargoHeadings = VdrCargoHeading::get();
          foreach ($cargoHeadings as $key => $heading) {
+            # code...
+
+            $vdrCargo = VdrCargo::where('vdr_id', $vdr->id)
+               ->where('heading_id', $heading->id)
+               ->first();
+
+            if (!$vdrCargo) {
                # code...
-
-               $vdrCargo = VdrCargo::where('vdr_id', $vdr->id)
-                  ->where('heading_id', $heading->id)
-                  ->first();
-
-               if (!$vdrCargo) {
-                  # code...
-                  $createVdrCargo = VdrCargo::create([
-                     'vdr_id' => $vdr->id,
-                     'heading_id' => $heading->id,
-                     'created_by' => $vdr->created_by,
-                     'created_at' => NOW(),
-                     'updated_at' => NOW()
-                  ]);
-               }
+               $createVdrCargo = VdrCargo::create([
+                  'vdr_id' => $vdr->id,
+                  'heading_id' => $heading->id,
+                  'created_by' => $vdr->created_by,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
          }
 
          $wHeadings = VdrWeatherHeading::get();
          foreach ($wHeadings as $key => $heading) {
-               # code...
-               $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
-                  ->where('heading_id', $heading->id)
-                  ->first();
+            # code...
+            $vdrWeather = VdrWeather::where('vdr_id', $vdr->id)
+               ->where('heading_id', $heading->id)
+               ->first();
 
-               if (!$vdrWeather) {
-                  # code...
-                  $createVdrWeather = VdrWeather::create([
-                     'vdr_id' => $vdr->id,
-                     'heading_id' => $heading->id,
-                     'created_at' => NOW(),
-                     'updated_at' => NOW()
-                  ]);
-                  
-               }
+            if (!$vdrWeather) {
+               # code...
+               $createVdrWeather = VdrWeather::create([
+                  'vdr_id' => $vdr->id,
+                  'heading_id' => $heading->id,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
          }
          $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
-         if (count($lastVdrWeathers) > 0) {
-            foreach($vdrWeathers as $vdrWeather){
-               foreach($lastVdrWeathers as $lastWeather){
-                  if ($lastWeather->heading_id == $vdrWeather->heading_id) {
-                     $vdrWeather->update([
-                        't_0006' => $lastWeather->t_0006,
-                        't_0612' => $lastWeather->t_0612,
-                        't_1218' => $lastWeather->t_1218,
-                        't_1824' => $lastWeather->t_1824,
-                     ]);
+         if ($lastVdr) {
+            if (count($lastVdrWeathers) > 0) {
+               foreach ($vdrWeathers as $vdrWeather) {
+                  foreach ($lastVdrWeathers as $lastWeather) {
+                     if ($lastWeather->heading_id == $vdrWeather->heading_id) {
+                        $vdrWeather->update([
+                           't_0006' => $lastWeather->t_0006,
+                           't_0612' => $lastWeather->t_0612,
+                           't_1218' => $lastWeather->t_1218,
+                           't_1824' => $lastWeather->t_1824,
+                        ]);
+                     }
                   }
                }
             }
          }
-         
+
+
 
 
 
          // HSE
          $hseHeadings = VdrHseHeader::get();
          foreach ($hseHeadings as $key => $heading) {
-               # code...
-               $vdrHse = VdrHse::where('vdr_id', $vdr->id)
-                  ->where('header_id', $heading->id)
-                  ->first();
+            # code...
+            $vdrHse = VdrHse::where('vdr_id', $vdr->id)
+               ->where('header_id', $heading->id)
+               ->first();
 
-               if (!$vdrHse) {
-                  $createVdrHse = VdrHse::create([
-                     'vdr_id' => $vdr->id,
-                     'header_id' => $heading->id,
-                     'created_at' => NOW(),
-                     'updated_at' => NOW()
-                  ]);
-               }
+            if (!$vdrHse) {
+               $createVdrHse = VdrHse::create([
+                  'vdr_id' => $vdr->id,
+                  'header_id' => $heading->id,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
          }
          $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
          // Generate value hse from last VDR
-         if (count($lastVdrHses) > 0) {
-            // dd('oke');
-            foreach($vdrHses as $vdrHse){
-               // dd($vdrHse->id);
-               foreach($lastVdrHses as $lastHse){
-                  if ($lastHse->header_id == $vdrHse->header_id) {
-                     // dd( $lastHse->heading_id);
-                     $vdrHse->update([
-                        'previous' => $lastHse->previous,
-                        'today' => $lastHse->today,
-                     ]);
+         if ($lastVdr) {
+            if (count($lastVdrHses) > 0) {
+               // dd('oke');
+               foreach ($vdrHses as $vdrHse) {
+                  // dd($vdrHse->id);
+                  foreach ($lastVdrHses as $lastHse) {
+                     if ($lastHse->header_id == $vdrHse->header_id) {
+                        // dd( $lastHse->heading_id);
+                        $vdrHse->update([
+                           'previous' => $lastHse->previous,
+                           'today' => $lastHse->today,
+                        ]);
+                     }
                   }
                }
             }
          }
 
-        
-         
+
+
 
 
 
          $engineHeadings = VdrEngineHeading::get();
          foreach ($engineHeadings as $key => $heading) {
-               # code...
-               $vdrEngine = VdrEngine::where('vdr_id', $vdr->id)
-                  ->where('heading_id', $heading->id)
-                  ->first();
+            # code...
+            $vdrEngine = VdrEngine::where('vdr_id', $vdr->id)
+               ->where('heading_id', $heading->id)
+               ->first();
 
-               if (!$vdrEngine) {
-                  # code...
-                  $createVdrEngine = VdrEngine::create([
-                     'vdr_id' => $vdr->id,
-                     'heading_id' => $heading->id,
-                     'created_at' => NOW(),
-                     'updated_at' => NOW()
-                  ]);
-               }
+            if (!$vdrEngine) {
+               # code...
+               $createVdrEngine = VdrEngine::create([
+                  'vdr_id' => $vdr->id,
+                  'heading_id' => $heading->id,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
          }
 
          $operatingHeadings = VdrOperatingHeader::get();
          foreach ($operatingHeadings as $key => $heading) {
-               # code...
-               $vdrOperating = VdrOperating::where('vdr_id', $vdr->id)
-                  ->where('heading_id', $heading->id)
-                  ->first();
+            # code...
+            $vdrOperating = VdrOperating::where('vdr_id', $vdr->id)
+               ->where('heading_id', $heading->id)
+               ->first();
 
-               if (!$vdrOperating) {
-                  # code...
-                  $createVdrOperating = VdrOperating::create([
-                     'vdr_id' => $vdr->id,
-                     'heading_id' => $heading->id,
-                     'created_at' => NOW(),
-                     'updated_at' => NOW()
-                  ]);
-               }
+            if (!$vdrOperating) {
+               # code...
+               $createVdrOperating = VdrOperating::create([
+                  'vdr_id' => $vdr->id,
+                  'heading_id' => $heading->id,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
          }
          $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
-         if (count($lastVdrOperatings) > 0) {
-            foreach($vdrOperatings as $vdrOperating){
-               foreach($lastVdrOperatings as $lastOperating){
-                  if ($lastOperating->heading_id == $vdrOperating->heading_id) {
-                     $vdrOperating->update([
-                        'speed' => $lastOperating->speed,
-                        'contractual_fuel' => $lastOperating->contractual_fuel,
-                        // 'daily' => $lastOperating->daily,
-                     ]);
+         if ($lastVdr) {
+            if (count($lastVdrOperatings) > 0) {
+               foreach ($vdrOperatings as $vdrOperating) {
+                  foreach ($lastVdrOperatings as $lastOperating) {
+                     if ($lastOperating->heading_id == $vdrOperating->heading_id) {
+                        $vdrOperating->update([
+                           'speed' => $lastOperating->speed,
+                           'contractual_fuel' => $lastOperating->contractual_fuel,
+                           // 'daily' => $lastOperating->daily,
+                        ]);
+                     }
                   }
                }
             }
@@ -485,18 +508,24 @@ class VdrController extends Controller
 
 
 
-         foreach($lastVdrCrews as $lastCrew){
-            $createVdrCrew = VdrCrew::create([
-               'vdr_id' => $vdr->id,
-               'is_crew' => $lastCrew->is_crew,
-               'name' => $lastCrew->name,
-               'rank' => $lastCrew->rank,
-               'company' => $lastCrew->company,
-               'created_at' => NOW(),
-               'updated_at' => NOW()
-            ]);
+
+         if ($lastVdr) {
+            foreach ($lastVdrCrews as $lastCrew) {
+               if ($lastCrew->is_crew == 1) {
+                  $createVdrCrew = VdrCrew::create([
+                     'vdr_id' => $vdr->id,
+                     'is_crew' => $lastCrew->is_crew,
+                     'name' => $lastCrew->name,
+                     'rank' => $lastCrew->rank,
+                     'company' => $lastCrew->company,
+                     'created_at' => NOW(),
+                     'updated_at' => NOW()
+                  ]);
+               }
+            }
          }
-         
+
+
 
 
 
@@ -529,7 +558,8 @@ class VdrController extends Controller
    }
 
 
-   public function delete(Request $req){
+   public function delete(Request $req)
+   {
       $vdr = Vdr::find($req->id);
       $vdrWeathers =  VdrWeather::where('vdr_id', $vdr->id)->get();
       $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
@@ -539,34 +569,31 @@ class VdrController extends Controller
       $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
 
-      foreach($vdrWeathers as $vdrW){
+      foreach ($vdrWeathers as $vdrW) {
          $vdrW->delete();
       }
-      foreach($vdrHses as $vdrH){
+      foreach ($vdrHses as $vdrH) {
          $vdrH->delete();
       }
-      foreach($vdrOperatings as $vdrO){
+      foreach ($vdrOperatings as $vdrO) {
          $vdrO->delete();
       }
-      foreach($vdrCrews as $vdrC){
+      foreach ($vdrCrews as $vdrC) {
          $vdrC->delete();
       }
-      foreach($vdrEngines as $vdrE){
+      foreach ($vdrEngines as $vdrE) {
          $vdrE->delete();
       }
-      foreach($vdrCargos as $vdrCargo){
+      foreach ($vdrCargos as $vdrCargo) {
          $vdrCargo->delete();
       }
-      foreach($vdrActivities as $vdrAct){
+      foreach ($vdrActivities as $vdrAct) {
          $vdrAct->delete();
       }
-      
+
       $vdr->delete();
 
       return redirect()->to('/')->with('success', 'VDR deleted');
-
-
-
    }
 
    public function edit($id)
@@ -609,15 +636,16 @@ class VdrController extends Controller
       try {
 
          $updateVdr = $vdr->update([
-               'crew_onduty' => $req->onduty,
-               'crew_max' => $req->max,
-               'location_midnight' => $req->location_midnight,
-               'contract' => $req->contract,
-               'contract_start' => $req->contract_start,
-               'contract_end' => $req->contract_end,
-               'owner' => $req->owner,
-               'master' => $req->master,
-               'ce' => $req->ce
+            'date' => $req->date,
+            'crew_onduty' => $req->onduty,
+            'crew_max' => $req->max,
+            'location_midnight' => $req->location_midnight,
+            'contract' => $req->contract,
+            'contract_start' => $req->contract_start,
+            'contract_end' => $req->contract_end,
+            'owner' => $req->owner,
+            'master' => $req->master,
+            'ce' => $req->ce
 
          ]);
 
@@ -638,7 +666,8 @@ class VdrController extends Controller
       }
    }
 
-   public function updateApproval(Request $req){
+   public function updateApproval(Request $req)
+   {
       $vdr = Vdr::find($req->id);
 
       $vdr->update([
@@ -666,12 +695,12 @@ class VdrController extends Controller
 
          # code...
          if ($totalMinutes == 60) {
-               # code...
-               $sisaMinutes = 0;
-               $tambahHours = 1;
+            # code...
+            $sisaMinutes = 0;
+            $tambahHours = 1;
          } else {
-               $sisaMinutes = $totalMinutes - 60;
-               $tambahHours = 1;
+            $sisaMinutes = $totalMinutes - 60;
+            $tambahHours = 1;
          }
 
          $penambahanJam = $hours + $tambahHours + ($sisaMinutes / 100);
@@ -713,106 +742,110 @@ class VdrController extends Controller
       // DB::beginTransaction();
       // // dd($req->sb);
       // try {
-         $createVdr = VdrActivity::create([
-               'vdr_id' => $req->id,
-               'created_by' => $req->created_by,
-               'activity' => $req->activity,
-               'start' => $req->start,
-               // 'finish' => $req->finish,
-               'high' => $req->high,
-               'normal' => $req->normal,
-               'slow' => $req->slow,
-               'manu' => $req->manu,
-               'idle' => $req->idle,
-               'tow' => $req->tow,
-               'ah' => $req->ah,
-               'sb' => $req->sb
-         ]);
+      $createVdr = VdrActivity::create([
+         'vdr_id' => $req->id,
+         'created_by' => $req->created_by,
+         'activity' => $req->activity,
+         'start' => $req->start,
+         // 'finish' => $req->finish,
+         'high' => $req->high,
+         'normal' => $req->normal,
+         'slow' => $req->slow,
+         'manu' => $req->manu,
+         'idle' => $req->idle,
+         'tow' => $req->tow,
+         'ah' => $req->ah,
+         'sb' => $req->sb
+      ]);
 
-         $high = 0;
-         $normal = 0;
-         $slow = 0;
-         $manu = 0;
-         $idle = 0;
-         $tow = 0;
-         $ah = 0;
-         $sb = 0;
-         $total = 0;
-
-
-         // TESTING
-         $high = $this->hitungTime($high, $req->high);
-         $normal = $this->hitungTime($normal, $req->normal);
-         $slow = $this->hitungTime($slow, $req->slow);
-         $manu = $this->hitungTime($manu, $req->manu);
-         $idle = $this->hitungTime($idle, $req->idle);
-         $tow = $this->hitungTime($tow, $req->tow);
-         $ah = $this->hitungTime($ah, $req->ah);
-         $sb = $this->hitungTime($sb, $req->sb);
-         $sum = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
-
-         $totalHour = explode('.', "$sum", 2)[0];
-         // dd($sum);
-         // $totalHour = $this->hitungTime($total, $sum);
-         // dd($totalHour);
-        
-         $minHigh = explode('.', $req->high, 2)[1];
-         $minNormal = explode('.', $req->normal, 2)[1];
-         $minSlow = explode('.', $req->slow, 2)[1];
-         $minManu = explode('.', $req->manu, 2)[1];
-         $minIdle = explode('.', $req->idle, 2)[1];
-         $minTow = explode('.', $req->tow, 2)[1];
-         $minAh = explode('.', $req->ah, 2)[1];
-         $minSb = explode('.', $req->sb, 2)[1];
-         $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb;
-         // dd($totalMinute);
-         // dd($req->sb);
-         // if ($totalMinute > 0) {
-         //    $grandMinute = explode('.', "$sum", 2)[1];
-         // } else {
-         //    $grandMinute = 0;
-         // }
-         // dd($sum);
-         $totalHours = '';
-         $debugHours = 0;
-         $debugMinutes = 0;
-
-         $hourHigh = floor($req->high) ;
-         $arrayHigh = explode('.', $req->high);
-         $minuteHigh = intval($arrayHigh[1]);
-         
-         $hourNormal = floor($req->normal);
-         $arrayNormal = explode('.', $req->normal);
-         $minuteNormal = intval($arrayNormal[1]);
-
-         $hourSlow =  floor($req->slow);
-         $arraySlow = explode('.', $req->slow);
-         $minuteSlow = intval($arraySlow[1]);
-
-         $hourManu =  floor($req->manu);
-         $arrayManu = explode('.', $req->manu);
-         $minuteManu = intval($arrayManu[1]);
-
-         $hourIdle =  floor($req->idle);
-         $arrayIdle = explode('.', $req->idle);
-         $minuteIdle = intval($arrayIdle[1]);
-
-         $hourTow =  floor($req->tow);
-         $arrayTow = explode('.', $req->tow);
-         $minuteTow = intval($arrayTow[1]);
-
-         $hourAh =  floor($req->ah);
-         $arrayAh = explode('.', $req->ah);
-         $minuteAh = intval($arrayAh[1]);
-
-         $hourSb =  floor($req->sb);
-         $arraySb = explode('.', $req->high);
-         $minuteSb = intval($arraySb[1]);
+      $high = 0;
+      $normal = 0;
+      $slow = 0;
+      $manu = 0;
+      $idle = 0;
+      $tow = 0;
+      $ah = 0;
+      $sb = 0;
+      $total = 0;
 
 
-         $debugHour = $hourHigh + $hourNormal + $hourSlow + $hourManu + $hourIdle + $hourTow + $hourAh + $hourSb;
-         $debugMinute = $minuteHigh + $minuteNormal + $minuteSlow + $minuteManu + $minuteIdle + $minuteTow + $minuteAh + $minuteSb;
+      // TESTING
+      $high = $this->hitungTime($high, $req->high);
+      $normal = $this->hitungTime($normal, $req->normal);
+      $slow = $this->hitungTime($slow, $req->slow);
+      $manu = $this->hitungTime($manu, $req->manu);
+      $idle = $this->hitungTime($idle, $req->idle);
+      $tow = $this->hitungTime($tow, $req->tow);
+      $ah = $this->hitungTime($ah, $req->ah);
+      $sb = $this->hitungTime($sb, $req->sb);
+      $sum = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
 
+      $totalHour = explode('.', "$sum", 2)[0];
+      // dd($sum);
+      // $totalHour = $this->hitungTime($total, $sum);
+      // dd($totalHour);
+
+      $minHigh = explode('.', $req->high, 2)[1];
+      $minNormal = explode('.', $req->normal, 2)[1];
+      $minSlow = explode('.', $req->slow, 2)[1];
+      $minManu = explode('.', $req->manu, 2)[1];
+      $minIdle = explode('.', $req->idle, 2)[1];
+      $minTow = explode('.', $req->tow, 2)[1];
+      $minAh = explode('.', $req->ah, 2)[1];
+      $minSb = explode('.', $req->sb, 2)[1];
+      $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb;
+      // dd($totalMinute);
+      // dd($req->sb);
+      // if ($totalMinute > 0) {
+      //    $grandMinute = explode('.', "$sum", 2)[1];
+      // } else {
+      //    $grandMinute = 0;
+      // }
+      // dd($sum);
+      $totalHours = '';
+      $debugHours = 0;
+      $debugMinutes = 0;
+
+      $hourHigh = floor($req->high);
+      $arrayHigh = explode('.', $req->high);
+      $minuteHigh = intval($arrayHigh[1]);
+
+      $hourNormal = floor($req->normal);
+      $arrayNormal = explode('.', $req->normal);
+      $minuteNormal = intval($arrayNormal[1]);
+
+      $hourSlow =  floor($req->slow);
+      $arraySlow = explode('.', $req->slow);
+      $minuteSlow = intval($arraySlow[1]);
+
+      $hourManu =  floor($req->manu);
+      $arrayManu = explode('.', $req->manu);
+      $minuteManu = intval($arrayManu[1]);
+
+      $hourIdle =  floor($req->idle);
+      $arrayIdle = explode('.', $req->idle);
+      $minuteIdle = intval($arrayIdle[1]);
+
+      $hourTow =  floor($req->tow);
+      $arrayTow = explode('.', $req->tow);
+      $minuteTow = intval($arrayTow[1]);
+
+      $hourAh =  floor($req->ah);
+      $arrayAh = explode('.', $req->ah);
+      $minuteAh = intval($arrayAh[1]);
+
+      $hourSb =  floor($req->sb);
+      $arraySb = explode('.', $req->sb);
+      $minuteSb = intval($arraySb[1]);
+
+
+      $debugHour = $hourHigh + $hourNormal + $hourSlow + $hourManu + $hourIdle + $hourTow + $hourAh + $hourSb;
+      $debugMinute = $minuteHigh + $minuteNormal + $minuteSlow + $minuteManu + $minuteIdle + $minuteTow + $minuteAh + $minuteSb;
+
+      if ($debugMinute >= 60) {
+         $minLeft = $debugMinute - 60;
+         $debugMinute = $minLeft;
+         $debugHour += 1;
          if ($debugMinute >= 60) {
             $minLeft = $debugMinute - 60;
             $debugMinute = $minLeft;
@@ -825,189 +858,185 @@ class VdrController extends Controller
                   $minLeft = $debugMinute - 60;
                   $debugMinute = $minLeft;
                   $debugHour += 1;
-                  if ($debugMinute >= 60) {
-                     $minLeft = $debugMinute - 60;
-                     $debugMinute = $minLeft;
-                     $debugHour += 1;
-                  }
                }
             }
          }
-
-
-         
-         
-
-         // dd(intval($totalMinute));
-         $currentStart = new Carbon($req->start);
-         // dd($currentStart);
-         $start = $currentStart;
-         $grandTotal = $currentStart->addHours($debugHour);
-         // dd($sum);
-         $grandFinal = $grandTotal->addMinutes(intval($debugMinute));
-         // dd('start:' . $start . ' normal:'. $normal . ' final:'. $grandFinal);
-         // dd($grandFinal);
-         $createVdr->update([
-            'finish' => $grandFinal
-         ]);
+      }
 
 
 
 
+
+      // dd(intval($totalMinute));
+      $currentStart = new Carbon($req->start);
+      // dd($currentStart);
+      $start = $currentStart;
+      $grandTotal = $currentStart->addHours($debugHour);
+      // dd($sum);
+      $grandFinal = $grandTotal->addMinutes(intval($debugMinute));
+      // dd('start:' . $start . ' normal:'. $normal . ' final:'. $grandFinal);
+      // dd($grandFinal);
+      $createVdr->update([
+         'finish' => $grandFinal
+      ]);
+
+
+
+
+      $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+
+      foreach ($activities as $key => $activity) {
+
+         $high = 0;
+         $normal = 0;
+         $slow = 0;
+         $manu = 0;
+         $idle = 0;
+         $tow = 0;
+         $ah = 0;
+         $sb = 0;
+         $total = 0;
+
+         $high = $this->hitungTime($high, $activity->high);
+         $normal = $this->hitungTime($normal, $activity->normal);
+         $slow = $this->hitungTime($slow, $activity->slow);
+         $manu = $this->hitungTime($manu, $activity->manu);
+         $idle = $this->hitungTime($idle, $activity->idle);
+         $tow = $this->hitungTime($tow, $activity->tow);
+         $ah = $this->hitungTime($ah, $activity->ah);
+         $sb = $this->hitungTime($sb, $activity->sb);
+         // dd($idle);
+
+         // $high = $activity->high;
+         // $normal = $activity->normal;
+         // $slow = $activity->slow;
+         // $manu = $activity->manu;
+         // $idle = $activity->idle;
+         // $tow = $activity->tow;
+         // $ah = $activity->ah;
+         // $sb = $activity->sb;
+
+         $total = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
+         // dd($total);
+         // dd($high . $normal . $slow . $manu . $idle . $tow .$ah .$sb);
+         // $grand = $activity->start + $total;
+
+         // $currentStart = new Carbon($activity->start);
+         // $grandTotal = $currentStart->addHours($total);
+         // dd($total);
+         // $activity->update([
+         //    'finish' => $grandTotal
+         // ]);
+
+
+      }
+
+      $totalMode = array(
+         'high'   => $high,
+         'normal' => $normal,
+         'slow'   => $slow,
+         'manu'   => $manu,
+         'idle'   => $idle,
+         'tow'    => $tow,
+         'ah'     => $ah,
+         'sb'     => $sb
+      );
+
+      // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
+      //     ->where('vdr_id', $req->vdr_id)
+      //     ->first();
+
+      $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+      $vdr = Vdr::find($req->vdr_id);
+
+      foreach ($operatings as $operating) {
          $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+         // $totalHigh = $activities->sum('high');
+         // $totalNormal = $operating->getSumNormal();
+         // $totalSlow = $activities->sum('slow');
+         // $totalManu = $activities->sum('manu');
+         // $totalIdle = $activities->sum('idle');
+         // $totalTow = $activities->sum('tow');
+         // $totalAh = $activities->sum('ah');
+         // $totalSb = $activities->sum('sb');
+         $totalHigh = $operating->getSumHigh();
+         $totalNormal = $operating->getSumNormal();
+         $totalSlow = $operating->getSumSlow();
+         $totalManu = $operating->getSumManu();
+         $totalIdle = $operating->getSumIdle();
+         $totalTow = $operating->getSumTow();
+         $totalAh = $operating->getSumAh();
+         $totalSb = $operating->getSumSb();
 
-         foreach ($activities as $key => $activity) {
-
-            $high = 0;
-            $normal = 0;
-            $slow = 0;
-            $manu = 0;
-            $idle = 0;
-            $tow = 0;
-            $ah = 0;
-            $sb = 0;
-            $total = 0;
-
-            $high = $this->hitungTime($high, $activity->high);
-            $normal = $this->hitungTime($normal, $activity->normal);
-            $slow = $this->hitungTime($slow, $activity->slow);
-            $manu = $this->hitungTime($manu, $activity->manu);
-            $idle = $this->hitungTime($idle, $activity->idle);
-            $tow = $this->hitungTime($tow, $activity->tow);
-            $ah = $this->hitungTime($ah, $activity->ah);
-            $sb = $this->hitungTime($sb, $activity->sb);
-            // dd($idle);
-
-            // $high = $activity->high;
-            // $normal = $activity->normal;
-            // $slow = $activity->slow;
-            // $manu = $activity->manu;
-            // $idle = $activity->idle;
-            // $tow = $activity->tow;
-            // $ah = $activity->ah;
-            // $sb = $activity->sb;
-            
-            $total = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
-            // dd($total);
-            // dd($high . $normal . $slow . $manu . $idle . $tow .$ah .$sb);
-            // $grand = $activity->start + $total;
-
-            // $currentStart = new Carbon($activity->start);
-            // $grandTotal = $currentStart->addHours($total);
-            // dd($total);
-            // $activity->update([
-            //    'finish' => $grandTotal
-            // ]);
-            
-
+         if ($operating->heading_id == 1) {
+            $operating->update([
+               'time' => floatval($totalHigh)
+            ]);
+         } elseif ($operating->heading_id == 2) {
+            $operating->update([
+               'time' => floatval($totalNormal)
+            ]);
+         } elseif ($operating->heading_id == 3) {
+            $operating->update([
+               'time' => floatval($totalSlow)
+            ]);
+         } elseif ($operating->heading_id == 4) {
+            $operating->update([
+               'time' => floatval($totalManu)
+            ]);
+         } elseif ($operating->heading_id == 5) {
+            $operating->update([
+               'time' => floatval($totalIdle)
+            ]);
+         } elseif ($operating->heading_id == 6) {
+            $operating->update([
+               'time' => floatval($totalTow)
+            ]);
+         } elseif ($operating->heading_id == 7) {
+            $operating->update([
+               'time' => floatval($totalAh)
+            ]);
+         } elseif ($operating->heading_id == 8) {
+            $operating->update([
+               'time' => floatval($totalSb)
+            ]);
          }
 
-         $totalMode = array(
-            'high'   => $high,
-            'normal' => $normal,
-            'slow'   => $slow,
-            'manu'   => $manu,
-            'idle'   => $idle,
-            'tow'    => $tow,
-            'ah'     => $ah,
-            'sb'     => $sb
-         );
-
-         // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
-         //     ->where('vdr_id', $req->vdr_id)
-         //     ->first();
-
-         $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
-         $vdr = Vdr::find($req->vdr_id);
-
-         foreach ($operatings as $operating) {
-            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
-            // $totalHigh = $activities->sum('high');
-            // $totalNormal = $operating->getSumNormal();
-            // $totalSlow = $activities->sum('slow');
-            // $totalManu = $activities->sum('manu');
-            // $totalIdle = $activities->sum('idle');
-            // $totalTow = $activities->sum('tow');
-            // $totalAh = $activities->sum('ah');
-            // $totalSb = $activities->sum('sb');
-            $totalHigh = $operating->getSumHigh();
-            $totalNormal = $operating->getSumNormal();
-            $totalSlow = $operating->getSumSlow();
-            $totalManu = $operating->getSumManu();
-            $totalIdle = $operating->getSumIdle();
-            $totalTow = $operating->getSumTow();
-            $totalAh = $operating->getSumAh();
-            $totalSb = $operating->getSumSb();
-
-            if ($operating->heading_id == 1) {
-               $operating->update([
-                  'time' => floatval($totalHigh)
-               ]);
-            } elseif ($operating->heading_id == 2) {
-               $operating->update([
-                  'time' => floatval($totalNormal)
-               ]);
-            } elseif ($operating->heading_id == 3) {
-               $operating->update([
-                  'time' => floatval($totalSlow)
-               ]);
-            } elseif ($operating->heading_id == 4) {
-               $operating->update([
-                  'time' => floatval($totalManu)
-               ]);
-            } elseif ($operating->heading_id == 5) {
-               $operating->update([
-                  'time' => floatval($totalIdle)
-               ]);
-            } elseif ($operating->heading_id == 6) {
-               $operating->update([
-                  'time' => floatval($totalTow)
-               ]);
-            } elseif ($operating->heading_id == 7) {
-               $operating->update([
-                  'time' => floatval($totalAh)
-               ]);
-            } elseif ($operating->heading_id == 8) {
-               $operating->update([
-                  'time' => floatval($totalSb)
-               ]);
-            } 
-            
 
 
 
 
-               // $field = $operating->heading->field;
+         // $field = $operating->heading->field;
 
 
-               // if ($field) {
-               //    $totalWaktu = $totalMode[$field];
-               //    $updateOperating = $operating->update([
-               //       'time' => floatval($totalWaktu)
-               //    ]);
-               // }
+         // if ($field) {
+         //    $totalWaktu = $totalMode[$field];
+         //    $updateOperating = $operating->update([
+         //       'time' => floatval($totalWaktu)
+         //    ]);
+         // }
 
-               // dd('not ok');
-         }
+         // dd('not ok');
+      }
 
-         // Hitung Operating Data
-         $this->hitungOperatingData($req->vdr_id);
-         // dd($oper)
+      // Hitung Operating Data
+      $this->hitungOperatingData($req->vdr_id);
+      // dd($oper)
 
-         // Jika semuanya berhasil, kita commit transaksi
-         DB::commit();
+      // Jika semuanya berhasil, kita commit transaksi
+      DB::commit();
 
-         ModelsLog::create([
-            'system' => 'VDR',
-            'user_id' => auth()->user()->id,
-            'vessel_id' => $vdr->vessel_id,
-            'action' => 'Add Activity',
-            'vdr_id' => $vdr->id,
-            'desc' => 'on VDR ' . $vdr->code,
-            'table' => 'vdr_activities'
-         ]);
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Add Activity',
+         'vdr_id' => $vdr->id,
+         'desc' => 'on VDR ' . $vdr->code,
+         'table' => 'vdr_activities'
+      ]);
 
-         return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
+      return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
       // } catch (\Exception $e) {
       //    // Jika terjadi kesalahan, kita rollback transaksi
       //    DB::rollback();
@@ -1080,19 +1109,19 @@ class VdrController extends Controller
 
 
          $updateVdr = VdrActivity::where('id', $req->id)
-               ->update([
-                  'activity' => $req->activity,
-                  'start' => $req->start,
-                  'finish' => $req->finish,
-                  'high' => $req->high,
-                  'normal' => $req->normal,
-                  'slow' => $req->slow,
-                  'manu' => $req->manu,
-                  'idle' => $req->idle,
-                  'tow' => $req->tow,
-                  'ah' => $req->ah,
-                  'sb' => $req->sb
-               ]);
+            ->update([
+               'activity' => $req->activity,
+               'start' => $req->start,
+               'finish' => $req->finish,
+               'high' => $req->high,
+               'normal' => $req->normal,
+               'slow' => $req->slow,
+               'manu' => $req->manu,
+               'idle' => $req->idle,
+               'tow' => $req->tow,
+               'ah' => $req->ah,
+               'sb' => $req->sb
+            ]);
 
          $high = 0;
          $normal = 0;
@@ -1107,32 +1136,32 @@ class VdrController extends Controller
 
          foreach ($activities as $key => $activity) {
 
-               $high = $this->hitungTime($high, $activity->high);
+            $high = $this->hitungTime($high, $activity->high);
 
-               $normal = $this->hitungTime($normal, $activity->normal);
+            $normal = $this->hitungTime($normal, $activity->normal);
 
-               $slow = $this->hitungTime($slow, $activity->slow);
+            $slow = $this->hitungTime($slow, $activity->slow);
 
-               $manu = $this->hitungTime($manu, $activity->manu);
+            $manu = $this->hitungTime($manu, $activity->manu);
 
-               $idle = $this->hitungTime($idle, $activity->idle);
+            $idle = $this->hitungTime($idle, $activity->idle);
 
-               $tow = $this->hitungTime($tow, $activity->tow);
+            $tow = $this->hitungTime($tow, $activity->tow);
 
-               $ah = $this->hitungTime($ah, $activity->ah);
+            $ah = $this->hitungTime($ah, $activity->ah);
 
-               $sb = $this->hitungTime($sb, $activity->sb);
+            $sb = $this->hitungTime($sb, $activity->sb);
          }
 
          $totalMode = array(
-               'high'   => $high,
-               'normal' => $normal,
-               'slow'   => $slow,
-               'manu'   => $manu,
-               'idle'   => $idle,
-               'tow'    => $tow,
-               'ah'     => $ah,
-               'sb'     => $sb
+            'high'   => $high,
+            'normal' => $normal,
+            'slow'   => $slow,
+            'manu'   => $manu,
+            'idle'   => $idle,
+            'tow'    => $tow,
+            'ah'     => $ah,
+            'sb'     => $sb
          );
 
          // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
@@ -1142,19 +1171,77 @@ class VdrController extends Controller
          $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
 
 
+         $operatings = VdrOperating::where('vdr_id', $req->vdr_id)->get();
+         $vdr = Vdr::find($req->vdr_id);
+
          foreach ($operatings as $operating) {
+            $activities = VdrActivity::where('vdr_id', $req->vdr_id)->get();
+            // $totalHigh = $activities->sum('high');
+            // $totalNormal = $operating->getSumNormal();
+            // $totalSlow = $activities->sum('slow');
+            // $totalManu = $activities->sum('manu');
+            // $totalIdle = $activities->sum('idle');
+            // $totalTow = $activities->sum('tow');
+            // $totalAh = $activities->sum('ah');
+            // $totalSb = $activities->sum('sb');
+            $totalHigh = $operating->getSumHigh();
+            $totalNormal = $operating->getSumNormal();
+            $totalSlow = $operating->getSumSlow();
+            $totalManu = $operating->getSumManu();
+            $totalIdle = $operating->getSumIdle();
+            $totalTow = $operating->getSumTow();
+            $totalAh = $operating->getSumAh();
+            $totalSb = $operating->getSumSb();
 
-               $field = $operating->heading->field;
+            if ($operating->heading_id == 1) {
+               $operating->update([
+                  'time' => floatval($totalHigh)
+               ]);
+            } elseif ($operating->heading_id == 2) {
+               $operating->update([
+                  'time' => floatval($totalNormal)
+               ]);
+            } elseif ($operating->heading_id == 3) {
+               $operating->update([
+                  'time' => floatval($totalSlow)
+               ]);
+            } elseif ($operating->heading_id == 4) {
+               $operating->update([
+                  'time' => floatval($totalManu)
+               ]);
+            } elseif ($operating->heading_id == 5) {
+               $operating->update([
+                  'time' => floatval($totalIdle)
+               ]);
+            } elseif ($operating->heading_id == 6) {
+               $operating->update([
+                  'time' => floatval($totalTow)
+               ]);
+            } elseif ($operating->heading_id == 7) {
+               $operating->update([
+                  'time' => floatval($totalAh)
+               ]);
+            } elseif ($operating->heading_id == 8) {
+               $operating->update([
+                  'time' => floatval($totalSb)
+               ]);
+            }
 
 
-               if ($field) {
-                  # code...
-                  $totalWaktu = $totalMode[$field];
 
-                  $updateOperating = $operating->update([
-                     'time' => floatval($totalWaktu)
-                  ]);
-               }
+
+
+            // $field = $operating->heading->field;
+
+
+            // if ($field) {
+            //    $totalWaktu = $totalMode[$field];
+            //    $updateOperating = $operating->update([
+            //       'time' => floatval($totalWaktu)
+            //    ]);
+            // }
+
+            // dd('not ok');
          }
 
 
@@ -1209,7 +1296,7 @@ class VdrController extends Controller
          // dd($daily);
 
          $operatingUpdate = $operating->update([
-               'daily' => $daily
+            'daily' => $daily
          ]);
       }
    }
@@ -1226,6 +1313,78 @@ class VdrController extends Controller
       if ($deleteActivity) {
          # code...
          // $vdr = Vdr::find($req->vdr_id);
+         $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+         // $vdr = Vdr::find($req->vdr_id);
+
+         foreach ($operatings as $operating) {
+            $activities = VdrActivity::where('vdr_id', $vdr->id)->get();
+            // $totalHigh = $activities->sum('high');
+            // $totalNormal = $operating->getSumNormal();
+            // $totalSlow = $activities->sum('slow');
+            // $totalManu = $activities->sum('manu');
+            // $totalIdle = $activities->sum('idle');
+            // $totalTow = $activities->sum('tow');
+            // $totalAh = $activities->sum('ah');
+            // $totalSb = $activities->sum('sb');
+            $totalHigh = $operating->getSumHigh();
+            $totalNormal = $operating->getSumNormal();
+            $totalSlow = $operating->getSumSlow();
+            $totalManu = $operating->getSumManu();
+            $totalIdle = $operating->getSumIdle();
+            $totalTow = $operating->getSumTow();
+            $totalAh = $operating->getSumAh();
+            $totalSb = $operating->getSumSb();
+
+            if ($operating->heading_id == 1) {
+               $operating->update([
+                  'time' => floatval($totalHigh)
+               ]);
+            } elseif ($operating->heading_id == 2) {
+               $operating->update([
+                  'time' => floatval($totalNormal)
+               ]);
+            } elseif ($operating->heading_id == 3) {
+               $operating->update([
+                  'time' => floatval($totalSlow)
+               ]);
+            } elseif ($operating->heading_id == 4) {
+               $operating->update([
+                  'time' => floatval($totalManu)
+               ]);
+            } elseif ($operating->heading_id == 5) {
+               $operating->update([
+                  'time' => floatval($totalIdle)
+               ]);
+            } elseif ($operating->heading_id == 6) {
+               $operating->update([
+                  'time' => floatval($totalTow)
+               ]);
+            } elseif ($operating->heading_id == 7) {
+               $operating->update([
+                  'time' => floatval($totalAh)
+               ]);
+            } elseif ($operating->heading_id == 8) {
+               $operating->update([
+                  'time' => floatval($totalSb)
+               ]);
+            }
+
+
+
+
+
+            // $field = $operating->heading->field;
+
+
+            // if ($field) {
+            //    $totalWaktu = $totalMode[$field];
+            //    $updateOperating = $operating->update([
+            //       'time' => floatval($totalWaktu)
+            //    ]);
+            // }
+
+            // dd('not ok');
+         }
 
          ModelsLog::create([
             'system' => 'VDR',
@@ -1281,33 +1440,32 @@ class VdrController extends Controller
 
          foreach ($datas as $key => $cargoId) {
 
-               $cargo = VdrCargo::find($cargoId);
+            $cargo = VdrCargo::find($cargoId);
 
-               
 
-               if($cargo->heading_id == 1){
-                  $closing = $req->closing[$key];
-               } elseif($cargo->heading_id == 2){
-                  $closing = $req->closing[$key];
-                  
-               } else {
-                  $closing = ($req->opening[$key] + $req->received[$key]) - ($req->consumption[$key] + $req->transferred[$key]);
-               }
-               $updateCargo = $cargo->update([
-                  'opening' => $req->opening[$key],
-                  'consumption' => $req->consumption[$key],
-                  'received' => $req->received[$key],
-                  'transferred' => $req->transferred[$key],
-                  'closing' => $closing,
-                  'remarks' => $req->remarks[$key]
+
+            if ($cargo->heading_id == 1) {
+               $closing = $req->closing[$key];
+            } elseif ($cargo->heading_id == 2) {
+               $closing = $req->closing[$key];
+            } else {
+               $closing = ($req->opening[$key] + $req->received[$key]) - ($req->consumption[$key] + $req->transferred[$key]);
+            }
+            $updateCargo = $cargo->update([
+               'opening' => $req->opening[$key],
+               'consumption' => $req->consumption[$key],
+               'received' => $req->received[$key],
+               'transferred' => $req->transferred[$key],
+               'closing' => $closing,
+               'remarks' => $req->remarks[$key]
+            ]);
+
+            if ($cargo->heading_id == 2 || $cargo->heading_id == 1) {
+               $actualWater = ($cargo->opening + $cargo->received) - ($cargo->transferred + $cargo->closing);
+               $cargo->update([
+                  'consumption' => $actualWater
                ]);
-
-               if ($cargo->heading_id == 2 || $cargo->heading_id == 1) {
-                  $actualWater = ($cargo->opening + $cargo->received) - ($cargo->transferred + $cargo->closing);
-                  $cargo->update([
-                     'consumption' => $actualWater
-                  ]);
-               }
+            }
          }
 
 
@@ -1371,20 +1529,20 @@ class VdrController extends Controller
 
          foreach ($datas as $key => $weatherId) {
 
-               $weather = VdrWeather::find($weatherId);
+            $weather = VdrWeather::find($weatherId);
 
-               $updateWeather = $weather->update([
-                  't_0006' => $req->t_0006[$key],
-                  't_0612' => $req->t_0612[$key],
-                  't_1218' => $req->t_1218[$key],
-                  't_1824' => $req->t_1824[$key]
-               ]);
+            $updateWeather = $weather->update([
+               't_0006' => $req->t_0006[$key],
+               't_0612' => $req->t_0612[$key],
+               't_1218' => $req->t_1218[$key],
+               't_1824' => $req->t_1824[$key]
+            ]);
          }
 
 
          // Jika semuanya berhasil, kita commit transaksi
          DB::commit();
-         
+
          ModelsLog::create([
             'system' => 'VDR',
             'user_id' => auth()->user()->id,
@@ -1422,15 +1580,15 @@ class VdrController extends Controller
 
          foreach ($datas as $key => $hseId) {
 
-               $hse = VdrHse::find($hseId);
-               if ($hse->header_id != '8') {
-                  # code...
-                  $updateHse = $hse->update([
-                     'previous' => $req->previous[$key],
-                     'today' => $req->today[$key],
-                     'status' => '1'
-                  ]);
-               }
+            $hse = VdrHse::find($hseId);
+            if ($hse->header_id != '8') {
+               # code...
+               $updateHse = $hse->update([
+                  'previous' => $req->previous[$key],
+                  'today' => $req->today[$key],
+                  'status' => '1'
+               ]);
+            }
          }
 
 
@@ -1465,21 +1623,21 @@ class VdrController extends Controller
 
          foreach ($datas as $key => $engineId) {
 
-               $engine = VdrEngine::find($engineId);
-               if ($engine->header_id != '8') {
-                  # code...
-                  $updateEngine = $engine->update([
-                     'm_ref' => $req->m_ref[$key],
-                     'm_port' => $req->m_port[$key],
-                     'm_stbd' => $req->m_stbd[$key],
-                     'm_center' => $req->m_center[$key],
-                     'm_other' => $req->m_other[$key],
-                     'a_ref' => $req->a_ref[$key],
-                     'a_port' => $req->a_port[$key],
-                     'a_stbd' => $req->a_stbd[$key],
-                     'a_other' => $req->a_other[$key]
-                  ]);
-               }
+            $engine = VdrEngine::find($engineId);
+            if ($engine->header_id != '8') {
+               # code...
+               $updateEngine = $engine->update([
+                  'm_ref' => $req->m_ref[$key],
+                  'm_port' => $req->m_port[$key],
+                  'm_stbd' => $req->m_stbd[$key],
+                  'm_center' => $req->m_center[$key],
+                  'm_other' => $req->m_other[$key],
+                  'a_ref' => $req->a_ref[$key],
+                  'a_port' => $req->a_port[$key],
+                  'a_stbd' => $req->a_stbd[$key],
+                  'a_other' => $req->a_other[$key]
+               ]);
+            }
          }
 
 
@@ -1515,20 +1673,20 @@ class VdrController extends Controller
 
          foreach ($datas as $key => $operatingId) {
 
-               $operating = VdrOperating::find($operatingId);
+            $operating = VdrOperating::find($operatingId);
 
-               // dd($req->contractual_fuel[$key]);
+            // dd($req->contractual_fuel[$key]);
 
-               // if ($operating->heading->field != null) {
+            // if ($operating->heading->field != null) {
 
-               # code...
-               $updateOperating = $operating->update([
-                  'speed' => $req->speed[$key],
-                  'contractual_fuel' => $req->contractual_fuel[$key],
-                  'daily' => $req->daily[$key]
-               ]);
-               // echo $updateOperating;
-               // }
+            # code...
+            $updateOperating = $operating->update([
+               'speed' => $req->speed[$key],
+               'contractual_fuel' => $req->contractual_fuel[$key],
+               'daily' => $req->daily[$key]
+            ]);
+            // echo $updateOperating;
+            // }
          }
 
 
@@ -1567,14 +1725,14 @@ class VdrController extends Controller
          'is_crew' => 'required',
       ]);
 
-      
+
       $vdrCrew = VdrCrew::where('id', $req->id)->first();
       $updateVdr = VdrCrew::where('id', $req->id)
          ->update([
-               'is_crew' => $req->is_crew,
-               'name' => $req->name,
-               'rank' => $req->rank,
-               'company' => $req->company
+            'is_crew' => $req->is_crew,
+            'name' => $req->name,
+            'rank' => $req->rank,
+            'company' => $req->company
          ]);
 
       if ($updateVdr) {

@@ -122,7 +122,7 @@ table {
             </tr>
 
             <tr>
-               <td>{{$cargo->desc}}</td>
+               <td>{{$cargo->description}}</td>
                <td>{{$cargo->qty}}</td>
                <td>{{$cargo->unit}}</td>
                <td>-</td>

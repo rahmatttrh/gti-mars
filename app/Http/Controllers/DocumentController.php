@@ -36,16 +36,17 @@ class DocumentController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
 
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrOperating::where('vdr_id', $vdr->id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
          $time = $op->time;
          $array = explode('.', $op->time);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -101,16 +102,14 @@ class DocumentController extends Controller
       // dd($schedule->code);
       $destinations = ModelsRequest::selectRaw('destination_name')->where('schedule_id', $schedule->id)->where('status', '>=', 2)->orderBy('updated_at', 'asc')->get()->groupBy('destination_name');
       $fixRoutes = ScheduleRoute::where('schedule_id', $schedule->id)->where('status', 1)->orderBy('rank', 'asc')->get();
-
       $cargos = Cargo::where('schedule_id', $schedule->id)->get();
       $items = CargoItem::get();
-      // dd($cargos);
-
       return view('pages.document.manifest', [
          'cargos' => $cargos,
          'schedule' => $schedule,
          'destinations' => $destinations,
          'routes' => $fixRoutes,
+         'cargos' => $cargos,
          'items' => $items
       ]);
    }
@@ -126,14 +125,15 @@ class DocumentController extends Controller
       ])->with('i');
    }
 
-   public function intermilanExport($start, $end){
+   public function intermilanExport($start, $end)
+   {
       $dekripStart = dekripRambo($start);
       $dekripEnd = dekripRambo($end);
       // dd($dekripEnd);
       $startDate = new Carbon($dekripStart);
       $endDate = new Carbon($dekripEnd);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -143,7 +143,7 @@ class DocumentController extends Controller
 
       // dd( $startDate->format('F'));
 
-      $users = CargoItem::selectRaw('id, date, status,user_id , user_name , description, schedule_id, request_id')   ->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
+      $users = CargoItem::selectRaw('id, date, status,user_id , user_name , description, schedule_id, request_id')->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
 
 
       // dd($users);
@@ -164,11 +164,12 @@ class DocumentController extends Controller
       ])->with('i');
    }
 
-   public function crewChangeExport($month, $year){
+   public function crewChangeExport($month, $year)
+   {
       $dekripMonth = dekripRambo($month);
       $dekripYear = dekripRambo($year);
 
-      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear  ('date', $dekripYear)->get();
+      $requests = ModelsRequest::where('activity_id', 7)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
       $schedules = Schedule::where('class', 'Crew Change')->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
 
       // $users = Schedule::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>=', 1)->whereBetween('date', [$dekripStart, $dekripEnd])->get()->groupBy('user_name');
@@ -207,7 +208,8 @@ class DocumentController extends Controller
       ])->with('i');
    }
 
-   public function add(Request $req){
+   public function add(Request $req)
+   {
       $vessel = Vessel::find($req->vessel);
       // dd($vessel->name);
 
@@ -224,11 +226,11 @@ class DocumentController extends Controller
          $doc->update([
             'status' => 3
          ]);
-      } else if($diffMonth <= 12) {
+      } else if ($diffMonth <= 12) {
          $doc->update([
             'status' => 2
          ]);
-      } else if($diffMonth > 12){
+      } else if ($diffMonth > 12) {
          $doc->update([
             'status' => 1
          ]);
@@ -238,7 +240,8 @@ class DocumentController extends Controller
       // dd($diffMonth);
    }
 
-   public function update(Request $req){
+   public function update(Request $req)
+   {
       // dd($req->doc);
       $doc = Document::find($req->doc);
 
@@ -253,11 +256,11 @@ class DocumentController extends Controller
          $doc->update([
             'status' => 3
          ]);
-      } else if($diffMonth <= 12) {
+      } else if ($diffMonth <= 12) {
          $doc->update([
             'status' => 2
          ]);
-      } else if($diffMonth > 12){
+      } else if ($diffMonth > 12) {
          $doc->update([
             'status' => 1
          ]);
@@ -266,7 +269,8 @@ class DocumentController extends Controller
       return redirect()->back()->with('success', 'Document Alert updated');
    }
 
-   public function timeline($id){
+   public function timeline($id)
+   {
       $dekripId = dekripRambo($id);
       $schedule = Schedule::find($dekripId);
       // dd($schedule->vessel->name);
@@ -277,7 +281,6 @@ class DocumentController extends Controller
          'reports' => $reports,
          'requests' => $requests
       ]);
-
    }
 
 
@@ -292,7 +295,8 @@ class DocumentController extends Controller
       ]);
    }
 
-   public function bcm($id){
+   public function bcm($id)
+   {
 
       $cargo = Cargo::find(dekripRambo($id));
       $cargoItems = CargoItem::where('cargo_id', $cargo->id)->get();
@@ -301,5 +305,4 @@ class DocumentController extends Controller
          'cargoItems' => $cargoItems
       ])->with('i');
    }
-
 }

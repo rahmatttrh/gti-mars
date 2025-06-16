@@ -16,14 +16,24 @@
       <div class="row">
          {{-- <h1>ok</h1> --}}
          <div class="col-md-7">
+            <div class="alert bg-info">
+               Announcement from PET
+               <hr>
+               Segera lakukan update nilai VDR pada tab <b>Operating Data</b> bagian <b>Contractual Fuel Consumption</b>, diisi ulang dengan nilai Decimal lengkap dengan angka dibelakang koma(.) jika ada.
+               <br>
+               Langkah ini hanya dilakukan sekali, abaikan pesan ini jika anda telah merubah nilai tersebut. Terimakasih.
+            </div>
             {{-- <div class="badge badge-info">DSP</div> --}}
             @if (count($rejectvdrs) > 0)
             <div class="alert bg-danger">
-               VDR Reject by Marine
+               VDR Reject by PET
                <hr>
                @foreach ($rejectvdrs as $rejectvdr)
-                  <a href="{{route('vdr.show', enkripRambo($rejectvdr->id))}}">{{$rejectvdr->code}} {{$rejectvdr->date}}</a>  - {{$rejectvdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}
-               @endforeach
+                  
+                     {{$rejectvdr->code}} {{formatDate($rejectvdr->date)}}  - {{$rejectvdr->times->where('type', 'reject')->where('status', 1)->first()->desc ?? '-'}}
+                     <br> <br>
+                     <a href="{{route('vdr.show', [enkripRambo($rejectvdr->id), enkripRambo('index')])}}" class="btn btn-light text-dark shadow-none">Revisi VDR</a>
+                     @endforeach
             </div>
             @endif
             

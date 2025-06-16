@@ -50,10 +50,9 @@ class HomeController extends Controller
       $this->middleware('auth');
    }
 
-   public function setting(){
-      return view('setting', [
-
-      ]);
+   public function setting()
+   {
+      return view('setting', []);
    }
 
    /**
@@ -131,7 +130,7 @@ class HomeController extends Controller
 
       $today = Carbon::now();
       $month = $today->format('m');
-      
+
 
       if ($month == 1) {
          $monthName = 'Januari';
@@ -221,16 +220,16 @@ class HomeController extends Controller
       // }
       // } catch (Throwable $e) {
       //       report($e);
-   
+
       //       return false;
       // }
 
-      
-      
+
+
 
       $acc = Vessel::find(27);
       $kj4 = Port::find(1);
-      $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
+      // $tesDis = (new GeofenceController)->getDistance($acc->latitude, $acc->longitude, $kj4->latitude, $kj4->longitude);
       // dd($acc->name . ' ke ' . $kj4->name . ': ' .$tesDis);
       // dd(count($ports));
 
@@ -408,7 +407,8 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function index(){
+   public function index()
+   {
 
       // dd('ok');
       $today = Carbon::now();
@@ -419,18 +419,26 @@ class HomeController extends Controller
             $doc->update([
                'status' => 3
             ]);
-         } else if($diffMonth <= 12) {
+         } else if ($diffMonth <= 12) {
             $doc->update([
                'status' => 2
             ]);
-         } else if($diffMonth > 12){
+         } else if ($diffMonth > 12) {
             $doc->update([
                'status' => 1
             ]);
          }
       }
 
-      
+      $user = User::where('username', auth()->user()->username)->first();
+      // dd($user->id);
+      // if ($user->id == 35) {
+      //    $user->roles()->detach();
+      //    $user->assignRole('vessel');
+      // }
+
+
+
 
 
 
@@ -442,21 +450,21 @@ class HomeController extends Controller
       // }
 
 
-      $debug = Carbon::make(1,10);
+      $debug = Carbon::make(1, 10);
       // dd(gmdate('H:i:s', 1.10 * 3600 ));
       // $value = 15.45;
       // $array = explode('.', $value);
       // $hours = floor($value);
       // $minutes = intval($array[1]);
 
-      
+
 
       // dd($hours . ':' . $minutes);
-      
-      
+
+
       // dd($array[1]);
       // $seconds = ($value * 3600);
-      
+
       // $minutes = floor($seconds / 60);
       // dd($hours  . ':' . $minutes);
 
@@ -471,7 +479,6 @@ class HomeController extends Controller
       //       'type' => 'office',
       //       'vessel_id' => $vessel->id
       //    ]);
-      //    $user->assignRole('vessel');
       // }
 
       // $user = User::where('username', auth()->user()->username)->first();
@@ -481,30 +488,31 @@ class HomeController extends Controller
 
       // dd('ok');
 
-      // $user = User::create([
-      //          'name' => 'Riko',
-      //          'username' => 'riko',
-      //          'email' => 'riko@test.com',
-      //          'password' => Hash::make('oses@2025'),
-      //          'type' => 'bod',
-      //          // 'vessel_id' => $vessel->id
-      //       ]);
-      // $user->assignRole('bod');
 
-      if(auth()->user()->hasRole('superuser')){
+
+      if (auth()->user()->hasRole('superuser')) {
+
+         // $user = User::create([
+         //    'name' => 'Riko',
+         //    'username' => 'riko',
+         //    'email' => 'riko@test.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'type' => 'bod',
+         //    // 'vessel_id' => $vessel->id
+         // ]);
+         // $user->assignRole('bod');
 
          // $offices = Office::get();
-         // foreach($offices as $office){
-         //    $user =User::create([
+         // foreach ($offices as $office) {
+         //    $user = User::create([
          //       'name' => $office->name,
          //       'username' => $office->username,
-         //       'email' =>  $office->code .'@oses.com',
+         //       'email' =>  $office->code . '@oses.com',
          //       'password' => Hash::make('oses@2025'),
          //       'created_at' => NOW(),
          //       'updated_at' => NOW()
          //    ]);
          //    $user->assignRole('office');
-         
          // }
 
 
@@ -544,7 +552,7 @@ class HomeController extends Controller
          // $cburadop->assignRole('department');
          // $cbusupt->assignRole('department');
 
-         
+
 
          // $nburadop = User::create([
          //    'name' => 'Radio Operator NBU',
@@ -602,10 +610,10 @@ class HomeController extends Controller
          //    'username' => 'comandwi',
          //    'email' => 'comandwi@pertamina.com',
          //    'password' => Hash::make('oses@2025'),
-            
+
          // ]);
          // $comandwi->assignRole('marine');
-         
+
 
          $vdrValidations = Vdr::where('status', 1)->get();
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -620,7 +628,7 @@ class HomeController extends Controller
          $logs = Log::orderBy('created_at', 'desc')->get();
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
          $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
-   
+
          $rawDates = [];
          while ($start->lte($end)) {
             $rawDates[] = $start->copy();
@@ -629,7 +637,7 @@ class HomeController extends Controller
          $dates = array();
          $values = array();
          $vdrsArray = array();
-         foreach($rawDates as $d){
+         foreach ($rawDates as $d) {
             $dates[] = $d->format('l, d/m/Y');
             $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
             $values[] = count($totalRequests);
@@ -654,7 +662,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      }  else if(auth()->user()->hasRole('bod')){
+      } else if (auth()->user()->hasRole('bod')) {
 
          $months = ['Jan', 'Mar', 'Apr', 'May'];
          $today = Carbon::now();
@@ -932,8 +940,8 @@ class HomeController extends Controller
       } else if(auth()->user()->hasRole('marine')){
 
          if (auth()->user()->username == 'pet') {
-            $vdrValidations = Vdr::where('status', 1)->get();
-            $vdrs = Vdr::where('status', '>=', 1)->get();
+            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->get();
             $vdrs = Vdr::where('status', '>=', 2)->get();
@@ -941,7 +949,7 @@ class HomeController extends Controller
             $vdrValidations = Vdr::where('status', 3)->get();
             $vdrs = Vdr::where('status', '>=', 3)->get();
          }
-         
+
          $cargoValidations = ModelsRequest::where('status', 1)->get();
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
@@ -952,7 +960,7 @@ class HomeController extends Controller
 
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
          $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
-   
+
          $rawDates = [];
          while ($start->lte($end)) {
             $rawDates[] = $start->copy();
@@ -961,7 +969,7 @@ class HomeController extends Controller
          $dates = array();
          $values = array();
          $vdrsArray = array();
-         foreach($rawDates as $d){
+         foreach ($rawDates as $d) {
             $dates[] = $d->format('l, d/m/Y');
             $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
             $values[] = count($totalRequests);
@@ -995,7 +1003,7 @@ class HomeController extends Controller
          $vessels = Vessel::where('office_id', $office->id)->get();
          $vesselId = [];
 
-         foreach($vessels as $vessel){
+         foreach ($vessels as $vessel) {
             $vesselId[] = $vessel->id;
          }
          $vdrs = Vdr::whereIn('vessel_id', $vesselId)->get();
@@ -1008,14 +1016,13 @@ class HomeController extends Controller
             'vdrs' => $vdrs
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {
-         
+
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
          if ($currentVessel == null) {
-            
+
             $currentVessel = Vessel::find(auth()->user()->vessel_id);
          }
-         
          // $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 1)->where('status', '!=', 101)->where('date', '>=', $now)->take(3)->get();
          $schedules = Schedule::where('vessel_id', $currentVessel->id)->where('status', '>=', 0)->where('status', '!=', 101)->get();
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
@@ -1040,7 +1047,7 @@ class HomeController extends Controller
             'docs' => $docs
          ])->with('i');
       } else {
-         
+
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $requests = null;
@@ -1051,11 +1058,12 @@ class HomeController extends Controller
          $rejectVdrs = null;
          $myVdr = null;
          $myRecentVdrs = null;
+         $vessels = null;
       }
 
       $feed = News::get()->first();
-      
-      
+
+
       $allSailingOrders = Schedule::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->get();
 
       $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
@@ -1066,34 +1074,34 @@ class HomeController extends Controller
          $rawDates[] = $start->copy();
          $start->addDay();
       }
-      
+
       $dates = array();
       $values = array();
       $vdrsArray = array();
-      foreach($rawDates as $d){
+      foreach ($rawDates as $d) {
          $dates[] = $d->format('l, d/m/Y');
          $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
          $values[] = count($totalRequests);
          // dd($d->format('l'));
       }
-      foreach($rawDates as $d){
+      foreach ($rawDates as $d) {
          // dd($d->format('Y-m-d'));
          $date = $d->format('Y-m-d');
          $vdr = Vdr::where('date', $date)->first();
          if ($vdr) {
-            
+
             $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
             $dailyFuel = $operatings->sum('daily');
             // dd($operatings->sum('daily'));
             $vdrsArray[] = $dailyFuel;
          }
-        
-         
+
+
          // dd($d->format('l'));
       }
       // dd($vdrsArray);
 
-      
+
       // foreach($allSailingOrders as $schedule){
       //    $scheduleRequests = ModelsRequest::where('schedule_id', $schedule->id)->get();
       //    $totalRequest = count($scheduleRequests);
@@ -1109,13 +1117,13 @@ class HomeController extends Controller
       $logisticSchedules = Schedule::where('class', 'Cargo')->get();
       // dd(count($thisMonthActivities));
 
-      
-      
-      
-      
+
+
+
+
       if (auth()->user()->hasRole('mm')) {
-        $mm = MaterialMan::where('email', auth()->user()->email)->first();
-        $cargos = Cargo::where('destination_id',$mm->port_id)->get();
+         $mm = MaterialMan::where('email', auth()->user()->email)->first();
+         $cargos = Cargo::where('destination_id', $mm->port_id)->get();
       } else {
          $mm = null;
          $cargos = null;
@@ -1125,10 +1133,10 @@ class HomeController extends Controller
 
       $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
 
-     
 
-      
-      
+
+
+
       return view('main', [
          'feed' => $feed,
          'currentVessel' => $currentVessel,
@@ -1161,7 +1169,8 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function indexFilter(Request $req){
+   public function indexFilter(Request $req)
+   {
       dd('ok');
    }
 
@@ -1574,11 +1583,11 @@ class HomeController extends Controller
       // $responseBody = json_decode($response->getBody());
       // if($responseBody){
       //    foreach ($responseBody->data as $res) {
-           
+
       //       if ($res->MMSI) {
       //          $vessel = Vessel::where('mmsi', $res->MMSI)->first();
       //          $barge = Port::where('mmsi', $res->MMSI)->first();
-   
+
       //          if ($vessel) {
       //             if ($vessel->latitude != $res->lat) {
       //                $vessel->update([
@@ -1591,7 +1600,7 @@ class HomeController extends Controller
       //                ]);
       //             }
       //          }
-   
+
       //          if ($barge) {
       //             $barge->update([
       //                'latitude' => $res->lat,
@@ -1601,10 +1610,10 @@ class HomeController extends Controller
       //       }
       //    }
       // } else {
-         
+
       // }
 
-      
+
 
       // $acc = Vessel::find(27);
       // $kj4 = Port::find(1);
@@ -1646,11 +1655,11 @@ class HomeController extends Controller
                   //             'port_id' => $port->id
                   //          ]);
                   //       } else {
-                           
+
                   //       }
                   //    }
                   // }
-                  
+
                   // ReportVessel::create([
                   //    'vessel_id' => $vessel->id,
                   //    'port_id' => $port->id,
@@ -1705,11 +1714,10 @@ class HomeController extends Controller
          'vesselLastUpdates' => $vesselLastUpdates,
          'incomingRequests' => $incomingRequests
       ])->with('i');
-
-      
    }
 
-   public function dspMarineIntermilan($month, $year){
+   public function dspMarineIntermilan($month, $year)
+   {
       $now = Carbon::now();
       // dd($now->format('Y-m-d'));
       // $yearMonth = $now->format('Y-m');
@@ -1753,19 +1761,18 @@ class HomeController extends Controller
       }
 
       // dd($dates);
-      foreach($dates as $date){
+      foreach ($dates as $date) {
          // dd($date->format('Y-m-d'));
 
          $requests = ModelsRequest::get();
-         foreach($requests as $req){
+         foreach ($requests as $req) {
             if ($req->date == $date->format('Y-m-d')) {
                // dd('Ada');
             }
          }
-         
       }
 
-      
+
       $requests = ModelsRequest::get();
 
       return view('pages-stisla.dsp.home-intermilan', [
@@ -1842,9 +1849,9 @@ class HomeController extends Controller
       // ])->post($url, []);
 
       // $responseBody = json_decode($response->getBody());
-      
+
       // foreach ($responseBody->data as $res) {
-         
+
       //    if ($res->MMSI) {
       //       $thisVessel = Vessel::where('mmsi', $res->MMSI)->first();
       //       $barge = Port::where('mmsi', $res->MMSI)->first();
@@ -1905,7 +1912,7 @@ class HomeController extends Controller
       //                         'port_id' => $port->id
       //                      ]);
       //                   } else {
-                           
+
       //                   }
       //             }
       //          }
@@ -1915,7 +1922,7 @@ class HomeController extends Controller
       //    }
       // }
 
-     
+
 
       return view('pages-stisla.dsp.home-vessel', [
          'today' => $today,
@@ -1985,16 +1992,15 @@ class HomeController extends Controller
       }
 
       // dd($dates);
-      foreach($dates as $date){
+      foreach ($dates as $date) {
          // dd($date->format('Y-m-d'));
 
          $requests = ModelsRequest::get();
-         foreach($requests as $req){
+         foreach ($requests as $req) {
             if ($req->date == $date->format('Y-m-d')) {
                // dd('Ada');
             }
          }
-         
       }
 
       $employee = Employee::where('email', auth()->user()->email)->first();
@@ -2049,9 +2055,10 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function dspFm(){
+   public function dspFm()
+   {
       $user = User::find(auth()->user()->id);
-      $requests = ModelsRequest::where('activity_id', 5)->orWhere('activity_id', 6)->where('status','>', 0)->orderBy('status', 'desc')->get();
+      $requests = ModelsRequest::where('activity_id', 5)->orWhere('activity_id', 6)->where('status', '>', 0)->orderBy('status', 'desc')->get();
       $schedules = Schedule::where('class', 'Fuel Oil')->orderBy('updated_at', 'desc')->get();
       $progressSchedules = Schedule::where('status', '>=', 0)->where('status', '!=', 101)->where('class', 'Fuel Oil')->get();
       return view('pages-stisla.dsp.home-fm', [
@@ -2063,7 +2070,7 @@ class HomeController extends Controller
    }
 
 
-   
+
 
    public function vdrFilter(Request $req)
    {
@@ -2091,7 +2098,7 @@ class HomeController extends Controller
       // foreach($operatingHeaders as $head){
 
       // }
-      
+
       // if ($month == 1) {
       //    $monthName = 'Januari';
       // } else if ($month == 2){
@@ -2121,7 +2128,7 @@ class HomeController extends Controller
       $date = array();
       $value = array();
       $fuel = array();
-      foreach($vdrs as $vdr){
+      foreach ($vdrs as $vdr) {
          $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
          $totalTime = $operatings->sum('time');
          $totalFuel = $operatings->sum('daily');
@@ -2152,7 +2159,14 @@ class HomeController extends Controller
 
    public function vdrMarineTable()
    {
-      $vdrs = Vdr::where('status', '>=', 1)->get();
+      if (auth()->user()->username == 'pet') {
+         $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+      } elseif (auth()->user()->username == 'marine') {
+         $vdrs = Vdr::where('status', '>', 2)->orderBy('date', 'desc')->get();
+      } elseif (auth()->user()->username == 'lutfi') {
+         $vdrs = Vdr::where('status', '>', 3)->orderBy('date', 'desc')->get();
+      }
+
       return view('pages-stisla.marine.vdr.history', [
          'vdrs' => $vdrs
       ])->with('i');
@@ -2163,33 +2177,39 @@ class HomeController extends Controller
       // ])->with('i');
    }
 
-   public function proactMarine(){
+   public function proactMarine()
+   {
       return view('pages-stisla.marine.proact.index');
    }
 
-   public function mapMarine(){
+   public function mapMarine()
+   {
       return view('pages-stisla.marine.map.index');
    }
 
-   public function proact(){
+   public function proact()
+   {
       $system = 'PROACT';
       return view('pages-stisla.future.proact', [
          'system' => $system
       ]);
    }
-   public function mapp(){
+   public function mapp()
+   {
       $system = 'MAP';
       return view('pages-stisla.future.map', [
          'system' => $system
       ]);
    }
-   public function fms(){
+   public function fms()
+   {
       $system = 'FMS';
       return view('pages-stisla.future.fms', [
          'system' => $system
       ]);
    }
-   public function hse(){
+   public function hse()
+   {
       $system = 'HSE';
       return view('pages-stisla.future.hse', [
          'system' => $system
@@ -2369,7 +2389,6 @@ class HomeController extends Controller
                            'port_id' => $port->id
                         ]);
                      } else {
-                        
                      }
                   }
                   // ReportVessel::create([
@@ -2422,11 +2441,13 @@ class HomeController extends Controller
       ])->with('i');
    }
 
-   public function forbidden(){
+   public function forbidden()
+   {
       return view('pages-stisla.forbidden');
    }
 
-   public function newsVessel(){
+   public function newsVessel()
+   {
       $feed = News::get()->first();
       return view('main-news', [
          'feed' => $feed
