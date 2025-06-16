@@ -284,7 +284,7 @@ var options = {
              show: false
          }
      },
-     colors: ['#5b66eb', '#18a538'],
+     colors: ['#5b66eb', '#68d3f8'],
      legend: {
          show: false
      },

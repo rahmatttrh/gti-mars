@@ -764,9 +764,9 @@
                         <button type="button" class="btn btn-light" id="resetBtn">
                             <i class="ri-reset-right-line"></i> Reset Layouts
                         </button>
-                        <button type="button" class="btn btn-danger">
+                        {{-- <button type="button" class="btn btn-danger">
                             <i class="ri-shopping-bag-3-line"></i> Buy Now
-                        </button>
+                        </button> --}}
                     </div>
                 </div>
             </div>
