@@ -488,6 +488,8 @@ class HomeController extends Controller
 
       // dd('ok');
 
+      $allVdrs = null;
+
 
 
       if (auth()->user()->hasRole('superuser')) {
@@ -1017,7 +1019,11 @@ class HomeController extends Controller
 
          ]);
       } else if(auth()->user()->hasRole('marine')){
-
+         // dd('ok');
+         // $user = User::where('username', auth()->user()->username)->first();
+         // $user->roles()->detach();
+         // $user->assignRole('vessel');
+         // dd('ok');
          if (auth()->user()->username == 'pet') {
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
@@ -1027,6 +1033,9 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'lutfi') {
             $vdrValidations = Vdr::where('status', 3)->get();
             $vdrs = Vdr::where('status', '>=', 3)->get();
+         } else {
+            $vdrs = null;
+            $vdrValidations = Vdr::where('status', 3)->get();
          }
 
          $cargoValidations = ModelsRequest::where('status', 1)->get();
@@ -1095,9 +1104,10 @@ class HomeController extends Controller
             'vdrs' => $vdrs
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {
-
+         
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
+         
          if ($currentVessel == null) {
 
             $currentVessel = Vessel::find(auth()->user()->vessel_id);

@@ -1,6 +1,6 @@
 @extends('layouts.stisla.app')
 @section('title')
-    VDR Create
+    VDRRRR Create
 @endsection
 @section('content')
 <section class="section">

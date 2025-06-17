@@ -151,6 +151,9 @@ class VdrController extends Controller
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
 
+      $wHeadings = VdrWeatherHeading::get();
+      $hseHeadings = VdrHseHeader::get();
+      $operatingHeadings = VdrOperatingHeader::get();
 
       //   pages.vdr.create-vdr
       return view('pages-stisla.vdr.home-vessel', [
@@ -166,7 +169,11 @@ class VdrController extends Controller
          'engines' => $engines,
          'crews' => $crews,
          'totalJam' => $totalJam,
-         'totalDaily' => $totalDaily
+         'totalDaily' => $totalDaily,
+
+         'wHeadings' => $wHeadings,
+         'hseHeadings' => $hseHeadings,
+         'operatingHeadings' => $operatingHeadings
       ])->with('i');
    }
 
