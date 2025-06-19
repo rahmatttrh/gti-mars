@@ -181,7 +181,7 @@ function getTotalHours($value){
    }
    $finalHours  = sprintf('%02d', floor($debugHours));
 
-   $final = $finalHours . ':' . $finalMinutes;
+   $final = $finalHours . '.' . $finalMinutes;
 
    return $final;
 }

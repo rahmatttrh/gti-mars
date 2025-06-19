@@ -632,6 +632,10 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+      Route::post('update/general', [VdrController::class, 'updateGeneralPost'])->name('vdr.update.general.post');
+      // Route::post('update/general', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+
+
       Route::put('update/approval', [VdrController::class, 'updateApproval'])->name('vdr.update.approval');
 
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
@@ -774,6 +778,14 @@ Route::group(['middleware' => ['role:vessel|superuser']], function () {
 Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
    Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
+
+   Route::get('vdr/update/general/{vdr}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+   Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
+   Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
+   Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
+   Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}/{remark}', [VdrController::class, 'updateCargoAjax']);
+   Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
+   Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
 });
 Auth::routes();
 
