@@ -37,9 +37,8 @@
    <div class="section-body">
       
       <div class="row">
-         <div class="col-md-2">
+         {{-- <div class="col-md-2">
             
-            {{-- <div class="btn-group"> --}}
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                   <a href="" class="btn btn-block btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
@@ -52,7 +51,7 @@
                      <td colspan="2">{{$vdr->code}}</td>
                   </tr>
                   <tr>
-                     <td colspan="2">ENC ONE</td>
+                     <td colspan="2">ENC ONE VDRID {{$vdr->id}}</td>
                   </tr>
                   <tr>
                      <td colspan="2"> <span>Status : <x-status-stisla.vdr :vdr="$vdr" /> </span></td>
@@ -80,18 +79,7 @@
                      <td>CE</td>
                      <td><input class="w-100 input_general" id="ce" name="ce" type="text" value="{{$vdr->ce}}" ></td>
                   </tr>
-                  {{-- <tr>
-                     <td>{{$vdr->code}}</td>
-                  </tr>
-                  <tr>
-                     <td>15 June 2025</td>
-                  </tr>
-                  <tr>
-                     <td> <span>Status : <x-status-stisla.vdr :vdr="$vdr" /> </span></td>
-                  </tr>
-                  <tr>
-                     <td class="text-muted"> Data VDR ini hanya bisa dilihat oleh kapal</td>
-                  </tr> --}}
+                 
                   <tr>
                      <td></td>
                   </tr>
@@ -99,177 +87,246 @@
                      <td colspan="2"><a href="">Update</a> | <a href="">Delete</a> </td>
                   </tr>
                   <tr>
-                     <td colspan="2"><a href="">Export to PDF</a></td>
+                     <td colspan="2">
+                        <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="">Export PDF</a>
+                     </td>
                   </tr>
                </tbody>
             </table>
-            {{-- <h4>Detail VDR</h4>
-            <span>ENC ONE</span> <br>
-            <span>Status : Draft</span> --}}
+           
                
-         </div>
+         </div> --}}
 
-         <div class="col-md-10">
-            <div class="table-responsive overflow-auto" style="height: 75vh"> 
+         <div class="col-md-12">
+            <div class="table-responsive overflow-auto" style="height: 72vh"> 
                <div class="row">
                   <div class="col-md-5">
                      
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
                      {{-- General  --}}
+                     @if (auth()->user()->hasRole('vessel'))
+                        <div class="d-flex">
+                           @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                           <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                           @endif
+                           <a href="" class="btn  btn-ligh border">Edit</a>
+                           <a href="" class="btn  btn-ligh border">Delete</a>
+                           
+                           
+                           <a  class="btn btn-ligh border" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                           <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                        </div>
+                        <hr>
+                     @endif
                      <table>
                         <thead>
                            <tr>
-                              <td colspan="4">General Information</td>
+                              <td>{{$vdr->code}}</td>
+                              <td><x-status-stisla.vdr :vdr="$vdr" /></td>
                            </tr>
+                           {{-- <tr>
+                              <td>Edit | Delete | <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="">Export PDF</a></td>
+                           </tr> --}}
+                           {{-- <tr>
+                              <td>
+                                 Shortcut :
+                                 <a href="">Crew Data</a>
+                              </td>
+                           </tr> --}}
                         </thead>
-                        <tbody>
-                           <form id="form_general"  method="POST">
-                              @csrf
-                              <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
-                              <tr>
-                                 <td class="px-1">Date</td>
-                                 <td><input class="w-100 input_general" id="date" name="date" required type="date" value="{{ old('date') ?: date('Y-m-d') }}" ></td>
-                                 <td class="px-1">Loc</td>
-                                 <td><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}"  ></td>
-                              </tr>
-                              <tr>
-                                 <td class="px-1">Crew</td>
-                                 <td><input class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" ></td>
-                                 <td class="px-1">Pax</td>
-                                 <td><input class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" ></td>
-                              </tr>
-                           </form>
-                        </tbody>
                      </table>
+
+                     <div class="table-responsive overflow-auto" style="height: 700px"> 
+                        <div class="table-responsive " >
+                           <table>
+                              <thead>
+                                 <tr>
+                                    <td colspan="4">General Information</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <form id="form_general"  method="POST">
+                                    @csrf
+                                    <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+                                    <tr>
+                                       <td class="px-1">Date</td>
+                                       <td><input class="w-100 input_general" id="date" name="date" required type="date" value="{{ old('date') ?: date('Y-m-d') }}" ></td>
+                                       <td class="px-1">Loc</td>
+                                       <td><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}"  ></td>
+                                    </tr>
+                                    {{-- <tr>
+                                       <td class="px-1">Crew</td>
+                                       <td><input class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" ></td>
+                                       <td class="px-1">Pax</td>
+                                       <td><input class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" ></td>
+                                    </tr> --}}
+                                    <tr>
+                                       <td class="px-1">Vessel</td>
+                                       <td><input class="w-100 input_general"  type="text" value="{{$vdr->vessel->name ?? '0'}}" ></td>
+                                       <td class="px-1">Owner</td>
+                                       <td><input class="w-100 input_general" id="owner" name="owner" type="text" value="{{$vdr->owner ?? '0'}}" ></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="px-1">Contract</td>
+                                       <td><input class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
+                                       <td class="px-1">Master</td>
+                                       <td><input class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? '0'}}" ></td>
+                                    </tr>
+                                    <tr>
+                                       <td class="px-1">Contract Period</td>
+                                       <td>
+                                          <input class="w-100 input_general" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
+                                          <input class="w-100 input_general" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
+                                       </td>
+                                       <td class="px-1">Crew / Pax</td>
+                                       <td>
+                                          <input class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
+                                          <input class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
+                                       </td>
+                                    </tr>
+                                 </form>
+                              </tbody>
+                           </table>
+                        </div>
                      
                      {{-- Weather --}}
-                     <div class="table-responsive overflow-auto" style="height: 400px"> 
-                     <table>
-                        <thead>
-                           <tr>
-                              <td colspan="4">Weather Condition</td>
-                           </tr>
-                           <tr>
-                              <td>Weather/Time</td>
-                              <td>00:00 - 06:00 hrs</td>
-                              <td>06:00 - 12:00 hrs</td>
-                              <td>12:00 - 18:00 hrs</td>
-                              <td>18:00 - 24:00 hrs</td>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @foreach ($weathers as $weather)
-                              <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                              <input type="hidden" name="id[]" value="{{$weather->id}}">
-                              <tr>
-                                 <td class="text-truncate">{{$weather->heading->description}}</td>
-                                 <input type="text" name="weatherId" id="weatherId" value="{{$weather->id}}" hidden>
-                                 <td class="text-center">
-                                    <input class="w-100 input_weather_{{$weather->id}}" type="text"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
-                                 </td>
-                                 <td class="text-center">
-                                    <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
-                                 </td>
-                                 <td class="text-center">
-                                    <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
-                                 </td>
-                                 <td class="text-center">
-                                    <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
-                                 </td>
-                              </tr>
-
-                              @endforeach
-                           
-                        </tbody>
-                     </table>
-
-                     {{-- HSSE --}}
                      
-                        <table>
-                           <thead>
-                              <tr>
-                                 <td colspan="5">HSSE</td>
-                              </tr>
-                              <tr>
-                                 <th class="text-center">A</th>
-                                 <th>HSSE STATISTICS (INPUT)</th>
-                                 <th>Previous</th>
-                                 <th>Today</th>
-                                 <th>Monthly</th>
-                              </tr>
-                           </thead>
-                           <tbody>
-                                 
-                     
+                        <div class="table-responsive " >
+                           <table>
+                              <thead>
+                                 <tr>
+                                    <td colspan="4">Weather Condition</td>
+                                 </tr>
+                                 <tr>
+                                    <td>Weather/Time</td>
+                                    <td>00:00 - 06:00 hrs</td>
+                                    <td>06:00 - 12:00 hrs</td>
+                                    <td>12:00 - 18:00 hrs</td>
+                                    <td>18:00 - 24:00 hrs</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach ($weathers as $weather)
                                     <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                    @php
-                                    $groupHeader = 'A';
-                                    $no = 1;
-                                    @endphp
-                     
-                                    @foreach ($hses as $hse)
-                                    <input type="hidden" name="id[]" value="{{$hse->id}}">
-                                    <input type="hidden" id="hsse" value="{{$hse->id}}">
-                                    @if($hse->header->group_header != $groupHeader)
-                                    <thead>
-                                       <tr>
-                                             <th class="text-center">B</th>
-                                             <th>HSSE STATISTICS (Output)</th>
-                                             <th>Previous</th>
-                                             <th>Today</th>
-                                             <th>Monthly</th>
-                                       </tr>
-                                    </thead>
-                     
-                                    @php
-                                    $no = 1;
-                                    @endphp
-                     
-                                    @endif
-
+                                    <input type="hidden" name="id[]" value="{{$weather->id}}">
                                     <tr>
-                                       <td>{{ $no++}}</td>
-                                       <td>{{$hse->header->description}}</td>
-                                       @if($hse->header_id != 8)
-                                       <td>
-                                             <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
+                                       <td class="">{{$weather->heading->description}}</td>
+                                       <input type="text" name="weatherId" id="weatherId" value="{{$weather->id}}" hidden>
+                                       <td class="text-center" style="width: 180px">
+                                          <input class="w-100 input_weather_{{$weather->id}}" type="text"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
                                        </td>
-                                       <td>
-                                             <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
+                                       <td class="text-center" style="width: 180px">
+                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
                                        </td>
-                                       <td>
-                                          {{-- <span class="hse_month"></span> --}}
-                                          <input class="w-100 hse_month_{{$hse->id}}" readonly type="text" name="" id="hse_month_{{$hse->id}}">
-                                             {{-- <input class="w-100 hse_month" type="text" name="monthly[]" id="monthly_{{$hse->id}}"  value="{{$hse->previous + $hse->today}}" readonly> --}}
+                                       <td class="text-center" style="width: 180px">
+                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
                                        </td>
-                                       @else
-                                       <input type="hidden" name="previous[]"  value="{{$hse->previous}}">
-                                       <input type="hidden" name="today[]"  value="{{$hse->today}}">
-                                       <input type="hidden" name="monthly[]"  value="{{$hse->today}}" readonly>
-                                       <td colspan="3"></td>
-                                       @endif
+                                       <td class="text-center" style="width: 180px">
+                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
+                                       </td>
                                     </tr>
-                     
-                                    @php
-                                    $groupHeader = $hse->header->group_header
-                                    @endphp
+
                                     @endforeach
-                     
-                           
                                  
-                           </tbody>
-                        </table>
+                              </tbody>
+                           </table>
+
+                           {{-- HSSE --}}
+                        
+                           <table>
+                              <thead>
+                                 <tr>
+                                    <td colspan="5">HSSE</td>
+                                 </tr>
+                                 <tr>
+                                    <th class="text-center">A</th>
+                                    <th>HSSE STATISTICS (INPUT)</th>
+                                    <th>Previous</th>
+                                    <th>Today</th>
+                                    <th>Monthly</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                    
+                        
+                                       <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
+                                       @php
+                                       $groupHeader = 'A';
+                                       $no = 1;
+                                       @endphp
+                        
+                                       @foreach ($hses as $hse)
+                                       <input type="hidden" name="id[]" value="{{$hse->id}}">
+                                       <input type="hidden" id="hsse" value="{{$hse->id}}">
+                                       @if($hse->header->group_header != $groupHeader)
+                                       <thead>
+                                          <tr>
+                                                <th class="text-center">B</th>
+                                                <th>HSSE STATISTICS (Output)</th>
+                                                <th>Previous</th>
+                                                <th>Today</th>
+                                                <th>Monthly</th>
+                                          </tr>
+                                       </thead>
+                        
+                                       @php
+                                       $no = 1;
+                                       @endphp
+                        
+                                       @endif
+
+                                       <tr>
+                                          <td>{{ $no++}}</td>
+                                          <td>{{$hse->header->description}}</td>
+                                          @if($hse->header_id != 8)
+                                          <td>
+                                                <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
+                                          </td>
+                                          <td>
+                                                <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
+                                          </td>
+                                          <td>
+                                             {{-- <span class="hse_month"></span> --}}
+                                             <input class="w-100 hse_month_{{$hse->id}}" readonly type="text" name="" id="hse_month_{{$hse->id}}">
+                                                {{-- <input class="w-100 hse_month" type="text" name="monthly[]" id="monthly_{{$hse->id}}"  value="{{$hse->previous + $hse->today}}" readonly> --}}
+                                          </td>
+                                          @else
+                                          <input type="hidden" name="previous[]"  value="{{$hse->previous}}">
+                                          <input type="hidden" name="today[]"  value="{{$hse->today}}">
+                                          <input type="hidden" name="monthly[]"  value="{{$hse->today}}" readonly>
+                                          <td colspan="3"></td>
+                                          @endif
+                                       </tr>
+                        
+                                       @php
+                                       $groupHeader = $hse->header->group_header
+                                       @endphp
+                                       @endforeach
+                        
+                              
+                                    
+                              </tbody>
+                           </table>
+                        </div>
                      </div>
+                     <hr>
                      
                      
                   </div>
          
                   <div class="col-md-7">
-                     {{-- <div class="table-responsive overflow-auto" style="height: 100vh"> --}}
+                     <div class="table-responsive " >
                      <table class="w-100">
                         <thead>
                            <tr>
                               <td colspan="13">Detail of Daily Operational Activity </td>
+                           </tr>
+                           <tr>
+                              <td colspan="12">
+                                 {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
+                                 <a href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity">Add Row</a>
+                                 {{-- <button onclick="addActivity()">Click</button> --}}
+                              </td>
                            </tr>
                            <tr>
                               <td colspan="2" class="text-center">Time</td>
@@ -292,72 +349,62 @@
                            </tr>
                         </thead>
                         <tbody>
-                           @php
-                              $totalHigh = 0;
-                              $totalNormal = 0;
-                              $totalSlow = 0;
-                              $totalManu = 0;
-                              $totalIdle = 0;
-                              $totalTow = 0;
-                              $totalAh = 0;
-                              $totalAb = 0;
-                              @endphp
+                           
                               @foreach ($activities as $activity)
+                              <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
                               <tr>
                                     <td class="text-info">
+                                       {{-- {{$activity->id}} --}}
                                        {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                       <input style="width: 75px"  class=" input_activity"  type="time" name="activity_start" id="activity_start" value="{{$activity->start}}">
+                                       <input style="width: 75px"  class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                     </td>
                                     <td class="text-danger">
                                        {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                       <input  style="width: 75px" class=" input_activity"  type="time" name="activity_finish" id="activity_finish" value="{{$activity->finish}}">
+                                       <input  style="width: 75px" class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->high)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="high" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->normal)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="normal" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->slow)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="slow" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->manu)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="manu" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->idle)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="idle" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->tow)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="tow" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->ah)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="ah" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                     </td>
                                     <td>
                                        {{-- {{getTotalHours($activity->sb)}} --}}
-                                       <input class="" style="width: 70px" placeholder="HH.mm" id="sb" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                     </td>
                                     <td>
-                                       <input class="" style="width: 160px"  id="sb" name="sb" value="{{$activity->activity}}" type="text" >
+                                       <input class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                        {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
                                           {{$activity->activity}}
                                        </textarea> --}}
                                        
                                     </td>
                                     <td>
-                                       @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                                       {{-- <a href="#" data-toggle="modal" data-target="#editActivity-{{$activity->id}}"> Edit </a> --}}
-                                       <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivity-{{$activity->id}}"> Delete </a>
-                                       @endif
-                                       
+                                       <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"> Delete </a>
                                     </td>
+                                   
                               </tr>
 
                               <!-- Modal Delete -->
@@ -396,262 +443,35 @@
                               <!-- End Modal  -->
 
 
-                              <!-- Modal Edit -->
-
-                              <div class="modal modal-blur fade" id="editAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-                                       <div class="modal-content">
-
-                                          <form action="{{route('vdr.update.activity')}}" method="POST">
-                                                <div class="modal-body">
-                                                   @csrf
-                                                   @method('PUT')
-                                                   <input type="hidden" name="vdr_id" value="{{$vdr->id}}">
-                                                   <input type="hidden" name="id" value="{{$activity->id}}" id="">
-                                                   <div class="card-body">
-                                                      @if ($errors->any())
-                                                      <div class="alert alert-danger text-danger">
-                                                            <ul>
-                                                               @foreach ($errors->all() as $error)
-                                                               <li><small>{{ $error }}</small></li>
-                                                               @endforeach
-                                                            </ul>
-                                                      </div>
-                                                      @endif
-
-                                                      <div class="form-floating mb-3">
-                                                            <textarea type="text" rows="50" required class="form-control" id="activity" name="activity" value="{{$activity->activity}}">{{$activity->activity}}</textarea>
-                                                            <label for="activity">Activities</label>
-                                                            @error('activity')
-                                                            <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                            @enderror
-                                                      </div>
-                                                      <div class="row">
-                                                            <label for="email">Time</label>
-                                                            <div class="col-md-6">
-                                                               <div class="form-floating mb-3">
-                                                                  <input type="time" required class="form-control jam24" id="start" name="start" value="{{$activity->start}}" value="1">
-                                                                  <label for="start">Start</label>
-                                                                  @error('start')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <div class="form-floating mb-3">
-                                                                  <input type="time" required class="form-control jam24" id="finish" name="finish" value="{{$activity->finish}}" value="1">
-                                                                  <label for="finish">Finish</label>
-                                                                  @error('finish')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row">
-                                                            <div class="col-md-6">
-                                                               <div class="form- mb-3">
-                                                                  <label for="high">High</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="high" name="high" value="{{$activity->high}}">
-                                                                  @error('high')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <div class="form- mb-3">
-                                                                  <label for="normal">Normal</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="normal" name="normal" value="{{$activity->normal}}">
-                                                                  @error('normal')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row">
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="slow">Slow</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="slow" name="slow" value="{{$activity->slow}}">
-                                                                  @error('slow')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="manu">Manu</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="manu" name="manu" value="{{$activity->manu}}">
-                                                                  @error('manu')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row">
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="idle">Idle</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="idle" name="idle" value="{{$activity->idle}}">
-                                                                  @error('idle')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="tow">Tow</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="tow" name="tow" value="{{$activity->tow}}">
-                                                                  @error('tow')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                      </div>
-                                                      <div class="row">
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="ah">A/H</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="ah" name="ah" value="{{$activity->ah}}">
-                                                                  @error('ah')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                               <div class="form mb-3">
-                                                                  <label for="sb">S/B</label>
-                                                                  <input type="text" placeholder="HH.mm" class="form-control waktu" id="sb" name="sb" value="{{$activity->sb}}">
-                                                                  @error('sb')
-                                                                  <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                                                                  @enderror
-                                                               </div>
-                                                            </div>
-                                                      </div>
-                                                   </div>
-                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                                                      <button type="submit" class="btn btn-success">Update</button>
-                                                   </div>
-                                                </div>
-                                          </form>
-                                       </div>
-                                    </div>
-                              </div>
+                              
 
                               <!-- End Modal  -->
                               @endforeach
 
                               <tr>
                                     <td colspan="2" class="text-center">Total</td>
-                                    @foreach ($operatings as $operating)
+                                    <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
+                                    <td class="text-center"><span class="normalTime">{{$vdrOperatingNormal}}</span> </td>
+                                    <td class="text-center"><span class="slowTime">{{$vdrOperatingSlow}}</span> </td>
+                                    <td class="text-center"><span class="manuTime">{{$vdrOperatingManu}}</span> </td>
+                                    <td class="text-center"><span class="idleTime">{{$vdrOperatingIdle}}</span> </td>
+                                    <td class="text-center"><span class="towTime">{{$vdrOperatingTow}}</span> </td>
+                                    <td class="text-center"><span class="ahTime">{{$vdrOperatingAh}}</span> </td>
+                                    <td class="text-center"><span class="sbTime">{{$vdrOperatingSb}}</span> </td>
+                                    {{-- @foreach ($operatings as $operating)
                                     @if($operating->heading->field)
                                     <td>{{getTotalHours($operating->time)}}</td>
                                     @endif
-                                    @endforeach
+                                    @endforeach --}}
                               </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
-                           <tr>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="finish" name="finish" required type="text"  ></td>
-                              <td><input class="w-100" id="high" name="high" required type="text"  ></td>
-                              <td><input class="w-100" id="normal" name="normal" required type="text"  ></td>
-                              <td><input class="w-100" id="slow" name="slow" required type="text"  ></td>
-                              <td><input class="w-100" id="manu" name="manu" required type="text"  ></td>
-                              <td><input class="w-100" id="idle" name="idle" required type="text"  ></td>
-                              <td><input class="w-100" id="tow" name="tow" required type="text"  ></td>
-                              <td><input class="w-100" id="ah" name="ah" required type="text"  ></td>
-                              <td><input class="w-100" id="bs" name="bs" required type="text"  ></td>
-                              <td><input class="w-100" id="activity" name="activity" required type="text"  ></td>
-                           </tr>
+                           
       
       
-                           <tr>
-                              <td colspan="2" class="text-center">Total</td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td><input class="w-100" id="start" name="start" required type="text"  ></td>
-                              <td></td>
-                           </tr> 
+                           
                            
                         </tbody>
                      </table>
-                     
-      
-                     
-                     {{-- </div> --}}
-                     
-                  
-                  </div>
-                  <div class="col-md-12">
+                     </div>
                      <table class="w-100">
                        
                         <thead>
@@ -674,10 +494,10 @@
                                  <input type="hidden" name="id[]" value="{{$operating->id}}">
                                  <input type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
                                  <!-- </td> -->
-                                 <td> {{$operating->heading->description}} </td>
+                                 <td> {{$operating->heading->description}} vdrid: {{$operating->vdr_id}} </td>
                                  <td class="text-center align-middle">
-                                    {{getTotalHours($operating->time)}}
-                                       <input type="text" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
+                                    <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
+                                       <input type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
                                  </td>
                                  <td class="text-center align-middle">
                                        @if($operating->heading->speed == '1')
@@ -700,7 +520,7 @@
             
                                        @if($operating->heading->daily == '1')
                                        <input class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @else
                                        <input class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @endif
@@ -723,7 +543,13 @@
                            
                         </tbody>
                      </table>
+                     
+                  
                   </div>
+                  
+                  
+               </div>
+               <div class="row">
                   <div class="col-md-8">
                      {{-- <div class="table-responsive overflow-auto" style="height: 100vh"> --}}
                      <table class="w-100">
@@ -868,6 +694,80 @@
 
                      </table>
                   </div>
+               </div>
+            </div>
+            <hr>
+            <div class="row">
+               <div class="col-md-6">
+                  <table>
+                     <thead>
+                        <tr>
+                           <td>Crew List</td>
+                        </tr>
+                        <tr>
+                           <td><a href="">Add Row</a></td>
+                        </tr>
+                        <tr>
+                           <td>Name</td>
+                           <td>Rank</td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($crews->where('is_crew', 1) as $crew)
+
+                        <tr>
+                           <td>
+                              {{-- {{$crew->id}} --}}
+                              <input class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                           </td>
+                           <td>
+                              <input class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                           </td>
+                           <td>
+                              <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}"> Delete </a>
+                           </td>
+                        </tr>
+
+                        
+                        @endforeach
+                        
+                     </tbody>
+                  </table>
+               </div>
+
+               <div class="col-md-6">
+                  <table>
+                     <thead>
+                        <tr>
+                           <td>Pax List</td>
+                        </tr>
+                        <tr>
+                           <td><a href="">Add Row</a></td>
+                        </tr>
+                        <tr>
+                           <td>Name</td>
+                           <td>Company</td>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($crews->where('is_crew', 0) as $pax)
+                        <tr>
+                           <td>
+                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
+                           </td>
+                           <td>
+                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_rank_{{$pax->id}}"  value="{{$pax->rank}} ">
+                           </td>
+                           <td>
+                              <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
+                           </td>
+                        </tr>
+
+                        
+                        @endforeach
+                        
+                     </tbody>
+                  </table>
                </div>
             </div>
          </div>
@@ -1128,9 +1028,9 @@
    
     @else
       @foreach ($crews as $crew)
-         <div class="modal fade" id="deleteAct-{{$crew->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
+         <div class="modal fade" id="deleteCrew-{{$crew->id}}" tabindex="-1" role="dialog"  aria-hidden="true">
             <div class="modal-dialog" role="document">
-               <form action="{{route('vdr.delete.crew')}}" method="POST">
+               <form action="{{route('vdr.delete.crew.spa')}}" method="POST">
                   @csrf
                   @method('DELETE')
                   <input type="hidden" name="id" value="{{$crew->id}}" id="">
@@ -1631,6 +1531,120 @@
    });
    </script>
     
+@endpush
+
+@push('activity')
+    @foreach ($activities as $act)
+      <script>
+         $(document).ready(function() {
+         
+            $(".input_activity_" + '{!! $act->id !!}').keyup(function () {
+               console.log('activity');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var start = $('#start_' + '{!! $act->id !!}').val();
+               var finish = $('#finish_' + '{!! $act->id !!}').val();
+               var high = $('#high_' + '{!! $act->id !!}').val();
+               var normal = $('#normal_' + '{!! $act->id !!}').val();
+               var slow = $('#slow_' + '{!! $act->id !!}').val();
+               var manu = $('#manu_' + '{!! $act->id !!}').val();
+               var idle = $('#idle_' + '{!! $act->id !!}').val();
+               var tow = $('#tow_' + '{!! $act->id !!}').val();
+               var ah = $('#ah_' + '{!! $act->id !!}').val();
+               var sb = $('#sb_' + '{!! $act->id !!}').val();
+               var activity = $('#activity_' + '{!! $act->id !!}').val();
+               
+               
+               
+               console.log('VDR : ' + vdr);
+
+               
+
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/activity/" + vdr + "/" + act +  "/"  + start + "/" + finish + "/" + high + "/" + normal + "/" + slow + "/" + manu  + "/"  + idle + "/" + tow + "/" + ah + "/" + sb + "/" + activity,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.highTime').html(result.highTime);
+                     $('.normalTime').html(result.normalTime);
+                     $('.slowTime').html(result.slowTime);
+                     $('.idleTime').html(result.idleTime);
+                     $('.manuTime').html(result.manuTime);
+                     $('.towTime').html(result.towTime);
+                     $('.ahTime').html(result.ahTime);
+                     $('.sbTime').html(result.sbTime);
+
+                     console.log('daily :' + result.vdrOperatingHigh.daily);
+
+                     $('.time_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.time);
+                     $('.time_' + result.vdrOperatingHigh.heading_id).html(result.vdrOperatingHigh.time);
+                     $('.daily_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.daily);
+
+                     $('.time_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.time);
+                     $('.time_' + result.vdrOperatingNormal.heading_id).html(result.vdrOperatingNormal.time);
+                     $('.daily_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.daily);
+
+                     $('.time_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.time);
+                     $('.time_' + result.vdrOperatingSlow.heading_id).html(result.vdrOperatingSlow.time);
+                     $('.daily_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.daily);
+
+                     $('.time_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.time);
+                     $('.time_' + result.vdrOperatingManu.heading_id).html(result.vdrOperatingManu.time);
+                     $('.daily_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.daily);
+
+                     $('.time_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.time);
+                     $('.time_' + result.vdrOperatingIdle.heading_id).html(result.vdrOperatingIdle.time);
+                     $('.daily_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.daily);
+
+                     $('.time_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.time);
+                     $('.time_' + result.vdrOperatingTow.heading_id).html(result.vdrOperatingTow.time);
+                     $('.daily_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.daily);
+
+                     $('.time_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.time);
+                     $('.time_' + result.vdrOperatingAh.heading_id).html(result.vdrOperatingAh.time);
+                     $('.daily_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.daily);
+
+                     $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
+                     $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
+                     $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            // $("#hse_month_" + '{!! $hse->id !!}').val(parseInt(prev)+parseInt(today));
+         });
+      </script>
+    @endforeach
+
+   <script>
+      function addActivity(){
+         console.log('func add activity');
+         var _token = $('meta[name="csrf-token"]').attr('content');
+         $.ajax({
+            url: "/fetch/vdr/add/activity/" + vdr + "/" + periodic +  "/"  + remu + "/" + correct + "/" + actual + "/" + specialTotal ,
+            method: "GET",
+            dataType: 'json',
+
+            success: function(result) {
+               $('.specialTotal').html(specialTotal);
+               console.log('result :' + specialTotal);
+               
+            },
+            error: function(error) {
+               console.log(error);
+               $('.specialTotal').html(0);
+            }
+
+         })
+      }
+   </script>
 @endpush
 
 

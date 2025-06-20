@@ -113,6 +113,9 @@
                         <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td>
                         <td>{{$vdr->getTotalHours()}}</td>
                         <td>{{$vdr->customRound($vdr->operatings->sum('daily'))}}</td>
+                        <td>
+                           <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">Detail SPA</a>
+                        </td>
                      </tr>
                      @endforeach
                   </tbody>

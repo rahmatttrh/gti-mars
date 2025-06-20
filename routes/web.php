@@ -141,6 +141,7 @@ Route::middleware(["auth"])->group(function () {
    });
 
    Route::get('vdr/detail/{id}/{tab}', [VdrController::class, 'show'])->name('vdr.show');
+   Route::get('vdr/spa/detail/{id}/{tab}', [VdrController::class, 'showSpa'])->name('vdr.show.spa');
 
    Route::prefix('fuel')->group(function () {
       Route::put('approve', [FuelController::class, 'approve'])->name('fuel.approve');
@@ -625,6 +626,8 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
       Route::prefix('act')->group(function () {
          Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
       Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
+      Route::get('create/spa', [VdrController::class, 'vdrCreateSpa'])->name('vdr.vessel.create.spa');
+      
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
@@ -641,10 +644,12 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
+      Route::delete('spa/delete/activity', [VdrController::class, 'deleteActivitySpa'])->name('vdr.delete.activity.spa');
 
       // Crew
       Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
       Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
+      Route::delete('spa/delete/crew', [VdrController::class, 'deleteCrewSpa'])->name('vdr.delete.crew.spa');
       Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
 
       Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
@@ -772,7 +777,7 @@ Route::group(['middleware' => ['role:vessel|superuser']], function () {
 
 
 
-
+Route::get('vdr/activity/add/row/{vdr}', [VdrController::class, 'addActivityRow'])->name('vdr.activity.add.row');
 
 
 Route::prefix('fetch')->group(function () {
@@ -786,6 +791,9 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}/{remark}', [VdrController::class, 'updateCargoAjax']);
    Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
    Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
+
+   Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
+   Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
 });
 Auth::routes();
 

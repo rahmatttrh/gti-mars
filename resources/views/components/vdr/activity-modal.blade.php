@@ -115,6 +115,31 @@
       </div>
    </div>
 
+   <div class="modal fade" id="deleteActivitySpa-{{$activity->id}}" tabindex="1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog modal-sm" role="document">
+         <form action="{{route('vdr.delete.activity.spa')}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <input type="hidden" name="id" value="{{$activity->id}}" id="">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Delete Activity </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+                  <span>Anda yakin ingin menghapus activity <span class="text-danger">{{$activity->activity}} </span> ?</span>
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-danger">Delete</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+
    <div class="modal fade" id="editActivity-{{$activity->id}}" tabindex="1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">
          <form action="{{route('vdr.update.activity')}}" method="POST">

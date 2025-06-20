@@ -4,7 +4,7 @@
       color: black
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark">
+<nav class="navbar navbar-expand-lg main-navbar  text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
@@ -15,7 +15,7 @@
       </a>
       <ul class="navbar-nav ">
          <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
-         <li class="nav-item text-dark active"><a href="{{route('vdr.create')}}" class="nav-link bgb-1 rounded px-2 py-1" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
+         <li class="nav-item text-dark active" ><a href="{{route('vdr.create')}}" class="nav-link  rounded px-2 py-1" style="background-color: #1f4481" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Marine Assurance Programs">MAP</a></li>
          <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Fuel Management System">FMS</a></li>
@@ -55,7 +55,7 @@
    </ul>
 </nav>
 
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #00A9FF" >
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
    <div class="container">
       <ul class="navbar-nav">
          {{-- <li class="nav-item dropdown {{ (request()->is('dsp/u/dash/*')) ? 'active' : '' }}">
@@ -90,6 +90,16 @@
                <span class="">Create</span>
             </a>
          </li>
+         <li class="nav-item {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
+            <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link {{ (request()->is('vdr/v/act/create/spa')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/v/act/create/spa'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Create by OnePageForm</span>
+            </a>
+         </li>
+         
          <li class="nav-item pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
             <a href="{{route('vdr.history')}}" class="nav-link {{ (request()->is('vdr/v/act/history')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/history'))
