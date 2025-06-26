@@ -23,7 +23,7 @@
          <div class="card card-statistic-1 border">
             <a href="{{route('vdr.marine.validation')}}">
                <div class="card-icon bg-primary">
-               <i class="fas fa-star"></i>
+               <i class="fas fa-user"></i>
                </div>
                <div class="card-wrap">
                <div class="card-header">
@@ -58,8 +58,8 @@
       <div class="col-md-3">
          <div class="card card-statistic-1 border">
             <a href="{{route('vdr.marine.validation')}}">
-               <div class="card-icon bg-dark">
-               <i class="fas fa-users"></i>
+               <div class="card-icon bg-info">
+               <i class="fas fa-user"></i>
                </div>
                <div class="card-wrap">
                <div class="card-header">
