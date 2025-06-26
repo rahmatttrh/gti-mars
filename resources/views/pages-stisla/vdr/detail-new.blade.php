@@ -955,6 +955,7 @@
                         <div class="form-group">
                            <label for="title1">Location </label>
                            <select class="form-control" name="title1" id="title1" required>
+                              <option value="Kalijapat">Kalijapat</option>
                               <option value="SBU">SBU</option>
                               <option value="CBU">CBU</option>
                               <option value="NBU">NBU</option>
