@@ -954,11 +954,16 @@
                      <div class="col-12">
                         
                         <div class="form-group">
-                           <label for="title1">Title </label>
-                           <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" placeholder="Jabatan/Posisi">
+                           <label for="title1">Location </label>
+                           <select class="form-control" name="title1" id="title1" required>
+                              <option value="SBU">SBU</option>
+                              <option value="CBU">CBU</option>
+                              <option value="NBU">NBU</option>
+                           </select>
+                           {{-- <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" placeholder="Jabatan/Posisi">
                            @error('title1')
                               <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                           @enderror
+                           @enderror --}}
                         </div>
                      </div>
                      <div class="col-12">
