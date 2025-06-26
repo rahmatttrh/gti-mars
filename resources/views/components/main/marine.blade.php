@@ -18,30 +18,88 @@
 
    
 
-
+   <div class="row">
+      <div class="col-md-3">
+         <div class="card card-statistic-1 border">
+            <a href="{{route('vdr.marine.validation')}}">
+               <div class="card-icon bg-primary">
+               <i class="fas fa-star"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  
+                  <h4>VDR Suptent Validation</h4>
+               </div>
+               <div class="card-body">
+                  {{count($vdrvalids)}}
+               </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="card card-statistic-1 border">
+            <a href="{{route('vdr.marine.validation')}}">
+               <div class="card-icon bg-info">
+               <i class="fas fa-user"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  
+                  <h4>VDR PET Validation</h4>
+               </div>
+               <div class="card-body">
+                  {{count($allvdrs->where('status', 1))}}
+               </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="card card-statistic-1 border">
+            <a href="{{route('vdr.marine.validation')}}">
+               <div class="card-icon bg-dark">
+               <i class="fas fa-users"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  
+                  <h4>VDR Marine Validation</h4>
+               </div>
+               <div class="card-body">
+                  {{count($allvdrs->where('status', 2))}}
+               </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      <div class="col-md-3">
+         <div class="card card-statistic-1 border">
+            <a href="{{route('vdr.marine.validation')}}">
+               <div class="card-icon bg-success">
+               <i class="fas fa-check"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  
+                  <h4>VDR Complete</h4>
+               </div>
+               <div class="card-body">
+                  {{count($allvdrs->where('status', 4))}}
+               </div>
+               </div>
+            </a>
+         </div>
+      </div>
+   </div>
    <div class="row"> 
       <div class="col-md-6">
          <div class="row">
             <div class="col-md-6">
-               <div class="card card-statistic-1 border">
-                  <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-primary">
-                    <i class="far fa-user"></i>
-                  </div>
-                  <div class="card-wrap">
-                    <div class="card-header">
-                     
-                      <h4>VDR Validation</h4>
-                    </div>
-                    <div class="card-body">
-                      {{count($vdrvalids)}}
-                    </div>
-                  </div>
-               </a>
-                </div>
+               
             </div>
             <div class="col-md-6">
-               <div class="card card-statistic-1 border">
+               {{-- <div class="card card-statistic-1 border">
                   <a href="{{route('marine.request.list')}}">
                      <div class="card-icon bg-info">
                      <i class="far fa-user"></i>
@@ -55,10 +113,63 @@
                      </div>
                      </div>
                   </a>
-                </div>
+                </div> --}}
             </div>
          </div>
          {{-- <span class="btn btn-light border">Sailing Order</span> --}}
+         <table class="display  border">
+            <tbody>
+               <tr>
+                  <th>VDR yang membutuhkan Approval anda</th>
+               </tr>
+            </tbody>
+         </table>
+         <div class="table-responsive overflow-auto" style="height: 180px">
+            <table class="display  border">
+               
+               <thead>
+                  
+                  <tr>
+                     {{-- <th>ID</th> --}}
+                     <th>Vessel</th>
+                     <th>Date</th>
+                     {{-- <th>Date</th> --}}
+                     <th>Status</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @if (count($allvdrs->where('status', 3)) > 0)
+                  @foreach ($allvdrs->where('status', 3) as $vdr)
+                     <tr class="border" style="border: 1px black">
+                        {{-- <td>{{$vdr->id}}</td> --}}
+                        <td class="text-truncate" style="max-width: 120px">
+                        @if (auth()->user()->username == 'lutfi')
+                        
+                        <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
+                           @else
+                           <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
+                           {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+
+                           @endif
+                        </td>
+                       
+                        <td>{{formatDate($vdr->date)}}</td>
+                        {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                        <td class="text-truncate" style="max-width: 100px">
+                           <x-status-stisla.vdr :vdr="$vdr" />
+                        </td>
+                     </tr>
+                  @endforeach
+                      @else
+                      <tr>
+                        <td colspan="3" class="text-center py-3">Empty</td>
+                      </tr>
+                  @endif
+                  
+               </tbody>
+            </table>
+         </div>
+         <hr>
          <table class="display  border">
             <tbody>
                <tr>
@@ -93,52 +204,7 @@
             </table>
          </div>
          <hr>
-         <table class="display  border">
-            <tbody>
-               <tr>
-                  <th>All Vessel Daily Report</th>
-               </tr>
-            </tbody>
-         </table>
-         <div class="table-responsive overflow-auto" style="height: 340px">
-            <table class="display  border">
-               
-               <thead>
-                  
-                  <tr>
-                     {{-- <th>ID</th> --}}
-                     <th>Vessel</th>
-                     <th>Date</th>
-                     {{-- <th>Date</th> --}}
-                     <th>Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach ($allvdrs as $vdr)
-                     <tr class="border" style="border: 1px black">
-                        {{-- <td>{{$vdr->id}}</td> --}}
-                        <td class="text-truncate" style="max-width: 120px">
-                        @if (auth()->user()->username == 'lutfi')
-                        
-                        <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
-                           @else
-                           <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
-                           {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
-
-                           @endif
-                        </td>
-                       
-                        <td>{{formatDate($vdr->date)}}</td>
-                        {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                        <td class="text-truncate" style="max-width: 100px">
-                           <x-status-stisla.vdr :vdr="$vdr" />
-                        </td>
-                     </tr>
-                  @endforeach
-               </tbody>
-            </table>
-         </div>
-         <hr>
+         
          
          @if ($itemrejects)
             <table>
@@ -164,6 +230,7 @@
          @endif
 
       </div>
+      @if (auth()->user()->username == 'marine')
       <div class="col-md-6">
          
          <table class="border display table-sm"  id="table-5" >
@@ -172,8 +239,7 @@
                   <th>BCM</th>
                   <th>MTD</th>
                   <th>Desc</th>
-                  {{-- <th>Qty</th> --}}
-                  {{-- <th>Vessel</th> --}}
+                 
                   <th>Status</th>
                </tr>
             </thead>
@@ -183,8 +249,7 @@
                      <td>{{$item->cargo->code}}</td>
                      <td>{{$item->mtd}}</td>
                      <td>{{$item->description}}</td>
-                     {{-- <td>{{$item->qty}} {{$item->unit}}</td> --}}
-                     {{-- <td>{{$item->schedule->vessel->name}}</td> --}}
+                    
                      <td>
                         <x-status-stisla.request-plain :request="$item->request"/>
                      </td>
@@ -192,7 +257,49 @@
                @endforeach
             </tbody>
          </table>
+      </div> 
+      @else
+      <div class="col-md-6">
+         <div class="badge badge-info">Monitoring VDR</div>
+         <hr>
+         <table class="border display table-sm"  id="table-5" >
+            <thead>
+                  
+               <tr>
+                  <th>ID</th>
+                  <th>Vessel</th>
+                  <th>Date</th>
+                  {{-- <th>Date</th> --}}
+                  <th>Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               @foreach ($allvdrs->where('status', '!=', 0) as $vdr)
+                  <tr class="border" style="border: 1px black">
+                     <td>{{$vdr->code}}</td>
+                     <td class="text-truncate" style="max-width: 120px">
+                     @if (auth()->user()->username == 'lutfi')
+                     
+                     <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
+                        @else
+                        <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
+                        {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+
+                        @endif
+                     </td>
+                    
+                     <td>{{formatDate($vdr->date)}}</td>
+                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                     <td class="text-truncate" style="max-width: 100px">
+                        <x-status-stisla.vdr :vdr="$vdr" />
+                     </td>
+                  </tr>
+               @endforeach
+            </tbody>
+         </table>
       </div>
+      @endif
+      
    </div>
    @push('chart')
          {{-- <script src="{{asset('modules/jquery.sparkline.min.js')}}"></script>
