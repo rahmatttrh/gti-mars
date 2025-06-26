@@ -16,6 +16,19 @@
    th, td {
       padding-left: 5px
    }
+
+   input {
+      border:0;
+      outline:0;
+      text-align: center; 
+      /* background-color: rgb(226, 236, 151) */
+   }
+
+   .bg-y {
+      background-color: rgb(226, 236, 151)
+   }
+
+
 </style>
 <section class="section">
 
@@ -152,7 +165,7 @@
                         <thead>
                            <tr>
                               <td>{{$vdr->code}}</td>
-                              <td><x-status-stisla.vdr :vdr="$vdr" /></td>
+                              <td class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
                            </tr>
                            {{-- <tr>
                               <td>Edit | Delete | <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="">Export PDF</a></td>
@@ -180,9 +193,9 @@
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                     <tr>
                                        <td class="px-1">Date</td>
-                                       <td><input class="w-100 input_general" id="date" name="date" required type="date" value="{{$vdr->date}}" ></td>
+                                       <td class="bg-y"><input  class="w-100 input_general" id="date" name="date" required type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
                                        <td class="px-1">Loc</td>
-                                       <td><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}"  ></td>
+                                       <td class="bg-y"><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}" style="background-color: rgb(226, 236, 151); text-align: left !important;" ></td>
                                     </tr>
                                     {{-- <tr>
                                        <td class="px-1">Crew</td>
@@ -192,26 +205,26 @@
                                     </tr> --}}
                                     <tr>
                                        <td class="px-1">Vessel</td>
-                                       <td><input class="w-100 input_general"  type="text" value="{{$vdr->vessel->name ?? '0'}}" ></td>
+                                       <td class="bg-y"><input class="w-100 input_general"  type="text" value="{{$vdr->vessel->name ?? '0'}}" style="background-color: rgb(226, 236, 151); text-align: left !important;"></td>
                                        <td class="px-1">Owner</td>
-                                       <td><input class="w-100 input_general" id="owner" name="owner" type="text" value="{{$vdr->owner ?? '0'}}" ></td>
+                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="owner" name="owner" type="text" value="{{$vdr->owner ?? '0'}}" ></td>
                                     </tr>
                                     <tr>
                                        <td class="px-1">Contract</td>
-                                       <td><input class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
+                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
                                        <td class="px-1">Master</td>
-                                       <td><input class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? '0'}}" ></td>
+                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? '0'}}" ></td>
                                     </tr>
                                     <tr>
                                        <td class="px-1">Contract Period</td>
-                                       <td>
-                                          <input class="w-100 input_general" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
-                                          <input class="w-100 input_general" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
+                                       <td class="bg-y">
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
                                        </td>
                                        <td class="px-1">Crew / Pax</td>
-                                       <td>
-                                          <input class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
-                                          <input class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
+                                       <td class="bg-y">
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
                                        </td>
                                     </tr>
                                  </form>
@@ -242,17 +255,17 @@
                                     <tr>
                                        <td class="">{{$weather->heading->description}}</td>
                                        <input type="text" name="weatherId" id="weatherId" value="{{$weather->id}}" hidden>
-                                       <td class="text-center" style="width: 180px">
-                                          <input class="w-100 input_weather_{{$weather->id}}" type="text"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
+                                       <td class="text-center bg-y" style="width: 180px">
+                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" style="border-color: red!"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
                                        </td>
-                                       <td class="text-center" style="width: 180px">
-                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
+                                       <td class="text-center bg-y" style="width: 180px">
+                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
                                        </td>
-                                       <td class="text-center" style="width: 180px">
-                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
+                                       <td class="text-center bg-y" style="width: 180px">
+                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
                                        </td>
-                                       <td class="text-center" style="width: 180px">
-                                          <input class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
+                                       <td class="text-center bg-y" style="width: 180px">
+                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
                                        </td>
                                     </tr>
 
@@ -309,11 +322,11 @@
                                           <td>{{ $no++}}</td>
                                           <td>{{$hse->header->description}}</td>
                                           @if($hse->header_id != 8)
-                                          <td>
-                                                <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
+                                          <td class="bg-y">
+                                                <input style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
                                           </td>
-                                          <td>
-                                                <input class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
+                                          <td class="bg-y">
+                                                <input style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
                                           </td>
                                           <td>
                                              {{-- <span class="hse_month"></span> --}}
@@ -383,49 +396,49 @@
                               @foreach ($activities as $activity)
                               <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
                               <tr>
-                                    <td class="text-info">
+                                    <td class="text-info bg-y">
                                        {{-- {{$activity->id}} --}}
                                        {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                       <input style="width: 75px"  class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                       <input style="background-color: rgb(226, 236, 151)" style="width: 75px"  class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                     </td>
-                                    <td class="text-danger">
+                                    <td class="text-danger bg-y">
                                        {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                       <input  style="width: 75px" class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                       <input  style="background-color: rgb(226, 236, 151)" style="width: 75px" class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                     </td>
-                                    <td>
+                                    <td class="bg-y text-center">
                                        {{-- {{getTotalHours($activity->high)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->normal)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->slow)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->manu)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->idle)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->tow)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->ah)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                     </td>
-                                    <td>
+                                    <td class="bg-y">
                                        {{-- {{getTotalHours($activity->sb)}} --}}
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                     </td>
-                                    <td>
-                                       <input class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                    <td class="bg-y">
+                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                        {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
                                           {{$activity->activity}}
                                        </textarea> --}}
@@ -525,24 +538,24 @@
                                  <input type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
                                  <!-- </td> -->
                                  <td> {{$operating->heading->description}} vdrid: {{$operating->vdr_id}} </td>
-                                 <td class="text-center align-middle">
+                                 <td class="text-center align-middle ">
                                     <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
                                        <input type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
                                  </td>
-                                 <td class="text-center align-middle">
+                                 <td class="text-center align-middle bg-y">
                                        @if($operating->heading->speed == '1')
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
                                        @else
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
                                        @endif
                                  </td>
             
-                                 <td class="text-center align-middle">
+                                 <td class="text-center align-middle bg-y">
                                     <!-- {{$operating->contractual_fuel}} -->
                                        @if($operating->heading->contractual == '1')
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @else
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @endif
                                  </td>
                                  <td class="text-center ">
@@ -550,7 +563,7 @@
             
                                        @if($operating->heading->daily == '1')
                                        <input class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
-                                       <input class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @else
                                        <input class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @endif
@@ -606,8 +619,8 @@
                                  <input type="hidden" id="cargo" value="{{$cargo->id}}">
                                  <!-- </td> -->
                                  <td> {{$cargo->heading->description}} </td>
-                                 <td class="text-center align-middle" >
-                                       <input class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
+                                 <td class="text-center align-middle bg-y" >
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
                                  </td>
                                  
                                        @if($cargo->heading->is_consumption == '1')
@@ -621,22 +634,25 @@
                                        </td>
                                        @endif
                                  
-                                 <td class="text-center align-middle">
-                                       <input type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
+                                 <td class="text-center align-middle bg-y">
+                                       <input style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
                                  </td>
-                                 <td class="text-center align-middle">
-                                       <input type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
+                                 <td class="text-center align-middle bg-y">
+                                       <input style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
                                  </td>
-                                 <td class="text-center align-middle">
+                                 
                                     @if($cargo->heading->is_consumption == '1')
-                                       <input type="text" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                    <td class="text-center align-middle bg-y">
+                                       <input type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
                                        @else
+                                       <td class="text-center align-middle ">
                                        <span class="my-2">{{ $cargo->closing}}</span>
                                        <input type="text" hidden name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                    </td>
                                     @endif
-                                 </td>
-                                 <td class="text-center align-middle"  >
-                                       <input class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
+                                 
+                                 <td class="text-center align-middle bg-y"  >
+                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
                                  </td>
                               </tr>
                            @endforeach
@@ -658,21 +674,21 @@
                            </tr>
                            <input type="number" name="periodic" id="periodic" value="{{$periodic->id}}" hidden>
                            <tr>
-                              <td>
-                                 <select  class="w-100 input_periodic_b" name="period_activity" style="height: 30px; width:100px" id="period_activity" >
+                              <td class="bg-y">
+                                 <select style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b" name="period_activity" style="height: 30px; width:100px" id="period_activity" >
                                     <option {{$periodic->activity == 'Spot Check' ? 'selected' : '-'}} value="Spot Check">Spot Check</option>
                                     <option {{$periodic->activity == 'Pre-Bunker Check' ? 'selected' : '-'}} value="Pre-Bunker Check">Pre-Bunker Check</option>
                                     <option {{$periodic->activity == 'Not Applicable' ? 'selected' : '-'}} value="Not Applicable">Not Applicable</option>
                                  </select>
                               </td>
-                              <td>
-                                 <input  class="w-100 input_periodic_b"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
+                              <td class="bg-y">
+                                 <input style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
                               </td>
                               
-                              <td><input class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
+                              <td class="bg-y"><input style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
                            
-                              <td>
-                                 <input class="w-100 input_periodic"  type="number" name="rob_actual" id="period_rob_actual" value="{{$periodic->rob_actual}}">
+                              <td class="bg-y">
+                                 <input style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_actual" id="period_rob_actual" value="{{$periodic->rob_actual}}">
                               </td>
                            
                               <td>
@@ -698,7 +714,7 @@
                         <tbody>
                            <tr>
                               <td style="width: 400px">Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (Manual input based on joint calculation by all parties)</td>
-                              <td ><input style="width: 70px" class="input_special"  type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></td>
+                              <td class="bg-y"><input style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></td>
                            </tr>
                            <tr>
                               <td>Part 1: Corrected Fuel Cons. from 00:00 hours to Check Time (based on calculation by applying ROB Difference) <br>
@@ -712,7 +728,7 @@
                            </tr>
                            <tr>
                               <td>Part 2: Actual Fuel Cons. from Check Time to 24:00 hours (manual input based on actual sounding)</td>
-                              <td ><input style="width: 70px" class="input_special"  type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></td>
+                              <td class="bg-y" ><input style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></td>
                            </tr>
                            <tr>
                               <th>Total Actual Daily Fuel Consumption = (Part 1 + Part 2)</th>
@@ -746,12 +762,12 @@
                         @foreach ($crews->where('is_crew', 1) as $crew)
 
                         <tr>
-                           <td>
+                           <td class="bg-y" >
                               {{-- {{$crew->id}} --}}
-                              <input class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                              <input  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
                            </td>
-                           <td>
-                              <input class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                           <td class="bg-y">
+                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
                            </td>
                            <td>
                               <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}"> Delete </a>
@@ -782,11 +798,11 @@
                      <tbody>
                         @foreach ($crews->where('is_crew', 0) as $pax)
                         <tr>
-                           <td>
-                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
+                           <td class="bg-y">
+                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
                            </td>
-                           <td>
-                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
+                           <td class="bg-y">
+                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
                            </td>
                            <td>
                               <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>

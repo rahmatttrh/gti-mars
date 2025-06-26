@@ -120,7 +120,7 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="container">
+   <div class="">
       <ul class="navbar-nav">
          <li class="nav-item dropdown {{ (request()->is('dsp/m/dash/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/m/dash/*')) ? 'text-dark' : 'text-white' }} ">
