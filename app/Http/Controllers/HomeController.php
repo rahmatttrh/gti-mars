@@ -1345,7 +1345,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      }else if(auth()->user()->username('lutfi')){
+      }else if(auth()->user()->username == 'lutfi'){
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
