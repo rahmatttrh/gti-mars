@@ -1349,6 +1349,72 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
+      }else if(auth()->user()->username('lutfi')){
+         // dd('ok');
+         // $user = User::where('username', auth()->user()->username)->first();
+         // $user->roles()->detach();
+         // $user->assignRole('vessel');
+         // dd('ok');
+         if (auth()->user()->username == 'pet') {
+            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+         } elseif (auth()->user()->username == 'marine') {
+            $vdrValidations = Vdr::where('status', 2)->get();
+            $vdrs = Vdr::where('status', '>=', 2)->get();
+         } elseif (auth()->user()->username == 'lutfi') {
+            $vdrValidations = Vdr::where('status', 3)->get();
+            $vdrs = Vdr::where('status', '>=', 3)->get();
+         } else {
+            $vdrs = null;
+            $vdrValidations = Vdr::where('status', 3)->get();
+         }
+
+         $cargoValidations = ModelsRequest::where('status', 1)->get();
+         $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
+         $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
+         $takeouts = ModelsRequest::where('undo', '!=', null)->get();
+         $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
+         $vessels = Vessel::get();
+         $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
+
+         $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
+         $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
+
+         $rawDates = [];
+         while ($start->lte($end)) {
+            $rawDates[] = $start->copy();
+            $start->addDay();
+         }
+         $dates = array();
+         $values = array();
+         $vdrsArray = array();
+         foreach ($rawDates as $d) {
+            $dates[] = $d->format('l, d/m/Y');
+            $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
+            $values[] = count($totalRequests);
+         }
+
+         $logs = Log::get();
+
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+         return view('main', [
+            'allVdrs' => $allVdrs,
+            'vdrs' => $vdrs,
+            'vdrValidations' => $vdrValidations,
+            'cargoValidations' => $cargoValidations,
+            'schedules' => $schedules,
+            'cargoItems' => $cargoItems,
+            'takeouts' => $takeouts,
+            'itemRejects' => $itemRejects,
+            'vessels' => $vessels,
+            'allRequests' => $allRequests,
+            'dates' => $dates,
+            'values' => $values,
+            'vdrsArray' => $vdrsArray,
+
+            'logs' => $logs
+
+         ])->with('i');
       } else if (auth()->user()->hasRole('office')) {
          // dd('ok');
          $now = Carbon::now();
