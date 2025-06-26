@@ -116,7 +116,7 @@
 
                            @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
                     
-                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
+                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approveee</a>
                             
                               
                            @endif

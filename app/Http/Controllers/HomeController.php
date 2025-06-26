@@ -1290,8 +1290,8 @@ class HomeController extends Controller
          // $user->assignRole('vessel');
          // dd('ok');
          if (auth()->user()->username == 'pet') {
-            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
-            $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+            $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 1)->orderBy('updated_at', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->get();
             $vdrs = Vdr::where('status', '>=', 2)->get();
@@ -1349,7 +1349,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      }else if(auth()->user()->username == 'lutfi'){
+      } else if(auth()->user()->username == 'lutfi'){
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();

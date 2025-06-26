@@ -1,11 +1,11 @@
 @if ($vdr->status == 0)
    Draft
    @elseif($vdr->status == 1)
-   Validasi PET
+   Menunggu Validasi PET
    @elseif($vdr->status == 2)
-   Validasi Marine
+   Menunggu Validasi Marine
    @elseif($vdr->status == 3)
-   Validasi Superintendent
+   Menunggu Validasi Superintendent
    @elseif($vdr->status == 4)
    Approved
 
