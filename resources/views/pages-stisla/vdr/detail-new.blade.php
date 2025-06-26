@@ -124,7 +124,8 @@
                               
                            @endif
 
-                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')<a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
+                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                           {{-- <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a> --}}
                         {{-- <div class="btn-group mr-2"> --}}
                            {{-- <div class="btn btn-block btn-group p-0"> --}}
                               {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
