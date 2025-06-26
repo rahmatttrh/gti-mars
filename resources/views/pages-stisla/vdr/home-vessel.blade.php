@@ -22,7 +22,7 @@
       <h4>OVERVIEW VDR</h4>
       <div class="row ">
          
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card card-statistic-1 border">
                <a href="{{route('vdr.marine.validation')}}">
                   <div class="card-icon bg-primary">
@@ -41,11 +41,11 @@
             </div>
             
          </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card card-statistic-1 border">
                <a href="{{route('vdr.marine.validation')}}">
                   <div class="card-icon bg-info">
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-edit"></i>
                   </div>
                   <div class="card-wrap">
                   <div class="card-header">
@@ -59,11 +59,11 @@
                </a>
             </div>
          </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card card-statistic-1 border">
                <a href="{{route('vdr.marine.validation')}}">
                   <div class="card-icon bg-info">
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-user"></i>
                   </div>
                   <div class="card-wrap">
                   <div class="card-header">
@@ -77,11 +77,11 @@
                </a>
             </div>
          </div>
-         <div class="col-md-3">
+         <div class="col-md-2">
             <div class="card card-statistic-1 border">
                <a href="{{route('vdr.marine.validation')}}">
                   <div class="card-icon bg-info">
-                  <i class="fas fa-star"></i>
+                  <i class="fas fa-user"></i>
                   </div>
                   <div class="card-wrap">
                   <div class="card-header">
@@ -90,6 +90,42 @@
                   </div>
                   <div class="card-body">
                      {{count($vdrs->where('status', 2))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="col-md-2">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-user"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Chief</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 3))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="col-md-2">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-success">
+                  <i class="fas fa-check"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Done</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 4))}}
                   </div>
                   </div>
                </a>
@@ -122,7 +158,7 @@
                   </div>
                </div>
             </div> --}}
-            <div class="table-responsive">
+            {{-- <div class="table-responsive">
             <table>
                <tbody>
                   <tr>
@@ -151,10 +187,10 @@
                   </tr>
                </tbody>
             </table>
-            </div>
+            </div> --}}
             {{-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est libero deserunt autem consectetur ea nihil, iusto distinctio corrupti harum. At debitis ipsum est. --}}
          </div>
-         <div class="col-md-10">
+         <div class="col-md-12">
             <div class="table-responsive">
                <table class="table table-striped table-sm" id="table-1">
                   <thead>
