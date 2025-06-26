@@ -49,7 +49,7 @@ table {
          <!-- Page title actions -->
          <div class="col-auto ms-auto d-print-none">
             {{-- {{$vdr->status}} --}}
-            @if ($vdr->status == 3 && auth()->user()->usernamr == 'lutfi')
+            @if ($vdr->status == 3 && auth()->user()->username == 'lutfi')
                <a href="#" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent">Approve </a>
             @endif
             @if ($vdr->status == 4 && auth()->user()->username == 'lutfi')
