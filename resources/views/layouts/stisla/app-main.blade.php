@@ -77,7 +77,7 @@ table {
 
 <body class="layout-3">
    <div id="app">
-      <div class="main-wrapper container">
+      <div class="main-wrapper px-2">
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
          <div class="navbar-bg" ></div>
          @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )

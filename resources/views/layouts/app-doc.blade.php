@@ -18,6 +18,7 @@
       {{-- <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet"/> --}}
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
       <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+      <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
       
    </head>
    <body>
@@ -100,6 +101,28 @@
                   </div>
                </div>
             </footer>
+         </div>
+      </div>
+
+      <div class="modal fade" id="vdr-approve-suptent" tabindex="1" role="dialog" aria-hidden="true">
+         <div class="modal-dialog modal-sm" role="document">
+            
+            
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Approve this VDR ???</h5>
+                  {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                  </button> --}}
+               </div>
+               <div class="modal-body">
+                  Validasi Vessel Daily Report
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
+               </div>
+            </div>
          </div>
       </div>
 
@@ -281,6 +304,37 @@
             $('.select2').select2({});
          });
       </script>
+
+
+<script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/popper.js')}}"></script>
+      <script src="{{asset('stisla/modules/tooltip.js')}}"></script>
+      <script src="{{asset('stisla/modules/bootstrap/js/bootstrap.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/nicescroll/jquery.nicescroll.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/moment.min.js')}}"></script>
+      <script src="{{asset('stisla/js/stisla.js')}}"></script>
+      
+      <!-- JS Libraies -->
+      <script src="{{asset('stisla/modules/jquery.sparkline.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/owlcarousel2/dist/owl.carousel.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/summernote/summernote-bs4.js')}}"></script>
+      <script src="{{asset('stisla/modules/chocolat/dist/js/jquery.chocolat.min.js')}}"></script>
+
+      <script src="{{asset('stisla/modules/datatables/datatables.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/datatables/Select-1.2.4/js/dataTables.select.min.js')}}"></script>
+      <script src="{{asset('stisla/modules/jquery-ui/jquery-ui.min.js')}}"></script>
+
+      <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
+      <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
+
+      <script src="{{asset('stisla/modules/izitoast/js/iziToast.min.js')}}"></script>
+
+      <!-- JS Libraies -->
+      <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
+
+      
 
       @stack('chart')
       @stack('get_schedules')

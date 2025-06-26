@@ -174,6 +174,8 @@ class MarineVdrController extends Controller
    public function approveSuptent(Request $req)
    {
       // $dekripId = dekripRambo($id);
+
+      dd('approve suptent');
       $vdr = Vdr::find($req->id);
       $vdr->update([
          'status' => 4,
@@ -207,8 +209,12 @@ class MarineVdrController extends Controller
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdr->update([
-         'status' => 3
+         'status' => 3,
+         'title2' => 'Marine',
+         'name2' => 'Capt. Umar',
       ]);
+
+      
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
@@ -257,9 +263,16 @@ class MarineVdrController extends Controller
    {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
+      // dd('lutfi');
+
+      // dd($vdr->title1);
       $vdr->update([
-         'status' => 4
+         'status' => 4,
+         'title3' => 'Suptent',
+         'name3' => 'Lutfi',
       ]);
+
+      // dd($vdr->name3);
       // dd()
 
       VdrTimestamp::create([

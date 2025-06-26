@@ -293,7 +293,7 @@ File: Leaflet-maps File
             show: false
         }
     },
-    colors: ['#5b66eb', '#68d3f8'],
+    colors: ['#5b66eb', '#6894f8'],
     legend: {
         show: false
     },

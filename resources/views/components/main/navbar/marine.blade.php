@@ -4,7 +4,7 @@
       color: black
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark">
+<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
@@ -119,8 +119,8 @@
    </ul>
 </nav>
 
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #00A9FF" >
-   <div class="container">
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+   <div class="">
       <ul class="navbar-nav">
          
          <li class="nav-item pl-2 {{ (request()->is('/')) ? 'active' : '' }}">
@@ -155,6 +155,14 @@
                <i class="fas fa-fire "></i>
                @endif
                <span class="mr-3">Images Feed</span>
+            </a>
+         </li>
+         <li class="nav-item pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
+            <a href="#" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('marine/daily/*'))
+               <i class="fas fa-fire "></i>
+               @endif
+               <span class="mr-3">Daily Activity</span>
             </a>
          </li>
          @endif

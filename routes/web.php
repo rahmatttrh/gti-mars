@@ -82,6 +82,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());
 
+   Route::get('marine/daily/index', [MarineController::class, 'daily'])->name('marine.daily');
+
    Route::get('user/setting', [HomeController::class, 'setting'])->name('user.setting');
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //    Route::group(['middleware' => ['role:marine']], function () {
@@ -141,6 +143,7 @@ Route::middleware(["auth"])->group(function () {
    });
 
    Route::get('vdr/detail/{id}/{tab}', [VdrController::class, 'show'])->name('vdr.show');
+   Route::get('vdr/spa/detail/{id}/{tab}', [VdrController::class, 'showSpa'])->name('vdr.show.spa');
 
    Route::prefix('fuel')->group(function () {
       Route::put('approve', [FuelController::class, 'approve'])->name('fuel.approve');
@@ -625,6 +628,8 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
       Route::prefix('act')->group(function () {
          Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
       Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
+      Route::get('create/spa', [VdrController::class, 'vdrCreateSpa'])->name('vdr.vessel.create.spa');
+      
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
       Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
@@ -632,15 +637,21 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
 
       Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
       Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+      Route::post('update/general', [VdrController::class, 'updateGeneralPost'])->name('vdr.update.general.post');
+      // Route::post('update/general', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+
+
       Route::put('update/approval', [VdrController::class, 'updateApproval'])->name('vdr.update.approval');
 
       Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
       Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
       Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
+      Route::delete('spa/delete/activity', [VdrController::class, 'deleteActivitySpa'])->name('vdr.delete.activity.spa');
 
       // Crew
       Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
       Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
+      Route::delete('spa/delete/crew', [VdrController::class, 'deleteCrewSpa'])->name('vdr.delete.crew.spa');
       Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
 
       Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
@@ -768,12 +779,26 @@ Route::group(['middleware' => ['role:vessel|superuser']], function () {
 
 
 
-
+Route::get('vdr/activity/add/row/{vdr}', [VdrController::class, 'addActivityRow'])->name('vdr.activity.add.row');
 
 
 Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
    Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
+
+   Route::get('vdr/update/general/{vdr}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+   Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
+   Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
+   Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
+   Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}/{remark}', [VdrController::class, 'updateCargoAjax']);
+   Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
+   Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
+
+   Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
+   Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
+
+   Route::get('vdr/update/crew/{vdr}/{crew}/{name}/{rank}', [VdrController::class, 'updateCrewAjax']);
+   Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updateCrewAjax']);
 });
 Auth::routes();
 

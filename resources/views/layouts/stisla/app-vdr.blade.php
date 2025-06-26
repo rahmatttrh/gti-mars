@@ -7,6 +7,7 @@
   <link rel="icon" href="{{asset('img/flaticon/neptune.png')}}" type="image/x-icon" />
 
   <!-- General CSS Files -->
+  <meta name="csrf-token" content="{!! csrf_token() !!}">
 
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
@@ -96,14 +97,14 @@
 
 
 </head>
-   <body class="layout-3 bg-white">
+   <body class="layout-3 bg-white ">
      
       <div id="app ">
          
-         <div class="main-wrapper container ">
+         <div class="main-wrapper px-2 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
                
-            <div class="navbar-bg bgb-1"></div>
+            <div class="navbar-bg bgb-1" style="background-color: #7C81AD"></div>
             
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
@@ -124,7 +125,7 @@
             
 
             <!-- Main Content -->
-            <div class="main-content">
+            <div class="main-content ">
             @yield('content')
             </div>
             <footer class="main-footer">
@@ -188,6 +189,17 @@
       @stack('autorefresh')
       @stack('report')
       @stack('chart')
+
+      @stack('general')
+      @stack('weather')
+      @stack('hsse')
+      @stack('operating')
+      @stack('cargo')
+      @stack('periodic')
+      @stack('special')
+      @stack('activity')
+      @stack('crew')
+
 
       <script>
          $(document).ready(function () {

@@ -116,7 +116,7 @@
    </ul>
 </nav>
 
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #00A9FF" >
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
    <div class="container">
       <ul class="navbar-nav">
          

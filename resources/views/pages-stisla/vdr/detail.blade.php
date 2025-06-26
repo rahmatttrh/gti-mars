@@ -184,7 +184,7 @@
                   @endif
    
                   @if ($vdr->status == 3 && auth()->user()->hasRole('chief'))
-                  <a href="" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-marine">Approve </a>
+                  <a href="" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent">Approve </a>
                   @endif
                   @if (auth()->user()->hasRole('vessel'))
                      @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
@@ -519,7 +519,7 @@
          </div>
       </div>
    </div>
-   <div class="modal fade" id="vdr-approve-marine" tabindex="1" role="dialog" aria-hidden="true">
+   <div class="modal fade" id="vdr-approve-suptent" tabindex="1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm" role="document">
          
          
