@@ -115,13 +115,16 @@
                            @endif
 
                            @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
-                    
+                              @if (auth()->user()->username != 'pet')
                               <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
+                              @endif
+                    
+                              
                             
                               
                            @endif
 
-                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')<a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
                         {{-- <div class="btn-group mr-2"> --}}
                            {{-- <div class="btn btn-block btn-group p-0"> --}}
                               {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
