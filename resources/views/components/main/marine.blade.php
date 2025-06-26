@@ -117,7 +117,17 @@
                   @foreach ($allvdrs as $vdr)
                      <tr class="border" style="border: 1px black">
                         {{-- <td>{{$vdr->id}}</td> --}}
-                        <td class="text-truncate" style="max-width: 120px"><a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
+                        <td class="text-truncate" style="max-width: 120px">
+                        @if (auth()->user()->username == 'lutfi')
+                        
+                        <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
+                           @else
+                           <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
+                           {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+
+                           @endif
+                        </td>
+                       
                         <td>{{formatDate($vdr->date)}}</td>
                         {{-- <td>{{formatDate($sche->date)}}</td> --}}
                         <td class="text-truncate" style="max-width: 100px">

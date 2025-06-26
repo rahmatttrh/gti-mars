@@ -198,6 +198,7 @@
       @stack('periodic')
       @stack('special')
       @stack('activity')
+      @stack('crew')
 
 
       <script>

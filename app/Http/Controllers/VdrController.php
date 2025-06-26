@@ -1382,6 +1382,61 @@ class VdrController extends Controller
 
    }
 
+   public function updateCrewAjax($vdr, $crew, $name, $rank)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrCrew = VdrCrew::find($crew);
+      $vdrCrew->update([
+         'name' => $name,
+         'rank' => $rank,
+         
+      ]);
+
+      
+
+      
+
+      return response()->json([
+         'success' => true,
+         'result' => $name,
+      ]);
+
+   }
+
+   public function updatePaxAjax($vdr, $crew, $name, $company)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrCrew = VdrCrew::find($crew);
+      $vdrCrew->update([
+         'name' => $name,
+         'company' => $company,
+         
+      ]);
+
+      
+
+      
+
+      return response()->json([
+         'success' => true,
+         'result' => $name,
+      ]);
+
+   }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
    public function updateGeneralPost(Request $req)

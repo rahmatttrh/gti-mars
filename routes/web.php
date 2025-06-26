@@ -82,6 +82,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());
 
+   Route::get('marine/daily/index', [MarineController::class, 'daily'])->name('marine.daily');
+
    Route::get('user/setting', [HomeController::class, 'setting'])->name('user.setting');
    Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
    //    Route::group(['middleware' => ['role:marine']], function () {
@@ -794,6 +796,9 @@ Route::prefix('fetch')->group(function () {
 
    Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
    Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
+
+   Route::get('vdr/update/crew/{vdr}/{crew}/{name}/{rank}', [VdrController::class, 'updateCrewAjax']);
+   Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updateCrewAjax']);
 });
 Auth::routes();
 

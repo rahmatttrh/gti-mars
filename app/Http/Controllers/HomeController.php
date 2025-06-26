@@ -495,14 +495,14 @@ class HomeController extends Controller
       if (auth()->user()->hasRole('superuser')) {
 
          // $user = User::create([
-         //    'name' => 'Riko',
-         //    'username' => 'riko',
-         //    'email' => 'riko@test.com',
+         //    'name' => 'Fleet Control',
+         //    'username' => 'marine_admin',
+         //    'email' => 'marine_admin@test.com',
          //    'password' => Hash::make('oses@2025'),
-         //    'type' => 'bod',
+         //    'type' => 'marine',
          //    // 'vessel_id' => $vessel->id
          // ]);
-         // $user->assignRole('bod');
+         // $user->assignRole('admin-marine');
 
          // $offices = Office::get();
          // foreach ($offices as $office) {
@@ -877,6 +877,271 @@ class HomeController extends Controller
          // $waterArray = [round($janWater), round($febWater), round($marWater), round($aprWater), round($mayWater), round($junWater)];
          // $monthArray = [formatDateMonth($jan), formatDateMonth($feb), formatDateMonth($mar), formatDateMonth($apr), formatDateMonth($may), formatDateMonth($jun)];
          // // dd($fuelArray);
+
+         $vessels = Vessel::where('status', 1)->get();
+         $lastActivity = [];
+         foreach($vessels as $v){
+            $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'desc')->first();
+            if ($lastVdr) {
+               $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'desc')->first();
+               if ($lastAct) {
+                  $lastActivity[] = $lastAct;
+               }
+               
+            }
+            
+         }
+
+         $maintenanceVessels = Vessel::where('status', 2)->get();
+         
+
+         $headerArray = [];
+         foreach($vdrOperatingHeaders as $head){
+            $headerArray[] = $head->description;
+         }
+         // dd($headerArray);
+
+         $vesselLists = DB::table('vessels')
+         ->select('type', DB::raw('count(*) as total') , 'type')
+         ->whereIn('status', [1,2])
+         ->groupBy('type')
+         ->orderBy('total', 'desc')
+         ->get();
+
+         // dd($vesselList);
+
+
+
+
+         // Intermilan
+         $now = Carbon::now();
+         $today = $now->format('l');
+         // dd($today);
+
+         if ($today == 'Friday') {
+            // dd('Friday');
+            $start = $now->addDay(-4);
+            $end = Carbon::now()->addDays(3);
+         }
+         if ($today == 'Saturday') {
+            // dd('Monday');
+            $start = $now->addDay(-5);
+            $end = Carbon::now()->addDays(2);
+         }
+         if ($today == 'Sunday') {
+            // dd('Monday');
+            $start = $now->addDay(-6);
+            $end = Carbon::now()->addDays(1);
+         }
+         if ($today == 'Monday') {
+            // dd('Monday');
+            $start = $now->addDay(+0);
+            $end = Carbon::now()->addDays(7);
+         }
+         if ($today == 'Tuesday') {
+            // dd('Monday');
+            $start = $now;
+            $end = Carbon::now()->addDays(8);
+         }
+         if ($today == 'Wednesday') {
+            // dd('Monday');
+            $start = $now->addDays(-2);
+            $end = Carbon::now()->addDays(5);
+         }
+         if ($today == 'Thursday') {
+            // dd('Monday');
+            $start = $now->addDays(-3);
+            $end = Carbon::now()->addDays(4);
+         }
+
+         // dd($start);
+
+         $start = $now->addDay(-10);
+         $end = Carbon::now();
+
+         $start = $start->format('Y-m-d');
+         // dd($start);
+         $end = $end->format('Y-m-d');
+         $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$start, $end])->get();
+         $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$start, $end])->get()->groupBy('user_name');
+         // dd(count($requests));
+         $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$start, $end])->orderBy('date', 'asc')->get();
+         // $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$start, $end])->get();
+         $today = Carbon::today();
+         $schedules = Schedule::orderBy('date', 'desc')->whereMonth('date', $today)->get();
+
+         $startDate = new Carbon($start);
+         $endDate = new Carbon($end);
+         $dates = array();
+         while ($startDate->lte($endDate)){
+            $dates[] = $startDate->toDateString();
+            $startDate->addDay();
+         }
+
+         $vessels = Vessel::get();
+         $cargoItems = CargoItem::whereBetween('date', [$start, $end])->get();
+
+         
+
+         return view('pages-urbix.dashboard', [
+            'fuelArray' => $fuelArray,
+            'waterArray' => $waterArray,
+            'monthArray' => $monthArray,
+
+            'lastActivity' => $lastActivity,
+
+            'vessels' => $vessels,
+            'maintenanceVessels' => $maintenanceVessels,
+
+            'operatingArray' => $operatingArray,
+            'operatingHeaders' => $headerArray,
+
+            'highArray' => $highArray,
+            'normalArray' => $normalArray,
+            'slowArray' => $slowArray,
+            'manuArray' => $manuArray,
+            'idleArray' => $idleArray,
+            'towArray' => $towArray,
+            'ahArray' => $ahArray,
+            'sbArray' => $sbArray,
+            'maintenanceArray' => $maintenanceArray,
+            'dtArray' => $dtArray,
+
+            'vesselLists' => $vesselLists,
+
+            // Intermilan
+            'dates' => $dates,
+            'weekSchedules' => $weekSchedules,
+            'start' => $start,
+            'end' => $end,
+            'vessels' => $vessels,
+            'cargoItems' => $cargoItems,
+
+         ]);
+      } else if (auth()->user()->hasRole('admin-marine')) {
+
+         $months = ['Jan', 'Mar', 'Apr', 'May'];
+         $today = Carbon::now();
+         // dd($today->format('Y'));
+         
+
+         // dd(12 - $today->format('m'));
+
+         $qty = 12 - $today->format('m');
+
+         $allMonth = [];
+         $monthArray = [];
+         for ($x = 1; $x <= $qty; $x++) {
+            $month = Carbon::createFromFormat('d/m/Y', '01/' . $x . '/' . $today->format('Y'));
+            $allMonth[] = $month;
+
+            $monthArray[] = formatDateMonth($month);
+         }
+
+         $fuelArray = [];
+         $waterArray = [];
+
+         $vdrOperatingHeaders = VdrOperatingHeader::get();
+         // $high = 0;
+         // $normal = 0;
+         // $slow = 0;
+         // $manu = 0;
+         // $idle = 0;
+         // $tow = 0;
+         // $ah = 0;
+         // $sb = 0;
+         // $maintenance = 0;
+         // $dt = 0;
+
+         $vdrOperating = [];
+
+         $highArray = [];
+         $normalArray = [];
+         $slowArray = [];
+         $manuArray = [];
+         $indleArray = [];
+         $towArray = [];
+         $ahArray = [];
+         $sbArray = [];
+         $maintenanceArray = [];
+         $dtArray = [];
+
+         foreach($allMonth as $m){
+            $vdrs = Vdr::whereMonth('date', $m)->get();
+            $fuel = 0;
+            $water = 0;
+
+            $high = 0;
+            $normal = 0;
+            $slow = 0;
+            $manu = 0;
+            $idle = 0;
+            $tow = 0;
+            $ah = 0;
+            $sb = 0;
+            $maintenance = 0;
+            $dt = 0;
+            
+            foreach($vdrs as $v){
+               $vdrOperatings = VdrOperating::where('vdr_id', $v->id)->get();
+               $daily = VdrOperating::where('vdr_id', $v->id)->sum('daily');
+               $fuel += $daily;
+
+               $vdrWater = VdrCargo::where('vdr_id', $v->id)->where('heading_id', 2)->sum('consumption');
+               $water += $vdrWater;
+
+
+
+               
+               $vdrOperatingHigh = $vdrOperatings->where('heading_id', 1)->first()->daily;
+               $high += $vdrOperatingHigh;
+
+               $vdrOperatingNormal = $vdrOperatings->where('heading_id', 2)->first()->daily;
+               $normal += $vdrOperatingNormal;
+
+               $vdrOperatingSlow = $vdrOperatings->where('heading_id', 3)->first()->daily;
+               $slow += $vdrOperatingSlow;
+
+               $vdrOperatingManu = $vdrOperatings->where('heading_id', 4)->first()->daily;
+               $manu += $vdrOperatingManu;
+
+               $vdrOperatingIdle = $vdrOperatings->where('heading_id', 5)->first()->daily;
+               $idle += $vdrOperatingIdle;
+
+               $vdrOperatingTow = $vdrOperatings->where('heading_id', 6)->first()->daily;
+               $tow += $vdrOperatingTow;
+
+               $vdrOperatingAh = $vdrOperatings->where('heading_id', 7)->first()->daily;
+               $ah += $vdrOperatingAh;
+
+               $vdrOperatingSb = $vdrOperatings->where('heading_id', 8)->first()->daily;
+               $sb += $vdrOperatingSb;
+
+               $vdrOperatingMaintenance = $vdrOperatings->where('heading_id', 9)->first()->daily;
+               $maintenance += $vdrOperatingMaintenance;
+
+               $vdrOperatingDt = $vdrOperatings->where('heading_id', 10)->first()->daily;
+               $dt += $vdrOperatingDt;
+            }
+
+            $fuelArray[] = round($fuel);
+            $waterArray[] = round($water);
+
+            $highArray[] = round($high);
+            $normalArray[] = round($normal);
+            $slowArray[] = round($slow);
+            $manuArray[] = round($manu);
+            $idleArray[] = round($idle);
+            $towArray[] = round($tow);
+            $ahArray[] = round($ah);
+            $sbArray[] = round($sb);
+            $maintenanceArray[] = round($maintenance);
+            $dtArray[] = round($dt);
+         }
+
+         $operatingArray = [round($high), round($normal), round($slow), round($manu), round($idle), round($tow), round($ah), round($sb), round($maintenance), round($dt)];
+
+
 
          $vessels = Vessel::where('status', 1)->get();
          $lastActivity = [];

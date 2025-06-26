@@ -104,20 +104,46 @@
                      
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
                      {{-- General  --}}
-                     @if (auth()->user()->hasRole('vessel'))
+                    
                         <div class="d-flex">
-                           @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                           <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                           @if (auth()->user()->hasRole('vessel'))
+                              @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                              <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                              <a href="" class="btn  btn-ligh border">Edit</a>
+                              <a href="" class="btn  btn-ligh border">Delete</a>
+                              @endif
                            @endif
-                           <a href="" class="btn  btn-ligh border">Edit</a>
-                           <a href="" class="btn  btn-ligh border">Delete</a>
+
+                           @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                    
+                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
+                            
+                              
+                           @endif
+
+                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                        {{-- <div class="btn-group mr-2"> --}}
+                           {{-- <div class="btn btn-block btn-group p-0"> --}}
+                              {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                              <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                           {{-- </div> --}}
+                           
+                           
+                        
+                        
+                        @endif
+                           
                            
                            
                            <a  class="btn btn-ligh border" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                            <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
                         </div>
                         <hr>
-                     @endif
+                     
+
+                     
+                     
                      <table>
                         <thead>
                            <tr>
@@ -756,7 +782,7 @@
                               <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
                            </td>
                            <td>
-                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_rank_{{$pax->id}}"  value="{{$pax->rank}} ">
+                              <input class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
                            </td>
                            <td>
                               <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
@@ -1609,6 +1635,107 @@
                      $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
                      $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
                      $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            // $("#hse_month_" + '{!! $hse->id !!}').val(parseInt(prev)+parseInt(today));
+         });
+      </script>
+    @endforeach
+
+   <script>
+      function addActivity(){
+         console.log('func add activity');
+         var _token = $('meta[name="csrf-token"]').attr('content');
+         $.ajax({
+            url: "/fetch/vdr/add/activity/" + vdr + "/" + periodic +  "/"  + remu + "/" + correct + "/" + actual + "/" + specialTotal ,
+            method: "GET",
+            dataType: 'json',
+
+            success: function(result) {
+               $('.specialTotal').html(specialTotal);
+               console.log('result :' + specialTotal);
+               
+            },
+            error: function(error) {
+               console.log(error);
+               $('.specialTotal').html(0);
+            }
+
+         })
+      }
+   </script>
+@endpush
+
+@push('crew')
+    @foreach ($crews as $crew)
+      <script>
+         $(document).ready(function() {
+         
+            $(".input_crew_" + '{!! $crew->id !!}').keyup(function () {
+               console.log('crew');
+               var vdr = $('#vdr').val();
+               var crew = '{!! $crew->id !!}';
+               var name = $('#crew_name_' + '{!! $crew->id !!}').val();
+               var rank = $('#crew_rank_' + '{!! $crew->id !!}').val();
+               
+               
+         
+               console.log('VDR : ' + vdr);
+
+               
+
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/crew/" + vdr + "/" + crew +  "/"  + name + "/" + rank,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     
+
+                     console.log('result :' + result.result);
+
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+
+            $(".input_pax_" + '{!! $crew->id !!}').keyup(function () {
+               console.log('crew');
+               var vdr = $('#vdr').val();
+               var crew = '{!! $crew->id !!}';
+               var name = $('#crew_name_' + '{!! $crew->id !!}').val();
+               var company = $('#crew_company_' + '{!! $crew->id !!}').val();
+               
+               
+         
+               console.log('VDR : ' + vdr);
+
+               
+
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/pax/" + vdr + "/" + crew +  "/"  + name + "/" + company,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     
+
+                     console.log('result :' + result.result);
+
                      
                   },
                   error: function(error) {
