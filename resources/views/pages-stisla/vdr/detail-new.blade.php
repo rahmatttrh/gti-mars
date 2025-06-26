@@ -7,10 +7,13 @@
 <style>
    table {
       width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 1px 1px 5px rgb(159, 158, 158);
    }
 
    table, th, td {
-      border: 1px solid rgb(226, 218, 218);
+      border: 1px solid rgba(226, 218, 218, 0);
       border-collapse: collapse;
    }
    th, td {
@@ -111,8 +114,8 @@
          </div> --}}
 
          <div class="col-md-12">
-            <div class="table-responsive overflow-auto" style="height: 72vh"> 
-               <div class="row">
+            <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
+               <div class="row pb-4">
                   <div class="col-md-5">
                      
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
@@ -153,38 +156,41 @@
                            
                            
                            
-                           <a  class="btn btn-ligh border" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                           <a  class="btn btn-light border bg-white mr-2 border" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                            <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                           {{-- <div class="card bg-warning">
+                              <div class="card-boy"></div>
+                           </div> --}}
+                           <div class="btn btn-warning btn-block ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                               <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                           </div>
                         </div>
                         <hr>
                      
 
                      
-                     
-                     <table>
+                  
+                        
+                     {{-- <table class="mb-2">
                         <thead>
                            <tr>
                               <td>{{$vdr->code}}</td>
                               <td class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
                            </tr>
-                           {{-- <tr>
-                              <td>Edit | Delete | <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class="">Export PDF</a></td>
-                           </tr> --}}
-                           {{-- <tr>
-                              <td>
-                                 Shortcut :
-                                 <a href="">Crew Data</a>
-                              </td>
-                           </tr> --}}
+                          
                         </thead>
-                     </table>
+                     </table> --}}
 
-                     <div class="table-responsive overflow-auto" style="height: 700px"> 
-                        <div class="table-responsive " >
+                     {{-- <div class="table-responsive overflow-auto pb-4" style="height: 700px ">  --}}
+                        <div class="table-responsive p-2" >
                            <table>
                               <thead>
                                  <tr>
-                                    <td colspan="4">General Information</td>
+                                    <td><b>{{$vdr->code}}</b></td>
+                                    <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
                                  </tr>
                               </thead>
                               <tbody>
@@ -232,13 +238,14 @@
                            </table>
                         </div>
                      
-                     {{-- Weather --}}
+                        {{-- Weather --}}
+                        <hr>
                      
-                        <div class="table-responsive " >
+                        <div class="table-responsive p-2" >
                            <table>
                               <thead>
                                  <tr>
-                                    <td colspan="4">Weather Condition</td>
+                                    <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">Weather Condition</b></td>
                                  </tr>
                                  <tr>
                                     <td>Weather/Time</td>
@@ -275,11 +282,12 @@
                            </table>
 
                            {{-- HSSE --}}
+                           <hr>
                         
                            <table>
                               <thead>
                                  <tr>
-                                    <td colspan="5">HSSE</td>
+                                    <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">HSSE</b></td>
                                  </tr>
                                  <tr>
                                     <th class="text-center">A</th>
@@ -351,33 +359,36 @@
                               </tbody>
                            </table>
                         </div>
-                     </div>
+                     {{-- </div> --}}
                      <hr>
                      
                      
                   </div>
          
                   <div class="col-md-7">
-                     <div class="table-responsive " >
+                     <div class="table-responsive p-2" >
                      <table class="w-100">
                         <thead>
                            <tr>
-                              <td colspan="13">Detail of Daily Operational Activity </td>
+                              <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
                            </tr>
                            <tr>
-                              <td colspan="12">
+                              <td colspan="13">
                                  {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
-                                 <a href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity">Add Row</a>
+                                 <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
+                                 <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete Check Item</a>
                                  {{-- <button onclick="addActivity()">Click</button> --}}
                               </td>
                            </tr>
                            <tr>
+                              <td></td>
                               <td colspan="2" class="text-center">Time</td>
                               <td colspan="8" class="text-center">Operating Mode Duration (hh:mm) - 
                                  Except Maintenance & Downtime </td>
                               <td rowspan="2" class="text-center">Activities</td>
                            </tr>
                            <tr>
+                              <th></th>
                               <td class="text-center">Start</td>
                               <td class="text-center">Finish</td>
                               <td class="text-center">High</td>
@@ -396,56 +407,59 @@
                               @foreach ($activities as $activity)
                               <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
                               <tr>
+                                 <td>
+                                    <input type="checkbox" name="" id="">
+                                 </td>
                                     <td class="text-info bg-y">
                                        {{-- {{$activity->id}} --}}
                                        {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                       <input style="background-color: rgb(226, 236, 151)" style="width: 75px"  class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                       <input style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                     </td>
                                     <td class="text-danger bg-y">
                                        {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                       <input  style="background-color: rgb(226, 236, 151)" style="width: 75px" class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                       <input  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                     </td>
                                     <td class="bg-y text-center">
                                        {{-- {{getTotalHours($activity->high)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->normal)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->slow)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->manu)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->idle)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->tow)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->ah)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
                                        {{-- {{getTotalHours($activity->sb)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                     </td>
                                     <td class="bg-y">
-                                       <input style="background-color: rgb(226, 236, 151)" class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                       <input style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                        {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
                                           {{$activity->activity}}
                                        </textarea> --}}
                                        
                                     </td>
                                     <td>
-                                       <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"> Delete </a>
+                                       {{-- <a href="#" class=" badge badge-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"><i class="fa fa-trash"></i> Delete </a> --}}
                                     </td>
                                    
                               </tr>
@@ -515,11 +529,13 @@
                         </tbody>
                      </table>
                      </div>
+                     <hr>
+                     <div class="table-responsive p-2" >
                      <table class="w-100">
                        
                         <thead>
                            <tr>
-                              <td colspan="5">Summary of Daily Operating Data</td>
+                              <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td>
                            </tr>
                            <tr class="text-center ">
                               <th class="">Operating Mode</th>
@@ -586,6 +602,7 @@
                            
                         </tbody>
                      </table>
+                     </div>
                      
                   
                   </div>
@@ -599,7 +616,7 @@
                         
                         <thead>
                            <tr>
-                              <td colspan="7">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</td>
+                              <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
                            </tr>
                            <tr class="text-center align-middle">
                               <th style="width: 120px">TYPE</th>
@@ -665,7 +682,7 @@
                      <table class="w-100">
                         <tbody>
                            <tr>
-                              <td rowspan="2">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</td>
+                              <td rowspan="2"><b class="text-primary" style="color: #1f4481 !important">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
                               <td class="text-truncate">Activity (Select Below)</td>
                               <td>ROB Check Time</td>
                               <td>ROB by VDR at Check Time</td>
@@ -707,8 +724,8 @@
                      <table>
                         <thead>
                            <tr>
-                              <td colspan="3">Special Calculation 
-                                 Applicable only for Periodical Fuel ROB Check/Control by Company Reps. and Surveyor </td>
+                              <td colspan="3"><b class="text-primary" style="color: #1f4481 !important"> Special Calculation 
+                                 Applicable only for Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b> </td>
                            </tr>
                         </thead>
                         <tbody>
@@ -748,12 +765,18 @@
                   <table>
                      <thead>
                         <tr>
-                           <td>Crew List</td>
+                           <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
                         </tr>
                         <tr>
-                           <td><a href="">Add Row</a></td>
+                           <td colspan="3">
+                              <a href="" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                              <a href="" class="badge badge-danger"><i class=" fa fa-trash"></i> Delete</a>
+                           </td>
+                           {{-- <td></td> --}}
+                           
                         </tr>
                         <tr>
+                           <td><input type="checkbox" name="id" id="id"></td>
                            <td>Name</td>
                            <td>Rank</td>
                         </tr>
@@ -762,6 +785,9 @@
                         @foreach ($crews->where('is_crew', 1) as $crew)
 
                         <tr>
+                           <td>
+                              <input type="checkbox" name="id" id="id">
+                           </td>
                            <td class="bg-y" >
                               {{-- {{$crew->id}} --}}
                               <input  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
@@ -769,9 +795,7 @@
                            <td class="bg-y">
                               <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
                            </td>
-                           <td>
-                              <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}"> Delete </a>
-                           </td>
+                           
                         </tr>
 
                         
@@ -785,10 +809,13 @@
                   <table>
                      <thead>
                         <tr>
-                           <td>Pax List</td>
+                           <td><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
                         </tr>
                         <tr>
-                           <td><a href="">Add Row</a></td>
+                           <td>
+                              <a href="" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                              <a href="" class="badge badge-danger"><i class=" fa fa-trash"></i> Delete</a>
+                           </td>
                         </tr>
                         <tr>
                            <td>Name</td>

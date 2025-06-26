@@ -97,7 +97,7 @@
 
 
 </head>
-   <body class="layout-3 bg-white ">
+   <body class="layout-3 " style="background-color: #eaeef7">
      
       <div id="app ">
          
