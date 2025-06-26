@@ -64,7 +64,10 @@
                      <tbody>
                         @foreach ($vdrvalids as $vdr)
                            <tr class="border" style="border: 1px black">
-                              <td><a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
+                              <td>
+                                 <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
+                                 {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+                              </td>
                               {{-- <td>{{$vdr->code}}</td> --}}
                               <td>{{formatDate($vdr->date)}}</td>
                               <td>
