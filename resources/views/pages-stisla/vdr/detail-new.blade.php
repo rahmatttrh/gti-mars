@@ -176,7 +176,7 @@
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                     <tr>
                                        <td class="px-1">Date</td>
-                                       <td><input class="w-100 input_general" id="date" name="date" required type="date" value="{{ old('date') ?: date('Y-m-d') }}" ></td>
+                                       <td><input class="w-100 input_general" id="date" name="date" required type="date" value="{{$vdr->date}}" ></td>
                                        <td class="px-1">Loc</td>
                                        <td><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}"  ></td>
                                     </tr>
