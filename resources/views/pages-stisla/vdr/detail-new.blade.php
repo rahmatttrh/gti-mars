@@ -121,10 +121,10 @@
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
                      {{-- General  --}}
                     
-                        <div class="d-flex">
+                        <div class="d-flex px-2">
                            @if (auth()->user()->hasRole('vessel'))
                               @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                              <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                              <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
                               <a href="" class="btn  btn-ligh border">Edit</a>
                               <a href="" class="btn  btn-ligh border">Delete</a>
                               @endif
@@ -141,18 +141,17 @@
                            @endif
 
                            @if ($vdr->status == 1  && auth()->user()->username == 'pet')
-                           {{-- <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a> --}}
-                        {{-- <div class="btn-group mr-2"> --}}
-                           {{-- <div class="btn btn-block btn-group p-0"> --}}
-                              {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
-                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
-                              <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                           {{-- </div> --}}
+                           {{-- <div class="btn-group mr-2"> --}}
+                              {{-- <div class="btn btn-block btn-group p-0"> --}}
+                                 {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                                 <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                                 <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              {{-- </div> --}}
+                              
+                              
                            
                            
-                        
-                        
-                        @endif
+                           @endif
                            
                            
                            
@@ -376,7 +375,7 @@
                               <td colspan="13">
                                  {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
                                  <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
-                                 <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete Check Item</a>
+                                 <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a>
                                  {{-- <button onclick="addActivity()">Click</button> --}}
                               </td>
                            </tr>
@@ -408,7 +407,7 @@
                               <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
                               <tr>
                                  <td>
-                                    <input type="checkbox" name="" id="">
+                                    <input class="idActivity" type="checkbox" name="idActivity" id="idActivity">
                                  </td>
                                     <td class="text-info bg-y">
                                        {{-- {{$activity->id}} --}}
@@ -553,7 +552,7 @@
                                  <input type="hidden" name="id[]" value="{{$operating->id}}">
                                  <input type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
                                  <!-- </td> -->
-                                 <td> {{$operating->heading->description}} vdrid: {{$operating->vdr_id}} </td>
+                                 <td> {{$operating->heading->description}} </td>
                                  <td class="text-center align-middle ">
                                     <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
                                        <input type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
@@ -1730,6 +1729,39 @@
     @foreach ($crews as $crew)
       <script>
          $(document).ready(function() {
+
+            // $(".idActivity" ).o(function () {
+            //    console.log('crew');
+            //    var vdr = $('#vdr').val();
+            //    var crew = '{!! $crew->id !!}';
+            //    var name = $('#crew_name_' + '{!! $crew->id !!}').val();
+            //    var rank = $('#crew_rank_' + '{!! $crew->id !!}').val();
+               
+               
+         
+            //    console.log('VDR : ' + vdr);
+
+               
+
+            //    var _token = $('meta[name="csrf-token"]').attr('content');
+            //    $.ajax({
+            //       url: "/fetch/vdr/update/crew/" + vdr + "/" + crew +  "/"  + name + "/" + rank,
+            //       method: "GET",
+            //       dataType: 'json',
+
+            //       success: function(result) {
+                     
+
+            //          console.log('result :' + result.result);
+
+                     
+            //       },
+            //       error: function(error) {
+            //          console.log(error)
+            //       }
+
+            //    })
+            // });
          
             $(".input_crew_" + '{!! $crew->id !!}').keyup(function () {
                console.log('crew');

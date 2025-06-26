@@ -6,10 +6,12 @@
 <style>
    table {
       width: 100%;
+      background-color: white !important;
+      border-radius: 5px !important
    }
 
    table, th, td {
-      border: 1px solid rgb(226, 218, 218);
+      border: 1px solid rgba(226, 218, 218, 0);
       border-collapse: collapse;
    }
    th, td {
@@ -17,11 +19,110 @@
    }
 </style>
    <section class="section">
+      <h4>OVERVIEW VDR</h4>
+      <div class="row ">
+         
+         <div class="col-md-3">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-primary">
+                  <i class="fas fa-star"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Total</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs)}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+            
+         </div>
+         <div class="col-md-3">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-star"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Draft</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 0))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-star"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>PET</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 1))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+         <div class="col-md-3">
+            <div class="card card-statistic-1 border">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-star"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Marine</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 2))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+         </div>
+      </div>
 
       <div class="row">
          <div class="col-md-2">
-            <h4>OVERVIEW VDR</h4>
-            <hr>
+           
+            
+
+            {{-- <div class="row">
+               <div class="col-md-3">
+                  <div class="card card-statistic-1 border">
+                     <a href="">
+                        <div class="card-icon bg-primary">
+                        <i class="fas fa-star"></i>
+                        </div>
+                        <div class="card-wrap">
+                        <div class="card-header">
+                           
+                           <h4>Total</h4>
+                        </div>
+                        <div class="card-body">
+                           {{count($vdrs)}}
+                        </div>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+            </div> --}}
+            <div class="table-responsive">
             <table>
                <tbody>
                   <tr>
@@ -30,26 +131,27 @@
                   </tr>
                   <tr>
                      <td>Draft</td>
-                     <td>4</td>
+                     <td>{{count($vdrs->where('status', 0))}}</td>
                   </tr>
                   <tr>
                      <td>PET</td>
-                     <td>2</td>
+                     <td>{{count($vdrs->where('status', 1))}}</td>
                   </tr>
                   <tr>
                      <td>Marine</td>
-                     <td>2</td>
+                     <td>{{count($vdrs->where('status', 2))}}</td>
                   </tr>
                   <tr>
                      <td>Suptend</td>
-                     <td>2</td>
+                     <td>{{count($vdrs->where('status', 3))}}</td>
                   </tr>
                   <tr>
                      <td>Done</td>
-                     <td>6</td>
+                     <td>{{count($vdrs->where('status', 4))}}</td>
                   </tr>
                </tbody>
             </table>
+            </div>
             {{-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est libero deserunt autem consectetur ea nihil, iusto distinctio corrupti harum. At debitis ipsum est. --}}
          </div>
          <div class="col-md-10">
