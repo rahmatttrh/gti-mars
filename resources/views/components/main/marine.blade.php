@@ -138,11 +138,11 @@
                   </tr>
                </thead>
                <tbody>
-                  @if (count($allvdrs->where('status', 3)) > 0)
-                  @foreach ($allvdrs->where('status', 3) as $vdr)
+                  @if (count($vdrvalids) > 0)
+                  @foreach ($vdrvalids as $vdr)
                      <tr class="border" style="border: 1px black">
                         {{-- <td>{{$vdr->id}}</td> --}}
-                        <td class="text-truncate" style="max-width: 120px">
+                        <td class="text-truncate" >
                         @if (auth()->user()->username == 'lutfi')
                         
                         <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
@@ -155,7 +155,7 @@
                        
                         <td>{{formatDate($vdr->date)}}</td>
                         {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                        <td class="text-truncate" style="max-width: 100px">
+                        <td class="text-truncate" >
                            <x-status-stisla.vdr :vdr="$vdr" />
                         </td>
                      </tr>

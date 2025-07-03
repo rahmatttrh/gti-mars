@@ -199,6 +199,7 @@
       @stack('special')
       @stack('activity')
       @stack('crew')
+      @stack('engine')
 
 
       <script>

@@ -226,6 +226,28 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
+   public function approveForm(Request $req)
+   {
+      
+      $vdr = Vdr::find($req->vdr);
+      $vdr->update([
+         'status' => 3,
+         'title2' => 'Marine Dept',
+         'name2' => $req->name2,
+      ]);
+
+      
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 3,
+         'user_id' => auth()->user()->id
+      ]);
+      // dd()
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
    public function reject(Request $req)
    {
       $vdr = Vdr::find($req->vdr);
