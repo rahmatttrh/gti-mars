@@ -1162,9 +1162,9 @@
                         <div class="form-group">
                            <label for="name2">PIC Marine</label>
                            <select class="form-control" name="name2" id="name2" required>
-                              <option value="Capt. Umar Agam">Capt. Umar Agam</option>
-                              <option value="Capt. Rezky">Capt. Rezky Hardanto</option>
-                              <option value="Capt. Misbakh">Capt. Muhammad Misbakhul Hasan</option>
+                              <option value="Umar Agam">Umar Agam</option>
+                              <option value="Rezky">Rezky Hardanto</option>
+                              <option value="Misbakh">Muhammad Misbakhul Hasan</option>
                               
                            </select>
                           
