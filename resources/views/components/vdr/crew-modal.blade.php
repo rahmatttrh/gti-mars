@@ -68,13 +68,14 @@
       
       <div class="modal-content">
          <div class="modal-header">
-            <h5 class="modal-title">Release VDR {{formatDate($vdr->date)}} ?</h5>
+            <h5 class="modal-title">Release VDR ?</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                <span aria-hidden="true">&times;</span>
             </button>
          </div>
          <div class="modal-body">
-            {{-- <span>Release VDR {{formatDate($vdr->date)}} ?</span> --}}
+            {{$vdr->code}} <br>
+            <span>Tanggal {{formatDate($vdr->date)}} </span>
             <hr>
             <span>Pastikan semua data sudah terisi dengan benar. Data akan terkirim ke Marine Department PHE OSES untuk dilakukan validasi.</span>
          </div>

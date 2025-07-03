@@ -25,9 +25,19 @@
       outline:0;
       text-align: center; 
       /* background-color: rgb(226, 236, 151) */
+      
    }
 
    .bg-y {
+      background-color: rgb(226, 236, 151)
+   }
+
+   .border-g {
+      border: 1px solid rgb(156, 152, 152);
+      border-collapse: collapse;
+   }
+
+   .input-bg-y {
       background-color: rgb(226, 236, 151)
    }
 
@@ -114,6 +124,57 @@
          </div> --}}
 
          <div class="col-md-12">
+            <div class="d-flex px-2">
+               @if (auth()->user()->hasRole('vessel'))
+                  @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                  <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                  <div class="btn-group btn-light mx-2">
+                     <a href="" class="btn bg-white btn-light border">Edit</a>
+                     <a href="" class="btn bg-white btn-light border">Delete</a>
+                  </div>
+                  <div class="btn btn-warning  ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                 </div>
+                  
+                  @endif
+               @endif
+
+               @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+               
+                  @if (auth()->user()->username != 'pet')
+                  <a href="#" class="btn   mr-2 btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                  @endif
+                  
+                
+                  
+               @endif
+
+               @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+               {{-- <div class="btn-group mr-2"> --}}
+                  {{-- <div class="btn btn-block btn-group p-0"> --}}
+                     {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                     <div class="btn-group mr-2">
+                        <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                     <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     </div>
+                     
+                  {{-- </div> --}}
+                  
+                  
+               
+               
+               @endif
+               
+               
+               
+               <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+               <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+               {{-- <div class="card bg-warning">
+                  <div class="card-boy"></div>
+               </div> --}}
+               
+            </div>
+            <hr>
             <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
                <div class="row pb-4">
                   <div class="col-md-5">
@@ -121,50 +182,6 @@
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
                      {{-- General  --}}
                     
-                        <div class="d-flex px-2">
-                           @if (auth()->user()->hasRole('vessel'))
-                              @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                              <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                              <a href="" class="btn  btn-ligh border">Edit</a>
-                              <a href="" class="btn  btn-ligh border">Delete</a>
-                              @endif
-                           @endif
-
-                           @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
-                              @if (auth()->user()->username != 'pet')
-                              <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#vdr-approve-marine">Approve</a>
-                              @endif
-                    
-                              
-                            
-                              
-                           @endif
-
-                           @if ($vdr->status == 1  && auth()->user()->username == 'pet')
-                           {{-- <div class="btn-group mr-2"> --}}
-                              {{-- <div class="btn btn-block btn-group p-0"> --}}
-                                 {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
-                                 <a href="#" class="btn  btn-block btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
-                                 <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                              {{-- </div> --}}
-                              
-                              
-                           
-                           
-                           @endif
-                           
-                           
-                           
-                           <a  class="btn btn-light border bg-white mr-2 border" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
-                           <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
-                           {{-- <div class="card bg-warning">
-                              <div class="card-boy"></div>
-                           </div> --}}
-                           
-                        </div>
-                        <div class="btn btn-warning  ml-2 mt-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                           <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                       </div>
                         
                      
 
@@ -843,6 +860,69 @@
                   </table>
                </div>
             </div>
+            <hr>
+            {{-- <div class="table-responsive"> --}}
+               <table class="" >
+                  <thead>
+                     <tr>
+                        <th  rowspan="2" class="text-center align-middle border-g">No</th>
+                        <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
+                        <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
+                        <th  colspan="6" class="text-center border-g">Main Engines Data</th>
+                        <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
+                     </tr>
+                     <tr>
+                        <th style="width: 10px"  class="border-g">Ref. Value</th>
+                        <th class="border-g">Port</th>
+                        <th class="border-g">Stbd</th>
+                        <th class="border-g">Center</th>
+                        <th class="border-g">Other</th>
+                        <th class="border-g">Ref. Value</th>
+                        <th class="border-g">Port</th>
+                        <th class="border-g">Stbd</th>
+                        <th class="border-g">Other</th>
+                     </tr>
+                  </thead>
+                  <tbody>  
+                     @foreach ($engines as $key => $engine)
+                     {{-- <input type="hidden" name="id[]" value="{{$engine->id}}"> --}}
+                     <input type="text" name="engine" id="engine" value="{{$engine->id}}" hidden>
+                     <tr>
+                        <td>{{$key+1}}</td>
+                        <td class="col-md-3">{{$engine->heading->description}}</td>
+                        <td>{{$engine->heading->unit}}</td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
+                        </td>
+                     </tr>
+                     @endforeach
+                  </tbody>
+               </table>
+            {{-- </div> --}}
          </div>
       </div>
 
@@ -972,7 +1052,7 @@
       </div>
    </div>
    <div class="modal fade" id="modalAppPet" tabindex="-1" role="dialog"  aria-hidden="true">
-      <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-dialog " role="document">
          <form action="{{route('vdr.approve.pet')}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -981,7 +1061,7 @@
             <input type="hidden" name="created_by" value="{{$user->name}}">
             <div class="modal-content">
                <div class="modal-header">
-                  <h5 class="modal-title">Approve VDR</h5>
+                  <h5 class="modal-title">Form Approve VDR</h5>
 
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
@@ -990,27 +1070,40 @@
                </div>
                <div class="modal-body">
                   
-
+                  <b>{{$vdr->code}}</b>
+                  <hr>
                   {{-- <div class="badge badge-info">Approval 1</div> --}}
-                  <div class="row mb-2">
+                  <div class="row ">
                      
-                     <div class="col-12">
+                     <div class="col-6">
                         
                         <div class="form-group">
-                           <label for="title1">Location </label>
+                           <label for="title1">LOCATION </label>
                            <select class="form-control" name="title1" id="title1" required>
-                              <option value="Kalijapat">Kalijapat</option>
-                              <option value="SBU">SBU</option>
-                              <option value="CBU">CBU</option>
-                              <option value="NBU">NBU</option>
+                              <option value="PET Kalijapat">PET Kalijapat</option>
+                              <option value="PET SBU">PET SBU</option>
+                              <option value="PET CBU">PET CBU</option>
+                              <option value="PET NBU">PET NBU</option>
                            </select>
                            {{-- <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" placeholder="Jabatan/Posisi">
                            @error('title1')
                               <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                            @enderror --}}
                         </div>
+                        
                      </div>
-                     <div class="col-12">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                           <label for="title1">PIC PET</label>
+                           <select class="form-control" name="name1" id="name1" required>
+                              <option value="Falah">Falah</option>
+                              <option value="Setyo">Setyo</option>
+                              
+                           </select>
+                          
+                        </div>
+                     </div>
+                     {{-- <div class="col-12">
                         <div class="form-group">
                            <label for="name1">Name </label>
                            <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
@@ -1018,7 +1111,67 @@
                               <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
                            @enderror
                         </div>
+                     </div> --}}
+                  </div>
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Approve</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="modalAppMarine" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.approve.marine.form')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Form Approve VDR</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  
+                  <b>{{$vdr->code}}</b>
+                  <hr>
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <div class="row mb-2">
+                     
+                     <div class="col-md-12">
+                        
+                        
+                        <div class="form-group">
+                           <label for="name2">PIC Marine</label>
+                           <select class="form-control" name="name2" id="name2" required>
+                              <option value="Capt. Umar Agam">Capt. Umar Agam</option>
+                              <option value="Capt. Rezky">Capt. Rezky</option>
+                              
+                           </select>
+                          
+                        </div>
                      </div>
+                     {{-- <div class="col-12">
+                        <div class="form-group">
+                           <label for="name1">Name </label>
+                           <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
+                           @error('name1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div> --}}
                   </div>
 
 
@@ -1858,6 +2011,93 @@
          })
       }
    </script>
+@endpush
+
+@push('engine')
+    @foreach ($engines as $en)
+      <script>
+         $(document).ready(function() {
+         
+            $(".input_engine_" + '{!! $en->id !!}').keyup(function () {
+               console.log('engine');
+               var vdr = $('#vdr').val();
+               var engine = '{!! $en->id !!}';
+               var m_ref = $('#m_ref_' + '{!! $en->id !!}').val();
+               var m_port = $('#m_port_' + '{!! $en->id !!}').val();
+               var m_stbd = $('#m_stbd_' + '{!! $en->id !!}').val();
+               var m_center = $('#m_center_' + '{!! $en->id !!}').val();
+               var m_other = $('#m_other_' + '{!! $en->id !!}').val();
+               var a_ref = $('#a_ref_' + '{!! $en->id !!}').val();
+               var a_port = $('#a_port_' + '{!! $en->id !!}').val();
+               var a_stbd = $('#a_stbd_' + '{!! $en->id !!}').val();
+               var a_other = $('#a_other_' + '{!! $en->id !!}').val();
+               
+               
+
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/engine/" + vdr + "/" + engine +  "/"  + m_ref + "/" + m_port + "/" + m_stbd + "/" + m_center + "/" + m_other + "/" + a_ref + "/" + a_port + "/" + a_stbd  + "/" + a_other,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     // $('.highTime').html(result.highTime);
+                     // $('.normalTime').html(result.normalTime);
+                     // $('.slowTime').html(result.slowTime);
+                     // $('.idleTime').html(result.idleTime);
+                     // $('.manuTime').html(result.manuTime);
+                     // $('.towTime').html(result.towTime);
+                     // $('.ahTime').html(result.ahTime);
+                     // $('.sbTime').html(result.sbTime);
+
+                     console.log('engine :' + result.result);
+
+                     // $('.time_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.time);
+                     // $('.time_' + result.vdrOperatingHigh.heading_id).html(result.vdrOperatingHigh.time);
+                     // $('.daily_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.daily);
+
+                     // $('.time_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.time);
+                     // $('.time_' + result.vdrOperatingNormal.heading_id).html(result.vdrOperatingNormal.time);
+                     // $('.daily_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.daily);
+
+                     // $('.time_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.time);
+                     // $('.time_' + result.vdrOperatingSlow.heading_id).html(result.vdrOperatingSlow.time);
+                     // $('.daily_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.daily);
+
+                     // $('.time_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.time);
+                     // $('.time_' + result.vdrOperatingManu.heading_id).html(result.vdrOperatingManu.time);
+                     // $('.daily_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.daily);
+
+                     // $('.time_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.time);
+                     // $('.time_' + result.vdrOperatingIdle.heading_id).html(result.vdrOperatingIdle.time);
+                     // $('.daily_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.daily);
+
+                     // $('.time_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.time);
+                     // $('.time_' + result.vdrOperatingTow.heading_id).html(result.vdrOperatingTow.time);
+                     // $('.daily_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.daily);
+
+                     // $('.time_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.time);
+                     // $('.time_' + result.vdrOperatingAh.heading_id).html(result.vdrOperatingAh.time);
+                     // $('.daily_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.daily);
+
+                     // $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
+                     // $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
+                     // $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            // $("#hse_month_" + '{!! $hse->id !!}').val(parseInt(prev)+parseInt(today));
+         });
+      </script>
+    @endforeach
+
+   
 @endpush
 
 

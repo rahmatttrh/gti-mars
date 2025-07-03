@@ -1289,15 +1289,18 @@ class HomeController extends Controller
             $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('updated_at', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
-            $vdrValidations = Vdr::where('status', 2)->get();
+            $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
+            // dd($vdrValidations);
             $vdrs = Vdr::where('status', '>=', 2)->get();
          } elseif (auth()->user()->username == 'lutfi') {
-            $vdrValidations = Vdr::where('status', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->get();
          } else {
             $vdrs = null;
-            $vdrValidations = Vdr::where('status', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
          }
+
+         // dd($vdrValidations);
 
          $cargoValidations = ModelsRequest::where('status', 1)->get();
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);

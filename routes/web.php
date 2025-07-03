@@ -454,6 +454,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
          Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
+         Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
          Route::get('approve/luthfi/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
@@ -799,6 +800,8 @@ Route::prefix('fetch')->group(function () {
 
    Route::get('vdr/update/crew/{vdr}/{crew}/{name}/{rank}', [VdrController::class, 'updateCrewAjax']);
    Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updateCrewAjax']);
+
+   Route::get('vdr/update/engine/{vdr}/{engine}/{m_ref}/{m_port}/{m_stbd}/{m_center}/{m_other}/{a_ref}/{a_port}/{a_stbd}/{a_other}', [VdrController::class, 'updateEngineAjax']);
 });
 Auth::routes();
 

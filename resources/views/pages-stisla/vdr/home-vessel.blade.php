@@ -19,7 +19,7 @@
    }
 </style>
    <section class="section">
-      <h4>OVERVIEW VDR</h4>
+      {{-- <h4>OVERVIEW VDR</h4> --}}
       <div class="row ">
          
          <div class="col-md-2">
@@ -206,6 +206,7 @@
                         <th colspan="2" class="text-center">Normal Speed Contract</th>
                         <th colspan="2" class="text-center">Slow Speed Contract</th>
                         <th colspan="2" class="text-center">Total</th>
+                        <th></th>
                      </tr>
                      <tr>
                         <th>Speed</th>
@@ -216,6 +217,7 @@
                         <th>Fuel</th>
                         <th>Time</th>
                         <th>Daily Fuel</th>
+                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
