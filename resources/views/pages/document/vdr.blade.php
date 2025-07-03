@@ -1089,7 +1089,9 @@ table {
 
                @if ($vdr->title3 != null)
                   <div class="col pt-1">
+                     <small>Acknowledged by,</small>
                      <br>
+                  
                      <small>{{$vdr->title3 ?? '-'}} : {{$vdr->name3 ?? '-'}}</small><br>
                      @if ($vdr->title3 != null)
                      <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
