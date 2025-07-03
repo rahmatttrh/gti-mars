@@ -2764,6 +2764,11 @@ class VdrController extends Controller
       
 
       $today = Carbon::now();
+      // dd($today->format('m'));
+
+      $year = $today->format('Y');
+      $month = $today->format('m');
+      $day = $today->format('d');
 
      
          $vdr = Vdr::create([
@@ -2789,9 +2794,11 @@ class VdrController extends Controller
 
          // Mengonversi $id ke dalam format tiga digit dengan leading zeros
          $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+         
+         $timestamp = $year . '/' . $month . '/' . $day;
 
          // Menggabungkan awalan dan $idPadded
-         $hasil = $awalan . $idPadded;
+         $hasil = $awalan . $timestamp;
 
          $vdr->update([
             'code' => $hasil
@@ -3002,6 +3009,10 @@ class VdrController extends Controller
       
 
       $today = Carbon::now();
+      $year = $today->format('Y');
+      $month = $today->format('m');
+      $day = $today->format('d');
+      
 
      
       $vdr = Vdr::create([
@@ -3021,15 +3032,16 @@ class VdrController extends Controller
          'status' => 0
       ]);
 
-         
+      
 
       $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+      $timestamp = $year . '/' . $month . '/' . $day;
 
       // Menggabungkan awalan dan $idPadded
-      $hasil = $awalan . $idPadded;
+      $hasil = $awalan . $timestamp;
 
       $vdr->update([
          'code' => $hasil
