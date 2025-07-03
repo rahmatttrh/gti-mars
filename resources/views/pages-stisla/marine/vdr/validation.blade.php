@@ -3,6 +3,14 @@
    VDR Validation
 @endsection
 @section('content')
+<style>
+    table {
+      width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 1px 1px 5px rgb(159, 158, 158);
+   }
+</style>
 <section class="section">
    {{-- <div class="section-header">
       <h1 class="section-title">VDR History</h1>
@@ -19,7 +27,7 @@
       </p> --}}
 
       <div class="table-responsive">
-         <table class="table table-striped table-sm" id="table-1">
+         <table class="" id="table-1">
             <thead>
                <tr>
                   <th rowspan="2" class="text-center">No.</th>

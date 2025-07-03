@@ -108,9 +108,9 @@
             </a>
          </li>
 
-         <li class="nav-item {{ (request()->is('vdr/m/act/validation')) ? 'active' : '' }}">
-            <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/m/act/validation'))
+         <li class="nav-item {{ (request()->is('vdr/m/act/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/*'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                

@@ -111,6 +111,39 @@ class MarineVdrController extends Controller
       ])->with('i');
    }
 
+   public function validationPet()
+   {
+      
+         $vdrValidations = Vdr::where('status', 1)->get();
+      
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function validationSuptent()
+   {
+      
+         $vdrValidations = Vdr::where('status', 3)->get();
+      
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function validationComplete()
+   {
+      
+         $vdrValidations = Vdr::where('status', 4)->get();
+      
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
    public function approvePet(Request $req)
    {
       // $dekripId = dekripRambo($id);

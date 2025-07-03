@@ -24,7 +24,7 @@
    <div class="row">
       <div class="col-md-3">
          <div class="card card-statistic-1 border">
-            <a href="{{route('vdr.marine.validation')}}">
+            <a href="{{route('vdr.pet.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
                </div>
@@ -62,7 +62,7 @@
       </div>
       <div class="col-md-3">
          <div class="card card-statistic-1 border">
-            <a href="{{route('vdr.marine.validation')}}">
+            <a href="{{route('vdr.suptent.validation')}}">
                <div class="card-icon bg-primary">
                <i class="fas fa-user"></i>
                </div>
@@ -80,7 +80,7 @@
       </div>
       <div class="col-md-3">
          <div class="card card-statistic-1 border">
-            <a href="{{route('vdr.marine.validation')}}">
+            <a href="{{route('vdr.complete.validation')}}">
                <div class="card-icon bg-success">
                <i class="fas fa-check"></i>
                </div>
