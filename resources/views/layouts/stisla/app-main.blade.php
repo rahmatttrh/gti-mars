@@ -75,7 +75,7 @@ table {
 </style>
 </head>
 
-<body class="layout-3">
+<body class="layout-3" style="background-color: #eaeef7">
    <div id="app">
       <div class="main-wrapper px-2">
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}

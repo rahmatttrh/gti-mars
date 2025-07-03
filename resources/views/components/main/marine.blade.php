@@ -1,6 +1,9 @@
 <style>
    table {
       width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 1px 1px 5px rgb(159, 158, 158);
    }
 
    table, th, td {
@@ -98,18 +101,20 @@
       <div class="col-md-7   ">
          
          {{-- <span class="btn btn-light border">Sailing Order</span> --}}
-         <table class="display  border">
+         {{-- <table class="display  border">
             <tbody>
                <tr>
                   <th>VDR yang membutuhkan Approval anda</th>
                </tr>
             </tbody>
-         </table>
-         <div class="table-responsive overflow-auto" style="max-height: 180px">
-            <table class="display  border">
+         </table> --}}
+         <div class="table-responsive overflow-auto p-1" style="max-height: 180px">
+            <table class="  border">
                
                <thead>
-                  
+                  <tr>
+                     <th colspan="4">VDR yang membutuhkan Approval anda</th>
+                  </tr>
                   <tr>
                      {{-- <th>ID</th> --}}
                      <th>Vessel</th>
@@ -152,18 +157,20 @@
             </table>
          </div>
          <hr>
-         <table class="display  border">
+         {{-- <table class="display  border">
             <tbody>
                <tr>
                   <th>Sailing Order</th>
                </tr>
             </tbody>
-         </table>
-         <div class="table-responsive overflow-auto" style="height: 120px">
+         </table> --}}
+         <div class="table-responsive overflow-auto p-1" style="height: 120px">
             <table class="display  border">
                
                <thead>
-                  
+                  <tr>
+                     <th colspan="4">Sailing Order</th>
+                  </tr>
                   <tr>
                      <th>Vessel</th>
                      <th>Code</th>
