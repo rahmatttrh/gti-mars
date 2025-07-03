@@ -37,9 +37,9 @@ table {
 }
 
 </style>
-<div class="container-xl">
+<div class="px-4">
    <!-- Page title -->
-   <div class="page-header d-print-none">
+   <div class="page-header bg-white d-print-none">
       <div class="row align-items-center">
          <div class="col">
             <h2 class="page-title">
@@ -50,11 +50,12 @@ table {
          <div class="col-auto ms-auto d-print-none">
             {{-- {{$vdr->status}} --}}
             @if ($vdr->status == 3 && auth()->user()->username == 'lutfi')
-               <a href="#" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent">Approve </a>
+               <a href="#" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
             @endif
-            @if ($vdr->status == 4 && auth()->user()->username == 'lutfi')
+            @if ( auth()->user()->username == 'lutfi')
                <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a>
             @endif
+            {{-- <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a> --}}
             <button type="button" class="btn btn-light" onclick="javascript:window.print();">
             <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
@@ -64,9 +65,9 @@ table {
       </div>
    </div>
 </div>
-<div class="page-body" >
-   <div class="container-xl bg-white rounded">
-      <div class="row border-bottom pt-1 mb-2">
+<div class="page-body bg-white" >
+   <div class=" px-4 bg-white rounded pb-4 pt-1 ">
+      <div class="row border-bottom pt-1 mb-2 ">
          <div class="col-12">
             <div class="d-flex justify-content-between">
                <div class="">
@@ -1054,7 +1055,7 @@ table {
 
                @if ($vdr->title1 != null)
                   <div class="col pt-1">
-                     <small>Acknowledged by,</small>
+                     <small>Checked by,</small>
                      <br>
                      <small>{{$vdr->title1 ?? '-'}} : {{$vdr->name1 ?? '-'}}</small><br>
                      @if ($vdr->title1 != null)
@@ -1102,9 +1103,12 @@ table {
                
                <div class="col text-end pt-1">
                   {!! QrCode::size(65)->generate(Request::url()); !!}
+                  <br>
+                  <small>VDR Rev. 6A - 1 Apr. 2024</small>
                </div>
                
             </div>
+
          </div>
          
          {{-- <div class="col-2">
