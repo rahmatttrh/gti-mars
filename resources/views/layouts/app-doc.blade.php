@@ -21,17 +21,17 @@
       <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
       
    </head>
-   <body>
+   <body class="bg-white">
       <div class="wrapper" >
          <div class="sticky-top">
             <header class="navbar navbar-expand-md navbar-light sticky-top d-print-none">
-               <div class="container-xl">
+               <div class="px-4">
                   <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
                      <span class="navbar-toggler-icon"></span>
                   </button>
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
-                     
+                     <a href="/" class="navbar-brand sidebar-gone-hide">
                      @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
                         <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                         {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
@@ -67,6 +67,7 @@
                         <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
                         <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP  <span class="text-primary">SYSTEM</span></div>
                      @endif
+                     </a>
                      
                      
                   </h1>
@@ -80,11 +81,11 @@
             @yield('content')
             
             <footer class="footer footer-transparent d-print-none">
-               <div class="container-xl">
+               <div class="px-4">
                   <div class="row text-center align-items-center flex-row-reverse">
                      <div class="col-lg-auto ms-lg-auto">
                      <ul class="list-inline list-inline-dots mb-0">
-                        <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">DSP-PHE v1.0.0-beta</a></li>
+                        <li class="list-inline-item"><a href="./docs/index.html" class="link-secondary">MARS v1.0.0-beta</a></li>
                         
                      </ul>
                      </div>
@@ -92,7 +93,7 @@
                      <ul class="list-inline list-inline-dots mb-0">
                         <li class="list-inline-item">
                            Copyright &copy; 2023
-                           <a href="." class="link-secondary">Ekanuri Development</a>.
+                           <a href="." class="link-secondary">PHE OSES</a>.
                            All rights reserved.
                         </li>
                         
