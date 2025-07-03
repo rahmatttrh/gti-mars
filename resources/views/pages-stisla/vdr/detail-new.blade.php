@@ -160,11 +160,12 @@
                            {{-- <div class="card bg-warning">
                               <div class="card-boy"></div>
                            </div> --}}
-                           <div class="btn btn-warning  ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                               <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                           </div>
+                           
                         </div>
-                        <hr>
+                        <div class="btn btn-warning  ml-2 mt-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                           <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                       </div>
+                        
                      
 
                      
