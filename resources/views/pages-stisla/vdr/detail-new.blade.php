@@ -132,9 +132,7 @@
                      <a href="" class="btn bg-white btn-light border">Edit</a>
                      <a href="" class="btn bg-white btn-light border">Delete</a>
                   </div>
-                  <div class="btn btn-warning  ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                 </div>
+                  
                   
                   @endif
                @endif
@@ -172,6 +170,14 @@
                {{-- <div class="card bg-warning">
                   <div class="card-boy"></div>
                </div> --}}
+
+               @if (auth()->user()->hasRole('vessel'))
+                  
+                  <div class="btn btn-warning  ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                  </div>
+                  
+               @endif
                
             </div>
             <hr>
