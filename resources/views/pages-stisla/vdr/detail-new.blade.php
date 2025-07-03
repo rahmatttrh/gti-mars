@@ -1104,7 +1104,7 @@
                            <select class="form-control" name="name1" id="name1" required>
                               <option value="Falah">Falah</option>
                               <option value="Setyo">Setyo</option>
-                              
+                              <option value="Setyo">Radit</option>
                            </select>
                           
                         </div>
