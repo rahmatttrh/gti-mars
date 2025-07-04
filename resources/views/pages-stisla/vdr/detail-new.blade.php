@@ -141,6 +141,7 @@
                
                   @if (auth()->user()->username != 'pet')
                   <a href="#" class="btn   mr-2 btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                  <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                   @endif
                   
                 
@@ -1162,7 +1163,7 @@
                         <div class="form-group">
                            <label for="name2">PIC Marine</label>
                            <select class="form-control" name="name2" id="name2" required>
-                              <option value="Umar Agam">Umar Agam</option>
+                              <option value="UA">Umar Agam</option>
                               <option value="Rezky">Rezky Hardanto</option>
                               <option value="Misbakh">Muhammad Misbakhul Hasan</option>
                               
