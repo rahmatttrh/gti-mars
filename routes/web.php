@@ -449,6 +449,11 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
          Route::get('validation/suptent', [MarineVdrController::class, 'validationSuptent'])->name('vdr.suptent.validation');
          Route::get('validation/marine', [MarineVdrController::class, 'validation'])->name('vdr.marine.validation');
          Route::get('validation/pet', [MarineVdrController::class, 'validationPet'])->name('vdr.pet.validation');
+         Route::get('reject/pet', [MarineVdrController::class, 'rejectPet'])->name('vdr.pet.reject');
+         Route::get('reject/marine', [MarineVdrController::class, 'rejectMarine'])->name('vdr.marine.reject');
+         Route::get('reject/suptent', [MarineVdrController::class, 'rejectSuptent'])->name('vdr.suptent.reject');
+         Route::get('reject/list', [MarineVdrController::class, 'rejectList'])->name('vdr.reject.list');
+         Route::get('history/list', [MarineVdrController::class, 'historyList'])->name('vdr.history.list');
          Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
          Route::get("history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
          // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');

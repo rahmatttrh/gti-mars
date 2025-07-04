@@ -21,9 +21,11 @@
 
    
 
-   <div class="row">
-      <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+   <div class="row px-1">
+      
+      
+      {{-- <div class="col-md-3">
+         <div class="card card-statistic-1 rounded-lg">
             <a href="{{route('vdr.pet.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
@@ -31,7 +33,7 @@
                <div class="card-wrap">
                <div class="card-header">
                   
-                  <h4>VDR PET Validation</h4>
+                  <h4>VDR PET </h4>
                </div>
                <div class="card-body">
                   {{count($allvdrs->where('status', 1))}}
@@ -39,11 +41,11 @@
                </div>
             </a>
          </div>
-      </div>
+      </div> --}}
       
       
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.marine.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
@@ -51,7 +53,7 @@
                <div class="card-wrap">
                <div class="card-header">
                   
-                  <h4>VDR Marine Validation</h4>
+                  <h4>VDR Marine </h4>
                </div>
                <div class="card-body">
                   {{count($allvdrs->where('status', 2))}}
@@ -61,7 +63,7 @@
          </div>
       </div>
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.suptent.validation')}}">
                <div class="card-icon bg-primary">
                <i class="fas fa-user"></i>
@@ -69,17 +71,37 @@
                <div class="card-wrap">
                <div class="card-header">
                   
-                  <h4>VDR Suptent Validation</h4>
+                  <h4>VDR Suptent </h4>
                </div>
                <div class="card-body">
-                  {{count($vdrvalids)}}
+                  {{count($allvdrs->where('status', 3))}}
                </div>
                </div>
             </a>
          </div>
       </div>
+
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
+            <a href="{{route('vdr.reject.list')}}">
+               <div class="card-icon bg-danger">
+               <i class="fas fa-bolt"></i>
+               </div>
+               <div class="card-wrap">
+               <div class="card-header">
+                  
+                  <h4>VDR Reject</h4>
+               </div>
+               <div class="card-body">
+                  {{count($allvdrs->whereIn('status', [101,202,303]))}}
+               </div>
+               </div>
+            </a>
+         </div>
+      </div>
+      
+      <div class="col-md-3">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.complete.validation')}}">
                <div class="card-icon bg-success">
                <i class="fas fa-check"></i>
@@ -108,12 +130,12 @@
                </tr>
             </tbody>
          </table> --}}
-         <div class="table-responsive overflow-auto p-1" style="max-height: 180px">
+         <div class="table-responsive overflow-auto p-1" style="max-height: 200px">
             <table class="  border">
                
                <thead>
                   <tr>
-                     <th colspan="4">VDR yang membutuhkan Approval anda</th>
+                     <th colspan="4" style="color: #1f4481 !important">VDR yang membutuhkan Approval anda</th>
                   </tr>
                   <tr>
                      {{-- <th>ID</th> --}}
@@ -169,7 +191,7 @@
                
                <thead>
                   <tr>
-                     <th colspan="4">Sailing Order</th>
+                     <th colspan="4" style="color: #1f4481 !important">Sailing Order</th>
                   </tr>
                   <tr>
                      <th>Vessel</th>

@@ -96,39 +96,43 @@
                   @endif
                   
                   <hr>
-                  <div class="table-responsive">
-                     <table class=" table-striped" id="table-1">
-                        <thead>
-                           <tr>
-                              {{-- <th class="text-center">No.</th> --}}
-                              <th>ID</th>
-                              <th>Vessel</th>
-                              <th>Date</th>
-                              <th>Crew</th>
-                              <th>Loc</th>
-                              <th>Status</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-      
-                              @foreach($vdrs as $vdr)
-                              <tr>
-                                 {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
-                                 <td>
-                                    <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a>
-      
-                                 </td>
-                                 <td>{{$vdr->vessel->name}}</td>
-                                 <td>{{formatDate($vdr->date)}}</td>
-                                 <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                                 <td>{{$vdr->location_midnight}}</td>
-                                 <td>
-                                    <x-status-stisla.vdr :vdr="$vdr" />
-                                 </td>
-                              </tr>
-                              @endforeach
-                        </tbody>
-                     </table>
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="table-responsive">
+                           <table class=" table-striped" id="table-1">
+                              <thead>
+                                 <tr>
+                                    {{-- <th class="text-center">No.</th> --}}
+                                    <th>ID</th>
+                                    <th>Vessel</th>
+                                    <th>Date</th>
+                                    <th>Crew</th>
+                                    <th>Loc</th>
+                                    <th>Status</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+            
+                                    @foreach($vdrs as $vdr)
+                                    <tr>
+                                       {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
+                                       <td>
+                                          <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a>
+            
+                                       </td>
+                                       <td>{{$vdr->vessel->name}}</td>
+                                       <td>{{formatDate($vdr->date)}}</td>
+                                       <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
+                                       <td>{{$vdr->location_midnight}}</td>
+                                       <td>
+                                          <x-status-stisla.vdr :vdr="$vdr" />
+                                       </td>
+                                    </tr>
+                                    @endforeach
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
                   </div>
                
         </div>

@@ -26,5 +26,11 @@
 
    @elseif($vdr->status == 101)
    
-   <div class="" data-toggle="tooltip" data-placement="top" title="{{$vdr->times->where('type', 'reject')->where('status', 1)->first()->desc}}">Reject by PET</div>
+   <div class="badge badge-danger" >Reject by PET</div>
+   @elseif($vdr->status == 202)
+   
+   <div class="badge badge-danger" >Reject by Marine</div>
+   @elseif($vdr->status == 303)
+   
+   <div class="badge badge-danger" >Reject by Suptent</div>
 @endif

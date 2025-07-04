@@ -92,7 +92,7 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="container">
+   <div class="px-2">
       <ul class="navbar-nav">
          
          <li class="nav-item {{ (request()->is('vdr/m/dashboard')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
@@ -108,9 +108,9 @@
             </a>
          </li>
 
-         <li class="nav-item {{ (request()->is('vdr/m/act/*')) ? 'active' : '' }}">
-            <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/*')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/m/act/*'))
+         <li class="nav-item {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/validation/*'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
@@ -118,9 +118,19 @@
             </a>
          </li>
 
-         <li class="nav-item px-3 {{ (request()->is('vdr/m/act/history')) ? 'active' : '' }}">
-            <a href="{{route('vdr.marine.table')}}" class="nav-link {{ (request()->is('vdr/m/act/history')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/m/act/history'))
+         <li class="nav-item {{ (request()->is('vdr/m/act/reject/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.reject.list')}}" class="nav-link {{ (request()->is('vdr/m/act/reject/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/reject/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Reject</span>
+            </a>
+         </li>
+
+         <li class="nav-item px-3 {{ (request()->is('vdr/m/act/history/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.history.list')}}" class="nav-link {{ (request()->is('vdr/m/act/history/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/history/*'))
                <i class="fas fa-fire"></i>
                @endif
                

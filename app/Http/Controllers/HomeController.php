@@ -669,7 +669,7 @@ class HomeController extends Controller
          $months = ['Jan', 'Mar', 'Apr', 'May'];
          $today = Carbon::now();
          // dd($today->format('Y'));
-         
+
 
          // dd(12 - $today->format('m'));
 
@@ -712,7 +712,7 @@ class HomeController extends Controller
          $maintenanceArray = [];
          $dtArray = [];
 
-         foreach($allMonth as $m){
+         foreach ($allMonth as $m) {
             $vdrs = Vdr::whereMonth('date', $m)->get();
             $fuel = 0;
             $water = 0;
@@ -727,8 +727,8 @@ class HomeController extends Controller
             $sb = 0;
             $maintenance = 0;
             $dt = 0;
-            
-            foreach($vdrs as $v){
+
+            foreach ($vdrs as $v) {
                $vdrOperatings = VdrOperating::where('vdr_id', $v->id)->get();
                $daily = VdrOperating::where('vdr_id', $v->id)->sum('daily');
                $fuel += $daily;
@@ -738,7 +738,7 @@ class HomeController extends Controller
 
 
 
-               
+
                $vdrOperatingHigh = $vdrOperatings->where('heading_id', 1)->first()->daily;
                $high += $vdrOperatingHigh;
 
@@ -788,7 +788,7 @@ class HomeController extends Controller
          $operatingArray = [round($high), round($normal), round($slow), round($manu), round($idle), round($tow), round($ah), round($sb), round($maintenance), round($dt)];
 
 
-         
+
          //  dd($allMonth);
 
          // $jan = Carbon::createFromFormat('d/m/Y', '01/01/' . $today->format('Y'));
@@ -870,7 +870,7 @@ class HomeController extends Controller
 
 
 
-        
+
 
 
          // $fuelArray = [round($janFuel), round($febFuel), round($marFuel), round($aprFuel), round($mayFuel), round($junFuel)];
@@ -880,33 +880,31 @@ class HomeController extends Controller
 
          $vessels = Vessel::where('status', 1)->get();
          $lastActivity = [];
-         foreach($vessels as $v){
+         foreach ($vessels as $v) {
             $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'desc')->first();
             if ($lastVdr) {
                $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'desc')->first();
                if ($lastAct) {
                   $lastActivity[] = $lastAct;
                }
-               
             }
-            
          }
 
          $maintenanceVessels = Vessel::where('status', 2)->get();
-         
+
 
          $headerArray = [];
-         foreach($vdrOperatingHeaders as $head){
+         foreach ($vdrOperatingHeaders as $head) {
             $headerArray[] = $head->description;
          }
          // dd($headerArray);
 
          $vesselLists = DB::table('vessels')
-         ->select('type', DB::raw('count(*) as total') , 'type')
-         ->whereIn('status', [1,2])
-         ->groupBy('type')
-         ->orderBy('total', 'desc')
-         ->get();
+            ->select('type', DB::raw('count(*) as total'), 'type')
+            ->whereIn('status', [1, 2])
+            ->groupBy('type')
+            ->orderBy('total', 'desc')
+            ->get();
 
          // dd($vesselList);
 
@@ -973,7 +971,7 @@ class HomeController extends Controller
          $startDate = new Carbon($start);
          $endDate = new Carbon($end);
          $dates = array();
-         while ($startDate->lte($endDate)){
+         while ($startDate->lte($endDate)) {
             $dates[] = $startDate->toDateString();
             $startDate->addDay();
          }
@@ -981,7 +979,7 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $cargoItems = CargoItem::whereBetween('date', [$start, $end])->get();
 
-         
+
 
          return view('pages-urbix.dashboard', [
             'fuelArray' => $fuelArray,
@@ -1023,7 +1021,7 @@ class HomeController extends Controller
          $months = ['Jan', 'Mar', 'Apr', 'May'];
          $today = Carbon::now();
          // dd($today->format('Y'));
-         
+
 
          // dd(12 - $today->format('m'));
 
@@ -1066,7 +1064,7 @@ class HomeController extends Controller
          $maintenanceArray = [];
          $dtArray = [];
 
-         foreach($allMonth as $m){
+         foreach ($allMonth as $m) {
             $vdrs = Vdr::whereMonth('date', $m)->get();
             $fuel = 0;
             $water = 0;
@@ -1081,8 +1079,8 @@ class HomeController extends Controller
             $sb = 0;
             $maintenance = 0;
             $dt = 0;
-            
-            foreach($vdrs as $v){
+
+            foreach ($vdrs as $v) {
                $vdrOperatings = VdrOperating::where('vdr_id', $v->id)->get();
                $daily = VdrOperating::where('vdr_id', $v->id)->sum('daily');
                $fuel += $daily;
@@ -1092,7 +1090,7 @@ class HomeController extends Controller
 
 
 
-               
+
                $vdrOperatingHigh = $vdrOperatings->where('heading_id', 1)->first()->daily;
                $high += $vdrOperatingHigh;
 
@@ -1145,33 +1143,31 @@ class HomeController extends Controller
 
          $vessels = Vessel::where('status', 1)->get();
          $lastActivity = [];
-         foreach($vessels as $v){
+         foreach ($vessels as $v) {
             $lastVdr = Vdr::where('vessel_id', $v->id)->orderBy('date', 'desc')->first();
             if ($lastVdr) {
                $lastAct = VdrActivity::where('vdr_id', $lastVdr->id)->orderBy('created_at', 'desc')->first();
                if ($lastAct) {
                   $lastActivity[] = $lastAct;
                }
-               
             }
-            
          }
 
          $maintenanceVessels = Vessel::where('status', 2)->get();
-         
+
 
          $headerArray = [];
-         foreach($vdrOperatingHeaders as $head){
+         foreach ($vdrOperatingHeaders as $head) {
             $headerArray[] = $head->description;
          }
          // dd($headerArray);
 
          $vesselLists = DB::table('vessels')
-         ->select('type', DB::raw('count(*) as total') , 'type')
-         ->whereIn('status', [1,2])
-         ->groupBy('type')
-         ->orderBy('total', 'desc')
-         ->get();
+            ->select('type', DB::raw('count(*) as total'), 'type')
+            ->whereIn('status', [1, 2])
+            ->groupBy('type')
+            ->orderBy('total', 'desc')
+            ->get();
 
          // dd($vesselList);
 
@@ -1238,7 +1234,7 @@ class HomeController extends Controller
          $startDate = new Carbon($start);
          $endDate = new Carbon($end);
          $dates = array();
-         while ($startDate->lte($endDate)){
+         while ($startDate->lte($endDate)) {
             $dates[] = $startDate->toDateString();
             $startDate->addDay();
          }
@@ -1246,7 +1242,7 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $cargoItems = CargoItem::whereBetween('date', [$start, $end])->get();
 
-         
+
 
          return view('pages-urbix.dashboard', [
             'fuelArray' => $fuelArray,
@@ -1283,7 +1279,7 @@ class HomeController extends Controller
             'cargoItems' => $cargoItems,
 
          ]);
-      } else if(auth()->user()->hasRole('marine')){
+      } else if (auth()->user()->hasRole('marine')) {
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
@@ -1297,8 +1293,8 @@ class HomeController extends Controller
             // dd($vdrValidations);
             $vdrs = Vdr::where('status', '>=', 2)->get();
          } elseif (auth()->user()->username == 'lutfi') {
-            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
-            $vdrs = Vdr::where('status', '>=', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'asc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
          } else {
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
@@ -1352,7 +1348,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      } else if(auth()->user()->username == 'lutfi'){
+      } else if (auth()->user()->username == 'lutfi') {
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
@@ -1362,11 +1358,11 @@ class HomeController extends Controller
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
-            $vdrValidations = Vdr::where('status', 2)->get();
-            $vdrs = Vdr::where('status', '>=', 2)->get();
+            $vdrValidations = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'lutfi') {
-            $vdrValidations = Vdr::where('status', 3)->get();
-            $vdrs = Vdr::where('status', '>=', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->orderBy('date', 'desc')->get();
          } else {
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->get();
@@ -1438,10 +1434,10 @@ class HomeController extends Controller
             'vdrs' => $vdrs
          ])->with('i');
       } else if (auth()->user()->hasRole('vessel')) {
-         
+
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
-         
+
          if ($currentVessel == null) {
 
             $currentVessel = Vessel::find(auth()->user()->vessel_id);

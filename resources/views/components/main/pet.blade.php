@@ -1,4 +1,4 @@
-<style>
+{{-- <style>
    table {
       width: 100%;
    }
@@ -12,48 +12,105 @@
    }
 
    
+</style> --}}
+
+<style>
+   table {
+      width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 1px 1px 5px rgb(159, 158, 158);
+   }
+
+   table, th, td {
+      border: 1px solid rgb(226, 218, 218);
+      border-collapse: collapse;
+   }
+   th, td {
+      padding-left: 5px
+   }
+
+   
 </style>
 
-
+   
    <div class="row"> 
       <div class="col-md-9">
-         <div class="row">
-            <div class="col-md-12">
-               <div class="card card-statistic-1 border">
-                  <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-primary">
-                    <i class="far fa-user"></i>
+
+         <div class="row px-2">
+            <div class="col-md-4">
+               <div class="card card-statistic-1 ">
+                  <a href="{{route('vdr.pet.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-user"></i>
                   </div>
                   <div class="card-wrap">
-                    <div class="card-header">
+                  <div class="card-header">
                      
-                      <h4>VDR Validation</h4>
-                    </div>
-                    <div class="card-body">
-                      {{count($vdrvalids)}}
-                    </div>
+                     <h4>Waiting</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 1))}}
+                  </div>
                   </div>
                </a>
-                </div>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card card-statistic-1 ">
+                  <a href="{{route('vdr.reject.list')}}">
+                  <div class="card-icon bg-danger">
+                  <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Rejected</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', 101))}}
+                  </div>
+                  </div>
+               </a>
+               </div>
+            </div>
+            <div class="col-md-4">
+               <div class="card card-statistic-1 ">
+                  <a href="{{route('vdr.history.list')}}">
+                  <div class="card-icon bg-success">
+                  <i class="fas fa-user"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>History</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vdrs->where('status', '>', 1))}}
+                  </div>
+                  </div>
+               </a>
+               </div>
             </div>
             
          </div>
+         
          {{-- <span class="btn btn-light border">Sailing Order</span> --}}
          
          <div class="row">
             <div class="col-6">
-               <table class="display  border">
+               {{-- <table class="display  ">
                   <tbody>
-                     <tr>
-                        <th>VDR Validation</th>
-                     </tr>
+                     
                   </tbody>
-               </table>
-               <div class="table-responsive overflow-auto" style="height: 310px">
-                  <table class="display  border">
+               </table> --}}
+               <div class="table-responsive overflow-auto p-2" style="height: 310px">
+                  <table class="">
                      
                      <thead>
-                        
+                        <tr>
+                           <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
+                        </tr>
                         <tr>
                            <th>Vessel</th>
                            {{-- <th>Code</th> --}}
@@ -80,18 +137,18 @@
                </div>
             </div>
             <div class="col-6">
-               <table class="display  border">
+               {{-- <table class="">
                   <tbody>
-                     <tr>
-                        <th>VDR History</th>
-                     </tr>
+                     
                   </tbody>
-               </table>
-               <div class="table-responsive overflow-auto" style="height: 310px">
+               </table> --}}
+               <div class="table-responsive overflow-auto p-2" style="height: 310px">
                   <table class="display  border">
                      
                      <thead>
-                        
+                        <tr>
+                           <th colspan="3" style="color: #1f4481 !important">VDR History</th>
+                        </tr>
                         <tr>
                            <th>Vessel</th>
                            {{-- <th>Code</th> --}}

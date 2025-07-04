@@ -40,6 +40,7 @@ table {
 <div class="px-4">
    <!-- Page title -->
    <div class="page-header bg-white d-print-none">
+      
       <div class="row align-items-center">
          <div class="col">
             <h2 class="page-title">
@@ -48,9 +49,11 @@ table {
          </div>
          <!-- Page title actions -->
          <div class="col-auto ms-auto d-print-none">
+            
             {{-- {{$vdr->status}} --}}
             @if ($vdr->status == 3 && auth()->user()->username == 'lutfi')
                <a href="#" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
+               <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
             @endif
             @if ( auth()->user()->username == 'lutfi')
                <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a>
@@ -63,6 +66,13 @@ table {
             </button>
          </div>
       </div>
+      @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+         <div class="btn btn-danger  mt-2" style="background-color: rgb(200, 54, 54);" >
+            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
+            {{$vdr->reject_desc}}
+         </div>
+                                     
+      @endif
    </div>
 </div>
 <div class="page-body bg-white" >
@@ -1138,6 +1148,37 @@ table {
    </div>
 
    
+</div>
+
+<div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{route('vdr.reject.marine')}}" method="POST">
+      @csrf
+      <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Form Reject VDR</h5>
+            
+         </div>
+         <div class="modal-body">
+            <b>{{$vdr->code}}</b>
+            
+         <hr>
+            <div class="form-row">
+               <div class="form-group col-md-12">
+                  <label for="desc">Description</label>
+                  <input type="text" class="form-control text-left" id="desc" name="desc" >
+               </div>
+            </div> <br>
+            <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
+         </div>
+         <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Reject</button>
+         </div>
+      </div>
+      </form>
+   </div>
 </div>
 
 

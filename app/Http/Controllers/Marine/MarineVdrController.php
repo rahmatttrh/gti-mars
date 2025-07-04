@@ -99,11 +99,11 @@ class MarineVdrController extends Controller
    public function validation()
    {
       if (auth()->user()->username == 'pet') {
-         $vdrValidations = Vdr::where('status', 1)->get();
+         $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
-         $vdrValidations = Vdr::where('status', 2)->get();
+         $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfi') {
-         $vdrValidations = Vdr::where('status', 3)->get();
+         $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
       }
 
       return view('pages-stisla.marine.vdr.validation', [
@@ -113,20 +113,91 @@ class MarineVdrController extends Controller
 
    public function validationPet()
    {
-      
-         $vdrValidations = Vdr::where('status', 1)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
       ])->with('i');
    }
 
+   public function rejectPet()
+   {
+
+      $vdrValidations = Vdr::where('status', 101)->orderBy('updated_at', 'desc')->get();
+
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function rejectMarine()
+   {
+
+      $vdrValidations = Vdr::where('status', 202)->orderBy('updated_at', 'desc')->get();
+
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function rejectSuptent()
+   {
+
+      $vdrValidations = Vdr::where('status', 303)->orderBy('updated_at', 'desc')->get();
+
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function rejectList()
+   {
+
+      // if (auth()->user()->username == 'pet') {
+      //    $vdrValidations = Vdr::where('status', 101)->orderBy('updated_at', 'desc')->get();
+      // } elseif(auth()->user()->username == 'marine'){
+      //    $vdrValidations = Vdr::where('status', 202)->orderBy('updated_at', 'desc')->get();
+      // } elseif(auth()->user()->username == 'suptent'){
+      //    $vdrValidations = Vdr::where('status', 303)->orderBy('updated_at', 'desc')->get();
+      // }
+
+      $vdrValidations = Vdr::whereIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
+      
+
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrValidations
+      ])->with('i');
+   }
+
+   public function historyList()
+   {
+
+      if (auth()->user()->username == 'pet') {
+         $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
+      } elseif(auth()->user()->username == 'marine'){
+         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
+      } elseif(auth()->user()->username == 'suptent'){
+         $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
+      }
+      
+
+
+      return view('pages-stisla.marine.vdr.validation', [
+         'vdrs' => $vdrs
+      ])->with('i');
+   }
+
    public function validationSuptent()
    {
-      
-         $vdrValidations = Vdr::where('status', 3)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -135,9 +206,9 @@ class MarineVdrController extends Controller
 
    public function validationComplete()
    {
-      
-         $vdrValidations = Vdr::where('status', 4)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 4)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -247,7 +318,7 @@ class MarineVdrController extends Controller
          'name2' => 'Capt. Umar',
       ]);
 
-      
+
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
@@ -261,7 +332,7 @@ class MarineVdrController extends Controller
 
    public function approveForm(Request $req)
    {
-      
+
       $vdr = Vdr::find($req->vdr);
       $vdr->update([
          'status' => 3,
@@ -269,7 +340,7 @@ class MarineVdrController extends Controller
          'name2' => $req->name2,
       ]);
 
-      
+
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
@@ -284,9 +355,23 @@ class MarineVdrController extends Controller
    public function reject(Request $req)
    {
       $vdr = Vdr::find($req->vdr);
+
+      if (auth()->user()->username == 'pet') {
+         $status = 101;
+      } elseif(auth()->user()->username == 'marine'){
+         $status = 202;
+      } elseif(auth()->user()->username == 'lutfi'){
+         $status = 303;
+      }
+
+
       $vdr->update([
-         'status' => 101
+         'status' => $status,
+         'reject_by' => auth()->user()->id,
+         'reject_date' => Carbon::now(),
+         'reject_desc' => $req->desc
       ]);
+      
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
