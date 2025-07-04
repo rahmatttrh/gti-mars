@@ -99,11 +99,11 @@ class MarineVdrController extends Controller
    public function validation()
    {
       if (auth()->user()->username == 'pet') {
-         $vdrValidations = Vdr::where('status', 1)->get();
+         $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
-         $vdrValidations = Vdr::where('status', 2)->get();
+         $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfi') {
-         $vdrValidations = Vdr::where('status', 3)->get();
+         $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
       }
 
       return view('pages-stisla.marine.vdr.validation', [
@@ -113,9 +113,9 @@ class MarineVdrController extends Controller
 
    public function validationPet()
    {
-      
-         $vdrValidations = Vdr::where('status', 1)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -124,9 +124,9 @@ class MarineVdrController extends Controller
 
    public function validationSuptent()
    {
-      
-         $vdrValidations = Vdr::where('status', 3)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -135,9 +135,9 @@ class MarineVdrController extends Controller
 
    public function validationComplete()
    {
-      
-         $vdrValidations = Vdr::where('status', 4)->get();
-      
+
+      $vdrValidations = Vdr::where('status', 4)->orderBy('updated_at', 'desc')->get();
+
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations
@@ -247,7 +247,7 @@ class MarineVdrController extends Controller
          'name2' => 'Capt. Umar',
       ]);
 
-      
+
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
@@ -261,7 +261,7 @@ class MarineVdrController extends Controller
 
    public function approveForm(Request $req)
    {
-      
+
       $vdr = Vdr::find($req->vdr);
       $vdr->update([
          'status' => 3,
@@ -269,7 +269,7 @@ class MarineVdrController extends Controller
          'name2' => $req->name2,
       ]);
 
-      
+
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,

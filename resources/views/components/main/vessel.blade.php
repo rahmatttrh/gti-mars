@@ -1,6 +1,9 @@
 <style>
    table {
       width: 100%;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 1px 1px 5px rgb(159, 158, 158);
    }
 
    table, th, td {
@@ -10,6 +13,8 @@
    th, td {
       padding-left: 5px
    }
+
+   
 </style>
 
 
@@ -37,19 +42,16 @@
             </div>
             @endif
             
-            <table class="display  border">
-               <tbody>
-                  <tr>
-                     <th>Sailing Order</th>
-                  </tr>
-               </tbody>
-            </table>
-            <div class="table-responsive overflow-auto" style="height: 120px">
+            
+            <div class="table-responsive overflow-auto p-2" style="height: 120px">
                <table class="" >
                   <thead >
-                     
+                     <tr>
+                        <th colspan="4" style="color: #1f4481 !important">Sailing Order</th>
+                     </tr>
                      <tr>
                         {{-- <th class="text-center">No</th> --}}
+                        
                         <th>ID</th>
                         <th>Date</th>
                         <th>Type</th>
@@ -72,18 +74,14 @@
                   </tbody>
                </table>
             </div>
+            <hr>
             
-            <table class="display  border">
-               <tbody>
-                  <tr>
-                     <th>Vessel Daily Report</th>
-                  </tr>
-               </tbody>
-            </table>
-            <div class="table-responsive overflow-auto" style="height: 120px">
+            <div class="table-responsive overflow-auto p-2" style="height: 120px">
                <table class="" >
                   <thead >
-                     
+                     <tr>
+                        <th colspan="4" style="color: #1f4481 !important">Vessel Daily Report</th>
+                     </tr>
                      <tr>
                         {{-- <th class="text-center">No</th> --}}
                         <th>ID</th>
@@ -123,7 +121,7 @@
                <table class="" id="table-6">
                   <thead >
                      <tr>
-                        <th colspan="4" class="py-1">My Request</th>
+                        <th colspan="4" class="py-1" style="color: #1f4481 !important">My Request</th>
                      </tr>
                      <tr>
                         {{-- <th class="text-center">No</th> --}}

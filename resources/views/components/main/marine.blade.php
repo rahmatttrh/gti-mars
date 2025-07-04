@@ -23,7 +23,7 @@
 
    <div class="row">
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 rounded-lg">
             <a href="{{route('vdr.pet.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
@@ -43,7 +43,7 @@
       
       
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.marine.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
@@ -61,7 +61,7 @@
          </div>
       </div>
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.suptent.validation')}}">
                <div class="card-icon bg-primary">
                <i class="fas fa-user"></i>
@@ -79,7 +79,7 @@
          </div>
       </div>
       <div class="col-md-3">
-         <div class="card card-statistic-1 border">
+         <div class="card card-statistic-1 ">
             <a href="{{route('vdr.complete.validation')}}">
                <div class="card-icon bg-success">
                <i class="fas fa-check"></i>
@@ -113,7 +113,7 @@
                
                <thead>
                   <tr>
-                     <th colspan="4">VDR yang membutuhkan Approval anda</th>
+                     <th colspan="4" style="color: #1f4481 !important">VDR yang membutuhkan Approval anda</th>
                   </tr>
                   <tr>
                      {{-- <th>ID</th> --}}
@@ -169,7 +169,7 @@
                
                <thead>
                   <tr>
-                     <th colspan="4">Sailing Order</th>
+                     <th colspan="4" style="color: #1f4481 !important">Sailing Order</th>
                   </tr>
                   <tr>
                      <th>Vessel</th>

@@ -1293,8 +1293,8 @@ class HomeController extends Controller
             // dd($vdrValidations);
             $vdrs = Vdr::where('status', '>=', 2)->get();
          } elseif (auth()->user()->username == 'lutfi') {
-            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
-            $vdrs = Vdr::where('status', '>=', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'asc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
          } else {
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
@@ -1358,11 +1358,11 @@ class HomeController extends Controller
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
-            $vdrValidations = Vdr::where('status', 2)->get();
-            $vdrs = Vdr::where('status', '>=', 2)->get();
+            $vdrValidations = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
          } elseif (auth()->user()->username == 'lutfi') {
-            $vdrValidations = Vdr::where('status', 3)->get();
-            $vdrs = Vdr::where('status', '>=', 3)->get();
+            $vdrValidations = Vdr::where('status', 3)->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->orderBy('date', 'desc')->get();
          } else {
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->get();

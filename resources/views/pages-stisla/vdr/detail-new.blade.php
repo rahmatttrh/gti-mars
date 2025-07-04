@@ -127,11 +127,13 @@
             <div class="d-flex px-2">
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                  <a href="#" class="btn  btn-info" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                  <div class="btn-group btn-light mx-2">
-                     <a href="" class="btn bg-white btn-light border">Edit</a>
-                     <a href="" class="btn bg-white btn-light border">Delete</a>
-                  </div>
+                  <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                  <a href="" class="btn bg-info mx-2">Edit</a>
+                  <a href="" class="btn  btn-danger  mr-2">Delete</a>
+                  {{-- <div class="btn-group btn-light mx-2">
+                     
+                     
+                  </div> --}}
                   
                   
                   @endif
@@ -141,6 +143,7 @@
                
                   @if (auth()->user()->username != 'pet')
                   <a href="#" class="btn   mr-2 btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                   @endif
                   
                 
@@ -1084,12 +1087,13 @@
                      <div class="col-6">
                         
                         <div class="form-group">
-                           <label for="title1">LOCATION </label>
+                           <label for="title1">Title </label>
                            <select class="form-control" name="title1" id="title1" required>
-                              <option value="PET Kalijapat">PET Kalijapat</option>
-                              <option value="PET SBU">PET SBU</option>
+                              <option value="Fuel Monitoring Team" selected>Fuel Monitoring Team</option>
+                              {{-- <option value="PET Kalijapat">PET Kalijapat</option> --}}
+                              {{-- <option value="PET SBU">PET SBU</option>
                               <option value="PET CBU">PET CBU</option>
-                              <option value="PET NBU">PET NBU</option>
+                              <option value="PET NBU">PET NBU</option> --}}
                            </select>
                            {{-- <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" placeholder="Jabatan/Posisi">
                            @error('title1')
@@ -1102,9 +1106,9 @@
                         <div class="form-group">
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
-                              <option value="Falah">Falah</option>
-                              <option value="Setyo">Setyo</option>
-                              <option value="Setyo">Radit</option>
+                              <option value="YFH">Yusuf Falah Hibatullah</option>
+                              <option value="S">Setyo</option>
+                              <option value="R">Radit</option>
                            </select>
                           
                         </div>
@@ -1162,9 +1166,9 @@
                         <div class="form-group">
                            <label for="name2">PIC Marine</label>
                            <select class="form-control" name="name2" id="name2" required>
-                              <option value="Umar Agam">Umar Agam</option>
-                              <option value="Rezky">Rezky Hardanto</option>
-                              <option value="Misbakh">Muhammad Misbakhul Hasan</option>
+                              <option value="UA">Umar Agam</option>
+                              <option value="RH">Rezky Hardanto</option>
+                              <option value="MMH">Muhammad Misbakhul Hasan</option>
                               
                            </select>
                           
