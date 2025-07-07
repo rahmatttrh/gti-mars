@@ -7,16 +7,39 @@
    <section class="section">
       <div class="row">
          <div class="col-md-5">
+            
             <div class="card">
                <div class="card-body">
-                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour) (7 Hari Terakhir)</small>
-                  <canvas class="mt-2" id="myChart"></canvas>
+                  <small class="mb-2 badge badge-primary">Fuel Consumption (Liter) 
+                     @if ($title == 'Today')
+                     (7 Hari Terakhir)
+                     @else 
+                        @if ($thisVessel)
+                          ( {{formatDate($start)}} - {{formatDate($end)}} )
+                            @else
+                            (7 Hari Terakhir)
+                        @endif
+                     @endif 
+                  </small>
+                  <canvas class="mt-2" id="myChart2" height="130px"></canvas>
                </div>
             </div>
             <div class="card">
                <div class="card-body">
-                  <small class="mb-2 badge badge-primary">Fuel Consumption (Liter) (7 Hari Terakhir)</small>
-                  <canvas class="mt-2" id="myChart2"></canvas>
+                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour)
+                      
+                  
+                     @if ($title == 'Today')
+                     (7 Hari Terakhir)
+                     @else 
+                        @if ($thisVessel)
+                          ( {{formatDate($start)}} - {{formatDate($end)}} )
+                            @else
+                            (7 Hari Terakhir)
+                        @endif
+                     @endif   
+                  </small>
+                  <canvas class="mt-2" id="myChart" height="130px"></canvas>
                </div>
             </div>
             
@@ -44,15 +67,15 @@
          </div>
          <div class="col-md-7">
             
-                 
-                  {{-- <form action="{{route('vdr.filter')}}" method="POST">
+                  @if ($title == 'All')
+                  <form action="{{route('vdr.filter')}}" method="POST">
                      @csrf
                     
                      <div class="form-group">
                         <div class="input-group">
                            
                            <select class="form-control " required name="vessel" id="vessel">
-                            
+                              <option value="" selected disabled>Select Vessel</option>
                               @foreach ($vessels as $vess)
                                  <option {{$vessel == $vess->id ? 'selected' : ''}} value="{{$vess->id}}">{{$vess->name}}</option> 
                               @endforeach
@@ -62,20 +85,16 @@
                            <span class="mx-2 mt-3">To</span>
                            <input type="date" name="end" id="end" class="form-control">
                            <div class="input-group-append">
-                              <button class="btn btn-light border px-4" type="submit">Filter</button>
+                              <button class="btn btn-primary  px-4" type="submit">Filter</button>
                               
                             </div>
                         </div>
                      </div>
                      
-                  </form> --}}
-                 
-                  @if ($thisVessel)
-                  <span>
-                     VDR Data of <b>{{$thisVessel->name}}</b> between <b>{{formatDate($start)}}</b> and <b>{{formatDate($end)}}</b>
-                  </span>
-                  
+                  </form>
                   @endif
+                 
+                  
                   
 
                   
@@ -95,7 +114,14 @@
                            @if ($title == 'Today')
                            <h5>{{formatDateName($now)}}</h5>
                            @else
+                           @if ($thisVessel)
+                           <b class="text-right">
+                              VDR {{$thisVessel->name}} <br> [ {{formatDate($start)}} - {{formatDate($end)}} ]
+                           </b>
+                           @else
                            <h5>All VDR</h5>
+                           @endif
+                           
                            @endif
                            
                         </div>

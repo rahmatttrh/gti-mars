@@ -2544,33 +2544,75 @@ class HomeController extends Controller
       //    $monthName = 'Desember';
       // }
 
-      $date = array();
-      $value = array();
-      $fuel = array();
-      foreach ($vdrs as $vdr) {
-         $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
-         $totalTime = $operatings->sum('time');
-         $totalFuel = $operatings->sum('daily');
+      // $date = array();
+      // $value = array();
+      // $fuel = array();
+      // foreach ($vdrs as $vdr) {
+      //    $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      //    $totalTime = $operatings->sum('time');
+      //    $totalFuel = $operatings->sum('daily');
 
-         // dd($operatings);
-         $date[] = formatDateOnly($vdr->date);
-         $value[] = $totalTime;
-         $fuel[] = $totalFuel;
+      //    // dd($operatings);
+      //    $date[] = formatDateOnly($vdr->date);
+      //    $value[] = $totalTime;
+      //    $fuel[] = $totalFuel;
+      // }
+
+      $endDate = Carbon::create($req->end);
+      // dd($startDate);
+      $startDate = Carbon::create($req->start);
+
+      // $endDate = new Carbon($req->end);
+      $dates = array();
+      while ($startDate->lte($endDate)){
+         $dates[] = $startDate->toDateString();
+         $startDate->addDay();
       }
 
+      // dd($dates);
+      
+
+      // dd($dates);
+
+      foreach($dates as $date){
+         $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
+
+         $totalTime = null;
+         $totalFuel = null;
+         foreach ($vdrs as $vdr) {
+            $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+            $totalTime += $operatings->sum('time');
+            $totalFuel += $operatings->sum('daily');
+         }
+
+         
+
+         // dd($operatings);
+         $dateFinal[] = formatDateOnly($date);
+         $value[] = $totalTime;
+         $fuel[] = $totalFuel;
+
+
+      }
+
+      $vdrs = Vdr::where('status', '>=', 1)->where('vessel_id', $vessel->id)->whereBetween('date', [$req->start, $req->end])->get();
+
+
+      // dd($req->end);
       // dd($value);
       return view('pages-stisla.vdr.home-marine', [
+         'title' => 'All',
          'thisMonth' => $month,
          'thisYear' => $year,
          // 'monthName' => $monthName,
          'vdrAlerts' => null,
          'vdrs' => $vdrs,
-         'start' => $startDate,
-         'end' => $endDate,
+         'start' => $req->start,
+         'end' => $req->end,
          'vessel' => $vessel->id,
          'thisVessel' => $vessel,
          'vessels' => $vessels,
-         'date' => $date,
+         'date' => $dateFinal,
          'value' => $value,
          'fuel' => $fuel
       ])->with('i');

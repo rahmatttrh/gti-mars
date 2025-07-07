@@ -19,7 +19,7 @@
       width: 100%;
       background-color: white;
       border-radius: 5px;
-      box-shadow: 1px 1px 5px rgb(159, 158, 158);
+      box-shadow: 1px 5px 10px rgb(159, 158, 158);
    }
 
    table, th, td {
@@ -39,7 +39,7 @@
 
          <div class="row px-2">
             <div class="col-md-4">
-               <div class="card card-statistic-1 ">
+               <div class="card card-statistic-1 shadow-lg">
                   <a href="{{route('vdr.pet.validation')}}">
                   <div class="card-icon bg-info">
                   <i class="fas fa-user"></i>
@@ -57,7 +57,7 @@
                </div>
             </div>
             <div class="col-md-4">
-               <div class="card card-statistic-1 ">
+               <div class="card card-statistic-1 shadow-lg">
                   <a href="{{route('vdr.reject.list')}}">
                   <div class="card-icon bg-danger">
                   <i class="fas fa-bolt"></i>
@@ -75,7 +75,7 @@
                </div>
             </div>
             <div class="col-md-4">
-               <div class="card card-statistic-1 ">
+               <div class="card card-statistic-1 shadow-lg">
                   <a href="{{route('vdr.history.list')}}">
                   <div class="card-icon bg-success">
                   <i class="fas fa-user"></i>
@@ -179,14 +179,14 @@
       </div>
       <div class="col-md-3">
          
-            <table class="display  border">
+            {{-- <table class="display  border">
                <tbody>
                   <tr>
                      <th>Log Activity</th>
                   </tr>
                </tbody>
-            </table>
-            <div class="table-responsive overflow-auto" style="height: 320px">
+            </table> --}}
+            <div class="table-responsive px-2 overflow-auto" style="height: 320px">
              <table class="border display "   >
                {{-- <thead>
                   <tr>
@@ -196,6 +196,9 @@
                   </tr>
                </thead> --}}
                <tbody>
+                  <tr>
+                     <th style="color: #1f4481 !important">Log Activity</th>
+                  </tr>
                   @foreach ($logs as $log)
                      <tr class="border">
                         <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name}}
