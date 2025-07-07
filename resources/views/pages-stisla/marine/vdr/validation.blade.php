@@ -37,44 +37,51 @@
                   <thead>
                      <tr>
                         <th rowspan="2" class="text-center">No.</th>
+                        <th rowspan="2">Vessel</th>
                         <th rowspan="2">VDR Number</th>
                         {{-- <th rowspan="2">Vessel</th> --}}
+                        <th rowspan="2">Day</th>
                         <th rowspan="2">Date</th>
                         <th rowspan="2">Crew</th>
                         {{-- <th>Created</th> --}}
-                        <th rowspan="2">Status</th>
-                        <th colspan="2" class="text-center">High Speed Contract</th>
+                        <th rowspan="2" class="text-center">Status</th>
+                        @if ($title == 'Reject')
+                            <th rowspan="2">Note</th>
+                        @endif
+                        {{-- <th colspan="2" class="text-center">High Speed Contract</th>
                         <th colspan="2" class="text-center">Normal Speed Contract</th>
-                        <th colspan="2" class="text-center">Slow Speed Contract</th>
+                        <th colspan="2" class="text-center">Slow Speed Contract</th> --}}
                         <th colspan="2" class="text-center">Total</th>
                      </tr>
                      <tr>
-                        <th>Speed</th>
+                        {{-- <th>Speed</th>
                         <th>Fuel</th>
                         <th>Speed</th>
                         <th>Fuel</th>
                         <th>Speed</th>
-                        <th>Fuel</th>
-                        <th>Time</th>
-                        <th>Daily Fuel</th>
+                        <th>Fuel</th> --}}
+                        <th class="text-center">Time</th>
+                        <th class="text-center">Daily Fuel</th>
                      </tr>
                   </thead>
                   <tbody>
                      @foreach($vdrs as $vdr)
                      <tr>
                         <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                        <td>{{$vdr->vessel->name}}</td>
                         <td>
                            <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a> <br>
-                           <small>{{$vdr->vessel->name}}</small>
+                           {{-- <small>{{$vdr->vessel->name}}</small> --}}
                         </td>
-                        {{-- <td>{{$vdr->vessel->name}}</td> --}}
+                       
+                        <td>{{formatDayName($vdr->date)}}</td>
                         <td>
                            {{formatDate($vdr->date)}} <br>
-                           <small>{{formatDayName($vdr->date)}}</small>
+                           {{-- <small>{{formatDayName($vdr->date)}}</small> --}}
                         </td>
                         <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
                         {{-- <td>{{$vdr->created_by}}</td> --}}
-                        <td>
+                        <td class="text-center">
                            {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
                            <span class="badge badge-warning">Draft</span>
                            @else
@@ -82,15 +89,20 @@
                            @endif --}}
                            <x-status-stisla.vdr :vdr="$vdr" />
                         </td>
+                        @if ($title == 'Reject')
+                           <td>
+                              {{$vdr->reject_desc}}
+                           </td>
+                        @endif
                         
-                        <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>
+                        {{-- <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>
                         <td>{{$vdr->operatings->where('heading_id', 1)->first()->contractual_fuel}}</td>
                         <td>{{$vdr->operatings->where('heading_id', 2)->first()->speed}}</td>
                         <td>{{$vdr->operatings->where('heading_id', 2)->first()->contractual_fuel}}</td>
                         <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
-                        <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td>
-                        <td>{{$vdr->getTotalHours()}}</td>
-                        <td>{{ceil($vdr->operatings->sum('daily'))}}</td>
+                        <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
+                        <td class="text-center">{{$vdr->getTotalHours()}}</td>
+                        <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>
                      </tr>
                      @endforeach
                   </tbody>

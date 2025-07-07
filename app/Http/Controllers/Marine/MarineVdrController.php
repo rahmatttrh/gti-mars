@@ -305,6 +305,7 @@ class MarineVdrController extends Controller
       }
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'Validation',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -316,6 +317,7 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'Validation',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -327,6 +329,7 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'Reject',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -338,6 +341,7 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'Reject',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -349,6 +353,7 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'Reject',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -367,9 +372,10 @@ class MarineVdrController extends Controller
       $vdrValidations = Vdr::whereIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       
 
-
+      
       return view('pages-stisla.marine.vdr.validation', [
-         'vdrs' => $vdrValidations
+         'vdrs' => $vdrValidations,
+         'title' => 'Reject'
       ])->with('i');
    }
 
@@ -387,6 +393,7 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
+         'title' => 'History',
          'vdrs' => $vdrs
       ])->with('i');
    }

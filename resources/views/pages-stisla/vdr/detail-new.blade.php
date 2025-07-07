@@ -156,7 +156,7 @@
                      {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
                      {{-- <div class="btn-group mr-2"> --}}
                         <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
-                        <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                        <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                      {{-- </div> --}}
                      
                   {{-- </div> --}}

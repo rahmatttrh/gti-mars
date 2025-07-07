@@ -22,6 +22,21 @@
                      @endif 
                   </small>
                   <canvas class="mt-2" id="myChart2" height="130px"></canvas>
+                  {{-- <hr>
+                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour)
+                      
+                  
+                     @if ($title == 'Today')
+                     (7 Hari Terakhir)
+                     @else 
+                        @if ($thisVessel)
+                          ( {{formatDate($start)}} - {{formatDate($end)}} )
+                            @else
+                            (7 Hari Terakhir)
+                        @endif
+                     @endif   
+                  </small>
+                  <canvas class="mt-2" id="myChart" height="130px"></canvas> --}}
                </div>
             </div>
             <div class="card">
@@ -192,7 +207,7 @@
                label: 'Total Hours',
                data: {!! json_encode($value) !!},
                borderWidth: 2,
-               backgroundColor: '#1698f0',
+               backgroundColor: '#25b1e8',
                borderWidth: 0,
                borderColor: 'transparent',
                pointBorderWidth: 0,
