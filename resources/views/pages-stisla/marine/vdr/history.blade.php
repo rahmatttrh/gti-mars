@@ -23,6 +23,21 @@
       <div class="row">
          <div class="col-md-4">
             <div class="card">
+               <div class="card-header"><h5>VDR History</h5></div>
+               <div class="card-body">
+                  Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->username}}</span>
+                  <hr>
+                  <div class="card bg-success">
+                     <div class="card-body">
+                        <h5>{{count($vdrs)}} VDR</h5>
+                     </div>
+                  </div>
+                  <hr>
+                  Klik pada VDR number untuk melakukan Approval
+                  
+               </div>
+            </div>
+            {{-- <div class="card">
                <div class="card-body">
                   <div class="badge badge-info">Form Filter</div>
                   <hr>
@@ -73,7 +88,7 @@
                      </tbody>
                   </table>
                </div>
-            </div>
+            </div> --}}
             
          </div>
          <div class="col-md-8">

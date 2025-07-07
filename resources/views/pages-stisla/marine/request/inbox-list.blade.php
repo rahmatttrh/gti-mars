@@ -15,7 +15,7 @@
    <div class="section-body">
       <div class="row">
          <div class="col-md-9">
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <div class="row">
                      <div class="col-md-6">
@@ -184,7 +184,7 @@
             
          </div>
          <div class="col-md-3">
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <div class="badge badge-info mb-2">Create Sailing Order</div>
             <form action="{{route('schedule.store.so')}}" method="POST">

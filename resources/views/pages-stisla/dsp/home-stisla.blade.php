@@ -96,7 +96,7 @@
          
          <div class="col-md-8">
 
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <div class="table-responsive">
                      <table class="table-sm table-striped " id="table-12">

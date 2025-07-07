@@ -388,7 +388,7 @@ class MarineVdrController extends Controller
          $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       } elseif(auth()->user()->username == 'marine'){
          $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
-      } elseif(auth()->user()->username == 'suptent'){
+      } elseif(auth()->user()->username == 'lutfi'){
          $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       }
       
@@ -410,7 +410,8 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
-         'vdrs' => $vdrValidations
+         'vdrs' => $vdrValidations,
+         'title' => 'Validation'
       ])->with('i');
    }
 
@@ -421,7 +422,8 @@ class MarineVdrController extends Controller
 
 
       return view('pages-stisla.marine.vdr.validation', [
-         'vdrs' => $vdrValidations
+         'vdrs' => $vdrValidations,
+         'title' => 'Complete'
       ])->with('i');
    }
 
