@@ -52,14 +52,16 @@ table {
             
             {{-- {{$vdr->status}} --}}
             @if ($vdr->status == 3 && auth()->user()->username == 'lutfi')
-               <a href="#" class="btn btn-block btn-primary  shadow-none" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
-               <a href="" class="btn btn-danger " data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+               <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
+               <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
             @endif
             @if ( auth()->user()->username == 'lutfi')
-               <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a>
+               <a href="/" class="btn btn-block btn-light border  shadow" >Back </a>
+               
+               <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}" class="btn btn-block btn-light border  shadow">Engine Parameret Log & Crew</a>
             @endif
             {{-- <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a> --}}
-            <button type="button" class="btn btn-light" onclick="javascript:window.print();">
+            <button type="button" class="btn btn-light shadow" onclick="javascript:window.print();">
             <!-- Download SVG icon from http://tabler-icons.io/i/printer -->
             <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 17h2a2 2 0 0 0 2 -2v-4a2 2 0 0 0 -2 -2h-14a2 2 0 0 0 -2 2v4a2 2 0 0 0 2 2h2" /><path d="M17 9v-4a2 2 0 0 0 -2 -2h-6a2 2 0 0 0 -2 2v4" /><rect x="7" y="13" width="10" height="8" rx="2" /></svg>
             Print VDR
@@ -67,7 +69,7 @@ table {
          </div>
       </div>
       @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
-         <div class="btn btn-danger  mt-2" style="background-color: rgb(200, 54, 54);" >
+         <div class="btn btn-danger  mt-2 shadow" style="background-color: rgb(200, 54, 54);" >
             <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
             {{$vdr->reject_desc}}
          </div>

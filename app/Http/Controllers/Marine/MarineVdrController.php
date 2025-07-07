@@ -272,7 +272,7 @@ class MarineVdrController extends Controller
       //    $fuel[] = $totalFuel;
       // }
 
-      $vdrs= Vdr::where('status', '>', 0)->orderBy('date', 'desc')->get();
+      $vdrs= Vdr::where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
 
 
       // dd($value);

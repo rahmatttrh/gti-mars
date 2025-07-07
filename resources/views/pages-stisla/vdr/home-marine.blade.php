@@ -143,7 +143,7 @@
                            
                         </div>
                         <div class="table-responsive">
-                           <table class=" table-striped" id="table-1">
+                           <table class="datatables table-striped" id="">
                               <thead>
                                  <tr>
                                     {{-- <th class="text-center">No.</th> --}}

@@ -21,7 +21,7 @@
       </p> --}}
 
       <div class="row">
-         <div class="col-md-4">
+         <div class="col-md-3">
             <div class="card">
                <div class="card-header"><h5>VDR History</h5></div>
                <div class="card-body">
@@ -91,7 +91,7 @@
             </div> --}}
             
          </div>
-         <div class="col-md-8">
+         <div class="col-md-9">
             <div class="card">
                {{-- <div class="card-header">
                   <b>VDR Validation</b>
