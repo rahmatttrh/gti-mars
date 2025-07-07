@@ -107,7 +107,7 @@
                                     <th>ID</th>
                                     <th>Vessel</th>
                                     <th>Date</th>
-                                    <th>Crew</th>
+                                    {{-- <th>Crew</th> --}}
                                     <th>Loc</th>
                                     <th>Status</th>
                                  </tr>
@@ -123,7 +123,7 @@
                                        </td>
                                        <td>{{$vdr->vessel->name}}</td>
                                        <td>{{formatDate($vdr->date)}}</td>
-                                       <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
+                                       {{-- <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td> --}}
                                        <td>{{$vdr->location_midnight}}</td>
                                        <td>
                                           <x-status-stisla.vdr :vdr="$vdr" />

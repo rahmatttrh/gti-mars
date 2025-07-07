@@ -100,7 +100,7 @@ class MarineVdrController extends Controller
       // dd($dates);
 
       foreach($dates as $date){
-         $vdrs = Vdr::where('date', $date)->get();
+         $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
          $totalFuel = null;
@@ -133,7 +133,7 @@ class MarineVdrController extends Controller
       // }
       
 
-      $vdrs= Vdr::where('date', Carbon::now())->orderBy('created_at', 'desc')->get();
+      $vdrs= Vdr::where('status', '>', 0)->where('date', Carbon::now())->orderBy('created_at', 'desc')->get();
 
 
       // dd($value);
@@ -240,7 +240,7 @@ class MarineVdrController extends Controller
       // dd($dates);
 
       foreach($dates as $date){
-         $vdrs = Vdr::where('date', $date)->get();
+         $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
          $totalFuel = null;
@@ -272,7 +272,7 @@ class MarineVdrController extends Controller
       //    $fuel[] = $totalFuel;
       // }
 
-      $vdrs= Vdr::orderBy('date', 'desc')->get();
+      $vdrs= Vdr::where('status', '>', 0)->orderBy('date', 'desc')->get();
 
 
       // dd($value);
