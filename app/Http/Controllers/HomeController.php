@@ -2575,7 +2575,7 @@ class HomeController extends Controller
       // dd($dates);
 
       foreach($dates as $date){
-         $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
+         $vdrs = Vdr::where('vessel_id', $vessel->id)->where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
          $totalFuel = null;
