@@ -142,8 +142,8 @@
                            @endif
                            
                         </div>
-                        <div class="table-responsive">
-                           <table class="datatables table-striped" id="">
+                        {{-- <div class="table-responsive"> --}}
+                           <table class="datatables-b" id="datatables">
                               <thead>
                                  <tr>
                                     {{-- <th class="text-center">No.</th> --}}
@@ -153,6 +153,7 @@
                                     {{-- <th>Crew</th> --}}
                                     <th>Loc</th>
                                     <th>Status</th>
+                                    <th></th>
                                  </tr>
                               </thead>
                               <tbody>
@@ -171,11 +172,14 @@
                                        <td>
                                           <x-status-stisla.vdr :vdr="$vdr" />
                                        </td>
+                                       <td>
+                                          {{$vdr->updated_at}}
+                                       </td>
                                     </tr>
                                     @endforeach
                               </tbody>
                            </table>
-                        </div>
+                        {{-- </div> --}}
                      </div>
                   </div>
                
