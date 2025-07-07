@@ -33,7 +33,7 @@
                      </div>
                   </div>
                   <hr>
-                  Klik pada VDR number untuk melakukan Approval
+                  Klik pada VDR number untuk melihat detail
                   
                </div>
             </div>
