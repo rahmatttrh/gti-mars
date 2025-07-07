@@ -7,20 +7,10 @@
    <section class="section">
       <div class="row">
          <div class="col-md-5">
-            <div class="card">
-               <div class="card-body">
-                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour)</small>
-                  <canvas class="mt-2" id="myChart"></canvas>
-               </div>
-            </div>
-            <div class="card">
-               <div class="card-body">
-                  <small class="mb-2 badge badge-primary">Fuel Consumption (Liter)</small>
+            <small class="mb-2">Total Operating Mode (Hour)</small>
+            <canvas class="mt-2" id="myChart"></canvas>
+            <small class="mb-2">Fuel Consumption (Liter)</small>
                   <canvas class="mt-2" id="myChart2"></canvas>
-               </div>
-            </div>
-            
-            
             {{-- <div class="card shadow-sm border">
                
                <div class="card-body">
@@ -89,15 +79,10 @@
                      <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                            <div>
-                              <a href="{{route('vdr.marine')}}" class="btn {{$title == 'Today' ? 'btn-primary' : 'bg-white btn-light border'}} mr-2 mb-2">Today VDR</a>
-                              <a href="{{route('vdr.marine.all')}}" class="btn {{$title == 'All' ? 'btn-primary' : 'bg-white btn-light border'}} mb-2">All VDR</a>
+                              <a href="" class="btn btn-primary mr-2 mb-2">Today VDR</a>
+                              <a href="" class="btn btn-light bg-white border mb-2">All VDR</a>
                            </div>
-                           @if ($title == 'Today')
                            <h5>{{formatDateName($now)}}</h5>
-                           @else
-                           <h5>All VDR</h5>
-                           @endif
-                           
                         </div>
                         <div class="table-responsive">
                            <table class=" table-striped" id="table-1">

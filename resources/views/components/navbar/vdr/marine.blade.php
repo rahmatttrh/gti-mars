@@ -95,9 +95,9 @@
    <div class="px-2">
       <ul class="navbar-nav">
          
-         <li class="nav-item {{ (request()->is('vdr/m/dashboard')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
-            <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/m/dashboard'))
+         <li class="nav-item {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
+            <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/dashboard/*'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                @if (request()->is('vdr/m/act/filter'))

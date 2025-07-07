@@ -442,7 +442,8 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
    });
 
    Route::prefix("vdr/m")->group(function () {
-      Route::get("dashboard", [MarineVdrController::class, "index",])->name('vdr.marine');
+      Route::get("dashboard/today", [MarineVdrController::class, "index",])->name('vdr.marine');
+      Route::get("dashboard/all", [MarineVdrController::class, "indexAll",])->name('vdr.marine.all');
 
       Route::prefix("act")->group(function () {
          Route::get('validation/complete', [MarineVdrController::class, 'validationComplete'])->name('vdr.complete.validation');
