@@ -109,7 +109,15 @@
                               {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
                               <td>{{$vdr->vessel->name}}</td>
                               <td>
-                                 <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a> <br>
+                                 @if (auth()->user()->username == 'lutfiaryanto')
+                              
+                                 <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
+                                 @else
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
+                                 {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+      
+                                 @endif
+                                 {{-- <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a> <br> --}}
                                  {{-- <small>{{$vdr->vessel->name}}</small> --}}
                               </td>
                              
