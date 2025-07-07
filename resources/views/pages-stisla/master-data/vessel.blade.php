@@ -20,7 +20,9 @@
 
       <div class="row">
          <div class="col-md-3">
-            <b>Form Add Vessel</b>
+            <div class="card">
+               <div class="card-body">
+                  <b>Form Add Vessel</b>
                <hr>
             @if ($errors->any())
                <div class="alert alert-danger">
@@ -40,48 +42,54 @@
                <hr>
                <button type="submit" class="btn btn-info">Create New</button>
             </form>
+               </div>
+            </div>
          </div>
          <div class="col-md-9">
-            <div class="table-responsive">
-               <table class=" table-striped " id="table-4">
-               <thead>
-                  <tr>
-                     {{-- <th class="text-center">No.</th> --}}
-                     <th>Name</th>
-                     <th>TXID</th>
-                     <th>Email</th>
-                     <th>Type</th>
-                     <th>Status</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  @foreach ($vessels as $vessel)
-                  <tr>
-                     {{-- <td class="text-center">{{++$i}}</td> --}}
-                     <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
-                     <td>{{$vessel->txid }}</td>
-                     <td>{{$vessel->email}}</td>
-                     <td>{{$vessel->type}}</td>
-                     <td>
-                        @if ($vessel->status == 0)
-                           <span class="badge badge-light">Off Hire</span>
-                           @elseif($vessel->status == 1)
-                           <span class="badge badge-primary" >On Hire</span>
-                           @elseif($vessel->status == 2)
-                           <span class="badge badge-warning" >Maintenance</span>
-                        @endif
-
-                        {{-- @if ($vessel->status == 0)
-                           <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
-                           @elseif($vessel->status == 1)
-                           <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
-                        @endif --}}
-                     </td>
-                  </tr>
-                  @endforeach
-                  
-               </tbody>
-               </table>
+            <div class="card">
+               <div class="card-body">
+                  <div class="table-responsive">
+                     <table class=" table-striped " id="table-4">
+                     <thead>
+                        <tr>
+                           {{-- <th class="text-center">No.</th> --}}
+                           <th>Name</th>
+                           <th>TXID</th>
+                           <th>Email</th>
+                           <th>Type</th>
+                           <th>Status</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vessels as $vessel)
+                        <tr>
+                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
+                           <td>{{$vessel->txid }}</td>
+                           <td>{{$vessel->email}}</td>
+                           <td>{{$vessel->type}}</td>
+                           <td>
+                              @if ($vessel->status == 0)
+                                 <span class="badge badge-light">Off Hire</span>
+                                 @elseif($vessel->status == 1)
+                                 <span class="badge badge-primary" >On Hire</span>
+                                 @elseif($vessel->status == 2)
+                                 <span class="badge badge-warning" >Maintenance</span>
+                              @endif
+      
+                              {{-- @if ($vessel->status == 0)
+                                 <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
+                                 @elseif($vessel->status == 1)
+                                 <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
+                              @endif --}}
+                           </td>
+                        </tr>
+                        @endforeach
+                        
+                     </tbody>
+                     </table>
+                  </div>
+               </div>
             </div>
          </div>
       </div>

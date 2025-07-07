@@ -2835,21 +2835,37 @@ class HomeController extends Controller
                if ($distance < 300) {
                   $vessel->update([
                      // 'status' => 9,
-                     'port_id' => $port->id
+                     'port_id' => $port->id,
+                     
                   ]);
 
-                  if ($vessel->schedule_id && $vessel->schedule->status > 1) {
-                     $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
-                     // dd($curentReport);
-                     if ($curentReport->status_id == 7 && $curentReport->port_id == $port->id) {
-                        Report::create([
-                           'schedule_id' => $vessel->schedule_id,
-                           'vessel_id' => $vessel->id,
-                           // arrived
-                           'status_id' => 8,
-                           'port_id' => $port->id
-                        ]);
-                     } else {
+                  $schedule = Schedule::find($vessel->schedule_id);
+                  if ($schedule) {
+                     # code...
+                  } else {
+                     $vessel->update([
+                        // 'status' => 9,
+                        'schedule_id' => null
+                        
+                     ]);
+                  }
+                  // dd($vessel->schedule_id);
+
+
+                  if ($vessel->schedule_id ) {
+                     if($vessel->schedule->status > 1){
+                        $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
+                        // dd($curentReport);
+                        if ($curentReport->status_id == 7 && $curentReport->port_id == $port->id) {
+                           Report::create([
+                              'schedule_id' => $vessel->schedule_id,
+                              'vessel_id' => $vessel->id,
+                              // arrived
+                              'status_id' => 8,
+                              'port_id' => $port->id
+                           ]);
+                        } else {
+                        }
                      }
                   }
                   // ReportVessel::create([

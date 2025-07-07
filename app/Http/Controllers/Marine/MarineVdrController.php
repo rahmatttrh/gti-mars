@@ -289,7 +289,9 @@ class MarineVdrController extends Controller
          'vessels' => $vessels,
          'date' => $dateFinal,
          'value' => $value,
-         'fuel' => $fuel
+         'fuel' => $fuel,
+         'start' => null,
+         'end' => null
       ])->with('i');
    }
 
@@ -390,11 +392,14 @@ class MarineVdrController extends Controller
          $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       }
       
+      $vessels = Vessel::get();
+      $vessel = null;
 
-
-      return view('pages-stisla.marine.vdr.validation', [
+      return view('pages-stisla.marine.vdr.history', [
          'title' => 'History',
-         'vdrs' => $vdrs
+         'vdrs' => $vdrs,
+         'vessels' => $vessels,
+         'vessel' => $vessel
       ])->with('i');
    }
 

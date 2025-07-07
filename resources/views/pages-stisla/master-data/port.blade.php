@@ -14,7 +14,9 @@
 
          <div class="row">
             <div class="col-md-4">
-               <b>Form Add Port</b>
+               <div class="card">
+                  <div class="card-body">
+                     <b>Form Add Port</b>
                <hr>
                <form action="{{route('port.store')}}" method="POST">
                   @csrf
@@ -64,45 +66,51 @@
                   </div>
                   <button class="btn btn-info">Add</button>
                </form>
+                  </div>
+               </div>
             </div>
             <div class="col-8">
                
-               <div class="table-responsive">
-                  <table class="table-sm table-striped " id="table-1">
-                     <thead>
-                     <tr>
-                        {{-- <th class="text-center">No.</th> --}}
-                        <th>Name</th>
-                        <th>Region</th>
-                        <th>Email</th>
-                        <th>Type</th>
-                        <th></th>
-                     </tr>
-                     </thead>
-                     <tbody>
-                     @foreach ($ports as $port)
-                        <tr>
-                           {{-- <td class="text-center">{{++$i}}</td> --}}
-                           <td>
-                              {{$port->name}}
-                              @if ($port->port_id)
-                                    (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
-                              @endif
-                           </td>
+               <div class="card">
+                  <div class="card-body">
+                     <div class="table-responsive">
+                        <table class="table-sm table-striped " id="table-1">
+                           <thead>
+                           <tr>
+                              {{-- <th class="text-center">No.</th> --}}
+                              <th>Name</th>
+                              <th>Region</th>
+                              <th>Email</th>
+                              <th>Type</th>
+                              <th></th>
+                           </tr>
+                           </thead>
+                           <tbody>
+                           @foreach ($ports as $port)
+                              <tr>
+                                 {{-- <td class="text-center">{{++$i}}</td> --}}
+                                 <td>
+                                    {{$port->name}}
+                                    @if ($port->port_id)
+                                          (<span class="text-muted">{{$port->port->code ?? ''}}</span>)
+                                    @endif
+                                 </td>
+                                 
+                                 <td>{{$port->region}}</td>
+                                 <td>{{$port->email}}</td>
+                                 <td>{{$port->type}}</td>
+                                 <td>
+                                    
+                                    <a href="{{route('port.edit', enkripRambo($port->id))}}" class="">Edit</a>
+                                    <a href="" class="">Delete</a>
+                                 </td>
+                              </tr>
+                           @endforeach
                            
-                           <td>{{$port->region}}</td>
-                           <td>{{$port->email}}</td>
-                           <td>{{$port->type}}</td>
-                           <td>
-                              
-                              <a href="{{route('port.edit', enkripRambo($port->id))}}" class="">Edit</a>
-                              <a href="" class="">Delete</a>
-                           </td>
-                        </tr>
-                     @endforeach
-                     
-                     </tbody>
-                  </table>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
                </div>
                
             </div>

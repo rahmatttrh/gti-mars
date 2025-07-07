@@ -8,255 +8,215 @@
    <div class="section-body">
       <div class="row">
          <div class="col-md-9">
-            <div class="row">
-               <div class="col-md-4">
-                  <h3>INTERMILAN CREW</h3>
-                  <a href="{{route('marine.request.list')}}">Detail</a>
-                  <hr>
-               </div>
-               <div class="col-md-8 d-flex justify-content-end">
-                  <form action="{{route('intermilan.filter')}}" method="POST">
-                     @csrf
-                     <div class="form-group">
-                        <div class="input-group">
-                           <input type="date" class="form-control" name="start" id="start" value="{{$start}}">
-                           <span class="mx-2 mt-3">To</span>
-                           <input type="date" class="form-control" name="end" id="end" value="{{$end}}">
-                           <div class="input-group-append">
-                              <button class="btn btn-light border btn-block " type="submit">Show</button>
-                              {{-- <button class="btn btn-light border btn-lg" type="submit">Show</button> --}}
-                           </div>
-                        {{-- <div class="input-group-append">
-                           <a href="" class="btn btn-light border btn-block " >Print</a>
-                        </div> --}}
-                        </div>
+            <div class="card">
+               <div class="card-body">
+                  <div class="row">
+                     <div class="col-md-4">
+                        <h3>INTERMILAN CREW</h3>
+                        <a href="{{route('marine.request.list')}}">Detail</a>
+                        <hr>
                      </div>
-                  </form>
-
-                  <div class="form-group">
-                     <a href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="btn btn-light shadow-sm  ml-1" data-toggle="tooltip" data-placement="top" title="Export PDF"><i class="fa fa-print"></i> </a>
+                     <div class="col-md-8 d-flex justify-content-end">
+                        <form action="{{route('intermilan.filter')}}" method="POST">
+                           @csrf
+                           <div class="form-group">
+                              <div class="input-group">
+                                 <input type="date" class="form-control" name="start" id="start" value="{{$start}}">
+                                 <span class="mx-2 mt-3">To</span>
+                                 <input type="date" class="form-control" name="end" id="end" value="{{$end}}">
+                                 <div class="input-group-append">
+                                    <button class="btn btn-light border btn-block " type="submit">Show</button>
+                                    {{-- <button class="btn btn-light border btn-lg" type="submit">Show</button> --}}
+                                 </div>
+                              {{-- <div class="input-group-append">
+                                 <a href="" class="btn btn-light border btn-block " >Print</a>
+                              </div> --}}
+                              </div>
+                           </div>
+                        </form>
+      
+                        <div class="form-group">
+                           <a href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="btn btn-light shadow-sm  ml-1" data-toggle="tooltip" data-placement="top" title="Export PDF"><i class="fa fa-print"></i> </a>
+                        </div>
+                        
+                        
+                     </div>
                   </div>
+                  {{-- <div class="badge badge-info mb-2">Incoming Request</div> --}}
                   
                   
-               </div>
-            </div>
-            {{-- <div class="badge badge-info mb-2">Incoming Request</div> --}}
-            
-            
-            {{-- <div class="badge badge-info mb-2">Incoming Request</div> --}}
-            {{-- <div class="table-responsive mb-3">
-               <table class=" table-striped " >
-                  <thead>
-                     <tr>
-                        <th colspan="2">Waiting Validation</th>
-                        <th>Route</th>
-                        <th>User</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @foreach ($schedules as $schedule)
-                        @if (count($schedule->requests->where('status','=', 1)) > 0 )
+                  {{-- <div class="badge badge-info mb-2">Incoming Request</div> --}}
+                  {{-- <div class="table-responsive mb-3">
+                     <table class=" table-striped " >
+                        <thead>
+                           <tr>
+                              <th colspan="2">Waiting Validation</th>
+                              <th>Route</th>
+                              <th>User</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach ($schedules as $schedule)
+                              @if (count($schedule->requests->where('status','=', 1)) > 0 )
+                                    <tr>
+                                       <td colspan="4">{{formatDate($schedule->date)}} <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> <b>{{$schedule->vessel->name ?? 'Vessel Not Available'}} </b></a></td>
+                                       
+                                       
+                                    </tr>
+                                    @foreach ($schedule->requests->where('status','=', 1) as $request)
+                                       <tr>
+                                       <td></td>
+                                       <td><a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                                       {{$request->desc}}
+                                       @foreach ($request->cargoItems as $item)
+                                             {{$item->desc}},
+                                       @endforeach
+                                       </a> </td>
+                                       <td>
+      
+                                       {{$request->origin->name}} to {{$request->destination->name}}
+                                       
+                                       </td>
+                                       <td>{{$request->user->name}}</td>
+                                       
+                                       
+                                    </tr>
+                                    @endforeach
+                                    
+                              @endif
+      
+                              @if (count($schedule->requests->where('status','=', 101)) > 0)
                               <tr>
                                  <td colspan="4">{{formatDate($schedule->date)}} <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> <b>{{$schedule->vessel->name ?? 'Vessel Not Available'}} </b></a></td>
                                  
                                  
                               </tr>
-                              @foreach ($schedule->requests->where('status','=', 1) as $request)
-                                 <tr>
+                              <tr>
                                  <td></td>
-                                 <td><a href="{{route('request.detail.new', enkripRambo($request->id))}}">
-                                 {{$request->desc}}
-                                 @foreach ($request->cargoItems as $item)
-                                       {{$item->desc}},
-                                 @endforeach
-                                 </a> </td>
-                                 <td>
-
-                                 {{$request->origin->name}} to {{$request->destination->name}}
-                                 
-                                 </td>
-                                 <td>{{$request->user->name}}</td>
-                                 
-                                 
+                                 <td>{{$schedule->requests->first()->desc }} {{$schedule->requests->first()->fuel->qty }} KL</td>
+                                 <td>{{$schedule->requests->first()->origin->name }} to {{$schedule->requests->first()->destination->name }}</td>
                               </tr>
+                              @endif
+                           @endforeach
+                           
+                           @if (count($requests->where('status', 1)) > 0)
+                                 @else
+                                 <tr>
+                                 <td class="text-center" colspan="4" style="height: 35px">Tidak ada Request Activity dari User</td>
+                                 </tr>
+                           @endif
+                        </tbody>
+                     </table>
+                  </div> --}}
+                  {{-- <hr> --}}
+                  <div class="table-responsive">
+                     <table class=" table-striped " >
+                        <thead>
+                           <tr>
+                              <th class="text-center">Station</th>
+                              <th>Activity</th>
+                              <th>Location</th>
+                              <th>Boat</th>
+                              @foreach ($dates as $date)
+                                 <th class="text-center">{{formatDateOnly($date)}}</th>
                               @endforeach
                               
-                        @endif
-
-                        @if (count($schedule->requests->where('status','=', 101)) > 0)
-                        <tr>
-                           <td colspan="4">{{formatDate($schedule->date)}} <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}"> <b>{{$schedule->vessel->name ?? 'Vessel Not Available'}} </b></a></td>
-                           
-                           
-                        </tr>
-                        <tr>
-                           <td></td>
-                           <td>{{$schedule->requests->first()->desc }} {{$schedule->requests->first()->fuel->qty }} KL</td>
-                           <td>{{$schedule->requests->first()->origin->name }} to {{$schedule->requests->first()->destination->name }}</td>
-                        </tr>
-                        @endif
-                     @endforeach
-                     
-                     @if (count($requests->where('status', 1)) > 0)
-                           @else
-                           <tr>
-                           <td class="text-center" colspan="4" style="height: 35px">Tidak ada Request Activity dari User</td>
                            </tr>
-                     @endif
-                  </tbody>
-               </table>
-            </div> --}}
-            {{-- <hr> --}}
-            <div class="table-responsive">
-               <table class=" table-striped " >
-                  <thead>
-                     <tr>
-                        <th class="text-center">Station</th>
-                        <th>Activity</th>
-                        <th>Location</th>
-                        <th>Boat</th>
-                        @foreach ($dates as $date)
-                           <th class="text-center">{{formatDateOnly($date)}}</th>
-                        @endforeach
-                        
-                     </tr>
-                  </thead>
-                  <tbody>
-
-                     @if ($users->count() > 0)
-                        @foreach ($users as $user => $reqs)
-                           
-                           
-                           @foreach ($reqs as $request)
-                           @if ($request->activity_id == 2)
-                              @if ($request->user->getPort()->func == 'DWI')
-                              <tr style="background-color: rgb(242, 248, 221)">
-                                 @else
-                                 <tr style="background-color: rgb(230, 221, 252)">
-                              @endif
-                                    <td>{{$request->user_name}}</td>
-                              <td style="width:220px">
-                                 <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
-                                 {{$request->description}}
-                                 @foreach ($request->cargoItems as $item)
-                                       {{$item->desc}},
-                                 @endforeach
-                                 </a>
-                              </td>
-                              <td style="width:115px">
-                                 {{-- @if ($request->activity_id < 5)
-                                 {{$request->origin->code}} to {{$request->destination->code}}
-                                 @else
-                                 
-                                 @endif --}}
-                                 {{$request->origin->code}}
-                                 {{-- @if ($request->origin->port_id != null)
-                                    ({{$request->origin->port->code}})
-                                     
-                                 @endif --}}
-                                  to {{$request->destination->code}}
-                              </td>
-                              <td class="d-flex align-items-center">
-                                 
-                                    <form action="{{route('intermilan.marine.select.schedule')}}" method="POST" class="d-flex">
-                                       @csrf
-                                       @method('PUT')
-                                       <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
-                                       <select style="width: 150px" name="schedule" id="schedule" required>
-                                          <option value="" selected disabled>Select Schedule</option>
-                                          {{-- <option value=""><a href="/">OK</a></option> --}}
-                                          @foreach ($schedules as $sche)
-                                             @if ($sche->class == 'Cargo' || $sche->class == 'Crew')
-                                             <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name}} - {{formatDate($sche->date)}}</option>
-                                             @endif
-                                             
-                                          @endforeach
-                                          
-                                       </select>
-                                       @if ($request->status == 1)
-                                          <button class="btn btn-sm border btn-info">
-                                           @else
-                                           <button class="btn btn-sm border btn-light">
-                                       @endif
-                                       {{-- <button class="btn btn-sm border btn-info"> --}}
-                                          {{-- <i class="fa fa-save"></i> --}}
-                                          Assign
-                                       </button>
-                                    </form>
-                                    
+                        </thead>
+                        <tbody>
+      
+                           @if ($users->count() > 0)
+                              @foreach ($users as $user => $reqs)
                                  
                                  
-                                 
-                                 
-                                 {{-- @if ($request->schedule->vessel_id == null)
-                                    <form action="{{route('intermilan.marine.select.vessel')}}" method="POST" class="d-flex">
-                                       @csrf
-                                       @method('PUT')
-                                       <input type="text" name="scheduleId" id="scheduleId" value="{{$request->schedule->id}}" hidden>
-                                       <select style="width: 130px" name="vessel" id="vessel">
-                                          <option value="" selected disabled>Select Vessel</option>
-                                          @foreach ($vessels as $vessel)
-
-                                             <option value="{{$vessel->id}}">{{$vessel->name ?? '-'}}</option>
-                                          @endforeach
-                                          
-                                       </select>
-                                       <button type="submit" class="btn btn-sm border">Assignn</button>
-                                    </form>
-                                    @else
-                                    <select style="width: 130px" name="schedule" id="schedule">
-                                       <option value="" selected disabled>Select</option>
-                                       @foreach ($schedules as $sche)
-   
-                                          <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name ?? '-'}}</option>
-                                       @endforeach
-                                       
-                                    </select>
-                                    <button class="btn btn-sm border">Assign</button>
-                                 @endif --}}
-                                 {{-- <a href="" class="btn btn-sm border">Detail</a> --}}
-                              </td>
-                              @foreach ($dates as $date)
-                                 @if ($date == $request->date)
-                                    <x-status-stisla.request-vessel :request="$request" />
-                                    
-                                    
-                                 @else
-                                 <td class="text-center">-</td>
-                                 @endif
-                                 
-                              @endforeach
-                           </tr>
-                           @endif
-                           @endforeach
-                        @endforeach
-                        @else
-                        <tr>
-                           <td colspan="4" class="text-center" style="height: 35px">Tidak ada data Intermilan di rentang waktu yang dipilih</td>
-                        </tr>
-                     @endif
-                     
-                     {{-- @foreach ($users as $user)
-                        @if (count($user->requests->where('status', '>', 1)) > 0)
-                        <tr>
-                           <td class="text-center" rowspan="{{count($user->requests) +1 }}">{{$user->name}}</td>
-                        </tr>
-                           @foreach ($requests->where('status', '>', 1) as $request)
-                              @if ($request->user_id == $user->id)
-                                 <tr>
-                                    <td style="width: 220px">
-                                       {{$request->desc}}
+                                 @foreach ($reqs as $request)
+                                 @if ($request->activity_id == 2)
+                                    @if ($request->user->getPort()->func == 'DWI')
+                                    <tr style="background-color: rgb(242, 248, 221)">
+                                       @else
+                                       <tr style="background-color: rgb(230, 221, 252)">
+                                    @endif
+                                          <td>{{$request->user_name}}</td>
+                                    <td style="width:220px">
+                                       <a href="{{route('request.detail.new', enkripRambo($request->id))}}">
+                                       {{$request->description}}
                                        @foreach ($request->cargoItems as $item)
                                              {{$item->desc}},
                                        @endforeach
+                                       </a>
                                     </td>
-                                    <td style="width:110px">@if ($request->activity_id < 5)
+                                    <td style="width:115px">
+                                       {{-- @if ($request->activity_id < 5)
                                        {{$request->origin->code}} to {{$request->destination->code}}
                                        @else
                                        
-                                       @endif</td>
-                                    <td>
-                                       {{$request->schedule->vessel->name ?? 'Not Available'}}
+                                       @endif --}}
+                                       {{$request->origin->code}}
+                                       {{-- @if ($request->origin->port_id != null)
+                                          ({{$request->origin->port->code}})
+                                           
+                                       @endif --}}
+                                        to {{$request->destination->code}}
+                                    </td>
+                                    <td class="d-flex align-items-center">
+                                       
+                                          <form action="{{route('intermilan.marine.select.schedule')}}" method="POST" class="d-flex">
+                                             @csrf
+                                             @method('PUT')
+                                             <input type="text" name="requestId" id="requestId" value="{{$request->id}}" hidden>
+                                             <select style="width: 150px" name="schedule" id="schedule" required>
+                                                <option value="" selected disabled>Select Schedule</option>
+                                                {{-- <option value=""><a href="/">OK</a></option> --}}
+                                                @foreach ($schedules as $sche)
+                                                   @if ($sche->class == 'Cargo' || $sche->class == 'Crew')
+                                                   <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name}} - {{formatDate($sche->date)}}</option>
+                                                   @endif
+                                                   
+                                                @endforeach
+                                                
+                                             </select>
+                                             @if ($request->status == 1)
+                                                <button class="btn btn-sm border btn-info">
+                                                 @else
+                                                 <button class="btn btn-sm border btn-light">
+                                             @endif
+                                             {{-- <button class="btn btn-sm border btn-info"> --}}
+                                                {{-- <i class="fa fa-save"></i> --}}
+                                                Assign
+                                             </button>
+                                          </form>
+                                          
+                                       
+                                       
+                                       
+                                       
+                                       {{-- @if ($request->schedule->vessel_id == null)
+                                          <form action="{{route('intermilan.marine.select.vessel')}}" method="POST" class="d-flex">
+                                             @csrf
+                                             @method('PUT')
+                                             <input type="text" name="scheduleId" id="scheduleId" value="{{$request->schedule->id}}" hidden>
+                                             <select style="width: 130px" name="vessel" id="vessel">
+                                                <option value="" selected disabled>Select Vessel</option>
+                                                @foreach ($vessels as $vessel)
+      
+                                                   <option value="{{$vessel->id}}">{{$vessel->name ?? '-'}}</option>
+                                                @endforeach
+                                                
+                                             </select>
+                                             <button type="submit" class="btn btn-sm border">Assignn</button>
+                                          </form>
+                                          @else
+                                          <select style="width: 130px" name="schedule" id="schedule">
+                                             <option value="" selected disabled>Select</option>
+                                             @foreach ($schedules as $sche)
+         
+                                                <option {{$request->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name ?? '-'}}</option>
+                                             @endforeach
+                                             
+                                          </select>
+                                          <button class="btn btn-sm border">Assign</button>
+                                       @endif --}}
+                                       {{-- <a href="" class="btn btn-sm border">Detail</a> --}}
                                     </td>
                                     @foreach ($dates as $date)
                                        @if ($date == $request->date)
@@ -269,16 +229,60 @@
                                        
                                     @endforeach
                                  </tr>
-                                 
-                              @endif
-                              
-                           @endforeach
-                        @endif
+                                 @endif
+                                 @endforeach
+                              @endforeach
+                              @else
+                              <tr>
+                                 <td colspan="4" class="text-center" style="height: 35px">Tidak ada data Intermilan di rentang waktu yang dipilih</td>
+                              </tr>
+                           @endif
                            
-                     @endforeach --}}
-                     
-                  </tbody>
-               </table>
+                           {{-- @foreach ($users as $user)
+                              @if (count($user->requests->where('status', '>', 1)) > 0)
+                              <tr>
+                                 <td class="text-center" rowspan="{{count($user->requests) +1 }}">{{$user->name}}</td>
+                              </tr>
+                                 @foreach ($requests->where('status', '>', 1) as $request)
+                                    @if ($request->user_id == $user->id)
+                                       <tr>
+                                          <td style="width: 220px">
+                                             {{$request->desc}}
+                                             @foreach ($request->cargoItems as $item)
+                                                   {{$item->desc}},
+                                             @endforeach
+                                          </td>
+                                          <td style="width:110px">@if ($request->activity_id < 5)
+                                             {{$request->origin->code}} to {{$request->destination->code}}
+                                             @else
+                                             
+                                             @endif</td>
+                                          <td>
+                                             {{$request->schedule->vessel->name ?? 'Not Available'}}
+                                          </td>
+                                          @foreach ($dates as $date)
+                                             @if ($date == $request->date)
+                                                <x-status-stisla.request-vessel :request="$request" />
+                                                
+                                                
+                                             @else
+                                             <td class="text-center">-</td>
+                                             @endif
+                                             
+                                          @endforeach
+                                       </tr>
+                                       
+                                    @endif
+                                    
+                                 @endforeach
+                              @endif
+                                 
+                           @endforeach --}}
+                           
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
             </div>
             
             
@@ -287,7 +291,9 @@
             
          </div>
          <div class="col-md-3">
-            <div class="badge badge-info mb-2">Create Sailing Order</div>
+            <div class="card">
+               <div class="card-body">
+                  <div class="badge badge-info mb-2">Create Sailing Order</div>
             <form action="{{route('schedule.store.so')}}" method="POST">
                @csrf
                {{-- <div class="form-group"> --}}
@@ -365,6 +371,8 @@
                   
                </tbody>
             </table>
+               </div>
+            </div>
             <hr>
             {{-- <form action="{{route('intermilan.filter')}}" method="POST">
                @csrf

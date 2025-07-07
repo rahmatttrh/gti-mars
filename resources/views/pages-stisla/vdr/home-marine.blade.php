@@ -96,9 +96,9 @@
                               @endforeach
                              
                            </select>
-                           <input type="date" name="start" id="start" class="form-control">
+                           <input type="date" name="start" id="start" value="{{$start}}" class="form-control">
                            <span class="mx-2 mt-3">To</span>
-                           <input type="date" name="end" id="end" class="form-control">
+                           <input type="date" name="end" id="end" value="{{$end}}" class="form-control">
                            <div class="input-group-append">
                               <button class="btn btn-primary  px-4" type="submit">Filter</button>
                               
@@ -130,9 +130,11 @@
                            <h5>{{formatDateName($now)}}</h5>
                            @else
                            @if ($thisVessel)
-                           <b class="text-right">
-                              VDR {{$thisVessel->name}} <br> [ {{formatDate($start)}} - {{formatDate($end)}} ]
-                           </b>
+                           <div class="text-right">
+                              {{$thisVessel->name}} [ {{formatDate($start)}} - {{formatDate($end)}} ] <br>
+                              {{count($vdrs)}} Submited VDR
+                           </div>
+                           
                            @else
                            <h5>All VDR</h5>
                            @endif
