@@ -1104,7 +1104,7 @@ table {
                      <small>Acknowledged by,</small>
                      <br>
                   
-                     <small>{{$vdr->title3 ?? '-'}} : {{$vdr->name3 ?? '-'}}</small><br>
+                     <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
                      @if ($vdr->title3 != null)
                      <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                      {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 4)->first()->created_at)}}</small><br> --}}
