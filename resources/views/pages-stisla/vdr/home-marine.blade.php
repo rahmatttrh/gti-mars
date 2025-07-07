@@ -9,13 +9,13 @@
          <div class="col-md-5">
             <div class="card">
                <div class="card-body">
-                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour)</small>
+                  <small class="mb-2 badge badge-info">Total Operating Mode (Hour) (7 Hari Terakhir)</small>
                   <canvas class="mt-2" id="myChart"></canvas>
                </div>
             </div>
             <div class="card">
                <div class="card-body">
-                  <small class="mb-2 badge badge-primary">Fuel Consumption (Liter)</small>
+                  <small class="mb-2 badge badge-primary">Fuel Consumption (Liter) (7 Hari Terakhir)</small>
                   <canvas class="mt-2" id="myChart2"></canvas>
                </div>
             </div>
