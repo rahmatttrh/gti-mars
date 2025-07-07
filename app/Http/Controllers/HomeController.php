@@ -1292,7 +1292,7 @@ class HomeController extends Controller
             $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
             $vdrs = Vdr::where('status', '>=', 2)->get();
-         } elseif (auth()->user()->username == 'lutfi') {
+         } elseif (auth()->user()->username == 'lutfiaryanto') {
             $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'asc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
          } else {
@@ -1348,7 +1348,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      } else if (auth()->user()->username == 'lutfi') {
+      } else if (auth()->user()->username == 'lutfiaryanto') {
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
@@ -1360,7 +1360,7 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 2)->orderBy('date', 'desc')->get();
-         } elseif (auth()->user()->username == 'lutfi') {
+         } elseif (auth()->user()->username == 'lutfiaryanto') {
             $vdrValidations = Vdr::where('status', 3)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->orderBy('date', 'desc')->get();
          } else {
@@ -2624,7 +2624,7 @@ class HomeController extends Controller
          $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
          $vdrs = Vdr::where('status', '>', 2)->orderBy('date', 'desc')->get();
-      } elseif (auth()->user()->username == 'lutfi') {
+      } elseif (auth()->user()->username == 'lutfiaryanto') {
          $vdrs = Vdr::where('status', '>', 3)->orderBy('date', 'desc')->get();
       }
 

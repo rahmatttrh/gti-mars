@@ -154,7 +154,7 @@
                            <tr class="border" style="border: 1px black">
                               {{-- <td>{{$vdr->id}}</td> --}}
                               <td class="text-truncate" >
-                              @if (auth()->user()->username == 'lutfi')
+                              @if (auth()->user()->username == 'lutfiaryanto')
                               
                               <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
                                  @else
@@ -300,7 +300,7 @@
                   <tr class="border" style="border: 1px black">
                      <td>{{$vdr->code}}</td>
                      <td class="text-truncate" >
-                     @if (auth()->user()->username == 'lutfi')
+                     @if (auth()->user()->username == 'lutfiaryanto')
                      
                      <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
                         @else

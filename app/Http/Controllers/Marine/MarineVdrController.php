@@ -302,7 +302,7 @@ class MarineVdrController extends Controller
          $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
          $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
-      } elseif (auth()->user()->username == 'lutfi') {
+      } elseif (auth()->user()->username == 'lutfiaryanto') {
          $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
       }
 
@@ -388,7 +388,7 @@ class MarineVdrController extends Controller
          $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       } elseif(auth()->user()->username == 'marine'){
          $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
-      } elseif(auth()->user()->username == 'lutfi'){
+      } elseif(auth()->user()->username == 'lutfiaryanto'){
          $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
       }
       
@@ -572,7 +572,7 @@ class MarineVdrController extends Controller
          $status = 101;
       } elseif(auth()->user()->username == 'marine'){
          $status = 202;
-      } elseif(auth()->user()->username == 'lutfi'){
+      } elseif(auth()->user()->username == 'lutfiaryanto'){
          $status = 303;
       }
 
@@ -621,7 +621,7 @@ class MarineVdrController extends Controller
       $vdr->update([
          'status' => 4,
          'title3' => 'Suptent',
-         'name3' => 'Lutfi',
+         'name3' => 'Lutfi Aryanto',
       ]);
 
       // dd($vdr->name3);
