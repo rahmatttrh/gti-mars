@@ -128,7 +128,7 @@
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                   <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                  <a href="" class="btn bg-info mx-2">Edit</a>
+                  <a href="" class="btn btn-info mx-2">Edit</a>
                   <a href="" class="btn  btn-danger  mr-2">Delete</a>
                   {{-- <div class="btn-group btn-light mx-2">
                      
@@ -410,167 +410,173 @@
          
                   <div class="col-md-7">
                      <div class="table-responsive p-2" >
-                     <table class="w-100">
-                        <thead>
-                           <tr>
-                              <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
-                           </tr>
-                           <tr>
-                              <td colspan="13">
-                                 {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
-                                 <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
-                                 <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a>
-                                 {{-- <button onclick="addActivity()">Click</button> --}}
-                              </td>
-                           </tr>
-                           <tr>
-                              <td></td>
-                              <td colspan="2" class="text-center">Time</td>
-                              <td colspan="8" class="text-center">Operating Mode Duration (hh:mm) - 
-                                 Except Maintenance & Downtime </td>
-                              <td rowspan="2" class="text-center">Activities</td>
-                           </tr>
-                           <tr>
-                              <th></th>
-                              <td class="text-center">Start</td>
-                              <td class="text-center">Finish</td>
-                              <td class="text-center">High</td>
-                              <td class="text-center">Normal</td>
-                              <td class="text-center">Slow</td>
-                              <td class="text-center">Manu</td>
-                              <td class="text-center">Idle</td>
-                              <td class="text-center">Tow</td>
-                              <td class="text-center">A/H</td>
-                              <td class="text-center">S/B</td>
-                              
-                           </tr>
-                        </thead>
-                        <tbody>
-                           
-                              @foreach ($activities as $activity)
-                              <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
-                              <tr>
-                                 <td>
-                                    <input class="idActivity" type="checkbox" name="idActivity" id="idActivity">
-                                 </td>
-                                    <td class="text-info bg-y">
-                                       {{-- {{$activity->id}} --}}
-                                       {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                       <input style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                        <form action="{{route('vdr.activity.delete.row')}}" method="post" >
+                           @csrf
+                           @method('POST')
+                           <table class="w-100">
+                              <thead>
+                                 <tr>
+                                    <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="13">
+                                       {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
+                                       <a class="btn btn-info btn-sm" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
+                                       {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
+                                       <button  class="btn btn-danger btn-sm"   type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                       {{-- <button onclick="addActivity()">Click</button> --}}
                                     </td>
-                                    <td class="text-danger bg-y">
-                                       {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                       <input  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
-                                    </td>
-                                    <td class="bg-y text-center">
-                                       {{-- {{getTotalHours($activity->high)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->normal)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->slow)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->manu)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->idle)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->tow)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->ah)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       {{-- {{getTotalHours($activity->sb)}} --}}
-                                       <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
-                                    </td>
-                                    <td class="bg-y">
-                                       <input style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
-                                       {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
-                                          {{$activity->activity}}
-                                       </textarea> --}}
+                                 </tr>
+                                 <tr>
+                                    <td></td>
+                                    <td colspan="2" class="text-center">Time</td>
+                                    <td colspan="8" class="text-center">Operating Mode Duration (hh:mm) - 
+                                       Except Maintenance & Downtime </td>
+                                    <td rowspan="2" class="text-center">Activities</td>
+                                 </tr>
+                                 <tr>
+                                    <th><input type="checkbox" name="" id="checkboxAllActivity"></th>
+                                    <td class="text-center">Start</td>
+                                    <td class="text-center">Finish</td>
+                                    <td class="text-center">High</td>
+                                    <td class="text-center">Normal</td>
+                                    <td class="text-center">Slow</td>
+                                    <td class="text-center">Manu</td>
+                                    <td class="text-center">Idle</td>
+                                    <td class="text-center">Tow</td>
+                                    <td class="text-center">A/H</td>
+                                    <td class="text-center">S/B</td>
+                                    
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <input type="text" name="vdr_id" id="vdr_id" value="{{$vdr->id}}" hidden>
+                                    @foreach ($activities as $activity)
+                                    <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
+                                    <tr>
+                                       <td>
+                                          <input type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
+                                          {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                       </td>
+                                          <td class="text-info bg-y">
+                                             {{-- {{$activity->id}} --}}
+                                             {{-- {{substr($activity->start, 0, 5)}}   --}}
+                                             <input style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                          </td>
+                                          <td class="text-danger bg-y">
+                                             {{-- {{substr($activity->finish, 0, 5)}} --}}
+                                             <input  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                          </td>
+                                          <td class="bg-y text-center">
+                                             {{-- {{getTotalHours($activity->high)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->normal)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->slow)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->manu)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->idle)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->tow)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->ah)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             {{-- {{getTotalHours($activity->sb)}} --}}
+                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             <input style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
+                                                {{$activity->activity}}
+                                             </textarea> --}}
+                                             
+                                          </td>
+                                          <td>
+                                             {{-- <a href="#" class=" badge badge-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"><i class="fa fa-trash"></i> Delete </a> --}}
+                                          </td>
                                        
-                                    </td>
-                                    <td>
-                                       {{-- <a href="#" class=" badge badge-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"><i class="fa fa-trash"></i> Delete </a> --}}
-                                    </td>
-                                   
-                              </tr>
+                                    </tr>
 
-                              <!-- Modal Delete -->
+                                    <!-- Modal Delete -->
 
-                              <div class="modal modal-blur fade" id="deleteAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                                       <div class="modal-content">
+                                    {{-- <div class="modal modal-blur fade" id="deleteAct-{{$activity->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                                             <div class="modal-content">
 
-                                          <form action="{{route('vdr.delete.activity')}}" method="POST">
-                                                <div class="modal-body">
-                                                   @csrf
-                                                   @method('DELETE')
-                                                   <input type="hidden" name="id" value="{{$activity->id}}" id="">
-                                                   <div class="card-body">
-                                                      @if ($errors->any())
-                                                      <div class="alert alert-danger text-danger">
-                                                            <ul>
-                                                               @foreach ($errors->all() as $error)
-                                                               <li><small>{{ $error }}</small></li>
-                                                               @endforeach
-                                                            </ul>
+                                                <form action="{{route('vdr.delete.activity')}}" method="POST">
+                                                      <div class="modal-body">
+                                                         @csrf
+                                                         @method('DELETE')
+                                                         <input type="hidden" name="id" value="{{$activity->id}}" id="">
+                                                         <div class="card-body">
+                                                            @if ($errors->any())
+                                                            <div class="alert alert-danger text-danger">
+                                                                  <ul>
+                                                                     @foreach ($errors->all() as $error)
+                                                                     <li><small>{{ $error }}</small></li>
+                                                                     @endforeach
+                                                                  </ul>
+                                                            </div>
+                                                            @endif
+                                                            <h4 class="text-center"> Anda yakin ingin menghapussss activity {{$activity->activity}} ?</h4>
+                                                         </div>
+                                                         <div class="modal-footer">
+                                                            <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
+                                                            <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
+                                                         </div>
                                                       </div>
-                                                      @endif
-                                                      <h4 class="text-center"> Anda yakin ingin menghapussss activity {{$activity->activity}} ?</h4>
-                                                   </div>
-                                                   <div class="modal-footer">
-                                                      <button type="button" class="btn btn-link link-secondary me-auto" data-bs-dismiss="modal">Cancel</button>
-                                                      <button type="submit" class="btn btn-danger">Ya, Saya yakin </button>
-                                                   </div>
-                                                </div>
-                                          </form>
-                                       </div>
-                                    </div>
-                              </div>
+                                                </form>
+                                             </div>
+                                          </div>
+                                    </div> --}}
 
-                              <!-- End Modal  -->
+                                    <!-- End Modal  -->
 
 
-                              
+                                    
 
-                              <!-- End Modal  -->
-                              @endforeach
+                                    <!-- End Modal  -->
+                                    @endforeach
 
-                              <tr>
-                                    <td colspan="2" class="text-center">Total</td>
-                                    <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
-                                    <td class="text-center"><span class="normalTime">{{$vdrOperatingNormal}}</span> </td>
-                                    <td class="text-center"><span class="slowTime">{{$vdrOperatingSlow}}</span> </td>
-                                    <td class="text-center"><span class="manuTime">{{$vdrOperatingManu}}</span> </td>
-                                    <td class="text-center"><span class="idleTime">{{$vdrOperatingIdle}}</span> </td>
-                                    <td class="text-center"><span class="towTime">{{$vdrOperatingTow}}</span> </td>
-                                    <td class="text-center"><span class="ahTime">{{$vdrOperatingAh}}</span> </td>
-                                    <td class="text-center"><span class="sbTime">{{$vdrOperatingSb}}</span> </td>
-                                    {{-- @foreach ($operatings as $operating)
-                                    @if($operating->heading->field)
-                                    <td>{{getTotalHours($operating->time)}}</td>
-                                    @endif
-                                    @endforeach --}}
-                              </tr>
-                           
-      
-      
-                           
-                           
-                        </tbody>
-                     </table>
+                                    <tr>
+                                          <td colspan="2" class="text-center">Total</td>
+                                          <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
+                                          <td class="text-center"><span class="normalTime">{{$vdrOperatingNormal}}</span> </td>
+                                          <td class="text-center"><span class="slowTime">{{$vdrOperatingSlow}}</span> </td>
+                                          <td class="text-center"><span class="manuTime">{{$vdrOperatingManu}}</span> </td>
+                                          <td class="text-center"><span class="idleTime">{{$vdrOperatingIdle}}</span> </td>
+                                          <td class="text-center"><span class="towTime">{{$vdrOperatingTow}}</span> </td>
+                                          <td class="text-center"><span class="ahTime">{{$vdrOperatingAh}}</span> </td>
+                                          <td class="text-center"><span class="sbTime">{{$vdrOperatingSb}}</span> </td>
+                                          {{-- @foreach ($operatings as $operating)
+                                          @if($operating->heading->field)
+                                          <td>{{getTotalHours($operating->time)}}</td>
+                                          @endif
+                                          @endforeach --}}
+                                    </tr>
+                                 
+            
+            
+                                 
+                                 
+                              </tbody>
+                           </table>
+                        </form>
                      </div>
                      <hr>
                      <div class="table-responsive p-2" >
@@ -581,6 +587,7 @@
                               <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td>
                            </tr>
                            <tr class="text-center ">
+                              {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
                               <th class="">Operating Mode</th>
                               <th>Total Time</th>
                               <th>Min. Speed as Contract (Knots) <br> </th>
@@ -801,7 +808,72 @@
                      </table>
                   </div>
                </div>
-            </div>
+
+               
+               <hr>
+            {{-- <div class="table-responsive"> --}}
+               <table class="" >
+                  <thead>
+                     <tr>
+                        <th  rowspan="2" class="text-center align-middle border-g">No</th>
+                        <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
+                        <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
+                        <th  colspan="6" class="text-center border-g">Main Engines Data</th>
+                        <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
+                     </tr>
+                     <tr>
+                        <th style="width: 10px"  class="border-g">Ref. Value</th>
+                        <th class="border-g">Port</th>
+                        <th class="border-g">Stbd</th>
+                        <th class="border-g">Center</th>
+                        <th class="border-g">Other</th>
+                        <th class="border-g">Ref. Value</th>
+                        <th class="border-g">Port</th>
+                        <th class="border-g">Stbd</th>
+                        <th class="border-g">Other</th>
+                     </tr>
+                  </thead>
+                  <tbody>  
+                     @foreach ($engines as $key => $engine)
+                     {{-- <input type="hidden" name="id[]" value="{{$engine->id}}"> --}}
+                     <input type="text" name="engine" id="engine" value="{{$engine->id}}" hidden>
+                     <tr>
+                        <td>{{$key+1}}</td>
+                        <td class="col-md-3">{{$engine->heading->description}}</td>
+                        <td>{{$engine->heading->unit}}</td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
+                        </td>
+                        <td class="bg-y">
+                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
+                        </td>
+                     </tr>
+                     @endforeach
+                  </tbody>
+               </table>
+            {{-- </div> --}}
+
             <hr>
             <div class="row">
                <div class="col-md-6">
@@ -886,69 +958,8 @@
                   </table>
                </div>
             </div>
-            <hr>
-            {{-- <div class="table-responsive"> --}}
-               <table class="" >
-                  <thead>
-                     <tr>
-                        <th  rowspan="2" class="text-center align-middle border-g">No</th>
-                        <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
-                        <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
-                        <th  colspan="6" class="text-center border-g">Main Engines Data</th>
-                        <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
-                     </tr>
-                     <tr>
-                        <th style="width: 10px"  class="border-g">Ref. Value</th>
-                        <th class="border-g">Port</th>
-                        <th class="border-g">Stbd</th>
-                        <th class="border-g">Center</th>
-                        <th class="border-g">Other</th>
-                        <th class="border-g">Ref. Value</th>
-                        <th class="border-g">Port</th>
-                        <th class="border-g">Stbd</th>
-                        <th class="border-g">Other</th>
-                     </tr>
-                  </thead>
-                  <tbody>  
-                     @foreach ($engines as $key => $engine)
-                     {{-- <input type="hidden" name="id[]" value="{{$engine->id}}"> --}}
-                     <input type="text" name="engine" id="engine" value="{{$engine->id}}" hidden>
-                     <tr>
-                        <td>{{$key+1}}</td>
-                        <td class="col-md-3">{{$engine->heading->description}}</td>
-                        <td>{{$engine->heading->unit}}</td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
-                        </td>
-                        <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
-                        </td>
-                     </tr>
-                     @endforeach
-                  </tbody>
-               </table>
-            {{-- </div> --}}
+            </div>
+            
          </div>
       </div>
 
@@ -2136,6 +2147,24 @@
 @push('general')
 <script>
    $(document).ready(function() {
+      
+      $("#checkboxAllActivity").change(function() {
+         $("input[name='checkActivity[]']").prop('checked', $(this).prop('checked'));
+         console.log('check all');
+      });
+
+      // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
+      $("input[name='checkActivity[]']").change(function() {
+         console.log('check one');
+         // Periksa apakah semua checkbox dengan name=check tercentang
+         var allChecked = ($("input[name='checkActivity[]']:checked").length === $("input[name='checkActivity[]']").length);
+
+         // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
+         $("#checkboxAllActivity").prop('checked', allChecked);
+      });
+
+
+
       $(".input_general").keyup(function () {
       console.log('general')
 

@@ -790,7 +790,8 @@ Route::group(['middleware' => ['role:vessel|superuser']], function () {
 
 
 Route::get('vdr/activity/add/row/{vdr}', [VdrController::class, 'addActivityRow'])->name('vdr.activity.add.row');
-
+Route::post('vdr/activity/delete', [VdrController::class, 'deleteActivityRow'])->name('vdr.activity.delete');
+Route::post('vdr/activity/delete/row', [VdrController::class, 'deleteActivityRow'])->name('vdr.activity.delete.row');
 
 Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
