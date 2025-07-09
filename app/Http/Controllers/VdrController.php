@@ -1389,6 +1389,48 @@ class VdrController extends Controller
 
    }
 
+   public function storeCrewAjax($id)
+   {
+      
+      $vdr = Vdr::find(dekripRambo($id));
+      VdrCrew::create([
+         'vdr_id' => $vdr->id,
+         'is_crew' => 1,
+         'name' => '-',
+         'rank' => '-'
+      ]);
+      
+
+      // return response()->json([
+      //    'success' => true,
+      //    'result' => 'Crew',
+      // ]);
+
+      return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'Row added');
+
+   }
+
+   public function storePaxAjax($id)
+   {
+      
+      $vdr = Vdr::find(dekripRambo($id));
+      VdrCrew::create([
+         'vdr_id' => $vdr->id,
+         'is_crew' => 0,
+         'name' => '-',
+         'company' => '-'
+      ]);
+      
+
+      // return response()->json([
+      //    'success' => true,
+      //    'result' => 'Crew',
+      // ]);
+
+      return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'Row added');
+
+   }
+
    public function updateCrewAjax($vdr, $crew, $name, $rank)
    {
       
@@ -2542,6 +2584,54 @@ class VdrController extends Controller
       }
       
       return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully deleted');
+      // $deleteActivity  = VdrActivity::destroy($req->id);
+
+   
+   }
+
+   public function deleteCrewRow(Request $req)
+   {
+      
+      if ($req->checkCrew == null) {
+         return redirect()->back()->with('warning', 'Gagal, Klik pada checkbox Crew yang ingin dihapus');
+      }
+      
+      foreach ($req->checkCrew as $key => $id) {
+
+         $vdr = Vdr::find($req->vdr);
+         // $vdrActivity = VdrActivity::find($req->id);
+
+         // Menghapus data dari TempDiscipline berdasarkan ID
+         $deleteCrew  = VdrCrew::destroy($id);
+
+
+      }
+      
+      return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr), enkripRambo('activity')])->with('success', 'Crew data successfully deleted');
+      // $deleteActivity  = VdrActivity::destroy($req->id);
+
+   
+   }
+
+   public function deletePaxRow(Request $req)
+   {
+      
+      if ($req->checkPax == null) {
+         return redirect()->back()->with('warning', 'Gagal, Klik pada checkbox Pax yang ingin dihapus');
+      }
+      
+      foreach ($req->checkPax as $key => $id) {
+
+         $vdr = Vdr::find($req->vdr);
+         // $vdrActivity = VdrActivity::find($req->id);
+
+         // Menghapus data dari TempDiscipline berdasarkan ID
+         $deletePax  = VdrCrew::destroy($id);
+
+
+      }
+      
+      return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr), enkripRambo('activity')])->with('success', 'Pax data successfully deleted');
       // $deleteActivity  = VdrActivity::destroy($req->id);
 
    

@@ -793,6 +793,11 @@ Route::get('vdr/activity/add/row/{vdr}', [VdrController::class, 'addActivityRow'
 Route::post('vdr/activity/delete', [VdrController::class, 'deleteActivityRow'])->name('vdr.activity.delete');
 Route::post('vdr/activity/delete/row', [VdrController::class, 'deleteActivityRow'])->name('vdr.activity.delete.row');
 
+Route::post('vdr/crew/delete/row', [VdrController::class, 'deleteCrewRow'])->name('vdr.crew.delete.row');
+Route::post('vdr/pax/delete/row', [VdrController::class, 'deletePaxRow'])->name('vdr.pax.delete.row');
+
+
+
 Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
    Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
@@ -808,8 +813,11 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
    Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
 
+
+   Route::get('vdr/add/crew/{vdr}', [VdrController::class, 'storeCrewAjax'])->name('vdr.crew.add');
+   Route::get('vdr/add/pax/{vdr}', [VdrController::class, 'storePaxAjax'])->name('vdr.pax.add');
    Route::get('vdr/update/crew/{vdr}/{crew}/{name}/{rank}', [VdrController::class, 'updateCrewAjax']);
-   Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updateCrewAjax']);
+   Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updatePaxAjax']);
 
    Route::get('vdr/update/engine/{vdr}/{engine}/{m_ref}/{m_port}/{m_stbd}/{m_center}/{m_other}/{a_ref}/{a_port}/{a_stbd}/{a_other}', [VdrController::class, 'updateEngineAjax']);
 });

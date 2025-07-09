@@ -131,7 +131,7 @@
          </div> --}}
 
          <div class="col-md-12">
-            <div class="d-flex px-2">
+            <div class="d-flex px-1 mb-2">
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                   <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
@@ -198,7 +198,7 @@
                                  @endif
                
             </div>
-            <hr>
+            
             <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
                <div class="row pb-4">
                   <div class="col-md-5">
@@ -881,90 +881,108 @@
                </table>
             {{-- </div> --}}
 
-            <hr>
-            <div class="row">
-               <div class="col-md-6">
-                  <table>
-                     <thead>
-                        <tr>
-                           <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
-                        </tr>
-                        <tr>
-                           <td colspan="3">
-                              <a href="" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
-                              <a href="" class="badge badge-danger"><i class=" fa fa-trash"></i> Delete</a>
-                           </td>
-                           {{-- <td></td> --}}
-                           
-                        </tr>
-                        <tr>
-                           <td><input type="checkbox" name="id" id="id"></td>
-                           <td>Name</td>
-                           <td>Rank</td>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($crews->where('is_crew', 1) as $crew)
+               <hr>
+              
+               <div class="row">
+                  <div class="col-md-6">
+                     <form action="{{route('vdr.crew.delete.row')}}" method="post" >
+                        @csrf
+                        @method('POST')
+                        <table>
+                           <thead>
+                              <tr>
+                                 <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3">
+                                    <a href="{{route('vdr.crew.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                                    <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                 </td>
+                                 {{-- <td></td> --}}
+                                 
+                              </tr>
+                              <tr>
+                                 <th><input type="checkbox" name="" id="checkboxAllCrew"></th>
+                                 <td>Name</td>
+                                 <td>Rank</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+                              @foreach ($crews->where('is_crew', 1) as $crew)
 
-                        <tr>
-                           <td>
-                              <input type="checkbox" name="id" id="id">
-                           </td>
-                           <td class="bg-y" >
-                              {{-- {{$crew->id}} --}}
-                              <input  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
-                           </td>
-                           <td class="bg-y">
-                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
-                           </td>
-                           
-                        </tr>
+                              <tr>
+                                 <td>
+                                    <input type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                    {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                 </td>
+                                 <td class="bg-y" >
+                                    {{-- {{$crew->id}} --}}
+                                    <input  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                                 </td>
+                                 <td class="bg-y">
+                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                 </td>
+                                 
+                              </tr>
 
-                        
-                        @endforeach
-                        
-                     </tbody>
-                  </table>
+                              
+                              @endforeach
+                              
+                           </tbody>
+                        </table>
+                     </form>
+                  </div>
+
+                  <div class="col-md-6">
+                     <form action="{{route('vdr.pax.delete.row')}}" method="post" >
+                        @csrf
+                        @method('POST')
+                        <table>
+                           <thead>
+                              <tr>
+                                 <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3">
+                                    <a href="{{route('vdr.pax.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                                    <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked pax list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                    {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <th><input type="checkbox" name="" id="checkboxAllPax"></th>
+                                 <td>Name</td>
+                                 <td>Company</td>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+                              @foreach ($crews->where('is_crew', 0) as $pax)
+                              <tr>
+                                 <td>
+                                    <input type="checkbox" name="checkPax[]" value="{{$pax->id}}" id="checkPax-{{$pax->id}}">
+                                    {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                 </td>
+                                 <td class="bg-y">
+                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
+                                 </td>
+                                 <td class="bg-y">
+                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
+                                 </td>
+                                 {{-- <td>
+                                    <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
+                                 </td> --}}
+                              </tr>
+
+                              
+                              @endforeach
+                              
+                           </tbody>
+                        </table>
+                     </form>
+                  </div>
                </div>
-
-               <div class="col-md-6">
-                  <table>
-                     <thead>
-                        <tr>
-                           <td><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
-                        </tr>
-                        <tr>
-                           <td>
-                              <a href="" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
-                              <a href="" class="badge badge-danger"><i class=" fa fa-trash"></i> Delete</a>
-                           </td>
-                        </tr>
-                        <tr>
-                           <td>Name</td>
-                           <td>Company</td>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($crews->where('is_crew', 0) as $pax)
-                        <tr>
-                           <td class="bg-y">
-                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
-                           </td>
-                           <td class="bg-y">
-                              <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
-                           </td>
-                           <td>
-                              <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
-                           </td>
-                        </tr>
-
-                        
-                        @endforeach
-                        
-                     </tbody>
-                  </table>
-               </div>
-            </div>
             </div>
             
          </div>
@@ -2155,6 +2173,8 @@
 <script>
    $(document).ready(function() {
       
+
+      // START Form Delete Multiple Activity
       $("#checkboxAllActivity").change(function() {
          $("input[name='checkActivity[]']").prop('checked', $(this).prop('checked'));
          console.log('check all');
@@ -2169,6 +2189,44 @@
          // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
          $("#checkboxAllActivity").prop('checked', allChecked);
       });
+      // END Form Delete Multiple Activity
+
+
+
+      // START Form Delete Multiple Crew
+      $("#checkboxAllCrew").change(function() {
+         $("input[name='checkCrew[]']").prop('checked', $(this).prop('checked'));
+         console.log('check all');
+      });
+
+      // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
+      $("input[name='checkCrew[]']").change(function() {
+         console.log('check one');
+         // Periksa apakah semua checkbox dengan name=check tercentang
+         var allChecked = ($("input[name='checkCrew[]']:checked").length === $("input[name='checkCrew[]']").length);
+
+         // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
+         $("#checkboxAllCrew").prop('checked', allChecked);
+      });
+      // END Form Delete Multiple Crew
+
+
+      // START Form Delete Multiple Pax
+      $("#checkboxAllPax").change(function() {
+         $("input[name='checkPax[]']").prop('checked', $(this).prop('checked'));
+         console.log('check all');
+      });
+
+      // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
+      $("input[name='checkPax[]']").change(function() {
+         console.log('check one');
+         // Periksa apakah semua checkbox dengan name=check tercentang
+         var allChecked = ($("input[name='checkPax[]']:checked").length === $("input[name='checkPax[]']").length);
+
+         // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
+         $("#checkboxAllPax").prop('checked', allChecked);
+      });
+      // END Form Delete Multiple Pax
 
 
 
