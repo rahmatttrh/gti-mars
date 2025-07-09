@@ -128,8 +128,8 @@
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                   <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                  <a href="" class="btn bg-info mx-2">Edit</a>
-                  <a href="" class="btn  btn-danger  mr-2">Delete</a>
+                  <a href="" class="btn btn-info mx-2">Edit</a>
+                  <a href="" class="btn  btn-danger  mr-2" data-toggle="modal" data-target="#modalDeleteVdr">Delete</a>
                   {{-- <div class="btn-group btn-light mx-2">
                      
                      
