@@ -41,6 +41,13 @@
       background-color: rgb(226, 236, 151)
    }
 
+   .button {
+      cursor: pointer;
+    border: none;
+    
+    outline: inherit;
+}
+
 
 </style>
 <section class="section">
@@ -421,9 +428,9 @@
                                  <tr>
                                     <td colspan="13">
                                        {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
-                                       <a class="btn btn-info btn-sm" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
+                                       <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
                                        {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
-                                       <button  class="btn btn-danger btn-sm"   type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                       <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
                                        {{-- <button onclick="addActivity()">Click</button> --}}
                                     </td>
                                  </tr>

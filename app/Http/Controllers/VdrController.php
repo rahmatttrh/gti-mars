@@ -2343,6 +2343,9 @@ class VdrController extends Controller
    public function deleteActivityRow(Request $req)
    {
       
+      if ($req->checkActivity == null) {
+         return redirect()->back()->with('warning', 'Gagal, Klik pada checkbox Activity yang ingin dihapus');
+      }
       
       foreach ($req->checkActivity as $key => $id) {
 
