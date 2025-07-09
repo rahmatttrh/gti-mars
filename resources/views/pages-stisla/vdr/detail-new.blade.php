@@ -8,18 +8,16 @@
    table {
       width: 100%;
       background-color: white;
-      border-radius: 5px;
+      border-radius: 10px;
       box-shadow: 1px 1px 5px rgb(159, 158, 158);
+      
    }
 
    table, th, td {
       border: 1px solid rgba(226, 218, 218, 0);
       border-collapse: collapse;
    }
-   th, td {
-      padding-left: 5px
-   }
-
+  
    input {
       border:0;
       outline:0;
@@ -200,7 +198,7 @@
             </div>
             
             <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
-               <div class="row pb-4">
+               <div class="row ">
                   <div class="col-md-5">
                      
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
@@ -224,11 +222,11 @@
 
                      {{-- <div class="table-responsive overflow-auto pb-4" style="height: 700px ">  --}}
                         <div class="table-responsive p-2" >
-                           <table>
+                           <table class="">
                               <thead>
                                  <tr>
-                                    <td><b>{{$vdr->code}}</b></td>
-                                    <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                                    <td colspan="2"><b>{{$vdr->code}}</b></td>
+                                    <td colspan="2" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
                                  </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                      <tr>
@@ -243,7 +241,7 @@
                                     <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
                                  </tr>
                               </thead>
-                              <tbody>
+                              <tbody class="pb-3">
                                  <form id="form_general"  method="POST">
                                     @csrf
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
@@ -282,6 +280,12 @@
                                           <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
                                           <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
                                        </td>
+                                    </tr>
+                                    <tr>
+                                       <td colspan="4"></td>
+                                    </tr>
+                                    <tr>
+                                       <td colspan="4"></td>
                                     </tr>
                                  </form>
                               </tbody>
@@ -327,6 +331,12 @@
                                     </tr>
 
                                     @endforeach
+                                    <tr>
+                                       <td colspan="5"></td>
+                                    </tr>
+                                    <tr>
+                                       <td colspan="5"></td>
+                                    </tr>
                                  
                               </tbody>
                            </table>
@@ -735,7 +745,7 @@
                         </tbody>
                      </table>
 
-
+                     <hr>
                      <table class="w-100">
                         <tbody>
                            <tr>
@@ -818,7 +828,7 @@
 
                
                <hr>
-            {{-- <div class="table-responsive"> --}}
+            <div class="table-responsive p-2">
                <table class="" >
                   <thead>
                      <tr>
@@ -877,6 +887,13 @@
                         </td>
                      </tr>
                      @endforeach
+                     <tr>
+                        <td colspan="9"></td>
+                     </tr>
+                     <tr>
+                        <td colspan="9"></td>
+                     </tr>
+
                   </tbody>
                </table>
             {{-- </div> --}}
@@ -927,7 +944,16 @@
                               </tr>
 
                               
+
+                              
                               @endforeach
+
+                              <tr>
+                                 <td colspan="3"></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3"></td>
+                              </tr>
                               
                            </tbody>
                         </table>
@@ -977,6 +1003,13 @@
 
                               
                               @endforeach
+
+                              <tr>
+                                 <td colspan="3"></td>
+                              </tr>
+                              <tr>
+                                 <td colspan="3"></td>
+                              </tr>
                               
                            </tbody>
                         </table>
