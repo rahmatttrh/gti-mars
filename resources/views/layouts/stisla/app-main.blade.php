@@ -77,9 +77,9 @@ table {
 
 <body class="layout-3" style="background-color: #eaeef7">
    <div id="app">
-      <div class="main-wrapper px-2">
+      <div class="main-wrapper px-2" >
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
-         <div class="navbar-bg" ></div>
+         <div class="navbar-bg" style="background-color: #aeb0bb"></div>
          @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
             <x-main.navbar.marine :notifrequests="$notifRequests" :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif (auth()->user()->hasRole('vessel'))

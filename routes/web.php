@@ -802,7 +802,7 @@ Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
    Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
 
-   Route::get('vdr/update/general/{vdr}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+   Route::get('vdr/update/general/{vdr}/{date}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
    Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
    Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
    Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);

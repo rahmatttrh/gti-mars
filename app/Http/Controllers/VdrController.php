@@ -953,7 +953,7 @@ class VdrController extends Controller
    }
 
 
-   public function updateGeneral($vdr, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
+   public function updateGeneral($vdr,$date, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
    {
       
       
@@ -961,7 +961,7 @@ class VdrController extends Controller
 
       $vdr = Vdr::find($vdr);
       $vdr->update([
-         
+         'date' => $date,
          'location_midnight' => $loc,
          'crew_onduty' => $onduty,
          'crew_max' => $pax,
