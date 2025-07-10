@@ -247,7 +247,7 @@
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                     <tr>
                                        <td class="px-1">Date</td>
-                                       <td class="bg-y"><input  class="w-100 input_general" id="date" name="date" required type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
+                                       <td class="bg-y"><input  class="w-100 input_general input_general_date" id="date" name="date" required type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
                                        <td class="px-1">Loc</td>
                                        <td class="bg-y"><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}" style="background-color: rgb(226, 236, 151); text-align: left !important;" ></td>
                                     </tr>
@@ -272,8 +272,8 @@
                                     <tr>
                                        <td class="px-1">Contract Period</td>
                                        <td class="bg-y">
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
+                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
                                        </td>
                                        <td class="px-1">Crew / Pax</td>
                                        <td class="bg-y">
@@ -571,7 +571,7 @@
                                     @endforeach
 
                                     <tr>
-                                          <td colspan="2" class="text-center">Total</td>
+                                          <td colspan="3" class="text-center">Total</td>
                                           <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
                                           <td class="text-center"><span class="normalTime">{{$vdrOperatingNormal}}</span> </td>
                                           <td class="text-center"><span class="slowTime">{{$vdrOperatingSlow}}</span> </td>
@@ -2264,10 +2264,11 @@
 
 
       $(".input_general").keyup(function () {
-      console.log('general')
+         console.log('general')
 
          var vdr = $('#vdr').val();
          var loc = $('#location_midnight').val();
+         var date = $('#date').val();
          var onduty = $('#onduty').val() ;
          var pax = $('#pax').val() ;
          var contract = $('#contract').val();
@@ -2276,6 +2277,8 @@
          var owner = $('#owner').val();
          var master = $('#master').val();
          var ce = $('#ce').val();
+
+         console.log(date);
 
          // let form = document.getElementById("form_general");
          // form.submit();
@@ -2307,7 +2310,7 @@
          console.log('vdr:' + vdr + ' loc:' + loc);
 
          $.ajax({
-            url: "/fetch/vdr/update/general/" + vdr + "/" + loc +  "/"  + onduty + "/" + pax +  "/"  + contract + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
+            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax +  "/"  + contract + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
             method: "GET",
             dataType: 'json',
 
@@ -2327,6 +2330,74 @@
 
       
       })
+
+      $('.input_general_date').change( function () {
+         
+         
+
+         console.log('change general date');
+
+         var vdr = $('#vdr').val();
+         var loc = $('#location_midnight').val();
+         var date = $('#date').val();
+         var onduty = $('#onduty').val() ;
+         var pax = $('#pax').val() ;
+         var contract = $('#contract').val();
+         var contract_end = $('#contract_end').val();
+         var contract_start = $('#contract_start').val();
+         var owner = $('#owner').val();
+         var master = $('#master').val();
+         var ce = $('#ce').val();
+
+         console.log(date);
+
+         // let form = document.getElementById("form_general");
+         // form.submit();
+
+
+         // $("#form_general").submit(function(e) {
+         //    console.log('form submit');
+
+         //    e.preventDefault(); // avoid to execute the actual submit of the form.
+         //    var form = $(this);
+         //    var actionUrl = form.attr('action');
+
+         //    $.ajax({
+         //       type: "POST",
+         //       url: actionUrl,
+         //       data: form.serialize(), // serializes the form's elements.
+         //       success: function(data)
+         //       {
+         //          alert(data); // show response from the php script.
+         //       }
+         //    });
+
+         // });
+
+
+
+         var _token = $('meta[name="csrf-token"]').attr('content');
+
+         console.log('vdr:' + vdr + ' loc:' + loc);
+
+         $.ajax({
+            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax +  "/"  + contract + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
+            method: "GET",
+            dataType: 'json',
+
+            success: function(result) {
+               console.log('result :' + result.result);
+               
+            },
+            error: function(error) {
+               console.log(error)
+            }
+
+         })
+      });
+
+
+     
    });
 </script>
 @endpush

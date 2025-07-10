@@ -4,7 +4,7 @@
       color: black
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
+<nav class="navbar navbar-expand-lg main-navbar  text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
@@ -15,7 +15,7 @@
       </a>
       <ul class="navbar-nav ">
          <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark">DSP</a></li>
-         <li class="nav-item text-dark"><a href="{{route('vdr.vessel')}}" class="nav-link text-dark">VDR</a></li>
+         <li class="nav-item text-dark"><a href="{{route('vdr.create')}}" class="nav-link text-dark">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
          <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>

@@ -104,7 +104,7 @@
          <div class="main-wrapper px-2 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
                
-            <div class="navbar-bg bgb-1" style="background-color: #7C81AD"></div>
+            <div class="navbar-bg " style="background-color: #7C81AD"></div>
             
             {{-- NAVBAR --}}
             @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
