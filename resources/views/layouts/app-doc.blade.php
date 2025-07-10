@@ -32,41 +32,47 @@
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
                      <a href="/" class="navbar-brand sidebar-gone-hide">
-                     @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
-                        <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
-                        {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
-                        
-                     @elseif(auth()->user()->hasRole('platform'))
-                        @if (auth()->user()->getLogo())
-                        <img src="{{asset('storage/' . auth()->user()->getLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        @else
-                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                        @if (auth()->user() != null)
+                              @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
+                              <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+                              {{-- <div class="ml-4" style="margin-left: 10px; font-weight: 900">DSP <span class="text-primary">SYSTEM</span></div> --}}
+                              
+                           @elseif(auth()->user()->hasRole('platform'))
+                              @if (auth()->user()->getLogo())
+                              <img src="{{asset('storage/' . auth()->user()->getLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                              @else
+                              <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                              @endif
+                           
+                              <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getSystem()}}  <span class="text-primary">SYSTEM</span></div>
+                           @elseif(auth()->user()->hasRole('retail'))
+                              {{-- <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image"> --}}
+                              @if (auth()->user()->getPartyLogo())
+                                 <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                                 @else
+                                 <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                                 @endif 
+                              <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
+                           @elseif(auth()->user()->hasRole('supplier'))
+                              @if (auth()->user()->getPartyLogo())
+                                 <img src="{{asset('storage/' . auth()->user()->getPartyLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                                 @else
+                                 <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                                 @endif   
+                              <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
+
+                           @elseif(auth()->user()->hasRole('receiving'))
+                              <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                              <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP  <span class="text-primary">SYSTEM</span></div>
+                              @elseif(auth()->user()->hasRole('marine'))
+                              <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
+                              <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP  <span class="text-primary">SYSTEM</span></div>
+                           @endif
+
+                           @else
+                           <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
                         @endif
                      
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getSystem()}}  <span class="text-primary">SYSTEM</span></div>
-                     @elseif(auth()->user()->hasRole('retail'))
-                        {{-- <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image"> --}}
-                        @if (auth()->user()->getPartyLogo())
-                           <img src="{{asset('storage/' . auth()->user()->getPlatformLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                           @else
-                           <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                           @endif 
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
-                     @elseif(auth()->user()->hasRole('supplier'))
-                        @if (auth()->user()->getPartyLogo())
-                           <img src="{{asset('storage/' . auth()->user()->getPartyLogo())}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                           @else
-                           <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                           @endif   
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">{{auth()->user()->getPlatformSystem()}}  <span class="text-primary">SYSTEM</span></div>
-
-                     @elseif(auth()->user()->hasRole('receiving'))
-                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP  <span class="text-primary">SYSTEM</span></div>
-                        @elseif(auth()->user()->hasRole('marine'))
-                        <img src="{{asset('img/logo/logo.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image">
-                        <div class="ml-2" style="margin-left: 10px; font-weight: 900">DSP  <span class="text-primary">SYSTEM</span></div>
-                     @endif
                      </a>
                      
                      

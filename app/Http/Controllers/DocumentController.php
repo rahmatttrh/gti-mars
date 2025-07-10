@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AssignEmail;
+use App\Mail\AssignVdrEmail;
 use App\Models\Cargo;
 use App\Models\CargoItem;
 use App\Models\Document;
@@ -19,12 +21,14 @@ use App\Models\VdrWeather;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class DocumentController extends Controller
 {
 
    public function vdr($id)
    {
+
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
@@ -76,11 +80,89 @@ class DocumentController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
+      // return('email');
 
+     
 
+      
 
 
       return view('pages.document.vdr', [
+         'vdr' => $vdr,
+         'vessel' => $vdr->vessel,
+         'vdrActivities' => $vdrActivities,
+         'vdrCargos' => $vdrCargos,
+         'vdrPeriodic' => $periodic,
+         'vdrWheathers' => $vdrWheathers,
+         'hses' => $hses,
+         'operatings' => $operatings,
+         'totaljam' => $final,
+         'totaldaily' => $totalDaily
+      ]);
+   }
+
+   public function vdrEmail($id)
+   {
+      
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
+      $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      $vdrWheathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+      $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+      $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
+
+      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+      // return('email');
+
+     
+
+      
+
+
+      return view('pages.document.vdr-email', [
          'vdr' => $vdr,
          'vessel' => $vdr->vessel,
          'vdrActivities' => $vdrActivities,

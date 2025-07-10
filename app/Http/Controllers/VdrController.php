@@ -1363,7 +1363,8 @@ class VdrController extends Controller
          'idle' => 00.00,
          'tow' => 00.00,
          'ah' => 00.00,
-         'sb' => 00.00
+         'sb' => 00.00,
+         'created_by' => auth()->user()->name
       ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'Row added');

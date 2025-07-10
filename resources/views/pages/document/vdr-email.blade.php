@@ -51,20 +51,18 @@ table {
          <div class="col-auto ms-auto d-print-none">
             
             {{-- {{$vdr->status}} --}}
-            @if (auth()->user() != null)
-                  @if ($vdr->status == 3 && auth()->user()->username == 'lutfiaryanto')
+         
+                  @if ($vdr->status == 3 )
                   <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
                   <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                @endif
-               @if ( auth()->user()->username == 'lutfiaryanto')
-                  <a href="/" class="btn btn-block btn-light border  shadow" >Back </a>
-                  
-                  <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}" class="btn btn-block btn-light border  shadow">Engine Parameret Log & Crew</a>
-               @endif
-
-               @else
                
-            @endif
+                  <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}" class="btn btn-block btn-light border  shadow">Engine Parameret Log & Crew</a>
+               
+
+              
+               
+            
             
             {{-- <a href="/" class="btn btn-block btn-light border  shadow-none" >Back </a> --}}
             <button type="button" class="btn btn-light shadow" onclick="javascript:window.print();">

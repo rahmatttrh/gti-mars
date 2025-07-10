@@ -79,8 +79,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('vdr/pdf/email/{vdr:id}', [DocumentController::class, 'vdrEmail'])->name('vdr.pdf.email');
+Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
+
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());
+
+
+   Route::get('vdr/email/approval/{id}', [EmailController::class, 'approvalVdr'])->name('vdr.approval.email');
 
    Route::get('marine/daily/index', [MarineController::class, 'daily'])->name('marine.daily');
 
@@ -466,7 +472,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
-         Route::get('approve/luthfi/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
+         Route::get('approve/superintendent/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
       });
       
    });
