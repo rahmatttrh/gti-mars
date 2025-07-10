@@ -3339,7 +3339,7 @@ class VdrController extends Controller
                't_0006' => '-',
                't_0612' => '-',
                't_1218' => '-',
-               't_1824' => '',
+               't_1824' => '-',
                'created_at' => NOW(),
                'updated_at' => NOW()
             ]);
@@ -3364,9 +3364,6 @@ class VdrController extends Controller
             ]);
          }
       }
-
-
-
 
 
 
