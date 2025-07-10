@@ -72,7 +72,7 @@ class EmailController extends Controller
          'totalDaily' => $totalDaily,
          'vdrCargoFuel' => $vdrCargoFuel,
          'link' => route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('activity')]),
-         'approve' => route('vdr.approve.suptent.from.email', enkripRambo($vdr))
+         'approve' => route('vdr.approve.suptent.from.email', enkripRambo($vdr->id))
       ];
 
       
