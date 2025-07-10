@@ -133,8 +133,8 @@
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                   <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                  <a href="" class="btn btn-info mx-2">Edit</a>
-                  <a href="" class="btn  btn-danger  mr-2">Delete</a>
+                  {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
+                  <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
                   {{-- <div class="btn-group btn-light mx-2">
                      
                      
@@ -227,7 +227,7 @@
                            <table class="">
                               <thead>
                                  <tr>
-                                    <td colspan="2"><b>{{$vdr->code}}</b></td>
+                                    <td colspan="3"><b>{{$vdr->code}}</b></td>
                                     <td colspan="2" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
                                  </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
@@ -269,7 +269,13 @@
                                        <td class="px-1">Contract</td>
                                        <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
                                        <td class="px-1">Master</td>
-                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? '0'}}" ></td>
+                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? ''}}" ></td>
+                                    </tr>
+                                    <tr>
+                                       <td></td>
+                                       <td></td>
+                                       <td class="px-1" colspan="">CE</td>
+                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="ce" name="ce" type="text" value="{{$vdr->ce ?? ''}}" ></td>
                                     </tr>
                                     <tr>
                                        <td class="px-1">Contract Period</td>
@@ -2281,7 +2287,7 @@
          var master = $('#master').val();
          var ce = $('#ce').val();
 
-         console.log(date);
+         console.log(ce);
 
          // let form = document.getElementById("form_general");
          // form.submit();
@@ -2389,7 +2395,7 @@
             dataType: 'json',
 
             success: function(result) {
-               console.log('result :' + result.result);
+               // console.log('result :' + result.result);
                
             },
             error: function(error) {

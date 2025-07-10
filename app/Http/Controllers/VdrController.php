@@ -3319,14 +3319,14 @@ class VdrController extends Controller
          'date' => $today,
          'crew_onduty' => 0,
          'crew_max' => 0,
-         'location_midnight' => '',
+         'location_midnight' => '-',
          'created_by' => $vessel->name,
-         'contract' => '',
-         'contract_start' => null,
-         'contract_end' => null,
-         'owner' => '',
-         'master' => '',
-         'ce' => '',
+         'contract' => '-',
+         'contract_start' => Carbon::now(),
+         'contract_end' => Carbon::now(),
+         'owner' => '-',
+         'master' => '-',
+         'ce' => '-',
          'status' => 0
       ]);
 
@@ -3382,6 +3382,10 @@ class VdrController extends Controller
             $createVdrWeather = VdrWeather::create([
                'vdr_id' => $vdr->id,
                'heading_id' => $heading->id,
+               't_0006' => '-',
+               't_0612' => '-',
+               't_1218' => '-',
+               't_1824' => '',
                'created_at' => NOW(),
                'updated_at' => NOW()
             ]);
@@ -3443,6 +3447,8 @@ class VdrController extends Controller
             $createVdrOperating = VdrOperating::create([
                'vdr_id' => $vdr->id,
                'heading_id' => $heading->id,
+               'speed' => 0,
+               'contractual_fuel' => 0,
                'created_at' => NOW(),
                'updated_at' => NOW()
             ]);

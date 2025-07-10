@@ -1031,6 +1031,7 @@ table {
                
             </div>
             
+           
             
             <div class="row ttd">
                {{-- <div class="col pt-1">
@@ -1103,6 +1104,32 @@ table {
                      
                   </div>
                @endif
+
+               {{-- <div class="col pt-1">
+                  
+                  <br>
+               
+                  <small>Suptent : Name of Suptent</small><br>
+                 
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                 
+                  
+               </div>
+
+               @if ($vdr->title3 != null)
+                  <div class="col pt-1">
+                     <small>Acknowledged by,</small>
+                     <br>
+                  
+                     <small>Marine Representative : Lutfi Aryanto</small><br>
+                     @if ($vdr->title3 != null)
+                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                     @else
+                     <small>Status : ____________</small>
+                     @endif
+                     
+                  </div>
+               @endif --}}
               
 
                @if ($vdr->title3 != null)
@@ -1113,7 +1140,6 @@ table {
                      <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
                      @if ($vdr->title3 != null)
                      <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-                     {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 4)->first()->created_at)}}</small><br> --}}
                      @else
                      <small>Status : ____________</small>
                      @endif
