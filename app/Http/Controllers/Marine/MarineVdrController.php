@@ -635,4 +635,29 @@ class MarineVdrController extends Controller
 
       return redirect()->back()->with('success', 'VDR Approved');
    }
+
+   public function approveSuptentFromEmail($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      dd('Success Approve VDR from email');
+
+      // dd($vdr->title1);
+      $vdr->update([
+         'status' => 4,
+         'title3' => 'Suptent',
+         'name3' => 'Lutfi Aryanto',
+      ]);
+
+      // dd($vdr->name3);
+      // dd()
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => 4,
+         'user_id' => auth()->user()->id
+      ]);
+
+      return redirect()->route('document.vdr', enkripRambo($vdr->id))->with('success', 'VDR Approved');
+   }
 }

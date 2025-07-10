@@ -226,7 +226,7 @@
             
                            @foreach($vdrs as $vdr)
                            <tr>
-                              <td class="text-muted text-center"><small>{{++$i}}</small></td>
+                              <td class="text-muted text-center"><small>{{++$i}} </small></td>
                               <td>
                                  <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a> 
                                  {{-- <small>{{$vdr->vessel->name}}</small> --}}

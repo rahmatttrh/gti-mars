@@ -71,7 +71,7 @@
                         <tbody>
                            @foreach ($myrecentvdrs as $myvdr)
                            <tr>
-                              <td><a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> </td>
+                              <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> </td>
                               <td>{{formatDate($myvdr->date)}}</td>
                               <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td>
                               <td class="text-truncate">
@@ -213,10 +213,22 @@
             @if ($vessel->email_office == null)
             <div class="card card-danger">
                <div class="card-body">
-                  Anda belum mengatur Email Kantor
+                  Anda belum mengatur Email Office
                </div>
             </div>
             @endif
+            <div class="card">
+               <div class="card-body">
+                  <div class="form-floating mb-3">
+                     
+                     <label for="name">Email Office</label>
+                     <input type="text" required class="form-control" id="name" name="name"  >
+                     
+                  </div>
+               </div>
+            </div>
+
+
             
             {{-- <form action="{{route('vessel.stowage.update')}}" method="POST" enctype="multipart/form-data">
                @csrf

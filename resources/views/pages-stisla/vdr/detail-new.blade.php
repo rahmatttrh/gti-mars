@@ -187,6 +187,8 @@
                   
                @endif
 
+               <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a>
+
                @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                <div class="btn btn-danger  ml-2 " style="background-color: rgb(200, 54, 54);" >
                   <span class="badge badge-light border">!</span> Rejected at {{formatDateTime($vdr->reject_date)}} :
@@ -571,6 +573,8 @@
                                     @endforeach
 
                                     <tr>
+                                          <td colspan="3" class="text-center">Total</td>
+
                                           <td colspan="3" class="text-center">Total</td>
                                           <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
                                           <td class="text-center"><span class="normalTime">{{$vdrOperatingNormal}}</span> </td>
