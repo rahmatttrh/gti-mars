@@ -17,6 +17,11 @@
    <div class="badge badge-primary">
       Menunggu Validasi Superintendent
    </div>
+
+   @elseif($vdr->status == 5)
+   <div class="badge badge-primary">
+      Menunggu Validasi Suptent On Location
+   </div>
    
    @elseif($vdr->status == 4)
    <div class="badge badge-success">
