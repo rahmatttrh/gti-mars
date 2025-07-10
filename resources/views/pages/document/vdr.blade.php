@@ -36,6 +36,13 @@ table {
    background-color: rgb(247, 247, 183)
 }
 
+.bg-lgray{
+   background-color: rgb(236, 237, 238)
+}
+
+table th tr td {
+   background-color: rgb(236, 237, 238)
+}
 </style>
 <div class="px-4">
    <!-- Page title -->
@@ -171,11 +178,11 @@ table {
             <table class="mb-1">
                <thead>
                   <tr>
-                     <td class="title">Wheather</td>
-                     <td class="text-center title">00 - 06 hrs</td>
-                     <td class="text-center title">06 - 12 hrs</td>
-                     <td class="text-center title">12 - 18 hrs</td>
-                     <td class="text-center title">18 - 24 hrs</td>
+                     <td class="title bg-lgray">Weather</td>
+                     <td class="text-center title bg-lgray">00 - 06 hrs</td>
+                     <td class="text-center title bg-lgray">06 - 12 hrs</td>
+                     <td class="text-center title bg-lgray">12 - 18 hrs</td>
+                     <td class="text-center title bg-lgray">18 - 24 hrs</td>
                   </tr>
                </thead>
                <tbody>
@@ -196,11 +203,11 @@ table {
             <table class="">
                <thead>
                   <tr>
-                     <td class="text-center title">A</td>
-                     <td class="title">HSSE STATISTICS (INPUT)</td>
-                     <td class="text-center title">Previous</td>
-                     <td class="text-center title">Today</td>
-                     <td class="text-center title">Monthly</td>
+                     <td class="text-center title bg-lgray">A</td>
+                     <td class="title bg-lgray">HSSE STATISTICS (INPUT)</td>
+                     <td class="text-center title bg-lgray">Previous</td>
+                     <td class="text-center title bg-lgray">Today</td>
+                     <td class="text-center title bg-lgray">Monthly</td>
                   </tr>
                </thead>
                <tbody>
@@ -214,11 +221,11 @@ table {
                         @if($hse->header->group_header != $groupHeader)
                         <thead>
                            <tr>
-                                 <td class="text-center title">B</td>
-                                 <td class="title">HSSE STATISTICS (Output)</td>
-                                 <td class="text-center title">Previous</td>
-                                 <td class="text-center title">Today</td>
-                                 <td class="text-center title">Monthly</td>
+                                 <td class="text-center title bg-lgray">B</td>
+                                 <td class="title bg-lgray">HSSE STATISTICS (Output)</td>
+                                 <td class="text-center title bg-lgray">Previous</td>
+                                 <td class="text-center title bg-lgray">Today</td>
+                                 <td class="text-center title bg-lgray">Monthly</td>
                            </tr>
                         </thead>
          
@@ -271,9 +278,9 @@ table {
             <table class="" style="width: 100%">
                <thead>
                   <tr>
-                     <td colspan="2" class="text-center title">TIME</td>
-                     <td colspan="8" class="text-center title">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
-                     <td rowspan="2" class="text-center align-middle title">ACTIVITIES</td>
+                     <td colspan="2" class="text-center title bg-lgray">TIME</td>
+                     <td colspan="8" class="text-center title bg-lgray">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
+                     <td rowspan="2" class="text-center align-middle title bg-lgray">ACTIVITIES</td>
                   </tr>
                   <tr>
                      <td class="text-center">Start 
@@ -774,11 +781,11 @@ table {
             <table class="mb-1">
                <thead>
                   <tr class="text-center ">
-                     <td class="title">Operating Mode</td>
-                     <td class="title">Total Time hh:mm</td>
-                     <td class="title">Min. Speed as Contract (Knots) <br> </td>
-                     <td class="title">Contractual Fuel Cons. </td>
-                     <td class="title">Daily Fuel Cons. </td>
+                     <td class="title bg-lgray">Operating Mode</td>
+                     <td class="title bg-lgray">Total Time hh:mm</td>
+                     <td class="title bg-lgray">Min. Speed as Contract (Knots) <br> </td>
+                     <td class="title bg-lgray">Contractual Fuel Cons. </td>
+                     <td class="title bg-lgray">Daily Fuel Cons. </td>
                   </tr>
                </thead>
                <tbody>
@@ -897,14 +904,14 @@ table {
                            <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
                         </tr> --}}
                         <tr>
-                           <td class="title">Type</td>
-                           <td class="text-truncate text-center "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
-                           <td class="text-center "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
-                           <td class="text-center "><b>Received</b></td>
-                           <td class="text-center "><b>Transferred</b></td>
-                           <td class="text-center "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
-                           <td class="text-center "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
-                           <td class="text-center " colspan="2"><b>Special Calculation</b>  </td>
+                           <td class="title bg-lgray">Type</td>
+                           <td class="text-truncate text-center bg-lgray "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
+                           <td class="text-center bg-lgray "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
+                           <td class="text-center bg-lgray "><b>Received</b></td>
+                           <td class="text-center bg-lgray "><b>Transferred</b></td>
+                           <td class="text-center bg-lgray "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
+                           <td class="text-center bg-lgray "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Special Calculation</b>  </td>
                         </tr>
                      </thead>
                      <tbody>
@@ -931,26 +938,26 @@ table {
                            <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
                            <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray">
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
                            </td>
                            <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 3)
-                           <td rowspan="3">
+                           <td rowspan="3" class="bg-lgray">
                               Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)
                            </td>
                            <td rowspan="3" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}} Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 6)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray">
                               Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)
                            </td>
                            <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
                            @endif
 
                            @if ($vdrCargo->heading_id == 8)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray">
                               Total Actual Daily Fuel Cons. = (Part 1 + Part 2)
                            </td>
                            <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
@@ -965,16 +972,16 @@ table {
                         </tr>
                         @endforeach
                         <tr>
-                           <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                           <td rowspan="3" class="bg-lgray"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
                            {{-- <td><small><b></b></small></td> --}}
                         </tr>
                         <tr>
-                           <td class="text-center" colspan="2"><b>Activity</b></td>
-                           <td class="text-center"><b>ROB Check Time</b></td>
-                           <td class="text-center"><b>ROB by VDR at Check Time</b></td>
-                           <td class="text-center"><b>Actual ROB at Check Time</b></td>
-                           <td class="text-center"><b>ROB Different</b></td>
-                           <td rowspan="2">
+                           <td class="text-center bg-lgray" colspan="2"><b>Activity</b></td>
+                           <td class="text-center bg-lgray"><b>ROB Check Time</b></td>
+                           <td class="text-center bg-lgray"><b>ROB by VDR at Check Time</b></td>
+                           <td class="text-center bg-lgray"><b>Actual ROB at Check Time</b></td>
+                           <td class="text-center bg-lgray"><b>ROB Different</b></td>
+                           <td rowspan="2" class="bg-lgray">
                               ROB Correction Rule <br>
                               <small>* Positive Diff -> Correction Applied</small><br>
                               <small>* Negative Diff -> Correction Not-Applied</small>
@@ -1120,6 +1127,33 @@ table {
                      
                   </div>
                @endif
+
+               {{-- TEST --}}
+               {{-- <div class="col pt-1">
+                  <small>Checked by,</small>
+                     <br>
+                  <small>Fuel Monitoring Team : YFH</small><br>
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+               </div>
+
+               <div class="col pt-1">
+                  <br>
+                  <small>Marine Dept : UA</small><br>
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+               </div>
+
+               <div class="col pt-1">
+                  <br>
+                  <small>Suptent : Suptent Name</small><br>
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+               </div>
+
+               <div class="col pt-1">
+                  <small>Acknowledged by,</small>
+                     <br>
+                  <small>Marine Representative : Lutfi Aryanto</small><br>
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+               </div> --}}
                
                <div class="col text-end pt-1">
                   {!! QrCode::size(65)->generate(Request::url()); !!}
