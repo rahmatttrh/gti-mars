@@ -14,6 +14,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
          <li class="nav-item active text-dark"><a href="{{route('dsp.marine')}}" class="nav-link  bgb-1 rounded px-2 py-1" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
          <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>
@@ -222,20 +223,7 @@
             </a>
          </li> --}}
 
-         <li class="nav-item dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
-            <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
-               @if (request()->is('master/data/*'))
-               <i class="text-primary fas fa-fire ml-3"></i>
-               @endif
-               
-               <span >Master Data </span>
-            </a>
-            
-            <ul class="dropdown-menu">
-            <li class="nav-item"><a href="{{route('port')}}" class="nav-link">Port</a></li>
-            <li class="nav-item"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
-            </ul>
-         </li>
+         
       </ul>
    </div>
 </nav>

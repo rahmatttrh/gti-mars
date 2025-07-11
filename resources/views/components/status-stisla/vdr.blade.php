@@ -14,9 +14,16 @@
    </div>
    
    @elseif($vdr->status == 3)
-   <div class="badge badge-primary">
-      Menunggu Validasi Superintendent
-   </div>
+      @if ($vdr->area != null)
+         <div class="badge badge-primary">
+            Menunggu Validasi Marine Representative
+         </div>
+          @else
+          <div class="badge badge-primary">
+            Menunggu Validasi Superintendent
+         </div>
+      @endif
+   
 
    @elseif($vdr->status == 5)
    <div class="badge badge-primary">

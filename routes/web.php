@@ -372,7 +372,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 // Level Admin
-Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
 
@@ -470,6 +470,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
+         Route::put('approve/suptent-loc', [MarineVdrController::class, 'approveSuptentLocForm'])->name('vdr.approve.suptent.loc.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
          Route::get('approve/superintendent/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');

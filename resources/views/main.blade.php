@@ -19,7 +19,8 @@
                
                    <x-main.marine :schedules="$schedules" :logs="$logs" :vdrs="$vdrs" :allvdrs="$allVdrs" :vdrvalids="$vdrValidations" :cargovalids="$cargoValidations" :items="$cargoItems" :takeouts="$takeouts" :itemrejects="$itemRejects" :vessels="$vessels" :allreqs="$allRequests" :i="$i" :dates="$dates" :values="$values" :fuel="$vdrsArray"  />
                
-            
+            @elseif(auth()->user()->hasRole('suptent_loc'))
+               <x-main.suptent-loc :vdrs="$vdrs" :vdrvalidations="$vdrValidations" />
             @elseif(auth()->user()->hasRole('admin-logistic'))
             <x-main.logistic :schedules="$logisticSchedules" :items="$cargoItems" />
             @elseif(auth()->user()->hasRole('office'))

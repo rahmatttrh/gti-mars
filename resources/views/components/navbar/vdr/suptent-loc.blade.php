@@ -31,43 +31,7 @@
    </div>
    
    <ul class="navbar-nav navbar-right ml-auto">
-      <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($notifvdrs) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
-         <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
-            <div class="dropdown-header">NOTIFICATIONS
-            
-            </div>
-            <div class="dropdown-list-content dropdown-list-icons">
-               @if (count($notifvdrs) > 0)
-                  @foreach ($notifvdrs as $vdr)
-                     <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}" class="dropdown-item dropdown-item-unread">
-                        {{-- <div class="dropdown-item-icon bg-danger text-white">
-                           <i class="fas fa-exclamation"></i>
-                        </div> --}}
-                        <div class="dropdown-item-desc">
-                           Validate VDR {{$vdr->vessel->name }} {{formatDate($vdr->date)}} 
-                           <div class="time text-primary">{{$vdr->created_at->diffForHumans()}}</div>
-                        </div>
-                     </a>
-                  @endforeach
-                  @else
-                  <small class="dropdown-item dropdown-item-unread text-muted">Tidak ada VDR dari vessel </small>
-                  
-                  
-               @endif
-               {{-- <span class="dropdown-item dropdown-item-unread">
-                  
-                  <div class="dropdown-item-desc text-muted">
-                     Tidak ada Request dari User Field
-                  </div>
-               </span> --}}
-              
-            </div>
-            <div class="dropdown-footer text-center">
-            {{-- <a href="{{route('marine.request')}}">View Intermilan <i class="fas fa-chevron-right"></i></a> --}}
-            {{-- <a href="#">View Crew Change <i class="fas fa-chevron-right"></i></a> --}}
-            </div>
-         </div>
-      </li>
+      
       
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
        <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
@@ -102,7 +66,7 @@
    <div class="px-2">
       <ul class="navbar-nav">
          
-         <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
+         {{-- <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/m/dashboard/*'))
                <i class="fas fa-fire ml-3"></i>
@@ -113,7 +77,7 @@
                
                <span class="mx-3">Dashboard</span>
             </a>
-         </li>
+         </li> --}}
 
          <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">

@@ -155,6 +155,17 @@
                   
                @endif
 
+               @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
+               
+                  
+                  <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
+                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-suptent-loc">Reject</a>
+                  
+                  
+                
+                  
+               @endif
+
                @if ($vdr->status == 1  && auth()->user()->username == 'pet')
                {{-- <div class="btn-group mr-2"> --}}
                   {{-- <div class="btn btn-block btn-group p-0"> --}}
@@ -227,8 +238,11 @@
                            <table class="">
                               <thead>
                                  <tr>
-                                    <td colspan="3"><b>{{$vdr->code}}</b></td>
-                                    <td colspan="2" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                                    <td colspan="5"><b>{{$vdr->code}}</b></td>
+                                    {{-- <td colspan="2" class="text-right py-2 pr-1"></td> --}}
+                                 </tr>
+                                 <tr>
+                                    <td colspan="5"><x-status-stisla.vdr :vdr="$vdr" /></td>
                                  </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                      <tr>
@@ -240,7 +254,8 @@
                                      </tr>
                                  @endif --}}
                                  <tr>
-                                    <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
+                                    <td colspan="2"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
+                                    {{-- <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td> --}}
                                  </tr>
                               </thead>
                               <tbody class="pb-3">
@@ -249,9 +264,9 @@
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                     <tr>
                                        <td class="px-1">Date</td>
-                                       <td class="bg-y"><input  class="w-100 input_general input_general_date" id="date" name="date" required type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
+                                       <td class="bg-y"><input  class="w-100 input_general input_general_date" id="date" name="date" required {{$editable == 0 ? 'readonly' : ''}} type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
                                        <td class="px-1">Loc</td>
-                                       <td class="bg-y"><input class="w-100 input_general" id="location_midnight" name="location_midnight" required type="text" value="{{$vdr->location_midnight}}" style="background-color: rgb(226, 236, 151); text-align: left !important;" ></td>
+                                       <td class="bg-y"><input class="w-100 input_general" id="location_midnight" name="location_midnight" {{$editable == 0 ? 'readonly' : ''}}  required type="text" value="{{$vdr->location_midnight}}" style="background-color: rgb(226, 236, 151); text-align: left !important;" ></td>
                                     </tr>
                                     {{-- <tr>
                                        <td class="px-1">Crew</td>
@@ -261,32 +276,32 @@
                                     </tr> --}}
                                     <tr>
                                        <td class="px-1">Vessel</td>
-                                       <td class="bg-y"><input class="w-100 input_general"  type="text" value="{{$vdr->vessel->name ?? '0'}}" style="background-color: rgb(226, 236, 151); text-align: left !important;"></td>
+                                       <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_general"  type="text" value="{{$vdr->vessel->name ?? '0'}}" style="background-color: rgb(226, 236, 151); text-align: left !important;"></td>
                                        <td class="px-1">Owner</td>
-                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="owner" name="owner" type="text" value="{{$vdr->owner ?? '0'}}" ></td>
+                                       <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="owner" name="owner" type="text" value="{{$vdr->owner ?? '0'}}" ></td>
                                     </tr>
                                     <tr>
                                        <td class="px-1">Contract</td>
-                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
+                                       <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="contract" name="contract" type="text" value="{{$vdr->contract ?? '0'}}" ></td>
                                        <td class="px-1">Master</td>
-                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? ''}}" ></td>
+                                       <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="master" name="master" type="text" value="{{$vdr->master ?? ''}}" ></td>
                                     </tr>
                                     <tr>
                                        <td></td>
                                        <td></td>
                                        <td class="px-1" colspan="">CE</td>
-                                       <td class="bg-y"><input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="ce" name="ce" type="text" value="{{$vdr->ce ?? ''}}" ></td>
+                                       <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="ce" name="ce" type="text" value="{{$vdr->ce ?? ''}}" ></td>
                                     </tr>
                                     <tr>
                                        <td class="px-1">Contract Period</td>
                                        <td class="bg-y">
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_start" name="contract_start" type="date" value="{{$vdr->contract_start}}" >
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general input_general_date" id="contract_end" name="contract_end" type="date" value="{{$vdr->contract_end}}" >
                                        </td>
                                        <td class="px-1">Crew / Pax</td>
                                        <td class="bg-y">
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
-                                          <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
                                        </td>
                                     </tr>
                                     <tr>
@@ -323,18 +338,18 @@
                                     <input type="hidden" name="id[]" value="{{$weather->id}}">
                                     <tr>
                                        <td class="">{{$weather->heading->description}}</td>
-                                       <input type="text" name="weatherId" id="weatherId" value="{{$weather->id}}" hidden>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" name="weatherId" id="weatherId" value="{{$weather->id}}" hidden>
                                        <td class="text-center bg-y" style="width: 180px">
-                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" style="border-color: red!"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" style="border-color: red!"  id="t_0006_{{$weather->id}}" name="t_0006_{{$weather->id}}" value="{{$weather->t_0006}} ">
                                        </td>
                                        <td class="text-center bg-y" style="width: 180px">
-                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_0612_{{$weather->id}}"  name="t_0612_{{$weather->id}}" value="{{$weather->t_0612}}">
                                        </td>
                                        <td class="text-center bg-y" style="width: 180px">
-                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1218_{{$weather->id}}"  name="t_1218_{{$weather->id}}" value="{{$weather->t_1218}}">
                                        </td>
                                        <td class="text-center bg-y" style="width: 180px">
-                                          <input style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_weather_{{$weather->id}}" type="text" id="t_1824_{{$weather->id}}"  name="t_1824_{{$weather->id}}" value="{{$weather->t_1824}}">
                                        </td>
                                     </tr>
 
@@ -399,20 +414,20 @@
                                           <td>{{$hse->header->description}}</td>
                                           @if($hse->header_id != 8)
                                           <td class="bg-y">
-                                                <input style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
+                                                <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="previous_{{$hse->id}}" name="previous[]"  value="{{$hse->previous}}">
                                           </td>
                                           <td class="bg-y">
-                                                <input style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
+                                                <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_hsse_{{$hse->id}}" type="number" id="today_{{$hse->id}}" name="today[]"  value="{{$hse->today}}">
                                           </td>
                                           <td>
                                              {{-- <span class="hse_month"></span> --}}
-                                             <input class="w-100 hse_month_{{$hse->id}}" readonly type="text" name="" id="hse_month_{{$hse->id}}">
-                                                {{-- <input class="w-100 hse_month" type="text" name="monthly[]" id="monthly_{{$hse->id}}"  value="{{$hse->previous + $hse->today}}" readonly> --}}
+                                             <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 hse_month_{{$hse->id}}" readonly type="text" name="" id="hse_month_{{$hse->id}}">
+                                                {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 hse_month" type="text" name="monthly[]" id="monthly_{{$hse->id}}"  value="{{$hse->previous + $hse->today}}" readonly> --}}
                                           </td>
                                           @else
-                                          <input type="hidden" name="previous[]"  value="{{$hse->previous}}">
-                                          <input type="hidden" name="today[]"  value="{{$hse->today}}">
-                                          <input type="hidden" name="monthly[]"  value="{{$hse->today}}" readonly>
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="previous[]"  value="{{$hse->previous}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="today[]"  value="{{$hse->today}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="monthly[]"  value="{{$hse->today}}" readonly>
                                           <td colspan="3"></td>
                                           @endif
                                        </tr>
@@ -445,11 +460,15 @@
                                  </tr>
                                  <tr>
                                     <td colspan="13">
+                                       @if ($editable == 1)
+                                           
+                                       
                                        {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
                                        <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
                                        {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
                                        <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
                                        {{-- <button onclick="addActivity()">Click</button> --}}
+                                       @endif
                                     </td>
                                  </tr>
                                  <tr>
@@ -480,52 +499,52 @@
                                     <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
                                     <tr>
                                        <td>
-                                          <input type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
-                                          {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
+                                          {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
                                        </td>
                                           <td class="text-info bg-y">
                                              {{-- {{$activity->id}} --}}
                                              {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                             <input style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                           </td>
                                           <td class="text-danger bg-y">
                                              {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                             <input  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                           </td>
                                           <td class="bg-y text-center">
                                              {{-- {{getTotalHours($activity->high)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->normal)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->slow)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->manu)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->idle)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->tow)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->ah)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->sb)}} --}}
-                                             <input style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             <input style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                              {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
                                                 {{$activity->activity}}
                                              </textarea> --}}
@@ -626,38 +645,38 @@
                               @foreach ($operatings as $operating)
                               <tr id="baris-{{$operating->id}}">
                                  <!-- <td> -->
-                                 <input type="hidden" name="id[]" value="{{$operating->id}}">
-                                 <input type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$operating->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
                                  <!-- </td> -->
                                  <td> {{$operating->heading->description}} </td>
                                  <td class="text-center align-middle ">
                                     <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
-                                       <input type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
                                  </td>
                                  <td class="text-center align-middle bg-y">
                                        @if($operating->heading->speed == '1')
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
                                        @else
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
                                        @endif
                                  </td>
             
                                  <td class="text-center align-middle bg-y">
                                     <!-- {{$operating->contractual_fuel}} -->
                                        @if($operating->heading->contractual == '1')
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @else
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @endif
                                  </td>
                                  <td class="text-center ">
             
             
                                        @if($operating->heading->daily == '1')
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
-                                       <input  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}}  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @else
-                                       <input class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
                                        @endif
                                  </td>
                               </tr>
@@ -669,7 +688,7 @@
                                  </th>
                                  <th colspan="2"></th>
                                  <td class="text-center">
-                                    <input class="w-100 "  readonly id="totalDaily"  value="{{round($totalDaily)}}">
+                                    <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 "  readonly id="totalDaily"  value="{{round($totalDaily)}}">
                                        {{-- <b > <span class="totalDaily"></span> Ltrs</b>  --}}
                                        
                                  </td>
@@ -708,44 +727,44 @@
                            @foreach ($cargos as $cargo)
                               <tr>
                                  <!-- <td> -->
-                                 <input type="hidden" name="id[]" value="{{$cargo->id}}">
-                                 <input type="hidden" id="cargo" value="{{$cargo->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$cargo->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="cargo" value="{{$cargo->id}}">
                                  <!-- </td> -->
                                  <td> {{$cargo->heading->description}} </td>
                                  <td class="text-center align-middle bg-y" >
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
                                  </td>
                                  
                                        @if($cargo->heading->is_consumption == '1')
                                        <td class="text-center align-middle">
-                                          <input type="text" class="w-100 input_cargo_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="w-100 input_cargo_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
                                           {{-- <span class="my-2 consumption">{{$cargo->consumption}}</span> --}}
                                        </td>
                                        @else
                                        <td class="" style="background-color: rgb(167, 171, 170)">
-                                       <input type="hidden" style="width: 100px" readonly name="consumption[]"  value="{{$cargo->consumption}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" style="width: 100px" readonly name="consumption[]"  value="{{$cargo->consumption}}">
                                        </td>
                                        @endif
                                  
                                  <td class="text-center align-middle bg-y">
-                                       <input style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
                                  </td>
                                  <td class="text-center align-middle bg-y">
-                                       <input style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
                                  </td>
                                  
                                     @if($cargo->heading->is_consumption == '1')
                                     <td class="text-center align-middle bg-y">
-                                       <input type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
                                        @else
                                        <td class="text-center align-middle ">
                                        <span class="my-2">{{ $cargo->closing}}</span>
-                                       <input type="text" hidden name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" hidden name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
                                     </td>
                                     @endif
                                  
                                  <td class="text-center align-middle bg-y"  >
-                                       <input style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
                                  </td>
                               </tr>
                            @endforeach
@@ -775,18 +794,18 @@
                                  </select>
                               </td>
                               <td class="bg-y">
-                                 <input style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
                               </td>
                               
-                              <td class="bg-y"><input style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
+                              <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
                            
                               <td class="bg-y">
-                                 <input style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_actual" id="period_rob_actual" value="{{$periodic->rob_actual}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_actual" id="period_rob_actual" value="{{$periodic->rob_actual}}">
                               </td>
                            
                               <td>
                                  <span class="my-3 periodDiff">{{$periodic->rob_diff}}</span>
-                                 <input class="w-100 " hidden  type="number" id="period_rob_diff" readonly value="{{$periodic->rob_diff}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 " hidden  type="number" id="period_rob_diff" readonly value="{{$periodic->rob_diff}}">
                               </td>
                              
                            </tr>
@@ -807,21 +826,21 @@
                         <tbody>
                            <tr>
                               <td style="width: 400px">Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (Manual input based on joint calculation by all parties)</td>
-                              <td class="bg-y"><input style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></td>
+                              <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></td>
                            </tr>
                            <tr>
                               <td>Part 1: Corrected Fuel Cons. from 00:00 hours to Check Time (based on calculation by applying ROB Difference) <br>
                                  <i>Note: Refer to ROB COrrection Rules</i>
                               </td>
                               <td >
-                                 <input class="input_special" hidden type="number" name="fuel_cons_correct" id="fuel_cons_correct" value="{{$periodic->fuel_cons_correct}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} class="input_special" hidden type="number" name="fuel_cons_correct" id="fuel_cons_correct" value="{{$periodic->fuel_cons_correct}}">
                                  <span class="my-2 fuel_cons_correct">{{$periodic->fuel_cons_correct}}</span>
                               </td>
                               
                            </tr>
                            <tr>
                               <td>Part 2: Actual Fuel Cons. from Check Time to 24:00 hours (manual input based on actual sounding)</td>
-                              <td class="bg-y" ><input style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></td>
+                              <td class="bg-y" ><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></td>
                            </tr>
                            <tr>
                               <th>Total Actual Daily Fuel Consumption = (Part 1 + Part 2)</th>
@@ -868,31 +887,31 @@
                         <td class="col-md-3">{{$engine->heading->description}}</td>
                         <td>{{$engine->heading->unit}}</td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
                         </td>
                         <td class="bg-y">
-                           <input class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
+                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
                         </td>
                      </tr>
                      @endforeach
@@ -920,10 +939,13 @@
                                  <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
                               </tr>
                               <tr>
+                                 @if ($editable == 1)
                                  <td colspan="3">
                                     <a href="{{route('vdr.crew.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
                                     <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
                                  </td>
+                                 @endif
+                                 
                                  {{-- <td></td> --}}
                                  
                               </tr>
@@ -939,15 +961,15 @@
 
                               <tr>
                                  <td>
-                                    <input type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
-                                    {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                    <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                    {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
                                  </td>
                                  <td class="bg-y" >
                                     {{-- {{$crew->id}} --}}
-                                    <input  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                                    <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
                                  </td>
                                  <td class="bg-y">
-                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
                                  </td>
                                  
                               </tr>
@@ -980,8 +1002,12 @@
                               </tr>
                               <tr>
                                  <td colspan="3">
+                                    @if ($editable == 1)
+                                        
+                                    
                                     <a href="{{route('vdr.pax.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
                                     <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked pax list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                    @endif
                                     {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
                                  </td>
                               </tr>
@@ -996,14 +1022,14 @@
                               @foreach ($crews->where('is_crew', 0) as $pax)
                               <tr>
                                  <td>
-                                    <input type="checkbox" name="checkPax[]" value="{{$pax->id}}" id="checkPax-{{$pax->id}}">
-                                    {{-- <input class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                    <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkPax[]" value="{{$pax->id}}" id="checkPax-{{$pax->id}}">
+                                    {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
                                  </td>
                                  <td class="bg-y">
-                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
+                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
                                  </td>
                                  <td class="bg-y">
-                                    <input style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
+                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
                                  </td>
                                  {{-- <td>
                                     <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
@@ -1033,7 +1059,7 @@
    </div>
 </section>
 
-@if (auth()->user()->hasRole('marine') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
+@if (auth()->user()->hasRole('marine|suptent_loc') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
    <div class="modal fade" id="modalEditApproval" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
          <form action="{{route('vdr.update.approval')}}" method="POST" enctype="multipart/form-data">
@@ -1181,20 +1207,15 @@
                      
                      <div class="col-6">
                         
-                        <div class="form-group">
-                           <label for="title1">Title </label>
-                           <select class="form-control" name="title1" id="title1" required>
+                       
+                           <select hidden name="title1" id="title1" required>
                               <option value="Fuel Monitoring Team" selected>Fuel Monitoring Team</option>
                               {{-- <option value="PET Kalijapat">PET Kalijapat</option> --}}
                               {{-- <option value="PET SBU">PET SBU</option>
                               <option value="PET CBU">PET CBU</option>
                               <option value="PET NBU">PET NBU</option> --}}
                            </select>
-                           {{-- <input class="form-control" id="title1" required name="title1" type="text" value="{{$vdr->title1}}" placeholder="Jabatan/Posisi">
-                           @error('title1')
-                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                           @enderror --}}
-                        </div>
+                          
                         
                      </div>
                      <div class="col-md-6">
@@ -1268,6 +1289,8 @@
                            </select>
                           
                         </div>
+                        <hr>
+                        <small>Inisal nama PIC yang dipilih akan ditampilkan pada Preview PDF VDR</small>
                      </div>
                      {{-- <div class="col-12">
                         <div class="form-group">
@@ -1323,6 +1346,107 @@
          </form>
       </div>
    </div>
+
+   <div class="modal fade" id="modalAppSuptentLoc" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.approve.suptent.loc.form')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Form Approve VDR</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  
+                  <b>{{$vdr->code}}</b>
+                  <hr>
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <p>Selanjutnya VDR akan di validasi Marine Representative</p>
+                  <div class="row mb-2">
+                     
+                     {{-- <div class="col-md-12">
+                        
+                        
+                        <div class="form-group">
+                           <label for="name2">PIC Marine</label>
+                           <select class="form-control" name="name2" id="name2" required>
+                              <option value="UA">Umar Agam</option>
+                              <option value="RH">Rezky Hardanto</option>
+                              <option value="MMH">Muhammad Misbakhul Hasan</option>
+                              
+                           </select>
+                          
+                        </div>
+                        <hr>
+                        <small>Inisal nama PIC yang dipilih akan ditampilkan pada Preview PDF VDR</small>
+                     </div> --}}
+                     {{-- <div class="col-12">
+                        <div class="form-group">
+                           <label for="name1">Name </label>
+                           <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
+                           @error('name1')
+                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                           @enderror
+                        </div>
+                     </div> --}}
+                  </div>
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Approve</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="vdr-reject-suptent-loc" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.reject.marine')}}" method="POST">
+         @csrf
+         <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Reject VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <b>{{$vdr->code}}</b>
+                  <hr>
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     <label for="desc">Description</label>
+                     <input type="text" class="form-control text-left" id="desc" name="desc" >
+                  </div>
+               </div>
+               <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-danger">Reject</button>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
+
+
+
+
+
    <div class="modal fade" id="vdr-approve-marine" tabindex="1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm" role="document">
          

@@ -19,7 +19,7 @@
       width: 100%;
       background-color: white;
       border-radius: 5px;
-      box-shadow: 1px 5px 10px rgb(159, 158, 158);
+      /* box-shadow: 1px 5px 10px rgb(159, 158, 158); */
    }
 
    table, th, td {
@@ -37,7 +37,7 @@
    <div class="row"> 
       <div class="col-md-9">
 
-         <div class="row px-2">
+         <div class="row ">
             <div class="col-md-4">
                <div class="card card-statistic-1 shadow-lg">
                   <a href="{{route('vdr.pet.validation')}}">
@@ -98,79 +98,85 @@
          {{-- <span class="btn btn-light border">Sailing Order</span> --}}
          
          <div class="row">
-            <div class="col-6">
+            <div class="col-12">
                {{-- <table class="display  ">
                   <tbody>
                      
                   </tbody>
                </table> --}}
-               <div class="table-responsive overflow-auto p-2" style="height: 310px">
-                  <table class="">
+               <div class="card shadow">
+                  <div class="card-body">
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="table-responsive overflow-auto" style="height: 320px">
+                              <table class="">
+                                 
+                                 <thead>
+                                    <tr>
+                                       <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
+                                    </tr>
+                                    <tr>
+                                       {{-- <th>Vessel</th> --}}
+                                       <th>Number</th>
+                                       {{-- <th>Date</th> --}}
+                                       <th>Status</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @foreach ($vdrvalids as $vdr)
+                                       <tr class="border" style="border: 1px black">
+                                          <td>
+                                             <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                             {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+                                          </td>
+                                          {{-- <td>{{$vdr->code}}</td> --}}
+                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                          <td>
+                                             <x-status-stisla.vdr :vdr="$vdr" />
+                                          </td>
+                                       </tr>
+                                    @endforeach
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="table-responsive overflow-auto " style="height: 310px">
+                              <table class="display  border">
+                                 
+                                 <thead>
+                                    <tr>
+                                       <th colspan="3" style="color: #1f4481 !important">VDR History</th>
+                                    </tr>
+                                    <tr>
+                                       {{-- <th>Vessel</th> --}}
+                                       <th>Number</th>
+                                       {{-- <th>Date</th> --}}
+                                       <th>Status</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @foreach ($vdrs->where('status', '>', 1) as $vdr)
+                                       <tr class="border" style="border: 1px black">
+                                          <td><a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
+                                          {{-- <td>{{$vdr->code}}</td> --}}
+                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                          <td>
+                                             <x-status-stisla.vdr :vdr="$vdr" />
+                                          </td>
+                                       </tr>
+                                    @endforeach
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
                      
-                     <thead>
-                        <tr>
-                           <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
-                        </tr>
-                        <tr>
-                           <th>Vessel</th>
-                           {{-- <th>Code</th> --}}
-                           <th>Date</th>
-                           <th>Status</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($vdrvalids as $vdr)
-                           <tr class="border" style="border: 1px black">
-                              <td>
-                                 <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
-                                 {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
-                              </td>
-                              {{-- <td>{{$vdr->code}}</td> --}}
-                              <td>{{formatDate($vdr->date)}}</td>
-                              <td>
-                                 <x-status-stisla.vdr :vdr="$vdr" />
-                              </td>
-                           </tr>
-                        @endforeach
-                     </tbody>
-                  </table>
+                  </div>
                </div>
+               
             </div>
-            <div class="col-6">
-               {{-- <table class="">
-                  <tbody>
-                     
-                  </tbody>
-               </table> --}}
-               <div class="table-responsive overflow-auto p-2" style="height: 310px">
-                  <table class="display  border">
-                     
-                     <thead>
-                        <tr>
-                           <th colspan="3" style="color: #1f4481 !important">VDR History</th>
-                        </tr>
-                        <tr>
-                           <th>Vessel</th>
-                           {{-- <th>Code</th> --}}
-                           <th>Date</th>
-                           <th>Status</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($vdrs->where('status', '>', 1) as $vdr)
-                           <tr class="border" style="border: 1px black">
-                              <td><a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
-                              {{-- <td>{{$vdr->code}}</td> --}}
-                              <td>{{formatDate($vdr->date)}}</td>
-                              <td>
-                                 <x-status-stisla.vdr :vdr="$vdr" />
-                              </td>
-                           </tr>
-                        @endforeach
-                     </tbody>
-                  </table>
-               </div>
-            </div>
+            
          </div>
          <hr>
          
@@ -186,7 +192,8 @@
                   </tr>
                </tbody>
             </table> --}}
-            <div class="table-responsive px-2 overflow-auto" style="height: 320px">
+            
+            <div class="table-responsive shadow overflow-auto" style="height: 320px">
              <table class="border display "   >
                {{-- <thead>
                   <tr>

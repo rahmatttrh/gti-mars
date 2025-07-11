@@ -520,8 +520,17 @@ class VdrController extends Controller
       //   dd($lastVdr);
       // }
       // dd('ok');
+      $editable = 0;
+
+      if (auth()->user()->hasRole('vessel')) {
+         if ($vdr->status == 0 ) {
+           $editable = 1;
+         }
+      }
+      
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
+         'editable' => $editable,
          'tab' => $tab,
          'lastVdr' => $lastVdr,
          'vessel' => $vdr->vessel,
@@ -3070,7 +3079,7 @@ class VdrController extends Controller
 
      
          $vdr = Vdr::create([
-
+            'area' => $vessel->area,
             'vessel_id' => $lastVdr->vessel_id,
             'date' => $today,
             'crew_onduty' => $lastVdr->onduty,
@@ -3314,14 +3323,14 @@ class VdrController extends Controller
 
      
       $vdr = Vdr::create([
-
+         'area' => $vessel->area,
          'vessel_id' => $vessel->id,
          'date' => $today,
          'crew_onduty' => 0,
          'crew_max' => 0,
          'location_midnight' => '-',
          'created_by' => $vessel->name,
-         'contract' => '-',
+         'contract' => $vessel->contract ?? '-',
          'contract_start' => Carbon::now(),
          'contract_end' => Carbon::now(),
          'owner' => '-',

@@ -96,6 +96,11 @@ class User extends Authenticatable
       return $platform->system;
    }
 
+   public function getArea(){
+      $employee = Employee::where('email', $this->email)->first();
+      return $employee->area;
+   }
+
    public function getPlatformLogo()
    {
       $party = Party::where('email', $this->email)->first();

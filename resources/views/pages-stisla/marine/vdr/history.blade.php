@@ -22,7 +22,7 @@
 
       <div class="row">
          <div class="col-md-3">
-            <div class="card">
+            <div class="card shadow">
                <div class="card-header"><h5>VDR History</h5></div>
                <div class="card-body">
                   Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->username}}</span>
@@ -92,7 +92,7 @@
             
          </div>
          <div class="col-md-9">
-            <div class="card">
+            <div class="card shadow">
                {{-- <div class="card-header">
                   <b>VDR Validation</b>
                </div> --}}

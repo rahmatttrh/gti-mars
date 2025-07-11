@@ -14,6 +14,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('forbidden')}}" class="nav-link text-dark">DSP</a></li>
          <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
@@ -80,7 +81,7 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="">
+   <div class="px-2">
       <ul class="navbar-nav">
          
          <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">

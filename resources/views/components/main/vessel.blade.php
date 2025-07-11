@@ -17,10 +17,12 @@
    
 </style>
 
-
+      
       <div class="row">
          {{-- <h1>ok</h1> --}}
          <div class="col-md-7">
+            
+            
             {{-- <div class="alert bg-info">
                Announcement from PET
                <hr>
@@ -29,37 +31,41 @@
                Langkah ini hanya dilakukan sekali, abaikan pesan ini jika anda telah merubah nilai tersebut. Terimakasih.
             </div> --}}
             {{-- <div class="badge badge-info">DSP</div> --}}
-            @if (count($rejectvdrs) > 0)
-            <div class="card shadow">
-               <div class="card-header bg-danger text-white">
-                  <b>VDR REJECT ALERT! </b>
-               </div>
-               <div class="card-body">
-                  @foreach ($rejectvdrs as $rejectvdr)
-                  
-                     VDR dengan Number  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b> <br>
-                     
-                      <br>
-                     <a href="{{route('vdr.show.spa', [enkripRambo($rejectvdr->id), enkripRambo('index')])}}" >Klik disini untuk melakukan Revisi</a>
-                     @endforeach
-               </div>
-            </div>
-            @endif
+            
             
            
 
             <div class="card shadow">
                
                <div class="card-body ">
-                  <div class="mb-2" style="color: #1f4481 !important">
-                     <b>Vessel Daily Report</b>
+                  <h4>Welcome back, {{$vessel->name}} !</h4>
+                  <div>Jika anda ingin membuat Vessel Daily Report silahkan <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a></div>
+                  <hr>
+                  {{-- <div class="mb-2" style="color: #1f4481 !important">
+                     <b></b>
+                  </div> --}}
+                  @if (count($rejectvdrs) > 0)
+                  <div class="card shadow-none">
+                     <div class="card-header bg-danger text-white">
+                        <b>VDR REJECT ALERT! </b>
+                     </div>
+                     <div class="card-body">
+                        @foreach ($rejectvdrs as $rejectvdr)
+                        
+                           VDR dengan Number  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b> <br>
+                           
+                           <br>
+                           <a href="{{route('vdr.show.spa', [enkripRambo($rejectvdr->id), enkripRambo('index')])}}" >Klik disini untuk melakukan Revisi</a>
+                           @endforeach
+                     </div>
                   </div>
+                  @endif
                   <div  class="table-responsive overflow-auto " style="height: 150px" >
                      <table class="basic-datatables" >
                         <thead >
-                           {{-- <tr>
+                           <tr>
                               <th colspan="4" style="color: #1f4481 !important">Vessel Daily Report</th>
-                           </tr> --}}
+                           </tr>
                            <tr>
                               {{-- <th class="text-center">No</th> --}}
                               <th>ID</th>
@@ -177,8 +183,8 @@
          </div>
          <div class="col-md-5">
             
-            <marquee  class="px-4 bgb-2 shadow rounded text-white py-2 px-2 mb-2" >
-               <i class="fa fa-bell"></i> Welcome to MARS, This main page contains summary data from several systems (Digital Smart Port, Vessel Daily Report) and Document Alert on the right side. 
+            <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
+               <i class="fa fa-bell"></i> Welcome to MARS, Klik 'VDR' pada Menu Utama (Atas) untuk mengakses data VDR secara lengkap 
             </marquee>
             <div class="card">
                <div class="card-body">

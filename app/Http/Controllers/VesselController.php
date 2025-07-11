@@ -140,6 +140,7 @@ class VesselController extends Controller
       $vessel->update([
          'status' => $req->status,
          'name' => $req->name,
+         'area' => $req->area,
          'username' => $req->username,
          'email' => $req->email,
          'telp' => $req->telp,

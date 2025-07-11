@@ -72,6 +72,8 @@ table {
    .bgc-2 {
       background-color: #86B6F6
    }
+
+   
 </style>
 </head>
 
@@ -102,6 +104,10 @@ table {
             <x-main.navbar.admin-logistic />
             @elseif(auth()->user()->hasRole('office'))
             <x-main.navbar.office />
+            @elseif(auth()->user()->hasRole('suptent_loc'))
+            <x-main.navbar.suptent-loc />
+            @elseif(auth()->user()->hasRole('suptent'))
+            <x-main.navbar.suptent-loc />
          @endif
        
          
@@ -156,6 +162,32 @@ table {
 
   <script src="{{asset('stisla/js/scripts.js')}}"></script>
   <script src="{{asset('stisla/js/custom.js')}}"></script>
+
+
+  <script>
+   $(document).ready(function () {
+      var body = $('body');
+     
+
+    
+      $('.datatables').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+       
+      });
+
+      $('.datatables-b').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": false,
+       
+      });
+
+   
+   });
+
+</script>
 
   @stack('chart')
   @if (session('success'))

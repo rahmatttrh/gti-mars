@@ -111,6 +111,8 @@
             <x-navbar.vdr.marine :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.vdr.department />
+            @elseif(auth()->user()->hasRole('suptent_loc'))
+            <x-navbar.vdr.suptent-loc />
             @elseif(auth()->user()->hasRole('vessel'))
             <x-navbar.vdr.vessel />
             {{-- @elseif(auth()->user()->hasRole('fm'))
