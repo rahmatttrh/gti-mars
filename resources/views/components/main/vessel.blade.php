@@ -7,8 +7,8 @@
    }
 
    table, th, td {
-      border: 1px solid rgb(226, 218, 218);
-      border-collapse: collapse;
+      /* border: 1px solid rgb(226, 218, 218); */
+      /* border-collapse: collapse; */
    }
    th, td {
       padding-left: 5px
@@ -20,7 +20,7 @@
       
       <div class="row">
          {{-- <h1>ok</h1> --}}
-         <div class="col-md-7">
+         <div class="col-md-8">
             
             
             {{-- <div class="alert bg-info">
@@ -39,38 +39,37 @@
                
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
-                  <div>Jika anda ingin membuat Vessel Daily Report silahkan <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a></div>
+                  <div>Jika anda ingin membuat Vessel Daily Report silahkan <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>, atau klik VDR pada menu utama</div>
                   <hr>
                   {{-- <div class="mb-2" style="color: #1f4481 !important">
                      <b></b>
                   </div> --}}
                   @if (count($rejectvdrs) > 0)
-                  <div class="card shadow-none">
-                     <div class="card-header bg-danger text-white">
+                  <div class="card shadow-none border">
+                     <div class="card-header py-1 bg-danger text-white">
                         <b>VDR REJECT ALERT! </b>
                      </div>
                      <div class="card-body">
                         @foreach ($rejectvdrs as $rejectvdr)
                         
-                           VDR dengan Number  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b> <br>
-                           
-                           <br>
+                           VDR dengan Number  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b>.
+                          
                            <a href="{{route('vdr.show.spa', [enkripRambo($rejectvdr->id), enkripRambo('index')])}}" >Klik disini untuk melakukan Revisi</a>
                            @endforeach
                      </div>
                   </div>
                   @endif
-                  <div  class="table-responsive overflow-auto " style="height: 150px" >
-                     <table class="basic-datatables" >
-                        <thead >
+                  <div  class="table-responsive overflow-auto " style="height: 210px" >
+                     <table class="table table-sm" >
+                        <thead>
                            <tr>
-                              <th colspan="4" style="color: #1f4481 !important">Vessel Daily Report</th>
+                              <th colspan="4" style="color: #1f4481 !important">Recent Vessel Daily Report</th>
                            </tr>
                            <tr>
                               {{-- <th class="text-center">No</th> --}}
                               <th>ID</th>
-                              <th>Date</th>
-                              <th>Crew</th>
+                              {{-- <th>Date</th>
+                              <th>Crew</th> --}}
                               <th style="width: 120px">Status</th>
                            </tr>
                         </thead>
@@ -78,8 +77,8 @@
                            @foreach ($myrecentvdrs as $myvdr)
                            <tr>
                               <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> </td>
-                              <td>{{formatDate($myvdr->date)}}</td>
-                              <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td>
+                              {{-- <td>{{formatDate($myvdr->date)}}</td>
+                              <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
                               <td class="text-truncate">
                                  {{-- @if(date('Y-m-d', strtotime($myvdr->date)) == date('Y-m-d'))
                                  <small>Draft</small>
@@ -118,8 +117,8 @@
                               {{-- <th class="text-center">No</th> --}}
                               
                               <th>ID</th>
-                              <th>Date</th>
-                              <th>Type</th>
+                              {{-- <th>Date</th> --}}
+                              {{-- <th>Type</th> --}}
                               <th style="width: 120px">Status</th>
                            </tr>
                         </thead>
@@ -181,12 +180,56 @@
                </table>
             </div>
          </div>
-         <div class="col-md-5">
+         <div class="col-md-4">
             
             <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
-               <i class="fa fa-bell"></i> Welcome to MARS, Klik 'VDR' pada Menu Utama (Atas) untuk mengakses data VDR secara lengkap 
+               <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
             </marquee>
-            <div class="card">
+            
+            @if ($vessel->email == null || $vessel->email_office == null)
+                  <div class="card card-danger shadow ">
+                     <div class="card-body">
+                        (!) Anda belum mengatur 
+                        {{-- {{$vessel->email}} --}}
+                        @if ($vessel->email == null)
+                            Email Vessel
+                        @endif
+                        @if ($vessel->email_vessel == null)
+                            Email Vessel
+                        @endif
+                     </div>
+                  </div>
+            @endif
+            <div class="card shadow">
+               <div class="card-body">
+                  {{-- @if ($vessel->email == null || $vessel->email_office == null)
+                  <div class="alert bg-danger">
+                     oke
+                  </div>
+                  @endif --}}
+                  
+                  <form action="{{route('vessel.update.email')}}" method="POST">
+                     @csrf
+                     @method('PUT')
+                     <input type="text" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
+                     <div class="form-floating mb-3">
+                        
+                        <label for="name">Email Kapal</label>
+                        <input type="text" required class="form-control" id="email_vessel" name="email_vessel" value="{{$vessel->email}}"  >
+                        
+                     </div>
+                     <div class="form-floating mb-3">
+                        
+                        <label for="name">Email Office</label>
+                        <input type="text" required class="form-control" id="email_office" name="email_office"  value="{{$vessel->email_office}}">
+                        
+                     </div>
+                     <button class="btn btn-primary" type="submit">Update</button>
+                  </form>
+               </div>
+            </div>
+            
+            <div class="card shadow">
                <div class="card-body">
                   <div class="table-responsive">
                      <table class="table-sm" id="table-6">
@@ -216,23 +259,6 @@
                </div>
             </div>
             <hr>
-            @if ($vessel->email_office == null)
-            <div class="card card-danger">
-               <div class="card-body">
-                  Anda belum mengatur Email Office
-               </div>
-            </div>
-            @endif
-            <div class="card">
-               <div class="card-body">
-                  <div class="form-floating mb-3">
-                     
-                     <label for="name">Email Office</label>
-                     <input type="text" required class="form-control" id="name" name="name"  >
-                     
-                  </div>
-               </div>
-            </div>
 
 
             

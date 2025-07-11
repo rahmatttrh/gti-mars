@@ -594,6 +594,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
+      
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
@@ -613,7 +614,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
 
 Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
    Route::prefix('master/data/vessel')->group(function () {
-      
+      Route::put('update/email', [VesselController::class, 'updateEmail'])->name('vessel.update.email');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
       Route::get('crew/add', [VesselCrewController::class, 'add'])->name('vessel.crew.add');

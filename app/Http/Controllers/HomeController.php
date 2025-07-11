@@ -1359,7 +1359,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      }else if (auth()->user()->hasRole('marine')) {
+      } else if (auth()->user()->hasRole('marine')) {
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
@@ -1428,7 +1428,7 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      }  else if (auth()->user()->hasRole('suptent_loc')) {
+      } else if (auth()->user()->hasRole('suptent_loc')) {
          
          
          $employee = Employee::where('email', auth()->user()->email)->first();
@@ -1543,7 +1543,7 @@ class HomeController extends Controller
          // dd($schedules);
 
          $myVdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
-         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->orderBy('date', 'desc')->paginate(3);
+         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->orderBy('date', 'desc')->paginate(10);
          // dd($vdr);
 
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
@@ -1560,7 +1560,7 @@ class HomeController extends Controller
             'docs' => $docs
          ])->with('i');
       } else {
-         dd('ok');
+         // dd('ok');
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $requests = null;

@@ -118,6 +118,8 @@ class VesselController extends Controller
       $dekripId = dekripRambo($id);
       $vessel = Vessel::find($dekripId);
 
+
+
       return view('pages.vessel.edit', [
          'vessel' => $vessel
       ]);
@@ -209,6 +211,25 @@ class VesselController extends Controller
          'email' => $req->email
       ]);
       return redirect()->back()->with('success', 'Vessel successfuly updated');
+   }
+
+   public function updateEmail(Request $req){
+      $req->validate([
+         'email_vessel' => 'required'
+      ]);
+      $vessel = Vessel::find($req->vessel);
+
+      $vessel->update([
+         'email' => $req->email_vessel,
+         'email_office' => $req->email_office
+      ]);
+
+      $user = User::where('username', $vessel->username)->first();
+      $user->update([
+         'email' => $req->email_vessel
+      ]);
+
+      return redirect()->back()->with('success', 'Email updated');
    }
 
 
