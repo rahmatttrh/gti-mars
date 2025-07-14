@@ -218,7 +218,7 @@ table {
                                  <td class="title">HSSE STATISTICS (Output)</td>
                                  <td class="text-center title">Previous</td>
                                  <td class="text-center title">Today</td>
-                                 <td class="text-center title">Monthly</td>
+                                 <td class="text-center title">Cumulative</td>
                            </tr>
                         </thead>
          
@@ -245,7 +245,7 @@ table {
                            <td class="text-center bg-yellow">
                               <small>{{$hse->today}}</small>
                            </td>
-                           <td class="text-center bg-yellow">
+                           <td class="text-center ">
                               <small>{{$hse->previous + $hse->today}}</small>
                            </td>
                            @else
@@ -923,7 +923,7 @@ table {
                               <td class="text-center" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              <td class="text-center ">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
                            @endif
                            
                            <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>

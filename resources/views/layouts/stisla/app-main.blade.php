@@ -191,16 +191,41 @@ table {
 
   @stack('chart')
   @if (session('success'))
-  <script>
-        $(document).ready(function() {
-           iziToast.success({
-           title: 'Success!',
-           message: "{{ Session::get('success') }}",
-           position: 'topRight'
-        });
-           
-        });
-  </script>
-@endif
+         <script>
+               $(document).ready(function() {
+                  iziToast.success({
+                  title: 'Success!',
+                  message: "{{ Session::get('success') }}",
+                  position: 'topRight'
+               });
+                  
+               });
+         </script>
+      @endif
+      @if (session('warning'))
+         <script>
+               $(document).ready(function() {
+                  iziToast.warning({
+                  title: 'Fail!',
+                  message: "{{ Session::get('warning') }}",
+                  position: 'topRight'
+               });
+                  
+               });
+         </script>
+      @endif
+      @if ($errors->any())  
+         @foreach ($errors->all() as $error)
+         <script>
+               $(document).ready(function() {
+                  iziToast.info({
+                     title: 'Failed!',
+                     message: '{{ $error }}',
+                     position: 'topRight'
+                  });
+               });
+         </script>
+         @endforeach     
+      @endif
 </body>
 </html>
