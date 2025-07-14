@@ -928,7 +928,7 @@ table {
                            
                            <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
                            <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
-                           <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
                            <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
                            <td rowspan="2">
