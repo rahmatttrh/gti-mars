@@ -123,7 +123,7 @@
                      <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                            <div>
-                              <a href="{{route('vdr.marine')}}" class="btn {{$title == 'Today' ? 'btn-primary' : 'bg-white btn-light border'}} mr-2 mb-2">Today VDR</a>
+                              <a href="{{route('vdr.marine')}}" class="btn {{$title == 'Today' ? 'btn-primary' : 'bg-white btn-light border'}} mr-2 mb-2">Recent VDR</a>
                               <a href="{{route('vdr.marine.all')}}" class="btn {{$title == 'All' ? 'btn-primary' : 'bg-white btn-light border'}} mb-2">All VDR</a>
                            </div>
                            @if ($title == 'Today')
@@ -151,9 +151,9 @@
                                     <th>Vessel</th>
                                     <th>Date</th>
                                     {{-- <th>Crew</th> --}}
-                                    <th>Loc</th>
+                                    {{-- <th>Loc</th> --}}
                                     <th>Status</th>
-                                    <th></th>
+                                    {{-- <th></th> --}}
                                  </tr>
                               </thead>
                               <tbody>
@@ -162,19 +162,19 @@
                                     <tr>
                                        {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
                                        <td>
-                                          <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a>
+                                          <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
             
                                        </td>
-                                       <td>{{$vdr->vessel->name}}</td>
+                                       <td class="text-truncate">{{$vdr->vessel->name}}</td>
                                        <td>{{formatDate($vdr->date)}}</td>
                                        {{-- <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td> --}}
-                                       <td>{{$vdr->location_midnight}}</td>
+                                       {{-- <td>{{$vdr->location_midnight}}</td> --}}
                                        <td>
                                           <x-status-stisla.vdr :vdr="$vdr" />
                                        </td>
-                                       <td>
+                                       {{-- <td>
                                           {{$vdr->updated_at}}
-                                       </td>
+                                       </td> --}}
                                     </tr>
                                     @endforeach
                               </tbody>

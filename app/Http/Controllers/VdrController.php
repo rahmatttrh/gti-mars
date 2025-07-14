@@ -591,6 +591,8 @@ class VdrController extends Controller
          $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
       }
 
+      $vessel = Vessel::find($req->vessel_id);
+
 
       // dd($lastVdr->date);
 
@@ -630,8 +632,29 @@ class VdrController extends Controller
          }
 
 
+         $vesselVdrs = Vdr::where('vessel_id', $vessel->id)->get();
+
+         // dd($lastVdr->date);
+
+
+
+         $today = Carbon::now();
+         // dd($today->format('m'));
+
+         $year = $today->format('Y');
+         $month = $today->format('m');
+         $day = $today->format('d');
+
+         $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+
+         // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+         $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+         $timestamp = $year . '/' . $month . '/' . $day;
+
+         // Menggabungkan awalan dan $idPadded
+         $hasil = $awalan . $timestamp;
          $vdr->update([
-            'code' => vdrId($vdr->id)
+            'code' => $hasil
          ]);
 
          $periodic = VdrPeriodic::create([

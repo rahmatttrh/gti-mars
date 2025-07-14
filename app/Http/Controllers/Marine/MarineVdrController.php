@@ -22,7 +22,7 @@ class MarineVdrController extends Controller
          return view('pages-stisla.forbidden');
       }
 
-      
+
 
       $vdrAlerts = Vdr::where('status', 1)->get();
 
@@ -92,15 +92,15 @@ class MarineVdrController extends Controller
 
       // $endDate = new Carbon($req->end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
-      
+
 
       // dd($dates);
 
-      foreach($dates as $date){
+      foreach ($dates as $date) {
          $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
@@ -111,14 +111,12 @@ class MarineVdrController extends Controller
             $totalFuel += $operatings->sum('daily');
          }
 
-         
+
 
          // dd($operatings);
          $dateFinal[] = formatDateOnly($date);
          $value[] = $totalTime;
          $fuel[] = $totalFuel;
-
-
       }
 
       // dd($date);
@@ -127,14 +125,14 @@ class MarineVdrController extends Controller
       //    $totalTime = $operatings->sum('time');
       //    $totalFuel = $operatings->sum('daily');
 
-        
+
       //    $date[] = formatDateOnly($vdr->date);
       //    $value[] = $totalTime;
       //    $fuel[] = $totalFuel;
       // }
-      
 
-      $vdrs= Vdr::where('status', '>', 0)->where('date', Carbon::now())->orderBy('created_at', 'desc')->get();
+
+      $vdrs = Vdr::where('status', '>', 0)->orderBy('created_at', 'desc')->whereIn('status', [1, 2, 3, 5])->get();
 
 
       // dd($value);
@@ -162,7 +160,7 @@ class MarineVdrController extends Controller
          return view('pages-stisla.forbidden');
       }
 
-      
+
 
       $vdrAlerts = Vdr::where('status', 1)->get();
 
@@ -232,15 +230,15 @@ class MarineVdrController extends Controller
 
       // $endDate = new Carbon($req->end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
-      
+
 
       // dd($dates);
 
-      foreach($dates as $date){
+      foreach ($dates as $date) {
          $vdrs = Vdr::where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
@@ -251,14 +249,12 @@ class MarineVdrController extends Controller
             $totalFuel += $operatings->sum('daily');
          }
 
-         
+
 
          // dd($operatings);
          $dateFinal[] = formatDateOnly($date);
          $value[] = $totalTime;
          $fuel[] = $totalFuel;
-
-
       }
 
       // dd($date);
@@ -267,13 +263,13 @@ class MarineVdrController extends Controller
       //    $totalTime = $operatings->sum('time');
       //    $totalFuel = $operatings->sum('daily');
 
-        
+
       //    $date[] = formatDateOnly($vdr->date);
       //    $value[] = $totalTime;
       //    $fuel[] = $totalFuel;
       // }
 
-      $vdrs= Vdr::where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
+      $vdrs = Vdr::where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
 
 
       // dd($value);
@@ -372,10 +368,10 @@ class MarineVdrController extends Controller
       //    $vdrValidations = Vdr::where('status', 303)->orderBy('updated_at', 'desc')->get();
       // }
 
-      $vdrValidations = Vdr::whereIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
-      
+      $vdrValidations = Vdr::whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
 
-      
+
+
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations,
          'title' => 'Reject'
@@ -386,13 +382,13 @@ class MarineVdrController extends Controller
    {
 
       if (auth()->user()->username == 'pet') {
-         $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
-      } elseif(auth()->user()->username == 'marine'){
-         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
-      } elseif(auth()->user()->username == 'lutfiaryanto'){
-         $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303,202,101])->orderBy('updated_at', 'desc')->get();
+         $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'marine') {
+         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'lutfiaryanto') {
+         $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
       }
-      
+
       $vessels = Vessel::get();
       $vessel = null;
 
@@ -469,9 +465,9 @@ class MarineVdrController extends Controller
          'name1' => $req->name2,
       ]);
 
-      
 
-      
+
+
 
 
       Log::create([
@@ -490,7 +486,7 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      
+
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
@@ -581,9 +577,9 @@ class MarineVdrController extends Controller
 
       if (auth()->user()->username == 'pet') {
          $status = 101;
-      } elseif(auth()->user()->username == 'marine'){
+      } elseif (auth()->user()->username == 'marine') {
          $status = 202;
-      } elseif(auth()->user()->username == 'lutfiaryanto'){
+      } elseif (auth()->user()->username == 'lutfiaryanto') {
          $status = 303;
       }
 
@@ -594,7 +590,7 @@ class MarineVdrController extends Controller
          'reject_date' => Carbon::now(),
          'reject_desc' => $req->desc
       ]);
-      
+
 
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
@@ -663,7 +659,7 @@ class MarineVdrController extends Controller
       // dd($vdr->name3);
       // dd()
 
-      
+
 
       return redirect()->route('vdr.pdf.email', enkripRambo($vdr->id))->with('success', 'VDR Approved');
    }
