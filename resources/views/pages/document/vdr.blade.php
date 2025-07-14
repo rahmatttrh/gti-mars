@@ -221,11 +221,11 @@ table th tr td {
                         @if($hse->header->group_header != $groupHeader)
                         <thead>
                            <tr>
-                                 <td class="text-center title bg-lgray">B</td>
-                                 <td class="title bg-lgray">HSSE STATISTICS (Output)</td>
-                                 <td class="text-center title bg-lgray">Previous</td>
-                                 <td class="text-center title bg-lgray">Today</td>
-                                 <td class="text-center title bg-lgray">Monthly</td>
+                                 <td class="text-center title">B</td>
+                                 <td class="title">HSSE STATISTICS (Output)</td>
+                                 <td class="text-center title">Previous</td>
+                                 <td class="text-center title">Today</td>
+                                 <td class="text-center title">Cumulative</td>
                            </tr>
                         </thead>
          
@@ -252,7 +252,7 @@ table th tr td {
                            <td class="text-center bg-yellow">
                               <small>{{$hse->today}}</small>
                            </td>
-                           <td class="text-center bg-yellow">
+                           <td class="text-center ">
                               <small>{{$hse->previous + $hse->today}}</small>
                            </td>
                            @else
@@ -930,12 +930,12 @@ table th tr td {
                               <td class="text-center" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              <td class="text-center ">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
                            @endif
                            
                            <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
                            <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
-                           <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
+                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
                            <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
                            <td rowspan="2" class="bg-lgray">

@@ -3,6 +3,12 @@
       background-color: white;
       color: black
    }
+
+   .nav-item-b a:hover {
+      /* text-color: #d5dcee; */
+   background-color: rgb(255, 255, 255);
+   font-size: 18px;
+}
 </style>
 <nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
@@ -14,6 +20,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
          @if (auth()->user()->username == 'pet')
             <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
              @else
@@ -120,50 +127,64 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="">
+   <div class="px-2">
       <ul class="navbar-nav">
          
-         <li class="nav-item pl-2 {{ (request()->is('/')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b  {{ (request()->is('/')) ? 'active' : '' }}">
             <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/'))
-               <i class="fas fa-fire"></i>
+               <i class="fas text-primary ml-3 fa-fire"></i>
                @endif
                
-               <span class="">Home Page</span>
+               <span class="mx-3">Home Page</span>
             </a>
          </li>
         
          @if (auth()->user()->username == 'pet')
-         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}">
-            <div class="nav-link text-white">
+         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}" style="text-decoration: none !important; ">
+            <div class="nav-link text-white" >
                
-               <span class="mr-3">Pertamina Energy Terminal</span>
+               <span class="mr-3">Welcome back, Fuel Monitoring Team</span>
             </div>
          </li>
          @else
-         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}">
-            <a href="{{route('news.edit')}}" class="nav-link {{ (request()->is('news/*')) ? 'text-dark' : 'text-white' }}">
+         {{-- <li class="nav-item  {{ (request()->is('news/*')) ? 'active' : '' }}">
+            <a  href="{{route('news.edit')}}" class="nav-link pl-3  {{ (request()->is('news/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('news/*'))
                <i class="fas fa-fire "></i>
                @endif
-               <span class="mr-3">News Feed</span>
+               <span class="mx-3">News Feed</span>
             </a>
          </li>
-         <li class="nav-item pr-3 {{ (request()->is('images/m/*')) ? 'active' : '' }}">
+         <li class="nav-item px-2 {{ (request()->is('images/m/*')) ? 'active' : '' }}">
             <a href="{{route('images')}}" class="nav-link {{ (request()->is('images/m/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('images/m/*'))
                <i class="fas fa-fire "></i>
                @endif
-               <span class="mr-3">Images Feed</span>
+               <span class="mx-3">Images Feed</span>
             </a>
-         </li>
-         <li class="nav-item pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
+         </li> --}}
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('marine/daily/*'))
                <i class="fas fa-fire "></i>
                @endif
-               <span class="mr-3">Daily Activity</span>
+               <span class="mx-3">Daily Activity</span>
             </a>
+         </li>
+         <li class="nav-item nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
+            <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
+               @if (request()->is('master/data/*'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="mx-3" >Master Data </span>
+            </a>
+            
+            <ul class="dropdown-menu">
+            <li class="nav-item"><a href="{{route('port')}}" class="nav-link">Port</a></li>
+            <li class="nav-item"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            </ul>
          </li>
          @endif
         

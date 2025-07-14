@@ -1,7 +1,8 @@
-@extends('layouts.stisla.app')
+@extends('layouts.stisla.app-main')
 @section('title')
-    Vessel
+   Vessel
 @endsection
+
 @section('content')
 <section class="section">
     {{-- <div class="section-header">
@@ -20,7 +21,7 @@
 
       <div class="row">
          <div class="col-md-3">
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <b>Form Add Vessel</b>
                <hr>
@@ -46,8 +47,13 @@
             </div>
          </div>
          <div class="col-md-9">
-            <div class="card">
+            <div class="card shadow">
+               {{-- <div class="card-header">
+                  <h3>Vessel List</h3>
+               </div> --}}
                <div class="card-body">
+                  <h3>Vessel List</h3>
+                  <hr>
                   <div class="table-responsive">
                      <table class=" table-striped " id="table-4">
                      <thead>

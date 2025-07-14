@@ -29,10 +29,10 @@
       <div class="row">
          <div class="col-md-3">
             @if ($title == 'Validation')
-               <div class="card">
+               <div class="card shadow">
                   <div class="card-header"><h5>VDR Validation</h5></div>
                   <div class="card-body">
-                     Daftar VDR yang membutuhkan Approval <span class="text-uppercase">{{auth()->user()->username}}</span>
+                     Daftar VDR yang membutuhkan Approval <span class="text-uppercase">{{auth()->user()->name}}</span>
                      <hr>
                      <div class="card bg-info">
                         <div class="card-body">
@@ -65,7 +65,7 @@
             
          </div>
          <div class="col-md-9">
-            <div class="card">
+            <div class="card shadow">
                {{-- <div class="card-header">
                   <b>VDR Validation</b>
                </div> --}}

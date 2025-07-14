@@ -8,7 +8,7 @@
       <div class="row">
          <div class="col-md-5">
             
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <small class="mb-2 badge badge-primary">Fuel Consumption (Liter) 
                      @if ($title == 'Today')
@@ -39,7 +39,7 @@
                   <canvas class="mt-2" id="myChart" height="130px"></canvas> --}}
                </div>
             </div>
-            <div class="card">
+            <div class="card shadow">
                <div class="card-body">
                   <small class="mb-2 badge badge-info">Total Operating Mode (Hour)
                       
@@ -115,7 +115,7 @@
                   
                   
                   {{-- <hr> --}}
-                  <div class="card">
+                  <div class="card shadow">
                      {{-- <div class="card-header">
                         <a href="" class="btn btn-primary mr-2">Today VDR</a>
                         <a href="" class="btn btn-light border">All VDR</a>
@@ -148,8 +148,8 @@
                                  <tr>
                                     {{-- <th class="text-center">No.</th> --}}
                                     <th>ID</th>
-                                    <th>Vessel</th>
-                                    <th>Date</th>
+                                    {{-- <th>Vessel</th> --}}
+                                    {{-- <th>Date</th> --}}
                                     {{-- <th>Crew</th> --}}
                                     {{-- <th>Loc</th> --}}
                                     <th>Status</th>
@@ -165,8 +165,8 @@
                                           <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
             
                                        </td>
-                                       <td class="text-truncate">{{$vdr->vessel->name}}</td>
-                                       <td>{{formatDate($vdr->date)}}</td>
+                                       {{-- <td>{{$vdr->vessel->name}}</td> --}}
+                                       {{-- <td>{{formatDate($vdr->date)}}</td> --}}
                                        {{-- <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td> --}}
                                        {{-- <td>{{$vdr->location_midnight}}</td> --}}
                                        <td>

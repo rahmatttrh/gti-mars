@@ -131,7 +131,7 @@
             </tbody>
          </table> --}}
          <div class="card shadow">
-            <div class="card-body px-2">
+            <div class="card-body px-3">
                <div class="table-responsive overflow-auto p-1" style="max-height: 200px">
                   <table class="  border">
                      

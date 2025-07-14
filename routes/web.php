@@ -372,7 +372,7 @@ Route::middleware(["auth"])->group(function () {
 
 
 // Level Admin
-Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
 
@@ -470,6 +470,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
+         Route::put('approve/suptent-loc', [MarineVdrController::class, 'approveSuptentLocForm'])->name('vdr.approve.suptent.loc.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
          Route::get('approve/superintendent/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
@@ -593,6 +594,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
+      
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
@@ -612,7 +614,7 @@ Route::group(['middleware' => ['role:marine|superuser|admin-logistic|admin-dsp|s
 
 Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
    Route::prefix('master/data/vessel')->group(function () {
-      
+      Route::put('update/email', [VesselController::class, 'updateEmail'])->name('vessel.update.email');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
       Route::get('crew/add', [VesselCrewController::class, 'add'])->name('vessel.crew.add');

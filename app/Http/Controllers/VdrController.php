@@ -520,8 +520,17 @@ class VdrController extends Controller
       //   dd($lastVdr);
       // }
       // dd('ok');
+      $editable = 0;
+
+      if (auth()->user()->hasRole('vessel')) {
+         if ($vdr->status == 0) {
+            $editable = 1;
+         }
+      }
+
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
+         'editable' => $editable,
          'tab' => $tab,
          'lastVdr' => $lastVdr,
          'vessel' => $vdr->vessel,
@@ -582,6 +591,8 @@ class VdrController extends Controller
          return redirect()->back()->with('warning', 'VDR gagal Disimpan, karena sudah ada pada hari ini!');
       }
 
+      $vessel = Vessel::find($req->vessel_id);
+
       $lastVdr = Vdr::where('vessel_id', $req->vessel_id)->orderBy('date', 'desc')->first();
       if ($lastVdr) {
          $lastVdrWeathers =  VdrWeather::where('vdr_id', $lastVdr->id)->get();
@@ -631,6 +642,7 @@ class VdrController extends Controller
             ]);
          }
 
+         $vesselVdrs = Vdr::where('vessel_id', $vessel->id)->get();
 
          $vesselVdrs = Vdr::where('vessel_id', $vessel->id)->get();
 
@@ -656,6 +668,8 @@ class VdrController extends Controller
          $vdr->update([
             'code' => $hasil
          ]);
+
+
 
          $periodic = VdrPeriodic::create([
             'vdr_id' => $vdr->id,
@@ -3291,14 +3305,14 @@ class VdrController extends Controller
 
 
       $vdr = Vdr::create([
-
+         'area' => $vessel->area,
          'vessel_id' => $vessel->id,
          'date' => $today,
          'crew_onduty' => 0,
          'crew_max' => 0,
          'location_midnight' => '-',
          'created_by' => $vessel->name,
-         'contract' => '-',
+         'contract' => $vessel->contract ?? '-',
          'contract_start' => Carbon::now(),
          'contract_end' => Carbon::now(),
          'owner' => '-',

@@ -3,6 +3,12 @@
       background-color: white;
       color: black
    }
+
+   .nav-item-b a:hover {
+      /* text-color: #d5dcee; */
+   background-color: rgb(255, 255, 255);
+   font-size: 18px;
+   }
 </style>
 <nav class="navbar navbar-expand-lg main-navbar  text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
@@ -14,12 +20,18 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark">DSP</a></li>
          <li class="nav-item text-dark"><a href="{{route('vdr.create')}}" class="nav-link text-dark">VDR</a></li>
-         <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">PROACT</a></li>
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">MAP</a></li>
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">FMS</a></li>
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">HSE</a></li>
+
+         {{-- <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
          <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-         <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+         <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li> --}}
       </ul>
    </div>
    
@@ -56,37 +68,37 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="">
+   <div class="px-2">
       <ul class="navbar-nav">
          
-         <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b {{ (request()->is('/')) ? 'active' : '' }}">
             <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Home Page</span>
+               <span class="mx-3">Home Page</span>
             </a>
          </li>
 
-         <li class="nav-item {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
             <a href="{{route('vessel.crew')}}" class="nav-link {{ (request()->is('master/data/vessel/crew')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('master/data/vessel/crew'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Crew List</span>
+               <span class=" mx-3">Crew List</span>
             </a>
          </li>
-         <li class="nav-item pr-3 {{ (request()->is('v/newsfeed')) ? 'active' : '' }}">
+         {{-- <li class="nav-item pr-3 {{ (request()->is('v/newsfeed')) ? 'active' : '' }}">
             <a href="{{route('vessel.newsfeed')}}" class="nav-link {{ (request()->is('v/newsfeed')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('v/newsfeed'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">News Feed</span>
+               <span class=" mx-3">News Feed</span>
             </a>
-         </li>
+         </li> --}}
          {{-- <li class="nav-item">
             <a href="#" class="nav-link text-white">
                <span class="">Marine Advanced Reporting System</span>

@@ -3,6 +3,12 @@
       background-color: white;
       color: black
    }
+
+   .nav-item-b a:hover {
+      /* text-color: #d5dcee; */
+   background-color: rgb(255, 255, 255);
+   font-size: 18px;
+   }
 </style>
 <nav class="navbar navbar-expand-lg main-navbar  text-dark" style="background-color: #d5dcee">
    <a href="/" class="navbar-brand sidebar-gone-hide">
@@ -14,6 +20,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
          <li class="nav-item text-dark active" ><a href="{{route('vdr.create')}}" class="nav-link  rounded px-2 py-1" style="background-color: #1f4481" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>
@@ -72,41 +79,41 @@
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
          </li> --}}
-         <li class="nav-item {{ (request()->is('vdr/v/dashboard')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b {{ (request()->is('vdr/v/dashboard')) ? 'active' : '' }}">
             <a href="{{route('vdr.create')}}" class="nav-link {{ (request()->is('vdr/v/dashboard')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/dashboard'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Dashboard</span>
+               <span class="mx-3">Dashboard</span>
             </a>
          </li>
-         <li class="nav-item {{ (request()->is('vdr/v/act/create')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create')}}" class="nav-link {{ (request()->is('vdr/v/act/create')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Create</span>
+               <span class="mx-3">Create</span>
             </a>
          </li>
-         <li class="nav-item {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link {{ (request()->is('vdr/v/act/create/spa')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create/spa'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">Create by OnePageForm</span>
+               <span class="mx-3">Create by OnePageForm</span>
             </a>
          </li>
          
-         <li class="nav-item pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
             <a href="{{route('vdr.history')}}" class="nav-link {{ (request()->is('vdr/v/act/history')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/history'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="">History</span>
+               <span class="mx-3">History</span>
             </a>
          </li>
          

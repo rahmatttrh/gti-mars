@@ -22,6 +22,10 @@ class MarineVdrController extends Controller
          return view('pages-stisla.forbidden');
       }
 
+      if (auth()->user()->hasRole('suptent_loc') || auth()->user()->hasRole('superadmin-dsp')) {
+         return redirect()->route('vdr.marine.validation');
+      }
+
 
 
       $vdrAlerts = Vdr::where('status', 1)->get();
@@ -303,6 +307,10 @@ class MarineVdrController extends Controller
          $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
       }
 
+      if (auth()->user()->hasRole('suptent_loc')) {
+         $vdrValidations = Vdr::where('area', auth()->user()->getArea())->where('status', 5)->orderBy('updated_at', 'desc')->get();
+      }
+
       return view('pages-stisla.marine.vdr.validation', [
          'title' => 'Validation',
          'vdrs' => $vdrValidations
@@ -495,12 +503,18 @@ class MarineVdrController extends Controller
    {
       // $dekripId = dekripRambo($id);
 
-      dd('approve suptent');
+      // dd('approve suptent');
       $vdr = Vdr::find($req->id);
+
+      if ($vdr->area != null) {
+         $title = 'Marine Representative';
+      } else {
+         $title = 'Suptent';
+      }
       $vdr->update([
          'status' => 4,
-         'title1' => $req->title3,
-         'name1' => $req->name3,
+         'title3' => $req->title3,
+         'name3' => $req->name3,
       ]);
 
 
@@ -550,10 +564,50 @@ class MarineVdrController extends Controller
    {
 
       $vdr = Vdr::find($req->vdr);
+
+      $vessel = Vessel::find($vdr->vessel_id);
+
+      if ($vessel->contract_type == 'Under PO') {
+         $status = 3;
+      } else {
+         $status = 5;
+      }
+      // dd($status);
       $vdr->update([
-         'status' => 3,
+         'status' => $status,
          'title2' => 'Marine Dept',
          'name2' => $req->name2,
+      ]);
+
+
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'status' => $status,
+         'user_id' => auth()->user()->id
+      ]);
+      // dd()
+
+      $emailController = new EmailController();
+      $emailController->approvalVdr(enkripRambo($vdr->id));
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
+
+   public function approveSuptentLocForm(Request $req)
+   {
+
+      $vdr = Vdr::find($req->vdr);
+
+      $vessel = Vessel::find($vdr->vessel_id);
+
+
+      // dd($status);
+      $vdr->update([
+         'status' => 3,
+         'title4' => 'Suptent',
+         'name4' => auth()->user()->name,
       ]);
 
 
@@ -565,8 +619,8 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      $emailController = new EmailController();
-      $emailController->approvalVdr(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdr(enkripRambo($vdr->id));
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
@@ -618,16 +672,23 @@ class MarineVdrController extends Controller
    //    return redirect()->back()->with('success', 'VDR Suptent Approved');
    // }
 
-   public function approveLuthfi($id)
+   public function approveLutfi($id)
    {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       // dd('lutfi');
 
       // dd($vdr->title1);
+
+      if ($vdr->area != null) {
+         $title = 'Marine Representative';
+      } else {
+         $title = 'Suptent';
+      }
+
       $vdr->update([
          'status' => 4,
-         'title3' => 'Suptent',
+         'title3' => $title,
          'name3' => 'Lutfi Aryanto',
       ]);
 
