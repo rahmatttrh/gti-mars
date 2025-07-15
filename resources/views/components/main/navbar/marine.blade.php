@@ -141,12 +141,12 @@
          </li>
         
          @if (auth()->user()->username == 'pet')
-         <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}" style="text-decoration: none !important; ">
+         {{-- <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}" style="text-decoration: none !important; ">
             <div class="nav-link text-white" >
                
                <span class="mr-3">Welcome back, Fuel Monitoring Team</span>
             </div>
-         </li>
+         </li> --}}
          @else
          {{-- <li class="nav-item  {{ (request()->is('news/*')) ? 'active' : '' }}">
             <a  href="{{route('news.edit')}}" class="nav-link pl-3  {{ (request()->is('news/*')) ? 'text-dark' : 'text-white' }}">
@@ -182,9 +182,9 @@
             </a>
             
             <ul class="dropdown-menu">
-            <li class="nav-item nav-item-b"><a href="{{route('port')}}" class="nav-link">Port</a></li>
-            <li class="nav-item nav-item-b"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
-            <li class="nav-item nav-item-b"><a href="{{route('user')}}" class="nav-link">User</a></li>
+            {{-- <li class="nav-item "><a href="{{route('port')}}" class="nav-link">Port</a></li> --}}
+            <li class="nav-item "><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            <li class="nav-item "><a href="{{route('user')}}" class="nav-link">User</a></li>
             </ul>
          </li>
          @endif
