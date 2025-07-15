@@ -52,7 +52,7 @@ class VesselController extends Controller
       ]);
 
       Vessel::create([
-         'status' => 0,
+         'status' => $req->status,
          'port_id' => null,
          'username' => $req->username,
          'name' => $req->name,
@@ -122,7 +122,7 @@ class VesselController extends Controller
 
       $user->assignRole('vessel');
 
-      return redirect()->back()->with('success', 'Vessel successfuly added');
+      return redirect()->route('vessel')->with('success', 'Vessel successfuly added');
    }
 
    public function edit($id)
