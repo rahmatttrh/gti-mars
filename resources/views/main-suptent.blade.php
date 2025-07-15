@@ -28,19 +28,19 @@
                   <div class="col-md-4">
                      <div class="card card-statistic-1 shadow-lg">
                         <a href="{{route('vdr.marine.validation')}}">
-                        <div class="card-icon bg-info">
-                        <i class="fas fa-user"></i>
-                        </div>
-                        <div class="card-wrap">
-                        <div class="card-header">
-                           
-                           <h4>VDR Waiting</h4>
-                        </div>
-                        <div class="card-body">
-                           {{count($allVdrs->where('status', 3))}}
-                        </div>
-                        </div>
-                     </a>
+                           <div class="card-icon bg-info">
+                           <i class="fas fa-user"></i>
+                           </div>
+                           <div class="card-wrap">
+                           <div class="card-header">
+                              
+                              <h4>VDR Waiting</h4>
+                           </div>
+                           <div class="card-body">
+                              {{count($allVdrs->where('status', 3))}}
+                           </div>
+                           </div>
+                        </a>
                      </div>
                   </div>
                   <div class="col-md-4">
@@ -90,7 +90,7 @@
                            <div class="badge badge-info">VDR Validation</div>
                            
                            <div class="table-responsive mt-2" >
-                              <table class=" datatables">
+                              <table class="datatables">
                                  
                                  <thead>
                                     {{-- <tr>
@@ -101,7 +101,7 @@
                                        <th>Vessel</th>
 
                                        <th>Number</th>
-                                       {{-- <th>Date</th> --}}
+                                       <th>Last Update</th>
                                        <th class="text-center">Status</th>
                                     </tr>
                                  </thead>
@@ -110,7 +110,7 @@
                                        <tr class="border" style="border: 1px black">
                                           <td>{{++$i}}</td>
                                           <td>
-                                             <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name}}</a>
+                                             <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name ?? ''}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
                                           <td>
@@ -118,7 +118,7 @@
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
                                           {{-- <td>{{$vdr->code}}</td> --}}
-                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                          <td>{{formatDate($vdr->updated_at)}}</td>
                                           <td class="text-right">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>

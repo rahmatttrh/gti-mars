@@ -511,6 +511,8 @@ class HomeController extends Controller
 
 
 
+
+
       if (auth()->user()->hasRole('superuser')) {
 
          // $user = User::create([
@@ -1303,7 +1305,7 @@ class HomeController extends Controller
          ]);
       } else if (auth()->user()->hasRole('suptent')) {
          // dd('ok');
-         $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'asc')->get();
+         $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
          $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
 
          // dd($vdrValidations);
@@ -1340,7 +1342,7 @@ class HomeController extends Controller
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
          // $user->assignRole('suptent');
-         // dd($user);
+         // dd($user); 
          return view('main-suptent', [
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
@@ -1410,6 +1412,29 @@ class HomeController extends Controller
          $logs = Log::get();
 
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+
+         if (auth()->user()->username == 'pet') {
+            // dd('ok');
+            // dd($vdrValidations);
+            return view('main-pet', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $vdrs,
+               'vdrValidations' => $vdrValidations,
+               'cargoValidations' => $cargoValidations,
+               'schedules' => $schedules,
+               'cargoItems' => $cargoItems,
+               'takeouts' => $takeouts,
+               'itemRejects' => $itemRejects,
+               'vessels' => $vessels,
+               'allRequests' => $allRequests,
+               'dates' => $dates,
+               'values' => $values,
+               'vdrsArray' => $vdrsArray,
+   
+               'logs' => $logs
+   
+            ])->with('i');
+         }
          return view('main', [
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,

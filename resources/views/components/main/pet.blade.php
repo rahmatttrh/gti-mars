@@ -15,20 +15,7 @@
 </style> --}}
 
 <style>
-   table {
-      width: 100%;
-      background-color: white;
-      border-radius: 5px;
-      /* box-shadow: 1px 5px 10px rgb(159, 158, 158); */
-   }
-
-   table, th, td {
-      border: 1px solid rgb(226, 218, 218);
-      border-collapse: collapse;
-   }
-   th, td {
-      padding-left: 5px
-   }
+   
 
    
 </style>
@@ -146,18 +133,19 @@
                                  {{-- <th>Vessel</th> --}}
                                  <th>Number</th>
                                  {{-- <th>Date</th> --}}
+                                 <th>Last Update</th>
                                  <th class="text-right">Status</th>
                               </tr>
                            </thead>
                            <tbody>
                               @foreach ($vdrvalids as $vdr)
-                                 <tr class="border" style="border: 1px black">
+                                 <tr >
                                     <td>
                                        <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
                                        {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                     </td>
                                     {{-- <td>{{$vdr->code}}</td> --}}
-                                    {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                    <td>{{formatDate($vdr->updated_at)}}</td>
                                     <td class="text-right">
                                        <x-status-stisla.vdr :vdr="$vdr" />
                                     </td>
@@ -253,50 +241,50 @@
          });
 
 
-var ctx = document.getElementById("myChart").getContext('2d');
-var myChart = new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: {!! json_encode($dates) !!},
-    datasets: [{
-      label: 'Statistics',
-      data: {!! json_encode($fuel) !!},
-      borderWidth: 2,
-      backgroundColor: '#6777ef',
-      borderColor: '#6777ef',
-      borderWidth: 2.5,
-      pointBackgroundColor: '#ffffff',
-      pointRadius: 4
-    }]
-  },
-  options: {
-    legend: {
-      display: false
-    },
-    responsive: true,
-   maintainAspectRatio: false,
-    scales: {
-      yAxes: [{
-        gridLines: {
-          drawBorder: false,
-          color: '#f2f2f2',
-        },
-        ticks: {
-          beginAtZero: true,
-          stepSize: 1500
-        }
-      }],
-      xAxes: [{
-        ticks: {
-          display: false
-        },
-        gridLines: {
-          display: false
-        }
-      }]
-    },
-  }
-});
+         var ctx = document.getElementById("myChart").getContext('2d');
+         var myChart = new Chart(ctx, {
+         type: 'line',
+         data: {
+            labels: {!! json_encode($dates) !!},
+            datasets: [{
+               label: 'Statistics',
+               data: {!! json_encode($fuel) !!},
+               borderWidth: 2,
+               backgroundColor: '#6777ef',
+               borderColor: '#6777ef',
+               borderWidth: 2.5,
+               pointBackgroundColor: '#ffffff',
+               pointRadius: 4
+            }]
+         },
+         options: {
+            legend: {
+               display: false
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+               yAxes: [{
+               gridLines: {
+                  drawBorder: false,
+                  color: '#f2f2f2',
+               },
+               ticks: {
+                  beginAtZero: true,
+                  stepSize: 1500
+               }
+               }],
+               xAxes: [{
+               ticks: {
+                  display: false
+               },
+               gridLines: {
+                  display: false
+               }
+               }]
+            },
+         }
+         });
        </script>
    @endpush
 
