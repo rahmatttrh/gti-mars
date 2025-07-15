@@ -1429,8 +1429,8 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if (auth()->user()->hasRole('suptent_loc')) {
-         
-         
+
+
          $employee = Employee::where('email', auth()->user()->email)->first();
          $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
 
@@ -1443,10 +1443,11 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if (auth()->user()->username == 'lutfiaryanto') {
+
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
-         // $user->assignRole('vessel');
+         // $user->assignRole('suptent');
          // dd('ok');
          if (auth()->user()->username == 'pet') {
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
@@ -2658,17 +2659,17 @@ class HomeController extends Controller
 
       // $endDate = new Carbon($req->end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
 
       // dd($dates);
-      
+
 
       // dd($dates);
 
-      foreach($dates as $date){
+      foreach ($dates as $date) {
          $vdrs = Vdr::where('vessel_id', $vessel->id)->where('status', '>', 0)->whereNotIn('status', [101, 202, 303])->where('date', $date)->get();
 
          $totalTime = null;
@@ -2679,14 +2680,12 @@ class HomeController extends Controller
             $totalFuel += $operatings->sum('daily');
          }
 
-         
+
 
          // dd($operatings);
          $dateFinal[] = formatDateOnly($date);
          $value[] = $totalTime;
          $fuel[] = $totalFuel;
-
-
       }
 
       $vdrs = Vdr::where('status', '>=', 1)->where('vessel_id', $vessel->id)->whereBetween('date', [$req->start, $req->end])->get();
@@ -2930,7 +2929,7 @@ class HomeController extends Controller
                   $vessel->update([
                      // 'status' => 9,
                      'port_id' => $port->id,
-                     
+
                   ]);
 
                   $schedule = Schedule::find($vessel->schedule_id);
@@ -2940,14 +2939,14 @@ class HomeController extends Controller
                      $vessel->update([
                         // 'status' => 9,
                         'schedule_id' => null
-                        
+
                      ]);
                   }
                   // dd($vessel->schedule_id);
 
 
-                  if ($vessel->schedule_id ) {
-                     if($vessel->schedule->status > 1){
+                  if ($vessel->schedule_id) {
+                     if ($vessel->schedule->status > 1) {
                         $curentReport = Report::where('schedule_id', $vessel->schedule_id)->orderBy('updated_at', 'desc')->first();
                         // dd($curentReport);
                         if ($curentReport->status_id == 7 && $curentReport->port_id == $port->id) {

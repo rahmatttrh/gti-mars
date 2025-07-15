@@ -33,10 +33,46 @@
    
 </style>
 
-   
-   <div class="row"> 
-      <div class="col-md-9">
+   <div class="row">
+      <div class="col-md-3">
+         <div class="card bg-primary shadow">
+            <div class="card-body ">
+               
+               <i class="fas fa-user"></i> Welcome back, <h4> {{auth()->user()->name}}</h4>
+               <hr>
+                <h4>Fuel Monitoring Team</h4>
+                
+            </div>
+         </div>
 
+         <div class="table-responsive shadow overflow-auto" style="height: 250px">
+            <table class="border display "   >
+              {{-- <thead>
+                 <tr>
+                    <th>Time</th>
+                    <th>User</th>
+                    <th>Action</th>
+                 </tr>
+              </thead> --}}
+              <tbody>
+                 <tr>
+                    <th style="color: #1f4481 !important">Log Activity</th>
+                 </tr>
+                 @foreach ($logs as $log)
+                    <tr class="border">
+                       <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
+                          <br>
+                          {{$log->action}} </small>
+                       </td>
+                       
+                       
+                    </tr>
+                 @endforeach
+              </tbody>
+           </table>
+           </div>
+      </div>
+      <div class="col-md-9">
          <div class="row ">
             <div class="col-md-4">
                <div class="card card-statistic-1 shadow-lg">
@@ -94,135 +130,80 @@
             </div>
             
          </div>
-         
-         {{-- <span class="btn btn-light border">Sailing Order</span> --}}
-         
-         <div class="row">
-            <div class="col-12">
-               {{-- <table class="display  ">
-                  <tbody>
-                     
-                  </tbody>
-               </table> --}}
-               <div class="card shadow">
-                  <div class="card-body">
-                     <div class="row">
-                        <div class="col-md-6">
-                           <div class="table-responsive overflow-auto" style="height: 320px">
-                              <table class="">
-                                 
-                                 <thead>
-                                    <tr>
-                                       <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
-                                    </tr>
-                                    <tr>
-                                       {{-- <th>Vessel</th> --}}
-                                       <th>Number</th>
-                                       {{-- <th>Date</th> --}}
-                                       <th>Status</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    @foreach ($vdrvalids as $vdr)
-                                       <tr class="border" style="border: 1px black">
-                                          <td>
-                                             <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                             {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
-                                          </td>
-                                          {{-- <td>{{$vdr->code}}</td> --}}
-                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
-                                          <td>
-                                             <x-status-stisla.vdr :vdr="$vdr" />
-                                          </td>
-                                       </tr>
-                                    @endforeach
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                        <div class="col-md-6">
-                           <div class="table-responsive overflow-auto " style="height: 310px">
-                              <table class="display  border">
-                                 
-                                 <thead>
-                                    <tr>
-                                       <th colspan="3" style="color: #1f4481 !important">VDR History</th>
-                                    </tr>
-                                    <tr>
-                                       {{-- <th>Vessel</th> --}}
-                                       <th>Number</th>
-                                       {{-- <th>Date</th> --}}
-                                       <th>Status</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    @foreach ($vdrs->where('status', '>', 1) as $vdr)
-                                       <tr class="border" style="border: 1px black">
-                                          <td><a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
-                                          {{-- <td>{{$vdr->code}}</td> --}}
-                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
-                                          <td>
-                                             <x-status-stisla.vdr :vdr="$vdr" />
-                                          </td>
-                                       </tr>
-                                    @endforeach
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
+
+         <div class="card shadow">
+            <div class="card-body">
+               <div class="row">
+                  <div class="col-md-6">
+                     <div class="table-responsive overflow-auto" style="height: 320px">
+                        <table class="">
+                           
+                           <thead>
+                              <tr>
+                                 <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
+                              </tr>
+                              <tr>
+                                 {{-- <th>Vessel</th> --}}
+                                 <th>Number</th>
+                                 {{-- <th>Date</th> --}}
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($vdrvalids as $vdr)
+                                 <tr class="border" style="border: 1px black">
+                                    <td>
+                                       <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                       {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
+                                    </td>
+                                    {{-- <td>{{$vdr->code}}</td> --}}
+                                    {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                    <td>
+                                       <x-status-stisla.vdr :vdr="$vdr" />
+                                    </td>
+                                 </tr>
+                              @endforeach
+                           </tbody>
+                        </table>
                      </div>
-                     
+                  </div>
+                  <div class="col-md-6">
+                     <div class="table-responsive overflow-auto " style="height: 310px">
+                        <table class="display  border">
+                           
+                           <thead>
+                              <tr>
+                                 <th colspan="3" style="color: #1f4481 !important">VDR History</th>
+                              </tr>
+                              <tr>
+                                 {{-- <th>Vessel</th> --}}
+                                 <th>Number</th>
+                                 {{-- <th>Date</th> --}}
+                                 <th>Status</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($vdrs->where('status', '>', 1) as $vdr)
+                                 <tr class="border" style="border: 1px black">
+                                    <td><a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
+                                    {{-- <td>{{$vdr->code}}</td> --}}
+                                    {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                    <td>
+                                       <x-status-stisla.vdr :vdr="$vdr" />
+                                    </td>
+                                 </tr>
+                              @endforeach
+                           </tbody>
+                        </table>
+                     </div>
                   </div>
                </div>
                
             </div>
-            
          </div>
-         <hr>
-         
-         
-
-      </div>
-      <div class="col-md-3">
-         
-            {{-- <table class="display  border">
-               <tbody>
-                  <tr>
-                     <th>Log Activity</th>
-                  </tr>
-               </tbody>
-            </table> --}}
-            
-            <div class="table-responsive shadow overflow-auto" style="height: 320px">
-             <table class="border display "   >
-               {{-- <thead>
-                  <tr>
-                     <th>Time</th>
-                     <th>User</th>
-                     <th>Action</th>
-                  </tr>
-               </thead> --}}
-               <tbody>
-                  <tr>
-                     <th style="color: #1f4481 !important">Log Activity</th>
-                  </tr>
-                  @foreach ($logs as $log)
-                     <tr class="border">
-                        <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
-                           <br>
-                           {{$log->action}} </small>
-                        </td>
-                        {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
-                        {{-- <td></td> --}}
-                        
-                     </tr>
-                  @endforeach
-               </tbody>
-            </table>
-            </div>
-        
       </div>
    </div>
+   
    @push('chart')
       <script>
          
