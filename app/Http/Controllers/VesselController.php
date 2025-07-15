@@ -226,7 +226,7 @@ class VesselController extends Controller
          'username' => $req->username,
          'email' => $req->email
       ]);
-      return redirect()->back()->with('success', 'Vessel successfuly updated');
+      return redirect()->route('vessel')->with('success', 'Vessel successfuly updated');
    }
 
    public function updateEmail(Request $req){
