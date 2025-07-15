@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Imports\CrewVdr;
+use App\Models\Cargo;
 use App\Models\Log as ModelsLog;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
@@ -813,7 +814,12 @@ class VdrController extends Controller
          $month = $today->format('m');
          $day = $today->format('d');
 
-         $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+         $date = Carbon::create($req->date);
+         $year = $date->format('Y');
+         $month = $date->format('m');
+         $day = $date->format('d');
+
+         $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
          // Mengonversi $id ke dalam format tiga digit dengan leading zeros
          $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
@@ -1153,23 +1159,55 @@ class VdrController extends Controller
 
 
       $vdr = Vdr::find($vdr);
-      $vdr->update([
-         'date' => $date,
-         'location_midnight' => $loc,
-         'crew_onduty' => $onduty,
-         'crew_max' => $pax,
-         'contract' => $contract,
-         'contract_start' => $contract_start,
-         'contract_end' => $contract_end,
-         'owner' => $owner,
-         'master' => $master,
-         'ce' => $ce,
 
-      ]);
+      $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
+
+      $sameVdr = Vdr::where('vessel_id', $vdr->vessel->id)->where('date', $date)->first();
+      if ($sameVdr) {
+         $msg = 'VDR di Tanggal tersebut sudah ada';
+      } else {
+         $msg = '';
+      }
+
+      $date = Carbon::create($date);
+      $year = $date->format('Y');
+      $month = $date->format('m');
+      $day = $date->format('d');
+
+      $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+
+      // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+      $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+      $timestamp = $year . '/' . $month . '/' . $day;
+
+      // Menggabungkan awalan dan $idPadded
+      $hasil = $awalan . $timestamp;
+      
+      if ($sameVdr) {
+         # code...
+      } else {
+         $vdr->update([
+            'date' => $date,
+            'code' => $hasil,
+            'location_midnight' => $loc,
+            'crew_onduty' => $onduty,
+            'crew_max' => $pax,
+            'contract' => $contract,
+            'contract_start' => $contract_start,
+            'contract_end' => $contract_end,
+            'owner' => $owner,
+            'master' => $master,
+            'ce' => $ce,
+   
+         ]);
+      }
+      
 
       return response()->json([
          'success' => true,
-         'result' => $master
+         'result' => $master,
+         'code' => $vdr->code,
+         'error' =>  $msg
 
       ]);
    }
@@ -3215,23 +3253,30 @@ class VdrController extends Controller
       $month = $today->format('m');
       $day = $today->format('d');
 
+      // $date = Carbon::create($req->date);
+      // $year = $date->format('Y');
+      // $month = $date->format('m');
+      // $day = $date->format('d');
 
-      $vdr = Vdr::create([
+      // $date = Carbon::create()
 
-         'vessel_id' => $lastVdr->vessel_id,
-         'date' => $today,
-         'crew_onduty' => $lastVdr->onduty,
-         'crew_max' => $lastVdr->max,
-         'location_midnight' => $lastVdr->location_midnight,
-         'created_by' => $lastVdr->created_by,
-         'contract' => $lastVdr->contract,
-         'contract_start' => $lastVdr->contract_start,
-         'contract_end' => $lastVdr->contract_end,
-         'owner' => $lastVdr->owner,
-         'master' => $lastVdr->master,
-         'ce' => $lastVdr->ce,
-         'status' => 0
-      ]);
+     
+         $vdr = Vdr::create([
+            'area' => $vessel->area,
+            'vessel_id' => $lastVdr->vessel_id,
+            'date' => $today,
+            'crew_onduty' => $lastVdr->onduty,
+            'crew_max' => $lastVdr->max,
+            'location_midnight' => $lastVdr->location_midnight,
+            'created_by' => $lastVdr->created_by,
+            'contract' => $lastVdr->contract,
+            'contract_start' => $lastVdr->contract_start,
+            'contract_end' => $lastVdr->contract_end,
+            'owner' => $lastVdr->owner,
+            'master' => $lastVdr->master,
+            'ce' => $lastVdr->ce,
+            'status' => 0
+         ]);
 
 
 
