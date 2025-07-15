@@ -238,7 +238,7 @@
                            <table class="">
                               <thead>
                                  <tr>
-                                    <td colspan="5"><b>{{$vdr->code}}</b></td>
+                                    <td colspan="5"><b class="code">{{$vdr->code}}</b></td>
                                     {{-- <td colspan="2" class="text-right py-2 pr-1"></td> --}}
                                  </tr>
                                  <tr>
@@ -264,7 +264,10 @@
                                     <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                     <tr>
                                        <td class="px-1">Date</td>
-                                       <td class="bg-y"><input  class="w-100 input_general input_general_date" id="date" name="date" required {{$editable == 0 ? 'readonly' : ''}} type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " ></td>
+                                       <td class="bg-y">
+                                          <input  class="w-100 input_general input_general_date" id="date" name="date" required {{$editable == 0 ? 'readonly' : ''}} type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " >
+                                          <small class="errordate"></small>
+                                       </td>
                                        <td class="px-1">Loc</td>
                                        <td class="bg-y"><input class="w-100 input_general" id="location_midnight" name="location_midnight" {{$editable == 0 ? 'readonly' : ''}}  required type="text" value="{{$vdr->location_midnight}}" style="background-color: rgb(226, 236, 151); text-align: left !important;" ></td>
                                     </tr>
@@ -2519,7 +2522,9 @@
             dataType: 'json',
 
             success: function(result) {
-               // console.log('result :' + result.result);
+               console.log('msg :' + result.error );
+               $('.code').html(result.code);
+               $('.errordate').html(result.error);
                
             },
             error: function(error) {
