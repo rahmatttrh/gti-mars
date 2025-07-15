@@ -510,6 +510,34 @@ class HomeController extends Controller
       // dd('done');
 
 
+      
+      // $allVdrs = Vdr::get();
+      // foreach($allVdrs as $vdr){
+      //    // $vessel = Vessel::find($vdr->vessel_id);
+      //    // if ($vessel == null) {
+      //    //    $vdr->delete();
+      //    // }
+      //    $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
+         
+      //    $date = Carbon::create($vdr->date);
+      //    $year = $date->format('Y');
+      //    $month = $date->format('m');
+      //    $day = $date->format('d');
+
+      //    $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+
+      //    // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+      //    $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+      //    $timestamp = $year . '/' . $month . '/' . $day;
+
+      //    // Menggabungkan awalan dan $idPadded
+      //    $hasil = $awalan . $timestamp;
+      //    $vdr->update([
+      //       'code' => $hasil
+      //    ]);
+      // }
+
+
 
 
 
