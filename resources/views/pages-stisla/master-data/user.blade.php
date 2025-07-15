@@ -1,21 +1,22 @@
-@extends('layouts.stisla.app')
+@extends('layouts.stisla.app-main')
 @section('title')
-    User Management
+   User
 @endsection
+
 @section('content')
 <style>
    table {
       width: 100%;
    }
 
-   table, th, td {
+   /* table, th, td {
       border: 1px solid rgb(226, 218, 218);
       border-collapse: collapse;
       font-size: 12px;
    }
    th, td {
       padding-left: 5px
-   }
+   } */
    
    input {
       width: 70px"
@@ -29,22 +30,18 @@
          <div class="breadcrumb-item active">User</div>
       </div>
    </div> --}}
-   <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-         <li class="breadcrumb-item">User Management</li>
-         {{-- <li class="breadcrumb-item">Edit</li>
-         <li class="breadcrumb-item">Choose Vessel</li> --}}
-      </ol>
-   </nav>
+   {{--  --}}
 
    <div class="section-body">
      
 
       <div class="row">
          <div class="col-md-4">
-            <div class="card border shadow-sm">
+            <div class="card border shadow">
               
                <div class="card-body">
+                  <b>Form Add User</b>
+               <hr>
                   <form action="{{route('user.store')}}" method="POST">
                      @csrf
                      {{-- <label class="d-block"><b>Choose app</b></label>
@@ -100,18 +97,39 @@
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                            <label for="email">Email *</label>
                            <input type="text" class="form-control " id="email" name="email" >
                         </div>
                         
-                        <div class="form-group col-md-5">
+                        <div class="form-group col-md-6">
                            <label for="username">Username *</label>
                            <input type="text" class="form-control " id="username" name="username" >
                         </div>
-                        <div class="form-group col-md-7">
+                        {{-- <div class="form-group col-md-6">
                            <label for="no_telp">No. Telp</label>
                            <input type="text" class="form-control " id="no_telp" name="no_telp" >
+                        </div> --}}
+
+                        <div class="form-group col-md-6">
+                           <label>Level*</label>
+                           <select  class="custom-select" required id="level" name="level">
+                              <option  disabled selected>Choose</option>
+                              <option value="marine">Marine</option>
+                              <option value="suptent">Suptent</option>
+                              <option value="suptent_loc">Suptent On Location</option>
+               
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>Area</label>
+                           <select  class="custom-select" required id="area" name="area">
+                              <option  disabled selected>Choose</option>
+                              <option value="SBU">SBU</option>
+                              <option value="CBU">CBU</option>
+                              <option value="NBU">NBU</option>
+               
+                           </select>
                         </div>
                         
                         
@@ -141,67 +159,49 @@
                            {{-- <th class="text-center">No.</th> --}}
                            <th>Name</th>
                            {{-- <th>System</th> --}}
-                           <th>Role</th>
                            <th>Email</th>
-                           <th>Telp</th>
                            <th>Username</th>
+                           <th>Role</th>
+                           
+                           
+                           
                            {{-- <th>Location</th> --}}
                            {{-- <th>Email</th> --}}
-                           {{-- <th>Role</th> --}}
+                           <th>Area</th>
                            <th>Action</th>
                         </tr>
                      </thead>
                      <tbody>
                         @foreach ($users as $user)
-                        @if ($user->hasRole('vessel') || $user->hasRole('department') || $user->hasRole('marine'))
-                           @else
-                           <tr>
-                              {{-- <td class="text-center">{{++$i}}</td> --}}
-                              <td>
-                                 {{-- <a href="{{route('vessel.detail', enkripRambo($user->id))}}">{{$user->name}}</a>  --}}
-                                 {{$user->name}} 
-                                 {{-- <br>
-                                 <small>{{$user->email}}</small> --}}
-                              </td>
-                              {{-- <td>{{strtoupper($user->system)}}</td> --}}
-                              <td>
-                                 {{-- {{getRoleName($user)}} --}}
-                                 @if ($user->hasRole('admin-dsp'))
-                                    Admin DSP |
-                                 @endif
-                                 
-                                 @if ($user->hasRole('admin-vdr'))
-                                    Admin VDR |
-                                 @endif 
-                              </td>
-                              <td>{{$user->email}}</td>
-                              <td>{{$user->no_telp}}</td>
-                              <td>{{$user->username}}</td>
+                        <tr>
+                           {{-- <td class="text-center">{{++$i}}</td> --}}
+                           <td>
+                              {{-- <a href="{{route('vessel.detail', enkripRambo($user->id))}}">{{$user->name}}</a>  --}}
+                              {{$user->name}} 
                              
-                              
-                              
-                              {{-- <td>{{$user->email}}</td> --}}
-                              {{-- <td>
-                                 @if ($user->hasRole('department'))
-                                    User
-                                    @elseif($user->hasRole('vessel'))
-                                    Vessel
-                                    @elseif($user->hasRole('marine'))
-                                    Admin
-                                 @endif
-                              </td> --}}
-                              <td>
-                                 {{-- <div class="btn-group btn-sm">
-                                 <a href="{{route('user.detail', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Detail</a>
-                                 <a href="{{route('user.edit', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Edit</a>
-                                 <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#user-delete-{{$user->id}}"><i class="fa fa-trash"></i></a>
-                                 </div> --}}
-                                 {{-- <a href="{{route('user.detail', enkripRambo($user->id))}}" >Detail</a> --}}
-                                 <a href="{{route('user.edit', enkripRambo($user->id))}}" class="mx-1" >Edit</a>
-                                 <a href="#"  data-toggle="modal" data-target="#user-delete-{{$user->id}}">Delete</a>
-                              </td>
-                           </tr>
-                        @endif
+                           </td>
+                           <td>{{$user->email}}</td>
+                           <td>{{$user->username}}</td>
+                           <td>
+                              {{$user->role}}
+                           </td>
+                           
+                           <td>{{$user->area}}</td>
+                           
+                          
+                           
+                         
+                           <td>
+                              {{-- <div class="btn-group btn-sm">
+                              <a href="{{route('user.detail', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Detail</a>
+                              <a href="{{route('user.edit', enkripRambo($user->id))}}" class="btn btn-primary btn-sm">Edit</a>
+                              <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#user-delete-{{$user->id}}"><i class="fa fa-trash"></i></a>
+                              </div> --}}
+                              {{-- <a href="{{route('user.detail', enkripRambo($user->id))}}" >Detail</a> --}}
+                              <a href="{{route('user.edit', enkripRambo($user->id))}}" class="mx-1" >Edit</a>
+                              <a href="#"  data-toggle="modal" data-target="#user-delete-{{$user->id}}">Delete</a>
+                           </td>
+                        </tr>
                         
                         @endforeach
                         

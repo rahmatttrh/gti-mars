@@ -11,6 +11,7 @@ use App\Models\VdrCargoHeading;
 use App\Models\VdrCrew;
 use App\Models\VdrEngine;
 use App\Models\VdrEngineHeading;
+use App\Models\VdrHistory;
 use App\Models\VdrHse;
 use App\Models\VdrHseHeader;
 use App\Models\VdrOperating;
@@ -316,6 +317,161 @@ class VdrController extends Controller
 
          'lastVdr' => $lastVdr ?? null
       ])->with('i');
+   }
+
+   public function vdrRevisiStore($id){
+      $vdr = Vdr::find(enkripRambo($id));
+
+      $vdrHistory = VdrHistory::create([
+         'vdr_id' => $vdr->id,
+         'area' => $vdr->area,
+         'vessel_id' => $vdr->vessel_id,
+         'date' => $vdr->date,
+         'crew_onduty' => $vdr->onduty,
+         'crew_max' => $vdr->max,
+         'location_midnight' => $vdr->location_midnight,
+         'created_by' => $vdr->created_by,
+         'contract' => $vdr->contract,
+         'contract_start' => $vdr->contract_start,
+         'contract_end' => $vdr->contract_end,
+         'owner' => $vdr->owner,
+         'master' => $vdr->master,
+         'ce' => $vdr->ce,
+         'status' => 0
+      ]);
+
+      $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+      foreach($vdrWeathers as $vw){
+         VdrWeather::create([
+            'history_id' => $vdrHistory->id,
+            'heading_id' => $vw->heading_id,
+            't_0006' => $vw->t_0006,
+            't_0612' => $vw->t_0612,
+            't_1218' => $vw->t_1218,
+            't_1824' => $vw->t_1824,
+            'status' => 1
+         ]);  
+      }
+
+
+      $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
+      foreach($vdrHses as $vh){
+         VdrHse::create([
+            'history_id' => $vdrHistory->id,
+            'header_id' => $vh->header_id,
+            'previous' => $vh->previous,
+            'today' => $vh->today,
+         ]);
+      }
+
+
+      $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
+      foreach($vdrActivities as $va){
+         VdrActivity::create([
+            'history_id' => $vdrHistory->id,
+            'activity' => $va->activity,
+            'start' => $va->start,
+            'finish' => $va->finish,
+            'high' => $va->high,
+            'normal' => $va->normal,
+            'slow' => $va->slow,
+            'manu' => $va->manu,
+            'idle' => $va->idle,
+            'tow' => $va->tow,
+            'ah' => $va->ah,
+            'sb' => $va->sb
+         ]);
+      }
+
+
+      $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      foreach($vdrCargos as $vc){
+         VdrCargo::create([
+            'history_id' => $vdrHistory->id,
+            'heading_id' => $vc->heading_id,
+            'opening' => $vc->opening,
+            'consumption' => $vc->consumption,
+            'received' => $vc->received,
+            'transferred' => $vc->transferred,
+            'closing' => $vc->closing,
+            'remarks' => $vc->remark
+         ]);
+      }
+
+
+      $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach($vdrOperatings as $vo){
+         VdrOperating::create([
+            'history_id' => $vdrHistory->id,
+            'heading_id' => $vo->heading->id,
+            'time' => $vo->time,
+            'speed' => $vo->speed,
+            'contractual_fuel' => $vo->contractual_fuel,
+            'daily' => $vo->daily,
+         ]);
+      }
+
+
+      $vdrPeriodics = VdrPeriodic::where('vdr_id', $vdr->id)->get();
+      foreach($vdrPeriodics as $vp){
+         VdrPeriodic::create([
+            'history_id' => $vdrHistory->id,
+            'activity' => $vp->activity,
+            'rob_time' => $vp->rob_time,
+            'rob_value' => $vp->rob_value,
+            'rob_actual' => $vp->rob_actual,
+            'rob_diff' => $vp->rob_diff,
+
+            'fuel_cons_remu' => $vp->fuel_cons_remu,
+            'fuel_cons_correct' => $vp->corrected,
+            'fuel_cons_actual' => $vp->fuel_cons_actual,
+            'fuel_cons_total' => $vp->fuel_cons_total
+         ]);
+      }
+
+
+      $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->get();
+      foreach($vdrCrews as $vc){
+         VdrCrew::create([
+            'history_id' => $vdrHistory->id,
+            'is_crew' => $vc->is_crew,
+            'name' => $vc->name,
+            'rank' => $vc->rank,
+            'company' => $vc->company,
+         ]);
+      }
+
+
+      $vdrEngines = VdrEngine::where('vdr_id', $vdr->id)->get();
+      foreach($vdrEngines as $ve){
+         VdrEngine::create([
+            'history_id' => $vdrHistory->id,
+            'm_ref' => $ve->m_ref,
+            'm_port' => $ve->m_port,
+            'm_stbd' => $ve->m_stbd,
+            'm_center' => $ve->m_center,
+            'm_other' => $ve->m_other,
+            'a_ref' => $ve->a_ref,
+            'a_port' => $ve->a_port,
+            'a_stbd' => $ve->a_stbd,
+            'a_other' => $ve->a_other
+         ]);
+      }
+
+
+
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+
+      $vdr->update([
+         'status' => 0,
+         'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
+      ]);
+
+      return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR duplicated');
+
+
+
    }
 
    public function show($id, $enkripTab)
