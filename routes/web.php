@@ -253,6 +253,8 @@ Route::middleware(["auth"])->group(function () {
       Route::get('history/{vessel:id}/{month}', [VesselController::class, 'history'])->name('vessel.history');
       Route::get('onhire/{id}', [VesselController::class, 'onhire'])->name('vessel.onhire');
       Route::get('offhire/{id}', [VesselController::class, 'offhire'])->name('vessel.offhire');
+
+      // Route::get('offhire', [VesselController::class, 'offhireList'])->name('vessel.offhire.list');
    });
    // Route::prefix('port')->group(function () {
    //    Route::get('index', [PortController::class, 'index'])->name('port');
@@ -590,6 +592,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
    // });
    Route::prefix('master/data/vessel')->group(function () {
       Route::get('index', [VesselController::class, 'index'])->name('vessel');
+      Route::get('/offhire/index', [VesselController::class, 'indexOffhire'])->name('vessel.offhire.list');
       Route::get('create', [VesselController::class, 'create'])->name('vessel.create');
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
@@ -644,9 +647,11 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
       Route::get('dashboard', [VdrController::class, 'vdrVessel'])->name('vdr.create');
       
       Route::prefix('act')->group(function () {
-         Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
+      Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
       Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
       Route::get('create/spa', [VdrController::class, 'vdrCreateSpa'])->name('vdr.vessel.create.spa');
+
+      Route::get('revisi/{id}', [VdrController::class, 'vdrRevisiStore'])->name('vdr.revisi.store');
       
       Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
       Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');

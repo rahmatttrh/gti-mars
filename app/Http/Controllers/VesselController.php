@@ -17,15 +17,27 @@ class VesselController extends Controller
 {
    public function index()
    {
-      $vessels = Vessel::get();
+      $vessels = Vessel::where('status', 1)->get();
+      $data = 'onhire';
       return view('pages-stisla.master-data.vessel', [
-         'vessels' => $vessels
+         'vessels' => $vessels,
+         'data' => $data
+      ])->with('i');
+   }
+
+   public function indexOffhire()
+   {
+      $vessels = Vessel::where('status', 0)->get();
+      $data = 'offhire';
+      return view('pages-stisla.master-data.vessel', [
+         'vessels' => $vessels,
+         'data' => $data
       ])->with('i');
    }
 
    public function create()
    {
-      return view('pages.vessel.create');
+      return view('pages-stisla.master-data.vessel-create');
    }
 
    public function store(Request $req)

@@ -182,8 +182,9 @@
             </a>
             
             <ul class="dropdown-menu">
-            <li class="nav-item"><a href="{{route('port')}}" class="nav-link">Port</a></li>
-            <li class="nav-item"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            <li class="nav-item nav-item-b"><a href="{{route('port')}}" class="nav-link">Port</a></li>
+            <li class="nav-item nav-item-b"><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            <li class="nav-item nav-item-b"><a href="{{route('user')}}" class="nav-link">User</a></li>
             </ul>
          </li>
          @endif

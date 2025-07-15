@@ -18,18 +18,19 @@ class CreateVdrHistoriesTable extends Migration
             
             $table->string('code');
             $table->integer('vdr_id');
-            $table->string('code');
             $table->date('date');
             $table->integer('crew_onduty');
             $table->integer('crew_max');
             $table->string('location_midnight');
             $table->integer('status');
-
             $table->string('contract');
             $table->date('contract_start');
             $table->date('contract_end');
 
             $table->string('area');
+            $table->string('owner');
+            $table->string('master');
+            $table->string('ce');
 
             $table->timestamps();
         });

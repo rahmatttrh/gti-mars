@@ -15,7 +15,7 @@ class UserController extends Controller
 {
    public function index()
    {
-      $users = User::where('system', '!=', null)->orderBy('created_at', 'desc')->get();
+      $users = Employee::where('role', '!=', null)->orderBy('created_at', 'desc')->get();
       $usersTotal = User::get();
       $ports = Port::get();
       return view('pages-stisla.master-data.user', [
@@ -45,29 +45,44 @@ class UserController extends Controller
       $req->validate([
          'name' => 'required',
          'email' => 'required',
-         'username' => 'required'
+         'username' => 'required',
+         'level' => 'required'
       ]);
 
       // dd($req->role . '-' . $req->sistem);
 
 
-      $user = User::create([
+
+      $employee = Employee::create([
          'name' => $req->name,
-         'system' => 'system',
+         
          'username' => $req->username,
          'email' => $req->email,
-         'no_telp' => $req->no_telp,
-         'password' => Hash::make('12345678'),
+         // 'no_telp' => $req->no_telp,
+         'role' => $req->level,
+         'area' => $req->area,
+         
       ]);
 
-      // $user->assignRole($req->role . '-' . $req->sistem);
-      if ($req->vdr) {
-         $user->assignRole('admin-vdr');
-      } 
+      $user = User::create([
+         'name' => $employee->name,
+         'email' => $employee->email,
+         'username' => $employee->username,
+         'password' => Hash::make('oses@2025'),
+      ]);
 
-      if ($req->dsp) {
-         $user->assignRole('admin-dsp');
-      }
+      $user->assignRole($req->level);
+
+
+
+      // $user->assignRole($req->role . '-' . $req->sistem);
+      // if ($req->vdr) {
+      //    $user->assignRole('admin-vdr');
+      // } 
+
+      // if ($req->dsp) {
+      //    $user->assignRole('admin-dsp');
+      // }
 
       
 
@@ -104,9 +119,9 @@ class UserController extends Controller
 
    public function edit($id){
       $dekripId = dekripRambo($id);
-      $user = User::find($dekripId);
+      $user = Employee::find($dekripId);
       // $ports = Port::get();
-      $users = User::where('system', '!=', null)->orderBy('updated_at', 'desc')->get();
+      $users = Employee::where('role', '!=', null)->orderBy('created_at', 'desc')->get();
 
       // $employee = Employee::where('email', $user->email)->first();
       // $port = Port::find($employee->port_id);
@@ -126,31 +141,41 @@ class UserController extends Controller
    }
 
    public function update(Request $req){
-      $user = User::find($req->user);
+      $employee = Employee::find($req->user);
+      $user = User::where('email', $employee->email)->first();
       // $employee = Employee::where('email', $user->email)->first();
       // dd($user->name);
+      $employee->update([
+         'name' => $req->name,
+         'username' => $req->username,
+         'email' => $req->email,
+         'role' => $req->level,
+         'area' => $req->area,
+      ]);
+
       $user->update([
          'name' => $req->name,
          'username' => $req->username,
-         'email' => $req->email
+         'email' => $req->email,
       ]);
       // $employee->update([
       //    'name' => $req->name,
       //    'username' => $req->username,
       //    'email' => $req->email
       // ]);
-      $user->assignRole($req->role . '-' . $req->sistem);
+      $user->assignRole($req->level);
 
       return redirect()->route('user')->with('success', 'User data updated');
    }
 
    public function delete($id){
       $dekripId = dekripRambo($id);
-      $user = User::find($dekripId);
-      // $employee = Employee::where('email', $user->email)->first();
+      $employee = Employee::find($dekripId);
+      $user = User::where('email', $employee->email)->first();
+      // $employee = Employee::where('email', $employee->email)->first();
 
-      // $employee->delete();
       $user->delete();
+      $employee->delete();
 
       return redirect()->back()->with('success', 'User deleted');
 

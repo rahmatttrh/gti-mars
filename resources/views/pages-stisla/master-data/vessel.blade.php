@@ -21,30 +21,63 @@
 
       <div class="row">
          <div class="col-md-3">
-            <div class="card shadow">
+            
+             <div class="section-header">
+               
+               <div class="breadcrumb-item ">Master Data</div>
+               <div class="breadcrumb-item active">Vessel</div>
+              
+            </div>
+            <a href="{{route('vessel.create')}}" class="btn btn-primary btn-block"><i class=" fas fa-plus"></i> Add New Vessel</a>
+            <hr>
+            <div class="card card-statistic-1 shadow-lg">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-info">
+                  <i class="fas fa-ship"></i>
+                  </div>
+                  <div class="card-wrap">
+                     <div class="card-header">
+                        
+                        <h4>Under PO</h4>
+                     </div>
+                     <div class="card-body">
+                        {{count($vessels->where('contract_type', 'Under PO'))}}
+                     </div>
+                  </div>
+               </a>
+            </div>
+            <div class="card card-statistic-1 shadow-lg">
+               <a href="{{route('vdr.marine.validation')}}">
+                  <div class="card-icon bg-warning">
+                  <i class="fas fa-ship"></i>
+                  </div>
+                  <div class="card-wrap">
+                  <div class="card-header">
+                     
+                     <h4>Non PO</h4>
+                  </div>
+                  <div class="card-body">
+                     {{count($vessels->where('contract_type', 'Non PO'))}}
+                  </div>
+                  </div>
+               </a>
+            </div>
+            {{-- <div class="card shadow">
                <div class="card-body">
                   <b>Form Add Vessel</b>
                <hr>
-            @if ($errors->any())
-               <div class="alert alert-danger">
-                  <ul>
-                        @foreach ($errors->all() as $error)
-                           <li>{{ $error }}</li>
-                        @endforeach
-                  </ul>
+            
+               <form action="{{route('vessel.store')}}" method="POST">
+                  @csrf
+                  <input type="text" name="name" id="name" class="form-control mb-2" placeholder="Vessel name...">
+                  <input type="text" name="type" id="type" class="form-control mb-2" placeholder="Vessel type...">
+                  <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Email...">
+                  <input type="text" name="username" id="username" class="form-control" placeholder="Username...">
+                  <hr>
+                  <button type="submit" class="btn btn-info">Create New</button>
+               </form>
                </div>
-            @endif
-            <form action="{{route('vessel.store')}}" method="POST">
-               @csrf
-               <input type="text" name="name" id="name" class="form-control mb-2" placeholder="Vessel name...">
-               <input type="text" name="type" id="type" class="form-control mb-2" placeholder="Vessel type...">
-               <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Email...">
-               <input type="text" name="username" id="username" class="form-control" placeholder="Username...">
-               <hr>
-               <button type="submit" class="btn btn-info">Create New</button>
-            </form>
-               </div>
-            </div>
+            </div> --}}
          </div>
          <div class="col-md-9">
             <div class="card shadow">
@@ -52,7 +85,16 @@
                   <h3>Vessel List</h3>
                </div> --}}
                <div class="card-body">
-                  <h3>Vessel List</h3>
+                  <div class="d-flex justify-content-between">
+                     <h3><span class="text-uppercase">{{$data}}</span> Vessel List</h3>
+                     @if ($data == 'onhire')
+                        <a href="{{route('vessel.offhire.list')}}"> Off Hire Vessel</a>
+                         @else
+                         <a href="{{route('vessel')}}"> On Hire Vessel</a>
+                     @endif
+                     
+                  </div>
+                  
                   <hr>
                   <div class="table-responsive">
                      <table class=" table-striped " id="table-4">
@@ -75,19 +117,19 @@
                            <td>{{$vessel->email}}</td>
                            <td>{{$vessel->type}}</td>
                            <td>
-                              @if ($vessel->status == 0)
+                              {{-- @if ($vessel->status == 0)
                                  <span class="badge badge-light">Off Hire</span>
                                  @elseif($vessel->status == 1)
                                  <span class="badge badge-primary" >On Hire</span>
                                  @elseif($vessel->status == 2)
                                  <span class="badge badge-warning" >Maintenance</span>
-                              @endif
+                              @endif --}}
       
-                              {{-- @if ($vessel->status == 0)
+                              @if ($vessel->status == 0)
                                  <a href="#" class="badge badge-light" data-toggle="modal" data-target="#vessel-onhire-{{$vessel->id}}">Off Hire</a>
                                  @elseif($vessel->status == 1)
                                  <a href="#" class="badge badge-primary" data-toggle="modal" data-target="#vessel-offhire-{{$vessel->id}}">On Hire</a>
-                              @endif --}}
+                              @endif
                            </td>
                         </tr>
                         @endforeach
