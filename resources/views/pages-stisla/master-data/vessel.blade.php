@@ -102,9 +102,10 @@
                         <tr>
                            {{-- <th class="text-center">No.</th> --}}
                            <th>Name</th>
-                           <th>TXID</th>
+                           <th>Username</th>
                            <th>Email</th>
                            <th>Type</th>
+                           <th>PO</th>
                            <th>Status</th>
                         </tr>
                      </thead>
@@ -113,9 +114,12 @@
                         <tr>
                            {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
-                           <td>{{$vessel->txid }}</td>
+                           <td>{{$vessel->username }}</td>
                            <td>{{$vessel->email}}</td>
                            <td>{{$vessel->type}}</td>
+                           <td>
+                              {{$vessel->contract_type}}
+                           </td>
                            <td>
                               {{-- @if ($vessel->status == 0)
                                  <span class="badge badge-light">Off Hire</span>
