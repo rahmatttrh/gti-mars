@@ -20,7 +20,7 @@
 
       <form action="{{route('vessel.store')}}" method="POST">
          @csrf
-         @method('PUT')
+         {{-- @method('PUT') --}}
          {{-- <input type="number" name="vessel" id="vessel" value="{{$vessel->id}}" hidden> --}}
 
          <div class="row">
