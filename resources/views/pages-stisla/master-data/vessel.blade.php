@@ -31,7 +31,7 @@
             <a href="{{route('vessel.create')}}" class="btn btn-primary btn-block"><i class=" fas fa-plus"></i> Add New Vessel</a>
             <hr>
             <div class="card card-statistic-1 shadow-lg">
-               <a href="{{route('vdr.marine.validation')}}">
+               
                   <div class="card-icon bg-info">
                   <i class="fas fa-ship"></i>
                   </div>
@@ -44,10 +44,10 @@
                         {{count($vessels->where('contract_type', 'Under PO'))}}
                      </div>
                   </div>
-               </a>
+            
             </div>
             <div class="card card-statistic-1 shadow-lg">
-               <a href="{{route('vdr.marine.validation')}}">
+               
                   <div class="card-icon bg-primary">
                   <i class="fas fa-ship"></i>
                   </div>
@@ -60,7 +60,7 @@
                      {{count($vessels->where('contract_type', 'Non PO'))}}
                   </div>
                   </div>
-               </a>
+               
             </div>
             {{-- <div class="card shadow">
                <div class="card-body">
