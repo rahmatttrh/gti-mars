@@ -86,7 +86,7 @@
                </div> --}}
                <div class="card-body">
                   <div class="d-flex justify-content-between">
-                     <h3><span class="text-uppercase">{{$data}}</span> Vessel List</h3>
+                     <h3><span class="text-uppercase">{{$data}}</span> Vessel List ({{count($vessels)}}) </h3>
                      @if ($data == 'onhire')
                         <a href="{{route('vessel.offhire.list')}}"> Off Hire Vessel</a>
                          @else
