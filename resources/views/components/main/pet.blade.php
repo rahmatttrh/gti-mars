@@ -134,19 +134,19 @@
          <div class="card shadow">
             <div class="card-body">
                <div class="row">
-                  <div class="col-md-6">
-                     <div class="table-responsive overflow-auto" style="height: 320px">
-                        <table class="">
+                  <div class="col-md-12">
+                     <div class="table-responsive " >
+                        <table class="datatables">
                            
                            <thead>
-                              <tr>
+                              {{-- <tr>
                                  <th colspan="3" style="color: #1f4481 !important">VDR Validation</th>
-                              </tr>
+                              </tr> --}}
                               <tr>
                                  {{-- <th>Vessel</th> --}}
                                  <th>Number</th>
                                  {{-- <th>Date</th> --}}
-                                 <th>Status</th>
+                                 <th class="text-right">Status</th>
                               </tr>
                            </thead>
                            <tbody>
@@ -158,7 +158,7 @@
                                     </td>
                                     {{-- <td>{{$vdr->code}}</td> --}}
                                     {{-- <td>{{formatDate($vdr->date)}}</td> --}}
-                                    <td>
+                                    <td class="text-right">
                                        <x-status-stisla.vdr :vdr="$vdr" />
                                     </td>
                                  </tr>
@@ -167,7 +167,7 @@
                         </table>
                      </div>
                   </div>
-                  <div class="col-md-6">
+                  {{-- <div class="col-md-6">
                      <div class="table-responsive overflow-auto " style="height: 310px">
                         <table class="display  border">
                            
@@ -176,9 +176,9 @@
                                  <th colspan="3" style="color: #1f4481 !important">VDR History</th>
                               </tr>
                               <tr>
-                                 {{-- <th>Vessel</th> --}}
+                                
                                  <th>Number</th>
-                                 {{-- <th>Date</th> --}}
+                                
                                  <th>Status</th>
                               </tr>
                            </thead>
@@ -186,8 +186,7 @@
                               @foreach ($vdrs->where('status', '>', 1) as $vdr)
                                  <tr class="border" style="border: 1px black">
                                     <td><a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
-                                    {{-- <td>{{$vdr->code}}</td> --}}
-                                    {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                   
                                     <td>
                                        <x-status-stisla.vdr :vdr="$vdr" />
                                     </td>
@@ -196,7 +195,7 @@
                            </tbody>
                         </table>
                      </div>
-                  </div>
+                  </div> --}}
                </div>
                
             </div>
