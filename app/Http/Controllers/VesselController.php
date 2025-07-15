@@ -58,6 +58,10 @@ class VesselController extends Controller
          'name' => $req->name,
          'email' => $req->email,
          'telp' => $req->telp,
+         'contract' => $req->contract,
+         'contract_type' => $req->contract_type,
+         'area' => $req->area,
+
          'imo' => $req->imo,
          'type' => $req->type,
          'prev_name' => $req->prev_name,
