@@ -48,7 +48,7 @@
             </div>
             <div class="card card-statistic-1 shadow-lg">
                <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-warning">
+                  <div class="card-icon bg-primary">
                   <i class="fas fa-ship"></i>
                   </div>
                   <div class="card-wrap">
