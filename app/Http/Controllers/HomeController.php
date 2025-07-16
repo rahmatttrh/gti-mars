@@ -31,6 +31,7 @@ use App\Models\User;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
+use App\Models\VdrHistory;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
 use App\Models\VesselHistory;
@@ -519,19 +520,32 @@ class HomeController extends Controller
       //    // }
       //    $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id)->get();
 
+      //    if ($vdr->contract != null) {
+      //       $contract = $vdr->contract;
+      //    } else {
+      //       $contract = '0000';
+      //    }
+
       //    $date = Carbon::create($vdr->date);
-      //    $year = $date->format('Y');
+      //    $year = $date->format('y');
       //    $month = $date->format('m');
       //    $day = $date->format('d');
 
-      //    $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      //    $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
-      //    // Mengonversi $id ke dalam format tiga digit dengan leading zeros
-      //    $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-      //    $timestamp = $year . '/' . $month . '/' . $day;
+
+      //    $timestamp = $year  . $month  . $day;
+
+      //    $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+      //    if (count($vdrHistories) > 0) {
+      //       $num = count($vdrHistories);
+      //    } else {
+      //       $num = 0;
+      //    }
 
       //    // Menggabungkan awalan dan $idPadded
-      //    $hasil = $awalan . $timestamp;
+      //    $hasil = $awalan . $timestamp . '/' . $num;
       //    $vdr->update([
       //       'code' => $hasil
       //    ]);
