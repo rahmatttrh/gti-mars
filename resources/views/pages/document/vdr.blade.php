@@ -90,14 +90,17 @@ table {
             <div class="d-flex justify-content-between">
                <div class="">
                   <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
-                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small>
+                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small><br>
+                  <small><b>{{$vdr->code}}</b></small>
                </div>
                <div class="text-center">
                   <small><b>VESSEL DAILY REPORT</b></small><br>
                   <small>(Every Midnight)</small>
+                  
                </div>
                <div>
                   <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+                  
                </div>
             </div>
          </div>
@@ -1034,6 +1037,7 @@ table {
            
             
             <div class="row ttd">
+
                {{-- <div class="col pt-1">
                   <small>Acknowledged by,</small>
                   <br>
@@ -1148,12 +1152,18 @@ table {
                @endif
                
                <div class="col text-end pt-1">
+                  @if ($vdr->status == 4)
                   {!! QrCode::size(65)->generate(Request::url()); !!}
+                  @endif
+                  
                   <br>
                   <small>VDR Rev. 6A - 1 Apr. 2024</small>
                </div>
                
             </div>
+
+
+           
 
          </div>
          
@@ -1170,6 +1180,10 @@ table {
          </div> --}}
       </div>
 
+
+      @if ($vdr->status == 4)
+      <h4><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></h4>
+      @endif
      
       
       
