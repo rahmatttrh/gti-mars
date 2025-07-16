@@ -137,7 +137,7 @@
                                  <x-status-stisla.vdr :vdr="$vdr" />
                               </td>
                               @if ($title == 'Reject')
-                                 <td>
+                                 <td class="text-truncate" style="max-width: 150px" data-toggle="tooltip" data-placement="bottom" title="{{$vdr->reject_desc}}">
                                     {{$vdr->reject_desc}}
                                  </td>
                               @endif

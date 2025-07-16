@@ -127,8 +127,7 @@
            
                
          </div> --}}
-
-         <div class="col-md-12">
+         <div class="col-md-12 ">
             <div class="d-flex px-1 mb-2">
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
@@ -181,34 +180,79 @@
                
                
                @endif
-               
-               
-               
+
                <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
-               {{-- <div class="card bg-warning">
-                  <div class="card-boy"></div>
-               </div> --}}
-
-               @if (auth()->user()->hasRole('vessel'))
-                  
-                  <div class="btn btn-warning  ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                  </div>
-                  
-               @endif
-
-               <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a>
-
-               @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
-               <div class="btn btn-danger  ml-2 " style="background-color: rgb(200, 54, 54);" >
-                  <span class="badge badge-light border">!</span> Rejected at {{formatDateTime($vdr->reject_date)}} :
+               
+               
+               
+               @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
+               <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
+                  <span class="badge badge-light border">!</span> Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
                   {{$vdr->reject_desc}}
                </div>
                                      
-                                 @endif
-               
+               @endif
+
+               @if (auth()->user()->hasRole('vessel'))
+                  @if ($vdr->status == 0)
+                  <div class="btn btn-warning  mr-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                  </div>
+                  @endif
+                  
+                  
+               @endif
+
+               @if (count($vdrHistories) > 0)
+               <select class="form-control" name="" id="">
+                  <option value="" selected disabled>Revision Record</option>
+                  @foreach ($vdrHistories as $vhis)
+                  <option value="">
+                     <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
+                  </option>
+                     @endforeach
+                  
+               </select>
+               {{-- <div class="btn-group">
+                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Action
+                  </button>
+                  <div class="dropdown-menu" style="max-width: 500px;min-width: 1%;" >
+                     @foreach ($vdrHistories as $vhis)
+                     <a class="dropdown-item" href="#" >{{$vhis->code}} Lorem, ipsum dolor.</a>
+                     
+                     @endforeach
+                  </div>
+                </div> --}}
+               {{-- <div class="dropdown">
+                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Riwayat Revisi
+                  </button>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                     
+                    
+                  </div>
+                </div> --}}
+               @endif
+
+               {{-- <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a> --}}
+               {{-- <div class="card bg-warning">
+                  <div class="card-boy"></div>
+               </div> --}}
             </div>
+            
+         </div>
+         
+
+         <div class="col-md-12">
+
+            {{-- <div class="d-flex px-1 mb-2">
+               
+
+               
+               
+            </div> --}}
             
             <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
                <div class="row ">

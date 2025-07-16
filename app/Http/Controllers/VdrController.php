@@ -321,15 +321,20 @@ class VdrController extends Controller
    }
 
    public function vdrRevisiStore($id){
-      $vdr = Vdr::find(enkripRambo($id));
+      $vdr = Vdr::find(dekripRambo($id));
+
+      $vdrRevisi = VdrHistory::where('vdr_id', $vdr->id)->first();
+      
+
+
 
       $vdrHistory = VdrHistory::create([
          'vdr_id' => $vdr->id,
          'area' => $vdr->area,
-         'vessel_id' => $vdr->vessel_id,
+         'code' => $vdr->code,
          'date' => $vdr->date,
-         'crew_onduty' => $vdr->onduty,
-         'crew_max' => $vdr->max,
+         'crew_onduty' => $vdr->crew_onduty,
+         'crew_max' => $vdr->crew_max,
          'location_midnight' => $vdr->location_midnight,
          'created_by' => $vdr->created_by,
          'contract' => $vdr->contract,
@@ -338,7 +343,22 @@ class VdrController extends Controller
          'owner' => $vdr->owner,
          'master' => $vdr->master,
          'ce' => $vdr->ce,
-         'status' => 0
+         'status' => 0,
+
+         'name1' => $vdr->name1,
+         'name2' => $vdr->name2,
+         'name3' => $vdr->name3,
+         'name4' => $vdr->name4,
+
+         'name1' => $vdr->name1,
+         'name2' => $vdr->name2,
+         'name3' => $vdr->name3,
+         'name4' => $vdr->name4,
+
+         'reject_by' => $vdr->reject_by,
+         'reject_date' => $vdr->reject_date,
+         'reject_desc' => $vdr->reject_desc,
+
       ]);
 
       $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
@@ -446,7 +466,9 @@ class VdrController extends Controller
       $vdrEngines = VdrEngine::where('vdr_id', $vdr->id)->get();
       foreach($vdrEngines as $ve){
          VdrEngine::create([
+
             'history_id' => $vdrHistory->id,
+            'heading_id' => $ve->heading_id,
             'm_ref' => $ve->m_ref,
             'm_port' => $ve->m_port,
             'm_stbd' => $ve->m_stbd,
@@ -461,13 +483,38 @@ class VdrController extends Controller
 
 
 
+      $date = Carbon::create($vdr->date);
+      $year = $date->format('y');
+      $month = $date->format('m');
+      $day = $date->format('d');
+
+      $awalan = $vdr->contract . "/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      $timestamp = $year  . $month  . $day;
+
       $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
 
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
+
+      // Menggabungkan awalan dan $idPadded
+      $hasil = $awalan . $timestamp . '/' . $num;
 
       $vdr->update([
          'status' => 0,
-         'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
+         'code' => $hasil
       ]);
+
+
+      // $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+
+      // $vdr->update([
+      //    'status' => 0,
+      //    'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
+      // ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR duplicated');
 
@@ -684,6 +731,9 @@ class VdrController extends Controller
            $editable = 1;
          }
       }
+
+
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
       
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
@@ -713,6 +763,8 @@ class VdrController extends Controller
          'vdrOperatingTow' => $vdrOperatingTow,
          'vdrOperatingAh' => $vdrOperatingAh,
          'vdrOperatingSb' => $vdrOperatingSb,
+
+         'vdrHistories' => $vdrHistories
       ])->with('i');
 
       // return view('pages.vdr.create-vdr', [

@@ -512,44 +512,44 @@ class HomeController extends Controller
 
 
       
-      // $allVdrs = Vdr::get();
-      // foreach($allVdrs as $vdr){
-      //    // $vessel = Vessel::find($vdr->vessel_id);
-      //    // if ($vessel == null) {
-      //    //    $vdr->delete();
-      //    // }
-      //    $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
+      $allVdrs = Vdr::get();
+      foreach($allVdrs as $vdr){
+         // $vessel = Vessel::find($vdr->vessel_id);
+         // if ($vessel == null) {
+         //    $vdr->delete();
+         // }
+         $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
 
-      //    if ($vdr->contract != null) {
-      //       $contract = $vdr->contract;
-      //    } else {
-      //       $contract = '0000000';
-      //    }
+         if ($vdr->contract != null) {
+            $contract = $vdr->contract;
+         } else {
+            $contract = '0000000';
+         }
          
-      //    $date = Carbon::create($vdr->date);
-      //    $year = $date->format('Y');
-      //    $month = $date->format('m');
-      //    $day = $date->format('d');
+         $date = Carbon::create($vdr->date);
+         $year = $date->format('y');
+         $month = $date->format('m');
+         $day = $date->format('d');
 
-      //    $awalan = $contract . "/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+         $awalan = $contract . "/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
         
-      //    $timestamp = $year  . $month  . $day;
+         $timestamp = $year  . $month  . $day;
 
-      //    $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+         $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
 
-      //    if (count($vdrHistories) > 0) {
-      //       $num = count($vdrHistories);
-      //    } else {
-      //       $num = 0;
-      //    }
+         if (count($vdrHistories) > 0) {
+            $num = count($vdrHistories);
+         } else {
+            $num = 0;
+         }
 
-      //    // Menggabungkan awalan dan $idPadded
-      //    $hasil = $awalan . $timestamp . '/' . $num;
-      //    $vdr->update([
-      //       'code' => $hasil
-      //    ]);
-      // }
+         // Menggabungkan awalan dan $idPadded
+         $hasil = $awalan . $timestamp . '/' . $num;
+         $vdr->update([
+            'code' => $hasil
+         ]);
+      }
 
 
 
