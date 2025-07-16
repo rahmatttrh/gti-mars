@@ -601,7 +601,7 @@
                                     @endforeach
 
                                     <tr>
-                                          <td colspan="3" class="text-center">Total</td>
+                                          {{-- <td colspan="3" class="text-center">Total</td> --}}
 
                                           <td colspan="3" class="text-center">Total</td>
                                           <td class="text-center"><span class="highTime">{{$vdrOperatingHigh}}</span> </td>
