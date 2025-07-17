@@ -320,16 +320,22 @@ class VdrController extends Controller
       ])->with('i');
    }
 
-   public function vdrRevisiStore($id){
-      $vdr = Vdr::find(enkripRambo($id));
+   public function vdrRevisiStore($id)
+   {
+      $vdr = Vdr::find(dekripRambo($id));
+
+      $vdrRevisi = VdrHistory::where('vdr_id', $vdr->id)->first();
+
+
+
 
       $vdrHistory = VdrHistory::create([
          'vdr_id' => $vdr->id,
          'area' => $vdr->area,
-         'vessel_id' => $vdr->vessel_id,
+         'code' => $vdr->code,
          'date' => $vdr->date,
-         'crew_onduty' => $vdr->onduty,
-         'crew_max' => $vdr->max,
+         'crew_onduty' => $vdr->crew_onduty,
+         'crew_max' => $vdr->crew_max,
          'location_midnight' => $vdr->location_midnight,
          'created_by' => $vdr->created_by,
          'contract' => $vdr->contract,
@@ -338,11 +344,26 @@ class VdrController extends Controller
          'owner' => $vdr->owner,
          'master' => $vdr->master,
          'ce' => $vdr->ce,
-         'status' => 0
+         'status' => 0,
+
+         'name1' => $vdr->name1,
+         'name2' => $vdr->name2,
+         'name3' => $vdr->name3,
+         'name4' => $vdr->name4,
+
+         'name1' => $vdr->name1,
+         'name2' => $vdr->name2,
+         'name3' => $vdr->name3,
+         'name4' => $vdr->name4,
+
+         'reject_by' => $vdr->reject_by,
+         'reject_date' => $vdr->reject_date,
+         'reject_desc' => $vdr->reject_desc,
+
       ]);
 
       $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
-      foreach($vdrWeathers as $vw){
+      foreach ($vdrWeathers as $vw) {
          VdrWeather::create([
             'history_id' => $vdrHistory->id,
             'heading_id' => $vw->heading_id,
@@ -351,12 +372,12 @@ class VdrController extends Controller
             't_1218' => $vw->t_1218,
             't_1824' => $vw->t_1824,
             'status' => 1
-         ]);  
+         ]);
       }
 
 
       $vdrHses = VdrHse::where('vdr_id', $vdr->id)->get();
-      foreach($vdrHses as $vh){
+      foreach ($vdrHses as $vh) {
          VdrHse::create([
             'history_id' => $vdrHistory->id,
             'header_id' => $vh->header_id,
@@ -367,7 +388,7 @@ class VdrController extends Controller
 
 
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
-      foreach($vdrActivities as $va){
+      foreach ($vdrActivities as $va) {
          VdrActivity::create([
             'history_id' => $vdrHistory->id,
             'activity' => $va->activity,
@@ -386,7 +407,7 @@ class VdrController extends Controller
 
 
       $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
-      foreach($vdrCargos as $vc){
+      foreach ($vdrCargos as $vc) {
          VdrCargo::create([
             'history_id' => $vdrHistory->id,
             'heading_id' => $vc->heading_id,
@@ -401,7 +422,7 @@ class VdrController extends Controller
 
 
       $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
-      foreach($vdrOperatings as $vo){
+      foreach ($vdrOperatings as $vo) {
          VdrOperating::create([
             'history_id' => $vdrHistory->id,
             'heading_id' => $vo->heading->id,
@@ -414,7 +435,7 @@ class VdrController extends Controller
 
 
       $vdrPeriodics = VdrPeriodic::where('vdr_id', $vdr->id)->get();
-      foreach($vdrPeriodics as $vp){
+      foreach ($vdrPeriodics as $vp) {
          VdrPeriodic::create([
             'history_id' => $vdrHistory->id,
             'activity' => $vp->activity,
@@ -432,7 +453,7 @@ class VdrController extends Controller
 
 
       $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->get();
-      foreach($vdrCrews as $vc){
+      foreach ($vdrCrews as $vc) {
          VdrCrew::create([
             'history_id' => $vdrHistory->id,
             'is_crew' => $vc->is_crew,
@@ -444,9 +465,11 @@ class VdrController extends Controller
 
 
       $vdrEngines = VdrEngine::where('vdr_id', $vdr->id)->get();
-      foreach($vdrEngines as $ve){
+      foreach ($vdrEngines as $ve) {
          VdrEngine::create([
+
             'history_id' => $vdrHistory->id,
+            'heading_id' => $ve->heading_id,
             'm_ref' => $ve->m_ref,
             'm_port' => $ve->m_port,
             'm_stbd' => $ve->m_stbd,
@@ -461,18 +484,40 @@ class VdrController extends Controller
 
 
 
+      $date = Carbon::create($vdr->date);
+      $year = $date->format('y');
+      $month = $date->format('m');
+      $day = $date->format('d');
+
+      $awalan = $vdr->contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      $timestamp = $year  . $month  . $day;
+
       $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
 
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
+
+      // Menggabungkan awalan dan $idPadded
+      $hasil = $awalan . $timestamp . '/' . $num;
 
       $vdr->update([
          'status' => 0,
-         'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
+         'code' => $hasil
       ]);
 
+
+      // $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+
+      // $vdr->update([
+      //    'status' => 0,
+      //    'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
+      // ]);
+
       return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR duplicated');
-
-
-
    }
 
    public function show($id, $enkripTab)
@@ -685,6 +730,9 @@ class VdrController extends Controller
          }
       }
 
+
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
          'editable' => $editable,
@@ -713,6 +761,8 @@ class VdrController extends Controller
          'vdrOperatingTow' => $vdrOperatingTow,
          'vdrOperatingAh' => $vdrOperatingAh,
          'vdrOperatingSb' => $vdrOperatingSb,
+
+         'vdrHistories' => $vdrHistories
       ])->with('i');
 
       // return view('pages.vdr.create-vdr', [
@@ -819,7 +869,7 @@ class VdrController extends Controller
          $month = $date->format('m');
          $day = $date->format('d');
 
-         $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
+         $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
          // Mengonversi $id ke dalam format tiga digit dengan leading zeros
          $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
@@ -1160,7 +1210,7 @@ class VdrController extends Controller
 
       $vdr = Vdr::find($vdr);
 
-      $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
+      $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id)->get();
 
       $sameVdr = Vdr::where('vessel_id', $vdr->vessel->id)->where('date', $date)->first();
       if ($sameVdr) {
@@ -1174,7 +1224,7 @@ class VdrController extends Controller
       $month = $date->format('m');
       $day = $date->format('d');
 
-      $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
@@ -1182,7 +1232,7 @@ class VdrController extends Controller
 
       // Menggabungkan awalan dan $idPadded
       $hasil = $awalan . $timestamp;
-      
+
       if ($sameVdr) {
          # code...
       } else {
@@ -1198,10 +1248,10 @@ class VdrController extends Controller
             'owner' => $owner,
             'master' => $master,
             'ce' => $ce,
-   
+
          ]);
       }
-      
+
 
       return response()->json([
          'success' => true,
@@ -3264,43 +3314,43 @@ class VdrController extends Controller
       } else {
          $contract = $lastVdr->contract;
       }
-     
-         $vdr = Vdr::create([
-            'area' => $vessel->area,
-            'vessel_id' => $lastVdr->vessel_id,
-            'date' => $today,
-            'crew_onduty' => $lastVdr->onduty,
-            'crew_max' => $lastVdr->max,
-            'location_midnight' => $lastVdr->location_midnight,
-            'created_by' => $lastVdr->created_by,
-            'contract' => $contract,
-            'contract_start' => $lastVdr->contract_start,
-            'contract_end' => $lastVdr->contract_end,
-            'owner' => $lastVdr->owner,
-            'master' => $lastVdr->master,
-            'ce' => $lastVdr->ce,
-            'status' => 0
-         ]);
+
+      $vdr = Vdr::create([
+         'area' => $vessel->area,
+         'vessel_id' => $lastVdr->vessel_id,
+         'date' => $today,
+         'crew_onduty' => $lastVdr->onduty,
+         'crew_max' => $lastVdr->max,
+         'location_midnight' => $lastVdr->location_midnight,
+         'created_by' => $lastVdr->created_by,
+         'contract' => $contract,
+         'contract_start' => $lastVdr->contract_start,
+         'contract_end' => $lastVdr->contract_end,
+         'owner' => $lastVdr->owner,
+         'master' => $lastVdr->master,
+         'ce' => $lastVdr->ce,
+         'status' => 0
+      ]);
 
 
 
-         $awalan = $contract . "/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
+      $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
-         // Mengonversi $id ke dalam format tiga digit dengan leading zeros
-         $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-         
-         $timestamp = $year  . $month  . $day;
+      // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+      $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
 
-         $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+      $timestamp = $year  . $month  . $day;
 
-         if (count($vdrHistories) > 0) {
-            $num = count($vdrHistories);
-         } else {
-            $num = 0;
-         }
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
 
-         // Menggabungkan awalan dan $idPadded
-         $hasil = $awalan . $timestamp . '/' . $num;
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
+
+      // Menggabungkan awalan dan $idPadded
+      $hasil = $awalan . $timestamp . '/' . $num;
 
       $vdr->update([
          'code' => $hasil
@@ -3483,7 +3533,7 @@ class VdrController extends Controller
          }
       }
 
-         // dd($vdr->code);
+      // dd($vdr->code);
 
 
 

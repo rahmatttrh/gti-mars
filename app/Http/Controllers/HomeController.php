@@ -513,17 +513,17 @@ class HomeController extends Controller
 
 
       // $allVdrs = Vdr::get();
-      // foreach ($allVdrs as $vdr) {
+      // foreach($allVdrs as $vdr){
       //    // $vessel = Vessel::find($vdr->vessel_id);
       //    // if ($vessel == null) {
       //    //    $vdr->delete();
       //    // }
-      //    $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id)->get();
+      //    $vesselVdrs = Vdr::where('vessel_id', $vdr->vessel->id )->get();
 
       //    if ($vdr->contract != null) {
       //       $contract = $vdr->contract;
       //    } else {
-      //       $contract = '0000';
+      //       $contract = '0000000';
       //    }
 
       //    $date = Carbon::create($vdr->date);
@@ -531,7 +531,7 @@ class HomeController extends Controller
       //    $month = $date->format('m');
       //    $day = $date->format('d');
 
-      //    $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      //    $awalan = $contract . "/". str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
 
       //    $timestamp = $year  . $month  . $day;
