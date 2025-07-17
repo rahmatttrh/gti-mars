@@ -236,7 +236,7 @@
                 </div> --}}
                @endif
 
-               {{-- <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a> --}}
+               <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a>
                {{-- <div class="card bg-warning">
                   <div class="card-boy"></div>
                </div> --}}
@@ -1265,7 +1265,7 @@
                           
                         
                      </div>
-                     <div class="col-md-6">
+                     <div class="col-md-12">
                         <div class="form-group">
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
