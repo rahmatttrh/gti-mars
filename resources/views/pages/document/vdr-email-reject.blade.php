@@ -51,37 +51,11 @@ table {
          <div class="col-auto ms-auto d-print-none">
             
             {{-- {{$vdr->status}} --}}
-            @if ($level == 'suptent')
-               @if ($vdr->status == 3 )
-                  {{-- <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-marine"><i class="fa fa-check"></i> Approve Marine</a> --}}
-                  
-                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve as Suptent</a>
-                  <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                  @else
-                  <a href="#" class="btn btn-light border shadow" >Approved</a>
-                  @endif
-            @endif
-
-            @if ($level == 'marine')
-               @if ($vdr->status == 2 )
-                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-marine"><i class="fa fa-check"></i> Approve as Marine</a>
-                  <a href="#" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                  @else
-                  <a href="#" class="btn btn-light border shadow" >Approved</a>
-                  {{-- <span class="mr-2">Approved</span> --}}
-               @endif
-            @endif
-                  {{-- <h1>{{$level}}</h1> --}}
-            @if ($level == 'pet')
-               @if ($vdr->status == 1 )
-               <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-pet"><i class="fa fa-check"></i> Approve as PET</a>
-                  <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-               @endif
-            @endif
-
-            
          
-            
+                  {{-- @if ($vdr->status == 3 )
+                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve </a>
+                  <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+               @endif --}}
                
                   <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}" class="btn btn-block btn-light border  shadow">Engine Parameret Log & Crew</a>
                
@@ -100,9 +74,34 @@ table {
            
          </div>
       </div>
-     
+      @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+         <div class="btn btn-danger  mt-2 shadow" style="background-color: rgb(200, 54, 54);" >
+            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
+            {{$vdr->reject_desc}}
+         </div>
+                                     
+      @endif
    </div>
    <div class="row">
+      <div class="col-md-6">
+         <form action="{{route('vdr.reject.from.email.store')}}" method="POST">
+            @csrf
+            <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+            <input type="text" name="user" id="user" value="{{$user}}" hidden>
+            <input type="text" name="userid" id="userid" value="{{$userid}}" hidden>
+                  {{-- <hr> --}}
+                  <div class="form-row mt-3">
+                     <div class="form-group col-md-12">
+                        {{-- <label for="desc">Remark</label> --}}
+                        <input type="text" class="form-control text-left" id="desc" name="desc" placeholder="Remarks.." >
+                     </div>
+                  </div> 
+                  
+                  
+                  <button type="submit" class="btn btn-danger mt-2">Reject</button>
+               
+            </form>
+      </div>
       <div class="col-md-6">
          @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
          <div class="btn btn-danger  mt-2 shadow" style="background-color: rgb(200, 54, 54);" >
@@ -1204,12 +1203,12 @@ table {
             <b>{{$vdr->code}}</b>
             
          <hr>
-            <div class="form-row mb-2">
+            <div class="form-row">
                <div class="form-group col-md-12">
-                  {{-- <label for="desc">Description</label> --}}
-                  <input type="text" class="form-control text-left" id="desc" name="desc" placeholder="Remarks .." >
+                  <label for="desc">Description</label>
+                  <input type="text" class="form-control text-left" id="desc" name="desc" >
                </div>
-            </div> 
+            </div> <br>
             <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
          </div>
          <div class="modal-footer bg-whitesmoke">
@@ -1217,143 +1216,6 @@ table {
             <button type="submit" class="btn btn-danger">Reject</button>
          </div>
       </div>
-      </form>
-   </div>
-</div>
-
-<div class="modal fade" id="vdr-approve-marine" tabindex="-1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      <form action="{{route('vdr.approve.marine.form.email')}}" method="POST" enctype="multipart/form-data">
-         @csrf
-         @method('PUT')
-         <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
-         <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
-         {{-- <input type="hidden" name="created_by" value="{{$user->name}}"> --}}
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">Form Approve VDR</h5>
-
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-               
-            </div>
-            <div class="modal-body">
-               
-               <b>{{$vdr->code}}</b>
-               <hr>
-               {{-- <div class="badge badge-info">Approval 1</div> --}}
-               <div class="row mb-2">
-                  
-                  <div class="col-md-12">
-                     
-                     
-                     <div class="form-group mb-2">
-                        {{-- <label for="name2">PIC Marine</label> --}}
-                        <select class="form-control" name="name2" id="name2" required>
-                           <option value="UA">Umar Agam</option>
-                           <option value="RH">Rezky Hardanto</option>
-                           <option value="MMH">Muhammad Misbakhul Hasan</option>
-                           
-                        </select>
-                       
-                     </div>
-                     
-                     <small>Inisal nama PIC yang dipilih akan ditampilkan pada Preview PDF VDR</small>
-                  </div>
-                  {{-- <div class="col-12">
-                     <div class="form-group">
-                        <label for="name1">Name </label>
-                        <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
-                        @error('name1')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div> --}}
-               </div>
-
-
-               
-               
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-info">Approve</button>
-            </div>
-         </div>
-      </form>
-   </div>
-</div>
-
-<div class="modal fade" id="vdr-approve-pet" tabindex="-1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog " role="document">
-      <form action="{{route('vdr.approve.pet.from.email')}}" method="POST" enctype="multipart/form-data">
-         @csrf
-         @method('PUT')
-         <input type="hidden" name="id" value="{{$vdr->id}}" id="">
-         <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
-         {{-- <input type="hidden" name="created_by" value="{{$user->name}}"> --}}
-         <div class="modal-content">
-            <div class="modal-header">
-               <h5 class="modal-title">Form Approve VDR</h5>
-
-               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-               
-            </div>
-            <div class="modal-body">
-               
-               <b>{{$vdr->code}}</b>
-               <hr>
-               {{-- <div class="badge badge-info">Approval 1</div> --}}
-               <div class="row ">
-                  
-                  <div class="col-6">
-                     
-                    
-                        <select hidden name="title1" id="title1" required>
-                           <option value="Fuel Monitoring Team" selected>Fuel Monitoring Team</option>
-                           {{-- <option value="PET Kalijapat">PET Kalijapat</option> --}}
-                           {{-- <option value="PET SBU">PET SBU</option>
-                           <option value="PET CBU">PET CBU</option>
-                           <option value="PET NBU">PET NBU</option> --}}
-                        </select>
-                       
-                     
-                  </div>
-                  <div class="col-md-12 mb-2">
-                     <div class="form-group">
-                        {{-- <label for="title1">PIC PET</label> --}}
-                        <select class="form-control" name="name1" id="name1" required>
-                           <option value="YFH">Yusuf Falah Hibatullah</option>
-                           <option value="S">Setyo</option>
-                           <option value="R">Radit</option>
-                        </select>
-                       
-                     </div>
-                  </div>
-                  <small>Inisal nama PIC yang dipilih akan ditampilkan pada Preview PDF VDR</small>
-                  {{-- <div class="col-12">
-                     <div class="form-group">
-                        <label for="name1">Name </label>
-                        <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
-                        @error('name1')
-                           <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                        @enderror
-                     </div>
-                  </div> --}}
-               </div>
-
-
-               
-               
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <button type="submit" class="btn btn-info">Approve</button>
-            </div>
-         </div>
       </form>
    </div>
 </div>

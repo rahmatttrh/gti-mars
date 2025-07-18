@@ -18,7 +18,7 @@
                   </div>
                </div>
       
-               <div class="table-responsive shadow overflow-auto" style="height: 250px">
+               <div class="d-none d-md-block table-responsive shadow overflow-auto" style="height: 250px">
                   <table class="border display bg-white shadow "   >
                     {{-- <thead>
                        <tr>
