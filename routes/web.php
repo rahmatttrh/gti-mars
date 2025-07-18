@@ -81,6 +81,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('vdr/pdf/email/{vdr:id}', [DocumentController::class, 'vdrEmail'])->name('vdr.pdf.email');
 Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
+Route::get('email/vdr/reject/superintendent/{id}', [MarineVdrController::class, 'rejectSuptentFromEmail'])->name('vdr.reject.suptent.from.email');
+Route::post('vdr/reject/from/email', [MarineVdrController::class, 'rejectFromEmail'])->name('vdr.reject.marine.from.email');
 
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());

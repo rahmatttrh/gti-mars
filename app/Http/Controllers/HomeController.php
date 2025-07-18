@@ -1451,7 +1451,7 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
          }
 
-         $logs = Log::get();
+         $logs = Log::orderBy('created_at', 'desc')->get();
 
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
 

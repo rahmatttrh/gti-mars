@@ -657,6 +657,38 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
    }
 
+   public function rejectFromEmail(Request $req)
+   {
+      $vdr = Vdr::find($req->vdr);
+
+      if (auth()->user()->username == 'pet') {
+         $status = 101;
+      } elseif(auth()->user()->username == 'marine'){
+         $status = 202;
+      } elseif(auth()->user()->username == 'lutfiaryanto'){
+         $status = 303;
+      }
+
+
+      $vdr->update([
+         'status' => $status,
+         'reject_by' => auth()->user()->id,
+         'reject_date' => Carbon::now(),
+         'reject_desc' => $req->desc
+      ]);
+      
+
+      VdrTimestamp::create([
+         'vdr_id' => $vdr->id,
+         'type' => 'reject',
+         'status' => 1,
+         'user_id' => auth()->user()->id,
+         'desc' => $req->desc
+      ]);
+
+      return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
+   }
+
    // public function approveSuptent($id){
    //    $dekripId = dekripRambo($id);
    //    $vdr = Vdr::find($dekripId);

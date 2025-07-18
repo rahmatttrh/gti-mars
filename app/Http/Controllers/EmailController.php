@@ -77,7 +77,7 @@ class EmailController extends Controller
 
       
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
-      Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'Email sent');
    }
 }
