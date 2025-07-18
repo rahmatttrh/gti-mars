@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Marine;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
 use App\Models\Cargo;
+use App\Models\Employee;
 use App\Models\Log;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
@@ -474,6 +475,9 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
+      $emailController = new EmailController();
+      $emailController->approvalVdrMarine(enkripRambo($vdr->id));
+
       return redirect()->back()->with('success', 'VDR PET Approved');
    }
 
@@ -503,6 +507,9 @@ class MarineVdrController extends Controller
       //    'user_id' => auth()->user()->id
       // ]);
       // dd()
+
+      $emailController = new EmailController();
+      $emailController->approvalVdrMarine(enkripRambo($vdr->id));
 
       return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('pet')])->with('success', 'VDR Approved');
    }
@@ -544,12 +551,12 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
-   public function approveSuptent(Request $req)
+   public function approveSuptent($id)
    {
       // $dekripId = dekripRambo($id);
 
       // dd('approve suptent');
-      $vdr = Vdr::find($req->id);
+      $vdr = Vdr::find(dekripRambo($id));
 
       if ($vdr->area != null) {
          $title = 'Marine Representative';
@@ -558,8 +565,8 @@ class MarineVdrController extends Controller
       }
       $vdr->update([
          'status' => 4,
-         'title3' => $req->title3,
-         'name3' => $req->name3,
+         'title3' => $title,
+         'name3' => auth()->user()->name,
       ]);
 
 
@@ -613,9 +620,15 @@ class MarineVdrController extends Controller
       $vessel = Vessel::find($vdr->vessel_id);
 
       if ($vessel->contract_type == 'Under PO' ) {
-        $status = 3;
+         $status = 3;
+
+         $emailController = new EmailController();
+         $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
       }  else {
          $status = 5;
+
+         $emailController = new EmailController();
+         $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
       }
       // dd($status);
       $vdr->update([
@@ -633,8 +646,11 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
+
       $emailController = new EmailController();
-      $emailController->approvalVdr(enkripRambo($vdr->id));
+      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+
+      
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
@@ -670,6 +686,9 @@ class MarineVdrController extends Controller
 
       // $emailController = new EmailController();
       // $emailController->approvalVdr(enkripRambo($vdr->id));
+
+      $emailController = new EmailController();
+      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
@@ -747,7 +766,10 @@ class MarineVdrController extends Controller
          $status = 202;
       } elseif($req->user == 'suptent'){
          $status = 303;
+      } elseif($req->user == 'suptent-loc'){
+         $status = 505;
       }
+
 
       // dd($req->user);
 
@@ -861,6 +883,29 @@ class MarineVdrController extends Controller
       
 
       return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('suptent')])->with('success', 'VDR Approved');
+   }
+
+   public function approveSuptentLocFromEmail($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      // dd('Success Approve VDR from email');
+      // $suptenLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
+      $suptenLoc = Employee::where('role', 'suptent_loc')->first();
+
+      // dd($vdr->title1);
+      $vdr->update([
+         'status' => 3,
+         'title4' => 'Suptent on Location',
+         'name4' => $suptenLoc->name,
+      ]);
+
+      // dd($vdr->name3);
+      // dd()
+
+      
+
+      return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('suptent-loc')])->with('success', 'VDR Approved');
    }
 
    public function rejectFromEmail($id, $user, $userid)

@@ -45,4 +45,7 @@
    @elseif($vdr->status == 303)
    
    <div class="badge badge-danger" >Reject by Suptent</div>
+   @elseif($vdr->status == 505)
+   
+   <div class="badge badge-danger" >Reject by Suptent on Location</div>
 @endif

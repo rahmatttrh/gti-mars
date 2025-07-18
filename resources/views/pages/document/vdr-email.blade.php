@@ -62,6 +62,8 @@ table {
                   @endif
             @endif
 
+            
+
             @if ($level == 'marine')
                @if ($vdr->status == 2 )
                   <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-marine"><i class="fa fa-check"></i> Approve as Marine</a>
@@ -1357,6 +1359,8 @@ table {
       </form>
    </div>
 </div>
+
+
 
 
 

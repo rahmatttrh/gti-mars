@@ -164,7 +164,7 @@
                                           <tbody>
                                              <tr>
                                                 <td align="center"  role="presentation" style="border:none;border-radius:30px;cursor:auto;mso-padding-alt:10px 25px;" valign="middle">
-                                                   @if ($data['level'] == 'suptent')
+                                                   @if ($data['level'] == 'suptent' || $data['level'] == 'suptent-loc' )
                                                    <a href="{{$data['approve']}}" style="display: inline-block; background: #215bfa; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Approve </a>
                                                    <a href="{{$data['reject']}}" style="display: inline-block; background: #c02e2e; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;margin: 5px" target="_blank"> Reject </a>
                                                    @endif
