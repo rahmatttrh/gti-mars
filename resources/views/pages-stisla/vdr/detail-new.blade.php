@@ -456,7 +456,7 @@
                                                 <th>HSSE STATISTICS (Output)</th>
                                                 <th>Previous</th>
                                                 <th>Today</th>
-                                                <th>Monthly</th>
+                                                <th>Cumulative</th>
                                           </tr>
                                        </thead>
                         
