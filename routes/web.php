@@ -83,11 +83,14 @@ Route::get('vdr/pdf/email/{vdr:id}/{level}', [DocumentController::class, 'vdrEma
 Route::get('email/vdr/approve//{id}', [MarineVdrController::class, 'approveFromEmail'])->name('vdr.approve.from.email');
 
 Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
+Route::get('email/vdr/approve/loc/superintendent/{id}', [MarineVdrController::class, 'approveSuptentLocFromEmail'])->name('vdr.approve.suptent.loc.from.email');
 Route::put('email/vdr/approve/pet', [MarineVdrController::class, 'approvePetFromEmail'])->name('vdr.approve.pet.from.email');
 
 Route::get('email/vdr/approve/marine/{id}', [MarineVdrController::class, 'approveMarineFromEmail'])->name('vdr.approve.marine.from.email');
 
 Route::put('email/vdr/approve/marine', [MarineVdrController::class, 'approveFormEmail'])->name('vdr.approve.marine.form.email');
+
+
 
 Route::get('email/vdr/reject/{id}/{user}/{userid}', [MarineVdrController::class, 'rejectFromEmail'])->name('vdr.reject.from.email');
 Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectFromEmailStore'])->name('vdr.reject.from.email.store');
@@ -98,6 +101,7 @@ Route::middleware(["auth"])->group(function () {
 
 
    Route::get('vdr/sent/email/approval/suptent/{id}', [EmailController::class, 'approvalVdrSuptent'])->name('vdr.sent.email.approval.suptent');
+   Route::get('vdr/sent/email/approval/loc/suptent/{id}', [EmailController::class, 'approvalVdrSuptentLoc'])->name('vdr.sent.email.approval.suptent.loc');
    Route::get('vdr/sent/email/approval/marine/{id}', [EmailController::class, 'approvalVdrMarine'])->name('vdr.sent.email.approval.marine');
    Route::get('vdr/sent/email/approval/pet/{id}', [EmailController::class, 'approvalVdrPet'])->name('vdr.sent.email.approval.pet');
 

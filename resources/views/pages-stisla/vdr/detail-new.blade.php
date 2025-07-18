@@ -238,9 +238,12 @@
 
                @if (auth()->user()->hasRole('marine'))
                    <div class="btn-group ml-2 ">
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
                      <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.pet', enkripRambo($vdr->id))}}">Email PET</a>
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent.loc', enkripRambo($vdr->id))}}">Email Suptent on Location</a>
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
+                     
+                     
                    </div>
                @endif
                

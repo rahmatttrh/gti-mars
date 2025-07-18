@@ -51,7 +51,8 @@ table th tr td {
       <div class="row align-items-center">
          <div class="col">
             <h2 class="page-title">
-            Vessel Daily Report [{{$vdr->code}}]
+            Vessel Daily Report
+             {{-- [{{$vdr->code}}]   --}}
             </h2>
          </div>
          <!-- Page title actions -->
@@ -1141,49 +1142,58 @@ table th tr td {
                      
                   </div>
                @endif --}}
-              
 
-               @if ($vdr->title3 != null)
-                  <div class="col pt-1">
-                     <small>Acknowledged by,</small>
-                     <br>
-                  
-                     <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
-                     @if ($vdr->title3 != null)
-                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-                     @else
-                     <small>Status : ____________</small>
-                     @endif
+               
+              
+               @if ($vdr->title4 != null)
+                  @if ($vdr->title4 != null)
+                     <div class="col pt-1">
+                        <small>Acknowledged by,</small>
+                        <br>
                      
-                  </div>
+                        <small>Suptent Location : {{$vdr->name4}}</small><br>
+                        @if ($vdr->title4 != null)
+                        <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                        @else
+                        <small>Status : ____________</small>
+                        @endif
+                        
+                     </div>
+                  @endif
+                  @if ($vdr->title3 != null)
+                        <div class="col pt-1">
+                           {{-- <small>Acknowledged by,</small> --}}
+                           <br>
+                        
+                           <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
+                           @if ($vdr->title3 != null)
+                           <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                           @else
+                           <small>Status : ____________</small>
+                           @endif
+                           
+                        </div>
+                     @endif
+
+                  @else
+
+                     @if ($vdr->title3 != null)
+                        <div class="col pt-1">
+                           <small>Acknowledged by,</small>
+                           <br>
+                        
+                           <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
+                           @if ($vdr->title3 != null)
+                           <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                           @else
+                           <small>Status : ____________</small>
+                           @endif
+                           
+                        </div>
+                     @endif
                @endif
 
-               {{-- TEST --}}
-               {{-- <div class="col pt-1">
-                  <small>Checked by,</small>
-                     <br>
-                  <small>Fuel Monitoring Team : YFH</small><br>
-                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-               </div>
-
-               <div class="col pt-1">
-                  <br>
-                  <small>Marine Dept : UA</small><br>
-                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-               </div>
-
-               <div class="col pt-1">
-                  <br>
-                  <small>Suptent : Suptent Name</small><br>
-                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-               </div>
-
-               <div class="col pt-1">
-                  <small>Acknowledged by,</small>
-                     <br>
-                  <small>Marine Representative : Lutfi Aryanto</small><br>
-                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
-               </div> --}}
+               
                
                <div class="col text-end pt-1">
                   @if ($vdr->status == 4)

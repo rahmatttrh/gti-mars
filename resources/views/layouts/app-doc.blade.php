@@ -127,7 +127,7 @@
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
+                  <a href="{{route('vdr.approve.suptent', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
                </div>
             </div>
          </div>
