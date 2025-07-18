@@ -123,7 +123,7 @@
                   </button> --}}
                </div>
                <div class="modal-body">
-                  Validasi Vessel Daily Report
+                  {{$vdr->code}}
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

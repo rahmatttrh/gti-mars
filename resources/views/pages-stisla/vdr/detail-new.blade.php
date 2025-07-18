@@ -196,7 +196,7 @@
 
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0)
-                  <div class="btn btn-warning  mr-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                  <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
                      <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
                   </div>
                   @endif
@@ -236,7 +236,14 @@
                 </div> --}}
                @endif
 
-               <a class="btn btn-dark mx-2" href="{{route('vdr.approval.email', enkripRambo($vdr->id))}}">Test Email</a>
+               @if (auth()->user()->hasRole('marine'))
+                   <div class="btn-group ml-2 ">
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
+                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.pet', enkripRambo($vdr->id))}}">Email PET</a>
+                   </div>
+               @endif
+               
                {{-- <div class="card bg-warning">
                   <div class="card-boy"></div>
                </div> --}}
@@ -2497,6 +2504,7 @@
 
             success: function(result) {
                console.log('result :' + result.result);
+               $('.code').html(result.code);
                
             },
             error: function(error) {

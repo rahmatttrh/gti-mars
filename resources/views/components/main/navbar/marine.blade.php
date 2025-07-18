@@ -10,12 +10,13 @@
    font-size: 18px;
 }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
+{{-- style="background-color: #d5dcee" --}}
+<nav class="navbar navbar-expand-lg main-navbar text-dark" >
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
-   <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
-   <div class="nav-collapse">
+   <a href="#" class="nav-link sidebar-gone-show text-dark" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
+   <div class="nav-collapse d-none d-sm-block">
       <a class="sidebar-gone-show nav-collapse-toggle nav-link" href="#">
          <i class="fas fa-ellipsis-v"></i>
       </a>
@@ -139,6 +140,24 @@
                <span class="mx-3">Home Page</span>
             </a>
          </li>
+
+         <li class="nav-item d-block d-sm-none nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
+            <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
+               @if (request()->is('master/data/*'))
+               <i class="text-primary fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="mx-3" >Master Data </span>
+            </a>
+            
+            <ul class="dropdown-menu">
+            {{-- <li class="nav-item "><a href="{{route('port')}}" class="nav-link">Port</a></li> --}}
+            <li class="nav-item "><a href="{{route('vessel')}}" class="nav-link">Vessel</a></li>
+            <li class="nav-item "><a href="{{route('user')}}" class="nav-link">User</a></li>
+            </ul>
+         </li>
+
+         
         
          @if (auth()->user()->username == 'pet')
          {{-- <li class="nav-item {{ (request()->is('news/*')) ? 'active' : '' }}" style="text-decoration: none !important; ">

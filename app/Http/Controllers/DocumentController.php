@@ -101,7 +101,7 @@ class DocumentController extends Controller
       ]);
    }
 
-   public function vdrEmail($id)
+   public function vdrEmail($id, $level)
    {
       
       $dekripId = dekripRambo($id);
@@ -163,6 +163,7 @@ class DocumentController extends Controller
 
 
       return view('pages.document.vdr-email', [
+         'level' => dekripRambo($level),
          'vdr' => $vdr,
          'vessel' => $vdr->vessel,
          'vdrActivities' => $vdrActivities,

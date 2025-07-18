@@ -1224,38 +1224,45 @@ class VdrController extends Controller
       $month = $date->format('m');
       $day = $date->format('d');
 
-      $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+      $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
-      // Mengonversi $id ke dalam format tiga digit dengan leading zeros
-      $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-      $timestamp = $year . '/' . $month . '/' . $day;
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+      $timestamp = $year  . $month  . $day;
+
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
 
       // Menggabungkan awalan dan $idPadded
-      $hasil = $awalan . $timestamp;
+      $hasil = $awalan . $timestamp . '/' . $num;
 
-      if ($sameVdr) {
-         # code...
-      } else {
-         $vdr->update([
-            'date' => $date,
-            'code' => $hasil,
-            'location_midnight' => $loc,
-            'crew_onduty' => $onduty,
-            'crew_max' => $pax,
-            'contract' => $contract,
-            'contract_start' => $contract_start,
-            'contract_end' => $contract_end,
-            'owner' => $owner,
-            'master' => $master,
-            'ce' => $ce,
+      $vdr->update([
+         'code' => $hasil
+      ]);
 
-         ]);
-      }
+      // if ($sameVdr == null) {
+      $vdr->update([
+         'date' => $date,
+         'code' => $hasil,
+         'location_midnight' => $loc,
+         'crew_onduty' => $onduty,
+         'crew_max' => $pax,
+         'contract' => $contract,
+         'contract_start' => $contract_start,
+         'contract_end' => $contract_end,
+         'owner' => $owner,
+         'master' => $master,
+         'ce' => $ce,
+
+      ]);
+      // } 
 
 
       return response()->json([
          'success' => true,
-         'result' => $master,
+         'result' => $vdr->code,
          'code' => $vdr->code,
          'error' =>  $msg
 

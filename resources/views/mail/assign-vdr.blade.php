@@ -128,7 +128,7 @@
                                  <tr>
                                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
-                                          <p style="margin: 0;">You have a {{$data['subject']}} Request Approval from {{$data['from']}} .</p>
+                                          <p style="margin: 0;">You have a {{$data['subject']}} Request from {{$data['from']}} .</p>
                                        </div>
                                     </td>
                                  </tr>
@@ -164,9 +164,12 @@
                                           <tbody>
                                              <tr>
                                                 <td align="center"  role="presentation" style="border:none;border-radius:30px;cursor:auto;mso-padding-alt:10px 25px;" valign="middle">
+                                                   @if ($data['level'] == 'suptent')
                                                    <a href="{{$data['approve']}}" style="display: inline-block; background: #215bfa; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Approve </a>
-                                                   <a href="{{$data['link']}}" style="display: inline-block; background: #c02e2e; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;margin: 5px" target="_blank"> Reject </a>
-                                                   <a href="{{$data['link']}}" style="display: inline-block; background: #4c4c4f; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Detail VDR </a>
+                                                   <a href="{{$data['reject']}}" style="display: inline-block; background: #c02e2e; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;margin: 5px" target="_blank"> Reject </a>
+                                                   @endif
+                                                   
+                                                   <a href="{{$data['link']}}" style="display: inline-block; background: #4c4c4f; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Open VDR </a>
                                                 </td>
                                              </tr>
                                           </tbody>

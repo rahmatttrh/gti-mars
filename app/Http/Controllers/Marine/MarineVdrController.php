@@ -7,8 +7,14 @@ use App\Http\Controllers\EmailController;
 use App\Models\Cargo;
 use App\Models\Log;
 use App\Models\Vdr;
+use App\Models\VdrActivity;
+use App\Models\VdrCargo;
+use App\Models\VdrCrew;
+use App\Models\VdrHse;
 use App\Models\VdrOperating;
+use App\Models\VdrPeriodic;
 use App\Models\VdrTimestamp;
+use App\Models\VdrWeather;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -462,6 +468,36 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR PET Approved');
    }
 
+   public function approvePetFromEmail(Request $req)
+   {
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($req->id);
+      $vdr->update([
+         'status' => 2,
+         'title1' => $req->title1,
+         'name1' => $req->name1,
+      ]);
+
+
+      // Log::create([
+      //    'system' => 'VDR',
+      //    'user_id' => auth()->user()->id,
+      //    'action' => 'Approve VDR',
+      //    'vdr_id' => $vdr->id,
+      //    'desc' => 'PET',
+      //    'table' => 'vdrs'
+      // ]);
+
+      // VdrTimestamp::create([
+      //    'vdr_id' => $vdr->id,
+      //    'status' => 2,
+      //    'user_id' => auth()->user()->id
+      // ]);
+      // dd()
+
+      return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('pet')])->with('success', 'VDR Approved');
+   }
+
    public function approveMarine(Request $req)
    {
       dd('marine');
@@ -594,6 +630,41 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
+   public function approveFormEmail(Request $req)
+   {
+
+      $vdr = Vdr::find($req->vdr);
+      // dd($req->name2);
+
+      $vessel = Vessel::find($vdr->vessel_id);
+
+      if ($vessel->contract_type == 'Under PO' ) {
+        $status = 3;
+      }  else {
+         $status = 5;
+      }
+      // dd($status);
+      $vdr->update([
+         'status' => $status,
+         'title2' => 'Marine Dept',
+         'name2' => $req->name2,
+      ]);
+
+
+
+      // VdrTimestamp::create([
+      //    'vdr_id' => $vdr->id,
+      //    'status' => $status,
+      //    'user_id' => auth()->user()->id
+      // ]);
+      // dd()
+
+      // $emailController = new EmailController();
+      // $emailController->approvalVdr(enkripRambo($vdr->id));
+
+      return redirect()->back()->with('success', 'VDR Marine Approved');
+   }
+
 
    public function approveSuptentLocForm(Request $req)
    {
@@ -657,22 +728,24 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
    }
 
-   public function rejectFromEmail(Request $req)
+   public function rejectFromEmailStore(Request $req)
    {
       $vdr = Vdr::find($req->vdr);
 
-      if (auth()->user()->username == 'pet') {
+      if ($req->user == 'pet') {
          $status = 101;
-      } elseif(auth()->user()->username == 'marine'){
+      } elseif($req->user == 'marine'){
          $status = 202;
-      } elseif(auth()->user()->username == 'lutfiaryanto'){
+      } elseif($req->user == 'suptent'){
          $status = 303;
       }
+
+      // dd($req->user);
 
 
       $vdr->update([
          'status' => $status,
-         'reject_by' => auth()->user()->id,
+         'reject_by' => $req->userid,
          'reject_date' => Carbon::now(),
          'reject_desc' => $req->desc
       ]);
@@ -682,11 +755,11 @@ class MarineVdrController extends Controller
          'vdr_id' => $vdr->id,
          'type' => 'reject',
          'status' => 1,
-         'user_id' => auth()->user()->id,
+         'user_id' => $req->userid,
          'desc' => $req->desc
       ]);
 
-      return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
+      return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo($req->user)])->with('success', 'VDR Rejected, sent back to Vessel');
    }
 
    // public function approveSuptent($id){
@@ -736,6 +809,30 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Approved');
    }
 
+
+   public function approveMarineFromEmail($id)
+   {
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      // dd('Success Approve VDR from email');
+
+      // dd($vdr->title1);
+      $vdr->update([
+         'status' => 4,
+         'title3' => 'Suptent',
+         'name3' => 'Lutfi Aryanto',
+      ]);
+
+      // dd($vdr->name3);
+      // dd()
+
+      
+
+      return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('suptent')])->with('success', 'VDR Approved');
+   }
+
+
+
    public function approveSuptentFromEmail($id)
    {
       $dekripId = dekripRambo($id);
@@ -754,6 +851,83 @@ class MarineVdrController extends Controller
 
 
 
-      return redirect()->route('vdr.pdf.email', enkripRambo($vdr->id))->with('success', 'VDR Approved');
+      return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('suptent')])->with('success', 'VDR Approved');
+   }
+
+   public function rejectFromEmail($id, $user, $userid)
+   {
+      
+      $dekripId = dekripRambo($id);
+      $vdr = Vdr::find($dekripId);
+      $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
+      $vdrCargos = VdrCargo::where('vdr_id', $vdr->id)->get();
+      $vdrWheathers = VdrWeather::where('vdr_id', $vdr->id)->get();
+      $hses = VdrHse::where('vdr_id', $vdr->id)->get();
+      $operatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+      $periodic = VdrPeriodic::where('vdr_id', $vdr->id)->first();
+
+      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+      // return('email');
+
+     
+
+      
+
+
+      return view('pages.document.vdr-email-reject', [
+         'user' => dekripRambo($user),
+         'userid' => dekripRambo($userid),
+         'vdr' => $vdr,
+         'vessel' => $vdr->vessel,
+         'vdrActivities' => $vdrActivities,
+         'vdrCargos' => $vdrCargos,
+         'vdrPeriodic' => $periodic,
+         'vdrWheathers' => $vdrWheathers,
+         'hses' => $hses,
+         'operatings' => $operatings,
+         'totaljam' => $final,
+         'totaldaily' => $totalDaily
+      ]);
    }
 }
