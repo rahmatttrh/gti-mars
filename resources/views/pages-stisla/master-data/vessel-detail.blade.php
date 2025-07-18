@@ -25,14 +25,14 @@
 
                <div class="row">
                   <div class="col-md-4">
-                     <div class="section-header">
+                     <div class="section-header shadow">
                
                         <div class="breadcrumb-item ">Master Data</div>
                         <div class="breadcrumb-item "><a href="{{route('vessel')}}">Vessel</a></div>
                         <div class="breadcrumb-item active">Detail</div>
                        
                      </div>
-                     <div class="card">
+                     <div class="card shadow">
                         <div class="card-body">
                            {{-- <h4 class="">Detail Vessel</h4>
                            <hr> --}}
@@ -62,28 +62,38 @@
 
                            <div class="form-row">
                               <div class="form-group col-md-5">
-                                 <label for="contract_type">Contract Type</label>
+                                 {{-- <label for="contract_type">Contract Type</label> --}}
                                  <select  class="form-control" id="contract_type" required name="contract_type" >
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" disabled selected>Select Contract</option>
                                     <option {{$vessel->contract_type == 'Under PO' ? 'selected' : ''}} value="Under PO">Under PO</option>
                                     <option {{$vessel->contract_type == 'Non PO' ? 'selected' : ''}} value="Non PO">Non PO</option>
                                  </select>
                               </div>
                               <div class="form-group col-md-7">
-                                 <label for="contract_type">Area</label>
+                                 {{-- <label for="contract_type">Area</label> --}}
                                  <select  class="form-control" id="area"  name="area" >
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" disabled selected>Select BU</option>
                                     <option {{$vessel->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                                     <option {{$vessel->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                                     <option {{$vessel->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
                                  </select>
                               </div>
+                              <div class="form-group col-md-12">
+                                 {{-- <label for="contract_type">Func</label> --}}
+                                 <select  class="form-control" id="area"  name="area" >
+                                    <option value="" disabled selected>Select Func</option>
+                                    <option {{$vessel->area == 'WI' ? 'selected' : ''}} value="WI">WI</option>
+                                    <option {{$vessel->area == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                    <option {{$vessel->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                                 </select>
+                              </div>
                            </div>
-                           <hr>
-                           <button class="btn btn-info ">Update</button>
+                           {{-- <hr> --}}
+                           
                            {{-- <a href="{{route('vessel.delete', enkripRambo($vessel->id))}}" class="btn btn-danger" >Delete</a> --}}
                         </div>
                      </div>
+                     <button class="btn btn-primary btn-block py-3 shadow">Update</button>
 
                      
 
