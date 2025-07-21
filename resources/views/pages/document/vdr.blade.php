@@ -1151,7 +1151,7 @@ table th tr td {
                         <small>Acknowledged by,</small>
                         <br>
                      
-                        <small>Suptent Location : {{$vdr->name4}}</small><br>
+                        <small>Location Company Representative : {{$vdr->name4}}</small><br>
                         @if ($vdr->title4 != null)
                         <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                         @else
@@ -1165,7 +1165,7 @@ table th tr td {
                            {{-- <small>Acknowledged by,</small> --}}
                            <br>
                         
-                           <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
+                           <small>Marine Representative : Lutfi Aryanto</small><br>
                            @if ($vdr->title3 != null)
                            <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                            @else
@@ -1182,7 +1182,7 @@ table th tr td {
                            <small>Acknowledged by,</small>
                            <br>
                         
-                           <small>{{$vdr->title3 ?? '-'}} : Lutfi Aryanto</small><br>
+                           <small>Marine Representative : Lutfi Aryanto</small><br>
                            @if ($vdr->title3 != null)
                            <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                            @else
