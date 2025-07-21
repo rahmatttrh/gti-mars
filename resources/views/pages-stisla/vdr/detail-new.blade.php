@@ -562,11 +562,11 @@
                                           <td class="text-info bg-y">
                                              {{-- {{$activity->id}} --}}
                                              {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                           </td>
                                           <td class="text-danger bg-y">
                                              {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                           </td>
                                           <td class="bg-y text-center">
                                              {{-- {{getTotalHours($activity->high)}} --}}
@@ -2065,6 +2065,86 @@
          $(document).ready(function() {
          
             $(".input_activity_" + '{!! $act->id !!}').keyup(function () {
+               console.log('activity');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var start = $('#start_' + '{!! $act->id !!}').val();
+               var finish = $('#finish_' + '{!! $act->id !!}').val();
+               var high = $('#high_' + '{!! $act->id !!}').val();
+               var normal = $('#normal_' + '{!! $act->id !!}').val();
+               var slow = $('#slow_' + '{!! $act->id !!}').val();
+               var manu = $('#manu_' + '{!! $act->id !!}').val();
+               var idle = $('#idle_' + '{!! $act->id !!}').val();
+               var tow = $('#tow_' + '{!! $act->id !!}').val();
+               var ah = $('#ah_' + '{!! $act->id !!}').val();
+               var sb = $('#sb_' + '{!! $act->id !!}').val();
+               var activity = $('#activity_' + '{!! $act->id !!}').val();
+               
+               
+               
+               console.log('VDR : ' + vdr);
+
+               
+
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/activity/" + vdr + "/" + act +  "/"  + start + "/" + finish + "/" + high + "/" + normal + "/" + slow + "/" + manu  + "/"  + idle + "/" + tow + "/" + ah + "/" + sb + "/" + activity,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.highTime').html(result.highTime);
+                     $('.normalTime').html(result.normalTime);
+                     $('.slowTime').html(result.slowTime);
+                     $('.idleTime').html(result.idleTime);
+                     $('.manuTime').html(result.manuTime);
+                     $('.towTime').html(result.towTime);
+                     $('.ahTime').html(result.ahTime);
+                     $('.sbTime').html(result.sbTime);
+
+                     console.log('daily :' + result.vdrOperatingHigh.daily);
+
+                     $('.time_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.time);
+                     $('.time_' + result.vdrOperatingHigh.heading_id).html(result.vdrOperatingHigh.time);
+                     $('.daily_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.daily);
+
+                     $('.time_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.time);
+                     $('.time_' + result.vdrOperatingNormal.heading_id).html(result.vdrOperatingNormal.time);
+                     $('.daily_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.daily);
+
+                     $('.time_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.time);
+                     $('.time_' + result.vdrOperatingSlow.heading_id).html(result.vdrOperatingSlow.time);
+                     $('.daily_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.daily);
+
+                     $('.time_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.time);
+                     $('.time_' + result.vdrOperatingManu.heading_id).html(result.vdrOperatingManu.time);
+                     $('.daily_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.daily);
+
+                     $('.time_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.time);
+                     $('.time_' + result.vdrOperatingIdle.heading_id).html(result.vdrOperatingIdle.time);
+                     $('.daily_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.daily);
+
+                     $('.time_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.time);
+                     $('.time_' + result.vdrOperatingTow.heading_id).html(result.vdrOperatingTow.time);
+                     $('.daily_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.daily);
+
+                     $('.time_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.time);
+                     $('.time_' + result.vdrOperatingAh.heading_id).html(result.vdrOperatingAh.time);
+                     $('.daily_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.daily);
+
+                     $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
+                     $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
+                     $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_time_" + '{!! $act->id !!}').change(function () {
                console.log('activity');
                var vdr = $('#vdr').val();
                var act = '{!! $act->id !!}';
