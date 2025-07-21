@@ -108,7 +108,7 @@ table {
       <div class="col-md-6">
          @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
          <div class="btn btn-danger  mt-2 shadow" style="background-color: rgb(200, 54, 54);" >
-            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
+            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name ?? ''}} at {{formatDateTime($vdr->reject_date)}} :
             {{$vdr->reject_desc}}
          </div>
                                      
@@ -1194,8 +1194,9 @@ table {
 
 <div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
    <div class="modal-dialog" role="document">
-      <form action="{{route('vdr.reject.marine')}}" method="POST">
+      <form action="{{route('vdr.reject.marine.from.email')}}" method="POST">
       @csrf
+      <input type="user" name="user" id="user" value="{{$level}}" hidden>
       <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
       <div class="modal-content">
          <div class="modal-header">

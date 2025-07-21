@@ -10,7 +10,7 @@
    font-size: 18px;
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
+<nav class="navbar navbar-expand-lg main-navbar text-dark" >
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
