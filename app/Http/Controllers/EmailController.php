@@ -20,9 +20,10 @@ class EmailController extends Controller
       return redirect()->back()->with('success', 'Email has sent');
    }
 
-   public function approvalVdrSuptent($id){
+   public function approvalVdrSuptent($id)
+   {
       $vdr = Vdr::find(dekripRambo($id));
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       $totalDaily = $vdr->customRound($totalDaily);
       $debugHours = 0;
       $debugMinutes = 0;
@@ -62,7 +63,7 @@ class EmailController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
-      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
+      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd('ok');
       $user = User::where('username', 'lutfiaryanto')->first();
       $data = [
@@ -91,11 +92,12 @@ class EmailController extends Controller
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Superintendent');
    }
 
-   public function approvalVdrSuptentLoc($id){
+   public function approvalVdrSuptentLoc($id)
+   {
 
       // dd('ok');
       $vdr = Vdr::find(dekripRambo($id));
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       $totalDaily = $vdr->customRound($totalDaily);
       $debugHours = 0;
       $debugMinutes = 0;
@@ -135,7 +137,7 @@ class EmailController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
-      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
+      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd($vdr->area);
       // $user = User::where('username', 'marine')->first();
       $suptentLoc = Employee::where('role', 'suptent_loc')->first();
@@ -157,7 +159,7 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
+      Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -173,9 +175,10 @@ class EmailController extends Controller
    }
 
 
-   public function approvalVdrMarine($id){
+   public function approvalVdrMarine($id)
+   {
       $vdr = Vdr::find(dekripRambo($id));
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       $totalDaily = $vdr->customRound($totalDaily);
       $debugHours = 0;
       $debugMinutes = 0;
@@ -215,7 +218,7 @@ class EmailController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
-      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
+      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd('ok');
       $user = User::where('username', 'marine')->first();
       $data = [
@@ -235,7 +238,7 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
+      Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -244,9 +247,10 @@ class EmailController extends Controller
    }
 
 
-   public function approvalVdrPet($id){
+   public function approvalVdrPet($id)
+   {
       $vdr = Vdr::find(dekripRambo($id));
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       $totalDaily = $vdr->customRound($totalDaily);
       $debugHours = 0;
       $debugMinutes = 0;
@@ -286,10 +290,10 @@ class EmailController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
-      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
+      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd('ok');
       $user = User::where('username', 'pet')->first();
-      
+
       $data = [
          'to' => 'Fuel Monitoring Team',
          'from' => $vdr->vessel->name,
@@ -315,7 +319,7 @@ class EmailController extends Controller
       // }
 
       // TESTING
-      Mail::to(["it.medan@grahasegara.com", "develop@ekanuri.com"])->send(new AssignVdrEmail($data));
+      Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
@@ -377,7 +381,7 @@ class EmailController extends Controller
    //    $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
    //    // dd('ok');
    //    $user = User::where('username', 'pet')->first();
-      
+
    //    $data = [
    //       'to' => 'Fuel Monitoring Team',
    //       'from' => $vdr->vessel->name,

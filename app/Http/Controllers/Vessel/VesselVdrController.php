@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class VesselVdrController extends Controller
 {
-   public function release($id){
+   public function release($id)
+   {
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
 
@@ -18,7 +19,7 @@ class VesselVdrController extends Controller
       ]);
 
       $emailController = new EmailController();
-      $emailController->approvalVdrPet(dekripRambo($vdr));
+      $emailController->approvalVdrPet(enkripRambo($vdr->id));
 
 
       return redirect()->back()->with('success', 'VDR successfully sent to Fleet Control');

@@ -709,10 +709,10 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      // $emailController = new EmailController();
-      // $emailController->approvalVdr(enkripRambo($vdr->id));
+      $emailController = new EmailController();
+      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
-      return redirect()->back()->with('success', 'VDR Marine Approved');
+      return redirect()->back()->with('success', 'VDR Suptent Location Approved');
    }
 
    public function reject(Request $req)

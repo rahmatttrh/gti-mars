@@ -1220,7 +1220,7 @@ class VdrController extends Controller
       }
 
       $date = Carbon::create($date);
-      $year = $date->format('Y');
+      $year = $date->format('y');
       $month = $date->format('m');
       $day = $date->format('d');
 
@@ -3316,11 +3316,12 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      if ($vessel->contract != null) {
-         $contract = $vessel->contract;
-      } else {
-         $contract = $lastVdr->contract;
-      }
+      // if ($vessel->contract != null) {
+      //    $contract = $vessel->contract;
+      // } else {
+      //    $contract = $lastVdr->contract;
+      // }
+      $contract = $lastVdr->contract;
 
       $vdr = Vdr::create([
          'area' => $vessel->area,
