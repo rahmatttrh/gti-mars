@@ -91,6 +91,9 @@ Route::get('email/vdr/approve/marine/{id}', [MarineVdrController::class, 'approv
 Route::put('email/vdr/approve/marine', [MarineVdrController::class, 'approveFormEmail'])->name('vdr.approve.marine.form.email');
 
 
+Route::post('email/vdr/reject/marine', [MarineVdrController::class, 'rejectFromEmailStore'])->name('vdr.reject.marine.from.email');
+
+
 
 Route::get('email/vdr/reject/{id}/{user}/{userid}', [MarineVdrController::class, 'rejectFromEmail'])->name('vdr.reject.from.email');
 Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectFromEmailStore'])->name('vdr.reject.from.email.store');
