@@ -18,32 +18,37 @@
                   </div>
                </div>
       
-               <div class="d-none d-md-block table-responsive shadow overflow-auto" style="height: 250px">
-                  <table class=" display bg-white shadow "   >
-                    {{-- <thead>
-                       <tr>
-                          <th>Time</th>
-                          <th>User</th>
-                          <th>Action</th>
-                       </tr>
-                    </thead> --}}
-                    <tbody>
-                       <tr>
-                          <th style="color: #1f4481 !important">Log Activity</th>
-                       </tr>
-                       @foreach ($logs as $log)
-                          <tr class="border-bottom">
-                             <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
-                                <br>
-                                {{$log->action}} </small>
-                             </td>
-                             
-                             
-                          </tr>
-                       @endforeach
-                    </tbody>
-                 </table>
-                 </div>
+               <div class="card shadow">
+                  <div class="card-body px-1">
+                     <div class="d-none d-md-block table-responsive  overflow-auto" style="height: 250px">
+                        <table class=" display  "   >
+                          {{-- <thead>
+                             <tr>
+                                <th>Time</th>
+                                <th>User</th>
+                                <th>Action</th>
+                             </tr>
+                          </thead> --}}
+                          <tbody>
+                             <tr>
+                                <th style="color: #1f4481 !important">Log Activity</th>
+                             </tr>
+                             @foreach ($logs as $log)
+                                <tr class="border-bottom">
+                                   <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
+                                      <br>
+                                      {{$log->action}} </small>
+                                   </td>
+                                   
+                                   
+                                </tr>
+                             @endforeach
+                          </tbody>
+                       </table>
+                     </div>
+                  </div>
+               </div>
+               
             </div>
             <div class="col-md-9">
                <div class="row ">
