@@ -19,7 +19,7 @@
                </div>
       
                <div class="d-none d-md-block table-responsive shadow overflow-auto" style="height: 250px">
-                  <table class="border display bg-white shadow "   >
+                  <table class=" display bg-white shadow "   >
                     {{-- <thead>
                        <tr>
                           <th>Time</th>
@@ -32,7 +32,7 @@
                           <th style="color: #1f4481 !important">Log Activity</th>
                        </tr>
                        @foreach ($logs as $log)
-                          <tr class="border">
+                          <tr class="border-bottom">
                              <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
                                 <br>
                                 {{$log->action}} </small>

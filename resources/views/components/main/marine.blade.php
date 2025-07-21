@@ -14,6 +14,14 @@
       padding-left: 5px
    }
 
+   .card{
+      border-radius:10px;
+   }
+
+   .border-bottom {
+      border-bottom: 1px rgba(132, 129, 129, 0.205)
+   }
+
    
 </style>
 
@@ -45,7 +53,7 @@
       
       
       <div class="col-md-3">
-         <div class="card card-statistic-1 shadow">
+         <div class="card card-statistic-1 shadow" style="border-radius:10px">
             <a href="{{route('vdr.marine.validation')}}">
                <div class="card-icon bg-info">
                <i class="fas fa-user"></i>
@@ -133,17 +141,17 @@
          <div class="card shadow">
             <div class="card-body px-3">
                <div class="table-responsive overflow-auto p-1" style="max-height: 200px">
-                  <table class="  border">
+                  <table class=" ">
                      
                      <thead>
-                        <tr>
+                        <tr class="border-bottom">
                            <th colspan="4" style="color: #1f4481 !important">VDR yang membutuhkan Approval anda</th>
                         </tr>
-                        <tr>
+                        <tr class="border-bottom">
                            {{-- <th>ID</th> --}}
                            <th>Vessel</th>
                            <th>Code</th>
-                           <th>Date</th>
+                           {{-- <th>Date</th> --}}
                            {{-- <th>Date</th> --}}
                            <th>Status</th>
                         </tr>
@@ -151,7 +159,7 @@
                      <tbody>
                         @if (count($vdrvalids) > 0)
                         @foreach ($vdrvalids as $vdr)
-                           <tr class="border" style="border: 1px black">
+                           <tr class="border-bottom" style="border: 1px black">
                               {{-- <td>{{$vdr->id}}</td> --}}
                               <td class="text-truncate" >
                               @if (auth()->user()->username == 'lutfiaryanto')
@@ -164,7 +172,7 @@
                                  @endif
                               </td>
                               <td>{{$vdr->code}}</td>
-                              <td>{{formatDate($vdr->date)}}</td>
+                              {{-- <td>{{formatDate($vdr->date)}}</td> --}}
                               {{-- <td>{{formatDate($sche->date)}}</td> --}}
                               <td class="text-truncate" >
                                  <x-status-stisla.vdr :vdr="$vdr" />
@@ -180,14 +188,20 @@
                      </tbody>
                   </table>
                </div>
+               
+            </div>
+         </div>
+
+         <div class="card shadow">
+            <div class="card-body px-3">
                <div class="table-responsive overflow-auto p-1" style="height: 120px">
-                  <table class="display  border">
+                  <table class="">
                      
                      <thead>
-                        <tr>
+                        <tr class="border-bottom">
                            <th colspan="4" style="color: #1f4481 !important">Sailing Order</th>
                         </tr>
-                        <tr>
+                        <tr class="border-bottom">
                            <th>Vessel</th>
                            <th>Code</th>
                            <th>Date</th>
@@ -196,7 +210,7 @@
                      </thead>
                      <tbody>
                         @foreach ($schedules->where('status', '>', 0) as $sche)
-                           <tr class="border" style="border: 1px black">
+                           <tr class="border-bottom" style="border: 1px black">
                               <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name}}</a></td>
                               <td>{{$sche->code}}</td>
                               <td>{{formatDate($sche->date)}}</td>

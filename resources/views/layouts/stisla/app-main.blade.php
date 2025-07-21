@@ -73,6 +73,10 @@ table {
       background-color: #86B6F6
    }
 
+   .border-bottom {
+      border-bottom: 1px rgba(132, 129, 129, 0.205)
+   }
+
    
 </style>
 </head>
