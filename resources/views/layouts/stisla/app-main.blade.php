@@ -77,6 +77,10 @@ table {
       border-bottom: 1px rgba(132, 129, 129, 0.205)
    }
 
+   .card {
+      border-radius: 10px;
+    }
+
    
 </style>
 </head>

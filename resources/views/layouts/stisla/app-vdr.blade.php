@@ -93,6 +93,10 @@
    /* .badge {
       font-size: 11px
    } */
+
+    .card {
+      border-radius: 10px;
+    }
 </style>
 
 
