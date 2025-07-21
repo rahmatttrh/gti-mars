@@ -280,7 +280,7 @@
                },
                ticks: {
                   beginAtZero: true,
-                  stepSize: 1500
+                  stepSize: 5000
                }
                }],
                xAxes: [{
