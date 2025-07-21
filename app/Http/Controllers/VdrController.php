@@ -1221,6 +1221,7 @@ class VdrController extends Controller
 
       $date = Carbon::create($date);
       $year = $date->format('y');
+      $year = $date->format('y');
       $month = $date->format('m');
       $day = $date->format('d');
 
@@ -3571,7 +3572,7 @@ class VdrController extends Controller
 
 
       $today = Carbon::now();
-      $year = $today->format('Y');
+      $year = $today->format('y');
       $month = $today->format('m');
       $day = $today->format('d');
 
@@ -3600,10 +3601,19 @@ class VdrController extends Controller
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-      $timestamp = $year . '/' . $month . '/' . $day;
+
+      $timestamp = $year  . $month  . $day;
+
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
 
       // Menggabungkan awalan dan $idPadded
-      $hasil = $awalan . $timestamp;
+      $hasil = $awalan . $timestamp . '/' . $num;
 
       $vdr->update([
          'code' => $hasil
@@ -3628,6 +3638,7 @@ class VdrController extends Controller
                'vdr_id' => $vdr->id,
                'heading_id' => $heading->id,
                'created_by' => $vdr->created_by,
+               'remarks' => '-',
                'created_at' => NOW(),
                'updated_at' => NOW()
             ]);

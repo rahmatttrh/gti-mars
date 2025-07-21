@@ -61,6 +61,7 @@ class UserController extends Controller
          // 'no_telp' => $req->no_telp,
          'role' => $req->level,
          'area' => $req->area,
+         'func' => $req->func
          
       ]);
 
@@ -151,6 +152,7 @@ class UserController extends Controller
          'email' => $req->email,
          'role' => $req->level,
          'area' => $req->area,
+         'func' => $req->func
       ]);
 
       $user->update([

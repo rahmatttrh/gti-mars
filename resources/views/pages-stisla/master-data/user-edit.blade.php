@@ -64,13 +64,23 @@
                         </div>
                         
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                            <label>Level*</label>
                            <select  class="custom-select" required id="level" name="level">
                               <option  disabled selected>Choose</option>
                               <option {{$user->role == 'marine' ? 'selected' : ''}} value="marine">Marine</option>
                               <option {{$user->role == 'suptent' ? 'selected' : ''}} value="suptent">Suptent</option>
                               <option {{$user->role == 'suptent_loc' ? 'selected' : ''}} value="suptent_loc">Suptent On Location</option>
+               
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>Func</label>
+                           <select  class="custom-select" required id="func" name="func">
+                              <option  disabled selected>Choose</option>
+                              <option {{$user->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
+                              <option {{$user->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                              {{-- <option {{$user->func == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option> --}}
                
                            </select>
                         </div>

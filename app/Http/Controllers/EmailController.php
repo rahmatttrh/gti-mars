@@ -83,8 +83,8 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
+      Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
       // Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));

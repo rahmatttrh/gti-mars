@@ -159,6 +159,7 @@ class VesselController extends Controller
          'status' => $req->status,
          'name' => $req->name,
          'area' => $req->area,
+         'func' => $req->func,
          'username' => $req->username,
          'email' => $req->email,
          'telp' => $req->telp,
