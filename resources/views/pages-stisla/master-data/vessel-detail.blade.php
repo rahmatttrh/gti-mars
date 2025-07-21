@@ -24,7 +24,7 @@
                <input type="number" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
 
                <div class="row">
-                  <div class="col-md-4">
+                  <div class="col-md-5">
                      <div class="section-header shadow">
                
                         <div class="breadcrumb-item ">Master Data</div>
@@ -70,6 +70,15 @@
                                  </select>
                               </div>
                               <div class="form-group col-md-7">
+                                 {{-- <label for="contract_type">Func</label> --}}
+                                 <select  class="form-control" id="func"  name="func" >
+                                    <option value="" disabled selected>Select Func</option>
+                                    <option {{$vessel->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
+                                    <option {{$vessel->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                    
+                                 </select>
+                              </div>
+                              <div class="form-group col-md-5">
                                  {{-- <label for="contract_type">Area</label> --}}
                                  <select  class="form-control" id="area"  name="area" >
                                     <option value="" disabled selected>Select BU</option>
@@ -78,15 +87,7 @@
                                     <option {{$vessel->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
                                  </select>
                               </div>
-                              <div class="form-group col-md-12">
-                                 {{-- <label for="contract_type">Func</label> --}}
-                                 <select  class="form-control" id="area"  name="area" >
-                                    <option value="" disabled selected>Select Func</option>
-                                    <option {{$vessel->area == 'WI' ? 'selected' : ''}} value="WI">WI</option>
-                                    <option {{$vessel->area == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
-                                    <option {{$vessel->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
-                                 </select>
-                              </div>
+                              
                            </div>
                            {{-- <hr> --}}
                            
@@ -101,7 +102,7 @@
                      
                   </div>
 
-                  <div class="col-md-8">
+                  <div class="col-md-7">
                      <div class="card">
                         <div class="card-body">
                            <div class="row">

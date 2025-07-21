@@ -794,7 +794,7 @@
                                  
                                        @if($cargo->heading->is_consumption == '1')
                                        <td class="text-center align-middle">
-                                          <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="w-100 input_cargo_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="w-100 input_cargo_{{$cargo->id}} consumption_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
                                           {{-- <span class="my-2 consumption">{{$cargo->consumption}}</span> --}}
                                        </td>
                                        @else
@@ -1805,6 +1805,10 @@
          var transferred = $('#transferred_' + '{!! $cargo->id !!}').val();
          var closing = $('#closing_' + '{!! $cargo->id !!}').val();
          var remark = $('#remark_' + '{!! $cargo->id !!}').val();
+
+         if (remark === '') {
+            remark = '-';
+         }
          
          
          
@@ -1825,7 +1829,7 @@
             dataType: 'json',
 
             success: function(result) {
-               $('#consumption_' + '{!! $cargo->id !!}').val(result.consumption);
+               $('.consumption_' + '{!! $cargo->id !!}').val(result.consumption);
                console.log('result :' + result.consumption);
                
             },

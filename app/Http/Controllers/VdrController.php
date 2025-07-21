@@ -1218,7 +1218,7 @@ class VdrController extends Controller
       }
 
       $date = Carbon::create($date);
-      $year = $date->format('Y');
+      $year = $date->format('y');
       $month = $date->format('m');
       $day = $date->format('d');
 
@@ -3365,6 +3365,14 @@ class VdrController extends Controller
       } else {
          $contract = $lastVdr->contract;
       }
+
+      if ($vessel->contract_type == 'Non PO') {
+         $func = $vessel->func;
+         $area = $vessel->area;
+      } else {
+         $func = '';
+         $area = '';
+      }
      
          $vdr = Vdr::create([
             'area' => $vessel->area,
@@ -3380,7 +3388,10 @@ class VdrController extends Controller
             'owner' => $lastVdr->owner,
             'master' => $lastVdr->master,
             'ce' => $lastVdr->ce,
-            'status' => 0
+            'status' => 0,
+
+            'func' => $func,
+            'area' => $area
          ]);
 
          
@@ -3614,7 +3625,7 @@ class VdrController extends Controller
       
 
       $today = Carbon::now();
-      $year = $today->format('Y');
+      $year = $today->format('y');
       $month = $today->format('m');
       $day = $today->format('d');
       
@@ -3637,16 +3648,31 @@ class VdrController extends Controller
          'status' => 0
       ]);
 
+
+      if ($vessel->contract != null) {
+         $contract = $vessel->contract;
+      } else {
+         $contract = '-';
+      }
       
 
-      $awalan = "VDR/PHEOSES/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
+      $awalan = $contract . "/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-      $timestamp = $year . '/' . $month . '/' . $day;
+      
+      $timestamp = $year  . $month  . $day;
+
+      $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+      if (count($vdrHistories) > 0) {
+         $num = count($vdrHistories);
+      } else {
+         $num = 0;
+      }
 
       // Menggabungkan awalan dan $idPadded
-      $hasil = $awalan . $timestamp;
+      $hasil = $awalan . $timestamp . '/' . $num;
 
       $vdr->update([
          'code' => $hasil
@@ -3671,6 +3697,7 @@ class VdrController extends Controller
                'vdr_id' => $vdr->id,
                'heading_id' => $heading->id,
                'created_by' => $vdr->created_by,
+               'remarks' => '-',
                'created_at' => NOW(),
                'updated_at' => NOW()
             ]);

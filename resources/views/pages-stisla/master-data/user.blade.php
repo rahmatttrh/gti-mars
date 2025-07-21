@@ -117,13 +117,23 @@
                            <input type="text" class="form-control " id="no_telp" name="no_telp" >
                         </div> --}}
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                            <label>Level*</label>
                            <select  class="custom-select" required id="level" name="level">
                               <option  disabled selected>Choose</option>
                               <option value="marine">Marine</option>
                               <option value="suptent">Suptent</option>
                               <option value="suptent_loc">Suptent On Location</option>
+               
+                           </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                           <label>Func</label>
+                           <select  class="custom-select" required id="func" name="func">
+                              <option  disabled selected>Choose</option>
+                              <option value="WI">WI</option>
+                              <option value="Drilling">Drilling</option>
+                              {{-- <option value="NBU">NBU</option> --}}
                
                            </select>
                         </div>
@@ -173,7 +183,7 @@
                            
                            {{-- <th>Location</th> --}}
                            {{-- <th>Email</th> --}}
-                           <th>Area</th>
+                           <th>Desc</th>
                            <th>Action</th>
                         </tr>
                      </thead>
@@ -192,7 +202,7 @@
                               {{$user->role}}
                            </td>
                            
-                           <td>{{$user->area}}</td>
+                           <td>{{$user->area}} {{$user->func}}</td>
                            
                           
                            

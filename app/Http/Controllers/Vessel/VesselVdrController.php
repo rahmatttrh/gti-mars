@@ -18,7 +18,7 @@ class VesselVdrController extends Controller
       ]);
 
       $emailController = new EmailController();
-      $emailController->approvalVdrPet(dekripRambo($vdr));
+      $emailController->approvalVdrPet(enkripRambo($vdr));
 
 
       return redirect()->back()->with('success', 'VDR successfully sent to Fleet Control');
