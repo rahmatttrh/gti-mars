@@ -82,25 +82,25 @@
                         <div class="col-md-12">
                            <h4>VDR Validation</h4>
                            <div class="table-responsive " >
-                              <table class=" datatables">
+                              <table class="datatables-vdr">
                                  
                                  <thead>
                                     {{-- <tr>
                                        <th colspan="3" style="color: #1f4481 !important">VDR yang membutuhkan approval anda</th>
                                     </tr> --}}
                                     <tr>
-                                       <th>No</th>
+                                       {{-- <th>No</th> --}}
                                        <th>Vessel</th>
 
                                        <th>Number</th>
-                                       {{-- <th>Date</th> --}}
+                                       <th>Date</th>
                                        <th class="text-center">Status</th>
                                     </tr>
                                  </thead>
                                  <tbody>
                                     @foreach ($vdrValidations as $vdr)
                                        <tr class="border" style="border: 1px black">
-                                          <td>{{++$i}}</td>
+                                          {{-- <td>{{++$i}}</td> --}}
                                           <td>
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
@@ -110,7 +110,7 @@
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
                                           {{-- <td>{{$vdr->code}}</td> --}}
-                                          {{-- <td>{{formatDate($vdr->date)}}</td> --}}
+                                          <td>{{$vdr->date}}</td>
                                           <td class="text-right">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
