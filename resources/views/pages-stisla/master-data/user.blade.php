@@ -37,17 +37,18 @@
 
       <div class="row">
          <div class="col-md-4">
-            <div class="section-header">
-               
-               <div class="breadcrumb-item ">Master Data</div>
-               <div class="breadcrumb-item active">User</div>
-              
-            </div>
+            
             <div class="card border shadow">
               
                <div class="card-body">
-                  <b>Form Add User</b>
-               <hr>
+                  {{-- <b>Form Add User</b>
+               <hr> --}}
+               <div class="section-header p-0 shadow-none">
+               
+                  <div class="breadcrumb-item ">Master Data</div>
+                  <div class="breadcrumb-item active">User</div>
+                 
+               </div>
                   <form action="{{route('user.store')}}" method="POST">
                      @csrf
                      {{-- <label class="d-block"><b>Choose app</b></label>
@@ -104,13 +105,13 @@
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
                         <div class="form-group col-md-6">
-                           <label for="email">Email *</label>
-                           <input type="text" class="form-control " id="email" name="email" >
+                           {{-- <label for="email"></label> --}}
+                           <input type="text" class="form-control " placeholder="Email" id="email" name="email" >
                         </div>
                         
                         <div class="form-group col-md-6">
-                           <label for="username">Username *</label>
-                           <input type="text" class="form-control " id="username" name="username" >
+                           {{-- <label for="username">Username *</label> --}}
+                           <input type="text" class="form-control " placeholder="Username" id="username" name="username" >
                         </div>
                         {{-- <div class="form-group col-md-6">
                            <label for="no_telp">No. Telp</label>
@@ -118,9 +119,9 @@
                         </div> --}}
 
                         <div class="form-group col-md-12">
-                           <label>Level*</label>
+                           {{-- <label>Level*</label> --}}
                            <select  class="custom-select" required id="level" name="level">
-                              <option  disabled selected>Choose</option>
+                              <option  disabled selected>Choose Level User</option>
                               <option value="marine">Marine</option>
                               <option value="suptent">Suptent</option>
                               <option value="suptent_loc">Suptent On Location</option>
@@ -131,6 +132,7 @@
                            <label>Func</label>
                            <select  class="custom-select" required id="func" name="func">
                               <option  disabled selected>Choose</option>
+                              <option  value="Empty">Empty</option>
                               <option value="WI">WI</option>
                               <option value="Drilling">Drilling</option>
                               {{-- <option value="NBU">NBU</option> --}}
@@ -141,6 +143,7 @@
                            <label>Area</label>
                            <select  class="custom-select" required id="area" name="area">
                               <option  disabled selected>Choose</option>
+                              <option  value="Empty">Empty</option>
                               <option value="SBU">SBU</option>
                               <option value="CBU">CBU</option>
                               <option value="NBU">NBU</option>

@@ -51,6 +51,18 @@ class UserController extends Controller
 
       // dd($req->role . '-' . $req->sistem);
 
+      if ($req->func == 'Empty') {
+         $func = null;
+      } else {
+         $func = $req->func;
+      }
+
+      if ($req->area == 'Empty') {
+         $area = null;
+      } else {
+         $area = $req->area;
+      }
+
 
 
       $employee = Employee::create([
@@ -60,8 +72,8 @@ class UserController extends Controller
          'email' => $req->email,
          // 'no_telp' => $req->no_telp,
          'role' => $req->level,
-         'area' => $req->area,
-         'func' => $req->func
+         'area' => $area,
+         'func' => $func
          
       ]);
 
@@ -146,13 +158,26 @@ class UserController extends Controller
       $user = User::where('email', $employee->email)->first();
       // $employee = Employee::where('email', $user->email)->first();
       // dd($user->name);
+
+      if ($req->func == 'Empty') {
+         $func = null;
+      } else {
+         $func = $req->func;
+      }
+
+      if ($req->area == 'Empty') {
+         $area = null;
+      } else {
+         $area = $req->area;
+      }
+
       $employee->update([
          'name' => $req->name,
          'username' => $req->username,
          'email' => $req->email,
          'role' => $req->level,
-         'area' => $req->area,
-         'func' => $req->func
+         'area' => $area,
+         'func' => $func
       ]);
 
       $user->update([

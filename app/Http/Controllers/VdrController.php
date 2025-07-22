@@ -3390,7 +3390,7 @@ class VdrController extends Controller
             'ce' => $lastVdr->ce,
             'status' => 0,
 
-            'func' => $func,
+            'func' => $vessel->func,
             'area' => $area
          ]);
 
@@ -3645,7 +3645,8 @@ class VdrController extends Controller
          'owner' => '-',
          'master' => '-',
          'ce' => '-',
-         'status' => 0
+         'status' => 0,
+         'func' => $vessel->func
       ]);
 
 

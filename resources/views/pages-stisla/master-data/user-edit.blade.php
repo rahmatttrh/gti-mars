@@ -40,7 +40,7 @@
             <div class="card border shadow">
               
                <div class="card-body">
-                  <b>Form Edit User</b>
+                  <b>Form Edit Userrr</b>
                <hr>
                   <form action="{{route('user.update')}}" method="POST">
                      @csrf
@@ -54,13 +54,13 @@
                            <input type="text" class="form-control " id="name" name="name" value="{{$user->name}}" >
                         </div>
                         <div class="form-group col-md-6">
-                           <label for="email">Email *</label>
-                           <input type="text" class="form-control " id="email" name="email" value="{{$user->email}}">
+                           {{-- <label for="email">Email *</label> --}}
+                           <input type="text" class="form-control " id="email" name="email" placeholder="Email" value="{{$user->email}}">
                         </div>
                         
                         <div class="form-group col-md-6">
-                           <label for="username">Username *</label>
-                           <input type="text" class="form-control " id="username" name="username" value="{{$user->username}}">
+                           {{-- <label for="username">Username *</label> --}}
+                           <input type="text" class="form-control " id="username" name="username" placeholder="Username" value="{{$user->username}}">
                         </div>
                         
 
@@ -78,6 +78,7 @@
                            <label>Func</label>
                            <select  class="custom-select" required id="func" name="func">
                               <option  disabled selected>Choose</option>
+                              <option  value="Empty">Empty</option>
                               <option {{$user->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
                               <option {{$user->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
                               {{-- <option {{$user->func == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option> --}}
@@ -88,6 +89,7 @@
                            <label>Area</label>
                            <select  class="custom-select" required id="area" name="area">
                               <option  disabled selected>Choose</option>
+                              <option  value="Empty">Empty</option>
                               <option {{$user->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                               <option {{$user->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                               <option {{$user->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
@@ -130,7 +132,7 @@
                            
                            {{-- <th>Location</th> --}}
                            {{-- <th>Email</th> --}}
-                           <th>Area</th>
+                           <th>Desc</th>
                            <th>Action</th>
                         </tr>
                      </thead>
