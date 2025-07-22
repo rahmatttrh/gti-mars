@@ -3331,6 +3331,7 @@ class VdrController extends Controller
 
       // dd('ok');
       // $lastVdr = $lastVdr;
+      // dd($lastVdr);
       $vessel = Vessel::find($lastVdr->vessel_id);
       // dd(str_replace(' ', '', $vessel->name));
 
@@ -3360,11 +3361,15 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      if ($vessel->contract != null) {
-         $contract = $vessel->contract;
-      } else {
-         $contract = $lastVdr->contract;
-      }
+      // if ($vessel->contract != null) {
+      //    // dd('ok');
+      //    $contract = $vessel->contract;
+      // } else {
+      //    // dd('ada');
+      //    $contract = $lastVdr->contract;
+      // }
+      $contract = $lastVdr->contract;
+      // dd($vessel->contract);
 
       if ($vessel->contract_type == 'Non PO') {
          $func = $vessel->func;
@@ -3653,8 +3658,11 @@ class VdrController extends Controller
       if ($vessel->contract != null) {
          $contract = $vessel->contract;
       } else {
+         
          $contract = '-';
       }
+
+
       
 
       $awalan = $contract . "/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
