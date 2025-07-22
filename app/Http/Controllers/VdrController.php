@@ -3288,6 +3288,7 @@ class VdrController extends Controller
 
       // dd('ok');
       // $lastVdr = $lastVdr;
+      // dd($lastVdr);
       $vessel = Vessel::find($lastVdr->vessel_id);
       // dd(str_replace(' ', '', $vessel->name));
 
@@ -3317,11 +3318,15 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      if ($vessel->contract != null) {
-         $contract = $vessel->contract;
-      } else {
-         $contract = $lastVdr->contract;
-      }
+      // if ($vessel->contract != null) {
+      //    // dd('ok');
+      //    $contract = $vessel->contract;
+      // } else {
+      //    // dd('ada');
+      //    $contract = $lastVdr->contract;
+      // }
+      $contract = $lastVdr->contract;
+      // dd($vessel->contract);
 
       if ($vessel->contract_type == 'Non PO') {
          $func = $vessel->func;
@@ -3330,26 +3335,26 @@ class VdrController extends Controller
          $func = '';
          $area = '';
       }
-     
-         $vdr = Vdr::create([
-            'area' => $vessel->area,
-            'vessel_id' => $lastVdr->vessel_id,
-            'date' => $today,
-            'crew_onduty' => $lastVdr->onduty,
-            'crew_max' => $lastVdr->max,
-            'location_midnight' => $lastVdr->location_midnight,
-            'created_by' => $lastVdr->created_by,
-            'contract' => $contract,
-            'contract_start' => $lastVdr->contract_start,
-            'contract_end' => $lastVdr->contract_end,
-            'owner' => $lastVdr->owner,
-            'master' => $lastVdr->master,
-            'ce' => $lastVdr->ce,
-            'status' => 0,
 
-            'func' => $vessel->func,
-            'area' => $area
-         ]);
+      $vdr = Vdr::create([
+         'area' => $vessel->area,
+         'vessel_id' => $lastVdr->vessel_id,
+         'date' => $today,
+         'crew_onduty' => $lastVdr->onduty,
+         'crew_max' => $lastVdr->max,
+         'location_midnight' => $lastVdr->location_midnight,
+         'created_by' => $lastVdr->created_by,
+         'contract' => $contract,
+         'contract_start' => $lastVdr->contract_start,
+         'contract_end' => $lastVdr->contract_end,
+         'owner' => $lastVdr->owner,
+         'master' => $lastVdr->master,
+         'ce' => $lastVdr->ce,
+         'status' => 0,
+
+         'func' => $vessel->func,
+         'area' => $area
+      ]);
 
 
 
@@ -3607,8 +3612,17 @@ class VdrController extends Controller
       ]);
 
 
+      if ($vessel->contract != null) {
+         $contract = $vessel->contract;
+      } else {
 
-      $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+         $contract = '-';
+      }
+
+
+
+
+      $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
