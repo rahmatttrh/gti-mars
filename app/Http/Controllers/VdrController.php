@@ -3317,29 +3317,39 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      // if ($vessel->contract != null) {
-      //    $contract = $vessel->contract;
-      // } else {
-      //    $contract = $lastVdr->contract;
-      // }
-      $contract = $lastVdr->contract;
+      if ($vessel->contract != null) {
+         $contract = $vessel->contract;
+      } else {
+         $contract = $lastVdr->contract;
+      }
 
-      $vdr = Vdr::create([
-         'area' => $vessel->area,
-         'vessel_id' => $lastVdr->vessel_id,
-         'date' => $today,
-         'crew_onduty' => $lastVdr->onduty,
-         'crew_max' => $lastVdr->max,
-         'location_midnight' => $lastVdr->location_midnight,
-         'created_by' => $lastVdr->created_by,
-         'contract' => $contract,
-         'contract_start' => $lastVdr->contract_start,
-         'contract_end' => $lastVdr->contract_end,
-         'owner' => $lastVdr->owner,
-         'master' => $lastVdr->master,
-         'ce' => $lastVdr->ce,
-         'status' => 0
-      ]);
+      if ($vessel->contract_type == 'Non PO') {
+         $func = $vessel->func;
+         $area = $vessel->area;
+      } else {
+         $func = '';
+         $area = '';
+      }
+     
+         $vdr = Vdr::create([
+            'area' => $vessel->area,
+            'vessel_id' => $lastVdr->vessel_id,
+            'date' => $today,
+            'crew_onduty' => $lastVdr->onduty,
+            'crew_max' => $lastVdr->max,
+            'location_midnight' => $lastVdr->location_midnight,
+            'created_by' => $lastVdr->created_by,
+            'contract' => $contract,
+            'contract_start' => $lastVdr->contract_start,
+            'contract_end' => $lastVdr->contract_end,
+            'owner' => $lastVdr->owner,
+            'master' => $lastVdr->master,
+            'ce' => $lastVdr->ce,
+            'status' => 0,
+
+            'func' => $vessel->func,
+            'area' => $area
+         ]);
 
 
 
@@ -3592,7 +3602,8 @@ class VdrController extends Controller
          'owner' => '-',
          'master' => '-',
          'ce' => '-',
-         'status' => 0
+         'status' => 0,
+         'func' => $vessel->func
       ]);
 
 

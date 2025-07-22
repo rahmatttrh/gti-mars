@@ -1501,12 +1501,13 @@ class HomeController extends Controller
 
 
          $employee = Employee::where('email', auth()->user()->email)->first();
-         $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+         $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
 
-         $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
+         $allVdrs = Vdr::where('func', $employee->func)->orderBy('updated_at', 'desc')->get();
          // dd('suptent-loc');
          // dd($allVdrs);
          return view('main-suptent-loc', [
+            'employee' => $employee,
             'allVdrs' => $allVdrs,
             'vdrValidations' => $vdrValidations
 

@@ -155,11 +155,24 @@ class VesselController extends Controller
 
       $vessel = Vessel::find($req->vessel);
       $user = User::where('email', $req->email)->first();
+
+      if ($req->func == 'Empty') {
+         $func = null;
+      } else {
+         $func = $req->func;
+      }
+
+      if ($req->area == 'Empty') {
+         $area = null;
+      } else {
+         $area = $req->area;
+      }
+
       $vessel->update([
          'status' => $req->status,
          'name' => $req->name,
-         'area' => $req->area,
-         'func' => $req->func,
+         'area' => $area,
+         'func' => $func,
          'ipb' => $req->ipb,
          'username' => $req->username,
          'email' => $req->email,
@@ -187,7 +200,7 @@ class VesselController extends Controller
          'deckspace' => $req->deckspace,
          'deckstrength' => $req->deckstrength,
          'deckcapacity' => $req->deckcapacity,
-         
+
          'contract' => $req->contract,
          'contract_type' => $req->contract_type,
 

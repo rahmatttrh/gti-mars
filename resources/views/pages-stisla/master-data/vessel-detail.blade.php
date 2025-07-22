@@ -83,6 +83,7 @@
                                  {{-- <label for="contract_type">Func</label> --}}
                                  <select  class="form-control" id="func"  name="func" >
                                     <option value="" disabled selected>Select Func</option>
+                                    <option value="Empty" >Empty</option>
                                     <option {{$vessel->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
                                     <option {{$vessel->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
                                     
@@ -92,6 +93,7 @@
                                  {{-- <label for="contract_type">Area</label> --}}
                                  <select  class="form-control" id="area"  name="area" >
                                     <option value="" disabled selected>Select BU</option>
+                                    <option value="Empty"  >Empty</option>
                                     <option {{$vessel->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                                     <option {{$vessel->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                                     <option {{$vessel->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
