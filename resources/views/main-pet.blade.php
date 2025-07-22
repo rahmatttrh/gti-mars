@@ -114,7 +114,7 @@
                      <div class="row">
                         <div class="col-md-12">
                            <div class="table-responsive " >
-                              <table class="datatables">
+                              <table class="datatables-vdr">
                                  
                                  <thead>
                                     {{-- <tr>
@@ -122,9 +122,13 @@
                                     </tr> --}}
                                     <tr>
                                        {{-- <th>No</th> --}}
+                                       
                                        <th>Vessel</th>
 
                                        <th>Number</th>
+                                       <th>Date</th>
+                                       
+                                       
                                        {{-- <th>Last Update</th> --}}
                                        <th class="text-center">Status</th>
                                     </tr>
@@ -133,6 +137,7 @@
                                     @foreach ($vdrValidations as $vdr)
                                        <tr class="border" style="border: 1px black">
                                           {{-- <td>{{++$i}}</td> --}}
+                                          
                                           <td>
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name ?? ''}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
@@ -141,6 +146,9 @@
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
+                                          <td>{{$vdr->date}}</td>
+                                          
+                                          
                                           {{-- <td>{{$vdr->code}}</td> --}}
                                           {{-- <td>{{formatDate($vdr->updated_at)}}</td> --}}
                                           <td class="text-right">

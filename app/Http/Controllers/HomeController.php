@@ -1410,8 +1410,10 @@ class HomeController extends Controller
          // $user->assignRole('vessel');
          // dd('ok');
          if (auth()->user()->username == 'pet') {
-            $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('updated_at', 'desc')->get();
+
+      
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);

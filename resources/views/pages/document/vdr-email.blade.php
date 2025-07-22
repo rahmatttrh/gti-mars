@@ -108,7 +108,16 @@ table {
       <div class="col-md-6">
          @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
          <div class="btn btn-danger  mt-2 shadow" style="background-color: rgb(200, 54, 54);" >
-            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by {{$vdr->rejectBy->name ?? ''}} at {{formatDateTime($vdr->reject_date)}} :
+            <span class="badge badge-light border mr-2">!</span> &nbsp; Rejected by 
+               @if ($vdr->status == 101)
+                   PET
+                   @elseif($vdr->status == 202)
+                   MARINE
+                   @elseif($vdr->status == 303)
+                   SUPTENT
+               @endif
+            
+            at {{formatDateTime($vdr->reject_date)}} :
             {{$vdr->reject_desc}}
          </div>
                                      

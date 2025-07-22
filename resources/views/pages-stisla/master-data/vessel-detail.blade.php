@@ -25,15 +25,16 @@
 
                <div class="row">
                   <div class="col-md-5">
-                     <div class="section-header shadow">
-               
-                        <div class="breadcrumb-item ">Master Data</div>
-                        <div class="breadcrumb-item "><a href="{{route('vessel')}}">Vessel</a></div>
-                        <div class="breadcrumb-item active">Detail</div>
-                       
-                     </div>
+                     
                      <div class="card shadow">
                         <div class="card-body">
+                           <div class="section-header p-0 shadow-none">
+               
+                              <div class="breadcrumb-item ">Master Data</div>
+                              <div class="breadcrumb-item "><a href="{{route('vessel')}}">Vessel</a></div>
+                              <div class="breadcrumb-item active">Detail</div>
+                             
+                           </div>
                            {{-- <h4 class="">Detail Vessel</h4>
                            <hr> --}}
                            <div class="form-row">
@@ -71,6 +72,15 @@
                               </div>
                               <div class="form-group col-md-7">
                                  {{-- <label for="contract_type">Func</label> --}}
+                                 <select  class="form-control" id="ipb"  name="ipb" >
+                                    <option value="" disabled selected>Select IPB / Non IPB</option>
+                                    <option {{$vessel->ipb == 'IPB' ? 'selected' : ''}} value="IPB">IPB</option>
+                                    <option {{$vessel->ipb == 'Non IPB' ? 'selected' : ''}} value="Non IPB">Non IPB</option>
+                                    
+                                 </select>
+                              </div>
+                              <div class="form-group col-md-5">
+                                 {{-- <label for="contract_type">Func</label> --}}
                                  <select  class="form-control" id="func"  name="func" >
                                     <option value="" disabled selected>Select Func</option>
                                     <option {{$vessel->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
@@ -78,7 +88,7 @@
                                     
                                  </select>
                               </div>
-                              <div class="form-group col-md-5">
+                              <div class="form-group col-md-7">
                                  {{-- <label for="contract_type">Area</label> --}}
                                  <select  class="form-control" id="area"  name="area" >
                                     <option value="" disabled selected>Select BU</option>

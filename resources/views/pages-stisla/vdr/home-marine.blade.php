@@ -143,7 +143,7 @@
                            
                         </div>
                         {{-- <div class="table-responsive"> --}}
-                           <table class="datatables-b" id="datatables">
+                           <table class="datatables-vdr" id="datatables">
                               <thead>
                                  <tr>
                                     {{-- <th class="text-center">No.</th> --}}
@@ -173,7 +173,7 @@
                                           <x-status-stisla.vdr :vdr="$vdr" />
                                        </td>
                                        <td>
-                                          {{$vdr->updated_at}}
+                                          {{$vdr->date}}
                                        </td>
                                     </tr>
                                     @endforeach
