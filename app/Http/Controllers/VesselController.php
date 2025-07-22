@@ -160,6 +160,7 @@ class VesselController extends Controller
          'name' => $req->name,
          'area' => $req->area,
          'func' => $req->func,
+         'ipb' => $req->ipb,
          'username' => $req->username,
          'email' => $req->email,
          'telp' => $req->telp,
@@ -186,6 +187,7 @@ class VesselController extends Controller
          'deckspace' => $req->deckspace,
          'deckstrength' => $req->deckstrength,
          'deckcapacity' => $req->deckcapacity,
+         
          'contract' => $req->contract,
          'contract_type' => $req->contract_type,
 

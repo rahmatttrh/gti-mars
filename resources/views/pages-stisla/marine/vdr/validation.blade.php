@@ -72,7 +72,7 @@
                <div class="card-body">
                   
                   <div class="table-responsive">
-                     <table class="datatables" id="datatable">
+                     <table class="datatables-vdr" id="datatable">
                         <thead>
                            <tr>
                               {{-- <th rowspan="2" class="text-center">No.</th> --}}
@@ -123,7 +123,7 @@
                              
                               {{-- <td>{{formatDayName($vdr->date)}}</td> --}}
                               <td>
-                                 {{formatDate($vdr->date)}} <br>
+                                 {{$vdr->date}}
                                  {{-- <small>{{formatDayName($vdr->date)}}</small> --}}
                               </td>
                               {{-- <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td> --}}

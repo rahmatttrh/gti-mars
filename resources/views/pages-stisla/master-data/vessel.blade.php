@@ -119,6 +119,14 @@
                            <td>{{$vessel->type}}</td>
                            <td>
                               {{$vessel->contract_type}}
+
+                              @if ($vessel->ipb == 'IPB')
+                                  (IPB)
+                              @endif
+
+                              @if ($vessel->func != null)
+                                 ({{$vessel->func}})
+                              @endif
                            </td>
                            <td>
                               {{-- @if ($vessel->status == 0)

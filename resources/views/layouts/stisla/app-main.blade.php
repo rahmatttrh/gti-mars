@@ -184,7 +184,7 @@ table {
       $('.datatables').DataTable( {
          "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
          "pageLength": 10,
-         "ordering": true,
+         "ordering": [[0, 'asc']],
        
       });
 
@@ -194,6 +194,24 @@ table {
          "ordering": false,
        
       });
+
+      $('.datatables-vdr').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [2, 'desc']
+         ],
+       
+      });
+
+      // $('.datatables-vdr').dataTable({
+            
+      //       iDisplayLength: -1,
+      //       "order": [
+      //           [0, "desc"]
+      //       ]
+      //   });
 
    
    });
