@@ -847,6 +847,7 @@ Route::prefix('fetch')->group(function () {
 
    Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
    
+   Route::get('vdr/update/time/activity/{vdr}/{act}/{start}/{finish}', [VdrController::class, 'updateActivityTimeAjax']);
    Route::get('vdr/update/high/activity/{vdr}/{act}/{high}', [VdrController::class, 'updateActivityHighAjax']);
    Route::get('vdr/update/normal/activity/{vdr}/{act}/{normal}', [VdrController::class, 'updateActivityNormalAjax']);
    Route::get('vdr/update/slow/activity/{vdr}/{act}/{slow}', [VdrController::class, 'updateActivitySlowAjax']);

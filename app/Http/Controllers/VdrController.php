@@ -1624,7 +1624,6 @@ class VdrController extends Controller
 
    }
 
-
    public function updateActivityHighAjax($vdr, $act, $high)
    {
 
