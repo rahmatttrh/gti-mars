@@ -2442,6 +2442,7 @@
                   success: function(result) {
                      $('.sbTime').html(result.vdrOperatingSb.time);
                      console.log('time sb :' + result.vdrOperatingSb.time);
+                     console.log('daily sb :' + result.vdrOperatingSb.daily);
                      $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
                      $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
                      $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
