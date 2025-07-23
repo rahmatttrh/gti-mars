@@ -18,9 +18,9 @@
                   </div>
                </div>
       
-               <div class="card shadow">
+               <div class="card shadow d-none d-md-block">
                   <div class="card-body px-1">
-                     <div class="d-none d-md-block table-responsive  overflow-auto" style="height: 250px">
+                     <div class=" table-responsive  overflow-auto" style="height: 250px">
                         <table class=" display  "   >
                           {{-- <thead>
                              <tr>
@@ -134,28 +134,23 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    @foreach ($vdrValidations as $vdr)
+                                    {{-- @foreach ($vdrValidations as $vdr)
                                        <tr class="border" style="border: 1px black">
-                                          {{-- <td>{{++$i}}</td> --}}
-                                          
+                                        
                                           <td>
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name ?? ''}}</a>
-                                             {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
                                           <td>
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                             {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
-                                          </td>
+                                           </td>
                                           <td>{{$vdr->date}}</td>
                                           
                                           
-                                          {{-- <td>{{$vdr->code}}</td> --}}
-                                          {{-- <td>{{formatDate($vdr->updated_at)}}</td> --}}
                                           <td class="text-right">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
                                        </tr>
-                                    @endforeach
+                                    @endforeach --}}
                                  </tbody>
                               </table>
                            </div>

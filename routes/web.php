@@ -835,6 +835,8 @@ Route::prefix('fetch')->group(function () {
    Route::get('jetty/{id}', [FetchController::class, 'fetchJetty']);
    Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
 
+   Route::get('vdr/update/bu/{vdr}/{bu}', [VdrController::class, 'updateBu'])->name('vdr.update.bu');
+
    Route::get('vdr/update/general/{vdr}/{date}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
    Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
    Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
@@ -844,6 +846,17 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
 
    Route::get('vdr/update/activity/{vdr}/{act}/{start}/{finish}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}/{activity}', [VdrController::class, 'updateActivityAjax']);
+   
+   Route::get('vdr/update/high/activity/{vdr}/{act}/{high}', [VdrController::class, 'updateActivityHighAjax']);
+   Route::get('vdr/update/normal/activity/{vdr}/{act}/{normal}', [VdrController::class, 'updateActivityNormalAjax']);
+   Route::get('vdr/update/slow/activity/{vdr}/{act}/{slow}', [VdrController::class, 'updateActivitySlowAjax']);
+   Route::get('vdr/update/manu/activity/{vdr}/{act}/{manu}', [VdrController::class, 'updateActivityManuAjax']);
+   Route::get('vdr/update/idle/activity/{vdr}/{act}/{idle}', [VdrController::class, 'updateActivityIdleAjax']);
+   Route::get('vdr/update/tow/activity/{vdr}/{act}/{tow}', [VdrController::class, 'updateActivityTowAjax']);
+   Route::get('vdr/update/ah/activity/{vdr}/{act}/{ah}', [VdrController::class, 'updateActivityAhAjax']);
+   Route::get('vdr/update/sb/activity/{vdr}/{act}/{sb}', [VdrController::class, 'updateActivitySbAjax']);
+   Route::get('vdr/update/desc/activity/{vdr}/{act}/{desc}', [VdrController::class, 'updateActivityDescAjax']);
+   
    Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
 
 

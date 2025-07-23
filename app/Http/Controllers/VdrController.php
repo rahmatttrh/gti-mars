@@ -1202,7 +1202,7 @@ class VdrController extends Controller
    }
 
 
-   public function updateGeneral($vdr, $date, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
+   public function updateGeneral($vdr,$date, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
    {
 
 
@@ -1561,18 +1561,18 @@ class VdrController extends Controller
       $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first();
       $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first();
 
-      return response()->json([
-         'success' => true,
-         'result' => $vdr->id,
+         return response()->json([
+            'success' => true,
+            'result' => $vdr->id,
 
-         'vdrOperatingHigh' => $vdrOperatingHigh,
-         'vdrOperatingNormal' => $vdrOperatingNormal,
-         'vdrOperatingSlow' => $vdrOperatingSlow,
-         'vdrOperatingIdle' => $vdrOperatingIdle,
-         'vdrOperatingManu' => $vdrOperatingManu,
-         'vdrOperatingAh' => $vdrOperatingAh,
-         'vdrOperatingTow' => $vdrOperatingTow,
-         'vdrOperatingSb' => $vdrOperatingSb,
+            'vdrOperatingHigh' => $vdrOperatingHigh,
+            'vdrOperatingNormal' => $vdrOperatingNormal,
+            'vdrOperatingSlow' => $vdrOperatingSlow,
+            'vdrOperatingIdle' => $vdrOperatingIdle,
+            'vdrOperatingManu' => $vdrOperatingManu,
+            'vdrOperatingAh' => $vdrOperatingAh,
+            'vdrOperatingTow' => $vdrOperatingTow,
+            'vdrOperatingSb' => $vdrOperatingSb,
 
          'highTime' => $vdrOperatingHigh->time,
          'normalTime' => $vdrOperatingNormal->time,
@@ -1594,8 +1594,7 @@ class VdrController extends Controller
 
    }
 
-   public function addActivityRow($vdr)
-   {
+   public function addActivityRow($vdr){
       $vdr = Vdr::find(dekripRambo($vdr));
 
       $lastActivity = VdrActivity::where('vdr_id', $vdr->id)->orderBy('created_at', 'desc')->first();
@@ -3288,7 +3287,6 @@ class VdrController extends Controller
 
       // dd('ok');
       // $lastVdr = $lastVdr;
-      // dd($lastVdr);
       $vessel = Vessel::find($lastVdr->vessel_id);
       // dd(str_replace(' ', '', $vessel->name));
 
@@ -3318,15 +3316,11 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      // if ($vessel->contract != null) {
-      //    // dd('ok');
-      //    $contract = $vessel->contract;
-      // } else {
-      //    // dd('ada');
-      //    $contract = $lastVdr->contract;
-      // }
-      $contract = $lastVdr->contract;
-      // dd($vessel->contract);
+      if ($vessel->contract != null) {
+         $contract = $vessel->contract;
+      } else {
+         $contract = $lastVdr->contract;
+      }
 
       if ($vessel->contract_type == 'Non PO') {
          $func = $vessel->func;
@@ -3335,26 +3329,26 @@ class VdrController extends Controller
          $func = '';
          $area = '';
       }
+     
+         $vdr = Vdr::create([
+            'area' => $vessel->area,
+            'vessel_id' => $lastVdr->vessel_id,
+            'date' => $today,
+            'crew_onduty' => $lastVdr->onduty,
+            'crew_max' => $lastVdr->max,
+            'location_midnight' => $lastVdr->location_midnight,
+            'created_by' => $lastVdr->created_by,
+            'contract' => $contract,
+            'contract_start' => $lastVdr->contract_start,
+            'contract_end' => $lastVdr->contract_end,
+            'owner' => $lastVdr->owner,
+            'master' => $lastVdr->master,
+            'ce' => $lastVdr->ce,
+            'status' => 0,
 
-      $vdr = Vdr::create([
-         'area' => $vessel->area,
-         'vessel_id' => $lastVdr->vessel_id,
-         'date' => $today,
-         'crew_onduty' => $lastVdr->onduty,
-         'crew_max' => $lastVdr->max,
-         'location_midnight' => $lastVdr->location_midnight,
-         'created_by' => $lastVdr->created_by,
-         'contract' => $contract,
-         'contract_start' => $lastVdr->contract_start,
-         'contract_end' => $lastVdr->contract_end,
-         'owner' => $lastVdr->owner,
-         'master' => $lastVdr->master,
-         'ce' => $lastVdr->ce,
-         'status' => 0,
-
-         'func' => $vessel->func,
-         'area' => $area
-      ]);
+            'func' => $func,
+            'area' => $area
+         ]);
 
 
 
@@ -3607,26 +3601,22 @@ class VdrController extends Controller
          'owner' => '-',
          'master' => '-',
          'ce' => '-',
-         'status' => 0,
-         'func' => $vessel->func
+         'status' => 0
       ]);
 
 
       if ($vessel->contract != null) {
          $contract = $vessel->contract;
       } else {
-
          $contract = '-';
       }
+      
 
-
-
-
-      $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+      $awalan = $contract . "/". str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
       // Mengonversi $id ke dalam format tiga digit dengan leading zeros
       $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-
+      
       $timestamp = $year  . $month  . $day;
 
       $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();

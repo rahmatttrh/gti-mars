@@ -129,15 +129,15 @@
          </div> --}}
          <div class="col-md-12 ">
             <div class="d-flex px-1 mb-2">
+               <div class="d-flex align-items-center">
+
+               
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                  <a href="#" class="btn  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                  <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
                   {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
                   <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
-                  {{-- <div class="btn-group btn-light mx-2">
-                     
-                     
-                  </div> --}}
+                 
                   
                   
                   @endif
@@ -182,7 +182,7 @@
                @endif
 
                <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
-               <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+               
                
                
                
@@ -194,47 +194,49 @@
                                      
                @endif
 
-               @if (auth()->user()->hasRole('vessel'))
-                  @if ($vdr->status == 0)
-                  <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                  </div>
-                  @endif
-                  
-                  
-               @endif
+               
 
                @if (count($vdrHistories) > 0)
-               <select class="form-control" name="" id="">
-                  <option value="" selected disabled>Revision Record</option>
-                  @foreach ($vdrHistories as $vhis)
-                  <option value="">
-                     <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
-                  </option>
-                     @endforeach
-                  
-               </select>
-               {{-- <div class="btn-group">
-                  <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Action
-                  </button>
-                  <div class="dropdown-menu" style="max-width: 500px;min-width: 1%;" >
+                  <select class="form-control" name="" id="">
+                     <option value="" selected disabled>Revision Record</option>
                      @foreach ($vdrHistories as $vhis)
-                     <a class="dropdown-item" href="#" >{{$vhis->code}} Lorem, ipsum dolor.</a>
+                     <option value="">
+                        <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
+                     </option>
+                        @endforeach
                      
-                     @endforeach
-                  </div>
-                </div> --}}
-               {{-- <div class="dropdown">
-                  <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Riwayat Revisi
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  </select>
+                  {{-- <div class="btn-group">
+                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Action
+                     </button>
+                     <div class="dropdown-menu" style="max-width: 500px;min-width: 1%;" >
+                        @foreach ($vdrHistories as $vhis)
+                        <a class="dropdown-item" href="#" >{{$vhis->code}} Lorem, ipsum dolor.</a>
+                        
+                        @endforeach
+                     </div>
+                  </div> --}}
+                  {{-- <div class="dropdown">
+                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Riwayat Revisi
+                     </button>
+                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        
                      
-                    
-                  </div>
-                </div> --}}
+                     </div>
+                  </div> --}}
                @endif
+
+               @if ($vdr->vessel->ipb == 'IPB')
+                   <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
+                     <option selected disabled >Choose BU</option>
+                     <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                     <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                     <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                   </select>
+               @endif
+            </div>
 
                @if (auth()->user()->hasRole('marine'))
                    <div class="btn-group ml-2 ">
@@ -246,6 +248,23 @@
                      
                    </div>
                @endif
+
+
+               
+
+               <div class="ml-auto">
+                  @if (auth()->user()->hasRole('vessel'))
+                     @if ($vdr->status == 0)
+                     <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                        <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                     </div>
+                     @endif
+                     
+                     
+                  @endif
+                  <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+               </div>
+               
                
                {{-- <div class="card bg-warning">
                   <div class="card-boy"></div>
@@ -570,38 +589,38 @@
                                           </td>
                                           <td class="bg-y text-center">
                                              {{-- {{getTotalHours($activity->high)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_high_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->normal)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_normal_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->slow)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_slow_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->manu)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_manu_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->idle)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_idle_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->tow)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_tow_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->ah)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_ah_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              {{-- {{getTotalHours($activity->sb)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sb_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_desc_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                              {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
                                                 {{$activity->activity}}
                                              </textarea> --}}
@@ -741,12 +760,12 @@
                               @endforeach
                               <tr>
                                  <th>Total Daily</th>
-                                 <th class="text-center">
+                                 <th class="text-center total_jam">
                                        {{$totalJam}}
                                  </th>
                                  <th colspan="2"></th>
                                  <td class="text-center">
-                                    <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 "  readonly id="totalDaily"  value="{{round($totalDaily)}}">
+                                    <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 total_daily"  readonly id="totalDaily"   value="{{round($totalDaily)}}">
                                        {{-- <b > <span class="totalDaily"></span> Ltrs</b>  --}}
                                        
                                  </td>
@@ -982,7 +1001,7 @@
 
                   </tbody>
                </table>
-            {{-- </div> --}}
+               {{-- </div> --}}
 
                <hr>
               
@@ -1281,7 +1300,7 @@
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
                               <option value="YFH">Yusuf Falah Hibatullah</option>
-                              <option value="S">Setyo</option>
+                              <option value="SW">Setyo Wiyono</option>
                               <option value="R">Radit</option>
                            </select>
                           
@@ -2082,7 +2101,7 @@
                
                
                
-               console.log('normal : ' + normal);
+               console.log('value : ' + normal);
 
                
 
@@ -2135,6 +2154,8 @@
                      $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
                      $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
                      $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+
+                     $('.total_jam').html(result.totalJam);
                      
                   },
                   error: function(error) {
@@ -2215,6 +2236,291 @@
                      $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
                      $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
                      $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+
+
+
+            $(".input_activity_high_" + '{!! $act->id !!}').keyup(function () {
+               console.log('activity');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var high = $('#high_' + '{!! $act->id !!}').val();
+            
+               
+               console.log('high : ' + high);
+         
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/high/activity/" + vdr + "/" + act +  "/"   + high ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.highTime').html(result.vdrOperatingHigh.time);
+                     
+
+                     console.log('time high :' + result.vdrOperatingHigh.time);
+
+                     $('.time_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.time);
+                     $('.time_' + result.vdrOperatingHigh.heading_id).html(result.vdrOperatingHigh.time);
+                     $('.daily_' + result.vdrOperatingHigh.heading_id).val(result.vdrOperatingHigh.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+
+
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_normal_" + '{!! $act->id !!}').keyup(function () {
+               console.log('activity');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var normal = $('#normal_' + '{!! $act->id !!}').val();
+               
+               console.log('normal : ' + normal);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/normal/activity/" + vdr + "/" + act +  "/"   + normal ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.normalTime').html(result.vdrOperatingNormal.time);
+                     console.log('time normal :' + result.vdrOperatingNormal.time);
+                     $('.time_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.time);
+                     $('.time_' + result.vdrOperatingNormal.heading_id).html(result.vdrOperatingNormal.time);
+                     $('.daily_' + result.vdrOperatingNormal.heading_id).val(result.vdrOperatingNormal.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_slow_" + '{!! $act->id !!}').keyup(function () {
+               console.log('activity');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var slow = $('#slow_' + '{!! $act->id !!}').val();
+               
+               console.log('slow : ' + slow);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/slow/activity/" + vdr + "/" + act +  "/"   + slow ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.slowTime').html(result.vdrOperatingSlow.time);
+                     console.log('time slow :' + result.vdrOperatingSlow.time);
+                     $('.time_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.time);
+                     $('.time_' + result.vdrOperatingSlow.heading_id).html(result.vdrOperatingSlow.time);
+                     $('.daily_' + result.vdrOperatingSlow.heading_id).val(result.vdrOperatingSlow.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_manu_" + '{!! $act->id !!}').keyup(function () {
+               console.log('manu');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var manu = $('#manu_' + '{!! $act->id !!}').val();
+               
+               console.log('manu : ' + manu);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/manu/activity/" + vdr + "/" + act +  "/"   + manu ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.manuTime').html(result.vdrOperatingManu.time);
+                     console.log('time manu :' + result.vdrOperatingManu.time);
+                     $('.time_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.time);
+                     $('.time_' + result.vdrOperatingManu.heading_id).html(result.vdrOperatingManu.time);
+                     $('.daily_' + result.vdrOperatingManu.heading_id).val(result.vdrOperatingManu.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_idle_" + '{!! $act->id !!}').keyup(function () {
+               console.log('idle');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var idle = $('#idle_' + '{!! $act->id !!}').val();
+               
+               console.log('idle : ' + idle);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/idle/activity/" + vdr + "/" + act +  "/"   + idle ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.idleTime').html(result.vdrOperatingIdle.time);
+                     console.log('time idle :' + result.vdrOperatingIdle.time);
+                     $('.time_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.time);
+                     $('.time_' + result.vdrOperatingIdle.heading_id).html(result.vdrOperatingIdle.time);
+                     $('.daily_' + result.vdrOperatingIdle.heading_id).val(result.vdrOperatingIdle.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_tow_" + '{!! $act->id !!}').keyup(function () {
+               console.log('tow');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var tow = $('#tow_' + '{!! $act->id !!}').val();
+               
+               console.log('tow : ' + tow);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/tow/activity/" + vdr + "/" + act +  "/"   + tow ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.towTime').html(result.vdrOperatingTow.time);
+                     console.log('time tow :' + result.vdrOperatingTow.time);
+                     $('.time_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.time);
+                     $('.time_' + result.vdrOperatingTow.heading_id).html(result.vdrOperatingTow.time);
+                     $('.daily_' + result.vdrOperatingTow.heading_id).val(result.vdrOperatingTow.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_ah_" + '{!! $act->id !!}').keyup(function () {
+               console.log('ah');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var ah = $('#ah_' + '{!! $act->id !!}').val();
+               
+               console.log('ah : ' + ah);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/ah/activity/" + vdr + "/" + act +  "/"   + ah ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.ahTime').html(result.vdrOperatingAh.time);
+                     console.log('time ah :' + result.vdrOperatingAh.time);
+                     $('.time_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.time);
+                     $('.time_' + result.vdrOperatingAh.heading_id).html(result.vdrOperatingAh.time);
+                     $('.daily_' + result.vdrOperatingAh.heading_id).val(result.vdrOperatingAh.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_sb_" + '{!! $act->id !!}').keyup(function () {
+               console.log('sb');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var sb = $('#sb_' + '{!! $act->id !!}').val();
+               
+               console.log('sb : ' + sb);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/sb/activity/" + vdr + "/" + act +  "/"   + sb ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.sbTime').html(result.vdrOperatingSb.time);
+                     console.log('time sb :' + result.vdrOperatingSb.time);
+                     $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
+                     $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
+                     $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+
+            $(".input_activity_desc_" + '{!! $act->id !!}').keyup(function () {
+               console.log('sb');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var desc = $('#activity_' + '{!! $act->id !!}').val();
+               
+               console.log('desc : ' + desc);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/desc/activity/" + vdr + "/" + act +  "/"   + desc ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     // $('.sbTime').html(result.vdrOperatingSb.time);
+                     console.log('act :' + result.result);
                      
                   },
                   error: function(error) {
@@ -2665,6 +2971,44 @@
                console.log('msg :' + result.error );
                $('.code').html(result.code);
                $('.errordate').html(result.error);
+               
+            },
+            error: function(error) {
+               console.log(error)
+            }
+
+         })
+      });
+
+      $('.input_bu').change( function () {
+         
+         
+
+         console.log('change ipb bu');
+
+         var vdr = $('#vdr').val();
+         
+         var bu = $('#bu').val();
+
+         console.log(date);
+
+        
+
+
+
+         var _token = $('meta[name="csrf-token"]').attr('content');
+
+         console.log('vdr bu:' + vdr);
+
+         $.ajax({
+            url: "/fetch/vdr/update/bu/" + vdr + "/" + bu ,
+            method: "GET",
+            dataType: 'json',
+
+            success: function(result) {
+               console.log('msg :' + result.result );
+               // $('.code').html(result.code);
+               // $('.errordate').html(result.error);
                
             },
             error: function(error) {
