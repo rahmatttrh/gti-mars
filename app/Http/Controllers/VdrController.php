@@ -1199,6 +1199,37 @@ class VdrController extends Controller
       }
    }
 
+   public function updateBu($vdr,$bu)
+   {
+      
+      
+      
+
+      $vdr = Vdr::find($vdr);
+
+     
+      
+      // if ($sameVdr == null) {
+         $vdr->update([
+            'area' => $bu,
+            
+   
+         ]);
+      // } 
+      
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->area,
+        
+
+      ]);
+
+      
+
+      
+   }
+
 
    public function updateGeneral($vdr,$date, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
    {
@@ -1591,10 +1622,49 @@ class VdrController extends Controller
          $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first();
          $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first();
 
+
+         $debugHours = 0;
+         $debugMinutes = 0;
+         $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+         foreach ($ops as $op) {
+            $time = $op->time;
+            $array = explode('.', $op->time);
+            $hours = floor($time);
+            $minutes = intval($array[1]);
+
+            $debugHours += $hours;
+            $debugMinutes += $minutes;
+         }
+         // dd($debugHours);
+
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+            }
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+            }
+         }
+
+         if ($debugMinutes < 10) {
+            $finalMinutes = '0' . $debugMinutes;
+         } else {
+            $finalMinutes = $debugMinutes;
+         }
+         $finalHours  = sprintf('%02d', floor($debugHours));
+         $final = $finalHours . ':' . $finalMinutes;
+
          return response()->json([
             'success' => true,
             'result' => $vdr->id,
-
+            'totalJam' => $final,
             'vdrOperatingHigh' => $vdrOperatingHigh,
             'vdrOperatingNormal' => $vdrOperatingNormal,
             'vdrOperatingSlow' => $vdrOperatingSlow,
@@ -1623,6 +1693,850 @@ class VdrController extends Controller
          // return redirect()->route('vdr.show', [enkripRambo($vdr), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
      
    }
+
+   public function updateActivityHighAjax($vdr, $act, $high)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'high' => $high, 
+      ]);
+
+      $thigh = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $thigh = $this->hitungTime($thigh, $activity->high);
+      }
+
+      $totalMode = array(
+         'high'   => $thigh,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
+      $totalHigh = $operating->getSumHigh();
+      $operating->update([
+         'time' => floatval($totalHigh)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingHigh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingHigh' => $vdrOperatingHigh,
+      ]);
+         
+         
+
+        
+
+         // return redirect()->route('vdr.show', [enkripRambo($vdr), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
+     
+   }
+
+   public function updateActivityNormalAjax($vdr, $act,  $normal)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([
+         'normal' => $normal,
+      ]);
+
+      $tnormal = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tnormal = $this->hitungTime($tnormal, $activity->normal);
+      }
+
+      $totalMode = array(
+         'normal' => $tnormal,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 2)->first();
+      $totalNormal = $operating->getSumNormal();
+      $operating->update([
+         'time' => floatval($totalNormal)
+      ]);
+
+
+      // Hitung Operating Data
+      $operatings = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 2)->get();
+      $bulat = floor($operating->time);
+
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+      
+      $vdrOperatingNormal = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 2)->first();
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         
+         'vdrOperatingNormal' => $vdrOperatingNormal,
+         'normalTime' => $vdrOperatingNormal->time,
+      ]);
+         
+         // return redirect()->route('vdr.show', [enkripRambo($vdr), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
+     
+   }
+
+   public function updateActivitySlowAjax($vdr, $act,  $slow)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+     
+      $vdrActivity->update([
+         'slow' => $slow,
+      ]);
+
+      
+      $tslow = 0;
+      
+
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tslow = $this->hitungTime($tslow, $activity->slow);
+      }
+
+      $totalMode = array(
+         'slow'   => $tslow,
+      );
+
+        
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 3)->first();
+      $totalSlow = $operating->getSumSlow();
+      $operating->update([
+         'time' => floatval($totalSlow)
+      ]);
+
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+       
+      $vdrOperatingSlow = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 3)->first();
+         
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingSlow' => $vdrOperatingSlow,
+         'slowTime' => $vdrOperatingSlow->time,
+      ]);
+         
+   }
+
+   public function updateActivityManuAjax($vdr, $act, $manu)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'manu' => $manu, 
+      ]);
+
+      $tmanu = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tmanu = $this->hitungTime($tmanu, $activity->manu);
+      }
+
+      $totalMode = array(
+         'manu'   => $tmanu,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $totalManu = $operating->getSumManu();
+      $operating->update([
+         'time' => floatval($totalManu)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingManu = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingManu' => $vdrOperatingManu,
+      ]);
+         
+         
+
+        
+
+         // return redirect()->route('vdr.show', [enkripRambo($vdr), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
+     
+   }
+
+   public function updateActivityIdleAjax($vdr, $act, $idle)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'idle' => $idle, 
+      ]);
+
+      $tidle = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tidle = $this->hitungTime($tidle, $activity->idle);
+      }
+
+      $totalMode = array(
+         'idle'   => $tidle,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 5)->first();
+      $totalIdle = $operating->getSumIdle();
+      $operating->update([
+         'time' => floatval($totalIdle)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 5)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingIdle = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingIdle' => $vdrOperatingIdle,
+      ]);
+    
+   }
+
+   public function updateActivityTowAjax($vdr, $act, $tow)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'tow' => $tow, 
+      ]);
+
+      $ttow = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $ttow = $this->hitungTime($ttow, $activity->tow);
+      }
+
+      $totalMode = array(
+         'tow'   => $ttow,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 6)->first();
+      $totalTow = $operating->getSumTow();
+      $operating->update([
+         'time' => floatval($totalTow)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 6)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingTow = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingTow' => $vdrOperatingTow,
+      ]);
+    
+   }
+
+   public function updateActivityAhAjax($vdr, $act, $ah)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'ah' => $ah, 
+      ]);
+
+      $tah = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tah = $this->hitungTime($tah, $activity->ah);
+      }
+
+      $totalMode = array(
+         'ah'   => $tah,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first();
+      $totalAh = $operating->getSumAh();
+      $operating->update([
+         'time' => floatval($totalAh)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingAh' => $vdrOperatingAh,
+      ]);
+    
+   }
+
+   public function updateActivitySbAjax($vdr, $act, $sb)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'sb' => $sb, 
+      ]);
+
+      $tsb = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tsb = $this->hitungTime($tsb, $activity->sb);
+      }
+
+      $totalMode = array(
+         'sb'   => $tsb,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first();
+      $totalSb = $operating->getSumSb();
+      $operating->update([
+         'time' => floatval($totalSb)
+      ]);
+        
+
+         // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+         
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingSb' => $vdrOperatingSb,
+      ]);
+    
+   }
+
+   public function updateActivityDescAjax($vdr, $act, $desc)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([ 
+         'activity' => $desc, 
+      ]);
+
+      
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         
+      ]);
+    
+   }
+
+
+
+
+
 
    public function addActivityRow($vdr){
       $vdr = Vdr::find(dekripRambo($vdr));
