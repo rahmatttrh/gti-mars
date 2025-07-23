@@ -1694,6 +1694,36 @@ class VdrController extends Controller
      
    }
 
+   public function updateActivityTimeAjax($vdr, $act, $start, $finish)
+   {
+      
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+     
+      
+
+      $vdrActivity->update([
+         
+         'start' => $start,
+         'finish' => $finish,
+         
+      ]);
+
+     
+         return response()->json([
+            'success' => true,
+            'result' => $vdr->id,
+         ]);
+         
+         
+
+        
+
+         // return redirect()->route('vdr.show', [enkripRambo($vdr), enkripRambo('activity')])->with('success', 'Activity data successfully updated.');
+     
+   }
+
    public function updateActivityHighAjax($vdr, $act, $high)
    {
       
