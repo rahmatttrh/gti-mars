@@ -2082,7 +2082,7 @@
                
                
                
-               console.log('VDR : ' + vdr);
+               console.log('normal : ' + normal);
 
                
 
