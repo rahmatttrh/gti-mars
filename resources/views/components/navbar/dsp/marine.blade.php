@@ -26,11 +26,11 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+             <li class="nav-item  text-dark"><a href="/" class="nav-link text-dark" >HOME</a></li>
              @if (auth()->user()->username == 'pet')
-                <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
+                <li class="nav-item active text-dark"><a href="#" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">DSP</a></li>
                 @else
-                <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
+                <li class="nav-item active text-dark"><a href="{{route('dsp.marine')}}" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">DSP</a></li>
              @endif
              
              <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>

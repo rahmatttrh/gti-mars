@@ -25,7 +25,7 @@
             <div class="card shadow">
                <div class="card-header"><h5>VDR History</h5></div>
                <div class="card-body">
-                  Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->username}}</span>
+                  Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->name}}</span>
                   <hr>
                   <div class="card bg-success">
                      <div class="card-body">

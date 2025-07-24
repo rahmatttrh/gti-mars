@@ -82,7 +82,7 @@
                   <h4>VDR Suptent </h4>
                </div>
                <div class="card-body">
-                  {{count($allvdrs->where('status', 3))}}
+                  {{count($allvdrs->where('status', 3)) + count($allvdrs->where('status', 5))}}
                </div>
                </div>
             </a>
