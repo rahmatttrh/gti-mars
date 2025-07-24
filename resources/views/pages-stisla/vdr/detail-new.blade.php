@@ -231,12 +231,17 @@
                         @endif
       
                         @if ($vdr->vessel->ipb == 'IPB')
-                           <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
-                              <option selected disabled >Choose BU</option>
-                              <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
-                              <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
-                              <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
-                           </select>
+                           @if ($vdr->status == 0)
+                              <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
+                                 <option selected disabled >Choose BU</option>
+                                 <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                                 <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                                 <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                              </select>
+                              @else
+                              <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a>
+                           @endif
+                           
                         @endif
 
                         @if (auth()->user()->hasRole('vessel'))
@@ -248,7 +253,7 @@
                            
                            
                         @endif
-                        <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                        <a href="#" class="btn mx-2 btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
                      </div>
                   </div>
                   <div class="col-md-4">

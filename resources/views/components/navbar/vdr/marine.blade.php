@@ -32,14 +32,14 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+             <li class="nav-item  text-dark"><a href="/" class="nav-link text-dark" >HOME</a></li>
              @if (auth()->user()->username == 'pet')
                 <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
                 @else
                 <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
              @endif
              
-             <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDRRRR</a></li>
+             <li class="nav-item active text-dark"><a href="{{route('vdr.marine')}}" class="nav-link rounded px-2 py-1 text-white" style="background-color: #1f4481">VDR</a></li>
              <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
              <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
              <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>

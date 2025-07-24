@@ -1453,7 +1453,7 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
          }
 
-         $logs = Log::orderBy('created_at', 'desc')->get();
+         $logs = Log::orderBy('created_at', 'desc')->paginate(500);
 
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
 
@@ -1501,9 +1501,17 @@ class HomeController extends Controller
          
          
          $employee = Employee::where('email', auth()->user()->email)->first();
-         $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
-
-         $allVdrs = Vdr::where('func', $employee->func)->orderBy('updated_at', 'desc')->get();
+         if ($employee->area != null) {
+            $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
+         } else {
+            $allVdrs = Vdr::where('func', $employee->func)->orderBy('updated_at', 'desc')->get();
+               $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+            
+         }
+         
+         // dd($vdrValidations);
+         
          // dd('suptent-loc');
          // dd($allVdrs);
          return view('main-suptent-loc', [
