@@ -10,7 +10,7 @@
    font-size: 18px;
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar text-dark" >
+<nav class="navbar navbar-expand-lg main-navbar text-dark fixed-top"  >
    <form class="form-inline mr-auto">
       <ul class="navbar-nav mr-3">
         <li>
@@ -39,7 +39,7 @@
                 <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
              @endif
              
-             <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
+             <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDRRRR</a></li>
              <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
              <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
              <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
@@ -217,6 +217,18 @@
                </a>
             </li>
             <hr>
+            <small class="ml-2"><b>- Master Data</b></small>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('vessel')}}" class="nav-link ">
+                  <span class="mx-3">Vessel</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('user')}}" class="nav-link ">
+                  <span class="mx-3">User</span>
+               </a>
+            </li>
+            <hr>
             <small class="ml-2"><b>- VDR</b></small>
             <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.marine')}}" class="nav-link ">
@@ -236,6 +248,30 @@
             <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.history.list')}}" class="nav-link ">
                   <span class="mx-3">History</span>
+               </a>
+            </li>
+
+
+            <hr>
+            <small class="ml-2"><b>- DSP</b></small>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('dsp.marine')}}" class="nav-link ">
+                  <span class="mx-3">Main Dashboard</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('map.full')}}" class="nav-link ">
+                  <span class="mx-3">Map Dashboard</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('marine.request.list')}}" class="nav-link ">
+                  <span class="mx-3">Intermilan</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('marine.crew.change', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link ">
+                  <span class="mx-3">Crew Change</span>
                </a>
             </li>
 

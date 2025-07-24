@@ -13,21 +13,100 @@
    </div> --}}
 
    <div class="section-body">
-      {{-- <h2 class="section-title">Schedule Plan</h2>
-      <p class="section-lead">
-         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
-      </p> --}}
-
-      <div class="table-responsive">
+      <div class="row">
+         <div class="col-md-3">
+            <div class="card shadow">
+               <div class="card-header"><h5>VDR History</h5></div>
+               <div class="card-body">
+                  Daftar VDR yang sudah anda buat didalam sistem</span>
+                  <hr>
+                  <div class="card bg-success">
+                     <div class="card-body">
+                        <h5>{{count($vdrs)}} VDR</h5>
+                     </div>
+                  </div>
+                  <hr>
+                  Klik pada VDR number untuk melihat detail
+                  
+               </div>
+            </div>
+           
+            
+         </div>
+         <div class="col-md-9">
+            <div class="card shadow">
+             
+               <div class="card-body">
+                  
+                  <div class="table-responsive">
+                     <table class="datatables-vdr " id="datatable">
+                        <thead>
+                           <tr>
+                            
+                              <th rowspan="2">Vessel</th>
+                              <th rowspan="2">VDR Number</th>
+                            
+                              <th rowspan="2">Date</th>
+                             
+                              <th rowspan="2" class="text-center">Status</th>
+                            
+                            
+                              <th colspan="2" class="text-center">Total</th>
+                           </tr>
+                           <tr>
+                             
+                              <th class="text-center">Time</th>
+                              <th class="text-center">Daily Fuel</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach($vdrs as $vdr)
+                           <tr>
+                             
+                              <td>{{$vdr->vessel->name}}</td>
+                              <td>
+                                 @if (auth()->user()->username == 'lutfiaryanto')
+                              
+                                 <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->code}}</a>
+                                    @else
+                                    <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                  
+                                    @endif
+                              
+                              </td>
+                             
+                              <td class="text-truncate">
+                                 {{$vdr->date}} <br>
+                                
+                              </td>
+                              <td>
+                            
+                                 <x-status-stisla.vdr :vdr="$vdr" />
+                              </td>
+                             
+                           
+                              <td class="text-center">{{$vdr->getTotalHours()}}</td>
+                              <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>
+                           </tr>
+                           @endforeach
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+     
+      {{-- <div class="table-responsive">
          <table class="table table-striped table-sm" id="table-1">
             <thead>
                <tr>
                   <th rowspan="2" class="text-center">No.</th>
                   <th rowspan="2">VDR Number</th>
-                  {{-- <th rowspan="2">Vessel</th> --}}
+                 
                   <th rowspan="2">Date</th>
                   <th rowspan="2">Crew</th>
-                  {{-- <th>Created</th> --}}
+                 
                   <th rowspan="2" class="text-center">Status</th>
                   <th colspan="2" class="text-center">High Speed Contract</th>
                   <th colspan="2" class="text-center">Normal Speed Contract</th>
@@ -54,19 +133,15 @@
                      <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a> <br>
                      <small>{{$vdr->vessel->name}}</small>
                   </td>
-                  {{-- <td>{{$vdr->vessel->name}}</td> --}}
+                 
                   <td>
                      {{formatDate($vdr->date)}} <br>
                      <small>{{formatDayName($vdr->date)}}</small>
                   </td>
                   <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                  {{-- <td>{{$vdr->created_by}}</td> --}}
+                
                   <td class="text-center">
-                     {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
-                     <span class="badge badge-warning">Draft</span>
-                     @else
-                     <span class="badge badge-success">Release</span>
-                     @endif --}}
+                   
                      <x-status-stisla.vdr :vdr="$vdr" />
                   </td>
                   
@@ -82,7 +157,7 @@
                @endforeach
             </tbody>
          </table>
-      </div>
+      </div> --}}
    </div>
 </section>
     

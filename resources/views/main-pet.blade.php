@@ -134,7 +134,7 @@
                                     </tr>
                                  </thead>
                                  <tbody>
-                                    {{-- @foreach ($vdrValidations as $vdr)
+                                    @foreach ($vdrValidations as $vdr)
                                        <tr class="border" style="border: 1px black">
                                         
                                           <td>
@@ -150,7 +150,7 @@
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
                                        </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                  </tbody>
                               </table>
                            </div>

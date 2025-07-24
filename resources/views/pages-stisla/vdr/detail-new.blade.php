@@ -127,46 +127,215 @@
            
                
          </div> --}}
-         <div class="col-md-12 ">
-            <div class="d-flex px-1 mb-2">
-               <div class="d-flex align-items-center">
+         <div class="d-none d-md-block">
+            <div class="col-md-12 ">
+               <div class="row">
+                  <div class="col-md-12 px-2">
+                     <div class="d-flex align-items-center px-3">
+
+                  
+                        @if (auth()->user()->hasRole('vessel'))
+                           @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                           <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                           {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
+                           <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
+                        
+                           
+                           
+                           @endif
+                        @endif
+      
+                        @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                        
+                           @if (auth()->user()->username != 'pet')
+                           <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                           <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                           @endif
+                           
+                        
+                           
+                        @endif
+      
+                        @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
+                        
+                           
+                           <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
+                           <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-suptent-loc">Reject</a>
+                           
+                           
+                        
+                           
+                        @endif
+      
+                        @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                        {{-- <div class="btn-group mr-2"> --}}
+                           {{-- <div class="btn btn-block btn-group p-0"> --}}
+                              {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
+                              {{-- <div class="btn-group mr-2"> --}}
+                                 <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                                 <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              {{-- </div> --}}
+                              
+                           {{-- </div> --}}
+                           
+                           
+                        
+                        
+                        @endif
+      
+                        <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                        
+                        
+                        
+                        
+                        @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
+                        <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
+                           <span class="badge badge-light border">!</span> Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
+                           {{$vdr->reject_desc}}
+                        </div>
+                                             
+                        @endif
+      
+                        
+      
+                        @if (count($vdrHistories) > 0)
+                           <select class="form-control" name="" id="">
+                              <option value="" selected disabled>Revision Record</option>
+                              @foreach ($vdrHistories as $vhis)
+                              <option value="">
+                                 <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
+                              </option>
+                                 @endforeach
+                              
+                           </select>
+                           {{-- <div class="btn-group">
+                              <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Action
+                              </button>
+                              <div class="dropdown-menu" style="max-width: 500px;min-width: 1%;" >
+                                 @foreach ($vdrHistories as $vhis)
+                                 <a class="dropdown-item" href="#" >{{$vhis->code}} Lorem, ipsum dolor.</a>
+                                 
+                                 @endforeach
+                              </div>
+                           </div> --}}
+                           {{-- <div class="dropdown">
+                              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Riwayat Revisi
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                 
+                              
+                              </div>
+                           </div> --}}
+                        @endif
+      
+                        @if ($vdr->vessel->ipb == 'IPB')
+                           <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
+                              <option selected disabled >Choose BU</option>
+                              <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                              <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                              <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                           </select>
+                        @endif
+
+                        @if (auth()->user()->hasRole('vessel'))
+                           @if ($vdr->status == 0)
+                           <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                              <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                           </div>
+                           @endif
+                           
+                           
+                        @endif
+                        <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                     </div>
+                  </div>
+                  <div class="col-md-4">
+                     <div class="">
+                        
+                     </div>
+                  </div>
+               </div>
+               <div class="d-flex px-1 mb-2">
+                  
+
+                  {{-- @if (auth()->user()->hasRole('marine'))
+                     <div class="btn-group ml-2 ">
+                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.pet', enkripRambo($vdr->id))}}">Email PET</a>
+                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
+                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent.loc', enkripRambo($vdr->id))}}">Email Suptent on Location</a>
+                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
+                        
+                        
+                     </div>
+                  @endif --}}
+
+
+                  
 
                
-               @if (auth()->user()->hasRole('vessel'))
-                  @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                  <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                  {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
-                  <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
-                 
                   
                   
+                  {{-- <div class="card bg-warning">
+                     <div class="card-boy"></div>
+                  </div> --}}
+               </div>
+               
+            </div>
+         </div>
+
+
+
+
+
+         {{-- Action Mobile View --}}
+         <div class="d-block d-sm-none">
+            <div class="row">
+               <div class="col-md-12 px-4">
+                  @if (auth()->user()->hasRole('vessel'))
+                     @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                     <div class="row">
+                        <div class="col-6">
+                           <a href="#" class="btn btn-block  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                        </div>
+                        <div class="col-6">
+                           <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn btn-block  btn-danger  mx-2">Delete</a>
+                        </div>
+                     </div>
+                     
+                     {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
+                     
+                  
+                     
+                     
+                     @endif
                   @endif
-               @endif
-
-               @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
-               
-                  @if (auth()->user()->username != 'pet')
-                  <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
-                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+      
+                  @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                  
+                     @if (auth()->user()->username != 'pet')
+                     <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                     <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                     @endif
+                     
+                  
+                     
                   @endif
+         
+                  @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
                   
-                
+                     
+                     <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
+                     <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-suptent-loc">Reject</a>
+                     
+                     
                   
-               @endif
-
-               @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
-               
-                  
-                  <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
-                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-suptent-loc">Reject</a>
-                  
-                  
-                
-                  
-               @endif
-
+                     
+                  @endif
+      
                @if ($vdr->status == 1  && auth()->user()->username == 'pet')
-               {{-- <div class="btn-group mr-2"> --}}
+                  {{-- <div class="btn-group mr-2"> --}}
                   {{-- <div class="btn btn-block btn-group p-0"> --}}
                      {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
                      {{-- <div class="btn-group mr-2"> --}}
@@ -180,8 +349,12 @@
                
                
                @endif
+               </div>
+            </div>
 
-               <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+            <div class="row">
+               <div class="col-md-12">
+                  <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                
                
                
@@ -191,11 +364,11 @@
                   <span class="badge badge-light border">!</span> Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
                   {{$vdr->reject_desc}}
                </div>
-                                     
+                                    
                @endif
-
-               
-
+      
+                        
+      
                @if (count($vdrHistories) > 0)
                   <select class="form-control" name="" id="">
                      <option value="" selected disabled>Revision Record</option>
@@ -229,47 +402,27 @@
                @endif
 
                @if ($vdr->vessel->ipb == 'IPB')
-                   <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
+                  <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
                      <option selected disabled >Choose BU</option>
                      <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                      <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                      <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
-                   </select>
-               @endif
-            </div>
-
-               @if (auth()->user()->hasRole('marine'))
-                   <div class="btn-group ml-2 ">
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.pet', enkripRambo($vdr->id))}}">Email PET</a>
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent.loc', enkripRambo($vdr->id))}}">Email Suptent on Location</a>
-                     <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
-                     
-                     
-                   </div>
+                  </select>
                @endif
 
-
-               
-
-               <div class="ml-auto">
-                  @if (auth()->user()->hasRole('vessel'))
-                     @if ($vdr->status == 0)
-                     <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                        <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                     </div>
-                     @endif
-                     
-                     
+               @if (auth()->user()->hasRole('vessel'))
+                  @if ($vdr->status == 0)
+                  <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                  </div>
                   @endif
-                  <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                  
+                  
+               @endif
+               <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
                </div>
-               
-               
-               {{-- <div class="card bg-warning">
-                  <div class="card-boy"></div>
-               </div> --}}
             </div>
+
             
          </div>
          
@@ -283,7 +436,7 @@
                
             </div> --}}
             
-            <div class="table-responsive overflow-auto pb-4" style="height: 72vh"> 
+            <div class="table-responsive " > 
                <div class="row ">
                   <div class="col-md-5">
                      
@@ -933,203 +1086,203 @@
 
                
                <hr>
-            <div class="table-responsive p-2">
-               <table class="" >
-                  <thead>
-                     <tr>
-                        <th  rowspan="2" class="text-center align-middle border-g">No</th>
-                        <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
-                        <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
-                        <th  colspan="6" class="text-center border-g">Main Engines Data</th>
-                        <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
-                     </tr>
-                     <tr>
-                        <th style="width: 10px"  class="border-g">Ref. Value</th>
-                        <th class="border-g">Port</th>
-                        <th class="border-g">Stbd</th>
-                        <th class="border-g">Center</th>
-                        <th class="border-g">Other</th>
-                        <th class="border-g">Ref. Value</th>
-                        <th class="border-g">Port</th>
-                        <th class="border-g">Stbd</th>
-                        <th class="border-g">Other</th>
-                     </tr>
-                  </thead>
-                  <tbody>  
-                     @foreach ($engines as $key => $engine)
-                     {{-- <input type="hidden" name="id[]" value="{{$engine->id}}"> --}}
-                     <input type="text" name="engine" id="engine" value="{{$engine->id}}" hidden>
-                     <tr>
-                        <td>{{$key+1}}</td>
-                        <td class="col-md-3">{{$engine->heading->description}}</td>
-                        <td>{{$engine->heading->unit}}</td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
-                        </td>
-                        <td class="bg-y">
-                           <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
-                        </td>
-                     </tr>
-                     @endforeach
-                     <tr>
-                        <td colspan="9"></td>
-                     </tr>
-                     <tr>
-                        <td colspan="9"></td>
-                     </tr>
+               <div class="table-responsive ">
+                  <table class="" >
+                     <thead>
+                        <tr>
+                           <th  rowspan="2" class="text-center align-middle border-g">No</th>
+                           <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
+                           <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
+                           <th  colspan="6" class="text-center border-g">Main Engines Data</th>
+                           <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
+                        </tr>
+                        <tr>
+                           <th style="width: 10px"  class="border-g">Ref. Value</th>
+                           <th class="border-g">Port</th>
+                           <th class="border-g">Stbd</th>
+                           <th class="border-g">Center</th>
+                           <th class="border-g">Other</th>
+                           <th class="border-g">Ref. Value</th>
+                           <th class="border-g">Port</th>
+                           <th class="border-g">Stbd</th>
+                           <th class="border-g">Other</th>
+                        </tr>
+                     </thead>
+                     <tbody>  
+                        @foreach ($engines as $key => $engine)
+                        {{-- <input type="hidden" name="id[]" value="{{$engine->id}}"> --}}
+                        <input type="text" name="engine" id="engine" value="{{$engine->id}}" hidden>
+                        <tr>
+                           <td>{{$key+1}}</td>
+                           <td class="col-md-3">{{$engine->heading->description}}</td>
+                           <td>{{$engine->heading->unit}}</td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_ref_{{$engine->id}}" id="m_ref_{{$engine->id}}" value="{{$engine->m_ref}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_port_{{$engine->id}}" id="m_port_{{$engine->id}}" value="{{$engine->m_port}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_stbd_{{$engine->id}}" id="m_stbd_{{$engine->id}}" value="{{$engine->m_stbd}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_center_{{$engine->id}}" id="m_center_{{$engine->id}}" value="{{$engine->m_center}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="m_other_{{$engine->id}}" id="m_other_{{$engine->id}}" value="{{$engine->m_other}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_ref_{{$engine->id}}" id="a_ref_{{$engine->id}}" value="{{$engine->a_ref}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_port_{{$engine->id}}" id="a_port_{{$engine->id}}" value="{{$engine->a_port}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_stbd_{{$engine->id}}" id="a_stbd_{{$engine->id}}" value="{{$engine->a_stbd}}">
+                           </td>
+                           <td class="bg-y">
+                              <input {{$editable == 0 ? 'readonly' : ''}} class="input-bg-y input_engine_{{$engine->id}}" style="width: 70px" type="number" min="0" name="a_other_{{$engine->id}}" id="a_other_{{$engine->id}}" value="{{$engine->a_other}}">
+                           </td>
+                        </tr>
+                        @endforeach
+                        <tr>
+                           <td colspan="9"></td>
+                        </tr>
+                        <tr>
+                           <td colspan="9"></td>
+                        </tr>
 
-                  </tbody>
-               </table>
-               {{-- </div> --}}
+                     </tbody>
+                  </table>
+                  {{-- </div> --}}
 
-               <hr>
-              
-               <div class="row">
-                  <div class="col-md-6">
-                     <form action="{{route('vdr.crew.delete.row')}}" method="post" >
-                        @csrf
-                        @method('POST')
-                        <table>
-                           <thead>
-                              <tr>
-                                 <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
-                              </tr>
-                              <tr>
-                                 @if ($editable == 1)
-                                 <td colspan="3">
-                                    <a href="{{route('vdr.crew.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
-                                    <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
-                                 </td>
-                                 @endif
-                                 
-                                 {{-- <td></td> --}}
-                                 
-                              </tr>
-                              <tr>
-                                 <th><input type="checkbox" name="" id="checkboxAllCrew"></th>
-                                 <td>Name</td>
-                                 <td>Rank</td>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
-                              @foreach ($crews->where('is_crew', 1) as $crew)
-
-                              <tr>
-                                 <td>
-                                    <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
-                                    {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
-                                 </td>
-                                 <td class="bg-y" >
-                                    {{-- {{$crew->id}} --}}
-                                    <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
-                                 </td>
-                                 <td class="bg-y">
-                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
-                                 </td>
-                                 
-                              </tr>
-
-                              
-
-                              
-                              @endforeach
-
-                              <tr>
-                                 <td colspan="3"></td>
-                              </tr>
-                              <tr>
-                                 <td colspan="3"></td>
-                              </tr>
-                              
-                           </tbody>
-                        </table>
-                     </form>
-                  </div>
-
-                  <div class="col-md-6">
-                     <form action="{{route('vdr.pax.delete.row')}}" method="post" >
-                        @csrf
-                        @method('POST')
-                        <table>
-                           <thead>
-                              <tr>
-                                 <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
-                              </tr>
-                              <tr>
-                                 <td colspan="3">
+                  <hr>
+               
+                  <div class="row">
+                     <div class="col-md-6">
+                        <form action="{{route('vdr.crew.delete.row')}}" method="post" >
+                           @csrf
+                           @method('POST')
+                           <table>
+                              <thead>
+                                 <tr>
+                                    <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
+                                 </tr>
+                                 <tr>
                                     @if ($editable == 1)
-                                        
-                                    
-                                    <a href="{{route('vdr.pax.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
-                                    <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked pax list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                    <td colspan="3">
+                                       <a href="{{route('vdr.crew.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                                       <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                    </td>
                                     @endif
-                                    {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
-                                 </td>
-                              </tr>
-                              <tr>
-                                 <th><input type="checkbox" name="" id="checkboxAllPax"></th>
-                                 <td>Name</td>
-                                 <td>Company</td>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
-                              @foreach ($crews->where('is_crew', 0) as $pax)
-                              <tr>
-                                 <td>
-                                    <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkPax[]" value="{{$pax->id}}" id="checkPax-{{$pax->id}}">
-                                    {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
-                                 </td>
-                                 <td class="bg-y">
-                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
-                                 </td>
-                                 <td class="bg-y">
-                                    <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
-                                 </td>
-                                 {{-- <td>
-                                    <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
-                                 </td> --}}
-                              </tr>
+                                    
+                                    {{-- <td></td> --}}
+                                    
+                                 </tr>
+                                 <tr>
+                                    <th><input type="checkbox" name="" id="checkboxAllCrew"></th>
+                                    <td>Name</td>
+                                    <td>Rank</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+                                 @foreach ($crews->where('is_crew', 1) as $crew)
 
-                              
-                              @endforeach
+                                 <tr>
+                                    <td>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                       {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                    </td>
+                                    <td class="bg-y" >
+                                       {{-- {{$crew->id}} --}}
+                                       <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                                    </td>
+                                    <td class="bg-y">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                    </td>
+                                    
+                                 </tr>
 
-                              <tr>
-                                 <td colspan="3"></td>
-                              </tr>
-                              <tr>
-                                 <td colspan="3"></td>
-                              </tr>
-                              
-                           </tbody>
-                        </table>
-                     </form>
+                                 
+
+                                 
+                                 @endforeach
+
+                                 <tr>
+                                    <td colspan="3"></td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="3"></td>
+                                 </tr>
+                                 
+                              </tbody>
+                           </table>
+                        </form>
+                     </div>
+
+                     <div class="col-md-6">
+                        <form action="{{route('vdr.pax.delete.row')}}" method="post" >
+                           @csrf
+                           @method('POST')
+                           <table>
+                              <thead>
+                                 <tr>
+                                    <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="3">
+                                       @if ($editable == 1)
+                                          
+                                       
+                                       <a href="{{route('vdr.pax.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
+                                       <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked pax list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                       @endif
+                                       {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
+                                    </td>
+                                 </tr>
+                                 <tr>
+                                    <th><input type="checkbox" name="" id="checkboxAllPax"></th>
+                                    <td>Name</td>
+                                    <td>Company</td>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+                                 @foreach ($crews->where('is_crew', 0) as $pax)
+                                 <tr>
+                                    <td>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkPax[]" value="{{$pax->id}}" id="checkPax-{{$pax->id}}">
+                                       {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                    </td>
+                                    <td class="bg-y">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_name_{{$pax->id}}"  value="{{$pax->name}} ">
+                                    </td>
+                                    <td class="bg-y">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_pax_{{$pax->id}}" type="text"  id="crew_company_{{$pax->id}}"  value="{{$pax->company}} ">
+                                    </td>
+                                    {{-- <td>
+                                       <a href="#" class="text-danger" data-toggle="modal" data-target="#deleteCrew-{{$pax->id}}"> Delete </a>
+                                    </td> --}}
+                                 </tr>
+
+                                 
+                                 @endforeach
+
+                                 <tr>
+                                    <td colspan="3"></td>
+                                 </tr>
+                                 <tr>
+                                    <td colspan="3"></td>
+                                 </tr>
+                                 
+                              </tbody>
+                           </table>
+                        </form>
+                     </div>
                   </div>
                </div>
             </div>
-            
          </div>
       </div>
 
