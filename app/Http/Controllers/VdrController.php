@@ -2079,7 +2079,7 @@ class VdrController extends Controller
          'daily' => $daily
       ]);
 
-      $vdrOperatingIdle = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $vdrOperatingIdle = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 5)->first();
 
 
       // TOTAL JAM
@@ -2179,7 +2179,7 @@ class VdrController extends Controller
          'daily' => $daily
       ]);
 
-      $vdrOperatingTow = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $vdrOperatingTow = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 6)->first();
 
 
       // TOTAL JAM
@@ -2279,7 +2279,7 @@ class VdrController extends Controller
          'daily' => $daily
       ]);
 
-      $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first();
 
 
       // TOTAL JAM
@@ -2379,7 +2379,7 @@ class VdrController extends Controller
          'daily' => $daily
       ]);
 
-      $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 4)->first();
+      $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first();
 
 
       // TOTAL JAM
