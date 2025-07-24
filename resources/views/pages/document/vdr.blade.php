@@ -146,7 +146,7 @@ table th tr td {
       </div>
 
       <div class="row">
-         <div class="col-5">
+         <div class="col-md-5">
             <small class="title mt-4">GENERAL INFORMATION</small>
             <table class="">
                <tbody>
@@ -277,7 +277,7 @@ table th tr td {
 
             
          </div>
-         <div class="col-7">
+         <div class="col-md-7">
             <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
             <table class="" style="width: 100%">
                <thead>
@@ -780,7 +780,7 @@ table th tr td {
       </div>
 
       <div class="row">
-         <div class="col-4">
+         <div class="col-md-4">
             <small class="title">SUMMARY OF DAILY OPERATING DATA</small>
             <table class="mb-1">
                <thead>
@@ -896,7 +896,7 @@ table th tr td {
                
             </div>
          </div>
-         <div class="col">
+         <div class="col-md-8">
             <div class="d-flex">
                <div>
                   <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
