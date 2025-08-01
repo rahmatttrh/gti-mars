@@ -38,7 +38,7 @@
              
                <div class="card-body">
                   
-                  <div class="table-responsive">
+                  {{-- <div class="table-responsive"> --}}
                      <table class="datatables-vdr " id="datatable">
                         <thead>
                            <tr>
@@ -91,7 +91,7 @@
                            @endforeach
                         </tbody>
                      </table>
-                  </div>
+                  {{-- </div> --}}
                </div>
             </div>
          </div>
