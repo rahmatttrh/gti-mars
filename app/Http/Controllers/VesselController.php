@@ -43,7 +43,7 @@ class VesselController extends Controller
    public function store(Request $req)
    {
 
-      
+
       $req->validate([
          'name' => 'required',
          'username' => 'required|unique:vessels',
@@ -154,7 +154,7 @@ class VesselController extends Controller
       ]);
 
       $vessel = Vessel::find($req->vessel);
-      $user = User::where('email', $req->email)->first();
+      $user = User::where('email', $vessel->email)->first();
 
       if ($req->func == 'Empty') {
          $func = null;
@@ -245,7 +245,8 @@ class VesselController extends Controller
       return redirect()->route('vessel')->with('success', 'Vessel successfuly updated');
    }
 
-   public function updateEmail(Request $req){
+   public function updateEmail(Request $req)
+   {
       $req->validate([
          'email_vessel' => 'required'
       ]);
@@ -265,7 +266,8 @@ class VesselController extends Controller
    }
 
 
-   public function updateStowage(Request $req){
+   public function updateStowage(Request $req)
+   {
       $req->validate([
          'stowage_plan' => 'required'
       ]);
@@ -418,12 +420,13 @@ class VesselController extends Controller
       ])->with('i');
    }
 
-   public function onhire($id){
+   public function onhire($id)
+   {
       // dd('ok');
       $dekripId = dekripRambo($id);
       $vessel = Vessel::find($dekripId);
       $today = Carbon::today();
-      
+
       VesselHistory::create([
          'vessel_id' => $vessel->id,
          'onhire' => $today
@@ -433,12 +436,13 @@ class VesselController extends Controller
          'status' => 1
       ]);
 
-      
+
 
       return redirect()->back()->with('success', 'Vessel set On Hire');
    }
 
-   public function offhire($id){
+   public function offhire($id)
+   {
       $dekripId = dekripRambo($id);
       $vessel = Vessel::find($dekripId);
       $today = Carbon::today();
@@ -446,12 +450,12 @@ class VesselController extends Controller
       $vesselHistory->update([
          'offhire' => $today
       ]);
-          
+
       $vessel->update([
          'status' => 0
       ]);
 
-      
+
       return redirect()->back()->with('success', 'Vessel set Off Hire');
    }
 }

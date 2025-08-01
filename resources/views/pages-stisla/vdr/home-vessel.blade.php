@@ -219,7 +219,7 @@
                               <th>Fuel</th> --}}
                               <th>Time</th>
                               <th>Daily Fuel</th>
-                              {{-- <th></th> --}}
+                              <th></th>
                            </tr>
                         </thead>
                         <tbody>
@@ -228,7 +228,12 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$i}} </small></td>
                               <td>
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a> 
+                                 @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+                                    <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                     @else
+                                     <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                 @endif
+                                 {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>  --}}
                                  {{-- <small>{{$vdr->vessel->name}}</small> --}}
                               </td>
                               {{-- <td>{{$vdr->vessel->name}}</td> --}}
@@ -255,9 +260,9 @@
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
                               <td>{{$vdr->getTotalHours()}}</td>
                               <td>{{$vdr->customRound($vdr->operatings->sum('daily'))}}</td>
-                              {{-- <td>
+                              <td>
                                  <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">Detail SPA</a>
-                              </td> --}}
+                              </td>
                            </tr>
                            @endforeach
                         </tbody>

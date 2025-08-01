@@ -65,13 +65,11 @@
                              
                               <td>{{$vdr->vessel->name}}</td>
                               <td>
-                                 @if (auth()->user()->username == 'lutfiaryanto')
-                              
-                                 <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->code}}</a>
-                                    @else
+                                 @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
                                     <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                  
-                                    @endif
+                                     @else
+                                     <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
+                                 @endif
                               
                               </td>
                              
@@ -87,6 +85,9 @@
                            
                               <td class="text-center">{{$vdr->getTotalHours()}}</td>
                               <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>
+                              <td>
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">Detail SPA</a>
+                              </td>
                            </tr>
                            @endforeach
                         </tbody>

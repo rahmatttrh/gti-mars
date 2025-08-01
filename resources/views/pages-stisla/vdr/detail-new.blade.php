@@ -13,8 +13,13 @@
       
    }
 
-   table, th, td {
-      border: 1px solid rgba(226, 218, 218, 0);
+   /* table, th, td {
+      border: 1px solid rgba(226, 218, 218, 0.959);
+      border-collapse: collapse;
+   } */
+
+    td {
+      border: 1px solid rgba(209, 207, 207, 0.959);
       border-collapse: collapse;
    }
   

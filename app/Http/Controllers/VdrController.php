@@ -4180,11 +4180,10 @@ class VdrController extends Controller
       // $day = $date->format('d');
 
       // $date = Carbon::create()
-      if ($vessel->contract != null) {
-         $contract = $vessel->contract;
-      } else {
-         $contract = $lastVdr->contract;
-      }
+
+      $contract = $lastVdr->contract;
+      // dd('contract : ' . $contract);
+
 
       if ($vessel->contract_type == 'Non PO') {
          $func = $vessel->func;
