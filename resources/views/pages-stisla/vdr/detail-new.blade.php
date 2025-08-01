@@ -14,12 +14,12 @@
    }
 
    /* table, th, td {
-      border: 1px solid rgba(226, 218, 218, 0.959);
+      border: 1px solid rgba(226, 218, 218, 0);
       border-collapse: collapse;
    } */
 
-    td {
-      border: 1px solid rgba(209, 207, 207, 0.959);
+   td {
+      border: 1px solid rgba(240, 235, 235, 0.932);
       border-collapse: collapse;
    }
   
@@ -49,6 +49,11 @@
     border: none;
     
     outline: inherit;
+}
+
+.bg-lgray{
+   background-color: rgb(245, 245, 240);
+   color: black
 }
 
 
@@ -563,12 +568,12 @@
                                  <tr>
                                     <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">Weather Condition</b></td>
                                  </tr>
-                                 <tr>
+                                 <tr class="bg-lgray">
                                     <td>Weather/Time</td>
-                                    <td>00:00 - 06:00 hrs</td>
-                                    <td>06:00 - 12:00 hrs</td>
-                                    <td>12:00 - 18:00 hrs</td>
-                                    <td>18:00 - 24:00 hrs</td>
+                                    <td class="text-center">00:00 - 06:00 hrs</td>
+                                    <td class="text-center">06:00 - 12:00 hrs</td>
+                                    <td class="text-center">12:00 - 18:00 hrs</td>
+                                    <td class="text-center">18:00 - 24:00 hrs</td>
                                  </tr>
                               </thead>
                               <tbody>
@@ -608,10 +613,10 @@
                         
                            <table>
                               <thead>
-                                 <tr>
+                                 <tr >
                                     <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">HSSE</b></td>
                                  </tr>
-                                 <tr>
+                                 <tr class="bg-lgray">
                                     <th class="text-center">A</th>
                                     <th>HSSE STATISTICS (INPUT)</th>
                                     <th>Previous</th>
@@ -694,7 +699,7 @@
                            @method('POST')
                            <table class="w-100">
                               <thead>
-                                 <tr>
+                                 <tr >
                                     <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
                                  </tr>
                                  <tr>
@@ -710,7 +715,7 @@
                                        @endif
                                     </td>
                                  </tr>
-                                 <tr>
+                                 <tr class="bg-lgray">
                                     <td></td>
                                     <td colspan="2" class="text-center">Time</td>
                                     <td colspan="8" class="text-center">Operating Mode Duration (hh:mm) - 
@@ -871,7 +876,7 @@
                            <tr>
                               <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td>
                            </tr>
-                           <tr class="text-center ">
+                           <tr class="text-center bg-lgray ">
                               {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
                               <th class="">Operating Mode</th>
                               <th>Total Time</th>
@@ -953,7 +958,7 @@
                            <tr>
                               <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
                            </tr>
-                           <tr class="text-center align-middle">
+                           <tr class="text-center align-middle bg-lgray">
                               <th style="width: 120px">TYPE</th>
                               <th style="width: 100px">Opening <br> <small>(ROB from Previous Day)</small></th>
                               <th style="width: 100px" >Actual Consumption <br> <small>(Based on Actual Sounding)</small></th>
@@ -1018,11 +1023,11 @@
                         <tbody>
                            <tr>
                               <td rowspan="2"><b class="text-primary" style="color: #1f4481 !important">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
-                              <td class="text-truncate">Activity (Select Below)</td>
-                              <td>ROB Check Time</td>
-                              <td>ROB by VDR at Check Time</td>
-                              <td>Actual ROB at Check Time</td>
-                              <td>ROB Difference</td>
+                              <td class="text-truncate bg-lgray">Activity (Select Below)</td>
+                              <td class="bg-lgray">ROB Check Time</td>
+                              <td class="bg-lgray">ROB by VDR at Check Time</td>
+                              <td class="bg-lgray">Actual ROB at Check Time</td>
+                              <td class="bg-lgray">ROB Difference</td>
                            </tr>
                            <input type="number" name="periodic" id="periodic" value="{{$periodic->id}}" hidden>
                            <tr>
@@ -1065,11 +1070,11 @@
                         </thead>
                         <tbody>
                            <tr>
-                              <td style="width: 400px">Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (Manual input based on joint calculation by all parties)</td>
+                              <td style="width: 400px" class="bg-lgray">Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (Manual input based on joint calculation by all parties)</td>
                               <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_remu" id="fuel_cons_remu" value="{{$periodic->fuel_cons_remu}}"></td>
                            </tr>
                            <tr>
-                              <td>Part 1: Corrected Fuel Cons. from 00:00 hours to Check Time (based on calculation by applying ROB Difference) <br>
+                              <td class="bg-lgray">Part 1: Corrected Fuel Cons. from 00:00 hours to Check Time (based on calculation by applying ROB Difference) <br>
                                  <i>Note: Refer to ROB COrrection Rules</i>
                               </td>
                               <td >
@@ -1079,7 +1084,7 @@
                               
                            </tr>
                            <tr>
-                              <td>Part 2: Actual Fuel Cons. from Check Time to 24:00 hours (manual input based on actual sounding)</td>
+                              <td class="bg-lgray">Part 2: Actual Fuel Cons. from Check Time to 24:00 hours (manual input based on actual sounding)</td>
                               <td class="bg-y" ><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" style="width: 70px" class="input_special"  type="number" name="fuel_cons_actual" id="fuel_cons_actual" value="{{$periodic->fuel_cons_actual}}"></td>
                            </tr>
                            <tr>
@@ -1099,14 +1104,14 @@
                <div class="table-responsive ">
                   <table class="" >
                      <thead>
-                        <tr>
+                        <tr class="bg-lgray">
                            <th  rowspan="2" class="text-center align-middle border-g">No</th>
                            <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
                            <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
                            <th  colspan="6" class="text-center border-g">Main Engines Data</th>
                            <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
                         </tr>
-                        <tr>
+                        <tr class="bg-lgray">
                            <th style="width: 10px"  class="border-g">Ref. Value</th>
                            <th class="border-g">Port</th>
                            <th class="border-g">Stbd</th>
@@ -1189,7 +1194,7 @@
                                     {{-- <td></td> --}}
                                     
                                  </tr>
-                                 <tr>
+                                 <tr class="bg-lgray">
                                     <th><input type="checkbox" name="" id="checkboxAllCrew"></th>
                                     <td>Name</td>
                                     <td>Rank</td>
@@ -1251,7 +1256,7 @@
                                        {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
                                     </td>
                                  </tr>
-                                 <tr>
+                                 <tr class="bg-lgray">
                                     <th><input type="checkbox" name="" id="checkboxAllPax"></th>
                                     <td>Name</td>
                                     <td>Company</td>
