@@ -39,7 +39,9 @@
                
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
-                  <div>Jika anda ingin membuat Vessel Daily Report silahkan <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>, atau klik VDR pada menu utama</div>
+                  <div>Jika anda ingin membuat Vessel Daily Report silahkan 
+                     <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
+                     , atau klik VDR pada menu utama</div>
                   <hr>
                   {{-- <div class="mb-2" style="color: #1f4481 !important">
                      <b></b>
@@ -71,12 +73,20 @@
                               {{-- <th>Date</th>
                               <th>Crew</th> --}}
                               <th style="width: 120px">Status</th>
+                              <th></th>
                            </tr>
                         </thead>
                         <tbody>
                            @foreach ($myrecentvdrs as $myvdr)
                            <tr>
-                              <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> </td>
+                              <td>
+                                 @if (auth()->user()->username == 'tegasjaya' || auth()->user()->username == 'logindo' || auth()->user()->username == 'encone')
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> 
+                                 @else
+                                 <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> 
+                                 @endif
+                                 
+                              </td>
                               {{-- <td>{{formatDate($myvdr->date)}}</td>
                               <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
                               <td class="text-truncate">
@@ -86,6 +96,9 @@
                                  <small>Release</small>
                                  @endif --}}
                                  <x-status-stisla.vdr :vdr="$myvdr" />
+                              </td>
+                              <td>
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Detail SPA</a> 
                               </td>
                            </tr>
                            @endforeach

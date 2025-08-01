@@ -4314,6 +4314,8 @@ class VdrController extends Controller
       // }
       $contract = $lastVdr->contract;
       // dd($vessel->contract);
+      // dd($contract);
+
 
       if ($vessel->contract_type == 'Non PO') {
          $func = $vessel->func;

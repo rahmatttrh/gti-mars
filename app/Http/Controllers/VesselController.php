@@ -154,7 +154,7 @@ class VesselController extends Controller
       ]);
 
       $vessel = Vessel::find($req->vessel);
-      $user = User::where('email', $req->email)->first();
+      $user = User::where('email', $vessel->email)->first();
 
       if ($req->func == 'Empty') {
          $func = null;
