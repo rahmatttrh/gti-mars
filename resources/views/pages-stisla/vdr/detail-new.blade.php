@@ -1104,22 +1104,22 @@
                   <table class="" >
                      <thead>
                         <tr class="bg-lgray">
-                           <th  rowspan="2" class="text-center align-middle border-g">No</th>
-                           <th  rowspan="2" class="text-center align-middle border-g">Observed Data / Indicators </th>
-                           <th  rowspan="2" class="text-center align-middle border-g">Unit</th>
-                           <th  colspan="6" class="text-center border-g">Main Engines Data</th>
-                           <th  colspan="6" class="text-center border-g">Aux. Engines Data</th>
+                           <th  rowspan="2" class="text-center align-middle ">No</th>
+                           <th  rowspan="2" class="text-center align-middle ">Observed Data / Indicators </th>
+                           <th  rowspan="2" class="text-center align-middle ">Unit</th>
+                           <th  colspan="6" class="text-center ">Main Engines Data</th>
+                           <th  colspan="6" class="text-center ">Aux. Engines Data</th>
                         </tr>
                         <tr class="bg-lgray">
-                           <th style="width: 10px"  class="border-g">Ref. Value</th>
-                           <th class="border-g">Port</th>
-                           <th class="border-g">Stbd</th>
-                           <th class="border-g">Center</th>
-                           <th class="border-g">Other</th>
-                           <th class="border-g">Ref. Value</th>
-                           <th class="border-g">Port</th>
-                           <th class="border-g">Stbd</th>
-                           <th class="border-g">Other</th>
+                           <th style="width: 10px"  class="">Ref. Value</th>
+                           <th class="">Port</th>
+                           <th class="">Stbd</th>
+                           <th class="">Center</th>
+                           <th class="">Other</th>
+                           <th class="">Ref. Value</th>
+                           <th class="">Port</th>
+                           <th class="">Stbd</th>
+                           <th class="">Other</th>
                         </tr>
                      </thead>
                      <tbody>  
