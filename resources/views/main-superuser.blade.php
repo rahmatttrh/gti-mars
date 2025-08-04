@@ -123,9 +123,10 @@
                <div class="card shadow-lg">
                   <div class="card-body">
                      <div class="badge badge-info mb-2">Log Activity</div>
-                     <table class="datatables-vdr"   >
+                     <div  class="table-responsive overflow-auto " style="height: 450px" >
+                     <table class=""   >
                         <thead>
-                           <tr>
+                           <tr class="border">
                               <th>Time</th>
                               <th>User</th>
                               <th>Action</th>
@@ -135,9 +136,10 @@
                            @foreach ($logs as $log)
                               <tr class="border">
                                  <td class="text-truncate">
-                                    <div class="badge badge-light">
-                                       {{formatDateTime($log->created_at)}} 
-                                    </div>
+                                    {{-- <div class="badge badge-light"> --}}
+                                       {{-- {{$log->created_at}}  --}}
+                                       {{$log->created_at}}
+                                    {{-- </div> --}}
                                    
                                     
                                      
@@ -151,6 +153,7 @@
                            @endforeach
                         </tbody>
                      </table>
+                     </div>
                      {{-- {{ $logs->links() }} --}}
                   </div>
                </div>

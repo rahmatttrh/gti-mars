@@ -16,6 +16,12 @@ function formatRibuan($data)
    return $ribuan;
 }
 
+function formatDateDefault($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('Y-m-y');
+   return $date;
+}
+
 function formatDate($data)
 {
    $date = \Carbon\Carbon::parse($data)->format('d/m/Y');
