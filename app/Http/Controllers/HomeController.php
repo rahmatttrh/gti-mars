@@ -673,14 +673,14 @@ class HomeController extends Controller
 
 
 
-         $comandwi = User::create([
-            'name' => 'Company Man DWI',
-            'username' => 'comandwi',
-            'email' => 'comandwi@pertamina.com',
-            'password' => Hash::make('oses@2025'),
+         // $comandwi = User::create([
+         //    'name' => 'Company Man DWI',
+         //    'username' => 'comandwi',
+         //    'email' => 'comandwi@pertamina.com',
+         //    'password' => Hash::make('oses@2025'),
 
-         ]);
-         $comandwi->assignRole('marine');
+         // ]);
+         // $comandwi->assignRole('marine');
 
 
          $vdrValidations = Vdr::where('status', 1)->get();
@@ -1412,8 +1412,6 @@ class HomeController extends Controller
          if (auth()->user()->username == 'pet') {
             $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->orderBy('updated_at', 'desc')->get();
-
-      
          } elseif (auth()->user()->username == 'marine') {
             $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
@@ -1506,12 +1504,11 @@ class HomeController extends Controller
             $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
          } else {
             $allVdrs = Vdr::where('func', $employee->func)->orderBy('updated_at', 'desc')->get();
-               $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
-            
+            $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
          }
-         
+
          // dd($vdrValidations);
-         
+
          // dd('suptent-loc');
          // dd($allVdrs);
          return view('main-suptent-loc', [

@@ -168,7 +168,7 @@
                   <tbody>
                      @foreach ($logs as $log)
                         <tr class="border">
-                           <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name}}
+                           <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
                               <br>
                               {{$log->action}} </small>
                            </td>

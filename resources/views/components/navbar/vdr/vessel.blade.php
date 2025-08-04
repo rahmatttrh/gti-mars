@@ -125,6 +125,8 @@
                <span class="mx-3">Dashboard</span>
             </a>
          </li>
+         @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+         @else
          <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create')}}" class="nav-link {{ (request()->is('vdr/v/act/create')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create'))
@@ -134,6 +136,8 @@
                <span class="mx-3">Create</span>
             </a>
          </li>
+         @endif
+         
          <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link {{ (request()->is('vdr/v/act/create/spa')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create/spa'))

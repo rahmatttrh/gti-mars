@@ -84,10 +84,10 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
-      Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
+      // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
-      // Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));
+      Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));
 
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Superintendent');
    }
@@ -174,11 +174,12 @@ class EmailController extends Controller
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Suptent on Location');
    }
 
-   public function approvalVdrSuptentBu($id){
+   public function approvalVdrSuptentBu($id)
+   {
 
       // dd('ok');
       $vdr = Vdr::find(dekripRambo($id));
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       $totalDaily = $vdr->customRound($totalDaily);
       $debugHours = 0;
       $debugMinutes = 0;
@@ -218,7 +219,7 @@ class EmailController extends Controller
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
 
-      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1 )->first();
+      $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd($vdr->area);
       // $user = User::where('username', 'marine')->first();
 
@@ -250,7 +251,7 @@ class EmailController extends Controller
       // TESTING
       // Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
       Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
-      
+
       // END OF TESTING
 
 
@@ -329,11 +330,11 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
-      // Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
+      Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'VDR Approved & Email sent Marine Departement');
    }
 
@@ -410,13 +411,13 @@ class EmailController extends Controller
       // }
 
       // TESTING
-      Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
-      // Mail::to(["mk.yusuf.hibatullah@pertamina.com", "mk.lutfa.jasworo@pertamina.com", "mk.luthfi.alhafiizh@pertamina.com", "mk.setyo.wiyono@pertamina.com", "mk.bryan.jhon@pertamina.com", "mk.raditya.r@pertamina.com"])->send(new AssignVdrEmail($data));
+      Mail::to(["develop@ekanuri.com", "mk.yusuf.hibatullah@pertamina.com", "mk.lutfa.jasworo@pertamina.com", "mk.luthfi.alhafiizh@pertamina.com", "mk.setyo.wiyono@pertamina.com", "mk.bryan.jhon@pertamina.com", "mk.raditya.r@pertamina.com"])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'VDR Released & Email sent to All Fuel Monitoring Team');
    }
 

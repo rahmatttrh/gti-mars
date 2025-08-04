@@ -306,6 +306,8 @@ class MarineVdrController extends Controller
 
    public function validation()
    {
+
+      $vdrValidations = collect();
       if (auth()->user()->username == 'pet') {
          $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
@@ -327,6 +329,10 @@ class MarineVdrController extends Controller
          }
 
          // dd($vdrs);
+      }
+
+      if (auth()->user()->hasRole('superuser')) {
+         $vdrValidations = Vdr::get();
       }
 
       return view('pages-stisla.marine.vdr.validation', [

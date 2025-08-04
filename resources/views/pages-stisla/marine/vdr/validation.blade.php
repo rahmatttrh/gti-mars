@@ -122,7 +122,7 @@
                               </td>
                              
                               {{-- <td>{{formatDayName($vdr->date)}}</td> --}}
-                              <td>
+                              <td class="text-truncate px-2">
                                  {{$vdr->date}}
                                  {{-- <small>{{formatDayName($vdr->date)}}</small> --}}
                               </td>
