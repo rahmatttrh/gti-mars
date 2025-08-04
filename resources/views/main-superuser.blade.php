@@ -7,8 +7,8 @@
    <section class="section">
       <div class="section-body">
          <div class="row"> 
-            <div class="col-md-9">
-               <div class="row">
+            <div class="col-md-7">
+               {{-- <div class="row">
                   <div class="col-md-6">
                      <div class="card card-statistic-1 border">
                         <a href="{{route('vdr.marine.validation')}}">
@@ -44,83 +44,52 @@
                         </a>
                       </div>
                   </div>
-               </div>
+               </div> --}}
                {{-- <span class="btn btn-light border">Sailing Order</span> --}}
-               <div class="row">
-                  <div class="col-12">
-                     <div class="card">
-                        <div class="card-body">
-                           {{-- <table class="display  border">
-                              <tbody>
-                                 <tr>
-                                    <th>All Vessel Daily Report</th>
-                                 </tr>
-                              </tbody>
-                           </table> --}}
-                           <div class="table-responsive  overflow-auto" style="height: 340px">
-                              <table class="datatables-vdr">
-                                 
-                                 <thead>
-                                    
-                                    <tr>
-                                       <th>ID</th>
-                                       <th>Vessel</th>
-                                       <th>Date</th>
-                                       {{-- <th>Date</th> --}}
-                                       <th>Status</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    @foreach ($allVdrs as $vdr)
-                                       <tr class="border" style="border: 1px black">
-                                          <td>{{$vdr->id}}</td>
-                                          <td class="text-truncate" style="max-width: 120px"><a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a></td>
-                                          <td>{{formatDate($vdr->date)}}</td>
-                                          {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                                          <td class="text-truncate" style="max-width: 100px">
-                                             <x-status-stisla.vdr :vdr="$vdr" />
-                                          </td>
-                                       </tr>
-                                    @endforeach
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
+               <div class="card shadow-lg">
+                  {{-- <div class="card-header">
+                     
+                  </div> --}}
+                  <div class="card-body">
+                     <div class="badge badge-info mb-2">
+                        ALL VDR
                      </div>
-                  </div>
-                  {{-- <div class="col-6">
-                     <table class="display  border">
+                     {{-- <table class="display  border">
                         <tbody>
                            <tr>
-                              <th>All Sailing Order</th>
+                              <th>All Vessel Daily Report</th>
                            </tr>
                         </tbody>
-                     </table>
-                     <div class="table-responsive overflow-auto" style="height: 340px">
-                        <table class="display  border">
+                     </table> --}}
+                     
+                        <table class="datatables-vdr">
                            
                            <thead>
                               
                               <tr>
+                                 <th>ID</th>
                                  <th>Vessel</th>
-                                 <th>Code</th>
+                                 <th>Date</th>
+                                 {{-- <th>Date</th> --}}
                                  <th>Status</th>
                               </tr>
                            </thead>
                            <tbody>
-                              @foreach ($allSchedules as $sche)
-                                 <tr class="border" style="border: 1px black">
-                                    <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->vessel->name ?? ''}}</a></td>
-                                    <td>{{$sche->code}}</td>
-                                    <td>
-                                       <x-status-stisla.schedule-plain :schedule="$sche"/>
+                              @foreach ($allVdrs as $vdr)
+                                 <tr >
+                                    <td>{{$vdr->id}}</td>
+                                    <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
+                                    <td>{{$vdr->date}}</td>
+                                    {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                                    <td class="text-truncate">
+                                       <x-status-stisla.vdr :vdr="$vdr" />
                                     </td>
                                  </tr>
                               @endforeach
                            </tbody>
                         </table>
-                     </div>
-                  </div> --}}
+                     
+                  </div>
                </div>
                
                
@@ -150,7 +119,41 @@
                @endif --}}
       
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
+               <div class="card shadow-lg">
+                  <div class="card-body">
+                     <div class="badge badge-info mb-2">Log Activity</div>
+                     <table class="datatables-vdr"   >
+                        <thead>
+                           <tr>
+                              <th>Time</th>
+                              <th>User</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           @foreach ($logs as $log)
+                              <tr class="border">
+                                 <td class="text-truncate">
+                                    <div class="badge badge-light">
+                                       {{formatDateTime($log->created_at)}} 
+                                    </div>
+                                   
+                                    
+                                     
+                                 </td>
+                                 <td>{{$log->user->name ?? ''}}</td>
+                                 <td>{{$log->action}}</td>
+                                 {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
+                                 {{-- <td></td> --}}
+                                 
+                              </tr>
+                           @endforeach
+                        </tbody>
+                     </table>
+                     {{-- {{ $logs->links() }} --}}
+                  </div>
+               </div>
                <table class="display  border">
                   <tbody>
                      <tr>
@@ -159,28 +162,7 @@
                   </tbody>
                </table>
                <div class="table-responsive overflow-auto" style="height: 460px">
-                <table class="border display "   >
-                  {{-- <thead>
-                     <tr>
-                        <th>Time</th>
-                        <th>User</th>
-                        <th>Action</th>
-                     </tr>
-                  </thead> --}}
-                  <tbody>
-                     @foreach ($logs as $log)
-                        <tr class="border">
-                           <td class="text-truncate"><small> {{formatDateTime($log->created_at)}} {{$log->user->name ?? ''}}
-                              <br>
-                              {{$log->action}} </small>
-                           </td>
-                           {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
-                           {{-- <td></td> --}}
-                           
-                        </tr>
-                     @endforeach
-                  </tbody>
-               </table>
+                
                </div>
             </div>
          </div>

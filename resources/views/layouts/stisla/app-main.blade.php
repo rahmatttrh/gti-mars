@@ -43,7 +43,8 @@ table {
       border-collapse: collapse;
    } */
    th, td {
-      padding-left: 5px
+      padding-left: 5px;
+      border: #0b4e99
    }
 
 .bga-1 {

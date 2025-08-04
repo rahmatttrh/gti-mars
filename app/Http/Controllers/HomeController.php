@@ -693,7 +693,7 @@ class HomeController extends Controller
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
          $allSchedules = Schedule::orderBy('updated_at', 'desc')->get();
-         $logs = Log::orderBy('created_at', 'desc')->get();
+         $logs = Log::orderBy('created_at', 'desc')->paginate(300);
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
          $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
 
