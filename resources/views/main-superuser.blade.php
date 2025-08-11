@@ -128,7 +128,7 @@
                         <thead>
                            <tr class="border">
                               <th>Time</th>
-                              <th>User</th>
+                              {{-- <th>User</th> --}}
                               <th>Action</th>
                            </tr>
                         </thead>
@@ -138,13 +138,14 @@
                                  <td class="text-truncate">
                                     {{-- <div class="badge badge-light"> --}}
                                        {{-- {{$log->created_at}}  --}}
-                                       {{$log->created_at}}
+                                       {{$log->created_at}} <br>
+                                       {{$log->user->name ?? ''}}
                                     {{-- </div> --}}
                                    
                                     
                                      
                                  </td>
-                                 <td class="text-truncate" style="width: 90px">{{$log->user->name ?? ''}}</td>
+                                 {{-- <td class="text-truncate" style="width: 90px"></td> --}}
                                  <td>{{$log->action}}</td>
                                  {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
                                  {{-- <td></td> --}}

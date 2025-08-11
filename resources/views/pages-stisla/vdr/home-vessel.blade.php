@@ -228,11 +228,11 @@
                            <tr>
                               <td class="text-muted text-center"><small>{{++$i}} </small></td>
                               <td>
-                                 @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+                                 {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
                                     <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                     @else
+                                     {{-- @else
                                      <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                 @endif
+                                 @endif --}}
                                  {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>  --}}
                                  {{-- <small>{{$vdr->vessel->name}}</small> --}}
                               </td>
