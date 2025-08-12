@@ -225,11 +225,11 @@ table th tr td {
                         @if($hse->header->group_header != $groupHeader)
                         <thead>
                            <tr>
-                                 <td class="text-center title">B</td>
-                                 <td class="title">HSSE STATISTICS (Output)</td>
-                                 <td class="text-center title">Previous</td>
-                                 <td class="text-center title">Today</td>
-                                 <td class="text-center title">Cumulative</td>
+                                 <td class="text-center title bg-lgray">B</td>
+                                 <td class="title bg-lgray">HSSE STATISTICS (Output)</td>
+                                 <td class="text-center title bg-lgray">Previous</td>
+                                 <td class="text-center title bg-lgray">Today</td>
+                                 <td class="text-center title bg-lgray">Cumulative</td>
                            </tr>
                         </thead>
          
