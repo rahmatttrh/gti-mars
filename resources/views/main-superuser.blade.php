@@ -79,7 +79,7 @@
                                  <tr >
                                     <td>{{$vdr->id}}</td>
                                     <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
-                                    <td>{{$vdr->date}}</td>
+                                    <td class="text-truncate">{{$vdr->date}}</td>
                                     {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                     <td class="text-truncate">
                                        <x-status-stisla.vdr :vdr="$vdr" />
@@ -124,7 +124,7 @@
                   <div class="card-body">
                      <div class="badge badge-info mb-2">Log Activity</div>
                      <div  class="table-responsive overflow-auto " style="height: 450px" >
-                     <table class=""   >
+                     <table class="datatables-vdr"   >
                         <thead>
                            <tr class="border">
                               <th>Time</th>
