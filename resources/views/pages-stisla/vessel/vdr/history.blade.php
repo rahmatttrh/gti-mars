@@ -66,11 +66,11 @@
                              
                               <td>{{$vdr->vessel->name}}</td>
                               <td>
-                                 @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+                                 {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
                                     <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                     @else
+                                     {{-- @else
                                      <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                 @endif
+                                 @endif --}}
                               
                               </td>
                              

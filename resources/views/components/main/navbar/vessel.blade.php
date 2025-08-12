@@ -167,11 +167,11 @@
                   <span class="mx-3">Dashboard</span>
                </a>
             </li>
-            <li class="nav-item nav-item-b ">
+            {{-- <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.vessel.create')}}" class="nav-link ">
                   <span class="mx-3">Create</span>
                </a>
-            </li>
+            </li> --}}
             <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link ">
                   <span class="mx-3">Create by OnePageForm</span>

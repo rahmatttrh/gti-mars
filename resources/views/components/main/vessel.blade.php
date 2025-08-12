@@ -40,11 +40,11 @@
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
                   <div>Jika anda ingin membuat Vessel Daily Report silahkan 
-                     @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+                     {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
                      <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
-                     @else
+                     {{-- @else
                      <a href="{{route('vdr.vessel.create')}}">Klik disini</a>
-                     @endif
+                     @endif --}}
                      , atau klik VDR pada menu utama</div>
                   <hr>
                   {{-- <div class="mb-2" style="color: #1f4481 !important">
@@ -85,11 +85,11 @@
                            <tr>
 
                               <td>
-                                 @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya')
+                                 {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
                                     <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                     @else
+                                     {{-- @else
                                      <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @endif
+                                 @endif --}}
                                  {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
                               </td>
                               {{-- <td>{{formatDate($myvdr->date)}}</td>
