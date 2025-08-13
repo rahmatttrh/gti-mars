@@ -1007,7 +1007,7 @@ table th tr td {
                   <table style="margin-top: 0px">
                      <tbody>
                         <tr>
-                           <td rowspan="3" class="bg-lgray" style="width: 110px"><b>Periodical Fuel ROB Check/ Control  <br>by Company Reps. and Surveyor</b></td>
+                           <td rowspan="3" class="bg-lgray" style="width: 120px"><b>Periodical Fuel ROB Check/ Control  <br>by Company Reps. and Surveyor</b></td>
                            {{-- <td><small><b></b></small></td> --}}
                         </tr>
                         <tr>
