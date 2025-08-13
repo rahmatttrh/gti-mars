@@ -1010,6 +1010,11 @@ table th tr td {
                               <small>* Positive Diff -> Correction Applied</small><br>
                               <small>* Negative Diff -> Correction Not-Applied</small>
                            </td>
+                           {{-- <td rowspan="2" class="bg-lgray">
+                              ROB Correction Rule <br>
+                              <small>* Positive Diff -> Correction Applied</small><br>
+                              <small>* Negative Diff -> Correction Not-Applied</small>
+                           </td> --}}
                         </tr>
                         <tr>
                            <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
@@ -1019,7 +1024,7 @@ table th tr td {
                            </td>
                            <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
                            <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                           <td class="text-center"  colspan="3">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
+                           <td class="text-center"  colspan="2">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
                            
                         </tr>
                      </tbody>
