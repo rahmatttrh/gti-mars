@@ -834,7 +834,7 @@ table th tr td {
                            <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                            </td>
                            @else
-                           <td class="text-center bg-yellow" style="border-right: none">
+                           <td class="text-center bg-yellow px-2" style="border-right: none">
                               {{-- @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @else --}}
@@ -878,10 +878,11 @@ table th tr td {
                         <td class="text-center">
                               <small>{{$totaljam ?? '00:00'}}</small>
                         </td>
-                        <td colspan="2"></td>
-                        <td class="text-center">
-                              <small>{{formatRibuan(round($totaldaily))}} Ltrs</small>
+                        <td colspan="3"></td>
+                        <td class="text-center" style="border-right: none">
+                              <small>{{formatRibuan(round($totaldaily))}} </small>
                         </td>
+                        <td style="border-left: none" class="text-end px-2">Ltrs</td>
                      </tr>
    
                   
