@@ -1371,8 +1371,11 @@ table {
                         {{-- <label for="title1">PIC PET</label> --}}
                         <select class="form-control" name="name1" id="name1" required>
                            <option value="YFH">Yusuf Falah Hibatullah</option>
-                           <option value="S">Setyo</option>
-                           <option value="R">Radit</option>
+                              <option value="SW">Setyo Wiyono</option>
+                              <option value="RR">Radit R</option>
+                              <option value="LJ">Lutfa Jasworo</option>
+                              <option value="LA">Luthfi Alhafiizh</option>
+                              <option value="BJ">Bryan Jhon</option>
                         </select>
                        
                      </div>
