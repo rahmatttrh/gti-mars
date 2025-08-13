@@ -283,7 +283,7 @@ table th tr td {
                <thead>
                   <tr>
                      <td colspan="2" class="text-center title bg-lgray">TIME</td>
-                     <td colspan="8" class="text-center title bg-lgray">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
+                     <td colspan="8" class="text-center title bg-lgray">Operation Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
                      <td rowspan="2" class="text-center align-middle title bg-lgray">ACTIVITIES</td>
                   </tr>
                   <tr>
@@ -786,10 +786,16 @@ table th tr td {
                <thead>
                   <tr class="text-center ">
                      <td class="title bg-lgray">Operating Mode</td>
-                     <td class="title bg-lgray">Total Time hh:mm</td>
-                     <td class="title bg-lgray">Min. Speed as Contract (Knots) <br> </td>
-                     <td class="title bg-lgray">Contractual Fuel Cons. </td>
-                     <td class="title bg-lgray">Daily Fuel Cons. </td>
+                     <td class="title bg-lgray">Total Time <br> hh:mm</td>
+                     <td class="title bg-lgray" >Min. Speed <br> as Contract  <br>(Knots) <br> </td>
+                     <td class="title bg-lgray" colspan="2">
+                        Contractual Fuel Cons. <br>
+                        Remuneration Figures
+                      </td>
+                     <td class="title bg-lgray" colspan="2" >
+                        Daily Fuel Cons. by <br>
+                        Remuneration Figures
+                     </td>
                   </tr>
                </thead>
                <tbody>
@@ -816,19 +822,19 @@ table th tr td {
                            
                            <td class="text-center bg-yellow">
                               @if($operating->heading->speed == '1')
-                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              <small>{{$operating->speed ?? '0:00'}}</small>
                               
                               @else
-                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              <small>{{$operating->speed ?? '0:00'}}</small>
                               @endif
                            </td>
                         @endif
    
                         @if ($operating->heading_id > 8)
-                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                            </td>
                            @else
-                           <td class="text-center bg-yellow">
+                           <td class="text-center bg-yellow" style="border-right: none">
                               {{-- @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @else --}}
@@ -840,15 +846,16 @@ table th tr td {
                                  @endif
                                  {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
                               {{-- @endif --}}
-                              L/H
-                        </td>
+                              
+                           </td>
+                           <td style="border-left: none">L/H</td>
                         @endif
                         
                         @if ($operating->heading_id > 8)
-                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                            </td>
                            @else
-                           <td class="text-center">
+                           <td class="text-center" style="border-right: none">
       
       
                                  @if($operating->heading->daily == '1')
@@ -860,8 +867,9 @@ table th tr td {
                                  @else
                                  <small>{{$operating->daily}}</small>
                                  @endif
-                                 Ltrs
+                                 
                            </td>
+                           <td style="border-left: none" >Ltrs</td>
                            @endif
                      </tr>
                      @endforeach
@@ -909,11 +917,11 @@ table th tr td {
                         </tr> --}}
                         <tr>
                            <td class="title bg-lgray">Type</td>
-                           <td class="text-truncate text-center bg-lgray "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
-                           <td class="text-center bg-lgray "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
-                           <td class="text-center bg-lgray "><b>Received</b></td>
-                           <td class="text-center bg-lgray "><b>Transferred</b></td>
-                           <td class="text-center bg-lgray "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
+                           <td class="text-truncate text-center bg-lgray " colspan="2"><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Received</b></td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Transferred</b></td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
                            <td class="text-center bg-lgray "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
                            <td class="text-center bg-lgray " colspan="2"><b>Special Calculation</b>  </td>
                         </tr>
@@ -929,23 +937,34 @@ table th tr td {
                         @endphp
                         <tr>
                            <td>{{$vdrCargo->heading->description}}</td>
-                           <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
+                           <td class="text-center bg-yellow text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->opening)}} </td>
+                           <td style="border-left: none">{{$satuan}}</td>
                            @if ($vdrCargo->heading_id > 2)
-                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
-                              <td class="text-center ">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              <td class="text-center text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->consumption)}} </td>
+                              <td style="border-left: none">{{$satuan}}</td>
                            @endif
                            
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->received)}} </td>
+                           <td style="border-left: none">{{$satuan}}</td>
+
+
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->transferred)}} </td>
+                           <td style="border-left: none">{{$satuan}}</td>
+
+
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->closing)}} </td>
+                           <td style="border-left: none">{{$satuan}}</td>
+
+
                            <td class="bg-yellow">{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
                            <td rowspan="2" class="bg-lgray">
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
+                           <td rowspan="2" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 3)
                            <td rowspan="3" class="bg-lgray">
@@ -957,7 +976,7 @@ table th tr td {
                            <td rowspan="2" class="bg-lgray">
                               Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
+                           <td rowspan="2" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
                            @endif
 
                            @if ($vdrCargo->heading_id == 8)
@@ -980,11 +999,11 @@ table th tr td {
                            {{-- <td><small><b></b></small></td> --}}
                         </tr>
                         <tr>
-                           <td class="text-center bg-lgray" colspan="2"><b>Activity</b></td>
-                           <td class="text-center bg-lgray"><b>ROB Check Time</b></td>
-                           <td class="text-center bg-lgray"><b>ROB by VDR at Check Time</b></td>
-                           <td class="text-center bg-lgray"><b>Actual ROB at Check Time</b></td>
-                           <td class="text-center bg-lgray"><b>ROB Different</b></td>
+                           <td class="text-center bg-lgray" colspan="3"><b>Activity</b></td>
+                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>ROB Check Time</b></td>
+                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>ROB by VDR at Check Time</b></td>
+                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>Actual ROB at Check Time</b></td>
+                           <td class="text-center bg-lgray" colspan="2"><b>ROB Different</b></td>
                            <td rowspan="2" class="bg-lgray">
                               ROB Correction Rule <br>
                               <small>* Positive Diff -> Correction Applied</small><br>
@@ -992,11 +1011,14 @@ table th tr td {
                            </td>
                         </tr>
                         <tr>
-                           <td colspan="2" class="text-center">{{$vdrPeriodic->activity ?? ''}} </td>
-                           <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                           <td class="text-center" colspan="">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
+                           <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
+                           <td class="text-center bg-yellow" colspan="2">
+                              {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
+                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
+                           </td>
+                           <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
+                           <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
+                           <td class="text-center"  colspan="3">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
                            
                         </tr>
                      </tbody>
