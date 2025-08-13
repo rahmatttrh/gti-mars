@@ -922,7 +922,7 @@ table th tr td {
                            <td class="text-center bg-lgray " colspan="2"><b>Received</b></td>
                            <td class="text-center bg-lgray " colspan="2"><b>Transferred</b></td>
                            <td class="text-center bg-lgray " colspan="2"><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
-                           <td class="text-center bg-lgray "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
+                           <td class="text-center bg-lgray " style="min-width: 70px"><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
                            <td class="text-center bg-lgray " colspan="2"><b>Special Calculation</b>  </td>
                         </tr>
                      </thead>
