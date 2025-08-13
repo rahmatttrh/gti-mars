@@ -278,12 +278,12 @@ table th tr td {
             
          </div>
          <div class="col-md-7">
-            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
+            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITIES</small>
             <table class="" style="width: 100%">
                <thead>
                   <tr>
                      <td colspan="2" class="text-center title bg-lgray">TIME</td>
-                     <td colspan="8" class="text-center title bg-lgray">Operation Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
+                     <td colspan="8" class="text-center title bg-lgray">Operating Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
                      <td rowspan="2" class="text-center align-middle title bg-lgray">ACTIVITIES</td>
                   </tr>
                   <tr>
