@@ -937,7 +937,7 @@ table th tr td {
                               }
                         @endphp
                         <tr>
-                           <td class="text-truncate">{{$vdrCargo->heading->description}}</td>
+                           <td class="text-truncate" style="width: 120px">{{$vdrCargo->heading->description}}</td>
                            <td class="text-center bg-yellow text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->opening)}} </td>
                            <td style="border-left: none; width:20px" class="text-end px-2">{{$satuan}} </td>
                            @if ($vdrCargo->heading_id > 2)
@@ -960,9 +960,9 @@ table th tr td {
                            <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
-                           <td class="bg-yellow" colspan="2">{{$vdrCargo->remark}}</td>
+                           <td class="bg-yellow" colspan="2" >{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
-                           <td rowspan="2" class="bg-lgray">
+                           <td rowspan="2" class="bg-lgray" >
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
                            </td>
                            <td rowspan="2"  style="border-right: none" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} </td>
