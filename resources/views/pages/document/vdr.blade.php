@@ -924,7 +924,7 @@ table th tr td {
                            <td class="text-center bg-lgray " colspan="2"><b>Transferred</b></td>
                            <td class="text-center bg-lgray " colspan="2"><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
                            <td class="text-center bg-lgray " style="min-width: 70px"><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
-                           <td class="text-center bg-lgray " colspan="2"><b>Special Calculation</b>  </td>
+                           <td class="text-center bg-lgray " colspan="3"><b>Special Calculation</b>  </td>
                         </tr>
                      </thead>
                      <tbody>
@@ -965,26 +965,30 @@ table th tr td {
                            <td rowspan="2" class="bg-lgray">
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
+                           <td rowspan="2"  style="border-right: none" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} </td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 3)
                            <td rowspan="3" class="bg-lgray">
                               Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)
                            </td>
-                           <td rowspan="3" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}} Ltrs</td>
+                           <td rowspan="3" style="border-right: none" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}}</td>
+                           <td rowspan="3" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 6)
                            <td rowspan="2" class="bg-lgray">
                               Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
+                           <td rowspan="2" style="border-right: none" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}}</td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
 
                            @if ($vdrCargo->heading_id == 8)
                            <td rowspan="2" class="bg-lgray">
                               Total Actual Daily Fuel Cons. = (Part 1 + Part 2)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
+                           <td rowspan="2" style="border-right: none" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} </td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 10)
                            <td rowspan="2">
@@ -1022,9 +1026,14 @@ table th tr td {
                               {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
                               {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
                            </td>
-                           <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
-                           <td class="text-center bg-yellow" colspan="2">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                           <td class="text-center"  colspan="2">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
+                           <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
+                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
+
+                           <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
+                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
+
+                           <td class="text-center" style="border-right: none; padding-left:4px"  >{{formatRibuan($vdrPeriodic->rob_diff)}} </td>
+                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
                            
                         </tr>
                      </tbody>
