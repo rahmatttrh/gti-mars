@@ -909,7 +909,7 @@ table th tr td {
             <div class="d-flex">
                <div>
                   <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
-                  <table class="mb-1" style="width: 100%">
+                  <table class="" style="width: 100%">
                      <thead>
                         {{-- <tr>
                            <th colspan="2" class="text-center">TIME</th>
@@ -923,7 +923,7 @@ table th tr td {
                            <td class="text-center bg-lgray " colspan="2"><b>Received</b></td>
                            <td class="text-center bg-lgray " colspan="2"><b>Transferred</b></td>
                            <td class="text-center bg-lgray " colspan="2"><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
-                           <td class="text-center bg-lgray " style="min-width: 70px"><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
+                           <td class="text-center bg-lgray " style="min-width: 70px" colspan="2"><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
                            <td class="text-center bg-lgray " colspan="3"><b>Special Calculation</b>  </td>
                         </tr>
                      </thead>
@@ -937,15 +937,15 @@ table th tr td {
                               }
                         @endphp
                         <tr>
-                           <td>{{$vdrCargo->heading->description}}</td>
+                           <td class="text-truncate">{{$vdrCargo->heading->description}}</td>
                            <td class="text-center bg-yellow text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->opening)}} </td>
-                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
+                           <td style="border-left: none; width:20px" class="text-end px-2">{{$satuan}} </td>
                            @if ($vdrCargo->heading_id > 2)
                               <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
                               <td class="text-center text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->consumption)}} </td>
-                              <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
+                              <td style="border-left: none; width:20px" class="text-end px-2">{{$satuan}}</td>
                            @endif
                            
                            <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->received)}} </td>
@@ -960,7 +960,7 @@ table th tr td {
                            <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
-                           <td class="bg-yellow">{{$vdrCargo->remark}}</td>
+                           <td class="bg-yellow" colspan="2">{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
                            <td rowspan="2" class="bg-lgray">
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
@@ -999,16 +999,23 @@ table th tr td {
                            @endif
                         </tr>
                         @endforeach
+                        
+                     </tbody>
+                     
+                     
+                  </table>
+                  <table style="margin-top: 0px">
+                     <tbody>
                         <tr>
-                           <td rowspan="3" class="bg-lgray"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                           <td rowspan="3" class="bg-lgray" style="width: 110px"><b>Periodical Fuel ROB Check/ Control  <br>by Company Reps. and Surveyor</b></td>
                            {{-- <td><small><b></b></small></td> --}}
                         </tr>
                         <tr>
                            <td class="text-center bg-lgray" colspan="3"><b>Activity</b></td>
-                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>ROB Check Time</b></td>
+                           <td class="text-center bg-lgray text-truncate" ><b>ROB Check Time</b></td>
                            <td class="text-center bg-lgray text-truncate" colspan="2"><b>ROB by VDR at Check Time</b></td>
                            <td class="text-center bg-lgray text-truncate" colspan="2"><b>Actual ROB at Check Time</b></td>
-                           <td class="text-center bg-lgray" colspan="2"><b>ROB Different</b></td>
+                           <td class="text-center bg-lgray" colspan="3"><b>ROB Different</b></td>
                            <td rowspan="2" class="bg-lgray">
                               ROB Correction Rule <br>
                               <small>* Positive Diff -> Correction Applied</small><br>
@@ -1022,22 +1029,21 @@ table th tr td {
                         </tr>
                         <tr>
                            <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
-                           <td class="text-center bg-yellow" colspan="2">
+                           <td class="text-center bg-yellow" >
                               {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
                               {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
                            </td>
                            <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
-                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
 
                            <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
 
-                           <td class="text-center" style="border-right: none; padding-left:4px"  >{{formatRibuan($vdrPeriodic->rob_diff)}} </td>
-                           <td  style="border-left: none" class="text-end px-2">Ltrs</td>
+                           <td class="text-center bg-yellow" style="border-right: none; padding-left:4px; width:70px"  >{{formatRibuan($vdrPeriodic->rob_diff)}} </td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
                            
                         </tr>
                      </tbody>
-                     
                   </table>
                </div>
                {{-- <div>
