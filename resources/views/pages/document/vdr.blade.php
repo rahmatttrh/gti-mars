@@ -848,7 +848,7 @@ table th tr td {
                               {{-- @endif --}}
                               
                            </td>
-                           <td style="border-left: none">L/H</td>
+                           <td style="border-left: none" class="text-end px-2">L/H</td>
                         @endif
                         
                         @if ($operating->heading_id > 8)
@@ -869,7 +869,7 @@ table th tr td {
                                  @endif
                                  
                            </td>
-                           <td style="border-left: none" >Ltrs</td>
+                           <td style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                      </tr>
                      @endforeach
@@ -938,25 +938,25 @@ table th tr td {
                         <tr>
                            <td>{{$vdrCargo->heading->description}}</td>
                            <td class="text-center bg-yellow text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->opening)}} </td>
-                           <td style="border-left: none">{{$satuan}}</td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
                            @if ($vdrCargo->heading_id > 2)
                               <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
                               <td class="text-center text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->consumption)}} </td>
-                              <td style="border-left: none">{{$satuan}}</td>
+                              <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
                            @endif
                            
                            <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->received)}} </td>
-                           <td style="border-left: none">{{$satuan}}</td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
                            <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->transferred)}} </td>
-                           <td style="border-left: none">{{$satuan}}</td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
                            <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->closing)}} </td>
-                           <td style="border-left: none">{{$satuan}}</td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
                            <td class="bg-yellow">{{$vdrCargo->remark}}</td>
@@ -1219,7 +1219,7 @@ table th tr td {
                
                <div class="col text-end pt-1">
                   @if ($vdr->status == 4)
-                  {!! QrCode::size(65)->generate(Request::url()); !!}
+                  {!! QrCode::size(55)->generate(Request::url()); !!}
                   @endif
                   
                   <br>
@@ -1247,9 +1247,7 @@ table th tr td {
       </div>
 
 
-      @if ($vdr->status == 4)
-      <small class="text-muted" style="font-size: 8px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small>
-      @endif
+      
      
       
       
