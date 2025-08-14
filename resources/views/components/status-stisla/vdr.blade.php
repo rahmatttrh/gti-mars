@@ -14,7 +14,7 @@
    </div>
    
    @elseif($vdr->status == 3)
-      @if ($vdr->area != null)
+      @if ($vdr->area != null || $vdr->func != null)
          <div class="badge badge-primary">
             Menunggu Validasi Marine Representative
          </div>

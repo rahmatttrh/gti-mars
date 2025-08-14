@@ -648,16 +648,20 @@ class MarineVdrController extends Controller
             // dd('IPB');
             // jika Vessel IPB butuh validasi Suptent BU
             $status = 5;
+
             $emailController = new EmailController();
             $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
          } else {
             // dd('Non IPB');
             // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
             $status = 3;
+
             $emailController = new EmailController();
             $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
          }
       } else {
+
+         // dd('non po');
          // Jika Vessel Non PO butuh validasi Suptent Func
          $status = 5;
          $emailController = new EmailController();
