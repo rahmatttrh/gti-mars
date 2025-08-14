@@ -135,6 +135,8 @@
                               <option  value="Empty">Empty</option>
                               <option value="WI">WI</option>
                               <option value="Drilling">Drilling</option>
+                              <option value="Project">Project</option>
+                              <option value="Security">Security</option>
                               {{-- <option value="NBU">NBU</option> --}}
                
                            </select>

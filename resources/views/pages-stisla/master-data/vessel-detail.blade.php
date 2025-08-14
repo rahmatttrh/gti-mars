@@ -86,6 +86,8 @@
                                     <option value="Empty" >Empty</option>
                                     <option {{$vessel->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
                                     <option {{$vessel->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                    <option {{$vessel->func == 'Project' ? 'selected' : ''}} value="Project">Project</option>
+                                    <option {{$vessel->func == 'Security' ? 'selected' : ''}} value="Security">Security</option>
                                     
                                  </select>
                               </div>
