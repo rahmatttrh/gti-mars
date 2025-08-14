@@ -315,7 +315,7 @@ table th tr td {
                            @if ($vdrActivity->high == 0.00)
    
                            @else
-                           {{getTotalHours($vdrActivity->high)}}
+                           {{getTotalHoursB($vdrActivity->high)}}
                            @endif
                         
                         </small>
@@ -324,7 +324,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->normal == 0.00)
                                @else
-                               {{getTotalHours($vdrActivity->normal)}}
+                               {{getTotalHoursB($vdrActivity->normal)}}
                            @endif
                         </small>
                      </td>
@@ -332,7 +332,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->slow == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->slow)}}
+                           {{getTotalHoursB($vdrActivity->slow)}}
                            @endif
                         </small>
                      </td>
@@ -340,7 +340,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->manu == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->manu)}}
+                           {{getTotalHoursB($vdrActivity->manu)}}
                            @endif
                         </small>
                      </td>
@@ -348,7 +348,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->idle == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->idle)}}
+                           {{getTotalHoursB($vdrActivity->idle)}}
                            @endif
                         </small>
                      </td>
@@ -356,7 +356,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->tow == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->tow)}}
+                           {{getTotalHoursB($vdrActivity->tow)}}
                            @endif
                         </small>
                      </td>
@@ -364,7 +364,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->ah == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->ah)}}
+                           {{getTotalHoursB($vdrActivity->ah)}}
                            @endif
                         </small>
                      </td>
@@ -372,7 +372,7 @@ table th tr td {
                         <small>
                            @if ($vdrActivity->sb == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->sb)}}
+                           {{getTotalHoursB($vdrActivity->sb)}}
                            @endif
                         </small>
                      </td>
@@ -761,7 +761,7 @@ table th tr td {
                      <td class=" text-center" colspan="2">Total</td>
                      @foreach ($operatings->where('heading_id', '<', 9) as $operating)
                      
-                     <td class=" text-center">{{getTotalHours($operating->time)}} </td>
+                     <td class=" text-center">{{getTotalHoursB($operating->time)}} </td>
                      @endforeach
                      
                      {{-- <td class="bg-yellow"></td>
@@ -813,7 +813,7 @@ table th tr td {
                        
                         <td> <small>{{$operating->heading->description}} </small></td>
                         <td class="text-center">
-                           <small>{{getTotalHours($operating->time)}}</small>
+                           <small>{{getTotalHoursB($operating->time)}}</small>
                         </td>
                         @if ($operating->heading_id > 3)
                            <td class="text-center" style="background-color: rgb(186, 186, 186)">
