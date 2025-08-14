@@ -1,8 +1,6 @@
 <?php
 
-function customRound($number){
-   
-}
+function customRound($number) {}
 
 function formatRupiah($data)
 {
@@ -131,16 +129,17 @@ function vdrId($id)
    return $hasil;
 }
 
-function getRoleName($user){
-   if ($user->hasRole('admin-dsp')){
+function getRoleName($user)
+{
+   if ($user->hasRole('admin-dsp')) {
       $roleName = 'Admin DSP';
-   } else if ($user->hasRole('admin-vdr')){
+   } else if ($user->hasRole('admin-vdr')) {
       $roleName = 'Admin VDR';
-   } else if($user->hasRole('superadmin-dsp')){
+   } else if ($user->hasRole('superadmin-dsp')) {
       $roleName = 'Super Admin';
-   } else if($user->hasRole('superadmin-vdr')){
+   } else if ($user->hasRole('superadmin-vdr')) {
       $roleName = 'Super Admin';
-   } else if($user->hasRole('marine')){
+   } else if ($user->hasRole('marine')) {
       $roleName = 'Super Admin';
    } else {
       $roleName = 'OK';
@@ -150,16 +149,17 @@ function getRoleName($user){
 }
 
 
-function getTotalHours($value){
-      
+function getTotalHours($value)
+{
+
    $totalHours = '';
    $debugHours = 0;
    $debugMinutes = 0;
-  
+
    $array = explode('.', $value);
    $hours = floor($value);
    $minutes = intval($array[1]);
-   
+
    $debugHours += $hours;
    $debugMinutes += $minutes;
    // dd($debugHours);
@@ -187,7 +187,7 @@ function getTotalHours($value){
    }
    $finalHours  = sprintf('%02d', floor($debugHours));
 
-   $final = $finalHours . ':' . $finalMinutes;
+   $final = $finalHours . '.' . $finalMinutes;
 
    return $final;
 }

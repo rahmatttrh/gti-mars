@@ -85,8 +85,13 @@
                            <tr>
 
                               <td>
+                                 @if (auth()->user()->username == 'parakan')
+                                 <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
+                                 @else
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
+                                 @endif
                                  {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
-                                    <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
+                                    
                                      {{-- @else
                                      <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
                                  @endif --}}
