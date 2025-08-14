@@ -528,6 +528,12 @@
                                           LOCATION : {{$vdr->area}}
                                           @endif
                                        @endif
+
+                                       @if ($vdr->func != null)
+                                          {{-- @if ($vdr->status > 0) --}}
+                                          FUNC : {{$vdr->func}}
+                                          {{-- @endif --}}
+                                       @endif
                                     </td>
                                  </tr>
                               </thead>
