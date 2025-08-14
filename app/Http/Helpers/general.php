@@ -187,6 +187,49 @@ function getTotalHours($value){
    }
    $finalHours  = sprintf('%02d', floor($debugHours));
 
+   $final = $finalHours . '.' . $finalMinutes;
+
+   return $final;
+}
+
+
+function getTotalHoursB($value){
+      
+   $totalHours = '';
+   $debugHours = 0;
+   $debugMinutes = 0;
+  
+   $array = explode('.', $value);
+   $hours = floor($value);
+   $minutes = intval($array[1]);
+   
+   $debugHours += $hours;
+   $debugMinutes += $minutes;
+   // dd($debugHours);
+
+   if ($debugMinutes >= 60) {
+      $minLeft = $debugMinutes - 60;
+      $debugMinutes = $minLeft;
+      $debugHours += 1;
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+      }
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+      }
+   }
+
+   if ($debugMinutes < 10) {
+      $finalMinutes = '0' . $debugMinutes;
+   } else {
+      $finalMinutes = $debugMinutes;
+   }
+   $finalHours  = sprintf('%02d', floor($debugHours));
+
    $final = $finalHours . ':' . $finalMinutes;
 
    return $final;

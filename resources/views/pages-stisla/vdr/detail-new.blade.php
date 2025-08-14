@@ -240,7 +240,7 @@
                            </div> --}}
                         @endif
       
-                        @if ($vdr->vessel->ipb == 'IPB')
+                        {{-- @if ($vdr->vessel->ipb == 'IPB')
                            @if ($vdr->status == 0)
                               <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
                                  <option selected disabled >Choose BU</option>
@@ -252,7 +252,7 @@
                               <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a>
                            @endif
                            
-                        @endif
+                        @endif --}}
 
                         @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0)
@@ -416,14 +416,14 @@
                   </div> --}}
                @endif
 
-               @if ($vdr->vessel->ipb == 'IPB')
+               {{-- @if ($vdr->vessel->ipb == 'IPB')
                   <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
                      <option selected disabled >Choose BU</option>
                      <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                      <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                      <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
                   </select>
-               @endif
+               @endif --}}
 
                @if (auth()->user()->hasRole('vessel'))
                   @if ($vdr->status == 0)
@@ -475,6 +475,24 @@
                      </table> --}}
 
                      {{-- <div class="table-responsive overflow-auto pb-4" style="height: 700px ">  --}}
+                       
+                        @if ($vdr->vessel->ipb == 'IPB')
+                           @if ($vdr->status == 0)
+                           <div class="px-2 mt-2">
+                              <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 100%">
+                                 <option selected disabled >Choose BU</option>
+                                 <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">South Bussines Unit</option>
+                                 <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">Central Bussines Unit</option>
+                                 <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">North Bussines Unit</option>
+                              </select>
+                           </div>
+                              @else
+                              {{-- <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a> --}}
+                           @endif
+                           
+                        @endif
+                       
+                        
                         <div class="table-responsive p-2" >
                            <table class="">
                               <thead>
@@ -483,7 +501,14 @@
                                     {{-- <td colspan="2" class="text-right py-2 pr-1"></td> --}}
                                  </tr>
                                  <tr>
-                                    <td colspan="5"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                                    <td colspan="4"><x-status-stisla.vdr :vdr="$vdr" /></td>
+                                    {{-- <td>
+                                       @if ($vdr->vessel->ipb == 'IPB')
+                                          @if ($vdr->status > 0)
+                                          LOCATION : {{$vdr->area}}
+                                          @endif
+                                       @endif
+                                    </td> --}}
                                  </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                      <tr>
@@ -495,8 +520,15 @@
                                      </tr>
                                  @endif --}}
                                  <tr>
-                                    <td colspan="2"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
+                                    <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
                                     {{-- <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td> --}}
+                                    <td>
+                                       @if ($vdr->vessel->ipb == 'IPB')
+                                          @if ($vdr->status > 0)
+                                          LOCATION : {{$vdr->area}}
+                                          @endif
+                                       @endif
+                                    </td>
                                  </tr>
                               </thead>
                               <tbody class="pb-3">

@@ -1308,6 +1308,21 @@ class VdrController extends Controller
       ]);
    }
 
+   public function updateBu($vdr, $bu)
+   {
+
+      $vdr = Vdr::find($vdr);
+      $vdr->update([
+         'area' => $bu,
+      ]);
+
+      return response()->json([
+         'success' => true,
+         'result' => $bu,
+
+      ]);
+   }
+
    public function updateOperatingAjax($vdr, $op, $minspeed, $contractfuel, $daily)
    {
 

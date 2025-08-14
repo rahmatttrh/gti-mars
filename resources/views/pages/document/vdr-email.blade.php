@@ -133,14 +133,17 @@ table {
             <div class="d-flex justify-content-between">
                <div class="">
                   <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
-                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small>
+                  <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small><br>
+                  <small><b>{{$vdr->code}}</b></small>
                </div>
                <div class="text-center">
                   <small><b>VESSEL DAILY REPORT</b></small><br>
                   <small>(Every Midnight)</small>
+                  
                </div>
                <div>
                   <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
+                  
                </div>
             </div>
          </div>
@@ -178,7 +181,7 @@ table {
       </div>
 
       <div class="row">
-         <div class="col-5">
+         <div class="col-md-5">
             <small class="title mt-4">GENERAL INFORMATION</small>
             <table class="">
                <tbody>
@@ -214,11 +217,11 @@ table {
             <table class="mb-1">
                <thead>
                   <tr>
-                     <td class="title">Wheather</td>
-                     <td class="text-center title">00 - 06 hrs</td>
-                     <td class="text-center title">06 - 12 hrs</td>
-                     <td class="text-center title">12 - 18 hrs</td>
-                     <td class="text-center title">18 - 24 hrs</td>
+                     <td class="title bg-lgray">Weather</td>
+                     <td class="text-center title bg-lgray">00 - 06 hrs</td>
+                     <td class="text-center title bg-lgray">06 - 12 hrs</td>
+                     <td class="text-center title bg-lgray">12 - 18 hrs</td>
+                     <td class="text-center title bg-lgray">18 - 24 hrs</td>
                   </tr>
                </thead>
                <tbody>
@@ -239,11 +242,11 @@ table {
             <table class="">
                <thead>
                   <tr>
-                     <td class="text-center title">A</td>
-                     <td class="title">HSSE STATISTICS (INPUT)</td>
-                     <td class="text-center title">Previous</td>
-                     <td class="text-center title">Today</td>
-                     <td class="text-center title">Monthly</td>
+                     <td class="text-center title bg-lgray">A</td>
+                     <td class="title bg-lgray">HSSE STATISTICS (INPUT)</td>
+                     <td class="text-center title bg-lgray">Previous</td>
+                     <td class="text-center title bg-lgray">Today</td>
+                     <td class="text-center title bg-lgray">Monthly</td>
                   </tr>
                </thead>
                <tbody>
@@ -257,11 +260,11 @@ table {
                         @if($hse->header->group_header != $groupHeader)
                         <thead>
                            <tr>
-                                 <td class="text-center title">B</td>
-                                 <td class="title">HSSE STATISTICS (Output)</td>
-                                 <td class="text-center title">Previous</td>
-                                 <td class="text-center title">Today</td>
-                                 <td class="text-center title">Monthly</td>
+                                 <td class="text-center title bg-lgray">B</td>
+                                 <td class="title bg-lgray">HSSE STATISTICS (Output)</td>
+                                 <td class="text-center title bg-lgray">Previous</td>
+                                 <td class="text-center title bg-lgray">Today</td>
+                                 <td class="text-center title bg-lgray">Cumulative</td>
                            </tr>
                         </thead>
          
@@ -288,7 +291,7 @@ table {
                            <td class="text-center bg-yellow">
                               <small>{{$hse->today}}</small>
                            </td>
-                           <td class="text-center bg-yellow">
+                           <td class="text-center ">
                               <small>{{$hse->previous + $hse->today}}</small>
                            </td>
                            @else
@@ -309,14 +312,14 @@ table {
 
             
          </div>
-         <div class="col-7">
-            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITY</small>
+         <div class="col-md-7">
+            <small class="title">DETAIL OF DAILY OPERATIONAL ACTIVITIES</small>
             <table class="" style="width: 100%">
                <thead>
                   <tr>
-                     <td colspan="2" class="text-center title">TIME</td>
-                     <td colspan="8" class="text-center title">Operation Mode Duration (hh::mm)- <br> Except Maintenance & Downtime</td>
-                     <td rowspan="2" class="text-center align-middle title">ACTIVITIES</td>
+                     <td colspan="2" class="text-center title bg-lgray">TIME</td>
+                     <td colspan="8" class="text-center title bg-lgray">Operating Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
+                     <td rowspan="2" class="text-center align-middle title bg-lgray">ACTIVITIES</td>
                   </tr>
                   <tr>
                      <td class="text-center">Start 
@@ -347,7 +350,7 @@ table {
                            @if ($vdrActivity->high == 0.00)
    
                            @else
-                           {{getTotalHours($vdrActivity->high)}}
+                           {{getTotalHoursB($vdrActivity->high)}}
                            @endif
                         
                         </small>
@@ -356,7 +359,7 @@ table {
                         <small>
                            @if ($vdrActivity->normal == 0.00)
                                @else
-                               {{getTotalHours($vdrActivity->normal)}}
+                               {{getTotalHoursB($vdrActivity->normal)}}
                            @endif
                         </small>
                      </td>
@@ -364,7 +367,7 @@ table {
                         <small>
                            @if ($vdrActivity->slow == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->slow)}}
+                           {{getTotalHoursB($vdrActivity->slow)}}
                            @endif
                         </small>
                      </td>
@@ -372,7 +375,7 @@ table {
                         <small>
                            @if ($vdrActivity->manu == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->manu)}}
+                           {{getTotalHoursB($vdrActivity->manu)}}
                            @endif
                         </small>
                      </td>
@@ -380,7 +383,7 @@ table {
                         <small>
                            @if ($vdrActivity->idle == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->idle)}}
+                           {{getTotalHoursB($vdrActivity->idle)}}
                            @endif
                         </small>
                      </td>
@@ -388,7 +391,7 @@ table {
                         <small>
                            @if ($vdrActivity->tow == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->tow)}}
+                           {{getTotalHoursB($vdrActivity->tow)}}
                            @endif
                         </small>
                      </td>
@@ -396,7 +399,7 @@ table {
                         <small>
                            @if ($vdrActivity->ah == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->ah)}}
+                           {{getTotalHoursB($vdrActivity->ah)}}
                            @endif
                         </small>
                      </td>
@@ -404,7 +407,7 @@ table {
                         <small>
                            @if ($vdrActivity->sb == 0.00)
                            @else
-                           {{getTotalHours($vdrActivity->sb)}}
+                           {{getTotalHoursB($vdrActivity->sb)}}
                            @endif
                         </small>
                      </td>
@@ -793,7 +796,7 @@ table {
                      <td class=" text-center" colspan="2">Total</td>
                      @foreach ($operatings->where('heading_id', '<', 9) as $operating)
                      
-                     <td class=" text-center">{{getTotalHours($operating->time)}} </td>
+                     <td class=" text-center">{{getTotalHoursB($operating->time)}} </td>
                      @endforeach
                      
                      {{-- <td class="bg-yellow"></td>
@@ -812,16 +815,22 @@ table {
       </div>
 
       <div class="row">
-         <div class="col-4">
+         <div class="col-md-4">
             <small class="title">SUMMARY OF DAILY OPERATING DATA</small>
             <table class="mb-1">
                <thead>
                   <tr class="text-center ">
-                     <td class="title">Operating Mode</td>
-                     <td class="title">Total Time hh:mm</td>
-                     <td class="title">Min. Speed as Contract (Knots) <br> </td>
-                     <td class="title">Contractual Fuel Cons. </td>
-                     <td class="title">Daily Fuel Cons. </td>
+                     <td class="title bg-lgray">Operating Mode</td>
+                     <td class="title bg-lgray">Total Time <br> hh:mm</td>
+                     <td class="title bg-lgray" >Min. Speed <br> as Contract  <br>(Knots) <br> </td>
+                     <td class="title bg-lgray" colspan="2">
+                        Contractual Fuel Cons. <br>
+                        Remuneration Figures
+                      </td>
+                     <td class="title bg-lgray" colspan="2" >
+                        Daily Fuel Cons. by <br>
+                        Remuneration Figures
+                     </td>
                   </tr>
                </thead>
                <tbody>
@@ -839,7 +848,7 @@ table {
                        
                         <td> <small>{{$operating->heading->description}} </small></td>
                         <td class="text-center">
-                           <small>{{getTotalHours($operating->time)}}</small>
+                           <small>{{getTotalHoursB($operating->time)}}</small>
                         </td>
                         @if ($operating->heading_id > 3)
                            <td class="text-center" style="background-color: rgb(186, 186, 186)">
@@ -848,19 +857,19 @@ table {
                            
                            <td class="text-center bg-yellow">
                               @if($operating->heading->speed == '1')
-                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              <small>{{$operating->speed ?? '0:00'}}</small>
                               
                               @else
-                              <small>{{$operating->speed ?? '0.00'}}</small>
+                              <small>{{$operating->speed ?? '0:00'}}</small>
                               @endif
                            </td>
                         @endif
    
                         @if ($operating->heading_id > 8)
-                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                            </td>
                            @else
-                           <td class="text-center bg-yellow">
+                           <td class="text-center bg-yellow px-2" style="border-right: none">
                               {{-- @if($operating->heading->contractual == '1')
                               <small>{{$operating->contractual_fuel ?? '0'}}</small>
                               @else --}}
@@ -872,15 +881,16 @@ table {
                                  @endif
                                  {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
                               {{-- @endif --}}
-                              L/H
-                        </td>
+                              
+                           </td>
+                           <td style="border-left: none" class="text-end px-2">L/H</td>
                         @endif
                         
                         @if ($operating->heading_id > 8)
-                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                            </td>
                            @else
-                           <td class="text-center">
+                           <td class="text-center" style="border-right: none">
       
       
                                  @if($operating->heading->daily == '1')
@@ -892,8 +902,9 @@ table {
                                  @else
                                  <small>{{$operating->daily}}</small>
                                  @endif
-                                 Ltrs
+                                 
                            </td>
+                           <td style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                      </tr>
                      @endforeach
@@ -902,10 +913,11 @@ table {
                         <td class="text-center">
                               <small>{{$totaljam ?? '00:00'}}</small>
                         </td>
-                        <td colspan="2"></td>
-                        <td class="text-center">
-                              <small>{{formatRibuan(round($totaldaily))}} Ltrs</small>
+                        <td colspan="3"></td>
+                        <td class="text-center" style="border-right: none">
+                              <small>{{formatRibuan(round($totaldaily))}} </small>
                         </td>
+                        <td style="border-left: none" class="text-end px-2">Ltrs</td>
                      </tr>
    
                   
@@ -928,11 +940,11 @@ table {
                
             </div>
          </div>
-         <div class="col">
+         <div class="col-md-8">
             <div class="d-flex">
                <div>
                   <small class="title">SUMMARY OF DAILY FUEL, WATER and CARGOES REMAINING ONBOARD</small>
-                  <table class="mb-1" style="width: 100%">
+                  <table class="" style="width: 100%">
                      <thead>
                         {{-- <tr>
                            <th colspan="2" class="text-center">TIME</th>
@@ -940,14 +952,14 @@ table {
                            <th rowspan="2" class="text-center align-middle">ACTIVITIES</th>
                         </tr> --}}
                         <tr>
-                           <td class="title">Type</td>
-                           <td class="text-truncate text-center "><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
-                           <td class="text-center "><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
-                           <td class="text-center "><b>Received</b></td>
-                           <td class="text-center "><b>Transferred</b></td>
-                           <td class="text-center "><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
-                           <td class="text-center "><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
-                           <td class="text-center " colspan="2"><b>Special Calculation</b>  </td>
+                           <td class="title bg-lgray">Type</td>
+                           <td class="text-truncate text-center bg-lgray " colspan="2"><b>Opening</b> <br> <small>(ROB from Previous Day)</small> </td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Actual Consumption</b> <br> <small>(Sounding)</small> </td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Received</b></td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Transferred</b></td>
+                           <td class="text-center bg-lgray " colspan="2"><b>Closing MN</b> <br> <small>(Based on Actual Sounding)</small> </td>
+                           <td class="text-center bg-lgray " style="min-width: 70px" colspan="2"><b>Remarks</b> <br> <small>(Related ro receiving and tranferring activities)</small> </td>
+                           <td class="text-center bg-lgray " colspan="3"><b>Special Calculation</b>  </td>
                         </tr>
                      </thead>
                      <tbody>
@@ -960,43 +972,58 @@ table {
                               }
                         @endphp
                         <tr>
-                           <td>{{$vdrCargo->heading->description}}</td>
-                           <td class="text-center bg-yellow text-truncate">{{formatRibuan($vdrCargo->opening)}} {{$satuan}}</td>
+                           <td class="text-truncate" style="width: 120px">{{$vdrCargo->heading->description}}</td>
+                           <td class="text-center bg-yellow text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->opening)}} </td>
+                           <td style="border-left: none; width:20px" class="text-end px-2">{{$satuan}} </td>
                            @if ($vdrCargo->heading_id > 2)
-                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
                               </td>
                               @else
-                              <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->consumption)}} {{$satuan}}</td>
+                              <td class="text-center text-truncate" style="border-right: none">{{formatRibuan($vdrCargo->consumption)}} </td>
+                              <td style="border-left: none; width:20px" class="text-end px-2">{{$satuan}}</td>
                            @endif
                            
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->received)}} {{$satuan}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrCargo->transferred)}} {{$satuan}}</td>
-                           <td class="text-center">{{formatRibuan($vdrCargo->closing)}} {{$satuan}}</td>
-                           <td class="bg-yellow">{{$vdrCargo->remark}}</td>
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->received)}} </td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
+
+
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->transferred)}} </td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
+
+
+                           <td class="text-center bg-yellow text-truncate px-2" style="border-right: none">{{formatRibuan($vdrCargo->closing)}} </td>
+                           <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
+
+
+                           <td class="bg-yellow" colspan="2" >{{$vdrCargo->remark}}</td>
                            @if ($vdrCargo->heading_id == 1)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray" >
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} Ltrs</td>
+                           <td rowspan="2"  style="border-right: none" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_remu)}} </td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 3)
-                           <td rowspan="3">
+                           <td rowspan="3" class="bg-lgray">
                               Part 1: Corrected Fuel Cons. from 00:00  hours to Check Time (based on calculation by applying ROB Different)
                            </td>
-                           <td rowspan="3" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}} Ltrs</td>
+                           <td rowspan="3" style="border-right: none" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_correct)}}</td>
+                           <td rowspan="3" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 6)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray">
                               Part 2: Actual Fuel Cons. from Check Time to 24:00  hours (manual input based on actual sounding)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}} Ltrs</td>
+                           <td rowspan="2" style="border-right: none" class="text-truncate px-3 bg-yellow">{{formatRibuan($vdrPeriodic->fuel_cons_actual)}}</td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
 
                            @if ($vdrCargo->heading_id == 8)
-                           <td rowspan="2">
+                           <td rowspan="2" class="bg-lgray">
                               Total Actual Daily Fuel Cons. = (Part 1 + Part 2)
                            </td>
-                           <td rowspan="2" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} Ltrs</td>
+                           <td rowspan="2" style="border-right: none" class="text-truncate px-3">{{formatRibuan($vdrPeriodic->fuel_cons_total)}} </td>
+                           <td rowspan="2" style="border-left: none" class="text-end px-2">Ltrs</td>
                            @endif
                            @if ($vdrCargo->heading_id == 10)
                            <td rowspan="2">
@@ -1007,32 +1034,51 @@ table {
                            @endif
                         </tr>
                         @endforeach
+                        
+                     </tbody>
+                     
+                     
+                  </table>
+                  <table style="margin-top: 0px">
+                     <tbody>
                         <tr>
-                           <td rowspan="3"><b>Periodical Fuel ROB Check/ Control by Company Reps. and Surveyor</b></td>
+                           <td rowspan="3" class="bg-lgray" style="width: 120px"><b>Periodical Fuel ROB Check/ Control  <br>by Company Reps. and Surveyor</b></td>
                            {{-- <td><small><b></b></small></td> --}}
                         </tr>
                         <tr>
-                           <td class="text-center" colspan="2"><b>Activity</b></td>
-                           <td class="text-center"><b>ROB Check Time</b></td>
-                           <td class="text-center"><b>ROB by VDR at Check Time</b></td>
-                           <td class="text-center"><b>Actual ROB at Check Time</b></td>
-                           <td class="text-center"><b>ROB Different</b></td>
-                           <td rowspan="2">
+                           <td class="text-center bg-lgray" colspan="3"><b>Activity</b></td>
+                           <td class="text-center bg-lgray text-truncate" ><b>ROB Check Time</b></td>
+                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>ROB by VDR at Check Time</b></td>
+                           <td class="text-center bg-lgray text-truncate" colspan="2"><b>Actual ROB at Check Time</b></td>
+                           <td class="text-center bg-lgray" colspan="3"><b>ROB Different</b></td>
+                           <td rowspan="2" class="bg-lgray">
                               ROB Correction Rule <br>
                               <small>* Positive Diff -> Correction Applied</small><br>
                               <small>* Negative Diff -> Correction Not-Applied</small>
                            </td>
+                           {{-- <td rowspan="2" class="bg-lgray">
+                              ROB Correction Rule <br>
+                              <small>* Positive Diff -> Correction Applied</small><br>
+                              <small>* Negative Diff -> Correction Not-Applied</small>
+                           </td> --}}
                         </tr>
                         <tr>
-                           <td colspan="2" class="text-center">{{$vdrPeriodic->activity ?? ''}} </td>
-                           <td class="text-center bg-yellow">{{$vdrPeriodic->rob_time ?? '0'}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
-                           <td class="text-center bg-yellow">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
-                           <td class="text-center" colspan="">{{formatRibuan($vdrPeriodic->rob_diff)}}</td>
+                           <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
+                           <td class="text-center bg-yellow" >
+                              {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
+                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
+                           </td>
+                           <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
+
+                           <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_actual)}}</td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
+
+                           <td class="text-center bg-yellow" style="border-right: none; padding-left:4px; width:70px"  >{{formatRibuan($vdrPeriodic->rob_diff)}} </td>
+                           <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
                            
                         </tr>
                      </tbody>
-                     
                   </table>
                </div>
                {{-- <div>
@@ -1074,8 +1120,10 @@ table {
                
             </div>
             
+           
             
             <div class="row ttd">
+
                {{-- <div class="col pt-1">
                   <small>Acknowledged by,</small>
                   <br>
@@ -1146,8 +1194,35 @@ table {
                      
                   </div>
                @endif
-              
 
+               {{-- <div class="col pt-1">
+                  
+                  <br>
+               
+                  <small>Suptent : Name of Suptent</small><br>
+                 
+                  <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                 
+                  
+               </div>
+
+               @if ($vdr->title3 != null)
+                  <div class="col pt-1">
+                     <small>Acknowledged by,</small>
+                     <br>
+                  
+                     <small>Marine Representative : Lutfi Aryanto</small><br>
+                     @if ($vdr->title3 != null)
+                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                     @else
+                     <small>Status : ____________</small>
+                     @endif
+                     
+                  </div>
+               @endif --}}
+
+               
+              
                @if ($vdr->title4 != null)
                   @if ($vdr->title4 != null)
                      <div class="col pt-1">
@@ -1195,14 +1270,22 @@ table {
                         </div>
                      @endif
                @endif
+
+               
                
                <div class="col text-end pt-1">
-                  {!! QrCode::size(65)->generate(Request::url()); !!}
+                  @if ($vdr->status == 4)
+                  {!! QrCode::size(55)->generate(Request::url()); !!}
+                  @endif
+                  
                   <br>
                   <small>VDR Rev. 6A - 1 Apr. 2024</small>
                </div>
                
             </div>
+
+
+           
 
          </div>
          
@@ -1219,6 +1302,8 @@ table {
          </div> --}}
       </div>
 
+
+      
      
       
       
