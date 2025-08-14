@@ -104,7 +104,7 @@
                            <label for="name">Name*</label>
                            <input type="text" class="form-control " id="name" name="name" >
                         </div>
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-12">
                            {{-- <label for="email"></label> --}}
                            <input type="text" class="form-control " placeholder="Email" id="email" name="email" >
                         </div>
@@ -118,7 +118,7 @@
                            <input type="text" class="form-control " id="no_telp" name="no_telp" >
                         </div> --}}
 
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                            {{-- <label>Level*</label> --}}
                            <select  class="custom-select" required id="level" name="level">
                               <option  disabled selected>Choose Level User</option>
