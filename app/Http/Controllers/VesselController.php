@@ -447,9 +447,17 @@ class VesselController extends Controller
       $vessel = Vessel::find($dekripId);
       $today = Carbon::today();
       $vesselHistory = VesselHistory::where('vessel_id', $vessel->id)->first();
-      $vesselHistory->update([
-         'offhire' => $today
-      ]);
+      if ($vesselHistory) {
+         $vesselHistory->update([
+            'offhire' => $today
+         ]);
+      } else {
+         VesselHistory::create([
+            'vessel_id' => $vessel->id,
+            'offhire' => $today
+         ]);
+      }
+      
 
       $vessel->update([
          'status' => 0
