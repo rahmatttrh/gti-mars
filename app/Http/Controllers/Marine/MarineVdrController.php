@@ -685,8 +685,8 @@ class MarineVdrController extends Controller
       // dd()
 
 
-      // $emailController = new EmailController();
-      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+      $emailController = new EmailController();
+      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
 
 
