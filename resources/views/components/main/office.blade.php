@@ -52,7 +52,7 @@
             
             <hr>
             <div class="table-responsive">
-               <table class=" table-striped display border " id="table-1">
+               <table class="datatables-vdr" >
                   <thead>
                      <tr>
                         {{-- <th class="text-center">No.</th> --}}
@@ -74,7 +74,7 @@
       
                            </td>
                            <td>{{$vdr->vessel->name}}</td>
-                           <td>{{formatDate($vdr->date)}}</td>
+                           <td>{{$vdr->date}}</td>
                            <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
                            <td>{{$vdr->location_midnight}}</td>
                            <td>
