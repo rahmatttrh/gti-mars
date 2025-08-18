@@ -17,11 +17,11 @@
    <div class="col-md-4">
       <div class="card">
          <div class="card-body">
-            <h2>{{$office->name}}</h2>
+            <h2>Welcome to MARS, {{$office->name}}</h2>
             <hr>
             <table class="border">
                <thead>
-                  <tr class="bg-dark text-white">
+                  <tr class="bg-primary text-white">
                      <th>Daftar Kapal</th>
                   </tr>
                </thead>
@@ -34,6 +34,11 @@
                   
                </tbody>
             </table>
+         </div>
+      </div>
+      <div class="card">
+         <div class="card-body">
+            Daftar VDR yang telah dibuat oleh Kapal
          </div>
       </div>
    </div>

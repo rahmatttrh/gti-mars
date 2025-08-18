@@ -4,7 +4,7 @@
       color: black
    }
 </style>
-<nav class="navbar navbar-expand-lg main-navbar bg-white text-dark">
+<nav class="navbar navbar-expand-lg main-navbar  text-dark">
    <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
@@ -116,8 +116,8 @@
    </ul>
 </nav>
 
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #00A9FF" >
-   <div class="container">
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+   <div class="px-2">
       <ul class="navbar-nav">
          
          <li class="nav-item px-3 {{ (request()->is('/')) ? 'active' : '' }}">
@@ -129,7 +129,7 @@
                <span class="">Home Page</span>
             </a>
          </li>
-         <li class="nav-item px-3 {{ (request()->is('/history')) ? 'active' : '' }}">
+         {{-- <li class="nav-item px-3 {{ (request()->is('/history')) ? 'active' : '' }}">
             <a href="/" class="nav-link {{ (request()->is('/history')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/history'))
                <i class="fas fa-fire"></i>
@@ -137,7 +137,7 @@
                
                <span class="">History VDR</span>
             </a>
-         </li>
+         </li> --}}
         
          
         
