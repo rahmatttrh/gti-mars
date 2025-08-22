@@ -274,6 +274,10 @@ class VdrController extends Controller
          $vdrId = $this->funcStoreEmpty($vessel->id);
       }
 
+
+
+      
+
       return redirect()->route('vdr.show.spa', [enkripRambo($vdrId), enkripRambo('index')]);
       // dd('ok');
 
@@ -324,6 +328,8 @@ class VdrController extends Controller
    {
       $vdr = Vdr::find(dekripRambo($id));
 
+      // dd($vdr);
+
       $vdrRevisi = VdrHistory::where('vdr_id', $vdr->id)->first();
 
 
@@ -337,7 +343,7 @@ class VdrController extends Controller
          'crew_onduty' => $vdr->crew_onduty,
          'crew_max' => $vdr->crew_max,
          'location_midnight' => $vdr->location_midnight,
-         'created_by' => $vdr->created_by,
+         // 'created_by' => $vdr->created_by,
          'contract' => $vdr->contract,
          'contract_start' => $vdr->contract_start,
          'contract_end' => $vdr->contract_end,
@@ -1341,6 +1347,30 @@ class VdrController extends Controller
       return response()->json([
          'success' => true,
          'result' => $minspeed,
+         'daily' => $opCurrent->daily,
+         'totalDaily' => round($vdrOperatings->sum('daily'))
+
+      ]);
+   }
+
+   public function updateOperatingBAjax($vdr, $op,  $contractfuel, $daily)
+   {
+
+      $vdr = Vdr::find($vdr);
+      $vdrOperating = VdrOperating::find($op);
+      $vdrOperating->update([
+         
+         'contractual_fuel' => $contractfuel,
+         'daily' => $daily
+      ]);
+
+      $vdrOperatings = VdrOperating::where('vdr_id', $vdr->id)->get();
+
+      $opCurrent = VdrOperating::find($op);
+
+      return response()->json([
+         'success' => true,
+         'result' => $contractfuel,
          'daily' => $opCurrent->daily,
          'totalDaily' => round($vdrOperatings->sum('daily'))
 

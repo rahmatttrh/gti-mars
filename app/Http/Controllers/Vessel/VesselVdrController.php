@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\EmailController;
 use App\Models\Vdr;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class VesselVdrController extends Controller
@@ -17,7 +18,8 @@ class VesselVdrController extends Controller
       $vessel = Vessel::find($vdr->vessel_id);
 
       $vdr->update([
-         'status' => 1
+         'status' => 1,
+         'release_date' => Carbon::now()
       ]);
 
       if ($vessel->func != null) {

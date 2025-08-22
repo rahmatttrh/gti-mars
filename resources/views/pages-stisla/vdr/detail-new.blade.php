@@ -949,7 +949,7 @@
                                        @if($operating->heading->contractual == '1')
                                        <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @else
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_b_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
                                        @endif
                                  </td>
                                  <td class="text-center ">
@@ -1963,6 +1963,66 @@
             var time = $('#time_' + '{!! $op->id !!}').val();
             var minspeed = $('#speed_' + '{!! $op->id !!}').val();
             var contractfuel = $('#fuel_' + '{!! $op->id !!}').val();
+
+            if (minspeed === '') {
+               minspeed = 0
+            }
+            
+            
+            console.log(minspeed);
+
+            
+            var timeValue = parseFloat(time) || 0;
+            let bulat = Math.floor(timeValue);
+            let desimal = timeValue - bulat;
+
+            // console.log((desimal * 100) / 60);
+
+            // Dapatkan nilai dari input contractual_fuel[]
+            var contractualFuelValue = parseFloat(contractfuel) || 0;
+
+            // console.log(contractualFuelValue);
+            let a = bulat * contractualFuelValue;
+            let b = ((desimal * 100) / 60) * contractualFuelValue;
+            // Hitung hasil perkalian
+            var result = a + b;
+            console.log(result);
+            
+
+            // Set hasil perkalian ke input daily[]
+            $('#dailyhidden_' + '{!! $op->id !!}').val(result);
+
+
+            var daily = $('#daily_' + '{!! $op->id !!}').val();
+            var dailyhidden = $('#dailyhidden_' + '{!! $op->id !!}').val();
+
+
+            var _token = $('meta[name="csrf-token"]').attr('content');
+            $.ajax({
+               url: "/fetch/vdr/update/operating/" + vdr + "/" + op +  "/"  + minspeed + "/" + contractfuel + "/" + dailyhidden,
+               method: "GET",
+               dataType: 'json',
+
+               success: function(result) {
+                  $('#daily_' + '{!! $op->id !!}').val(result.daily);
+
+                  $("#totalDaily").val(result.totalDaily);
+                  console.log('result :' + result.totalDaily);
+                  
+               },
+               error: function(error) {
+                  console.log(error)
+               }
+
+            })
+         });
+
+         $(".input_operating_b_" + '{!! $op->id !!}').keyup(function () {
+            console.log('operating');
+            var vdr = $('#vdr').val();
+            var op = '{!! $op->id !!}';
+            var time = $('#time_' + '{!! $op->id !!}').val();
+            var contractfuel = $('#fuel_' + '{!! $op->id !!}').val();
             
             
             console.log(time);
@@ -1995,7 +2055,7 @@
 
             var _token = $('meta[name="csrf-token"]').attr('content');
             $.ajax({
-               url: "/fetch/vdr/update/operating/" + vdr + "/" + op +  "/"  + minspeed + "/" + contractfuel + "/" + dailyhidden,
+               url: "/fetch/vdr/update/operating-b/" + vdr + "/" + op +  "/"  + contractfuel + "/" + dailyhidden,
                method: "GET",
                dataType: 'json',
 

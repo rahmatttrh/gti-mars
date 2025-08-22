@@ -1,49 +1,89 @@
-@extends('layouts.app')
-
+@extends('layouts.stisla.app')
+   @section('title')
+      Send Reset Password Link
+   @endsection
 @section('content')
-<div class="container mt-4">
-   <div class="row justify-content-center">
-      <div class="col-md-8">
-         <div class="card">
-            <div class="card-header">{{ __('Reset Password') }}</div>
-            <div class="card-body">
-               @if (session('status'))
-                  <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
+   
+   <div class="page-inner">
+     
+      <div class="container">
+         <div class="row">
+            <div class="col-md-6 mx-auto">
+               <div class="card">
+                  <div class="card-header d-flex"> 
+                     <div class="d-flex  align-items-center">
+                        <div class="card-title">Reset Password</div> 
+                     </div>
+                     
+                  </div> 
+                  <div class="card-body">
+                     @if (session('status'))
+                           <div class="alert alert-success" role="alert">
+                              {{ session('status') }}
+                           </div>
+                     @endif
+
+                     <form method="POST" action="{{ route('pass.reset.update') }}">
+                           @csrf
+                           @method('PUT')
+                           <div class="row">
+                              <div class="col-md-12">
+                                 {{-- <img src="{{asset('img/undraw/password.png')}}" class="img-thumbnail" alt=""> --}}
+                                 <div class="form-group form-group-default">
+                                    <label>New Password *</label>
+                                    <input id="password" name="password"  type="password" required class="form-control">
+                                    @error('password')
+                                       <small class="text-danger"><i>{{ $message }}</i></small>
+                                    @enderror
+                                 </div>
+                                 <div class="form-group form-group-default">
+                                    <label>Confirm Password *</label>
+                                    <input id="password_confirmation" name="password_confirmation"  type="password" required class="form-control">
+                                    @error('password_confirmation')
+                                       <small class="text-danger"><i>{{ $message }}</i></small>
+                                    @enderror
+                                 </div>
+                                 <hr>
+                                 <button type="submit" class="btn btn-primary">
+                                    Change Password
+                              </button>
+                              <br><br>
+                              
+                              <small>Gunakan frasa unik yang gampang anda ingat</small> <br>
+                              <small>Gabungkan kata yang tidak berhubungan, contoh: PohonLompat#72</small><br>
+                              <small>Hindari menggunakan kata “password” atau “123456”</small><br>
+                              <small>Simpan password di password manager agar tidak lupa</small>
+                              <hr>
+                              </div>
+                              {{-- <div class="col-md-6">
+                                 <img src="{{asset('img/undraw/password.png')}}" class="img-thumbnail" alt="">
+                              </div> --}}
+                           </div>
+                           
+                           {{-- <div class="row mb-3">
+                              <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+
+                              <div class="col-md-6">
+                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+
+                                 @error('email')
+                                       <span class="invalid-feedback" role="alert">
+                                          <strong>{{ $message }}</strong>
+                                       </span>
+                                 @enderror
+                              </div>
+                           </div> --}}
+
+                           
+                     </form>
                   </div>
-               @endif
-
-               <form method="POST" action="{{ route('password.email') }}">
-                  @csrf
-
-                  <div class="row mb-3">
-                        <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                        <div class="col-md-6">
-                           <input id="email" type="email" readonly  value="{{auth()->user()->email}}" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                           @error('email')
-                              <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                              </span>
-                           @enderror
-                        </div>
+                  <div class="card-footer">
+                     {{-- <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, autem laborum?</small> --}}
                   </div>
-
-                  <div class="row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                           <button type="submit" class="btn btn-primary">
-                              {{ __('Send Password Reset Link') }}
-                           </button>
-                        </div>
-                  </div>
-               </form>
-            </div>
-            <div class="card-footer">
-               <small>Hint : Make sure the email address is active to be able to receive an email containing a password reset link</small>
+               </div>
             </div>
          </div>
       </div>
    </div>
-</div>
+
 @endsection
