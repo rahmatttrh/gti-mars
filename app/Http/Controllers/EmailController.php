@@ -423,7 +423,15 @@ class EmailController extends Controller
 
 
       // Production
-      Mail::to(["develop@ekanuri.com", "mk.yusuf.hibatullah@pertamina.com", "mk.lutfa.jasworo@pertamina.com", "mk.luthfi.alhafiizh@pertamina.com", "mk.setyo.wiyono@pertamina.com", "mk.bryan.jhon@pertamina.com", "mk.raditya.r@pertamina.com"])->send(new AssignVdrEmail($data));
+      Mail::to([
+         "mk.yusuf.hibatullah@pertamina.com", 
+         "mk.lutfa.jasworo@pertamina.com", 
+         "mk.luthfi.alhafiizh@pertamina.com", 
+         "mk.setyo.wiyono@pertamina.com", 
+         "mk.bryan.jhon@pertamina.com", 
+         "mk.raditya.r@pertamina.com", 
+         "mk.akhmad.kurniawan@pertamina.com"
+         ])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'VDR Released & Email sent to All Fuel Monitoring Team');
    }
 
