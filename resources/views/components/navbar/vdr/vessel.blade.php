@@ -83,6 +83,12 @@
          <a href="features-settings.html" class="dropdown-item has-icon">
            <i class="fas fa-cog"></i> Settings
          </a> --}}
+         @if (auth()->user()->hasRole('Administrator'))
+                               @else
+                               <a class="dropdown-item" href="{{ route('pass.reset') }}">
+                                 Change Password
+                              </a>
+                           @endif
          <div class="dropdown-divider"></div>
          <a class="dropdown-item has-icon" href="{{ route('logout') }}"
             onclick="event.preventDefault();

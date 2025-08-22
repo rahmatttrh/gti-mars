@@ -1278,9 +1278,9 @@ table th tr td {
 
 
       
-     
-      
-      
+      @if ($vdr->status == 4)
+      <small class="text-muted" style="font-size: 10px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small>
+      @endif
 
       
       

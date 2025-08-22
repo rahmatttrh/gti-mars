@@ -36,6 +36,7 @@ use App\Http\Controllers\MarineController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ParentRequestController;
 use App\Http\Controllers\PartyController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\PortController;
 use App\Http\Controllers\ReportController;
@@ -101,6 +102,15 @@ Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectF
 
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn () => phpinfo());
+
+
+   Route::prefix('pass')->group(function () {
+      Route::get('reset', [PasswordController::class, 'index'])->name('pass.reset');
+      Route::put('reset/update', [PasswordController::class, 'update'])->name('pass.reset.update');
+      // Route::get('department/{id}', [FetchController::class, 'fetchDepartment']);
+      // Route::get('subdept/{id}', [FetchController::class, 'fetchSubdept']);
+      // Route::get('position/{id}', [FetchController::class, 'fetchPosition']);
+   });
 
 
    Route::get('vdr/sent/email/approval/suptent/{id}', [EmailController::class, 'approvalVdrSuptent'])->name('vdr.sent.email.approval.suptent');
@@ -841,6 +851,7 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
    Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
    Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
+   Route::get('vdr/update/operating-b/{vdr}/{op}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingBAjax']);
    Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}/{remark}', [VdrController::class, 'updateCargoAjax']);
    Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
    Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);

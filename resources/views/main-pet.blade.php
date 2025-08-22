@@ -114,7 +114,7 @@
                      <div class="row">
                         <div class="col-md-12">
                            <div class="table-responsive " >
-                              <table class="datatables-vdr">
+                              <table class="datatables-3">
                                  
                                  <thead>
                                     {{-- <tr>
@@ -127,6 +127,7 @@
 
                                        <th>Number</th>
                                        <th>Date</th>
+                                       <th>Release at</th>
                                        
                                        
                                        {{-- <th>Last Update</th> --}}
@@ -144,6 +145,7 @@
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
                                            </td>
                                           <td>{{$vdr->date}}</td>
+                                          <td>{{$vdr->release_date}}</td>
                                           
                                           
                                           <td class="text-right">
