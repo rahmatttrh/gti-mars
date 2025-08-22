@@ -960,7 +960,7 @@ table th tr td {
                            <td style="border-left: none" class="text-end px-2">{{$satuan}}</td>
 
 
-                           <td class="bg-yellow" colspan="2" >{{$vdrCargo->remark}}</td>
+                           <td class="bg-yellow" colspan="2" >{{$vdrCargo->remarks}}</td>
                            @if ($vdrCargo->heading_id == 1)
                            <td rowspan="2" class="bg-lgray" >
                               Fuel Cons. by Remuneration or Actual, from 00:00 hours to Check Time (manual input based on joint calculation by all parties)
@@ -1031,7 +1031,12 @@ table th tr td {
                            <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
                            <td class="text-center bg-yellow" >
                               {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
+                              @if ($vdrPeriodic->rob_time != null)
                               {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
+                              @else
+                              -
+                              @endif
+                              
                            </td>
                            <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
                            <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
@@ -1253,6 +1258,10 @@ table th tr td {
            
 
          </div>
+
+         @if ($vdr->status == 4)
+         <small class="text-muted" style="font-size: 10px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small>
+         @endif
          
          {{-- <div class="col-2">
             <small class="title">QRCODE</small>

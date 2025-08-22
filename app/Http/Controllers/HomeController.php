@@ -557,6 +557,28 @@ class HomeController extends Controller
 
       if (auth()->user()->hasRole('superuser')) {
 
+         $vessels = Vessel::get();
+         $offices = Office::get();
+
+         // foreach ($vessels as $vessel) {
+         //    $user = User::where('username', $vessel->username)->first();
+         //    if ($user) {
+         //       $user->update([
+         //          'password' => Hash::make('oses_2025')
+         //       ]);
+         //    }
+         // }
+
+         // foreach ($offices as $office) {
+         //    $user = User::where('username', $office->username)->first();
+
+         //    if ($user) {
+         //       $user->update([
+         //          'password' => Hash::make('oses_2025')
+         //       ]);
+         //    }
+         // }
+
          // $user = User::create([
          //    'name' => 'Fleet Control',
          //    'username' => 'marine_admin',

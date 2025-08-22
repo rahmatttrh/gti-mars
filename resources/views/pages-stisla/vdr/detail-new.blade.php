@@ -676,7 +676,7 @@
                                        <input type="hidden" id="hsse" value="{{$hse->id}}">
                                        @if($hse->header->group_header != $groupHeader)
                                        <thead>
-                                          <tr>
+                                          <tr class="bg-lgray">
                                                 <th class="text-center">B</th>
                                                 <th>HSSE STATISTICS (Output)</th>
                                                 <th>Previous</th>
@@ -1506,11 +1506,12 @@
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
                               <option value="YFH">Yusuf Falah Hibatullah</option>
-                              <option value="SW">Setyo Wiyono</option>
-                              <option value="RR">Radit R</option>
-                              <option value="LJ">Lutfa Jasworo</option>
-                              <option value="LA">Luthfi Alhafiizh</option>
+                              <option value="RPR">Raditya Perdana Rachmansyah</option>
                               <option value="BJ">Bryan Jhon</option>
+                              <option value="LAJ">Lutfa Alprimas Jasworo</option>
+                              <option value="SW">Setyo Wiyono</option>
+                              <option value="LA">Luthfi Alhafiizh</option>
+                              <option value="ARK">Akhmad Rizki Kurniawan</option>
                            </select>
                           
                         </div>
@@ -1963,6 +1964,10 @@
             var time = $('#time_' + '{!! $op->id !!}').val();
             var minspeed = $('#speed_' + '{!! $op->id !!}').val();
             var contractfuel = $('#fuel_' + '{!! $op->id !!}').val();
+
+            if (minspeed === '') {
+               minspeed = 0
+            }
             
             
             console.log(time);

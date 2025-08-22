@@ -365,6 +365,7 @@ class VdrController extends Controller
       $vdrWeathers = VdrWeather::where('vdr_id', $vdr->id)->get();
       foreach ($vdrWeathers as $vw) {
          VdrWeather::create([
+            // 'vdr_id' => $vd
             'history_id' => $vdrHistory->id,
             'heading_id' => $vw->heading_id,
             't_0006' => $vw->t_0006,

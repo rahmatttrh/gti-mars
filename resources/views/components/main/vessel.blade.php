@@ -85,11 +85,14 @@
                            <tr>
 
                               <td>
-                                 @if (auth()->user()->username == 'parakan')
+                                 {{-- || auth()->user()->username == 'magelang' --}}
+                                 {{-- @if (auth()->user()->username == 'parakan' )
                                  <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
                                  @else
                                  <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @endif
+                                 @endif --}}
+
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
                                  {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
                                     
                                      {{-- @else

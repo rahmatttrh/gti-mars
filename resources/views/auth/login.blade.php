@@ -105,7 +105,8 @@
                            </div>
                            
                            <button type="submit"  class="btn bgb-1 btn-block text-white">Login</button>
-                        
+                           <br>
+                           <small class="text-muted">Default Password Kapal adalah oses_2025</small>
                            <hr>
                         </form>
                         <div class="login-account">
