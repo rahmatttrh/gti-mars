@@ -1649,7 +1649,7 @@ class HomeController extends Controller
 
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
-         $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->where('status', 101)->get();
+         $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereIn('status', [101,202,303])->get();
          return view('main', [
             'myVdr' => $myVdr,
             'myRecentVdrs' =>  $myRecentVdrs,

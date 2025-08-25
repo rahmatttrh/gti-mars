@@ -89,7 +89,7 @@ class EmailController extends Controller
 
 
       // Production
-      Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));
+      // Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));
 
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Superintendent');
    }
@@ -346,7 +346,7 @@ class EmailController extends Controller
 
 
       // Production
-      Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
+      // Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'VDR Approved & Email sent Marine Departement');
    }
 

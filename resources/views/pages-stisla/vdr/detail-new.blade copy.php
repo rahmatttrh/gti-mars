@@ -144,7 +144,7 @@
                      <div class="d-flex align-items-center px-3">
 
                   
-                        @if (auth()->user()->hasRole('vessel'))
+                        {{-- @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                            <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
                            
@@ -153,9 +153,9 @@
                            
                            
                            @endif
-                        @endif
+                        @endif --}}
       
-                        @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                        {{-- @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
                         
                            @if (auth()->user()->username != 'pet')
                            <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
@@ -164,9 +164,9 @@
                            
                         
                            
-                        @endif
+                        @endif --}}
       
-                        @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
+                        {{-- @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
                         
                            
                            <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
@@ -175,9 +175,9 @@
                            
                         
                            
-                        @endif
+                        @endif --}}
       
-                        @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                        {{-- @if ($vdr->status == 1  && auth()->user()->username == 'pet')
                        
                                  <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
                                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
@@ -185,11 +185,11 @@
                            
                         
                         
-                        @endif
+                        @endif --}}
       
-                        <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                        {{-- <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a> --}}
                         
-                        <a href="#" class="btn btn-light  bg-white mr-2 shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                        
                         
                         
                         {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
@@ -230,10 +230,10 @@
                         @endif --}}
 
                         @if (auth()->user()->hasRole('vessel'))
-                           @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
-                           <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                           @if ($vdr->status == 0)
+                           {{-- <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
                               <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                           </div>
+                           </div> --}}
                            @endif
                            
                            
@@ -467,7 +467,7 @@
                            
                         @endif
 
-                        {{-- @if (auth()->user()->hasRole('vessel'))
+                        @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                            <div class="row mb-2">
                               <div class="col-md-12 ">
@@ -480,6 +480,9 @@
                                     <div class="btn btn-warning  btn-lg ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
                                        <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
                                     </div>
+                                    {{-- <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a> --}}
+                                 
+                                    
                                     
                                     
                                  </div>
@@ -526,7 +529,7 @@
                            
                         
                            
-                        @endif --}}
+                        @endif
 
             
                         {{-- <div class="table">
@@ -590,12 +593,12 @@
                                     
                                     
                                  @endif
-                                 {{-- <tr>
+                                 <tr>
                                     <td></td>
                                     <td colspan="3">
                                        <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank">Export PDF</a> | <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" >Delete</a> | <a href="#"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
                                     </td>
-                                 </tr> --}}
+                                 </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                      <tr>
                                       

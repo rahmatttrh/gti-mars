@@ -333,6 +333,7 @@ class VdrController extends Controller
       $vdrRevisi = VdrHistory::where('vdr_id', $vdr->id)->first();
 
 
+      // dd($vdr->code);
 
 
       $vdrHistory = VdrHistory::create([
