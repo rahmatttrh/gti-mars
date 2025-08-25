@@ -144,16 +144,16 @@
                      <div class="d-flex align-items-center px-3">
 
                   
-                        @if (auth()->user()->hasRole('vessel'))
+                        {{-- @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
                            <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                           {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
+                           
                            <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
                         
                            
                            
                            @endif
-                        @endif
+                        @endif --}}
       
                         @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
                         
@@ -177,34 +177,28 @@
                            
                         @endif
       
-                        @if ($vdr->status == 1  && auth()->user()->username == 'pet')
-                        {{-- <div class="btn-group mr-2"> --}}
-                           {{-- <div class="btn btn-block btn-group p-0"> --}}
-                              {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
-                              {{-- <div class="btn-group mr-2"> --}}
+                        {{-- @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                       
                                  <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
                                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                              {{-- </div> --}}
                               
-                           {{-- </div> --}}
-                           
                            
                         
                         
-                        @endif
+                        @endif --}}
       
-                        <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                        {{-- <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a> --}}
                         
                         
                         
                         
-                        @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
+                        {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
                         <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
                            <span class="badge badge-light border">!</span> Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
                            {{$vdr->reject_desc}}
                         </div>
                                              
-                        @endif
+                        @endif --}}
       
                         
       
@@ -256,14 +250,14 @@
 
                         @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0)
-                           <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                           {{-- <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
                               <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                           </div>
+                           </div> --}}
                            @endif
                            
                            
                         @endif
-                        <a href="#" class="btn mx-2 btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                        
                      </div>
                   </div>
                   <div class="col-md-4">
@@ -491,16 +485,62 @@
                            @endif
                            
                         @endif
+
+                        @if (auth()->user()->hasRole('vessel'))
+                           @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
+                           <div class="row mb-2">
+                              <div class="col-md-12 ">
+                                 <div class="d-flex px-2">
+
+                                 
+                                 
+                                    
+                                    <a href="#" class="btn btn-block btn-lg  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                                    <div class="btn btn-warning  btn-lg ml-2 text-dark" style="background-color: rgb(226, 236, 151);" >
+                                       <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
+                                    </div>
+                                    {{-- <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a> --}}
+                                 
+                                    
+                                    
+                                    
+                                 </div>
+                              </div>
+                           </div>
+                           @endif
+                        @endif
+
+                        @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                        <div class="row mb-2">
+                           <div class="col-md-12 ">
+                              <div class="d-flex px-2">
+                                 <a href="#" class="btn btn-block  btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                                 <a href="" class="btn btn-danger ml-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              </div>
+                           </div>
+                        </div>
+                        @endif
+
+            
+                        {{-- <div class="table">
+                           <tbody>
+                              <tr>
+                                 <td> a </td>
+                              </tr>
+                           </tbody>
+                        </div> --}}
                        
                         
                         <div class="table-responsive p-2" >
                            <table class="">
                               <thead>
                                  <tr>
-                                    <td colspan="5"><b class="code">{{$vdr->code}}</b></td>
+                                    <td>ID VDR</td>
+                                    <td colspan="4"><b class="code">{{$vdr->code}}</b></td>
                                     {{-- <td colspan="2" class="text-right py-2 pr-1"></td> --}}
                                  </tr>
                                  <tr>
+                                    <td>Status</td>
                                     <td colspan="4"><x-status-stisla.vdr :vdr="$vdr" /></td>
                                     {{-- <td>
                                        @if ($vdr->vessel->ipb == 'IPB')
@@ -509,6 +549,25 @@
                                           @endif
                                        @endif
                                     </td> --}}
+                                 </tr>
+                                 @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
+                                 <tr>
+                                    <td></td>
+                                    <td colspan="3">
+                                    {{-- <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
+                                       <span class="badge badge-light border">!</span>  --}}
+                                       Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} <br>
+                                       {{$vdr->reject_desc}}
+                                    {{-- </div> --}}
+                                 </td>
+                                 </tr> 
+                                                      
+                                 @endif
+                                 <tr>
+                                    <td></td>
+                                    <td colspan="3">
+                                       <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank">Export PDF</a> | <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" >Delete</a> | <a href="#"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                                    </td>
                                  </tr>
                                  {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                      <tr>
@@ -731,7 +790,7 @@
                   </div>
          
                   <div class="col-md-7">
-                     <div class="table-responsive p-2" >
+                     <div class="table-responsive p-1" >
                         <form action="{{route('vdr.activity.delete.row')}}" method="post" >
                            @csrf
                            @method('POST')

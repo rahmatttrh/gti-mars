@@ -142,37 +142,41 @@ class EmailController extends Controller
       $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd($vdr->area);
       // $user = User::where('username', 'marine')->first();
-      $suptentLoc = Employee::where('role', 'suptent_loc')->where('func', $vdr->func)->first();
-      $user = User::where('username', $suptentLoc->username)->first();
-      $data = [
-         'to' =>  $suptentLoc->name,
-         'from' => 'Marine Department',
-         'subject' => 'VDR Online Approval Suptent On Location',
-         'body' => '',
-         'vdr' => $vdr,
-         'totalJam' => $final,
-         'totalDaily' => $totalDaily,
-         'vdrCargoFuel' => $vdrCargoFuel,
-         'link' => route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('supten-loc')]),
-         'approve' => route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id)),
-         'reject' => route('vdr.reject.from.email', [enkripRambo($vdr->id), enkripRambo('suptent-loc'), enkripRambo($user->id)]),
-         'user_id' => $user->id,
-         'level' => 'suptent-loc'
-      ];
 
-      // TESTING
-      // Mail::to(["rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      // END OF TESTING
+      if ($vdr->func  != null) {
+         $suptentLoc = Employee::where('role', 'suptent_loc')->where('func', $vdr->func)->first();
+         $user = User::where('username', $suptentLoc->username)->first();
+         $data = [
+            'to' =>  $suptentLoc->name,
+            'from' => 'Marine Department',
+            'subject' => 'VDR Online Approval Suptent On Location',
+            'body' => '',
+            'vdr' => $vdr,
+            'totalJam' => $final,
+            'totalDaily' => $totalDaily,
+            'vdrCargoFuel' => $vdrCargoFuel,
+            'link' => route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('supten-loc')]),
+            'approve' => route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id)),
+            'reject' => route('vdr.reject.from.email', [enkripRambo($vdr->id), enkripRambo('suptent-loc'), enkripRambo($user->id)]),
+            'user_id' => $user->id,
+            'level' => 'suptent-loc'
+         ];
 
-
-      // $suptentLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
-      // Mail::to($suptentLoc->email)->send(new AssignVdrEmail($data));
+         // TESTING
+         // Mail::to(["rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+         // END OF TESTING
 
 
+         // $suptentLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
+         // Mail::to($suptentLoc->email)->send(new AssignVdrEmail($data));
 
 
 
-      // Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
+
+
+         // Mail::to(["mk.umar.agam@pertamina.com", "mk.rezky.hardanto@pertamina.com", "mk.muhammad.hasan@pertamina.com"])->send(new AssignVdrEmail($data));
+      }
+      
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Suptent on Location');
    }
 
@@ -231,34 +235,38 @@ class EmailController extends Controller
       $user = User::where('username', $suptentLoc->username)->first();
       // END TESTING
 
-      $suptentBu = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
-      $user = User::where('username', $suptentBu->username)->first();
+      if ($vdr->area != null) {
+         $suptentBu = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
+      
+         $user = User::where('username', $suptentBu->username)->first();
 
-      $data = [
-         'to' => 'Superintendent of ' . $vdr->area,
-         'from' => 'Marine Department',
-         'subject' => 'VDR Online Approval Suptent On Location',
-         'body' => '',
-         'vdr' => $vdr,
-         'totalJam' => $final,
-         'totalDaily' => $totalDaily,
-         'vdrCargoFuel' => $vdrCargoFuel,
-         'link' => route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('supten-loc')]),
-         'approve' => route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id)),
-         'reject' => route('vdr.reject.from.email', [enkripRambo($vdr->id), enkripRambo('suptent-loc'), enkripRambo($user->id)]),
-         'user_id' => $user->id,
-         'level' => 'suptent-loc'
-      ];
+         $data = [
+            'to' => 'Superintendent of ' . $vdr->area,
+            'from' => 'Marine Department',
+            'subject' => 'VDR Online Approval Suptent On Location',
+            'body' => '',
+            'vdr' => $vdr,
+            'totalJam' => $final,
+            'totalDaily' => $totalDaily,
+            'vdrCargoFuel' => $vdrCargoFuel,
+            'link' => route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('supten-loc')]),
+            'approve' => route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id)),
+            'reject' => route('vdr.reject.from.email', [enkripRambo($vdr->id), enkripRambo('suptent-loc'), enkripRambo($user->id)]),
+            'user_id' => $user->id,
+            'level' => 'suptent-loc'
+         ];
 
-      // TESTING
-      // Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
-      // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
+            // TESTING
+            // Mail::to("it.medan@grahasegara.com")->send(new AssignVdrEmail($data));
+            // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
 
-      // END OF TESTING
+            // END OF TESTING
 
 
-      // $suptentLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
-      // Mail::to($suptentBu->email)->send(new AssignVdrEmail($data));
+            // $suptentLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
+            // Mail::to($suptentBu->email)->send(new AssignVdrEmail($data));  
+      }
+      
 
 
 
@@ -416,22 +424,22 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
+      Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
 
       // Production
-      Mail::to([
-         "mk.yusuf.hibatullah@pertamina.com", 
-         "mk.lutfa.jasworo@pertamina.com", 
-         "mk.luthfi.alhafiizh@pertamina.com", 
-         "mk.setyo.wiyono@pertamina.com", 
-         "mk.bryan.jhon@pertamina.com", 
-         "mk.raditya.r@pertamina.com", 
-         "mk.akhmad.kurniawan@pertamina.com"
-         ])->send(new AssignVdrEmail($data));
+      // Mail::to([
+      //    "mk.yusuf.hibatullah@pertamina.com", 
+      //    "mk.lutfa.jasworo@pertamina.com", 
+      //    "mk.luthfi.alhafiizh@pertamina.com", 
+      //    "mk.setyo.wiyono@pertamina.com", 
+      //    "mk.bryan.jhon@pertamina.com", 
+      //    "mk.raditya.r@pertamina.com", 
+      //    "mk.akhmad.kurniawan@pertamina.com"
+      //    ])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'VDR Released & Email sent to All Fuel Monitoring Team');
    }
 
