@@ -746,8 +746,11 @@
                                            
                                        
                                        {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
-                                       <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Row</a>
+                                       
+                                       <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Empty Row</a>
+                                       <a href="#" class="badge badge-info" style="background-color: #1f4481 !important" data-toggle="modal" data-target="#modalAddActivity"><i class="fa fa-plus"></i> Add Activity</a>
                                        {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
+                                       
                                        <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
                                        {{-- <button onclick="addActivity()">Click</button> --}}
                                        @endif
@@ -1341,6 +1344,101 @@
 
    </div>
 </section>
+
+<div class="modal fade" id="modalAddActivity" tabindex="1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog modal-lg" role="document">
+      <form action="{{route('vdr.store.activity')}}" method="POST">
+         @csrf
+         <input type="hidden" name="vdr_id" value="{{$vdr->id}}" id="">
+         <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+         <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+         <input type="hidden" name="created_by" value="{{$user->name}}">
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Add Operational Activity </h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               
+
+
+               <div class="form-row">
+                  
+                  <div class="form-group col-md-3">
+                     <label for="start">Start</label>
+                     <input class="form-control jam24" id="start" required name="start" type="time" >
+                     @error('start')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div>
+                  {{-- <div class="form-group col-md-6">
+                     <label for="finish">Finish</label>
+                     <input class="form-control jam24" id="finish" name="finish" type="time" >
+                     @error('finish')
+                        <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                     @enderror
+                  </div> --}}
+               </div>
+
+               <div class="form-row">
+                  <div class="form-group col-md-3">
+                     <label for="high">High</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="high" name="high" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="normal">Normal</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="normal" name="normal" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="slow">Slow</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="slow" name="slow" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="manu">Manu</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="manu" name="manu" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="idle">Idle</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="idle" name="idle" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="tow">Tow</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="tow" name="tow" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="ah">A/H</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="ah" name="ah" value="00.00" type="text" >
+                  </div>
+                  <div class="form-group col-md-3">
+                     <label for="sb">S/B</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" value="00.00" type="text" >
+                  </div>
+               </div>
+
+               <div class="form-group ">
+                  <label for="activity">Activity Description</label>
+                  <textarea class="form-control" name="activity" id="activity" required  rows="5"></textarea>
+                  {{-- <input class="form-control" id="activity" name="activity" type="text" > --}}
+                  @error('activity')
+                     <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
+                  @enderror
+               </div>
+               <hr>
+               <small>Jam Finish otomatis terisi berdasarkan akumulasi total jam yang di input</small>
+               
+               
+            
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
 
 @if (auth()->user()->hasRole('marine|suptent_loc') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
    <div class="modal fade" id="modalEditApproval" tabindex="-1" role="dialog"  aria-hidden="true">

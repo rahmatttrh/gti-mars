@@ -3085,7 +3085,7 @@ class VdrController extends Controller
          'table' => 'vdr_activities'
       ]);
 
-      return redirect()->route('vdr.show', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
+      return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
       // } catch (\Exception $e) {
       //    // Jika terjadi kesalahan, kita rollback transaksi
       //    DB::rollback();
