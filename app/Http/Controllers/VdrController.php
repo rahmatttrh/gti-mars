@@ -366,6 +366,7 @@ class VdrController extends Controller
          'reject_by' => $vdr->reject_by,
          'reject_date' => $vdr->reject_date,
          'reject_desc' => $vdr->reject_desc,
+         'reject_data' => $vdr->reject_data
 
       ]);
 
@@ -1457,7 +1458,7 @@ class VdrController extends Controller
 
 
 
-   public function updateActivityAjax($vdr, $act, $start, $finish, $high, $normal, $slow, $manu, $idle, $tow, $ah, $sb, $activity)
+   public function updateActivityAjax($vdr, $act, $high, $normal, $slow, $manu, $idle, $tow, $ah, $sb)
    {
 
       $vdr = Vdr::find($vdr);
@@ -1467,9 +1468,7 @@ class VdrController extends Controller
 
 
       $vdrActivity->update([
-         'activity' => $activity,
-         'start' => $start,
-         'finish' => $finish,
+         
          'high' => $high,
          'normal' => $normal,
          'slow' => $slow,
@@ -2568,6 +2567,10 @@ class VdrController extends Controller
          'rank' => '-'
       ]);
 
+      $vdr->calculateCrew();
+
+
+
 
       // return response()->json([
       //    'success' => true,
@@ -2588,6 +2591,8 @@ class VdrController extends Controller
          'company' => '-'
       ]);
 
+
+      $vdr->calculateCrew();
 
       // return response()->json([
       //    'success' => true,
@@ -4208,6 +4213,11 @@ class VdrController extends Controller
       $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
 
       $vesselVdrs = Vdr::where('vessel_id', $vessel->id)->get();
+
+      $totalCrew = count($lastVdrCrews->where('is_crew', 1));
+      $totalPax = count($lastVdrCrews->where('is_crew', 0));
+
+      
 
       // dd($lastVdr->date);
 

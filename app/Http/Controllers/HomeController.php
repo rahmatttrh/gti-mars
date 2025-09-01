@@ -1644,7 +1644,7 @@ class HomeController extends Controller
          // dd($schedules);
 
          $myVdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
-         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->orderBy('date', 'desc')->paginate(10);
+         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereNotIn('status', [101,202,303])->orderBy('date', 'desc')->paginate(10);
          // dd($vdr);
 
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();

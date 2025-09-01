@@ -641,32 +641,37 @@ class MarineVdrController extends Controller
       $vessel = Vessel::find($vdr->vessel_id);
 
       // Cek Vessel Uner PO atau Non PO
-      if ($vessel->contract_type == 'Under PO') {
+      // if ($vessel->contract_type == 'Under PO') {
 
-         // Cek Vessel IPB atau bukan
-         if ($vessel->ipb == 'IPB') {
-            // dd('IPB');
-            // jika Vessel IPB butuh validasi Suptent BU
-            $status = 5;
+      //    // Cek Vessel IPB atau bukan
+      //    if ($vessel->ipb == 'IPB') {
+      //       // dd('IPB');
+      //       // jika Vessel IPB butuh validasi Suptent BU
+      //       $status = 5;
 
-            $emailController = new EmailController();
-            $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
-         } else {
-            // dd('Non IPB');
-            // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
-            $status = 3;
+      //       $emailController = new EmailController();
+      //       $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
+      //    } else {
+      //       // dd('Non IPB');
+      //       // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
+      //       $status = 3;
 
-            $emailController = new EmailController();
-            $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
-         }
-      } else {
+      //       $emailController = new EmailController();
+      //       $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+      //    }
+      // } else {
 
-         // dd('non po');
-         // Jika Vessel Non PO butuh validasi Suptent Func
-         $status = 5;
-         $emailController = new EmailController();
-         $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
-      }
+      //    // dd('non po');
+      //    // Jika Vessel Non PO butuh validasi Suptent Func
+      //    $status = 5;
+      //    $emailController = new EmailController();
+      //    $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
+      // }
+
+      $status = 3;
+
+      $emailController = new EmailController();
+      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       // dd($status);
       $vdr->update([
@@ -779,7 +784,8 @@ class MarineVdrController extends Controller
          'status' => $status,
          'reject_by' => auth()->user()->id,
          'reject_date' => Carbon::now(),
-         'reject_desc' => $req->desc
+         'reject_desc' => $req->desc,
+         // 'reject_data' => $req->data
       ]);
 
 
@@ -809,6 +815,7 @@ class MarineVdrController extends Controller
       }
 
 
+      // dd($req->data);
       // dd($req->user);
 
 
@@ -816,7 +823,8 @@ class MarineVdrController extends Controller
          'status' => $status,
          'reject_by' => $req->userid,
          'reject_date' => Carbon::now(),
-         'reject_desc' => $req->desc
+         'reject_desc' => $req->desc,
+         'reject_data' => $req->data
       ]);
 
 

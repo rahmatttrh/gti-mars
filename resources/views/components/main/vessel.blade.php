@@ -58,8 +58,10 @@
                      <div class="card-body">
                         @foreach ($rejectvdrs as $rejectvdr)
                         
-                           VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b>.
-                          
+                           VDR <b>{{$rejectvdr->code}}</b>  <b>Rejected</b> by <b>{{$rejectvdr->rejectBy->name}}</b>  karena pada : <br>
+                           {{$rejectvdr->reject_data}} <br>
+                            {{$rejectvdr->reject_desc}}
+                          <br><br>
                            <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a> <br> <br>
 
                            @endforeach

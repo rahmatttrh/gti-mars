@@ -17,8 +17,27 @@ class VesselVdrController extends Controller
       $vdr = Vdr::find($dekripId);
       $vessel = Vessel::find($vdr->vessel_id);
 
+      if($vdr->reject_by == 149){
+         $status = 1;
+      } elseif($vdr->reject_by == 1){
+         $status = 2;
+      } else {
+         $status = 1;
+      }
+
+
+      if ($status == 1) {
+         $emailController = new EmailController();
+         $emailController->approvalVdrPet(enkripRambo($vdr->id));
+      } else {
+         $emailController = new EmailController();
+         $emailController->approvalVdrMarine(enkripRambo($vdr->id));
+      }
+
+      
+
       $vdr->update([
-         'status' => 1,
+         'status' => $status,
          'release_date' => Carbon::now()
       ]);
 
@@ -31,8 +50,8 @@ class VesselVdrController extends Controller
 
 
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrPet(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrPet(enkripRambo($vdr->id));
 
 
 

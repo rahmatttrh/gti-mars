@@ -323,11 +323,31 @@ class EmailController extends Controller
       $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd('ok');
       $user = User::where('username', 'marine')->first();
+
+      if ($vdr->reject_by != null) {
+         $body = 'Revisi '. $vdr->rejectBy->name .  ' : ' . $vdr->reject_desc;
+         $revisi = 'Revisi';
+      } else {
+         $body =  '';
+         $revisi = '';
+
+      }
+
+      if ($vdr->reject_by != null) {
+         if ($vdr->reject_by == 1) {
+            $from = $vdr->vessel->name;
+         } else {
+            $from = 'Fuel Monitoring Team';
+         }
+      } else {
+         $from = 'Fuel Monitoring Team';
+      }
+
       $data = [
          'to' => 'Marine Department',
-         'from' => 'Fuel Monitoring Team',
-         'subject' => 'VDR Online Approval Marine',
-         'body' => '',
+         'from' => $from,
+         'subject' => $revisi . ' VDR Online Approval Marine',
+         'body' => $body,
          'vdr' => $vdr,
          'totalJam' => $final,
          'totalDaily' => $totalDaily,
@@ -340,7 +360,7 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      Mail::to([ "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -397,12 +417,19 @@ class EmailController extends Controller
       $vdrCargoFuel = VdrCargo::where('vdr_id', $vdr->id)->where('heading_id', 1)->first();
       // dd('ok');
       $user = User::where('username', 'pet')->first();
+      if ($vdr->reject_by != null) {
+         $body = 'Revisi '. $vdr->rejectBy->name .  ' : ' . $vdr->reject_desc;
+         $revisi = 'Revisi';
+      } else {
+         $body =  '';
+         $revisi = '';
+      }
 
       $data = [
          'to' => 'Fuel Monitoring Team',
          'from' => $vdr->vessel->name,
-         'subject' => 'VDR Online Approval PET',
-         'body' => '',
+         'subject' => $revisi . ' VDR Online Approval PET',
+         'body' => $body,
          'vdr' => $vdr,
          'totalJam' => $final,
          'totalDaily' => $totalDaily,
@@ -424,7 +451,7 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
+      // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 

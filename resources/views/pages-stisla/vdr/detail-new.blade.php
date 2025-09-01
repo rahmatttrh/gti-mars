@@ -823,7 +823,7 @@
                            @method('POST')
                            <table class="w-100">
                               <thead>
-                                 <tr >
+                                 <tr class="">
                                     <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
                                  </tr>
                                  <tr>
@@ -868,61 +868,104 @@
                                  <input type="text" name="vdr_id" id="vdr_id" value="{{$vdr->id}}" hidden>
                                     @foreach ($activities as $activity)
                                     <input type="text" name="activity" id="activity" value="{{$activity->id}}" hidden>
+                                    {{-- <tr>
+                                       <td>
+                                          <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
+                                         
+                                       </td>
+                                          <td class="text-info bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class=" input_activity_time_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                          </td>
+                                          <td class="text-danger bg-y">
+                                           
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class=" input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                          </td>
+                                          <td class="bg-y text-center">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                            
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
+                                          </td>
+                                          <td class="bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_desc_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                            
+                                             
+                                          </td>
+                                          <td>
+                                            
+                                          </td>
+                                       
+                                    </tr> --}}
+
+
                                     <tr>
                                        <td>
                                           <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
-                                          {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
                                        </td>
                                           <td class="text-info bg-y">
-                                             {{-- {{$activity->id}} --}}
-                                             {{-- {{substr($activity->start, 0, 5)}}   --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class=" input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class="  input_activity_time_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                           </td>
                                           <td class="text-danger bg-y">
-                                             {{-- {{substr($activity->finish, 0, 5)}} --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class=" input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
                                           </td>
                                           <td class="bg-y text-center">
-                                             {{-- {{getTotalHours($activity->high)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_high_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->normal)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_normal_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="normal_{{$activity->id}}" name="normal" value="{{getTotalHours($activity->normal)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->slow)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_slow_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="slow_{{$activity->id}}" name="slow" value="{{getTotalHours($activity->slow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->manu)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_manu_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="manu_{{$activity->id}}" name="manu" value="{{getTotalHours($activity->manu)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->idle)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_idle_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="idle_{{$activity->id}}" name="idle" value="{{getTotalHours($activity->idle)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->tow)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_tow_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="tow_{{$activity->id}}" name="tow" value="{{getTotalHours($activity->tow)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->ah)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_ah_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="ah_{{$activity->id}}" name="ah" value="{{getTotalHours($activity->ah)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             {{-- {{getTotalHours($activity->sb)}} --}}
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sb_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_desc_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
-                                             {{-- <textarea class="" style="width: 160px" name="" id=""  rows="1">
-                                                {{$activity->activity}}
-                                             </textarea> --}}
+                                            
                                              
                                           </td>
                                           <td>
-                                             {{-- <a href="#" class=" badge badge-danger" data-toggle="modal" data-target="#deleteActivitySpa-{{$activity->id}}"><i class="fa fa-trash"></i> Delete </a> --}}
+                                            
                                           </td>
                                        
                                     </tr>
@@ -1800,10 +1843,23 @@
             <div class="modal-body">
                <b>{{$vdr->code}}</b>
                   <hr>
+
+                  {{-- <div class="form-group ">
+                     <label for="desc">Data yang harus di Revisi</label>
+                     <select name="data[]" style="width: 100%" multiple="multiple" id="data" class="form-control text-danger select2" required>
+                        <option value="General Information">General Information</option>
+                        <option value="Weather Condition">Weather Condition</option>
+                        <option value="HSSE">HSSE</option>
+                        <option value="Daily Operational Activity">Daily Operational Activity</option>
+                        <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
+                        <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
+                     </select>
+                  </div> --}}
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="desc">Description</label>
-                     <input type="text" class="form-control text-left" id="desc" name="desc" >
+                     <textarea class="form-control" id="desc" name="desc"   rows="3"></textarea>
+                     {{-- <input type="text" class="form-control text-left" id="desc" name="desc" > --}}
                   </div>
                </div>
                <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
@@ -2540,8 +2596,8 @@
                console.log('activity');
                var vdr = $('#vdr').val();
                var act = '{!! $act->id !!}';
-               var start = $('#start_' + '{!! $act->id !!}').val();
-               var finish = $('#finish_' + '{!! $act->id !!}').val();
+               // var start = $('#start_' + '{!! $act->id !!}').val();
+               // var finish = $('#finish_' + '{!! $act->id !!}').val();
                var high = $('#high_' + '{!! $act->id !!}').val();
                var normal = $('#normal_' + '{!! $act->id !!}').val();
                var slow = $('#slow_' + '{!! $act->id !!}').val();
@@ -2550,7 +2606,7 @@
                var tow = $('#tow_' + '{!! $act->id !!}').val();
                var ah = $('#ah_' + '{!! $act->id !!}').val();
                var sb = $('#sb_' + '{!! $act->id !!}').val();
-               var activity = $('#activity_' + '{!! $act->id !!}').val();
+               // var activity = $('#activity_' + '{!! $act->id !!}').val();
                
                
                
@@ -2560,7 +2616,7 @@
 
                var _token = $('meta[name="csrf-token"]').attr('content');
                $.ajax({
-                  url: "/fetch/vdr/update/activity/" + vdr + "/" + act +  "/"  + start + "/" + finish + "/" + high + "/" + normal + "/" + slow + "/" + manu  + "/"  + idle + "/" + tow + "/" + ah + "/" + sb + "/" + activity,
+                  url: "/fetch/vdr/update/activity/" + vdr + "/" + act  + "/" + high + "/" + normal + "/" + slow + "/" + manu  + "/"  + idle + "/" + tow + "/" + ah + "/" + sb ,
                   method: "GET",
                   dataType: 'json',
 
