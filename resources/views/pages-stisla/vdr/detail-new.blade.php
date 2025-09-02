@@ -1844,9 +1844,9 @@
                <b>{{$vdr->code}}</b>
                   <hr>
 
-                  {{-- <div class="form-group ">
+                  <div class="form-group ">
                      <label for="desc">Data yang harus di Revisi</label>
-                     <select name="data[]" style="width: 100%" multiple="multiple" id="data" class="form-control text-danger select2" required>
+                     <select name="data[]" style="width: 100%"  id="data" class="form-control text-danger " required>
                         <option value="General Information">General Information</option>
                         <option value="Weather Condition">Weather Condition</option>
                         <option value="HSSE">HSSE</option>
@@ -1854,7 +1854,7 @@
                         <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
                         <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
                      </select>
-                  </div> --}}
+                  </div>
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="desc">Description</label>

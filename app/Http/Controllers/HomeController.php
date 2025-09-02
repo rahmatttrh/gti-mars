@@ -730,6 +730,12 @@ class HomeController extends Controller
          $dates = array();
          $values = array();
          $vdrsArray = array();
+
+         $totalPet = Vdr::where('status', 1)->get()->count();
+         $totalMarine = Vdr::where('status', 2)->get()->count();
+         $totalSuptent = Vdr::where('status', 3)->get()->count();
+         // dd($totalPet);
+
          foreach ($rawDates as $d) {
             $dates[] = $d->format('l, d/m/Y');
             $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
@@ -737,6 +743,9 @@ class HomeController extends Controller
             // dd($d->format('l'));
          }
          return view('main-superuser', [
+            'totalPet' => $totalPet,
+            'totalMarine' => $totalMarine,
+            'totalSuptent' => $totalSuptent,
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
             'schedules' => $schedules,
