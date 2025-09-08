@@ -71,7 +71,7 @@
                                     <tr>
                                        <th>ID</th>
                                        <th>Vessel</th>
-                                       <th>Date</th>
+                                       <th>Release</th>
                                        {{-- <th>Date</th> --}}
                                        <th>Status</th>
                                     </tr>
@@ -111,8 +111,8 @@
                                                 {{-- <div class="badge badge-light"> --}}
                                                    {{-- {{$log->created_at}}  --}}
                                                    
-                                                   {{$log->user->name ?? ''}} : {{$log->action}}<br>
-                                                   <small>{{$log->created_at}} </small>
+                                                   <small>{{$log->user->name ?? ''}} : {{$log->action}}<br>
+                                                   {{$log->created_at}} </small>
                                                 {{-- </div> --}}
                                                
                                                 
