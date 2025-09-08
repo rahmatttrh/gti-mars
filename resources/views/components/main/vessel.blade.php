@@ -40,11 +40,11 @@
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
                   <div>Jika anda ingin membuat Vessel Daily Report silahkan 
-                     {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
+                     @if (auth()->user()->username == 'parakan' )
+                     <a href="#">Klik disini</a>
+                     @else
                      <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
-                     {{-- @else
-                     <a href="{{route('vdr.vessel.create')}}">Klik disini</a>
-                     @endif --}}
+                     @endif
                      , atau klik VDR pada menu utama</div>
                   <hr>
                   {{-- <div class="mb-2" style="color: #1f4481 !important">
@@ -58,7 +58,7 @@
                      <div class="card-body">
                         @foreach ($rejectvdrs as $rejectvdr)
                         
-                           VDR dengan Number  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b>.
+                           VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b>.
                           
                            <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a> <hr>
                            @endforeach

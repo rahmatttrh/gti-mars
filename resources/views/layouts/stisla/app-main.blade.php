@@ -206,6 +206,26 @@ table {
        
       });
 
+      $('.datatables-vdr-b').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 25,
+         "ordering": true,
+         "order": [
+            [1, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-vdr-monitoring').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 25,
+         "ordering": true,
+         "order": [
+            [2, 'desc']
+         ],
+       
+      });
+
       $('.datatables-3').DataTable( {
          "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
          "pageLength": 10,

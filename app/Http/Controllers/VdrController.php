@@ -276,7 +276,7 @@ class VdrController extends Controller
 
 
 
-      
+
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdrId), enkripRambo('index')]);
       // dd('ok');
@@ -333,6 +333,7 @@ class VdrController extends Controller
       $vdrRevisi = VdrHistory::where('vdr_id', $vdr->id)->first();
 
 
+      // dd($vdr->code);
 
 
       $vdrHistory = VdrHistory::create([
@@ -1360,7 +1361,7 @@ class VdrController extends Controller
       $vdr = Vdr::find($vdr);
       $vdrOperating = VdrOperating::find($op);
       $vdrOperating->update([
-         
+
          'contractual_fuel' => $contractfuel,
          'daily' => $daily
       ]);
@@ -2568,6 +2569,8 @@ class VdrController extends Controller
          'rank' => '-'
       ]);
 
+      $vdr->calculateCrew();
+
 
       // return response()->json([
       //    'success' => true,
@@ -2587,6 +2590,8 @@ class VdrController extends Controller
          'name' => '-',
          'company' => '-'
       ]);
+
+      $vdr->calculateCrew();
 
 
       // return response()->json([

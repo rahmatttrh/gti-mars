@@ -120,11 +120,12 @@
       
             </div>
             <div class="col-md-5">
+               
                <div class="card shadow-lg">
                   <div class="card-body">
                      <div class="badge badge-info mb-2">Log Activity</div>
                      <div  class="table-responsive overflow-auto " style="height: 450px" >
-                     <table class="datatables-vdr"   >
+                     <table class=""   >
                         <thead>
                            <tr class="border">
                               <th>Time</th>
@@ -158,15 +159,177 @@
                      {{-- {{ $logs->links() }} --}}
                   </div>
                </div>
-               <table class="display  border">
-                  <tbody>
-                     <tr>
-                        <th>Log Activity</th>
-                     </tr>
-                  </tbody>
-               </table>
-               <div class="table-responsive overflow-auto" style="height: 460px">
-                
+               
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-md-12">
+               <div class="card shadow-lg">
+                  {{-- <div class="card-header">
+                     
+                  </div> --}}
+                  <div class="card-body">
+                     <span class="badge badge-info mb-2">
+                        MONITORING VDR
+                     </span>
+                     <span class="badge badge-info mb-2">
+                       01/08/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                     </span>
+                     
+                     {{-- <table class="display  border">
+                        <tbody>
+                           <tr>
+                              <th>All Vessel Daily Report</th>
+                           </tr>
+                        </tbody>
+                     </table> --}}
+                     
+                     <div class="row">
+                        <div class="col-md-9">
+                           <table class="datatables-vdr-monitoring">
+                           
+                              <thead>
+                                 
+                                 <tr>
+                                    
+                                    <th>Vessel</th>
+                                    <th>Type</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Rejected</th>
+                                    <th class="text-center">Waiting PET</th>
+                                    <th class="text-center">Waiting Marine</th>
+                                    <th class="text-center">Waiting Suptent</th>
+                                    <th class="text-center">Complete</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach ($vessels as $vessel)
+                                
+                                    @if (count($vessel->getVdrs()) > 0)
+                                    <tr >
+                                       <td>{{$vessel->name}}</td>
+                                       <td>
+                                          {{$vessel->contract_type}}
+                                          @if ($vessel->ipb == 'IPB')
+                                          (IPB)
+                                      @endif
+        
+                                      @if ($vessel->func != null)
+                                         ({{$vessel->func}})
+                                      @endif
+                                       </td>
+                                       <td class="text-center">{{count($vessel->getVdrs())}}</td>
+                                       <td class="text-center">{{count($vessel->getRejectVdrs())}}</td>
+                                       <td class="text-center">{{count($vessel->getPetVdrs())}}</td>
+                                       <td class="text-center">{{count($vessel->getMarineVdrs())}}</td>
+                                       <td class="text-center">{{count($vessel->getSuptentVdrs())}}</td>
+                                       {{-- <td>{{count($vessel->getProgressVdrs())}}</td> --}}
+                                       <td class="text-center">{{count($vessel->getCompleteVdrs())}}</td>
+         
+                                    </tr>
+         
+                                    
+                                    @endif
+   
+                                    
+                                    
+                                 @endforeach
+                                 
+                                
+                              </tbody>
+                           </table>
+                        </div>
+
+                        <div class="col-md-3">
+                           <div class="card shadow-lg">
+                              {{-- <div class="card-header">
+                                 
+                              </div> --}}
+                              <div class="card-body">
+                                 <span class="badge badge-info mb-2">
+                                    PENDING VDR
+                                 </span>
+                                 {{-- <span class="badge badge-info mb-2">
+                                   01/08/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                                 </span> --}}
+                                 
+                                 {{-- <table class="display  border">
+                                    <tbody>
+                                       <tr>
+                                          <th>All Vessel Daily Report</th>
+                                       </tr>
+                                    </tbody>
+                                 </table> --}}
+                                 
+                                    <table class="datatables-vdr-monitoring">
+                                       
+                                       
+                                       <tbody>
+                                          <tr>
+                                             <td>Waiting PET</td>
+                                             <td>{{$totalPet}}</td>
+                                          </tr>
+                                          <tr>
+                                             <td>Waiting Marine</td>
+                                             <td>{{$totalMarine}}</td>
+                                          </tr>
+                                          <tr>
+                                             <td>Waiting Suptent</td>
+                                             <td>{{$totalSuptent}}</td>
+                                          </tr>
+                                       </tbody>
+                                    </table>
+                                 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                        
+                     
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-3">
+               <div class="card shadow-lg">
+                  {{-- <div class="card-header">
+                     
+                  </div> --}}
+                  <div class="card-body">
+                     <span class="badge badge-info mb-2">
+                        PENDING VDR
+                     </span>
+                     {{-- <span class="badge badge-info mb-2">
+                       01/08/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                     </span> --}}
+                     
+                     {{-- <table class="display  border">
+                        <tbody>
+                           <tr>
+                              <th>All Vessel Daily Report</th>
+                           </tr>
+                        </tbody>
+                     </table> --}}
+                     
+                        <table class="datatables-vdr-monitoring">
+                           
+                           
+                           <tbody>
+                              <tr>
+                                 <td>Waiting PET</td>
+                                 <td>{{$totalPet}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Waiting Marine</td>
+                                 <td>{{$totalMarine}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Waiting Suptent</td>
+                                 <td>{{$totalSuptent}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     
+                  </div>
                </div>
             </div>
          </div>

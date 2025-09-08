@@ -309,7 +309,16 @@ table th tr td {
                   @foreach ($vdrActivities as $vdrActivity)
                   <tr>
                      <td class="text-center bg-yellow"><small>{{substr($vdrActivity->start, 0, 5)}} </small></td>
-                     <td class="text-center bg-yellow"><small>{{substr($vdrActivity->finish, 0, 5)}}</small></td>
+                     <td class="text-center bg-yellow">
+                        
+                        @if ($vdrActivity->finish === "00:00:00")
+                            24:00
+                            @else
+                            <small>{{substr($vdrActivity->finish, 0, 5)}}
+                              
+                        @endif
+                        </small>
+                     </td>
                      <td class="text-center bg-yellow">
                         <small>
                            @if ($vdrActivity->high == 0.00)
@@ -1259,9 +1268,9 @@ table th tr td {
 
          </div>
 
-         @if ($vdr->status == 4)
+         {{-- @if ($vdr->status == 4)
          <small class="text-muted" style="font-size: 10px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small>
-         @endif
+         @endif --}}
          
          {{-- <div class="col-2">
             <small class="title">QRCODE</small>

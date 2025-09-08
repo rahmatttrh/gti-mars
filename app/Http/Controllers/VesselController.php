@@ -121,7 +121,7 @@ class VesselController extends Controller
          'name' => $req->name,
          'username' => $req->username,
          'email' => $req->email,
-         'password' => Hash::make('oses@2025')
+         'password' => Hash::make('oses_2025')
       ]);
 
       $user->assignRole('vessel');
@@ -457,7 +457,7 @@ class VesselController extends Controller
             'offhire' => $today
          ]);
       }
-      
+
 
       $vessel->update([
          'status' => 0

@@ -551,6 +551,13 @@ class HomeController extends Controller
       //    ]);
       // }
 
+      // if (auth()->user()->username == 'minerva88') {
+      //    $user = User::where('username', auth()->user()->username)->first();
+      //    $user->update([
+      //       'password' => Hash::make('oses_2025')
+      //    ]);
+      // }
+
 
 
 
@@ -733,7 +740,18 @@ class HomeController extends Controller
             $values[] = count($totalRequests);
             // dd($d->format('l'));
          }
+
+         $to = Carbon::now();
+
+         $totalPet = Vdr::where('status', 1)->whereBetween('date', ['2025-08-01', $to])->get()->count();
+         $totalMarine = Vdr::where('status', 2)->whereBetween('date', ['2025-08-01', $to])->get()->count();
+         $totalSuptent = Vdr::where('status', 3)->whereBetween('date', ['2025-08-01', $to])->get()->count();
+
+
          return view('main-superuser', [
+            'totalPet' => $totalPet,
+            'totalMarine' => $totalMarine,
+            'totalSuptent' => $totalSuptent,
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
             'schedules' => $schedules,
@@ -1641,12 +1659,12 @@ class HomeController extends Controller
          // dd($schedules);
 
          $myVdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
-         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->orderBy('date', 'desc')->paginate(10);
+         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereNotIn('status', [101, 202, 303])->orderBy('date', 'desc')->paginate(10);
          // dd($vdr);
 
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();
          $docs = Document::where('vessel_id', $currentVessel->id)->get();
-         $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->where('status', 101)->get();
+         $rejectVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereIn('status', [101, 202, 303])->get();
          return view('main', [
             'myVdr' => $myVdr,
             'myRecentVdrs' =>  $myRecentVdrs,

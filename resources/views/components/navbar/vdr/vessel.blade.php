@@ -131,7 +131,7 @@
                <span class="mx-3">Dashboard</span>
             </a>
          </li>
-         @if (auth()->user()->username == 'parakan' )
+         {{-- @if (auth()->user()->username == 'parakan' )
           <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create')}}" class="nav-link {{ (request()->is('vdr/v/act/create')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create'))
@@ -142,17 +142,12 @@
             </a>
          </li>
          @else
-         {{-- <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create')) ? 'active' : '' }}">
-            <a href="{{route('vdr.vessel.create')}}" class="nav-link {{ (request()->is('vdr/v/act/create')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/v/act/create'))
-               <i class="fas fa-fire ml-3"></i>
-               @endif
-               
-               <span class="mx-3">Create</span>
-            </a>
-         </li> --}}
-         @endif
          
+         @endif --}}
+         
+
+         @if (auth()->user()->username == 'parakan' )
+         @else
          <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link {{ (request()->is('vdr/v/act/create/spa')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create/spa'))
@@ -162,6 +157,8 @@
                <span class="mx-3">Create by OnePageForm</span>
             </a>
          </li>
+         @endif
+
          
          <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
             <a href="{{route('vdr.history')}}" class="nav-link {{ (request()->is('vdr/v/act/history')) ? 'text-dark' : 'text-white' }}">

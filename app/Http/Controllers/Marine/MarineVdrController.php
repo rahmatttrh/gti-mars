@@ -649,8 +649,8 @@ class MarineVdrController extends Controller
             // jika Vessel IPB butuh validasi Suptent BU
             $status = 5;
 
-            $emailController = new EmailController();
-            $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
+            // $emailController = new EmailController();
+            // $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
          } else {
             // dd('Non IPB');
             // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
@@ -664,9 +664,14 @@ class MarineVdrController extends Controller
          // dd('non po');
          // Jika Vessel Non PO butuh validasi Suptent Func
          $status = 5;
-         $emailController = new EmailController();
-         $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
+         // $emailController = new EmailController();
+         // $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
       }
+
+      // $status = 3;
+
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       // dd($status);
       $vdr->update([
@@ -685,8 +690,8 @@ class MarineVdrController extends Controller
       // dd()
 
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
 
 
@@ -701,11 +706,13 @@ class MarineVdrController extends Controller
 
       $vessel = Vessel::find($vdr->vessel_id);
 
-      if ($vessel->contract_type == 'Under PO') {
-         $status = 3;
-      } else {
-         $status = 5;
-      }
+      // if ($vessel->contract_type == 'Under PO') {
+      //    $status = 3;
+      // } else {
+      //    $status = 5;
+      // }
+
+      $status = 3;
       // dd($status);
       $vdr->update([
          'status' => $status,
