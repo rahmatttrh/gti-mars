@@ -366,6 +366,7 @@ class VdrController extends Controller
          'reject_by' => $vdr->reject_by,
          'reject_date' => $vdr->reject_date,
          'reject_desc' => $vdr->reject_desc,
+         'reject_data' => $vdr->reject_data
 
       ]);
 
@@ -1458,7 +1459,7 @@ class VdrController extends Controller
 
 
 
-   public function updateActivityAjax($vdr, $act, $start, $finish, $high, $normal, $slow, $manu, $idle, $tow, $ah, $sb, $activity)
+   public function updateActivityAjax($vdr, $act, $high, $normal, $slow, $manu, $idle, $tow, $ah, $sb)
    {
 
       $vdr = Vdr::find($vdr);
@@ -2592,6 +2593,7 @@ class VdrController extends Controller
       ]);
 
       $vdr->calculateCrew();
+
 
 
       // return response()->json([

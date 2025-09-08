@@ -27,6 +27,9 @@
   <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
 
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
   <style>
     .input {
         background-color: lightgrey
@@ -207,10 +210,13 @@
       @stack('crew')
       @stack('engine')
 
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
       <script>
          $(document).ready(function () {
             var body = $('body');
+            $('.select2').select2({});
             $(".main-sidebar .sidebar-menu > li").each(function() {
                let me = $(this);
 

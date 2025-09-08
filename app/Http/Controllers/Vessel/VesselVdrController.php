@@ -37,6 +37,7 @@ class VesselVdrController extends Controller
 
       $vdr->update([
          'status' => $status,
+         'status' => $status,
          'release_date' => Carbon::now()
       ]);
 
@@ -49,6 +50,8 @@ class VesselVdrController extends Controller
 
 
 
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrPet(enkripRambo($vdr->id));
       // $emailController = new EmailController();
       // $emailController->approvalVdrPet(enkripRambo($vdr->id));
 

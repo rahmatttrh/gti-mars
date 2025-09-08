@@ -786,7 +786,8 @@ class MarineVdrController extends Controller
          'status' => $status,
          'reject_by' => auth()->user()->id,
          'reject_date' => Carbon::now(),
-         'reject_desc' => $req->desc
+         'reject_desc' => $req->desc,
+         // 'reject_data' => $req->data
       ]);
 
 
@@ -816,6 +817,7 @@ class MarineVdrController extends Controller
       }
 
 
+      // dd($req->data);
       // dd($req->user);
 
 
@@ -823,7 +825,8 @@ class MarineVdrController extends Controller
          'status' => $status,
          'reject_by' => $req->userid,
          'reject_date' => Carbon::now(),
-         'reject_desc' => $req->desc
+         'reject_desc' => $req->desc,
+         'reject_data' => $req->data
       ]);
 
 

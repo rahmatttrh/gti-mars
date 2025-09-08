@@ -345,6 +345,9 @@ class EmailController extends Controller
          'from' => $from,
          'subject' => $revisi . ' VDR Online Approval Marine',
          'body' => $body,
+         'from' => $from,
+         'subject' => $revisi . ' VDR Online Approval Marine',
+         'body' => $body,
          'vdr' => $vdr,
          'totalJam' => $final,
          'totalDaily' => $totalDaily,
@@ -357,7 +360,7 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      Mail::to([ "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -427,6 +430,8 @@ class EmailController extends Controller
          'from' => $vdr->vessel->name,
          'subject' => $revisi . ' VDR Online Approval PET',
          'body' => $body,
+         'subject' => $revisi . ' VDR Online Approval PET',
+         'body' => $body,
          'vdr' => $vdr,
          'totalJam' => $final,
          'totalDaily' => $totalDaily,
@@ -448,6 +453,7 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING

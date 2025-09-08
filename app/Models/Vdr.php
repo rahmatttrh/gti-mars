@@ -31,6 +31,26 @@ class Vdr extends Model
       return $this->hasMany(VdrTimestamp::class);
    }
 
+   public function calculateCrew(){
+      $vdrCrews = VdrCrew::where('vdr_id', $this->id)->get();
+
+      $totalCrew = count($vdrCrews->where('is_crew', 1));
+      $totalPax = count($vdrCrews->where('is_crew', 0));
+      
+      // $vdrHseManhours = VdrHse::where('vdr_id', $this->id)->where('header_id', 7)->first();
+
+      // $vdrHseManhours->update([
+      //    ''
+      // ]);
+
+      $this->update([
+         'crew_onduty' => $totalCrew,
+         'crew_max' => $totalPax
+      ]);
+
+
+   }
+
 
    public function getTotalHours()
    {
