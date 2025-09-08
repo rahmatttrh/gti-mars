@@ -2534,7 +2534,15 @@
          
          
          // console.log(periodTime);
-         var correctValue = parseInt(remu) - parseInt(periodDiff);
+         if (periodDiff < 0) {
+            console.log('negatif')
+            var correctValue = parseInt(remu)
+
+         } else {
+            console.log('positif')
+            var correctValue = parseInt(remu) - parseInt(periodDiff);
+         }
+        
          $('#fuel_cons_correct').val(correctValue)
          $('.fuel_cons_correct').html(correctValue)
 
@@ -2564,7 +2572,7 @@
 
          var _token = $('meta[name="csrf-token"]').attr('content');
          $.ajax({
-            url: "/fetch/vdr/update/special/" + vdr + "/" + periodic +  "/"  + remu + "/" + correct + "/" + actual + "/" + specialTotal ,
+            url: "/fetch/vdr/update/special/" + vdr + "/" + periodic +  "/"  + remu + "/" + correctValue + "/" + actual + "/" + specialTotal ,
             method: "GET",
             dataType: 'json',
 

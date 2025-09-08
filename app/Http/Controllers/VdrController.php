@@ -1451,7 +1451,8 @@ class VdrController extends Controller
 
       return response()->json([
          'success' => true,
-         'result' => $remu,
+         'result' => $correct,
+
          'specialTotal' => $total,
       ]);
    }

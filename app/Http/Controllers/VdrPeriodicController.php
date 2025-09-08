@@ -57,7 +57,13 @@ class VdrPeriodicController extends Controller
             
          ]);
       } else {
-         $corrected = $req->fuel_cons_remu - $periodic->rob_diff;
+         if ($periodic->rob_diff < 0) {
+            $corrected = $req->fuel_cons_remu;
+         } else {
+            $corrected = $req->fuel_cons_remu - $periodic->rob_diff;
+         }
+
+         
 
          $periodic->update([
             
