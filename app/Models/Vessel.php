@@ -11,53 +11,53 @@ class Vessel extends Model
    use HasFactory;
    protected $guarded = [];
 
-   public function getVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->where('status', '>', 0)->get();
-      return $vdrs;
-   }
+   // public function getVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->where('status', '>', 0)->get();
+   //    return $vdrs;
+   // }
 
-   public function getRejectVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [101, 202, 303])->get();
-      return $vdrs;
-   }
-   public function getPetVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [1])->get();
-      return $vdrs;
-   }
+   // public function getRejectVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [101, 202, 303])->get();
+   //    return $vdrs;
+   // }
+   // public function getPetVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [1])->get();
+   //    return $vdrs;
+   // }
 
-   public function getMarineVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [2])->get();
-      return $vdrs;
-   }
+   // public function getMarineVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [2])->get();
+   //    return $vdrs;
+   // }
 
-   public function getSuptentVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [3])->get();
-      return $vdrs;
-   }
+   // public function getSuptentVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [3])->get();
+   //    return $vdrs;
+   // }
 
-   public function getProgressVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereNotIn('status', [0, 4, 101, 202, 303])->get();
-      return $vdrs;
-   }
+   // public function getProgressVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereNotIn('status', [0, 4, 101, 202, 303])->get();
+   //    return $vdrs;
+   // }
 
-   public function getCompleteVdrs()
-   {
-      $to = Carbon::now();
-      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [4])->get();
-      return $vdrs;
-   }
+   // public function getCompleteVdrs()
+   // {
+   //    $to = Carbon::now();
+   //    $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-08-01', $to])->whereIn('status', [4])->get();
+   //    return $vdrs;
+   // }
 
    public function schedules()
    {

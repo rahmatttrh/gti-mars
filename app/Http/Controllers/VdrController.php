@@ -366,7 +366,7 @@ class VdrController extends Controller
          'reject_by' => $vdr->reject_by,
          'reject_date' => $vdr->reject_date,
          'reject_desc' => $vdr->reject_desc,
-         'reject_data' => $vdr->reject_data
+         // 'reject_data' => $vdr->reject_data
 
       ]);
 
@@ -2570,7 +2570,7 @@ class VdrController extends Controller
          'rank' => '-'
       ]);
 
-      $vdr->calculateCrew();
+      // $vdr->calculateCrew();
 
 
       // return response()->json([
@@ -2592,7 +2592,7 @@ class VdrController extends Controller
          'company' => '-'
       ]);
 
-      $vdr->calculateCrew();
+      // $vdr->calculateCrew();
 
 
 

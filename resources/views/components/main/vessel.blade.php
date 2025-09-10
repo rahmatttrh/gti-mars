@@ -43,7 +43,7 @@
                      @if (auth()->user()->username == 'parakan' )
                      <a href="#">Klik disini</a>
                      @else
-                     <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
+                     <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
                      @endif
                      , atau klik VDR pada menu utama</div>
                   <hr>

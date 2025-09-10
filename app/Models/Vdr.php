@@ -31,12 +31,13 @@ class Vdr extends Model
       return $this->hasMany(VdrTimestamp::class);
    }
 
-   public function calculateCrew(){
+   public function calculateCrew()
+   {
       $vdrCrews = VdrCrew::where('vdr_id', $this->id)->get();
 
       $totalCrew = count($vdrCrews->where('is_crew', 1));
       $totalPax = count($vdrCrews->where('is_crew', 0));
-      
+
       // $vdrHseManhours = VdrHse::where('vdr_id', $this->id)->where('header_id', 7)->first();
 
       // $vdrHseManhours->update([
@@ -47,8 +48,6 @@ class Vdr extends Model
          'crew_onduty' => $totalCrew,
          'crew_max' => $totalPax
       ]);
-
-
    }
 
 
@@ -99,18 +98,18 @@ class Vdr extends Model
    }
 
 
-   public function calculateCrew()
-   {
-      $vdrCrews = VdrCrew::where('vdr_id', $this->id)->get();
+   // public function calculateCrew()
+   // {
+   //    $vdrCrews = VdrCrew::where('vdr_id', $this->id)->get();
 
-      $totalCrew = count($vdrCrews->where('is_crew', 1));
-      $totalPax = count($vdrCrews->where('is_crew', 0));
+   //    $totalCrew = count($vdrCrews->where('is_crew', 1));
+   //    $totalPax = count($vdrCrews->where('is_crew', 0));
 
-      $this->update([
-         'crew_onduty' => $totalCrew,
-         'crew_max' => $totalPax
-      ]);
-   }
+   //    $this->update([
+   //       'crew_onduty' => $totalCrew,
+   //       'crew_max' => $totalPax
+   //    ]);
+   // }
 
    public function customRound($number)
    {

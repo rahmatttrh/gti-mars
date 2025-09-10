@@ -73,7 +73,7 @@
                                        <th>Vessel</th>
                                        <th>Release</th>
                                        {{-- <th>Date</th> --}}
-                                       <th>Status</th>
+                                       <th class="text-right">Status</th>
                                     </tr>
                                  </thead>
                                  <tbody>
@@ -83,7 +83,7 @@
                                           <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
                                           <td>{{$vdr->release_date}}</td>
                                           {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                                          <td class="text-truncate">
+                                          <td class="text-right text-truncate">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
                                        </tr>
