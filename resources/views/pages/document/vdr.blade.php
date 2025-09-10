@@ -1149,9 +1149,18 @@ table th tr td {
                @if ($vdr->title2 != null)
                   <div class="col pt-1">
                      <br>
-                     <small>{{$vdr->title2 ?? '-'}} : {{$vdr->name2 ?? '-'}}</small><br>
+                     <small>{{$vdr->title2 ?? '-'}} :
+                         {{$vdr->name2 ?? '-'}}
+                         @if ($vdr->name2 == 'DDP' || $vdr->name2 == 'JPG' || $vdr->name2 == 'MH' ||$vdr->name2 == 'YRF')
+                         <i>(on behalf of port captain)</i>
+                          @endif
+                        </small><br>
                      @if ($vdr->title2 != null)
-                     <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                       
+                       
+                            <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                       
+                     
                      {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 3)->first()->created_at)}}</small><br> --}}
                      @else
                      <small>Status : ____________</small>

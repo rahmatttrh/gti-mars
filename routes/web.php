@@ -877,6 +877,9 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/crew/{vdr}/{crew}/{name}/{rank}', [VdrController::class, 'updateCrewAjax']);
    Route::get('vdr/update/pax/{vdr}/{crew}/{name}/{company}', [VdrController::class, 'updatePaxAjax']);
 
+   Route::get('vdr/check/crew/{vdr}/{crew}', [VdrController::class, 'updateCheckCrewAjax']);
+   Route::get('vdr/uncheck/crew/{vdr}/{crew}', [VdrController::class, 'updateUncheckCrewAjax']);
+
    Route::get('vdr/update/engine/{vdr}/{engine}/{m_ref}/{m_port}/{m_stbd}/{m_center}/{m_other}/{a_ref}/{a_port}/{a_stbd}/{a_other}', [VdrController::class, 'updateEngineAjax']);
 });
 Auth::routes();

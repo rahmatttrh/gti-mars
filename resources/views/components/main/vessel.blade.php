@@ -41,7 +41,7 @@
                   <h4>Welcome back, {{$vessel->name}} !</h4>
                   <div>Jika anda ingin membuat Vessel Daily Report silahkan 
                      {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
-                     <a href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
+                     <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
                      {{-- @else
                      <a href="{{route('vdr.vessel.create')}}">Klik disini</a>
                      @endif --}}
