@@ -697,7 +697,7 @@
                                  </form>
 
                                  <tr>
-                                    <td colspan="4"><small>Total Crew otomatis menjumlahkan dari daftar Checklist Crew List</small></td>
+                                    <td colspan="4"><small>Total Crew otomatis menjumlahkan dari total Checklist Crew List</small></td>
                                  </tr>
                               </tbody>
                            </table>
@@ -1408,8 +1408,12 @@
 
                                  <tr>
                                     <td>
+                                       @if (auth()->user()->hasRole('vessel'))
+                                          @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
                                        <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" {{$crew->status == 1 ? 'checked' : ''}} name="checkCrew" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
                                        {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                       @endif
+                                       @endif
                                     </td>
                                     <td class="bg-y" >
                                        {{-- {{$crew->id}} --}}
@@ -1419,7 +1423,11 @@
                                        <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
                                     </td>
                                     <td>
-                                       <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
+                                       @if (auth()->user()->hasRole('vessel'))
+                                          @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+                                          <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
+                                          @endif
+                                       @endif
                                     </td>
                                     
                                  </tr>
