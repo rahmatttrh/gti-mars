@@ -99,7 +99,7 @@
                                  <table class=""   >
                                     <thead>
                                        <tr class="border">
-                                          <th>Log Activity</th>
+                                          <th colspan="2">Log Activity</th>
                                           {{-- <th>User</th> --}}
                                           {{-- <th>Action</th> --}}
                                        </tr>
@@ -111,19 +111,20 @@
                                                 {{-- <div class="badge badge-light"> --}}
                                                    {{-- {{$log->created_at}}  --}}
                                                    
-                                                   <small>{{$log->user->name ?? ''}} : {{$log->action}}<br>
-                                                   {{$log->created_at}} </small>
+                                                   <small>{{$log->created_at}}</small> <small>{{$log->user->name ?? ''}}
+                                                    </small> <br>
+                                                   
+                                                    <small>{{$log->action}}</small>
+
                                                 {{-- </div> --}}
                                                
                                                 
                                                  
                                              </td>
-                                             {{-- <td class="text-truncate" style="width: 90px"></td> --}}
-                                             {{-- <td></td> --}}
-                                             {{-- <td class="text-truncate" style="max-width: 100px"></td> --}}
-                                             {{-- <td></td> --}}
+                                             
                                              
                                           </tr>
+                                          
                                        @endforeach
                                     </tbody>
                                  </table>

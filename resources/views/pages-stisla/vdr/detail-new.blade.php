@@ -57,6 +57,24 @@
 }
 
 
+#messageBox {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2c2d2c; /* hijau default sukses */
+      color: white;
+      padding: 10px 15px;
+      border-radius: 50px;
+      font-family: sans-serif;
+      font-size: 12px;
+      font-weight: normal;
+      
+      z-index: 9999;
+    }
+
+
 </style>
 <section class="section">
 
@@ -671,17 +689,16 @@
                                        </td>
                                        <td class="px-1">Crew / Pax</td>
                                        <td class="bg-y">
-                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
+                                          <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general onduty" id="onduty" name="onduty" type="text" value="{{$vdr->crew_onduty ?? '0'}}" >
                                           <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_general" id="pax" name="pax" type="text" value="{{$vdr->crew_max ?? '0'}}" >
                                        </td>
                                     </tr>
-                                    <tr>
-                                       <td colspan="4"></td>
-                                    </tr>
-                                    <tr>
-                                       <td colspan="4"></td>
-                                    </tr>
+                                    
                                  </form>
+
+                                 <tr>
+                                    <td colspan="4"><small>Total Crew otomatis menjumlahkan dari daftar Checklist Crew List</small></td>
+                                 </tr>
                               </tbody>
                            </table>
                         </div>
@@ -807,7 +824,9 @@
                                        $groupHeader = $hse->header->group_header
                                        @endphp
                                        @endforeach
-                        
+                                       <tr>
+                                          <td colspan="5"><small>Nilai Today Safe Manhours Worked otomatis kalkulasi berdasarkan total Checklist Crew List</small></td>
+                                       </tr>
                               
                                     
                               </tbody>
@@ -837,7 +856,7 @@
                                        {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
                                        
                                        <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Empty Row</a>
-                                       <a href="#" class="badge badge-info" style="background-color: #1f4481 !important" data-toggle="modal" data-target="#modalAddActivity"><i class="fa fa-plus"></i> Add Activity</a>
+                                       {{-- <a href="#" class="badge badge-info" style="background-color: #1f4481 !important" data-toggle="modal" data-target="#modalAddActivity"><i class="fa fa-plus"></i> Add Activity</a> --}}
                                        {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
                                        
                                        <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
@@ -1356,9 +1375,9 @@
                
                   <div class="row">
                      <div class="col-md-6">
-                        <form action="{{route('vdr.crew.delete.row')}}" method="post" >
+                        {{-- <form action="{{route('vdr.crew.delete.row')}}" method="post" >
                            @csrf
-                           @method('POST')
+                           @method('POST') --}}
                            <table>
                               <thead>
                                  <tr>
@@ -1366,9 +1385,9 @@
                                  </tr>
                                  <tr>
                                     @if ($editable == 1)
-                                    <td colspan="3">
+                                    <td colspan="4">
                                        <a href="{{route('vdr.crew.add', enkripRambo($vdr->id))}}" style="background-color: #1f4481 !important" class="badge badge-info"><i class=" fa fa-plus"></i> Add Row</a>
-                                       <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
+                                       {{-- <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked crew list"  type="submit"><i class="fas fa-trash"></i> Delete</button> --}}
                                     </td>
                                     @endif
                                     
@@ -1376,10 +1395,12 @@
                                     
                                  </tr>
                                  <tr class="bg-lgray">
-                                    <th><input type="checkbox" name="" id="checkboxAllCrew"></th>
+                                    <th></th>
                                     <td>Name</td>
                                     <td>Rank</td>
+                                    <td></td>
                                  </tr>
+                                 
                               </thead>
                               <tbody>
                                  <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
@@ -1387,7 +1408,7 @@
 
                                  <tr>
                                     <td>
-                                       <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkCrew[]" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" {{$crew->status == 1 ? 'checked' : ''}} name="checkCrew" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
                                        {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
                                     </td>
                                     <td class="bg-y" >
@@ -1396,6 +1417,9 @@
                                     </td>
                                     <td class="bg-y">
                                        <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                    </td>
+                                    <td>
+                                       <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
                                     </td>
                                     
                                  </tr>
@@ -1406,15 +1430,21 @@
                                  @endforeach
 
                                  <tr>
-                                    <td colspan="3"></td>
+                                    <td colspan="4"></td>
                                  </tr>
                                  <tr>
-                                    <td colspan="3"></td>
+                                    <td colspan="4">
+                                       <small>Checklist untuk crew onboard || Uncheck untuk crew offboard</small> <br>
+                                       <small>Total Checklist Crew akan otomatis merubah Total Crew di table General Information</small> <br>
+                                       <small>Total Checklist Crew akan otomatis merubah nilai Today Safe Manhours Worked (Total Checklist x 14)</small>
+                                    </td>
                                  </tr>
+                                 
                                  
                               </tbody>
                            </table>
-                        </form>
+                           
+                        {{-- </form> --}}
                      </div>
 
                      <div class="col-md-6">
@@ -1810,6 +1840,11 @@
                               <option value="UA">Umar Agam</option>
                               <option value="RH">Rezky Hardanto</option>
                               <option value="MMH">Muhammad Misbakhul Hasan</option>
+
+                              <option value="JPG">Joy Pranata Ginting</option>
+                              <option value="MH">Mochamad Harris</option>
+                              <option value="YRF">Yusuf Revy Fadillah</option>
+                              <option value="DDP">Dicky Dandi Permana</option>
                               
                            </select>
                           
@@ -2147,6 +2182,7 @@
 
                      success: function(result) {
                         console.log('result :' + result.result);
+                        showMessage("Autosave: " + "Data Weather tersimpan");
                         
                      },
                      error: function(error) {
@@ -2159,6 +2195,136 @@
         </script>
     @endforeach
 @endpush  
+
+@push('crew_check')
+   @foreach ($crews->where('is_crew', 1) as $crew)
+   <script>
+      $(document).ready(function() {
+
+         
+
+         console.log('{!! $crew->id !!}')
+         // const Chkinput = document.getElementById("laneFilter");
+         // Chkinput.click();
+
+         // $("#checkCrew-" + '{!! $crew->id !!}').keyup(function () {
+         //    console.log($("#crewCheck-" + '{!! $crew->id !!}').val())
+         // })
+
+         var vdr = $('#vdr').val();
+         let cb = document.getElementById('checkCrew-' + '{!! $crew->id !!}');
+
+         cb.addEventListener("change", function() {
+            if (cb.checked === true) {
+               console.log("di checkkkk");
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/check/crew/" + vdr + "/" + cb.value ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $("#onduty").val(result.result);
+                     $("#hse_month_" + result.hseid).val(result.month);
+                     $("#today_" + result.hseid).val(result.today);
+                     console.log('month :' + result.month);
+
+                     showMessage("Autosave: " + "Data Checklist Crew tersimpan");
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                     showMessage("Failed: " + "Data gagal tersimpan");
+                  }
+
+               })
+            } else if(cb.checked === false){
+               console.log("di uncheck");
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/uncheck/crew/" + vdr + "/" + cb.value ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $("#onduty").val(result.result);
+                     $("#hse_month_" + result.hseid).val(result.month);
+                     $("#today_" + result.hseid).val(result.today);
+                     console.log('month :' + result.month);
+                     showMessage("Autosave: " + "Data Uncheck Crew tersimpan");
+                     
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            }
+            // console.log("Checkbox berubah:", cb.checked);
+         });
+
+         // cc = document.getElementById('checkCrew-' + '{!! $crew->id !!}')
+         // // $('#checkCrew-' + '{!! $crew->id !!}');
+         // cc.keyup(function(){ 
+         //    if (cc.checked) {
+         //       console.log(cc.value)
+         //    }
+         // });
+         
+
+         // $("#checkboxAllCrew").change(function() {
+      //    $("input[name='checkCrew[]']").prop('checked', $(this).prop('checked'));
+      //    console.log('check all');
+      // });
+
+      // // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
+         // $("input[name='checkCrew-{!! $crew->id !!}']").change(function() {
+         //    console.log('check one');
+         //    // Periksa apakah semua checkbox dengan name=check tercentang
+         //    // var allChecked = ($("input[name='checkCrew[]']:checked").length === $("input[name='checkCrew[]']").length);
+
+         //    // // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
+         //    // $("#checkboxAllCrew").prop('checked', allChecked);
+         // });
+         
+
+
+         // var prev = $('#previous_' + '{!! $hse->id !!}').val();
+         // var today = $('#today_' + '{!! $hse->id !!}').val();
+         
+         // $(".input_hsse_" + '{!! $hse->id !!}').keyup(function () {
+         //    console.log('hsse');
+         //    var vdr = $('#vdr').val();
+         //    var hsse = '{!! $hse->id !!}';
+         //    var prev = $('#previous_' + '{!! $hse->id !!}').val();
+         //    var today = $('#today_' + '{!! $hse->id !!}').val();
+            
+            
+         //    console.log(hsse);
+
+         //    var _token = $('meta[name="csrf-token"]').attr('content');
+         //    $.ajax({
+         //       url: "/fetch/vdr/update/hsse/" + vdr + "/" + hsse +  "/"  + prev + "/" + today,
+         //       method: "GET",
+         //       dataType: 'json',
+
+         //       success: function(result) {
+         //          $("#hse_month_" + '{!! $hse->id !!}').val(result.month);
+         //          console.log('result :' + result.result);
+                  
+         //       },
+         //       error: function(error) {
+         //          console.log(error)
+         //       }
+
+         //    })
+         // });
+
+         // $("#hse_month_" + '{!! $hse->id !!}').val(parseInt(prev)+parseInt(today));
+      });
+  </script>
+   @endforeach
+@endpush
 
 @push('hsse')
    @foreach ($hses as $hse)
@@ -2186,6 +2352,7 @@
                success: function(result) {
                   $("#hse_month_" + '{!! $hse->id !!}').val(result.month);
                   console.log('result :' + result.result);
+                  showMessage("Autosave: " + "Data HSSE tersimpan");
                   
                },
                error: function(error) {
@@ -2261,6 +2428,7 @@
 
                   $("#totalDaily").val(result.totalDaily);
                   console.log('result :' + result.totalDaily);
+                  showMessage("Autosave: " + "Data Sumamry Operating Data tersimpan");
                   
                },
                error: function(error) {
@@ -2373,6 +2541,8 @@
             success: function(result) {
                $('.consumption_' + '{!! $cargo->id !!}').val(result.consumption);
                console.log('result :' + result.consumption);
+
+               showMessage("Autosave: " + "Data Summary of Daily Fuel tersimpan");
                
             },
             error: function(error) {
@@ -2440,6 +2610,7 @@
             success: function(result) {
                $('.periodDiff').html(periodDiff);
                console.log('result :' + periodDiff);
+               showMessage("Autosave: " + "Data Periodical Fuel ROB tersimpan");
                
             },
             error: function(error) {
@@ -2555,6 +2726,7 @@
             console.log('positif')
             var correctValue = parseInt(remu) - parseInt(periodDiff);
          }
+        
          $('#fuel_cons_correct').val(correctValue)
          $('.fuel_cons_correct').html(correctValue)
 
@@ -2591,6 +2763,8 @@
             success: function(result) {
                $('.specialTotal').html(specialTotal);
                console.log('result :' + specialTotal);
+
+               showMessage("Autosave: " + "Data Special Calculation tersimpan");
                
             },
             error: function(error) {
@@ -2685,6 +2859,7 @@
                      $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
 
                      $('.total_jam').html(result.totalJam);
+                     showMessage("Autosave: " + "Data otomatis tersimpan");
                      
                   },
                   error: function(error) {
@@ -2718,6 +2893,7 @@
                      
 
                      console.log('time :' + result.result);
+                     showMessage("Autosave: " + "Data Time tersimpan");
                      
                   },
                   error: function(error) {
@@ -2758,6 +2934,8 @@
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
 
+                     showMessage("Autosave: " + "Data High tersimpan");
+
 
                      
                   },
@@ -2791,6 +2969,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data Normal tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2822,6 +3002,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data Slow tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2853,6 +3035,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data Manuveuring tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2884,6 +3068,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data Idle tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2915,6 +3101,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data Tow tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2946,6 +3134,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data A/H tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -2978,6 +3168,8 @@
 
                      $('.total_jam').html(result.totalJam);
                      $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data S/B tersimpan");
                   },
                   error: function(error) {
                      console.log(error)
@@ -3004,6 +3196,7 @@
                   success: function(result) {
                      // $('.sbTime').html(result.vdrOperatingSb.time);
                      console.log('act :' + result.result);
+                     showMessage("Autosave: " + "Data Deskripsi tersimpan");
                      
                   },
                   error: function(error) {
@@ -3103,6 +3296,7 @@
                      
 
                      console.log('result :' + result.result);
+                     showMessage("Autosave: " + "Data Crew tersimpan");
 
                      
                   },
@@ -3137,6 +3331,7 @@
                      
 
                      console.log('result :' + result.result);
+                     showMessage("Autosave: " + "Data Pax tersimpan");
 
                      
                   },
@@ -3246,6 +3441,8 @@
                      // $('.time_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.time);
                      // $('.time_' + result.vdrOperatingSb.heading_id).html(result.vdrOperatingSb.time);
                      // $('.daily_' + result.vdrOperatingSb.heading_id).val(result.vdrOperatingSb.daily);
+
+                     showMessage("Autosave: " + "Data Engine tersimpan");
                      
                   },
                   error: function(error) {
@@ -3291,20 +3488,20 @@
 
 
       // START Form Delete Multiple Crew
-      $("#checkboxAllCrew").change(function() {
-         $("input[name='checkCrew[]']").prop('checked', $(this).prop('checked'));
-         console.log('check all');
-      });
+      // $("#checkboxAllCrew").change(function() {
+      //    $("input[name='checkCrew[]']").prop('checked', $(this).prop('checked'));
+      //    console.log('check all');
+      // });
 
-      // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
-      $("input[name='checkCrew[]']").change(function() {
-         console.log('check one');
-         // Periksa apakah semua checkbox dengan name=check tercentang
-         var allChecked = ($("input[name='checkCrew[]']:checked").length === $("input[name='checkCrew[]']").length);
+      // // Ketika salah satu checkbox dengan name=check dicentang atau dicentang ulang
+      // $("input[name='checkCrew[]']").change(function() {
+      //    console.log('check one');
+      //    // Periksa apakah semua checkbox dengan name=check tercentang
+      //    var allChecked = ($("input[name='checkCrew[]']:checked").length === $("input[name='checkCrew[]']").length);
 
-         // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
-         $("#checkboxAllCrew").prop('checked', allChecked);
-      });
+      //    // Terapkan status checked pada checkboxAll sesuai hasil pengecekan di atas
+      //    $("#checkboxAllCrew").prop('checked', allChecked);
+      // });
       // END Form Delete Multiple Crew
 
 
@@ -3381,6 +3578,7 @@
             success: function(result) {
                console.log('result :' + result.result);
                $('.code').html(result.code);
+               showMessage("Autosave: " + "Data General Information tersimpan");
                
             },
             error: function(error) {
@@ -3454,6 +3652,7 @@
                console.log('msg :' + result.error );
                $('.code').html(result.code);
                $('.errordate').html(result.error);
+               showMessage("Autosave: " + "Data Tanggal VDR tersimpan");
                
             },
             error: function(error) {
@@ -3492,6 +3691,7 @@
                console.log('msg :' + result.result );
                // $('.code').html(result.code);
                // $('.errordate').html(result.error);
+               showMessage("Autosave: " + "Data BU tersimpan");
                
             },
             error: function(error) {

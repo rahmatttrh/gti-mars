@@ -110,6 +110,7 @@
          
          <div class="main-wrapper px-2 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
+               <div id="messageBox"></div>
                
             <div class="navbar-bg " style="background-color: #e6e6ef;"></div>
             
@@ -147,6 +148,8 @@
             </footer>
          </div>
       </div>
+
+      
 
       <!-- General JS Scripts -->
       <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
@@ -192,6 +195,20 @@
       <script src="{{asset('stisla/js/page/modules-datatables.js')}}"></script>
       <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
 
+      <script>
+          function showMessage(html, color = "#499bc4") {
+               let box = document.getElementById("messageBox");
+               box.innerHTML = html;          // bisa isi HTML
+               box.style.background = color;
+               box.style.display = "block";
+
+               // auto hilang setelah 3 detik
+               setTimeout(() => {
+               box.style.display = "none";
+               }, 1800);
+            }
+      </script>
+
       {{-- MYJS --}}
       @stack('map')
       @stack('get_schedules')
@@ -208,13 +225,19 @@
       @stack('special')
       @stack('activity')
       @stack('crew')
+
+      @stack('crew_check')
       @stack('engine')
 
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
       <script>
+        
          $(document).ready(function () {
+            
+
+
             var body = $('body');
             $('.select2').select2({});
             $(".main-sidebar .sidebar-menu > li").each(function() {

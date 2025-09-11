@@ -1452,7 +1452,8 @@ class VdrController extends Controller
 
       return response()->json([
          'success' => true,
-         'result' => $remu,
+         'result' => $correct,
+
          'specialTotal' => $total,
       ]);
    }
@@ -2643,6 +2644,63 @@ class VdrController extends Controller
       return response()->json([
          'success' => true,
          'result' => $name,
+      ]);
+   }
+
+   public function updateCheckCrewAjax($vdr, $crew)
+   {
+
+      $vdr = Vdr::find($vdr);
+      $vdrCrew = VdrCrew::find($crew);
+      $vdrCrew->update([
+         'status' => 1
+      ]);
+
+      $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();
+      $vdrHseManhours = VdrHse::where('vdr_id', $vdr->id)->where('header_id', 7)->first();
+
+      $today = count($vdrCrews) * 14 ;
+
+      $vdrHseManhours->update([
+         'today' => $today,
+      ]);
+
+
+
+      return response()->json([
+         'success' => true,
+         'hseid' => $vdrHseManhours->id,
+         'month' => $vdrHseManhours->previous + $today,
+         'today' => $today,
+         'result' => count($vdrCrews),
+      ]);
+   }
+
+   public function updateUncheckCrewAjax($vdr, $crew)
+   {
+
+      $vdr = Vdr::find($vdr);
+      $vdrCrew = VdrCrew::find($crew);
+      $vdrCrew->update([
+         'status' => 0
+      ]);
+
+      $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();
+      $vdrHseManhours = VdrHse::where('vdr_id', $vdr->id)->where('header_id', 7)->first();
+
+      $today = count($vdrCrews) * 14 ;
+
+      $vdrHseManhours->update([
+         'today' => $today,
+      ]);
+
+
+      return response()->json([
+         'success' => true,
+         'hseid' => $vdrHseManhours->id,
+         'month' => $vdrHseManhours->previous + $today,
+         'today' => $today,
+         'result' => count($vdrCrews),
       ]);
    }
 
@@ -4246,6 +4304,7 @@ class VdrController extends Controller
          $area = '';
       }
 
+
       $vdr = Vdr::create([
          'area' => $vessel->area,
          'vessel_id' => $lastVdr->vessel_id,
@@ -4294,6 +4353,29 @@ class VdrController extends Controller
          'vdr_id' => $vdr->id,
          'activity' => 'Not Applicable'
       ]);
+
+
+      foreach (range(1, 10) as $i){
+         VdrActivity::create([
+            'vdr_id' => $vdr->id,
+            'activity' => '-',
+            'start' => '00:00',
+            'finish' => '00:00',
+            'high' => 00.00,
+            'normal' => 00.00,
+            'slow' => 00.00,
+            'manu' => 00.00,
+            'idle' => 00.00,
+            'tow' => 00.00,
+            'ah' => 00.00,
+            'sb' => 00.00,
+            'created_by' => auth()->user()->name
+         ]);
+      }
+      
+
+
+
 
       $cargoHeadings = VdrCargoHeading::get();
       foreach ($cargoHeadings as $key => $heading) {
@@ -4350,6 +4432,34 @@ class VdrController extends Controller
          }
       }
 
+      if ($lastVdr) {
+         foreach ($lastVdrCrews as $lastCrew) {
+            if ($lastCrew->is_crew == 1) {
+               if ($lastCrew->status == null) {
+                  $status = 1;
+               } else {
+                  $status = $lastCrew->status;
+               }
+               $createVdrCrew = VdrCrew::create([
+                  'vdr_id' => $vdr->id,
+                  'is_crew' => $lastCrew->is_crew,
+                  'name' => $lastCrew->name,
+                  'rank' => $lastCrew->rank,
+                  'company' => $lastCrew->company,
+                  'status' => $status,
+                  'created_at' => NOW(),
+                  'updated_at' => NOW()
+               ]);
+            }
+         }
+
+         $vdrCrew = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();
+
+         $vdr->update([
+            'crew_onduty' => count($vdrCrew)
+         ]);
+      }
+
 
 
 
@@ -4382,11 +4492,21 @@ class VdrController extends Controller
                   if ($lastHse->header_id == $vdrHse->header_id) {
                      // dd( $lastHse->heading_id);
                      $vdrHse->update([
-                        'previous' => $lastHse->previous,
+                        'previous' => $lastHse->previous ,
                         'today' => $lastHse->today,
                      ]);
                   }
+
+
+                  if ($vdrHse->header_id == 7  && $lastHse->header_id == 7) {
+                     $vdrHse->update([
+                        'previous' => $lastHse->previous + $lastHse->today,
+                        'today' => count($vdrCrew) * 14,
+                     ]);
+                  }
                }
+
+              
             }
          }
       }
@@ -4451,21 +4571,7 @@ class VdrController extends Controller
 
 
 
-      if ($lastVdr) {
-         foreach ($lastVdrCrews as $lastCrew) {
-            if ($lastCrew->is_crew == 1) {
-               $createVdrCrew = VdrCrew::create([
-                  'vdr_id' => $vdr->id,
-                  'is_crew' => $lastCrew->is_crew,
-                  'name' => $lastCrew->name,
-                  'rank' => $lastCrew->rank,
-                  'company' => $lastCrew->company,
-                  'created_at' => NOW(),
-                  'updated_at' => NOW()
-               ]);
-            }
-         }
-      }
+      
 
       // dd($vdr->code);
 
