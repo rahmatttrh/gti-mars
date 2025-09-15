@@ -1041,7 +1041,7 @@ table th tr td {
                            <td class="text-center bg-yellow" >
                               {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
                               @if ($vdrPeriodic->rob_time != null)
-                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
+                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('H:i')}}
                               @else
                               -
                               @endif

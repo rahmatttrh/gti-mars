@@ -89,7 +89,10 @@ class EmailController extends Controller
 
 
       // Production
-      Mail::to("laryanto@pertamina.com")->send(new AssignVdrEmail($data));
+      Mail::to([
+         "laryanto@pertamina.com",
+         "mohamad.wahyudi@pertamina.com"
+      ])->send(new AssignVdrEmail($data));
 
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Superintendent');
    }
@@ -179,6 +182,8 @@ class EmailController extends Controller
 
       return redirect()->back()->with('success', 'VDR Approved & Email sent to Suptent on Location');
    }
+
+   
 
    public function approvalVdrSuptentBu($id)
    {
@@ -360,7 +365,7 @@ class EmailController extends Controller
       ];
 
       // TESTING
-      Mail::to([ "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      Mail::to(["rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 

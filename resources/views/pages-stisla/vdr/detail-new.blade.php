@@ -207,7 +207,7 @@
       
                         <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                         
-                        <a href="#" class="btn btn-light  bg-white mr-2 shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
+                        <a href="#" class="btn btn-light  bg-white mr-2 shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan ketika muncul alert pada sistem.">Info</a>
                         
                         
                         {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
@@ -856,7 +856,7 @@
                                        {{-- <a href="#" onclick="addActivity()">Add Row</a> --}}
                                        
                                        <a class="badge badge-info" style="background-color: #1f4481 !important" href="{{route('vdr.activity.add.row', enkripRambo($vdr->id))}}" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-plus"></i> Add Empty Row</a>
-                                       {{-- <a href="#" class="badge badge-info" style="background-color: #1f4481 !important" data-toggle="modal" data-target="#modalAddActivity"><i class="fa fa-plus"></i> Add Activity</a> --}}
+                                       <a href="#" class="badge badge-info" style="background-color: #1f4481 !important" data-toggle="modal" data-target="#modalAddActivity"><i class="fa fa-plus"></i> Add Activity</a>
                                        {{-- <a class="badge badge-danger" href="" data-toggle="tooltip" data-placement="top" title="Click to add new row activity"><i class="fa fa-trash"></i> Delete </a> --}}
                                        
                                        <button  class="badge badge-danger button" data-toggle="tooltip" data-placement="top" title="Click to delete checked activity list"  type="submit"><i class="fas fa-trash"></i> Delete</button>
@@ -990,7 +990,7 @@
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sb_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_desc_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; " class="input_activity_desc_{{$activity->id}}"  style="width: 160px;text-align:left !important"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                             
                                              
                                           </td>
