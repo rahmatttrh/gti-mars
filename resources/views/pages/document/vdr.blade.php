@@ -1030,8 +1030,9 @@ table th tr td {
                         <tr>
                            <td colspan="3" class="text-center bg-yellow">{{$vdrPeriodic->activity ?? ''}} </td>
                            <td class="text-center bg-yellow" >
+                              {{-- {{$vdrPeriodic->rob_time}} --}}
                               {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
-                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('h:i')}}
+                              {{\Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('H:i')}}
                            </td>
                            <td class="text-center bg-yellow" style="border-right: none">{{formatRibuan($vdrPeriodic->rob_value)}}</td>
                            <td  style="border-left: none; width:30px" class="text-end px-2">Ltrs</td>
