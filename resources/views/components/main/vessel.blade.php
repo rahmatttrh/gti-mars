@@ -40,10 +40,13 @@
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
                   <div>Jika anda ingin membuat Vessel Daily Report silahkan 
-                     @if (auth()->user()->username == 'parakan' )
-                     <a href="#">Klik disini</a>
+                     @if (auth()->user()->username == 'magelang' )
+                     klik
+                     <a href="{{route('vdr.vessel.create')}}" class="btn btn-sm btn-primary">Form Lama</a> atau <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Form Baru</a>
+                     
                      @else
                      <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
+                     
                      @endif
                      , atau klik VDR pada menu utama</div>
                   <hr>
@@ -77,7 +80,7 @@
                               {{-- <th>Date</th>
                               <th>Crew</th> --}}
                               <th style="width: 120px">Status</th>
-                              <th></th>
+                              {{-- <th></th> --}}
                            </tr>
                         </thead>
                         <tbody>
@@ -85,19 +88,23 @@
                            <tr>
 
                               <td>
-                                 {{-- || auth()->user()->username == 'magelang' --}}
-                                 {{-- @if (auth()->user()->username == 'parakan' )
-                                 <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @else
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @endif --}}
+                                 @if (auth()->user()->username == 'magelang' )
+                                 <div class="dropdown">
+                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                       {{$myvdr->code}}
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                       <a class="dropdown-item" href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Baru</a>
+                                       <a class="dropdown-item" href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Lama</a>
 
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
+                                      
+                                    </div>
+                                 </div>
                                     
-                                     {{-- @else
-                                     <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @endif --}}
+                                     @else
+                                     {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
+                                     <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
+                                 @endif
                                  {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
                               </td>
                               {{-- <td>{{formatDate($myvdr->date)}}</td>
@@ -110,7 +117,7 @@
                                  @endif --}}
                                  <x-status-stisla.vdr :vdr="$myvdr" />
                               </td>
-                              <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Detail SPA</a> </td>
+                              {{-- <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Detail SPA</a> </td> --}}
                            </tr>
                            @endforeach
                            {{-- @if ($myvdr)
