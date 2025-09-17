@@ -477,7 +477,7 @@ class MarineVdrController extends Controller
          'status' => 2,
          'title1' => $req->title1,
          'name1' => $req->name1,
-         'timestamp' => Carbon::now()
+         'timestamp1' => Carbon::now()
       ]);
 
 
