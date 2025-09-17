@@ -92,7 +92,7 @@
 
                               <td>
                                  @if (auth()->user()->username == 'magelang' )
-                                 <div class="dropdown">
+                                 {{-- <div class="dropdown">
                                     <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                        {{$myvdr->code}}
                                     </button>
@@ -102,7 +102,8 @@
 
                                       
                                     </div>
-                                 </div>
+                                 </div> --}}
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> | <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Buka di Form Lama</a>
                                     
                                      @else
                                      {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
