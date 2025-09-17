@@ -1150,6 +1150,11 @@ table th tr td {
                      @if ($vdr->title1 != null)
                      <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                      {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 2)->first()->created_at)}}</small><br> --}}
+                     @if ($vdr->timestamp1 != null)
+                     <small >Time : <span style="color:rgb(44, 133, 251)"><i>
+                        {{$vdr->timestamp1}}
+                     </i></span></small><br>
+                     @endif
                      @else
                      <small>Status : ____________</small>
                      @endif
@@ -1175,7 +1180,14 @@ table th tr td {
                        
                             <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
                        
-                     
+                            
+                              @if ($vdr->timestamp2 != null)
+                              <small >Time : <span style="color:rgb(44, 133, 251)"><i>
+                                 {{$vdr->timestamp2}}
+                              </i></span></small><br>
+                              @endif
+                              
+                           
                      {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 3)->first()->created_at)}}</small><br> --}}
                      @else
                      <small>Status : ____________</small>
@@ -1221,6 +1233,12 @@ table th tr td {
                         <small>Location Company Representative : {{$vdr->name4}}</small><br>
                         @if ($vdr->title4 != null)
                         <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                        <small >Status : <span style="color:rgb(44, 133, 251)"><i>
+                           @if ($vdr->timestamp1 != null)
+                           {{$vdr->timestamp1}}
+                           @endif
+                           
+                        </i></span></small><br>
                         @else
                         <small>Status : ____________</small>
                         @endif
@@ -1235,6 +1253,11 @@ table th tr td {
                            <small>Marine Representative : Lutfi Aryanto</small><br>
                            @if ($vdr->title3 != null)
                            <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                           @if ($vdr->timestamp3 != null)
+                           <small >Time : <span style="color:rgb(44, 133, 251)"><i>
+                              {{$vdr->timestamp3}}
+                           </i></span></small><br>
+                           @endif
                            @else
                            <small>Status : ____________</small>
                            @endif
@@ -1252,6 +1275,11 @@ table th tr td {
                            <small>Marine Representative : Lutfi Aryanto</small><br>
                            @if ($vdr->title3 != null)
                            <small >Status : <span style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                           @if ($vdr->timestamp3 != null)
+                           <small >Time : <span style="color:rgb(44, 133, 251)"><i>
+                              {{$vdr->timestamp3}}
+                           </i></span></small><br>
+                           @endif
                            @else
                            <small>Status : ____________</small>
                            @endif
