@@ -477,6 +477,7 @@ class MarineVdrController extends Controller
          'status' => 2,
          'title1' => $req->title1,
          'name1' => $req->name1,
+         'timestamp' => Carbon::now()
       ]);
 
 
@@ -678,6 +679,7 @@ class MarineVdrController extends Controller
          'status' => $status,
          'title2' => 'Marine Dept',
          'name2' => $req->name2,
+         'timestamp2' => Carbon::now()
       ]);
 
 
@@ -921,6 +923,7 @@ class MarineVdrController extends Controller
          'status' => 4,
          'title3' => 'Suptent',
          'name3' => 'Lutfi Aryanto',
+         'timestamp3' => Carbon::now()
       ]);
 
       // dd($vdr->name3);
