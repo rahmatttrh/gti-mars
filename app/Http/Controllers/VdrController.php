@@ -4268,6 +4268,7 @@ class VdrController extends Controller
       $lastVdrHses = VdrHse::where('vdr_id', $lastVdr->id)->get();
       // dd($lastVdr->id);
       $lastVdrOperatings = VdrOperating::where('vdr_id', $lastVdr->id)->get();
+      $lastVdrEngines = VdrEngine::where('vdr_id', $lastVdr->id)->get();
       $lastVdrCrews = VdrCrew::where('vdr_id', $lastVdr->id)->get();
 
       $vesselVdrs = Vdr::where('vessel_id', $vessel->id)->get();
@@ -4536,6 +4537,31 @@ class VdrController extends Controller
             ]);
          }
       }
+      $vdrEngines = VdrEngine::where('vdr_id', $vdr->id)->get();
+      if ($lastVdr) {
+         if (count($lastVdrEngines) > 0) {
+            foreach ($vdrEngines as $vdrEngine) {
+               foreach ($lastVdrEngines as $lastVdrEngine){
+                  if ($lastVdrEngine->heading_id == $vdrEngine->heading_id){
+                     $vdrEngine->update([
+                        'm_ref' => $lastVdrEngine->m_ref,
+                        'm_port' => $lastVdrEngine->m_port,
+                        'm_stbd' => $lastVdrEngine->m_stbd,
+                        'm_center' => $lastVdrEngine->m_center,
+                        'm_other' => $lastVdrEngine->m_other,
+                        'a_ref' => $lastVdrEngine->a_ref,
+                        'a_port' => $lastVdrEngine->a_port,
+                        'a_stbd' => $lastVdrEngine->a_stbd,
+                        'a_other' => $lastVdrEngine->a_other
+                     ]);
+                  }
+
+               }
+            }
+         }
+      }
+
+
 
       $operatingHeadings = VdrOperatingHeader::get();
       foreach ($operatingHeadings as $key => $heading) {
