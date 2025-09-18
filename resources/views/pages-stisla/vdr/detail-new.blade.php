@@ -2530,10 +2530,28 @@
          if (remark === '') {
             remark = '-';
          }
+
+         if (opening === '') {
+            opening = 0
+         }
+         if (consumption === undefined) {
+            consumption = 0
+         }
+         if (received === '') {
+            received = 0
+         }
+
+         if (transferred === '') {
+            transferred = 0
+         }
+
+         if (closing === undefined) {
+            closing = 0
+         }
          
          
          
-         console.log(remark);
+         console.log("consumption :" + consumption);
 
          // var closing = (opening + received) - (consumption + transferred);
          // // Tampilkan hasil perhitungan di kolom Closing
