@@ -113,8 +113,10 @@ class Vdr extends Model
 
    public function customRound($number)
    {
+
+      // 0.48
       $decimal = $number - floor($number);
-      if ($decimal >= 0.48) {
+      if ($decimal >= 0.50) {
          return  ceil($number);
       } else {
          return floor($number);

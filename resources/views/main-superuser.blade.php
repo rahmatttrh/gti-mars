@@ -72,6 +72,7 @@
                                        <th>ID</th>
                                        <th>Vessel</th>
                                        <th>Release</th>
+                                       {{-- <th></th> --}}
                                        {{-- <th>Date</th> --}}
                                        <th class="text-right">Status</th>
                                     </tr>
@@ -83,6 +84,7 @@
                                           <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
                                           <td>{{$vdr->release_date}}</td>
                                           {{-- <td>{{formatDate($sche->date)}}</td> --}}
+                                          {{-- <td>{{formatRibuan(round($totaldaily))}}</td> --}}
                                           <td class="text-right text-truncate">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>

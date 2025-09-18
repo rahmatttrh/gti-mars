@@ -1133,6 +1133,9 @@
                                  </th>
                                  <th colspan="2"></th>
                                  <td class="text-center">
+                                    {{-- @if(auth()->user()->hasRole('superuser'))
+                                    {{$totalDaily}}
+                                    @endif --}}
                                     <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 total_daily"  readonly id="totalDaily"   value="{{round($totalDaily)}}">
                                        {{-- <b > <span class="totalDaily"></span> Ltrs</b>  --}}
                                        
