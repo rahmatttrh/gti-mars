@@ -513,6 +513,16 @@ class MarineVdrController extends Controller
          'name1' => $req->name1,
       ]);
 
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         
+         'action' => 'Approve VDR via Email',
+         'vdr_id' => $vdr->id,
+         'desc' => 'PET',
+         'table' => 'vdrs'
+      ]);
+
 
       // Log::create([
       //    'system' => 'VDR',
@@ -695,6 +705,15 @@ class MarineVdrController extends Controller
       // $emailController = new EmailController();
       // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         
+         'action' => 'Approve VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Marine',
+         'table' => 'vdrs'
+      ]);
 
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
@@ -905,6 +924,16 @@ class MarineVdrController extends Controller
       // dd($vdr->name3);
       // dd()
 
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         
+         'action' => 'Approve VDR via Email',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Marine',
+         'table' => 'vdrs'
+      ]);
+
 
 
       return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('suptent')])->with('success', 'VDR Approved');
@@ -928,6 +957,17 @@ class MarineVdrController extends Controller
 
       // dd($vdr->name3);
       // dd()
+
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         
+         'action' => 'Approve VDR via Email',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Superintendent',
+         'table' => 'vdrs'
+      ]);
 
 
 

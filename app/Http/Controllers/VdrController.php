@@ -276,7 +276,15 @@ class VdrController extends Controller
 
 
 
-      
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Create VDR',
+         'vdr_id' => $vdrId,
+         'desc' => '',
+         'table' => 'vdrs'
+      ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdrId), enkripRambo('index')]);
       // dd('ok');
@@ -524,6 +532,16 @@ class VdrController extends Controller
       //    'status' => 0,
       //    'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
       // ]);
+
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Create Revisi VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => '',
+         'table' => 'vdrs'
+      ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR duplicated');
    }
@@ -1106,7 +1124,7 @@ class VdrController extends Controller
             'system' => 'VDR',
             'user_id' => auth()->user()->id,
             'vessel_id' => $vdr->vessel_id,
-            'action' => 'Create VDR',
+            'action' => 'Create VDR Form Lama',
             'vdr_id' => $vdr->id,
             'desc' => '',
             'table' => 'vdrs'
@@ -3163,15 +3181,15 @@ class VdrController extends Controller
       // Jika semuanya berhasil, kita commit transaksi
       DB::commit();
 
-      ModelsLog::create([
-         'system' => 'VDR',
-         'user_id' => auth()->user()->id,
-         'vessel_id' => $vdr->vessel_id,
-         'action' => 'Add Activity',
-         'vdr_id' => $vdr->id,
-         'desc' => 'on VDR ' . $vdr->code,
-         'table' => 'vdr_activities'
-      ]);
+      // ModelsLog::create([
+      //    'system' => 'VDR',
+      //    'user_id' => auth()->user()->id,
+      //    'vessel_id' => $vdr->vessel_id,
+      //    'action' => 'Add Activity',
+      //    'vdr_id' => $vdr->id,
+      //    'desc' => 'on VDR ' . $vdr->code,
+      //    'table' => 'vdr_activities'
+      // ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
       // } catch (\Exception $e) {
