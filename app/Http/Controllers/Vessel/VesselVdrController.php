@@ -8,6 +8,7 @@ use App\Models\Vdr;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Models\Log as ModelsLog;
 
 class VesselVdrController extends Controller
 {
@@ -54,6 +55,16 @@ class VesselVdrController extends Controller
       // $emailController->approvalVdrPet(enkripRambo($vdr->id));
       // $emailController = new EmailController();
       // $emailController->approvalVdrPet(enkripRambo($vdr->id));
+
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Release VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => '',
+         'table' => 'vdrs'
+      ]);
 
 
 

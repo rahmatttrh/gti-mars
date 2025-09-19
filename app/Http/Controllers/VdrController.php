@@ -276,7 +276,15 @@ class VdrController extends Controller
 
 
 
-
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Create VDR',
+         'vdr_id' => $vdrId,
+         'desc' => '',
+         'table' => 'vdrs'
+      ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdrId), enkripRambo('index')]);
       // dd('ok');
@@ -525,6 +533,16 @@ class VdrController extends Controller
       //    'status' => 0,
       //    'code' => $vdr->code . '/' . 'R' . count($vdrHistories)
       // ]);
+
+      ModelsLog::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'vessel_id' => $vdr->vessel_id,
+         'action' => 'Create Revisi VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => '',
+         'table' => 'vdrs'
+      ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])->with('success', 'VDR duplicated');
    }
@@ -895,7 +913,7 @@ class VdrController extends Controller
          } else {
             $contract = '';
          }
-         
+
          $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
          $timestamp = $year  . $month  . $day;
@@ -1107,7 +1125,7 @@ class VdrController extends Controller
             'system' => 'VDR',
             'user_id' => auth()->user()->id,
             'vessel_id' => $vdr->vessel_id,
-            'action' => 'Create VDR',
+            'action' => 'Create VDR Form Lama',
             'vdr_id' => $vdr->id,
             'desc' => '',
             'table' => 'vdrs'
@@ -2684,7 +2702,7 @@ class VdrController extends Controller
       $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();
       $vdrHseManhours = VdrHse::where('vdr_id', $vdr->id)->where('header_id', 7)->first();
 
-      $today = count($vdrCrews) * 14 ;
+      $today = count($vdrCrews) * 14;
 
       $vdrHseManhours->update([
          'today' => $today,
@@ -2713,7 +2731,7 @@ class VdrController extends Controller
       $vdrCrews = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();
       $vdrHseManhours = VdrHse::where('vdr_id', $vdr->id)->where('header_id', 7)->first();
 
-      $today = count($vdrCrews) * 14 ;
+      $today = count($vdrCrews) * 14;
 
       $vdrHseManhours->update([
          'today' => $today,
@@ -3165,15 +3183,15 @@ class VdrController extends Controller
       // Jika semuanya berhasil, kita commit transaksi
       DB::commit();
 
-      ModelsLog::create([
-         'system' => 'VDR',
-         'user_id' => auth()->user()->id,
-         'vessel_id' => $vdr->vessel_id,
-         'action' => 'Add Activity',
-         'vdr_id' => $vdr->id,
-         'desc' => 'on VDR ' . $vdr->code,
-         'table' => 'vdr_activities'
-      ]);
+      // ModelsLog::create([
+      //    'system' => 'VDR',
+      //    'user_id' => auth()->user()->id,
+      //    'vessel_id' => $vdr->vessel_id,
+      //    'action' => 'Add Activity',
+      //    'vdr_id' => $vdr->id,
+      //    'desc' => 'on VDR ' . $vdr->code,
+      //    'table' => 'vdr_activities'
+      // ]);
 
       return redirect()->route('vdr.show.spa', [enkripRambo($req->vdr_id), enkripRambo('activity')])->with('success', 'Activity data successfully saved.');
       // } catch (\Exception $e) {
@@ -4381,7 +4399,7 @@ class VdrController extends Controller
       ]);
 
 
-      foreach (range(1, 10) as $i){
+      foreach (range(1, 10) as $i) {
          VdrActivity::create([
             'vdr_id' => $vdr->id,
             'activity' => '-',
@@ -4398,7 +4416,7 @@ class VdrController extends Controller
             'created_by' => auth()->user()->name
          ]);
       }
-      
+
 
 
 
@@ -4518,7 +4536,7 @@ class VdrController extends Controller
                   if ($lastHse->header_id == $vdrHse->header_id) {
                      // dd( $lastHse->heading_id);
                      $vdrHse->update([
-                        'previous' => $lastHse->previous ,
+                        'previous' => $lastHse->previous,
                         'today' => $lastHse->today,
                      ]);
                   }
@@ -4531,8 +4549,6 @@ class VdrController extends Controller
                      ]);
                   }
                }
-
-              
             }
          }
       }
@@ -4563,8 +4579,8 @@ class VdrController extends Controller
       if ($lastVdr) {
          if (count($lastVdrEngines) > 0) {
             foreach ($vdrEngines as $vdrEngine) {
-               foreach ($lastVdrEngines as $lastVdrEngine){
-                  if ($lastVdrEngine->heading_id == $vdrEngine->heading_id){
+               foreach ($lastVdrEngines as $lastVdrEngine) {
+                  if ($lastVdrEngine->heading_id == $vdrEngine->heading_id) {
                      $vdrEngine->update([
                         'm_ref' => $lastVdrEngine->m_ref,
                         'm_port' => $lastVdrEngine->m_port,
@@ -4577,7 +4593,6 @@ class VdrController extends Controller
                         'a_other' => $lastVdrEngine->a_other
                      ]);
                   }
-
                }
             }
          }
@@ -4622,7 +4637,7 @@ class VdrController extends Controller
 
 
 
-      
+
 
       // dd($vdr->code);
 
