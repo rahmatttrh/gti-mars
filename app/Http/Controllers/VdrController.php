@@ -877,14 +877,39 @@ class VdrController extends Controller
          $month = $date->format('m');
          $day = $date->format('d');
 
-         $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+         // $awalan = "VDR/PHEOSES/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
 
-         // Mengonversi $id ke dalam format tiga digit dengan leading zeros
-         $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
-         $timestamp = $year . '/' . $month . '/' . $day;
+         // // Mengonversi $id ke dalam format tiga digit dengan leading zeros
+         // $idPadded = sprintf("%02d", count($vesselVdrs) + 1);
+         // $timestamp = $year . '/' . $month . '/' . $day;
+
+         // // Menggabungkan awalan dan $idPadded
+         // $hasil = $awalan . $timestamp;
+         // $vdr->update([
+         //    'code' => $hasil
+         // ]);
+
+         if ($lastVdr) {
+            $contract = $lastVdr->contract;
+         } else {
+            $contract = '';
+         }
+         
+         $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vessel->name)) . '/';
+
+         $timestamp = $year  . $month  . $day;
+
+         $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+         if (count($vdrHistories) > 0) {
+            $num = count($vdrHistories);
+         } else {
+            $num = 0;
+         }
 
          // Menggabungkan awalan dan $idPadded
-         $hasil = $awalan . $timestamp;
+         $hasil = $awalan . $timestamp . '/' . $num;
+
          $vdr->update([
             'code' => $hasil
          ]);
