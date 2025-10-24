@@ -17,6 +17,7 @@ use App\Models\VdrCargo;
 use App\Models\VdrHse;
 use App\Models\VdrOperating;
 use App\Models\VdrPeriodic;
+use App\Models\VdrReject;
 use App\Models\VdrWeather;
 use App\Models\Vessel;
 use Carbon\Carbon;
@@ -40,7 +41,9 @@ class DocumentController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-      $totalDaily = $vdr->customRound($totalDaily);
+      // $totalDaily = $vdr->customRound($totalDaily);
+      // $totalDaily = round($totalDaily, 1); // di komen dulu 
+      $totalDaily = round($totalDaily);
 
       $debugHours = 0;
       $debugMinutes = 0;
@@ -82,9 +85,9 @@ class DocumentController extends Controller
 
       // return('email');
 
-     
 
-      
+
+
 
 
       return view('pages.document.vdr', [
@@ -103,7 +106,7 @@ class DocumentController extends Controller
 
    public function vdrEmail($id, $level)
    {
-      
+
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       $vdrActivities = VdrActivity::where('vdr_id', $vdr->id)->get();
@@ -115,7 +118,9 @@ class DocumentController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-      $totalDaily = $vdr->customRound($totalDaily);
+      // $totalDaily = $vdr->customRound($totalDaily);
+      $totalDaily = round($totalDaily, 1);
+      $totalDaily = round($totalDaily);
 
       $debugHours = 0;
       $debugMinutes = 0;
@@ -157,9 +162,11 @@ class DocumentController extends Controller
 
       // return('email');
 
-     
+      $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
 
-      
+
+
+
 
 
       return view('pages.document.vdr-email', [

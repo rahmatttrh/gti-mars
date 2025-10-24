@@ -195,7 +195,7 @@
                            
                         @endif
       
-                        @if ($vdr->status == 1  && auth()->user()->username == 'pet')
+                        {{-- @if ($vdr->status == 1  && auth()->user()->username == 'pet')
                        
                                  <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
                                  <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
@@ -203,6 +203,16 @@
                            
                         
                         
+                        @endif --}}
+
+                        @if (auth()->user()->username == 'pet')
+                           @if ($vdr->status == 1)
+                        
+                              <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              @elseif($vdr->status > 1)
+                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoPet">Undo Approve</a>
+                           @endif
                         @endif
       
                         <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
@@ -472,7 +482,7 @@
 
                      {{-- <div class="table-responsive overflow-auto pb-4" style="height: 700px ">  --}}
                        
-                        @if ($vdr->vessel->ipb == 'IPB')
+                        {{-- @if ($vdr->vessel->ipb == 'IPB')
                            @if ($vdr->status == 0)
                            <div class="px-2 mt-2">
                               <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 100%">
@@ -483,10 +493,10 @@
                               </select>
                            </div>
                               @else
-                              {{-- <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a> --}}
+                              <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a>
                            @endif
                            
-                        @endif
+                        @endif --}}
 
                         {{-- @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
@@ -580,14 +590,15 @@
                                  </tr>
                                  @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
                                  <tr>
-                                    <td></td>
-                                    <td colspan="3">
-                                    {{-- <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
-                                       <span class="badge badge-light border">!</span>  --}}
-                                       Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} <br>
-                                       {{$vdr->reject_desc}}
-                                    {{-- </div> --}}
-                                 </td>
+                                    <td colspan="4">
+                                       {{-- <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
+                                          <span class="badge badge-light border">!</span>  --}}
+                                          Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} <br>
+                                          
+                                          {!! $vdr->reject_desc !!}
+                                          <small><i>Harap Perhatikan Table yang berwarna Merah</i></small>
+                                       {{-- </div> --}}
+                                    </td>
                                  </tr> 
                                                       
                                  @endif
@@ -626,10 +637,45 @@
                                        </td>
                                      </tr>
                                  @endif --}}
+                                 @if ($vdr->vessel->ipb == 'IPB')
+                                    @if ($vdr->status == 0)
+                                     <tr>
+                                       <td>BU</td>
+                                       <td colspan="3">
+                                          <select name="bu" id="bu" style="border:0; outline:0;" class="  input_bu" style="width: 100%">
+                                             <option selected disabled >Choose BU</option>
+                                             <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">South Bussines Unit</option>
+                                             <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">Central Bussines Unit</option>
+                                             <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">North Bussines Unit</option>
+                                          </select>
+                                       </td>
+                                     </tr>
+                                    {{-- <div class="px-2 mt-2">
+                                       
+                                    </div> --}}
+                                       @else
+                                       {{-- <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a> --}}
+                                    @endif
+                                    
+                                 @endif
                                  <tr>
-                                    <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
+                                    @if ($vdr->reject_data == 'General Information')
+                                    <td colspan="4" class="text-light bg-danger"><b  style="">General Information</b></td>
+                                       @elseif(count($vdrRejectTables) > 0)
+                                          @foreach ($vdrRejectTables as $r)
+                                             @if ($r->table == 'General Information')
+                                             <td colspan="4" class="text-light bg-danger"><b  style="">General Information</b></td>
+                                             @endif
+                                          @endforeach
+                                        @else
+                                        <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
+                                    @endif
+                                    {{-- <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td> --}}
                                     {{-- <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td> --}}
-                                    <td>
+                                    
+                                 </tr>
+                                 <tr>
+                                    <td colspan="4">
                                        @if ($vdr->vessel->ipb == 'IPB')
                                           @if ($vdr->status > 0)
                                           LOCATION : {{$vdr->area}}
@@ -651,7 +697,7 @@
                                     <tr>
                                        <td class="px-1" >Date</td>
                                        <td class="bg-y" style="width: 70px">
-                                          <input  class="w-100 input_general input_general_date" id="date" name="date" required {{$editable == 0 ? 'readonly' : ''}} type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " >
+                                          <input max="{{$now}}"  class="w-100 input_general input_general_date" id="date" name="date" required {{$editable == 0 ? 'readonly' : ''}} type="date" value="{{$vdr->date}}" style="background-color: rgb(226, 236, 151); text-align: left !important; " >
                                           <small class="errordate"></small>
                                        </td>
                                        <td class="px-1">Loc</td>
@@ -710,7 +756,19 @@
                            <table>
                               <thead>
                                  <tr>
-                                    <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">Weather Condition</b></td>
+                                    @if ($vdr->reject_data == 'Weather Condition')
+                                    <td colspan="5" class="text-light bg-danger"><b  style=""> Weather Condition</b></td>
+                                    {{-- <td colspan="3"><b class="text-light bg-danger" style="color: #1f4481 !important"><span class="bagde badge-light">!</span> General Information</b></td> --}}
+                                    @elseif(count($vdrRejectTables) > 0)
+                                       @foreach ($vdrRejectTables as $r)
+                                          @if ($r->table == 'Weather Condition')
+                                          <td colspan="5" class="text-light bg-danger"><b  style="">Weather Condition</b></td>
+                                          @endif
+                                       @endforeach    
+                                    @else
+                                        <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Weather Condition</b></td>
+                                    @endif
+                                    {{-- <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">Weather Condition</b></td> --}}
                                  </tr>
                                  <tr class="bg-lgray">
                                     <td>Weather/Time</td>
@@ -758,7 +816,18 @@
                            <table>
                               <thead>
                                  <tr >
-                                    <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">HSSE</b></td>
+                                    @if ($vdr->reject_data == 'HSSE')
+                                    <td colspan="5" class="text-light bg-danger"><b  style="">HSSE</b></td>
+                                    @elseif(count($vdrRejectTables) > 0)
+                                       @foreach ($vdrRejectTables as $r)
+                                          @if ($r->table == 'HSSE')
+                                          <td colspan="5" class="text-light bg-danger"><b  style="">HSSE</b></td>
+                                          @endif
+                                       @endforeach 
+                                        @else
+                                        <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">HSSE</b></td>
+                                    @endif
+                                    {{-- <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">HSSE</b></td> --}}
                                  </tr>
                                  <tr class="bg-lgray">
                                     <th class="text-center">A</th>
@@ -846,7 +915,22 @@
                            <table class="w-100">
                               <thead>
                                  <tr class="">
-                                    <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td>
+                                    @if ($vdr->reject_data == 'Daily Operational Activity')
+                                    <td colspan="13" class="text-light bg-danger">
+                                       <b class="" > Detail of Daily Operational Activity </b>
+                                    </td>
+                                       @elseif(count($vdrRejectTables) > 0)
+                                          @foreach ($vdrRejectTables as $r)
+                                             @if ($r->table == 'Daily Operational Activity')
+                                             <td colspan="13" class="text-light bg-danger"><b  style="">Detail of Daily Operational Activity</b></td>
+                                             @endif
+                                          @endforeach 
+                                       @else
+                                       <td colspan="13" class="text-primary">
+                                          <b class="" style="color: #1f4481 !important">Detail of Daily Operational Activity </b>
+                                    </td>
+                                    @endif
+                                    {{-- <td colspan="13"><b class="text-primary" style="color: #1f4481 !important">Detail of Daily Operational Activity </b></td> --}}
                                  </tr>
                                  <tr>
                                     <td colspan="13">
@@ -936,7 +1020,7 @@
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); " class="input_activity_desc_{{$activity->id}}"  style="width: 160px"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 150px !important" class="input_activity_desc_{{$activity->id}}"   id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                             
                                              
                                           </td>
@@ -952,9 +1036,9 @@
                                           <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
                                        </td>
                                           <td class="text-info bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"   class="  input_activity_time_{{$activity->id}}"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="  input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                           </td>
-                                          <td class="text-danger bg-y">
+                                          <td class="text-dark bg-y">
                                              {{-- {{$activity->finish === "00:00:00"}} --}}
                                              {{-- {{substr($activity->finish, 0, 5)}} --}}
 
@@ -962,8 +1046,25 @@
                                              {{-- @if ($activity->finish === "00:00:00")
                                              <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="24.00">
                                              @else --}}
-                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                             {{-- <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151)"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}}"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}"> --}}
                                              {{-- @endif --}}
+
+                                             @if ($vdr->status > 0)
+                                                @if ($activity->finish === "00:00:00")
+                                                      24:00
+                                                      @else
+                                                      {{substr($activity->finish, 0, 5)}}
+                                                         
+                                                   @endif
+
+                                                   @else
+                                                   <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); width: 80px"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+
+                                             @endif
+                                             {{-- @if (auth()->user()->hasRole('superuser'))
+                                             {{$activity->finish}}
+                                                 
+                                             @endif --}}
                                           </td>
                                           <td class="bg-y text-center">
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_high_{{$activity->id}}"   placeholder="HH.mm" id="high_{{$activity->id}}" name="high" value="{{getTotalHours($activity->high)}}" type="text" >
@@ -990,7 +1091,7 @@
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sb_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
                                           <td class="bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; " class="input_activity_desc_{{$activity->id}}"  style="width: 160px;text-align:left !important"  id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; width: 550px" class="input_activity_desc_{{$activity->id}}"    id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
                                             
                                              
                                           </td>
@@ -1074,7 +1175,19 @@
                        
                         <thead>
                            <tr>
+                              @if ($vdr->reject_data == 'Summary of Daily Operating Data')
+                              <td colspan="5" class="text-light bg-danger"><b  style="">Summary of Daily Operating Data</b></td>
+                              @elseif(count($vdrRejectTables) > 0)
+                                 @foreach ($vdrRejectTables as $r)
+                                    @if ($r->table == 'Summary of Daily Operating Data')
+                                    <td colspan="5" class="text-light bg-danger"><b  style="">Summary of Daily Operating Data</b></td>
+                                    @endif
+                                 @endforeach 
+                              
+                              @else
                               <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td>
+                              @endif
+                              {{-- <td colspan="5"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td> --}}
                            </tr>
                            <tr class="text-center bg-lgray ">
                               {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
@@ -1138,7 +1251,7 @@
                                     @endif --}}
                                     <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 total_daily"  readonly id="totalDaily"   value="{{round($totalDaily)}}">
                                        {{-- <b > <span class="totalDaily"></span> Ltrs</b>  --}}
-                                       
+                                       ({{$realTotalDaily}})
                                  </td>
                               </tr>
             
@@ -1159,7 +1272,19 @@
                         
                         <thead>
                            <tr>
-                              <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                              @if ($vdr->reject_data == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
+                                    <td colspan="7" class="text-light bg-danger"><b  style="">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                                    @elseif(count($vdrRejectTables) > 0)
+                                       @foreach ($vdrRejectTables as $r)
+                                          @if ($r->table == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
+                                          <td colspan="7" class="text-light bg-danger"><b  style="">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                                          @endif
+                                       @endforeach 
+                                    
+                                    @else
+                                    <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                                    @endif
+                              {{-- <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td> --}}
                            </tr>
                            <tr class="text-center align-middle bg-lgray">
                               <th style="width: 120px">TYPE</th>
@@ -1225,7 +1350,18 @@
                      <table class="w-100">
                         <tbody>
                            <tr>
+                              @if ($vdr->reject_data == 'Periodical Fuel')
+                              <td rowspan="2" class="text-light bg-danger"><b  style="">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
+                              @elseif(count($vdrRejectTables) > 0)
+                                 @foreach ($vdrRejectTables as $r)
+                                    @if ($r->table == 'Periodical Fuel')
+                                    <td rowspan="2" class="text-light bg-danger"><b  style="">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
+                                    @endif
+                                 @endforeach 
+                              
+                              @else
                               <td rowspan="2"><b class="text-primary" style="color: #1f4481 !important">Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
+                              @endif
                               <td class="text-truncate bg-lgray">Activity (Select Below)</td>
                               <td class="bg-lgray">ROB Check Time</td>
                               <td class="bg-lgray">ROB by VDR at Check Time</td>
@@ -1267,8 +1403,21 @@
                      <table>
                         <thead>
                            <tr>
+                              @if ($vdr->reject_data == 'Special Calculation')
+                              <td colspan="3" class="text-light bg-danger"><b  style="">Special Calculation 
+                                 Applicable only for Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
+                              @elseif(count($vdrRejectTables) > 0)
+                                 @foreach ($vdrRejectTables as $r)
+                                    @if ($r->table == 'Special Calculation')
+                                    <td colspan="3" class="text-light bg-danger"><b  style="">Special Calculation 
+                                       Applicable only for Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b></td>
+                                    @endif
+                                 @endforeach 
+                              
+                              @else
                               <td colspan="3"><b class="text-primary" style="color: #1f4481 !important"> Special Calculation 
                                  Applicable only for Periodical Fuel ROB Check/Control by Company Reps. and Surveyor</b> </td>
+                              @endif
                            </tr>
                         </thead>
                         <tbody>
@@ -1384,7 +1533,18 @@
                            <table>
                               <thead>
                                  <tr>
+                                    @if ($vdr->reject_data == 'Crew List')
+                                    <td colspan="3" class="text-light bg-danger"><b  style="">Crew List</b></td>
+                                    @elseif(count($vdrRejectTables) > 0)
+                                       @foreach ($vdrRejectTables as $r)
+                                          @if ($r->table == 'Crew List')
+                                          <td colspan="3" class="text-light bg-danger"><b  style="">Crew List</b></td>
+                                          @endif
+                                       @endforeach 
+                                    
+                                    @else
                                     <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Crew List</b></td>
+                                    @endif      
                                  </tr>
                                  <tr>
                                     @if ($editable == 1)
@@ -1465,7 +1625,18 @@
                            <table>
                               <thead>
                                  <tr>
+                                    @if ($vdr->reject_data == 'Pax List')
+                                    <td colspan="3" class="text-light bg-danger"><b  style="">Pax List</b></td>
+                                    @elseif(count($vdrRejectTables) > 0)
+                                       @foreach ($vdrRejectTables as $r)
+                                          @if ($r->table == 'Pax List')
+                                          <td colspan="3" class="text-light bg-danger"><b  style="">Pax List</b></td>
+                                          @endif
+                                       @endforeach 
+                                    
+                                    @else
                                     <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">Pax List</b></td>
+                                    @endif
                                  </tr>
                                  <tr>
                                     <td colspan="3">
@@ -1818,6 +1989,30 @@
          </form>
       </div>
    </div>
+
+   <div class="modal fade" id="modalUndoPet" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Undo Approve VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               VDR {{$vdr->code}} saat ini sedang  <b><x-status-stisla.vdr-plain :vdr="$vdr" /></b>.
+               <hr>
+               Proses Undo Approve VDR akan merubah <b>Status VDR kembali ke PET</b>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.undo.pet', enkripRambo($vdr->id))}}"  class="btn btn-info">Undo VDR</a>
+            </div>
+         </div>
+      </div>
+   </div>
    <div class="modal fade" id="modalAppMarine" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">
          <form action="{{route('vdr.approve.marine.form')}}" method="POST" enctype="multipart/form-data">
@@ -1880,14 +2075,14 @@
                </div>
                <div class="modal-footer bg-whitesmoke">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-info">Approve</button>
+                  <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button>
                </div>
             </div>
          </form>
       </div>
    </div>
    <div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
          <form action="{{route('vdr.reject.marine')}}" method="POST">
          @csrf
          <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
@@ -1902,22 +2097,33 @@
                <b>{{$vdr->code}}</b>
                   <hr>
 
-                  {{-- <div class="form-group ">
+                  <div class="form-group ">
                      <label for="desc">Data yang harus di Revisi</label>
-                     <select name="data[]" style="width: 100%"  id="data" class="form-control text-danger " required>
+                     <select name="data[]" style="width: 100%"  id="data" class="form-control text-danger select2" multiple="multiple" required>
                         <option value="General Information">General Information</option>
                         <option value="Weather Condition">Weather Condition</option>
                         <option value="HSSE">HSSE</option>
                         <option value="Daily Operational Activity">Daily Operational Activity</option>
                         <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
                         <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
+                        <option value="Special Calculation">Special Calculation</option>
+                        <option value="Periodical Fuel">Periodical Fuel</option>
+                        <option value="Crew List">Crew List</option>
+                        <option value="Pax List">Pax List</option>
                      </select>
-                  </div> --}}
+                  </div>
                <div class="form-row">
                   <div class="form-group col-md-12">
                      <label for="desc">Description</label>
-                     <textarea class="form-control" id="desc" name="desc"   rows="3"></textarea>
+                     {{-- <textarea class="form-control" id="desc" name="desc"   rows="3"></textarea> --}}
                      {{-- <input type="text" class="form-control text-left" id="desc" name="desc" > --}}
+                     <textarea name="desc" id="desc" cols="30" rows="5" hidden></textarea>
+               {{-- <span>B</span> --}}
+                  <main>
+                     <trix-toolbar id="my_toolbar"></trix-toolbar>
+                     <div class="more-stuff-inbetween"></div>
+                     <trix-editor toolbar="my_toolbar" input="desc" ></trix-editor>
+                  </main>
                   </div>
                </div>
                <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
@@ -2563,9 +2769,10 @@
 
          var _token = $('meta[name="csrf-token"]').attr('content');
          $.ajax({
-            url: "/fetch/vdr/update/cargo/" + vdr + "/" + cargo +  "/"  + opening + "/" + consumption + "/" + received + "/" + transferred + "/" + closing + "/" + remark,
+            url: "/fetch/vdr/update/cargo/" + vdr + "/" + cargo +  "/"  + opening + "/" + consumption + "/" + received + "/" + transferred + "/" + closing ,
             method: "GET",
             dataType: 'json',
+            data: { remark: remark },
 
             success: function(result) {
                $('.consumption_' + '{!! $cargo->id !!}').val(result.consumption);
@@ -3218,9 +3425,10 @@
             
                var _token = $('meta[name="csrf-token"]').attr('content');
                $.ajax({
-                  url: "/fetch/vdr/update/desc/activity/" + vdr + "/" + act +  "/"   + desc ,
+                  url: "/fetch/vdr/update/desc/activity/" + vdr + "/" + act ,
                   method: "GET",
                   dataType: 'json',
+                  data : {desc: desc},
 
                   success: function(result) {
                      // $('.sbTime').html(result.vdrOperatingSb.time);
@@ -3600,9 +3808,10 @@
          console.log('vdr:' + vdr + ' loc:' + loc);
 
          $.ajax({
-            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax +  "/"  + contract + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
+            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax  + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
             method: "GET",
             dataType: 'json',
+            data : {contract: contract},
 
             success: function(result) {
                console.log('result :' + result.result);
@@ -3673,9 +3882,10 @@
          console.log('vdr:' + vdr + ' loc:' + loc);
 
          $.ajax({
-            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax +  "/"  + contract + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
+            url: "/fetch/vdr/update/general/" + vdr + "/" + date + "/" + loc +  "/"  + onduty + "/" + pax  + "/" + contract_start +  "/"  + contract_end + "/" + owner +  "/"  + master + "/" + ce,
             method: "GET",
             dataType: 'json',
+            data : {contract: contract},
 
             success: function(result) {
                console.log('msg :' + result.error );

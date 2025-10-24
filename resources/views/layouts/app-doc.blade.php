@@ -19,6 +19,11 @@
       <link rel="stylesheet" href="https://cdn.datatables.net/1.13.2/css/dataTables.bootstrap4.min.css" rel="stylesheet">
       <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
       <link rel="stylesheet" href="{{asset('stisla/modules/izitoast/css/iziToast.min.css')}}">
+
+      <link rel="stylesheet" type="text/css" href="https://unpkg.com/trix@2.0.0/dist/trix.css">
+      <script type="text/javascript" src="https://unpkg.com/trix@2.0.0/dist/trix.umd.min.js"></script>
+
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
       
    </head>
    <body class="bg-white">
@@ -291,6 +296,7 @@
             </div>
          </div>
       </div>
+      <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
       <script src="{{asset('js/core/jquery.3.2.1.min.js')}}"></script>
       <script src="{{asset('js/datatables/datatables.min.js')}}"></script>
 
@@ -305,12 +311,7 @@
 
       <script src='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.js'></script>
       <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
-      <script>
-         $(document).ready(function() {
-            $('.example').DataTable();
-            $('.select2').select2({});
-         });
-      </script>
+      
 
 
 <script src="{{asset('stisla/modules/jquery.min.js')}}"></script>
@@ -337,6 +338,7 @@
       <script src="https://unpkg.com/supercluster@7.1.2/dist/supercluster.min.js"></script>
 
       <script src="{{asset('stisla/modules/izitoast/js/iziToast.min.js')}}"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
       <!-- JS Libraies -->
       <script src="{{asset('stisla/modules/chart.min.js')}}"></script>
@@ -349,6 +351,13 @@
       @stack('capacity')
       @stack('map')
       @stack('autorefresh')
+
+      <script>
+         $(document).ready(function() {
+            $('.example').DataTable();
+            $('.select2').select2({});
+         });
+      </script>
 
       @if (session('succedeed'))
          <script>

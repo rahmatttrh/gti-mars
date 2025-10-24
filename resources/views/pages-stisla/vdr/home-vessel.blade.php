@@ -259,7 +259,12 @@
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
                               <td>{{$vdr->getTotalHours()}}</td>
-                              <td>{{$vdr->customRound($vdr->operatings->sum('daily'))}}</td>
+                              {{-- <td>{{$vdr->customRound($vdr->operatings->sum('daily'))}}</td> --}}
+                              @php
+                                    $totalDaily = round($vdr->operatings->sum('daily'), 1);
+                                    $totalDaily = round($totalDaily);
+                              @endphp
+                              <td>{{$totalDaily}}</td>
                               <td>
                                  <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">Detail SPA</a>
                               </td>

@@ -26,6 +26,12 @@ function formatDate($data)
    return $date;
 }
 
+function formatDateB($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('d/m/y');
+   return $date;
+}
+
 
 function formatDateMonth($data)
 {

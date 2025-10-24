@@ -21,6 +21,7 @@ use App\Http\Controllers\FuelController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\IntermilanController as ControllersIntermilanController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\JettyController;
 use App\Http\Controllers\LogController;
@@ -95,13 +96,15 @@ Route::put('email/vdr/approve/marine', [MarineVdrController::class, 'approveForm
 Route::post('email/vdr/reject/marine', [MarineVdrController::class, 'rejectFromEmailStore'])->name('vdr.reject.marine.from.email');
 
 
+Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
+
 
 Route::get('email/vdr/reject/{id}/{user}/{userid}', [MarineVdrController::class, 'rejectFromEmail'])->name('vdr.reject.from.email');
 Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectFromEmailStore'])->name('vdr.reject.from.email.store');
 
 
 Route::middleware(["auth"])->group(function () {
-   Route::get('phpinfo', fn () => phpinfo());
+   Route::get('phpinfo', fn() => phpinfo());
 
 
    Route::prefix('pass')->group(function () {
@@ -132,7 +135,7 @@ Route::middleware(["auth"])->group(function () {
    Route::put('request/bcm/update', [DepartmentRequestController::class, 'updateBcm'])->name('request.update.bcm');
    Route::put('cargo/update/logistic', [CargoItemController::class, 'updateLogistic'])->name('cargo.update.logistic');
    Route::get('crew/drop/{id}', [RequestController::class, 'crewDrop'])->name('crew.drop');
-   
+
 
 
    Route::group(['middleware' => ['role:bod']], function () {
@@ -147,14 +150,14 @@ Route::middleware(["auth"])->group(function () {
 
 
    Route::prefix('news')->group(function () {
-      
+
       Route::get('detail/{id}', [NewsController::class, 'detail'])->name('news.detail');
       Route::post('store', [NewsController::class, 'store'])->name('news.store');
    });
 
    Route::get('forbidden', [HomeController::class, 'forbidden'])->name('forbidden');
 
-   
+
 
    Route::prefix('document')->group(function () {
       Route::post('add', [DocumentController::class, 'add'])->name('document.add');
@@ -167,8 +170,8 @@ Route::middleware(["auth"])->group(function () {
    Route::get("hse/dashboard", [HomeController::class, "hse",])->name('hse');
 
    Route::put("vessel/stowage/update", [VesselController::class, "updateStowage",])->name('vessel.stowage.update');
-   
-   
+
+
    Route::prefix('user')->group(function () {
       Route::get('index', [UserController::class, 'index'])->name('user');
       Route::post('store', [UserController::class, 'store'])->name('user.store');
@@ -177,6 +180,25 @@ Route::middleware(["auth"])->group(function () {
       Route::put('update', [UserController::class, 'update'])->name('user.update');
       Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
    });
+
+   Route::prefix('intermilan')->group(function () {
+      Route::get('marine/index', [ControllersIntermilanController::class, 'index'])->name('intermilan.marine');
+      Route::post('marine/store', [ControllersIntermilanController::class, 'storeMarine'])->name('intermilan.marine.store');
+
+      Route::post('marine/request/store', [ControllersIntermilanController::class, 'storeMarineRequest'])->name('intermilan.marine.request.store');
+      Route::post('marine/delete/request/{$id}', [ControllersIntermilanController::class, 'deleteMarineRequest'])->name('intermilan.marine.request.delete');
+      Route::post('marine/cargo/store', [ControllersIntermilanController::class, 'storeMarineCargo'])->name('intermilan.marine.cargo.store');
+      Route::put('marine/cargo/update', [ControllersIntermilanController::class, 'updateMarineCargo'])->name('intermilan.marine.cargo.update');
+      Route::get('marine/detail/{id}', [ControllersIntermilanController::class, 'detail'])->name('intermilan.marine.detail');
+      Route::get('marine/risalah/{id}', [ControllersIntermilanController::class, 'risalah'])->name('intermilan.marine.risalah');
+
+      // Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+      // Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');
+      // Route::put('update', [UserController::class, 'update'])->name('user.update');
+      // Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+   });
+
+
 
    Route::get('vdr/detail/{id}/{tab}', [VdrController::class, 'show'])->name('vdr.show');
    Route::get('vdr/spa/detail/{id}/{tab}', [VdrController::class, 'showSpa'])->name('vdr.show.spa');
@@ -188,7 +210,7 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix("dsp")->group(function () {
       // Route::get("marine/dashboard", [HomeController::class, "dspMarine",])->name('dsp.marine');
       // Route::get("vessel/dashboard", [HomeController::class, "dspVessel",])->name('dsp.vessel');
-      
+
    });
 
    Route::prefix("dsp")->group(function () {
@@ -197,7 +219,7 @@ Route::middleware(["auth"])->group(function () {
       // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
    });
 
-   
+
 
    Route::prefix("surveillance")->group(function () {
       Route::get("marine", [SurveillanceController::class, "marine",])->name('surveillance.marine');
@@ -331,7 +353,7 @@ Route::middleware(["auth"])->group(function () {
       Route::post('store', [RequestController::class, 'store'])->name('request.store');
       Route::get('detail/{request:id}', [RequestController::class, 'detail'])->name('request.detail');
       Route::get('detail/n/{request:id}', [RequestController::class, 'detailNew'])->name('request.detail.new');
-      
+
 
       Route::get('approve/{request:id}', [RequestController::class, 'approve'])->name('request.approve');
 
@@ -407,10 +429,8 @@ Route::middleware(["auth"])->group(function () {
 Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
-
-      
    });
-   
+
    Route::prefix("dsp/m")->group(function () {
       Route::get("dash/main", [HomeController::class, "dspMarine",])->name('dsp.marine');
       Route::get('dash/map', [HomeController::class, 'fullMap'])->name('map.full');
@@ -422,15 +442,15 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
       Route::put('intermilan/select/vessel', [MarineRequestController::class, 'selectVessel'])->name('intermilan.marine.select.vessel');
       Route::put('intermilan/select/schedule', [IntermilanController::class, 'selectSchedule'])->name('intermilan.marine.select.schedule');
       Route::put('request/select/schedule', [IntermilanController::class, 'selectScheduleList'])->name('intermilan.marine.select.schedule.list');
-       
+
 
       Route::prefix('schedule')->group(function () {
          Route::get('progress', [MarineScheduleController::class, 'progress'])->name('schedule.progress');
          Route::post('progress/filter', [MarineScheduleController::class, 'progressFilter'])->name('schedule.progress.filter');
          Route::get('plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
-   
+
          Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
-         
+
          Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
          Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
          Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
@@ -473,10 +493,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
 
       Route::prefix("report")->group(function () {
          Route::get('/', [ReportController::class, "index"])->name('report');
-
-         
       });
-
    });
 
    Route::prefix("vdr/m")->group(function () {
@@ -499,15 +516,15 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
          // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
 
          Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
+         Route::get('undo/pet/{id}', [MarineVdrController::class, 'undoPet'])->name('vdr.undo.pet');
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
          Route::put('approve/suptent-loc', [MarineVdrController::class, 'approveSuptentLocForm'])->name('vdr.approve.suptent.loc.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
-         Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
+         // Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');
          Route::get('approve/superintendent/{id}', [MarineVdrController::class, 'approveLuthfi'])->name('vdr.approve.luthfi');
       });
-      
    });
 
 
@@ -522,8 +539,8 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
       Route::post('store', [ImagesController::class, 'store'])->name('images.store');
       Route::get('delete/{id}', [ImagesController::class, 'delete'])->name('images.delete');
    });
-   
-   
+
+
    Route::prefix("log")->group(function () {
       Route::get("dsp", [LogController::class, "dsp",])->name('log.dsp');
       Route::get("vdr", [LogController::class, "vdr",])->name('log.vdr');
@@ -540,7 +557,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
 
    Route::get('get-distance', [GeofenceController::class, 'getDistance']);
 
-   
+
 
    Route::prefix("proact")->group(function () {
       Route::get("marine/dashboard", [HomeController::class, "proactMarine",])->name('proact.marine');
@@ -549,7 +566,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
    Route::prefix("map")->group(function () {
       Route::get("marine/dashboard", [HomeController::class, "mapMarine",])->name('map.marine');
    });
-   
+
 
    Route::prefix('master/data/port')->group(function () {
       Route::get('index', [PortController::class, 'index'])->name('port');
@@ -603,7 +620,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
    //    Route::get('m/plan/{month}', [MarineScheduleController::class, 'plan'])->name('schedule.plan');
 
    //    Route::get('inbox', [MarineScheduleController::class, 'inbox'])->name('schedule.inbox');
-      
+
    //    Route::get('order/{month}', [MarineScheduleController::class, 'order'])->name('schedule.order');
    //    Route::get('history', [MarineScheduleController::class, 'history'])->name('schedule.history');
    //    Route::get('create', [MarineScheduleController::class, 'create'])->name('schedule.create');
@@ -627,7 +644,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
       Route::post('store', [VesselController::class, 'store'])->name('vessel.store');
       Route::get('edit/{vessel:id}', [VesselController::class, 'edit'])->name('vessel.edit');
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
-      
+
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
@@ -672,60 +689,58 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
          Route::put('revision', [VesselScheduleController::class, 'revision'])->name('schedule.revision');
       });
    });
-   
+
    Route::prefix('vdr/v/')->group(function () {
       Route::get('dashboard', [VdrController::class, 'vdrVessel'])->name('vdr.create');
-      
+
       Route::prefix('act')->group(function () {
-      Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
-      Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
-      Route::get('create/spa', [VdrController::class, 'vdrCreateSpa'])->name('vdr.vessel.create.spa');
+         Route::get('main', [VdrController::class, 'vdrVessel'])->name('vdr.vessel');
+         Route::get('create', [VdrController::class, 'vdrCreate'])->name('vdr.vessel.create');
+         Route::get('create/spa', [VdrController::class, 'vdrCreateSpa'])->name('vdr.vessel.create.spa');
 
-      Route::get('revisi/{id}', [VdrController::class, 'vdrRevisiStore'])->name('vdr.revisi.store');
-      
-      Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
-      Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
-      Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
-      Route::post('delete', [VdrController::class, 'delete'])->name('vdr.delete');
+         Route::get('revisi/{id}', [VdrController::class, 'vdrRevisiStore'])->name('vdr.revisi.store');
 
-      Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
-      Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
-      Route::post('update/general', [VdrController::class, 'updateGeneralPost'])->name('vdr.update.general.post');
-      // Route::post('update/general', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+         Route::get('history', [VdrController::class, 'history'])->name('vdr.history');
+         Route::get('chart', [VdrController::class, 'chart'])->name('vdr.chart');
+         Route::post('store', [VdrController::class, 'store'])->name('vdr.store');
+         Route::post('delete', [VdrController::class, 'delete'])->name('vdr.delete');
+
+         Route::get('edit/{vdr:id}', [VdrController::class, 'edit'])->name('vdr.edit');
+         Route::put('update', [VdrController::class, 'update'])->name('vdr.update');
+         Route::post('update/general', [VdrController::class, 'updateGeneralPost'])->name('vdr.update.general.post');
+         // Route::post('update/general', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
 
 
-      Route::put('update/approval', [VdrController::class, 'updateApproval'])->name('vdr.update.approval');
+         Route::put('update/approval', [VdrController::class, 'updateApproval'])->name('vdr.update.approval');
 
-      Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
-      Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
-      Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
-      Route::delete('spa/delete/activity', [VdrController::class, 'deleteActivitySpa'])->name('vdr.delete.activity.spa');
+         Route::post('store/activity', [VdrController::class, 'storeActivity'])->name('vdr.store.activity');
+         Route::put('update/activity', [VdrController::class, 'updateActivity'])->name('vdr.update.activity');
+         Route::delete('delete/activity', [VdrController::class, 'deleteActivity'])->name('vdr.delete.activity');
+         Route::delete('spa/delete/activity', [VdrController::class, 'deleteActivitySpa'])->name('vdr.delete.activity.spa');
 
-      // Crew
-      Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
-      Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
-      Route::delete('spa/delete/crew', [VdrController::class, 'deleteCrewSpa'])->name('vdr.delete.crew.spa');
-      Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
+         // Crew
+         Route::post('store/crew', [VdrController::class, 'storeCrew'])->name('vdr.store.crew');
+         Route::delete('delete/crew', [VdrController::class, 'deleteCrew'])->name('vdr.delete.crew');
+         Route::delete('spa/delete/crew', [VdrController::class, 'deleteCrewSpa'])->name('vdr.delete.crew.spa');
+         Route::put('update/crew', [VdrController::class, 'updateCrew'])->name('vdr.update.crew');
 
-      Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
-      Route::post('import/crew', [VdrController::class, 'importCrew'])->name('vdr.import.crew');
+         Route::get('template/crew', [VdrCrewController::class, 'templateExcel'])->name('vdr.template.crew');
+         Route::post('import/crew', [VdrController::class, 'importCrew'])->name('vdr.import.crew');
 
-      // 
-      Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
-      Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
-      Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
-      Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
+         // 
+         Route::put('update/cargo', [VdrController::class, 'updateCargo'])->name('vdr.update.cargo');
+         Route::put('update/weather', [VdrController::class, 'updateWeather'])->name('vdr.update.weather');
+         Route::put('update/hse', [VdrController::class, 'updateHse'])->name('vdr.update.hse');
+         Route::put('update/engine', [VdrController::class, 'updateEngine'])->name('vdr.update.engine');
 
-      Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
-      Route::put('update/periodic', [VdrPeriodicController::class, 'update'])->name('vdr.update.periodic');
-      Route::put('update/special', [VdrPeriodicController::class, 'updateSpecial'])->name('vdr.update.special');
+         Route::put('update/operating', [VdrController::class, 'updateOperating'])->name('vdr.update.operating');
+         Route::put('update/periodic', [VdrPeriodicController::class, 'update'])->name('vdr.update.periodic');
+         Route::put('update/special', [VdrPeriodicController::class, 'updateSpecial'])->name('vdr.update.special');
 
-      // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
-      Route::get('release/{id}', [VesselVdrController::class, 'release'])->name('vdr.release');
+         // Route::get('delete/{employee:id}', [EmployeeController::class, 'delete'])->name('employee.delete');
+         Route::get('release/{id}', [VesselVdrController::class, 'release'])->name('vdr.release');
       });
-      
    });
-   
 });
 
 
@@ -744,7 +759,7 @@ Route::group(['middleware' => ['role:logistic|drilling|department|mm|superuser']
          Route::post('store/new', [DepartmentRequestController::class, 'storeNew'])->name('request.store.new');
          Route::post('additional/store', [DepartmentRequestController::class, 'additionalStore'])->name('request.additional.store');
          Route::post('add', [DepartmentRequestController::class, 'add'])->name('request.add');
-   
+
          Route::get('draft', [DepartmentRequestController::class, 'draft'])->name('request.draft');
          Route::get('progress', [DepartmentRequestController::class, 'progress'])->name('request.progress');
          Route::get('history', [DepartmentRequestController::class, 'history'])->name('request.history');
@@ -753,19 +768,19 @@ Route::group(['middleware' => ['role:logistic|drilling|department|mm|superuser']
          Route::post('change/vessel', [DepartmentRequestController::class, 'changeVessel'])->name('request.change.vessel');
 
          Route::get('parent/release/{parent:id}', [ParentRequestController::class, 'release'])->name('request.release.parent');
-   
+
          Route::post('undo', [DepartmentRequestController::class, 'undo'])->name('request.undo');
          Route::get('delete/{request:id}', [DepartmentRequestController::class, 'delete'])->name('request.delete');
          Route::get('parent/delete/{parent:id}', [ParentRequestController::class, 'delete'])->name('request.delete.parent');
          Route::get('edit/{request:id}', [DepartmentRequestController::class, 'edit'])->name('request.edit');
-         
+
 
          Route::get('parent/detail/{parent:id}', [ParentRequestController::class, 'detail'])->name('request.detail.parent');
       });
    });
-   
 
-   
+
+
 
 
 
@@ -820,9 +835,6 @@ Route::group(['middleware' => ['role:vessel|superuser']], function () {
       Route::get('deviation/arrive/{deviation:id}', [VesselDeviationController::class, 'arrive'])->name('schedule.arrive.deviation');
       Route::get('deviation/complete/{deviation:id}', [VesselDeviationController::class, 'complete'])->name('schedule.complete.deviation');
    });
-
-
-   
 });
 
 
@@ -847,17 +859,17 @@ Route::prefix('fetch')->group(function () {
 
    Route::get('vdr/update/bu/{vdr}/{bu}', [VdrController::class, 'updateBu'])->name('vdr.update.bu');
 
-   Route::get('vdr/update/general/{vdr}/{date}/{loc}/{onduty}/{pax}/{contract}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
+   Route::get('vdr/update/general/{vdr}/{date}/{loc}/{onduty}/{pax}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
    Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
    Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
    Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
    Route::get('vdr/update/operating-b/{vdr}/{op}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingBAjax']);
-   Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}/{remark}', [VdrController::class, 'updateCargoAjax']);
+   Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}', [VdrController::class, 'updateCargoAjax']);
    Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
    Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
 
    Route::get('vdr/update/activity/{vdr}/{act}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}', [VdrController::class, 'updateActivityAjax']);
-   
+
    Route::get('vdr/update/time/activity/{vdr}/{act}/{start}/{finish}', [VdrController::class, 'updateActivityTimeAjax']);
    Route::get('vdr/update/high/activity/{vdr}/{act}/{high}', [VdrController::class, 'updateActivityHighAjax']);
    Route::get('vdr/update/normal/activity/{vdr}/{act}/{normal}', [VdrController::class, 'updateActivityNormalAjax']);
@@ -867,8 +879,8 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/tow/activity/{vdr}/{act}/{tow}', [VdrController::class, 'updateActivityTowAjax']);
    Route::get('vdr/update/ah/activity/{vdr}/{act}/{ah}', [VdrController::class, 'updateActivityAhAjax']);
    Route::get('vdr/update/sb/activity/{vdr}/{act}/{sb}', [VdrController::class, 'updateActivitySbAjax']);
-   Route::get('vdr/update/desc/activity/{vdr}/{act}/{desc}', [VdrController::class, 'updateActivityDescAjax']);
-   
+   Route::get('vdr/update/desc/activity/{vdr}/{act}', [VdrController::class, 'updateActivityDescAjax']);
+
    Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
 
 

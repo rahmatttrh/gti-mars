@@ -7,6 +7,7 @@ use App\Http\Controllers\EmailController;
 use App\Models\Cargo;
 use App\Models\Employee;
 use App\Models\Log;
+use App\Models\User;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
@@ -14,6 +15,7 @@ use App\Models\VdrCrew;
 use App\Models\VdrHse;
 use App\Models\VdrOperating;
 use App\Models\VdrPeriodic;
+use App\Models\VdrReject;
 use App\Models\VdrTimestamp;
 use App\Models\VdrWeather;
 use App\Models\Vessel;
@@ -41,8 +43,9 @@ class MarineVdrController extends Controller
       $today = Carbon::now();
       // dd($today->month);
       $vessels = Vessel::get();
+      $to = Carbon::now();
       // $vessel = Vessel::find(11);
-      $vdrs = Vdr::where('status', '>=', 1)->orderBy('date', 'desc')->get();
+      $vdrs = Vdr::where('status', '>=', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
       // dd($vdrs);
 
       // $operatingHeaders = VdrOperatingHeader::get();
@@ -309,11 +312,14 @@ class MarineVdrController extends Controller
 
       $vdrValidations = collect();
       if (auth()->user()->username == 'pet') {
-         $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
-         $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfiaryanto') {
-         $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
       // if (auth()->user()->hasRole('suptent_loc')) {
@@ -344,7 +350,9 @@ class MarineVdrController extends Controller
    public function validationPet()
    {
 
-      $vdrValidations = Vdr::where('status', 1)->orderBy('updated_at', 'desc')->get();
+
+      $to = Carbon::now();
+      $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
 
 
       return view('pages-stisla.marine.vdr.validation', [
@@ -414,11 +422,14 @@ class MarineVdrController extends Controller
    {
 
       if (auth()->user()->username == 'pet') {
-         $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine') {
-         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfiaryanto') {
-         $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now();
+         $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
 
@@ -497,10 +508,37 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrMarine(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrMarine(enkripRambo($vdr->id));
 
       return redirect()->back()->with('success', 'VDR PET Approved');
+   }
+
+   public function undoPet($id)
+   {
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find(dekripRambo($id));
+      $vdr->update([
+         'status' => 1,
+
+      ]);
+
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Undo VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'PET',
+         'table' => 'vdrs'
+      ]);
+
+
+      // dd()
+
+
+
+      return redirect()->back()->with('success', 'Undo VDR success');
    }
 
    public function approvePetFromEmail(Request $req)
@@ -516,7 +554,7 @@ class MarineVdrController extends Controller
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
-         
+
          'action' => 'Approve VDR via Email',
          'vdr_id' => $vdr->id,
          'desc' => 'PET',
@@ -540,8 +578,8 @@ class MarineVdrController extends Controller
       // ]);
       // dd()
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrMarine(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrMarine(enkripRambo($vdr->id));
 
       return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('pet')])->with('success', 'VDR Approved');
    }
@@ -592,19 +630,24 @@ class MarineVdrController extends Controller
 
       if ($vdr->area != null) {
          $title = 'Marine Representative';
+         $name = 'Marine Representative';
+         $user = User::where('username', 'lutfiaryanto')->first();
       } else {
          $title = 'Suptent';
+         $name = 'Lutfi Aryanto';
+         $user = User::where('username', 'lutfiaryanto')->first();
       }
       $vdr->update([
          'status' => 4,
          'title3' => $title,
-         'name3' => auth()->user()->name,
+         'name3' => $name,
+         'timestamp3' => Carbon::now()
       ]);
 
 
       Log::create([
          'system' => 'VDR',
-         'user_id' => auth()->user()->id,
+         'user_id' => $user->id,
          'action' => 'Approve VDR',
          'vdr_id' => $vdr->id,
          'desc' => 'Superintendent',
@@ -614,11 +657,11 @@ class MarineVdrController extends Controller
       VdrTimestamp::create([
          'vdr_id' => $vdr->id,
          'status' => 4,
-         'user_id' => auth()->user()->id
+         'user_id' => $user->id
       ]);
       // dd()
 
-      return redirect()->back()->with('success', 'VDR Marine Approved');
+      return redirect()->back()->with('success', 'VDR Superintendent Approved');
    }
 
 
@@ -681,8 +724,8 @@ class MarineVdrController extends Controller
 
       $status = 3;
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       // dd($status);
       $vdr->update([
@@ -708,7 +751,7 @@ class MarineVdrController extends Controller
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
-         
+
          'action' => 'Approve VDR',
          'vdr_id' => $vdr->id,
          'desc' => 'Marine',
@@ -753,8 +796,11 @@ class MarineVdrController extends Controller
       // $emailController = new EmailController();
       // $emailController->approvalVdr(enkripRambo($vdr->id));
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+
+
+
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
@@ -802,13 +848,28 @@ class MarineVdrController extends Controller
          $status = 303;
       }
 
+      $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
+      if (count($vdrRejectTables) > 0) {
+         foreach ($vdrRejectTables as $reject) {
+            $reject->delete();
+         }
+      }
+
+      foreach ($req->data as $d) {
+         // dd($d);
+         VdrReject::create([
+            'vdr_id' => $vdr->id,
+            'table' => $d
+         ]);
+      }
+
 
       $vdr->update([
          'status' => $status,
          'reject_by' => auth()->user()->id,
          'reject_date' => Carbon::now(),
          'reject_desc' => $req->desc,
-         // 'reject_data' => $req->data
+         'reject_data' => null
       ]);
 
 
@@ -820,6 +881,16 @@ class MarineVdrController extends Controller
          'desc' => $req->desc
       ]);
 
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+
+         'action' => 'Reject VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'PET',
+         'table' => 'vdrs'
+      ]);
+
       return redirect()->back()->with('success', 'VDR Rejected, sent back to Vessel');
    }
 
@@ -829,12 +900,32 @@ class MarineVdrController extends Controller
 
       if ($req->user == 'pet') {
          $status = 101;
+         $user = User::where('username', 'pet')->first();
       } elseif ($req->user == 'marine') {
          $status = 202;
+         $user = User::where('username', 'marine')->first();
       } elseif ($req->user == 'suptent') {
          $status = 303;
+         $user = User::where('username', 'lutfiaryanto')->first();
       } elseif ($req->user == 'suptent-loc') {
          $status = 505;
+         $user = User::where('username', 'suptent')->first();
+      }
+
+      $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
+      if (count($vdrRejectTables) > 0) {
+         foreach ($vdrRejectTables as $reject) {
+            $reject->delete();
+         }
+      }
+
+
+      foreach ($req->data as $d) {
+         // dd($d);
+         VdrReject::create([
+            'vdr_id' => $vdr->id,
+            'table' => $d
+         ]);
       }
 
 
@@ -844,10 +935,10 @@ class MarineVdrController extends Controller
 
       $vdr->update([
          'status' => $status,
-         'reject_by' => $req->userid,
+         'reject_by' => $user->id,
          'reject_date' => Carbon::now(),
          'reject_desc' => $req->desc,
-         'reject_data' => $req->data
+         'reject_data' => null
       ]);
 
 
@@ -855,8 +946,20 @@ class MarineVdrController extends Controller
          'vdr_id' => $vdr->id,
          'type' => 'reject',
          'status' => 1,
-         'user_id' => $req->userid,
+         'user_id' => $user->id,
          'desc' => $req->desc
+      ]);
+
+      // $user = User::where('username', 'pet')->first();
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => $user->id,
+
+         'action' => 'Reject VDR by Email',
+         'vdr_id' => $vdr->id,
+         'desc' => 'PET',
+         'table' => 'vdrs'
       ]);
 
       return redirect()->route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo($req->user)])->with('success', 'VDR Rejected, sent back to Vessel');
@@ -929,7 +1032,7 @@ class MarineVdrController extends Controller
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
-         
+
          'action' => 'Approve VDR via Email',
          'vdr_id' => $vdr->id,
          'desc' => 'Marine',
@@ -964,7 +1067,7 @@ class MarineVdrController extends Controller
       Log::create([
          'system' => 'VDR',
          'user_id' => auth()->user()->id,
-         
+
          'action' => 'Approve VDR via Email',
          'vdr_id' => $vdr->id,
          'desc' => 'Superintendent',

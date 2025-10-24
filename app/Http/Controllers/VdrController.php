@@ -18,6 +18,7 @@ use App\Models\VdrHseHeader;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
 use App\Models\VdrPeriodic;
+use App\Models\VdrReject;
 use App\Models\VdrWeather;
 use App\Models\VdrWeatherHeading;
 use App\Models\Vessel;
@@ -688,7 +689,12 @@ class VdrController extends Controller
 
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
-      $totalDaily = $vdr->customRound($totalDaily);
+      $realTotalDaily = $totalDaily;
+
+      // $totalDaily = round($totalDaily, 1); // di komen dulu 
+      $totalDaily = round($totalDaily);
+
+      // $totalDaily = $vdr->customRound($totalDaily);
       $vdrs = Vdr::get();
 
       $totalHours = '';
@@ -759,9 +765,12 @@ class VdrController extends Controller
 
 
       $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+      $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
 
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
+         'vdrRejectTables' => $vdrRejectTables,
+         'realTotalDaily' => $realTotalDaily,
          'editable' => $editable,
          'tab' => $tab,
          'lastVdr' => $lastVdr,
@@ -789,7 +798,8 @@ class VdrController extends Controller
          'vdrOperatingAh' => $vdrOperatingAh,
          'vdrOperatingSb' => $vdrOperatingSb,
 
-         'vdrHistories' => $vdrHistories
+         'vdrHistories' => $vdrHistories,
+         'now' => Carbon::now()->format('Y-m-d')
       ])->with('i');
 
       // return view('pages.vdr.create-vdr', [
@@ -1254,7 +1264,7 @@ class VdrController extends Controller
    }
 
 
-   public function updateGeneral($vdr, $date, $loc, $onduty, $pax, $contract, $contract_start, $contract_end, $owner, $master, $ce)
+   public function updateGeneral($vdr, $date, $loc, $onduty, $pax, $contract_start, $contract_end, $owner, $master, $ce, Request $req)
    {
 
 
@@ -1276,6 +1286,8 @@ class VdrController extends Controller
       $year = $date->format('y');
       $month = $date->format('m');
       $day = $date->format('d');
+
+      $contract = $req->get('contract');
 
       $awalan = $contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
@@ -1423,7 +1435,7 @@ class VdrController extends Controller
       ]);
    }
 
-   public function updateCargoAjax($vdr, $cargo, $opening, $consumption, $received, $transferred, $closing, $remark)
+   public function updateCargoAjax($vdr, $cargo, $opening, $consumption, $received, $transferred, $closing, Request $req)
    {
 
       $vdr = Vdr::find($vdr);
@@ -1434,7 +1446,7 @@ class VdrController extends Controller
          'received' => $received,
          'transferred' => $transferred,
          'closing' => $closing,
-         'remarks' => $remark
+         'remarks' => $req->remark
       ]);
 
       if ($vdrCargo->heading_id == 2 || $vdrCargo->heading_id == 1) {
@@ -2530,14 +2542,14 @@ class VdrController extends Controller
       ]);
    }
 
-   public function updateActivityDescAjax($vdr, $act, $desc)
+   public function updateActivityDescAjax($vdr, $act, Request $req)
    {
 
       $vdr = Vdr::find($vdr);
       $vdrActivity = VdrActivity::find($act);
 
       $vdrActivity->update([
-         'activity' => $desc,
+         'activity' => $req->desc,
       ]);
 
 

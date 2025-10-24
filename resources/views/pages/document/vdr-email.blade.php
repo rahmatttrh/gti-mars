@@ -57,6 +57,10 @@ table {
                   
                   <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent"><i class="fa fa-check"></i> Approve as Suptent</a>
                   <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                  @elseif($vdr->status == 2)
+                  <a href="#" class="btn btn-light border shadow" >Menunggu Approval Marine</a>
+                  @elseif($vdr->status == 1)
+                  <a href="#" class="btn btn-light border shadow" >Menunggu Approval PET</a>
                   @else
                   <a href="#" class="btn btn-light border shadow" >Approved</a>
                   @endif
@@ -77,7 +81,8 @@ table {
             @if ($level == 'pet')
                @if ($vdr->status == 1 )
                <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-pet"><i class="fa fa-check"></i> Approve as PET</a>
-                  <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                  {{-- <a href="" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a> --}}
+                  <a class="btn btn-danger shadow" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Reject</a>
                @endif
             @endif
 
@@ -104,6 +109,60 @@ table {
       </div>
      
    </div>
+
+   <div class="collapse" id="collapseExample">
+      @if ($level == 'pet')
+      <div class="card mt-3">
+         <div class="card-body">
+            <form action="{{route('vdr.reject.marine.from.email')}}" method="POST">
+               @csrf
+               <input type="user" name="user" id="user" value="{{$level}}" hidden>
+               <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+               
+                  
+                     
+                     <div class="form-group mb-2">
+                        <label for="desc">Data yang harus di Revisi</label>
+                        <select name="data[]" style="width: 100%"  id="data" class="form-control text-danger select2" multiple="multiple" required>
+                           <option value="General Information">General Information</option>
+                           <option value="Weather Condition">Weather Condition</option>
+                           <option value="HSSE">HSSE</option>
+                           <option value="Daily Operational Activity">Daily Operational Activity</option>
+                           <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
+                           <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
+                           <option value="Special Calculation">Special Calculation</option>
+                           <option value="Periodical Fuel">Periodical Fuel</option>
+                           <option value="Crew List">Crew List</option>
+                           <option value="Pax List">Pax List</option>
+                        </select>
+                     </div>
+                     
+                     <div class="form-row mb-2">
+                        <div class="form-group col-md-12">
+                           {{-- <label for="desc">Description</label> --}}
+                           {{-- <input type="text" class="form-control text-left" id="desc" name="desc" placeholder="Remarks .." > --}}
+                           <textarea name="desc" id="desc" cols="30" rows="5" hidden></textarea>
+                        {{-- <span>B</span> --}}
+                           <main>
+                              <trix-toolbar id="my_toolbar"></trix-toolbar>
+                              <div class="more-stuff-inbetween"></div>
+                              <trix-editor toolbar="my_toolbar" input="desc" ></trix-editor>
+                           </main>
+      
+                        </div>
+                     </div> 
+                     <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
+                     <br><br>
+                  <button type="submit" class="btn btn-danger">Reject</button>
+               
+            </form>
+         </div>
+      </div>
+      
+      @endif
+   </div>
+
+
    <div class="row">
       <div class="col-md-6">
          @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
@@ -122,6 +181,20 @@ table {
          </div>
                                      
       @endif
+      </div>
+      <div class="col-md-6">
+         @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+         <div class="card mt-3">
+            <div class="card-body">
+               Table yang harus direvisi : <br>
+               @foreach ($vdrRejectTables as $r)
+                        - {{$r->table}} <br>
+                     @endforeach
+            </div>
+         </div>
+         
+
+         @endif
       </div>
    </div>
    
@@ -1339,8 +1412,10 @@ table {
    
 </div>
 
+@if ($level == 'pet')
+@else
 <div class="modal fade" id="vdr-reject-marine" tabindex="1" role="dialog" aria-hidden="true">
-   <div class="modal-dialog" role="document">
+   <div class="modal-dialog modal-lg" role="document">
       <form action="{{route('vdr.reject.marine.from.email')}}" method="POST">
       @csrf
       <input type="user" name="user" id="user" value="{{$level}}" hidden>
@@ -1354,10 +1429,33 @@ table {
             <b>{{$vdr->code}}</b>
             
          <hr>
+         <div class="form-group ">
+            <label for="desc">Data yang harus di Revisi</label>
+            <select name="data" style="width: 100%"  id="data" class="form-control text-danger "  required>
+               <option value="General Information">General Information</option>
+               <option value="Weather Condition">Weather Condition</option>
+               <option value="HSSE">HSSE</option>
+               <option value="Daily Operational Activity">Daily Operational Activity</option>
+               <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
+               <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
+               <option value="Special Calculation">Special Calculation</option>
+               <option value="Periodical Fuel">Periodical Fuel</option>
+               <option value="Crew List">Crew List</option>
+               <option value="Pax List">Pax List</option>
+            </select>
+         </div>
             <div class="form-row mb-2">
                <div class="form-group col-md-12">
                   {{-- <label for="desc">Description</label> --}}
-                  <input type="text" class="form-control text-left" id="desc" name="desc" placeholder="Remarks .." >
+                  {{-- <input type="text" class="form-control text-left" id="desc" name="desc" placeholder="Remarks .." > --}}
+                  <textarea name="desc" id="desc" cols="30" rows="5" hidden></textarea>
+               {{-- <span>B</span> --}}
+                  <main>
+                     <trix-toolbar id="my_toolbar"></trix-toolbar>
+                     <div class="more-stuff-inbetween"></div>
+                     <trix-editor toolbar="my_toolbar" input="desc" ></trix-editor>
+                  </main>
+
                </div>
             </div> 
             <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
@@ -1370,6 +1468,7 @@ table {
       </form>
    </div>
 </div>
+@endif
 
 <div class="modal fade" id="vdr-approve-marine" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog" role="document">

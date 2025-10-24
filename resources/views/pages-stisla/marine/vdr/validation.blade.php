@@ -149,7 +149,9 @@
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
                               <td class="text-center">{{$vdr->getTotalHours()}}</td>
-                              <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>
+                              {{-- <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>  --}}
+
+                              <td class="text-center">{{round($vdr->operatings->sum('daily'))}}</td>
                            </tr>
                            @endforeach
                         </tbody>

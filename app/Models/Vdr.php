@@ -119,7 +119,7 @@ class Vdr extends Model
       if ($decimal >= 0.50) {
          return  ceil($number);
       } else {
-         return floor($number);
+         return ceil($number);
       }
    }
 }

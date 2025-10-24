@@ -34,6 +34,7 @@ use App\Models\VdrCargo;
 use App\Models\VdrHistory;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
+use App\Models\VdrTimestamp;
 use App\Models\VesselHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -566,6 +567,114 @@ class HomeController extends Controller
 
          $vessels = Vessel::get();
          $offices = Office::get();
+         // dd('ok');
+
+         // $magelangVdrs = Vdr::whereIn('id', [1548, 1530, 1529, 1528, 1527, 1526])->get();
+         // $magelangVdrs = Vdr::whereIn('id', [1548, 1530, 1529, 1528, 1527, 1526])->get();
+
+         // $emailController = new EmailController();
+         // $emailController->summaryVdrSuptent('09:00'); 
+
+
+         // $vdrPendingPets = Vdr::whereIn('id', [1515, 1599, 1591])->get();
+         // // $vdrPendingPets = Vdr::whereIn('id', [1808, 1778, 1777, 1767, 1764])->get();
+         // // $vdrPendingSuptents = Vdr::whereIn('id', [1532])->get();
+         // // dd($vdrPendingPets);
+         // foreach ($vdrPendingPets as $vdr) {
+         //    // if ($vdr->area != null) {
+         //    //    $title = 'Marine Representative';
+         //    //    $name = 'Marine Representative';
+         //    //    $user = User::where('username', 'lutfiaryanto')->first()
+         //    // } else {
+         //    //    $title = 'Suptent';
+         //    //    $name = 'Lutfi Aryanto';
+         //    //    $user = User::where('username', 'lutfiaryanto')->first();
+         //    // }
+         //    $title = 'Suptent';
+         //    $name = 'Lutfi Aryanto';
+         //    $user = User::where('username', 'lutfiaryanto')->first();
+
+         //    $vdr->update([
+         //       'status' => 4,
+         //       'title1' => 'Fuel Monitoring Team',
+         //       'name1' => 'YFH',
+         //       'timestamp1' => Carbon::now(),
+         //       'title2' => 'Marine Dept',
+         //       'name2' => 'UA',
+         //       'timestamp2' => Carbon::now(),
+         //       'title3' => $title,
+         //       'name3' => $name,
+         //       'timestamp3' => Carbon::now()
+         //    ]);
+
+         //    // $vdr->update([
+         //    //    'status' => 3,
+
+         //    // ]);
+
+
+         //    $pet = User::where('username', 'pet')->first();
+         //    VdrTimestamp::create([
+         //       'vdr_id' => $vdr->id,
+         //       'status' => 2,
+         //       'user_id' => $pet->id
+         //    ]);
+
+
+         //    $marine = User::where('username', 'marine')->first();
+         //    VdrTimestamp::create([
+         //       'vdr_id' => $vdr->id,
+         //       'status' => 3,
+         //       'user_id' => $marine->id
+         //    ]);
+
+
+
+         //    VdrTimestamp::create([
+         //       'vdr_id' => $vdr->id,
+         //       'status' => 4,
+         //       'user_id' => $user->id
+         //    ]);
+         // }
+
+
+
+         // dd('done');
+
+
+
+
+         // dd($magelangVdrs);
+
+         // foreach ($magelangVdrs as $vdr) {
+         //    // dd($vdr->date);
+         //    $today = Carbon::create($vdr->date);
+         //    // dd($today->format('m'));
+
+         //    $year = $today->format('y');
+         //    $month = $today->format('m');
+         //    $day = $today->format('d');
+         //    // dd($day);
+
+         //    $awalan = $vdr->contract . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+
+         //    $timestamp = $year  . $month  . $day;
+
+         //    $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+
+         //    if (count($vdrHistories) > 0) {
+         //       $num = count($vdrHistories);
+         //    } else {
+         //       $num = 0;
+         //    }
+
+         //    // Menggabungkan awalan dan $idPadded
+         //    $hasil = $awalan . $timestamp . '/' . $num;
+
+         //    $vdr->update([
+         //       'code' => $hasil
+         //    ]);
+         // }
 
          // foreach ($vessels as $vessel) {
          //    $user = User::where('username', $vessel->username)->first();
@@ -720,7 +829,27 @@ class HomeController extends Controller
          $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
          $vessels = Vessel::get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
-         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+         $to = Carbon::now()->addMonth();
+         $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         // $allVdrs = Vdr::whereBetween('date', ['2025-09-23', '2025-09-28'])->where('status', 1)->orderBy('updated_at', 'desc')->get();
+         // foreach($allVdrs as $v){
+         //    // dd($allVdrs);
+         //    $v->update([
+         //       'status' => 4,
+         //       'title1' => 'Fuel Monitoring Team',
+         //       'name1' => 'YRF',
+         //       'timestamp1' => Carbon::now(),
+
+         //       'title2' => 'Marine Dept',
+         //       'name2' => 'UA',
+         //       'timestamp2' => Carbon::now(),
+
+         //       'title3' => 'Suptent',
+         //       'name3' => 'Lutfi Aryanto',
+         //       'timestamp3' => Carbon::now(),
+         //    ]);
+         // }
+
          $allSchedules = Schedule::orderBy('updated_at', 'desc')->get();
          $logs = Log::orderBy('created_at', 'desc')->paginate(300);
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
@@ -749,9 +878,9 @@ class HomeController extends Controller
 
          $to = Carbon::now();
 
-         $totalPet = Vdr::where('status', 1)->whereBetween('date', ['2025-08-01', $to])->get()->count();
-         $totalMarine = Vdr::where('status', 2)->whereBetween('date', ['2025-08-01', $to])->get()->count();
-         $totalSuptent = Vdr::where('status', 3)->whereBetween('date', ['2025-08-01', $to])->get()->count();
+         $totalPet = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->get()->count();
+         $totalMarine = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->get()->count();
+         $totalSuptent = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->get()->count();
 
 
          return view('main-superuser', [
@@ -1459,18 +1588,22 @@ class HomeController extends Controller
          // $user->assignRole('vessel');
          // dd('ok');
          if (auth()->user()->username == 'pet') {
-            $vdrValidations = Vdr::where('status', 1)->orderBy('date', 'desc')->get();
-            $vdrs = Vdr::where('status', '>=', 1)->orderBy('updated_at', 'desc')->get();
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+            $vdrs = Vdr::where('status', '>=', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
          } elseif (auth()->user()->username == 'marine') {
-            $vdrValidations = Vdr::where('status', 2)->orderBy('updated_at', 'desc')->get();
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
-            $vdrs = Vdr::where('status', '>=', 2)->get();
+            $vdrs = Vdr::where('status', '>=', 2)->whereBetween('date', ['2025-09-16', $to])->get();
          } elseif (auth()->user()->username == 'lutfiaryanto') {
-            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'asc')->get();
-            $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
          } else {
+            $to = Carbon::now();
             $vdrs = null;
-            $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
          }
 
          // dd($vdrValidations);

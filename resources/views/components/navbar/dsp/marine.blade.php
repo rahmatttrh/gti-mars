@@ -169,14 +169,22 @@
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
          </li>
-         <li class="nav-item {{ (request()->is('dsp/m/request/*')) ? 'active' : '' }}">
+         <li class="nav-item {{ (request()->is('intermilan/*')) ? 'active' : '' }}">
+            <a href="{{route('intermilan.marine')}}" class="nav-link {{ (request()->is('intermilan/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('intermilan/*'))
+               <i class="text-primary fas fa-calendar ml-3"></i>
+               @endif
+               <span>Intermilan</span>
+            </a>
+         </li>
+         {{-- <li class="nav-item {{ (request()->is('dsp/m/request/*')) ? 'active' : '' }}">
             <a href="{{route('marine.request.list')}}" class="nav-link {{ (request()->is('dsp/m/request/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/request/*'))
                <i class="text-primary fas fa-calendar ml-3"></i>
                @endif
                <span>Intermilan</span>
             </a>
-         </li>
+         </li> --}}
          <li class="nav-item {{ (request()->is('dsp/m/crew/change/*')) ? 'active' : '' }}">
             <a href="{{route('marine.crew.change', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link {{ (request()->is('dsp/m/crew/change/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/m/crew/change/*'))

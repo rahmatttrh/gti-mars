@@ -849,7 +849,8 @@ table th tr td {
                               @else --}}
                               <small>
                                  @if ($operating->contractual_fuel)
-                                     {{round($operating->contractual_fuel)}}
+                                     {{-- {{round($operating->contractual_fuel)}} --}}
+                                     {{$operating->contractual_fuel }}
                                      @else
                                      0
                                  @endif

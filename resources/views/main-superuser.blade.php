@@ -52,7 +52,7 @@
                   </div> --}}
                   <div class="card-body">
                      <div class="row">
-                        <div class="col-md-9">
+                        <div class="col-md-8">
                            <div class="badge badge-info mb-2">
                               ALL VDR
                            </div>
@@ -82,7 +82,10 @@
                                        <tr >
                                           <td>{{$vdr->id}}</td>
                                           <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
-                                          <td>{{$vdr->release_date}}</td>
+                                          <td>
+                                             -
+                                             {{-- {{$vdr->release_date}} --}}
+                                          </td>
                                           {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                           {{-- <td>{{formatRibuan(round($totaldaily))}}</td> --}}
                                           <td class="text-right text-truncate">
@@ -93,11 +96,11 @@
                                  </tbody>
                               </table>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                            <div class="card shadow-lg">
                               <div class="card-body p-0">
                                  {{-- <div class="badge badge-info mb-2">Log Activity</div> --}}
-                                 <div  class="table-responsive overflow-auto " style="height: 350px" >
+                                 <div  class="table-responsive overflow-auto " style="height: 650px" >
                                  <table class=""   >
                                     <thead>
                                        <tr class="border">
@@ -106,6 +109,8 @@
                                           {{-- <th>Action</th> --}}
                                        </tr>
                                     </thead>
+
+                                    {{-- https://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@github.com/rahmatttrh/wims.git --}}
                                     <tbody>
                                        @foreach ($logs as $log)
                                           <tr class="border">
@@ -117,6 +122,10 @@
                                                     </small> <br>
                                                    
                                                     <small>{{$log->action}}</small>
+                                                    @if ($log->vdr_id != null)
+                                                    <small>{{$log->vdr->code ?? ''}}</small>
+                                                        
+                                                    @endif
 
                                                 {{-- </div> --}}
                                                
@@ -188,7 +197,7 @@
                         MONITORING VDR
                      </span>
                      <span class="badge badge-info mb-2">
-                       01/08/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                       16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
                      </span>
                      
                      {{-- <table class="display  border">
@@ -254,7 +263,7 @@
                         MONITORING VDR
                      </span>
                      <span class="badge badge-info mb-2">
-                       01/08/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                       16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
                      </span>
                      
                      {{-- <table class="display  border">

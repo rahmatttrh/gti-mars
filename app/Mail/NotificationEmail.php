@@ -29,6 +29,6 @@ class NotificationEmail extends Mailable
     */
    public function build()
    {
-      return $this->subject($this->data['subject'])->view('mail.test');
+      return $this->subject($this->data['subject'])->view('mail.template.welcome');
    }
 }

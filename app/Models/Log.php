@@ -15,7 +15,13 @@ class Log extends Model
       return $this->belongsTo(User::class);
    }
 
-   public function vessel(){
+   public function vessel()
+   {
       return $this->belongsTo(Vessel::class);
+   }
+
+   public function vdr()
+   {
+      return $this->belongsTo(Vdr::class);
    }
 }

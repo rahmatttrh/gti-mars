@@ -61,9 +61,11 @@
                      <div class="card-body">
                         @foreach ($rejectvdrs as $rejectvdr)
                         
-                           VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name}}</b>  dengan alasan <b>{{$rejectvdr->reject_desc}}</b>.
-                          
-                           <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a> <hr>
+                           VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name ?? ''}}</b>  
+                           {{-- dengan alasan <b>{!!$rejectvdr->reject_desc!!}</b>. --}}
+                          <br>
+                           <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a>
+                           <br>
                            @endforeach
                      </div>
                   </div>
@@ -217,10 +219,24 @@
             <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
                <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
             </marquee>
+
+
+            <div class="card card-danger shadow ">
+               <div class="card-body">
+                  # Pengumuman <br>
+                  Anda tidak bisa melakukan <b>Release VDR</b> ketika VDR di tanggal sebelumnya masih berstatus <b>Menunggu Validasi PET</b>, hanya bisa melalukan <b>Drafting VDR</b>. <br>
+                  Untuk menjaga data tetap berkesinambungan antar VDR.
+                  <hr>
+                  # Alur Approval VDR <br>
+                  PET -> MARINE -> SUPTENT -> COMPLETE
+               </div>
+            </div>
             
-            @if ($vessel->email == null || $vessel->email_office == null)
-                  <div class="card card-danger shadow ">
-                     <div class="card-body">
+            
+            <div class="card shadow">
+               @if ($vessel->email == null || $vessel->email_office == null)
+                  
+                     <div class="card-body text-danger">
                         (!) Anda belum mengatur 
                         {{-- {{$vessel->email}} --}}
                         @if ($vessel->email == null)
@@ -230,9 +246,8 @@
                             Email Vessel
                         @endif
                      </div>
-                  </div>
+               
             @endif
-            <div class="card shadow">
                <div class="card-body">
                   {{-- @if ($vessel->email == null || $vessel->email_office == null)
                   <div class="alert bg-danger">

@@ -1,9 +1,7 @@
 <!DOCTYPE html><html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
    <head>
       <title> </title>
-      <!--[if !mso]><!-- -->
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <!--<![endif]-->
+      
       <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -128,12 +126,12 @@
                                  <tr>
                                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
-                                          <p style="margin: 0;">You have a {{$data['subject']}} Request from {{$data['from']}} .</p>
+                                          <p style="margin: 0;">You have a {{$data['subject']}} from {{$data['from']}}. {{$data['body']}}</p>
                                        </div>
-                                       <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
+                                       {{-- <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
                                           <br>
                                           <p style="margin: 0;">{{$data['body']}}.</p>
-                                       </div>
+                                       </div> --}}
                                     </td>
                                  </tr>
                               </tbody>
@@ -145,9 +143,73 @@
             </table>
          </div>
 
-         <div style="background:#BFFCFD;background-color:#BFFCFD;margin:0px auto;border-radius:4px;max-width:600px;">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#BFFCFD;background-color:#BFFCFD;width:100%;border-radius:4px;">
+         <div style="background:#ffffff;background-color:#ffffff;margin:0px auto;border-radius:4px;max-width:600px;">
+            <table style="width:100%; border-collapse: collapse; font-family: Arial, sans-serif;">
+               <thead>
+                  <tr>
+                     <th  style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Menunggu Validasi</th>
+                     <th colspan="2" style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">{{count($data['vdrs'])}}</th>
+                  </tr>
+                  <tr>
+                     <th  style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Rejected</th>
+                     <th colspan="2" style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">{{count($data['vdrRejectPets'])}}</th>
+                  </tr>
+                  <tr>
+                     <th  style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Complete</th>
+                     <th colspan="2" style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">{{count($data['vdrCompletes'])}}</th>
+                  </tr>
+                 <tr>
+                   <th style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">VDR ID</th>
+                   {{-- <th style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Nama Kapal</th> --}}
+                   <th style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Release Date</th>
+                   <th style="background-color:#f2f2f2; border:1px solid #ddd; padding:8px; text-align:left;">Action</th>
+                 </tr>
+               </thead>
                <tbody>
+                  @foreach ($data['vdrs'] as $vdr)
+                  <tr>
+                     <td style="border:1px solid #ddd; padding:8px;">{{$vdr->code}}</td>
+                     {{-- <td style="border:1px solid #ddd; padding:8px;">{{$vdr->vessel->name}}</td> --}}
+                     <td style="border:1px solid #ddd; padding:8px;">{{formatDate($vdr->release_date)}}</td>
+                     <td style="border:1px solid #ddd; padding:8px; ">
+                        @foreach ($data['links'] as $link)
+                            @if ($link->id == $vdr->id)
+                              <a href="{{$link->link}}"
+                                 style="background-color:#007bff; color:#fff; padding:5px 10px; text-decoration:none; 
+                                       border-radius:5px; display:inline-block; font-family:Arial, sans-serif; font-size:10px;">
+                                 Open VDR
+                              </a>
+                            @endif
+                        @endforeach
+                        {{-- <a href="{{route('vdr.pdf.email', [enkripRambo($vdr->id), enkripRambo('pet')])}}"
+                              style="background-color:#007bff; color:#fff; padding:5px 10px; text-decoration:none; 
+                                    border-radius:5px; display:inline-block; font-family:Arial, sans-serif; font-size:10px;">
+                              Open VDR
+                           </a> --}}
+
+                     </td>
+                  </tr>
+                  @endforeach
+                 {{-- <tr>
+                   <td style="border:1px solid #ddd; padding:8px;">1</td>
+                   <td style="border:1px solid #ddd; padding:8px;">MT Pertamina Gas</td>
+                   <td style="border:1px solid #ddd; padding:8px;">2233.5 Jam</td>
+                   <td style="border:1px solid #ddd; padding:8px; color:green;">Approved</td>
+                 </tr>
+                 <tr>
+                   <td style="border:1px solid #ddd; padding:8px;">2</td>
+                   <td style="border:1px solid #ddd; padding:8px;">MT Patra Ocean</td>
+                   <td style="border:1px solid #ddd; padding:8px;">1987.2 Jam</td>
+                   <td style="border:1px solid #ddd; padding:8px; color:orange;">Pending</td>
+                 </tr> --}}
+               </tbody>
+            </table>
+             
+            
+            {{-- <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="background:#BFFCFD;background-color:#BFFCFD;width:100%;border-radius:4px;">
+               <tbody>
+                  
+
                   <tr>
                      <td style="direction:ltr;font-size:0px;padding:20px 0;text-align:center;">
                         <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
@@ -156,8 +218,8 @@
                                  <tr>
                                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:bold;line-height:24px;text-align:left;color:#2149fa;">
-                                          {{-- <p class="date" style="margin: 0; margin-bottom: 5px; font-size: 16px;">INFO</p> --}}
-                                          <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">{{$data['vdr']->code}}</h2>
+                                          
+                                          <h2 style="margin: 0; font-size: 24px; font-weight: bold; line-height: 24px;">code</h2>
                                        </div>
                                     </td>
                                  </tr>
@@ -168,12 +230,7 @@
                                           <tbody>
                                              <tr>
                                                 <td align="center"  role="presentation" style="border:none;border-radius:30px;cursor:auto;mso-padding-alt:10px 25px;" valign="middle">
-                                                   {{-- @if ($data['level'] == 'suptent' || $data['level'] == 'suptent-loc' )
-                                                   <a href="{{$data['approve']}}" style="display: inline-block; background: #215bfa; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Approve </a>
-                                                   <a href="{{$data['reject']}}" style="display: inline-block; background: #c02e2e; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;margin: 5px" target="_blank"> Reject </a>
-                                                   @endif --}}
                                                    
-                                                   <a href="{{$data['link']}}" style="display: inline-block; background: #4c4c4f; color: #BFFCFD; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank"> Open VDR </a>
                                                 </td>
                                              </tr>
                                           </tbody>
@@ -186,95 +243,10 @@
                      </td>
                   </tr>
                </tbody>
-            </table>
+            </table> --}}
          </div>
          
-         <div style="margin:0px auto;max-width:600px;margin-top:50px;">
-            <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
-               <tbody>
-                  <tr>
-                     <td style="direction:ltr;font-size:0px;padding:0;text-align:center;">
-                        <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
-                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
-                              <tbody>
-                                 <tr>
-                                    <td align="left" class="receipt-table" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                       <table cellpadding="5px" cellspacing="0" width="100%" border="0" style="color:#000000;font-family:Helvetica, Arial, sans-serif;font-size:14px;line-height:20px;table-layout:auto;width:100%;border:none;">
-                                          <tbody>
-                                             {{-- @foreach ($data['activities'] as $activity) --}}
-                                             <tr valign="top" style="border-bottom: 1px solid rgb(188, 185, 185);">
-                                                <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
-                                                   <p style="margin: 0;"> Contract</p>
-                                                   
-                                                </td>
-                                                <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
-                                                   <p style="margin: 0;">{{$data['vdr']->contract}} </p>
-                                                </td>
-                                                
-                                             </tr>
-                                                <tr valign="top" style="border-bottom: 1px solid rgb(188, 185, 185);">
-                                                   <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
-                                                      <p style="margin: 0;"> Vessel</p>
-                                                      
-                                                   </td>
-                                                   <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
-                                                      <p style="margin: 0;">{{$data['vdr']->vessel->name}} </p>
-                                                   </td>
-                                                   
-                                                </tr>
-                                                <tr valign="top" style="border-bottom: 1px solid rgb(188, 185, 185);">
-                                                   <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
-                                                      <p style="margin: 0;"> Date</p>
-                                                      
-                                                   </td>
-                                                   <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
-                                                      <p style="margin: 0;">{{formatDate($data['vdr']->date)}} </p>
-                                                   </td>
-                                                   
-                                                </tr>
-                                                <tr valign="top" style="border-bottom: 1px solid rgb(188, 185, 185);">
-                                                   <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
-                                                      <p style="margin: 0;"> Total Time Daily</p>
-                                                      
-                                                   </td>
-                                                   <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
-                                                      <p style="margin: 0;">{{$data['totalJam']}} Jam </p>
-                                                   </td>
-                                                   
-                                                </tr>
-                                                <tr valign="top" style="border-bottom: 1px solid rgb(188, 185, 185);">
-                                                   <td width="60%" style="font-size: 16px; line-height: 20px; word-break: normal;">
-                                                      <p style="margin: 0;"> Daily Actual Consumption</p>
-                                                      
-                                                   </td>
-                                                   <td align="right" style="font-size: 16px; line-height: 20px; word-break: normal; padding-right: 5px;">
-                                                      <p style="margin: 0;">{{formatRibuan(round($data['vdrCargoFuel']->consumption))}}  Ltrs</p>
-                                                   </td>
-                                                   
-                                                </tr>
-
-                                                
-                                             {{-- @endforeach --}}
-                                             
-                                             {{-- <tr>
-                                                <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
-                                                <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
-                                                <td style="font-size: 16px; line-height: 20px; word-break: normal; border-bottom-width: 1px; border-bottom-color: #EAEEEB; border-bottom-style: dashed; padding-top: 10px;"></td>
-                                             </tr> --}}
-                                            
-                                             
-                                          </tbody>
-                                       </table>
-                                    </td>
-                                 </tr>
-                              </tbody>
-                           </table>
-                        </div>
-                     </td>
-                  </tr>
-               </tbody>
-            </table>
-         </div>
+         
          <div style="margin:0px auto;max-width:600px;margin-top:80px">
             <table align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;">
                <tbody>
