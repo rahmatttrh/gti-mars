@@ -47,19 +47,37 @@ class VesselController extends Controller
       $req->validate([
          'name' => 'required',
          'username' => 'required|unique:vessels',
-         'email' => 'required|email|unique:vessels',
+         // 'email' => 'required|email|unique:vessels',
          'type' => 'required',
       ]);
+
+      if ($req->email != null) {
+         $req->validate([
+            'email' => 'required|email|unique:vessels',
+         ]);
+
+         $email = $req->email;
+      } else {
+         $email = $req->username . '@test.com';
+      }
+
+      if ($req->func == 'Empty') {
+         $func = null;
+      } else {
+         $func = $req->func;
+      }
 
       Vessel::create([
          'status' => $req->status,
          'port_id' => null,
          'username' => $req->username,
          'name' => $req->name,
-         'email' => $req->email,
+         'email' => $email,
          'telp' => $req->telp,
          'contract' => $req->contract,
          'contract_type' => $req->contract_type,
+         'func' => $func,
+         'ipb' => $req->ipb,
          'area' => $req->area,
 
          'imo' => $req->imo,
@@ -120,7 +138,7 @@ class VesselController extends Controller
       $user = User::create([
          'name' => $req->name,
          'username' => $req->username,
-         'email' => $req->email,
+         'email' => $email,
          'password' => Hash::make('oses_2025')
       ]);
 

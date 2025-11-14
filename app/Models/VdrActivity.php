@@ -10,8 +10,14 @@ class VdrActivity extends Model
     use HasFactory;
     protected $guarded = [];
 
+    protected $casts = [
+        'sb' => 'decimal:2',
+        'sp' => 'decimal:2',
+    ];
 
-    public function vdr(){
+
+    public function vdr()
+    {
         return $this->belongsTo(Vdr::class);
     }
 }

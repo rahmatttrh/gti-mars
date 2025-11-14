@@ -13,13 +13,42 @@
                      
                      <i class="fas fa-user"></i> Welcome back, <h4> {{auth()->user()->name}}</h4>
                      <hr>
-                      <h4>Superintendent & Marine Representative</h4>
+                      <b>Superintendent & Marine Representative</b>
                       
                   </div>
                </div>
                <div class="card shadow">
+                  
                   <div class="card-body">
-                     <p>Anda memiliki <b>{{count($allVdrs->where('status', 3))}}</b> VDR yang harus di validasi. Klik Nama kapal / VDR Number pada table VDR Validation</p>
+                     <div class="badge badge-info">
+                        Intermilan
+                     </div>
+
+                     <table class="mt-2">
+                        <tbody>
+                           <tr>
+                              <td class="border-bottom"><a href="{{route('intermilan.marine.detail', enkripRambo($intermilan->id))}}">{{$intermilan->code}}</a></td>
+                              <td class="border-bottom">{{formatDate($intermilan->date)}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+                  <div class="card-body">
+                     <div class="badge badge-info">
+                        Daily Report
+                     </div>
+
+                     <table class="mt-2">
+                        <tbody>
+                           @foreach ($dailyReports as $daily)
+                           <tr>
+                              <td class="border-bottom"><a href="{{route('daily.report.detail', enkripRambo($daily->id))}}">{{formatDateName($daily->date)}}</a></td>
+                              {{-- <td class="border-bottom">{{formatDate($intermilan->date)}}</td> --}}
+                           </tr>
+                           @endforeach
+                           
+                        </tbody>
+                     </table>
                   </div>
                </div>
             </div>

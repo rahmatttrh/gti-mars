@@ -173,11 +173,16 @@
                            @endif
                         @endif
       
-                        @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
+                        @if ( auth()->user()->hasRole('marine') )
                         
                            @if (auth()->user()->username != 'pet')
-                           <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
-                           <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              @if ($vdr->status == 2)
+                              <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              @elseif($vdr->status > 2)
+                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoMarine">Undo Approve</a>
+                              @endif
+                           
                            @endif
                            
                         
@@ -951,7 +956,7 @@
                                  <tr class="bg-lgray">
                                     <td></td>
                                     <td colspan="2" class="text-center">Time</td>
-                                    <td colspan="8" class="text-center">Operating Mode Duration (hh:mm) - 
+                                    <td colspan="9" class="text-center">Operating Mode Duration (hh:mm) - 
                                        Except Maintenance & Downtime </td>
                                     <td rowspan="2" class="text-center">Activities</td>
                                  </tr>
@@ -967,6 +972,11 @@
                                     <td class="text-center">Tow</td>
                                     <td class="text-center">A/H</td>
                                     <td class="text-center">S/B</td>
+                                    <td class="text-center">
+                                       @if ($sp)
+                                       S/P
+                                       @endif
+                                    </td>
                                     
                                  </tr>
                               </thead>
@@ -1090,9 +1100,20 @@
                                           <td class="bg-y">
                                              <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sb_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sb_{{$activity->id}}" name="sb" value="{{getTotalHours($activity->sb)}}" type="text" >
                                           </td>
+                                          @if ($sp)
+                                          {{-- <td>OK</td> --}}
+                                              <td class="bg-y">
+                                                @if ($activity->sp != null)
+                                                    
+                                                
+                                                <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 55px" class="input_activity_sp_{{$activity->id}}"  style="width: 70px" placeholder="HH.mm" id="sp_{{$activity->id}}" name="sp" value="{{getTotalHours($activity->sp)}}" type="text" >
+                                                @endif
+                                             </td>
+                                          @endif
+                                          
                                           <td class="bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; width: 550px" class="input_activity_desc_{{$activity->id}}"    id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" >
-                                            
+                                             {{-- <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; width: 550px" class="input_activity_desc_{{$activity->id}}"    id="activity_{{$activity->id}}" name="sb" value="{{$activity->activity}}" type="text" > --}}
+                                             <textarea {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important; width: 550px" class="input_activity_desc_{{$activity->id}}"    id="activity_{{$activity->id}}" name="sb" type="text" rows="1" >{{$activity->activity}}</textarea>
                                              
                                           </td>
                                           <td>
@@ -1154,6 +1175,14 @@
                                           <td class="text-center"><span class="towTime">{{$vdrOperatingTow}}</span> </td>
                                           <td class="text-center"><span class="ahTime">{{$vdrOperatingAh}}</span> </td>
                                           <td class="text-center"><span class="sbTime">{{$vdrOperatingSb}}</span> </td>
+                                          <td class="text-center">
+                                             @if ($sp)
+                                                 
+                                             
+                                             <span class="spTime">
+                                             {{$vdrOperatingSp}}</span> 
+                                             @endif
+                                          </td>
                                           {{-- @foreach ($operatings as $operating)
                                           @if($operating->heading->field)
                                           <td>{{getTotalHours($operating->time)}}</td>
@@ -1378,7 +1407,7 @@
                                  </select>
                               </td>
                               <td class="bg-y">
-                                 <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b flat_time"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
                               </td>
                               
                               <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
@@ -1767,6 +1796,14 @@
                      <label for="sb">S/B</label>
                      <input class="form-control waktu" placeholder="HH.mm" id="sb" name="sb" value="00.00" type="text" >
                   </div>
+                  @if ($sp)
+                      
+                  
+                  <div class="form-group col-md-3">
+                     <label for="sb">S/P</label>
+                     <input class="form-control waktu" placeholder="HH.mm" id="sp" name="sp" value="00.00" type="text" >
+                  </div>
+                  @endif
                </div>
 
                <div class="form-group ">
@@ -2013,6 +2050,31 @@
          </div>
       </div>
    </div>
+   <div class="modal fade" id="modalUndoMarine" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Undo Approve VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               VDR {{$vdr->code}} saat ini sedang  <b><x-status-stisla.vdr-plain :vdr="$vdr" /></b>.
+               <hr>
+               Proses Undo Approve VDR akan merubah <b>Status VDR kembali ke Marine</b>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.undo.marine', enkripRambo($vdr->id))}}"  class="btn btn-info">Undo VDR</a>
+            </div>
+         </div>
+      </div>
+   </div>
+
+
    <div class="modal fade" id="modalAppMarine" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">
          <form action="{{route('vdr.approve.marine.form')}}" method="POST" enctype="multipart/form-data">
@@ -3406,6 +3468,40 @@
                      $('.total_daily').val(result.totalDaily);
 
                      showMessage("Autosave: " + "Data S/B tersimpan");
+                  },
+                  error: function(error) {
+                     console.log(error)
+                  }
+
+               })
+            });
+
+            $(".input_activity_sp_" + '{!! $act->id !!}').keyup(function () {
+               console.log('sp');
+               var vdr = $('#vdr').val();
+               var act = '{!! $act->id !!}';
+               var sp = $('#sp_' + '{!! $act->id !!}').val();
+               
+               console.log('sp test : ' + sp);
+            
+               var _token = $('meta[name="csrf-token"]').attr('content');
+               $.ajax({
+                  url: "/fetch/vdr/update/sp/activity/" + vdr + "/" + act +  "/"   + sp ,
+                  method: "GET",
+                  dataType: 'json',
+
+                  success: function(result) {
+                     $('.spTime').html(result.vdrOperatingSp.time);
+                     console.log('time sp :' + result.vdrOperatingSp.time);
+                     console.log('daily sp :' + result.vdrOperatingSp.daily);
+                     $('.time_' + result.vdrOperatingSp.heading_id).val(result.vdrOperatingSp.time);
+                     $('.time_' + result.vdrOperatingSp.heading_id).html(result.vdrOperatingSp.time);
+                     $('.daily_' + result.vdrOperatingSp.heading_id).val(result.vdrOperatingSp.daily);
+
+                     $('.total_jam').html(result.totalJam);
+                     $('.total_daily').val(result.totalDaily);
+
+                     showMessage("Autosave: " + "Data S/P tersimpan");
                   },
                   error: function(error) {
                      console.log(error)

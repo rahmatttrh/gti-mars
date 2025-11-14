@@ -48,19 +48,28 @@ class VesselVdrController extends Controller
       // }
 
 
-      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily') ;
+      $totalDaily = VdrOperating::where('vdr_id', $vdr->id)->sum('daily');
       // $realTotalDaily = $totalDaily;
 
       // $totalDaily = round($totalDaily, 1); // di komen dulu 
       $totalDaily = round($totalDaily);
 
+      if ($vdr->id == 2234) {
+         $vdr->update([
+            'status' => $status,
+            'status' => $status,
+            'release_date' => Carbon::now(),
+            // 'total_daily' => $totalDaily
+         ]);
+      } else {
+         $vdr->update([
+            'status' => $status,
+            'status' => $status,
+            'release_date' => Carbon::now(),
+            'total_daily' => $totalDaily
+         ]);
+      }
 
-      $vdr->update([
-         'status' => $status,
-         'status' => $status,
-         'release_date' => Carbon::now(),
-         'total_daily' => $totalDaily
-      ]);
 
       if ($vessel->func != null) {
          $vdr->update([

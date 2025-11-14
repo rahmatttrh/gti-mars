@@ -1,9 +1,12 @@
 <?php
 
 use App\Http\Controllers\ActivityController;
+use App\Http\Controllers\BargeScheduleController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarrierController;
 use App\Http\Controllers\CrewController;
+use App\Http\Controllers\DailyBargeLocationController;
+use App\Http\Controllers\DailyReportController;
 use App\Http\Controllers\Department\CargoItemController;
 use App\Http\Controllers\Department\DepartmentAdditionalController;
 use App\Http\Controllers\Department\DepartmentRequestController;
@@ -17,15 +20,23 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FetchController;
+use App\Http\Controllers\FoodstuffScheduleController;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\GeofenceController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HopperScheduleController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\IntermilanController as ControllersIntermilanController;
+use App\Http\Controllers\IntermilanUserController;
+use App\Http\Controllers\InterWeatherController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\IpbScheduleController;
 use App\Http\Controllers\JettyController;
+use App\Http\Controllers\LiftingScheduleController;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\LogisticController;
+use App\Http\Controllers\MainStrategyController;
+use App\Http\Controllers\MaintenanceScheduleController;
 use App\Http\Controllers\Marine\IntermilanController;
 use App\Http\Controllers\Marine\MarineAdditionalController;
 use App\Http\Controllers\Marine\MarineDeviationController;
@@ -35,11 +46,14 @@ use App\Http\Controllers\Marine\MarineScheduleController;
 use App\Http\Controllers\Marine\MarineVdrController;
 use App\Http\Controllers\MarineController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\OtherScheduleController;
 use App\Http\Controllers\ParentRequestController;
 use App\Http\Controllers\PartyController;
 use App\Http\Controllers\PasswordController;
+use App\Http\Controllers\PaxScheduleController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\PortController;
+use App\Http\Controllers\ProjectScheduleController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ReportSurveillanceController;
 use App\Http\Controllers\RequestController;
@@ -82,6 +96,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('vdr/pdf/email/{vdr:id}/{level}', [DocumentController::class, 'vdrEmail'])->name('vdr.pdf.email');
+Route::get('vdr/open/pdf/{vdr:id}', [DocumentController::class, 'vdr'])->name('vdr.open.pdf');
+Route::post('vdr/pin/check/pdf', [DocumentController::class, 'vdrPinCheck'])->name('vdr.pin.check.pdf');
+Route::get('vdr/pin/pdf/{vdr:id}', [DocumentController::class, 'vdrPin'])->name('vdr.pin.pdf');
+
 Route::get('email/vdr/approve//{id}', [MarineVdrController::class, 'approveFromEmail'])->name('vdr.approve.from.email');
 
 Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
@@ -186,11 +204,68 @@ Route::middleware(["auth"])->group(function () {
       Route::post('marine/store', [ControllersIntermilanController::class, 'storeMarine'])->name('intermilan.marine.store');
 
       Route::post('marine/request/store', [ControllersIntermilanController::class, 'storeMarineRequest'])->name('intermilan.marine.request.store');
+      Route::post('marine/request/material/import/store', [ControllersIntermilanController::class, 'importMaterial'])->name('intermilan.marine.request.material.import');
+
       Route::post('marine/delete/request/{$id}', [ControllersIntermilanController::class, 'deleteMarineRequest'])->name('intermilan.marine.request.delete');
       Route::post('marine/cargo/store', [ControllersIntermilanController::class, 'storeMarineCargo'])->name('intermilan.marine.cargo.store');
       Route::put('marine/cargo/update', [ControllersIntermilanController::class, 'updateMarineCargo'])->name('intermilan.marine.cargo.update');
       Route::get('marine/detail/{id}', [ControllersIntermilanController::class, 'detail'])->name('intermilan.marine.detail');
       Route::get('marine/risalah/{id}', [ControllersIntermilanController::class, 'risalah'])->name('intermilan.marine.risalah');
+
+      Route::put('marine/weather/update', [InterWeatherController::class, 'update'])->name('intermilan.marine.weather.update');
+      Route::post('marine/lifting/store', [LiftingScheduleController::class, 'store'])->name('intermilan.marine.lifting.store');
+      Route::get('marine/lifting/delete/{id}', [LiftingScheduleController::class, 'delete'])->name('intermilan.marine.lifting.delete');
+      Route::post('marine/barge/store', [BargeScheduleController::class, 'store'])->name('intermilan.marine.barge.store');
+      Route::get('marine/barge/delete/{id}', [BargeScheduleController::class, 'delete'])->name('intermilan.marine.barge.delete');
+      Route::post('marine/project/store', [ProjectScheduleController::class, 'store'])->name('intermilan.marine.project.store');
+      Route::get('marine/project/delete/{id}', [ProjectScheduleController::class, 'delete'])->name('intermilan.marine.project.delete');
+      Route::post('marine/foodstuff/store', [FoodstuffScheduleController::class, 'store'])->name('intermilan.marine.foodstuff.store');
+      Route::get('marine/foodstuff/delete/{id}', [FoodstuffScheduleController::class, 'delete'])->name('intermilan.marine.foodstuff.delete');
+      Route::post('marine/pax/store', [PaxScheduleController::class, 'store'])->name('intermilan.marine.pax.store');
+      Route::get('marine/pax/delete/{id}', [PaxScheduleController::class, 'delete'])->name('intermilan.marine.pax.delete');
+
+      Route::post('marine/maintenance/store', [MaintenanceScheduleController::class, 'store'])->name('intermilan.marine.maintenance.store');
+      Route::get('marine/maintenance/delete/{id}', [MaintenanceScheduleController::class, 'delete'])->name('intermilan.marine.maintenance.delete');
+      Route::post('marine/hopper/store', [HopperScheduleController::class, 'store'])->name('intermilan.marine.hopper.store');
+      Route::get('marine/hopper/delete/{id}', [HopperScheduleController::class, 'delete'])->name('intermilan.marine.hopper.delete');
+      Route::post('marine/other/store', [OtherScheduleController::class, 'store'])->name('intermilan.marine.other.store');
+      Route::get('marine/other/delete/{id}', [OtherScheduleController::class, 'delete'])->name('intermilan.marine.other.delete');
+      Route::post('marine/main-strategy/store', [MainStrategyController::class, 'store'])->name('intermilan.marine.main.strategy.store');
+      Route::get('marine/main-strategy/delete/{id}', [MainStrategyController::class, 'delete'])->name('intermilan.marine.main.strategy.delete');
+   });
+
+
+   Route::prefix('daily-report')->group(function () {
+      Route::get('marine/index', [DailyReportController::class, 'index'])->name('daily.report');
+      Route::get('marine/create', [DailyReportController::class, 'create'])->name('daily.report.create');
+      Route::post('marine/store', [DailyReportController::class, 'store'])->name('daily.report.store');
+      Route::get('marine/detail/{id}', [DailyReportController::class, 'detail'])->name('daily.report.detail');
+
+      Route::prefix('bare-loc')->group(function () {
+         Route::post('store', [DailyBargeLocationController::class, 'store'])->name('daily.barge.location.store');
+         Route::get('delete/{id}', [DailyBargeLocationController::class, 'delete'])->name('daily.barge.location.delete');
+         // Route::post('marine/store', [DailyReportController::class, 'store'])->name('daily.report.store');
+         // Route::get('marine/detail/{id}', [DailyReportController::class, 'detail'])->name('daily.report.detail');
+      });
+   });
+
+   Route::prefix('intermilan/user')->group(function () {
+      Route::get('index', [IntermilanUserController::class, 'index'])->name('intermilan.user');
+      Route::post('store', [IntermilanUserController::class, 'store'])->name('intermilan.user.store');
+
+      Route::post('request/store', [IntermilanUserController::class, 'storeRequest'])->name('intermilan.user.request.store');
+      Route::get('cancel/request/{id}', [IntermilanUserController::class, 'cancelRequest'])->name('intermilan.user.request.cancel');
+      Route::get('release/request/{id}', [IntermilanUserController::class, 'releaseRequest'])->name('intermilan.user.request.release');
+
+
+
+      Route::post('delete/request/{$id}', [IntermilanUserController::class, 'deleteRequest'])->name('intermilan.user.request.delete');
+      Route::post('cargo/store', [IntermilanUserController::class, 'storeCargo'])->name('intermilan.user.cargo.store');
+      Route::put('cargo/update', [IntermilanUserController::class, 'updateCargo'])->name('intermilan.user.cargo.update');
+      Route::get('detail/{id}', [IntermilanUserController::class, 'detail'])->name('intermilan.user.detail');
+      Route::get('risalah/{id}', [IntermilanUserController::class, 'risalah'])->name('intermilan.user.risalah');
+
+
 
       // Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
       // Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');
@@ -517,6 +592,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
 
          Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
          Route::get('undo/pet/{id}', [MarineVdrController::class, 'undoPet'])->name('vdr.undo.pet');
+         Route::get('undo/marine/{id}', [MarineVdrController::class, 'undoMarine'])->name('vdr.undo.marine');
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
@@ -879,6 +955,7 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/tow/activity/{vdr}/{act}/{tow}', [VdrController::class, 'updateActivityTowAjax']);
    Route::get('vdr/update/ah/activity/{vdr}/{act}/{ah}', [VdrController::class, 'updateActivityAhAjax']);
    Route::get('vdr/update/sb/activity/{vdr}/{act}/{sb}', [VdrController::class, 'updateActivitySbAjax']);
+   Route::get('vdr/update/sp/activity/{vdr}/{act}/{sp}', [VdrController::class, 'updateActivitySpAjax']);
    Route::get('vdr/update/desc/activity/{vdr}/{act}', [VdrController::class, 'updateActivityDescAjax']);
 
    Route::get('vdr/add/activity/{vdr}', [VdrController::class, 'storeActivityAjax']);
@@ -894,6 +971,46 @@ Route::prefix('fetch')->group(function () {
 
    Route::get('vdr/update/engine/{vdr}/{engine}/{m_ref}/{m_port}/{m_stbd}/{m_center}/{m_other}/{a_ref}/{a_port}/{a_stbd}/{a_other}', [VdrController::class, 'updateEngineAjax']);
 });
+
+
+Route::prefix('fetch/intermilan')->group(function () {
+   Route::get('update/lifting/{id}', [LiftingScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/barge/lifting/{id}', [LiftingScheduleController::class, 'ajaxUpdateBarge']);
+   Route::get('update/ipb/vessel/{id}', [IpbScheduleController::class, 'ajaxUpdateVessel']);
+
+   Route::get('update/barge/{id}', [BargeScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/schedule/barge/{id}', [BargeScheduleController::class, 'ajaxUpdateBarge']);
+
+
+   Route::get('update/project/{id}', [ProjectScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/change/project/{id}', [ProjectScheduleController::class, 'ajaxUpdateChange']);
+
+   Route::get('update/foodstuff/{id}', [FoodstuffScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/change/foodstuff/{id}', [FoodstuffScheduleController::class, 'ajaxUpdateChange']);
+
+   Route::get('update/pax/{id}', [PaxScheduleController::class, 'ajaxUpdate']);
+
+   Route::get('update/maintenance/{id}', [MaintenanceScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/change/maintenance/{id}', [MaintenanceScheduleController::class, 'ajaxUpdateChange']);
+
+   Route::get('update/hopper/{id}', [HopperScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/other/{id}', [OtherScheduleController::class, 'ajaxUpdate']);
+   Route::get('update/main-strategy/{id}', [MainStrategyController::class, 'ajaxUpdate']);
+
+
+
+   Route::get('update/note/{id}', [ControllersIntermilanController::class, 'ajaxUpdate']);
+
+
+   // Route::get('schedule/{date}/{id}', [FetchController::class, 'fetchSchedule']);
+
+   // Route::get('vdr/update/bu/{vdr}/{bu}', [VdrController::class, 'updateBu'])->name('vdr.update.bu');
+
+   
+});
+
+
+
 Auth::routes();
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

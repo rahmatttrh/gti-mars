@@ -7,25 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 
 class VdrOperating extends Model
 {
-    use HasFactory;
-    protected $guarded = [];
+   use HasFactory;
+   protected $guarded = [];
 
-    public function heading()
-    {
-        return $this->belongsTo(VdrOperatingHeader::class, 'heading_id');
-    }
+   public function heading()
+   {
+      return $this->belongsTo(VdrOperatingHeader::class, 'heading_id');
+   }
 
 
-    public function getTotalHours($value){
-      
+   public function getTotalHours($value)
+   {
+
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-     
+
       $array = explode('.', $value);
       $hours = floor($value);
       $minutes = intval($array[1]);
-      
+
       $debugHours += $hours;
       $debugMinutes += $minutes;
       // dd($debugHours);
@@ -52,17 +53,18 @@ class VdrOperating extends Model
    }
 
 
-   public function getSumHigh(){
+   public function getSumHigh()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->high;
          $array = explode('.', $op->high);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -122,7 +124,6 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
       if ($debugMinutes < 10) {
@@ -131,27 +132,26 @@ class VdrOperating extends Model
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
 
-     
-   
+
+
       return $final;
-
-
    }
 
-   public function getSumNormal(){
+   public function getSumNormal()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->normal;
          $array = explode('.', $op->normal);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -208,11 +208,9 @@ class VdrOperating extends Model
                         }
                      }
                   }
-                  
                }
             }
          }
-         
       }
 
       if ($debugMinutes < 10) {
@@ -221,25 +219,24 @@ class VdrOperating extends Model
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
-      
+
       return $final;
-
-
    }
 
-   public function getSumSlow(){
+   public function getSumSlow()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->slow;
          $array = explode('.', $op->slow);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -304,7 +301,6 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
       if ($debugMinutes < 10) {
@@ -314,25 +310,24 @@ class VdrOperating extends Model
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
 
-      
-   
+
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
-
-
    }
 
-   public function getSumManu(){
+   public function getSumManu()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->manu;
          $array = explode('.', $op->manu);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -382,7 +377,6 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
       if ($debugMinutes < 10) {
@@ -391,24 +385,23 @@ class VdrOperating extends Model
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
-
-
    }
 
-   public function getSumIdle(){
+   public function getSumIdle()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->idle;
          $array = explode('.', $op->idle);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -458,35 +451,33 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
-      
-   
-       if ($debugMinutes < 10) {
+
+
+      if ($debugMinutes < 10) {
          $finalMinutes = '0' . $debugMinutes;
       } else {
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
-
-
    }
 
-   public function getSumTow(){
+   public function getSumTow()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->tow;
          $array = explode('.', $op->tow);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -536,35 +527,33 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
-      
-   
-       if ($debugMinutes < 10) {
+
+
+      if ($debugMinutes < 10) {
          $finalMinutes = '0' . $debugMinutes;
       } else {
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
-
-
    }
 
-   public function getSumAh(){
+   public function getSumAh()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->ah;
          $array = explode('.', $op->ah);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -614,36 +603,33 @@ class VdrOperating extends Model
                }
             }
          }
-         
-         
       }
 
-      
-   
-       if ($debugMinutes < 10) {
+
+
+      if ($debugMinutes < 10) {
          $finalMinutes = '0' . $debugMinutes;
       } else {
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
-
-
    }
 
-   public function getSumSb(){
+   public function getSumSb()
+   {
       $totalHours = '';
       $debugHours = 0;
       $debugMinutes = 0;
-      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get() ;
-      foreach($ops as $op){
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->get();
+      foreach ($ops as $op) {
          $time = $op->sb;
          $array = explode('.', $op->sb);
          $hours = floor($time);
          $minutes = intval($array[1]);
-         
+
          $debugHours += $hours;
          $debugMinutes += $minutes;
       }
@@ -703,21 +689,106 @@ class VdrOperating extends Model
                }
             }
          }
-         
       }
 
-      
-   
-       if ($debugMinutes < 10) {
+
+
+      if ($debugMinutes < 10) {
          $finalMinutes = '0' . $debugMinutes;
       } else {
          $finalMinutes = $debugMinutes;
       }
       // $finalHours  = sprintf('%02d', floor($debugHours));
-   
+
       $final = $debugHours . '.' . $finalMinutes;
       return $final;
+   }
+
+   public function getSumSp()
+   {
+      $totalHours = '';
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrActivity::where('vdr_id', $this->vdr_id)->where('sp', '!=', null)->get();
+      foreach ($ops as $op) {
+         $time = $op->sp;
+         if ($op->sp != null) {
+            $array = explode('.', $op->sp);
+            $hours = floor($time);
+            $minutes = intval($array[1]);
+
+            $debugHours += $hours;
+            $debugMinutes += $minutes;
+         }
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+            if ($debugMinutes >= 60) {
+               $minLeft = $debugMinutes - 60;
+               $debugMinutes = $minLeft;
+               $debugHours += 1;
+               if ($debugMinutes >= 60) {
+                  $minLeft = $debugMinutes - 60;
+                  $debugMinutes = $minLeft;
+                  $debugHours += 1;
+                  if ($debugMinutes >= 60) {
+                     $minLeft = $debugMinutes - 60;
+                     $debugMinutes = $minLeft;
+                     $debugHours += 1;
+                     if ($debugMinutes >= 60) {
+                        $minLeft = $debugMinutes - 60;
+                        $debugMinutes = $minLeft;
+                        $debugHours += 1;
+                        if ($debugMinutes >= 60) {
+                           $minLeft = $debugMinutes - 60;
+                           $debugMinutes = $minLeft;
+                           $debugHours += 1;
+                           if ($debugMinutes >= 60) {
+                              $minLeft = $debugMinutes - 60;
+                              $debugMinutes = $minLeft;
+                              $debugHours += 1;
+                              if ($debugMinutes >= 60) {
+                                 $minLeft = $debugMinutes - 60;
+                                 $debugMinutes = $minLeft;
+                                 $debugHours += 1;
+                                 if ($debugMinutes >= 60) {
+                                    $minLeft = $debugMinutes - 60;
+                                    $debugMinutes = $minLeft;
+                                    $debugHours += 1;
+                                    if ($debugMinutes >= 60) {
+                                       $minLeft = $debugMinutes - 60;
+                                       $debugMinutes = $minLeft;
+                                       $debugHours += 1;
+                                    }
+                                 }
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
 
 
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      // $finalHours  = sprintf('%02d', floor($debugHours));
+
+      $final = $debugHours . '.' . $finalMinutes;
+      return $final;
    }
 }

@@ -169,7 +169,7 @@
 
 
 <div class="d-none d-md-block">
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg px-3" style="background-color: #252e47" >
    <div class="px-2">
       <ul class="navbar-nav">
          
@@ -180,6 +180,22 @@
                @endif
                
                <span class="mx-3">Home Page</span>
+            </a>
+         </li>
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
+            <a href="{{route('daily.report')}}" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('daily/report/*'))
+               <i class="fas fa-fire "></i>
+               @endif
+               <span class="mx-3">Daily Report</span>
+            </a>
+         </li>
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
+            <a href="{{route('intermilan.marine')}}" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('intermilan/*'))
+               <i class="fas fa-fire "></i>
+               @endif
+               <span class="mx-3">Intermilan</span>
             </a>
          </li>
 
@@ -225,14 +241,15 @@
                <span class="mx-3">Images Feed</span>
             </a>
          </li> --}}
-         <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
+         {{-- <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('marine/daily/*'))
                <i class="fas fa-fire "></i>
                @endif
                <span class="mx-3">Daily Activity</span>
             </a>
-         </li>
+         </li> --}}
+         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'superuser')
          <li class="nav-item nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('master/data/*'))
@@ -248,6 +265,7 @@
             <li class="nav-item "><a href="{{route('user')}}" class="nav-link">User</a></li>
             </ul>
          </li>
+         @endif
          @endif
         
       </ul>

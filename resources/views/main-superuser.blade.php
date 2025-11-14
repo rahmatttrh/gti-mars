@@ -83,8 +83,8 @@
                                           <td>{{$vdr->id}}</td>
                                           <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
                                           <td>
-                                             -
-                                             {{-- {{$vdr->release_date}} --}}
+                                             
+                                             {{$vdr->release_date}}
                                           </td>
                                           {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                           {{-- <td>{{formatRibuan(round($totaldaily))}}</td> --}}
@@ -100,7 +100,7 @@
                            <div class="card shadow-lg">
                               <div class="card-body p-0">
                                  {{-- <div class="badge badge-info mb-2">Log Activity</div> --}}
-                                 <div  class="table-responsive overflow-auto " style="height: 650px" >
+                                 <div  class="table-responsive overflow-auto " style="height: 450px" >
                                  <table class=""   >
                                     <thead>
                                        <tr class="border">
@@ -208,7 +208,7 @@
                         </tbody>
                      </table> --}}
                      
-                        <table class="datatables-vdr-monitoring">
+                        <table class="datatables-vdr-monitoring text-dark">
                            
                            <thead>
                               
@@ -216,10 +216,11 @@
                                  
                                  <th>Vessel</th>
                                  <th class="text-center">Total</th>
+                                 <th class="text-center">Draft</th>
                                  <th class="text-center">Rejected</th>
-                                 <th class="text-center">Waiting PET</th>
-                                 <th class="text-center">Waiting Marine</th>
-                                 <th class="text-center">Waiting Suptent</th>
+                                 <th class="text-center">Waiting <br> PET</th>
+                                 <th class="text-center">Waiting <br> Marine</th>
+                                 <th class="text-center">Waiting <br> Suptent</th>
                                  <th class="text-center">Complete</th>
                               </tr>
                            </thead>
@@ -230,6 +231,7 @@
                                  <tr >
                                     <td>{{$vessel->name}}</td>
                                     <td class="text-center">{{count($vessel->getVdrs())}}</td>
+                                    <td class="text-center">{{count($vessel->getDraftVdrs())}}</td>
                                     <td class="text-center">{{count($vessel->getRejectVdrs())}}</td>
                                     <td class="text-center">{{count($vessel->getPetVdrs())}}</td>
                                     <td class="text-center">{{count($vessel->getMarineVdrs())}}</td>
@@ -274,10 +276,14 @@
                         </tbody>
                      </table> --}}
                      
-                        <table class="datatables-vdr-monitoring">
+                        <table class="datatables-vdr-monitoring text-dark">
                            
                            
                            <tbody>
+                              <tr>
+                                 <td>Draft</td>
+                                 <td>{{$totalDraft}}</td>
+                              </tr>
                               <tr>
                                  <td>Waiting PET</td>
                                  <td>{{$totalPet}}</td>
@@ -289,6 +295,10 @@
                               <tr>
                                  <td>Waiting Suptent</td>
                                  <td>{{$totalSuptent}}</td>
+                              </tr>
+                              <tr>
+                                 <td>Complete</td>
+                                 <td>{{$totalComplete}}</td>
                               </tr>
                            </tbody>
                         </table>

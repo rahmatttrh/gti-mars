@@ -283,7 +283,7 @@ table th tr td {
                <thead>
                   <tr>
                      <td colspan="2" class="text-center title bg-lgray">TIME</td>
-                     <td colspan="8" class="text-center title bg-lgray">Operating Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
+                     <td colspan="9" class="text-center title bg-lgray">Operating Mode Duration (hh:mm)- <br> Except Maintenance & Downtime</td>
                      <td rowspan="2" class="text-center align-middle title bg-lgray">ACTIVITIES</td>
                   </tr>
                   <tr>
@@ -303,6 +303,12 @@ table th tr td {
                      <td class="text-center">Tow</td>
                      <td class="text-center">A/H</td>
                      <td class="text-center">S/B</td>
+                     <td class="text-center">
+                        @if ($sp)
+                        S/P
+                        @endif
+                        
+                     </td>
                   </tr>
                </thead>
                <tbody>
@@ -385,6 +391,18 @@ table th tr td {
                            @endif
                         </small>
                      </td>
+                     <td class="text-center bg-yellow">
+                        @if ($sp)
+                            
+                        
+                        <small>
+                           @if ($vdrActivity->sp == 0.00)
+                           @else
+                           {{getTotalHoursB($vdrActivity->sp)}}
+                           @endif
+                        </small>
+                        @endif
+                     </td>
                      <td class="bg-yellow"><small>{{$vdrActivity->activity}}</small></td>
                   </tr>
                   
@@ -395,6 +413,7 @@ table th tr td {
                   @if (count($vdrActivities) == 0)
                      @for ($i = 0; $i < 23; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -422,6 +441,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -429,6 +449,7 @@ table th tr td {
                   @if (count($vdrActivities) == 2)
                      @for ($i = 0; $i < 20; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -456,6 +477,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -463,6 +485,7 @@ table th tr td {
                   @if (count($vdrActivities) == 4)
                      @for ($i = 0; $i < 18; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -490,6 +513,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -497,6 +521,7 @@ table th tr td {
                   @if (count($vdrActivities) == 6)
                      @for ($i = 0; $i < 16; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -524,6 +549,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -531,6 +557,7 @@ table th tr td {
                   @if (count($vdrActivities) == 8)
                      @for ($i = 0; $i < 14; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -558,6 +585,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -565,6 +593,7 @@ table th tr td {
                   @if (count($vdrActivities) == 10)
                      @for ($i = 0; $i < 12; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -592,6 +621,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -599,6 +629,7 @@ table th tr td {
                   @if (count($vdrActivities) == 12)
                      @for ($i = 0; $i < 10; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -626,6 +657,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -633,6 +665,7 @@ table th tr td {
                   @if (count($vdrActivities) == 14)
                      @for ($i = 0; $i < 8; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -660,6 +693,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -667,6 +701,7 @@ table th tr td {
                   @if (count($vdrActivities) == 16)
                      @for ($i = 0; $i < 6; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -694,6 +729,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -701,6 +737,7 @@ table th tr td {
                   @if (count($vdrActivities) == 18)
                      @for ($i = 0; $i < 4; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -728,6 +765,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -735,6 +773,7 @@ table th tr td {
                   @if (count($vdrActivities) == 20)
                      @for ($i = 0; $i < 2; $i++)
                         <tr>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
@@ -762,6 +801,7 @@ table th tr td {
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
                            <td class="bg-yellow"></td>
+                           <td class="bg-yellow"></td>
                            <td class="bg-yellow"> &nbsp;</td>
                         </tr>
                      @endfor
@@ -771,6 +811,13 @@ table th tr td {
                      @foreach ($operatings->where('heading_id', '<', 9) as $operating)
                      
                      <td class=" text-center">{{getTotalHoursB($operating->time)}} </td>
+                     @endforeach
+
+                     @foreach ($operatings->where('heading_id', 11) as $operating)
+                     
+                     <td class=" text-center">
+                        {{getTotalHoursB($operating->time)}} 
+                     </td>
                      @endforeach
                      
                      {{-- <td class="bg-yellow"></td>
@@ -809,79 +856,303 @@ table th tr td {
                </thead>
                <tbody>
                   
-                     @foreach ($operatings as $operating)
-                     @if($operating->heading->daily == '1')
-                        
-                           <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                     @foreach ($operatings->where('heading_id', '<', 9) as $operating)
+                        @if($operating->heading->daily == '1')
                            
-                        
-                     @else
-                        <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
-                     @endif
-                     <tr id="baris-{{$operating->id}}">
-                       
-                        <td> <small>{{$operating->heading->description}} </small></td>
-                        <td class="text-center">
-                           <small>{{getTotalHoursB($operating->time)}}</small>
-                        </td>
-                        @if ($operating->heading_id > 3)
-                           <td class="text-center" style="background-color: rgb(186, 186, 186)">
-                           </td>
-                           @else
-                           
-                           <td class="text-center bg-yellow">
-                              @if($operating->heading->speed == '1')
-                              <small>{{$operating->speed ?? '0:00'}}</small>
+                              <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
                               
+                           
+                        @else
+                           <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
+                        @endif
+                        <tr id="baris-{{$operating->id}}">
+                        
+                           <td> <small>{{$operating->heading->description}} </small></td>
+                           <td class="text-center">
+                              <small>{{getTotalHoursB($operating->time)}}</small>
+                           </td>
+                           @if ($operating->heading_id > 3)
+                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              </td>
                               @else
-                              <small>{{$operating->speed ?? '0:00'}}</small>
-                              @endif
-                           </td>
-                        @endif
-   
-                        @if ($operating->heading_id > 8)
-                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
-                           </td>
-                           @else
-                           <td class="text-center bg-yellow px-2" style="border-right: none">
-                              {{-- @if($operating->heading->contractual == '1')
-                              <small>{{$operating->contractual_fuel ?? '0'}}</small>
-                              @else --}}
-                              <small>
-                                 @if ($operating->contractual_fuel)
-                                     {{-- {{round($operating->contractual_fuel)}} --}}
-                                     {{$operating->contractual_fuel }}
-                                     @else
-                                     0
-                                 @endif
-                                 {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
-                              {{-- @endif --}}
                               
-                           </td>
-                           <td style="border-left: none" class="text-end px-2">L/H</td>
-                        @endif
-                        
-                        @if ($operating->heading_id > 8)
-                           <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
-                           </td>
-                           @else
-                           <td class="text-center" style="border-right: none">
-      
-      
-                                 @if($operating->heading->daily == '1')
-                                 <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
-                                 {{-- <div class="input-group ">
-                                    <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
-                                    
-                                 </div> --}}
-                                 @else
-                                 <small>{{$operating->daily}}</small>
-                                 @endif
+                              <td class="text-center bg-yellow">
+                                 @if($operating->heading->speed == '1')
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
                                  
-                           </td>
-                           <td style="border-left: none" class="text-end px-2">Ltrs</td>
+                                 @else
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 @endif
+                              </td>
                            @endif
-                     </tr>
+      
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center bg-yellow px-2" style="border-right: none">
+                                 {{-- @if($operating->heading->contractual == '1')
+                                 <small>{{$operating->contractual_fuel ?? '0'}}</small>
+                                 @else --}}
+                                 <small>
+                                    @if ($operating->contractual_fuel)
+                                       {{-- {{round($operating->contractual_fuel)}} --}}
+                                       {{$operating->contractual_fuel }}
+                                       @else
+                                       0
+                                    @endif
+                                    {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
+                                 {{-- @endif --}}
+                                 
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">L/H</td>
+                           @endif
+                           
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center" style="border-right: none">
+         
+         
+                                    @if($operating->heading->daily == '1')
+                                    <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
+                                    {{-- <div class="input-group ">
+                                       <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                       
+                                    </div> --}}
+                                    @else
+                                    <small>{{$operating->daily}}</small>
+                                    @endif
+                                    
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">Ltrs</td>
+                              @endif
+                        </tr>
+                     @endforeach
+
+                     @foreach ($operatings->where('heading_id', 11) as $operating)
+                        @if($operating->heading->daily == '1')
+                           
+                              <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                              
+                           
+                        @else
+                           <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
+                        @endif
+                        <tr id="baris-{{$operating->id}}">
+                        
+                           <td> <small>{{$operating->heading->description}} </small></td>
+                           <td class="text-center">
+                              <small>{{getTotalHoursB($operating->time)}} </small>
+                           </td>
+                           @if ($operating->heading_id > 3)
+                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              
+                              <td class="text-center bg-yellow">
+                                 @if($operating->heading->speed == '1')
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 
+                                 @else
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 @endif
+                              </td>
+                           @endif
+      
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center bg-yellow px-2" style="border-right: none">
+                                 {{-- @if($operating->heading->contractual == '1')
+                                 <small>{{$operating->contractual_fuel ?? '0'}}</small>
+                                 @else --}}
+                                 <small>
+                                    @if ($operating->contractual_fuel)
+                                       {{-- {{round($operating->contractual_fuel)}} --}}
+                                       {{$operating->contractual_fuel }}
+                                       @else
+                                       0
+                                    @endif
+                                    {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
+                                 {{-- @endif --}}
+                                 
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">L/H</td>
+                           @endif
+                           
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center" style="border-right: none">
+         
+         
+                                    @if($operating->heading->daily == '1')
+                                    <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
+                                    {{-- <div class="input-group ">
+                                       <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                       
+                                    </div> --}}
+                                    @else
+                                    <small>{{$operating->daily}}</small>
+                                    @endif
+                                    
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">Ltrs</td>
+                              @endif
+                        </tr>
+                     @endforeach
+
+                     @foreach ($operatings->where('heading_id', 9) as $operating)
+                        @if($operating->heading->daily == '1')
+                           
+                              <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                              
+                           
+                        @else
+                           <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
+                        @endif
+                        <tr id="baris-{{$operating->id}}">
+                        
+                           <td> <small>{{$operating->heading->description}} </small></td>
+                           <td class="text-center">
+                              <small>{{getTotalHoursB($operating->time)}} </small>
+                           </td>
+                           @if ($operating->heading_id > 3)
+                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              
+                              <td class="text-center bg-yellow">
+                                 @if($operating->heading->speed == '1')
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 
+                                 @else
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 @endif
+                              </td>
+                           @endif
+      
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center bg-yellow px-2" style="border-right: none">
+                                 {{-- @if($operating->heading->contractual == '1')
+                                 <small>{{$operating->contractual_fuel ?? '0'}}</small>
+                                 @else --}}
+                                 <small>
+                                    @if ($operating->contractual_fuel)
+                                       {{-- {{round($operating->contractual_fuel)}} --}}
+                                       {{$operating->contractual_fuel }}
+                                       @else
+                                       0
+                                    @endif
+                                    {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
+                                 {{-- @endif --}}
+                                 
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">L/H</td>
+                           @endif
+                           
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center" style="border-right: none">
+         
+         
+                                    @if($operating->heading->daily == '1')
+                                    <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
+                                    {{-- <div class="input-group ">
+                                       <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                       
+                                    </div> --}}
+                                    @else
+                                    <small>{{$operating->daily}}</small>
+                                    @endif
+                                    
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">Ltrs</td>
+                              @endif
+                        </tr>
+                     @endforeach
+                     @foreach ($operatings->where('heading_id', 10) as $operating)
+                        @if($operating->heading->daily == '1')
+                           
+                              <input type="text" hidden readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                              
+                           
+                        @else
+                           <input type="hidden" hidden readonly disabled name="daily[]"  value="{{$operating->daily}}">
+                        @endif
+                        <tr id="baris-{{$operating->id}}">
+                        
+                           <td> <small>{{$operating->heading->description}} </small></td>
+                           <td class="text-center">
+                              <small>{{getTotalHoursB($operating->time)}} </small>
+                           </td>
+                           @if ($operating->heading_id > 3)
+                              <td class="text-center" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              
+                              <td class="text-center bg-yellow">
+                                 @if($operating->heading->speed == '1')
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 
+                                 @else
+                                 <small>{{$operating->speed ?? '0:00'}}</small>
+                                 @endif
+                              </td>
+                           @endif
+      
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center bg-yellow px-2" style="border-right: none">
+                                 {{-- @if($operating->heading->contractual == '1')
+                                 <small>{{$operating->contractual_fuel ?? '0'}}</small>
+                                 @else --}}
+                                 <small>
+                                    @if ($operating->contractual_fuel)
+                                       {{-- {{round($operating->contractual_fuel)}} --}}
+                                       {{$operating->contractual_fuel }}
+                                       @else
+                                       0
+                                    @endif
+                                    {{-- {{$operating->contractual_fuel ?? '0'}}</small> --}}
+                                 {{-- @endif --}}
+                                 
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">L/H</td>
+                           @endif
+                           
+                           @if ($operating->heading_id > 8)
+                              <td class="text-center" colspan="2" style="background-color: rgb(186, 186, 186)">
+                              </td>
+                              @else
+                              <td class="text-center" style="border-right: none">
+         
+         
+                                    @if($operating->heading->daily == '1')
+                                    <small>{{number_format($operating->daily, 2, ',' , '.')}}</small>
+                                    {{-- <div class="input-group ">
+                                       <input type="text" readonly disabled name="daily[]"  value="{{round($operating->daily)}}">
+                                       
+                                    </div> --}}
+                                    @else
+                                    <small>{{$operating->daily}}</small>
+                                    @endif
+                                    
+                              </td>
+                              <td style="border-left: none" class="text-end px-2">Ltrs</td>
+                              @endif
+                        </tr>
                      @endforeach
                      <tr>
                         <td>Total Daily</td>
@@ -1293,11 +1564,23 @@ table th tr td {
                
                <div class="col text-end pt-1">
                   @if ($vdr->status == 4)
-                  {!! QrCode::size(55)->generate(Request::url()); !!}
+                  {{-- vdr.pin.pdf --}}
+                  {{-- {!! QrCode::size(55)->generate(Request::url()); !!} --}}
+
+                  {!! QrCode::size(55)->generate(route('vdr.pin.pdf', enkripRambo($vdr->id))); !!}
+                     {{-- @if (auth()->user()->hasRole('superuser')) --}}
+                     {{-- vdr.open.pdf --}}
+                     {{-- {!! QrCode::size(55)->generate(route('vdr.open.pdf', enkripRambo($vdr->id))); !!} --}}
+                     {{-- @endif --}}
                   @endif
                   
                   <br>
-                  <small>VDR Rev. 6A - 1 Apr. 2024</small>
+                  @if ($sp)
+                     <small>VDR Rev. 7 - 9 Nov. 2025</small>
+                      @else
+                      <small>VDR Rev. 6A - 1 Apr. 2024</small>
+                  @endif
+                  
                </div>
                
             </div>

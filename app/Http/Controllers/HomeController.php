@@ -21,7 +21,10 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\GeofenceController;
 use App\Models\Cargo;
 use App\Models\CargoItem;
+use App\Models\DailyReport;
 use App\Models\Document;
+use App\Models\Intermilan;
+use App\Models\IntermilanUser;
 use App\Models\Log;
 use App\Models\MaterialMan;
 use App\Models\News;
@@ -34,6 +37,7 @@ use App\Models\VdrCargo;
 use App\Models\VdrHistory;
 use App\Models\VdrOperating;
 use App\Models\VdrOperatingHeader;
+use App\Models\VdrPin;
 use App\Models\VdrTimestamp;
 use App\Models\VesselHistory;
 use Illuminate\Support\Facades\DB;
@@ -567,6 +571,46 @@ class HomeController extends Controller
 
          $vessels = Vessel::get();
          $offices = Office::get();
+
+         // $employee = Employee::create([
+         //    'status' => 1,
+         //    // 'level' => 'supten_loc',
+         //    // 'area' => 'CBU',
+         //    'name' => 'Fleet Control',
+         //    'username' => 'fleet',
+         //    'email' => 'fleet@test.com'
+         // ]);
+
+         // $user = User::create([
+         //    'name' => $employee->name,
+         //    'username' => $employee->username,
+         //    'email' => $employee->email,
+         //    'password' => Hash::make('oses@2025'),
+         // ]);
+         // $user->assignRole('marine');
+
+         // $employee2 = Employee::create([
+         //    'status' => 1,
+         //    // 'level' => 'supten_loc',
+         //    // 'area' => 'CBU',
+         //    'name' => 'Super Admin',
+         //    'username' => 'superadmin',
+         //    'email' => 'superadmin@test.com'
+         // ]);
+
+         // $user2 = User::create([
+         //    'name' => $employee2->name,
+         //    'username' => $employee2->username,
+         //    'email' => $employee2->email,
+         //    'password' => Hash::make('oses@2025'),
+         // ]);
+         // $user2->assignRole('marine');
+
+
+         // VdrPin::create([
+         //    'title' => 'vdr',
+         //    'pin' => Hash::make('250912')
+         // ]);
          // dd('ok');
 
          // $magelangVdrs = Vdr::whereIn('id', [1548, 1530, 1529, 1528, 1527, 1526])->get();
@@ -576,9 +620,9 @@ class HomeController extends Controller
          // $emailController->summaryVdrSuptent('09:00'); 
 
 
-         // $vdrPendingPets = Vdr::whereIn('id', [1515, 1599, 1591])->get();
-         // // $vdrPendingPets = Vdr::whereIn('id', [1808, 1778, 1777, 1767, 1764])->get();
-         // // $vdrPendingSuptents = Vdr::whereIn('id', [1532])->get();
+         // $vdrPendingPets = Vdr::whereIn('id', [2193,2074])->get();
+         // // $vdrPendingPets = Vdr::whereIn('id', [2107, 2165, 2147, 2139, 2115, 2114, 2113, 2111, 2110, 2109, 2108, 2106, 2105])->get();
+         // $vdrPendingSuptents = Vdr::whereIn('id', [1532])->get();
          // // dd($vdrPendingPets);
          // foreach ($vdrPendingPets as $vdr) {
          //    // if ($vdr->area != null) {
@@ -827,7 +871,7 @@ class HomeController extends Controller
          $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
          $takeouts = ModelsRequest::where('undo', '!=', null)->get();
          $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
-         $vessels = Vessel::get();
+         $vessels = Vessel::where('contract_type', 'Under PO')->get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
          $to = Carbon::now()->addMonth();
          $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
@@ -878,9 +922,11 @@ class HomeController extends Controller
 
          $to = Carbon::now();
 
+         $totalDraft = Vdr::where('status', 0)->whereBetween('date', ['2025-09-16', $to])->get()->count();
          $totalPet = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->get()->count();
          $totalMarine = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->get()->count();
          $totalSuptent = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->get()->count();
+         $totalComplete = Vdr::where('status', 4)->whereBetween('date', ['2025-09-16', $to])->get()->count();
 
 
          return view('main-superuser', [
@@ -905,7 +951,9 @@ class HomeController extends Controller
             'allSchedules' => $allSchedules,
             'allVdrs' => $allVdrs,
 
-            'logs' => $logs
+            'logs' => $logs,
+            'totalComplete' => $totalComplete,
+            'totalDraft' => $totalDraft
 
          ])->with('i');
       } else if (auth()->user()->hasRole('bod')) {
@@ -1558,12 +1606,16 @@ class HomeController extends Controller
          $logs = Log::get();
 
          $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+         $intermilan = Intermilan::orderBy('from', 'desc')->first();
+         $dailyReports = DailyReport::orderBy('date', 'desc')->paginate(3);
 
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
          // $user->assignRole('suptent');
          // dd($user); 
          return view('main-suptent', [
+            'intermilan' => $intermilan,
+            'dailyReports' => $dailyReports,
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
             'vdrValidations' => $vdrValidations,
@@ -1581,7 +1633,56 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
-      } else if (auth()->user()->hasRole('marine')) {
+      } elseif (auth()->user()->username == 'fleet') {
+         $to = Carbon::now();
+         $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+         $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         $intermilans = Intermilan::orderBy('from', 'desc')->paginate(10);
+         $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(30);
+
+         $inboxRequests = ModelsRequest::whereBetween('date', ['2025-09-16', $to])->where('status', 1)->get();
+
+         $todayDailyReport = DailyReport::where('date', Carbon::now())->first();
+         if ($todayDailyReport == null) {
+            // dd('kosong');
+            $dailyReportAlert = true;
+         } else {
+            $dailyReportAlert = false;
+         }
+         return view('main-fleet', [
+            'allVdrs' => $allVdrs,
+            'vdrs' => $vdrs,
+            'vdrValidations' => $vdrValidations,
+            'intermilans' => $intermilans,
+            'dailyReports' => $dailyReports,
+            'inboxRequests' => $inboxRequests,
+
+            'dailyReportAlert' => $dailyReportAlert
+
+
+         ])->with('i');
+      }  else if (auth()->user()->hasRole('marine')) {
+
+         // $employee = Employee::create([
+         //    'status' => 1,
+         //    // 'level' => 'supten_loc',
+         //    // 'area' => 'CBU',
+         //    'name' => 'Fleet Control',
+         //    'username' => 'fleet',
+         //    'email' => 'fleer@test.com'
+         // ]);
+
+         // $user = User::create([
+         //    'name' => $employee->name,
+         //    'username' => $employee->username,
+         //    'email' => $employee->email,
+         //    'password' =>Hash::make('12345678'),
+         // ]);
+         // $user->assignRole('marine');
+         // dd('ok');
+
+
          // dd('ok');
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
@@ -1591,6 +1692,82 @@ class HomeController extends Controller
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
             $vdrs = Vdr::where('status', '>=', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         } elseif (auth()->user()->username == 'fleet') {
+
+            // $user = User::find(auth()->user()->id);
+            // $user->update([
+            //    'password' => Hash::make('oses@2025')
+            // ]);
+            // dd('ok');
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $intermilans = Intermilan::orderBy('from', 'desc')->paginate(10);
+            $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(30);
+
+            $inboxRequests = ModelsRequest::whereBetween('date', ['2025-09-16', $to])->where('status', 1)->get();
+
+            $todayDailyReport = DailyReport::where('date', Carbon::now())->first();
+            if ($todayDailyReport == null) {
+               // dd('kosong');
+               $dailyReportAlert = true;
+            } else {
+               $dailyReportAlert = false;
+            }
+            return view('main-fleet', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $vdrs,
+               'vdrValidations' => $vdrValidations,
+               'intermilans' => $intermilans,
+               'dailyReports' => $dailyReports,
+
+               'dailyReportAlert' => $dailyReportAlert,
+               'inboxRequests' => $inboxRequests
+
+
+            ])->with('i');
+         } elseif (auth()->user()->username == 'superadmin') {
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+            $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $intermilans = Intermilan::orderBy('from', 'desc')->paginate(6);
+            $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(3);
+   
+            $inboxRequests = ModelsRequest::whereBetween('date', ['2025-09-16', $to])->where('status', 1)->get();
+   
+            $todayDailyReport = DailyReport::where('date', Carbon::now())->first();
+            if ($todayDailyReport == null) {
+               // dd('kosong');
+               $dailyReportAlert = true;
+            } else {
+               $dailyReportAlert = false;
+            }
+   
+            $onHireVessels = Vessel::where('status', 1)->get();
+            $offHireVessels = Vessel::where('status', 0)->get();
+            $allVessels = Vessel::get();
+            $logs = Log::orderBy('created_at', 'desc')->paginate(300);
+   
+            return view('main-superadmin', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $vdrs,
+               'vdrValidations' => $vdrValidations,
+               'intermilans' => $intermilans,
+               'dailyReports' => $dailyReports,
+               'inboxRequests' => $inboxRequests,
+   
+               'dailyReportAlert' => $dailyReportAlert,
+               'onHireVessels' => $onHireVessels,
+               'allVessels' => $allVessels,
+               'offHireVessels' => $offHireVessels,
+               'logs' => $logs,
+               'vessels' => Vessel::get()
+   
+   
+   
+            ])->with('i');
          } elseif (auth()->user()->username == 'marine') {
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
@@ -1789,6 +1966,17 @@ class HomeController extends Controller
 
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
+
+         if ($currentVessel->id == 24) {
+            // dd('ok');
+            // $allVdrActivities = VdrActivity::get();
+            // foreach ($allVdrActivities as $vdr) {
+            //    $vdr->update([
+            //       'sp' => 00.00
+            //    ]);
+            // }
+            // dd('ok');
+         }
 
          if ($currentVessel == null) {
 
@@ -2805,7 +2993,34 @@ class HomeController extends Controller
       // dd(auth()->user()->getPort());
 
       $titipRequests = ModelsRequest::where('user_id', auth()->user()->id)->where('status', 0)->where('request_id', '!=', null)->get();
+
+      $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      $ports = Port::get();
+      $intermilanUsers = IntermilanUser::orderBy('from', 'desc')->get();
+
+      $lastIntermilan = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('from', 'desc')->first();
+      // dd($lastIntermilan);
+      if ($lastIntermilan) {
+         $lastIntermilan = $lastIntermilan;
+         $startDate = new Carbon($lastIntermilan->from);
+         $endDate = new Carbon($lastIntermilan->to);
+         $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->whereBetween('date', [$startDate, $endDate])->orderBy('parent_id', 'asc')->get();
+      } else {
+         $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+         $startDate = Carbon::now();
+         $endDate = Carbon::now();
+         $lastIntermilan = null;
+      }
+
+
       return view('pages-stisla.dsp.home-user', [
+         'intermilans' => $intermilanUsers,
+         'lastIntermilan' => $lastIntermilan,
+         'startDate' => $startDate,
+         'endDate' => $endDate,
+         'ports' => $ports,
+         'userRequests' => $userRequests,
+
          'month' => $month,
          'year' => $year,
          'user' => $user,

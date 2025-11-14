@@ -31,6 +31,11 @@ function formatDateB($data)
    $date = \Carbon\Carbon::parse($data)->format('d/m/y');
    return $date;
 }
+function formatDateTimeB($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('d/m/Y H:i ');
+   return $date;
+}
 
 
 function formatDateMonth($data)
@@ -155,16 +160,17 @@ function getRoleName($user)
 }
 
 
-function getTotalHours($value){
-      
+function getTotalHours($value)
+{
+
    $totalHours = '';
    $debugHours = 0;
    $debugMinutes = 0;
-  
+
    $array = explode('.', $value);
    $hours = floor($value);
    $minutes = intval($array[1]);
-   
+
    $debugHours += $hours;
    $debugMinutes += $minutes;
    // dd($debugHours);
@@ -198,16 +204,17 @@ function getTotalHours($value){
 }
 
 
-function getTotalHoursB($value){
-      
+function getTotalHoursB($value)
+{
+
    $totalHours = '';
    $debugHours = 0;
    $debugMinutes = 0;
-  
+
    $array = explode('.', $value);
    $hours = floor($value);
    $minutes = intval($array[1]);
-   
+
    $debugHours += $hours;
    $debugMinutes += $minutes;
    // dd($debugHours);

@@ -24,25 +24,46 @@
          {{-- <input type="number" name="vessel" id="vessel" value="{{$vessel->id}}" hidden> --}}
 
          <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
                
                <div class="card">
                   <div class="card-body">
-                     <div class="section-header px-0 shadow-none">
+                     <h4 class="border-bottom">Form Create Vessel</h4>
+                     <small>Kolom input dengan tanda (*) wajib di isi</small><br>
+                     <small>Default Password Vessel adalah <b>oses_2025</b></small>
+                     {{-- <div class="badge badge-info">Form Create Vessel</div> --}}
+                     {{-- <div class="section-header px-0 shadow-none">
          
                         <div class="breadcrumb-item ">Master Data</div>
                         <div class="breadcrumb-item "><a href="{{route('vessel')}}">Vessel</a></div>
                         <div class="breadcrumb-item active">Create</div>
                         
-                     </div>
+                     </div> --}}
                      {{-- <h4 class="">Detail Vessel</h4>
                      <hr> --}}
-                     <div class="form-row">
+                     <div class="form-row mt-2">
                         <div class="form-group col-md-12">
                            <label for="name" >Vessel Name*</label>
                            <input type="text" required class="form-control" id="name" name="name"  >
                         </div>
                         
+                     </div>
+
+                     <div class=" form-row">
+                        <div class="form-group col-md-5">
+                           <label for="type" >Vessel Type*</label>
+                           {{-- <input type="text" class="form-control" id="type" name="type"  > --}}
+                           <select  class="form-control" id="type" required  name="type" >
+                              <option value="" disabled selected>Select</option>
+                              <option  value="Crew Boat">Crew Boat</option>
+                              <option value="AHTS">AHTS</option>
+                              <option  value="Supply">Supply</option>
+                           </select>
+                        </div>
+                        <div class="form-group col-md-7">
+                           <label for="username" >Username*</label>
+                           <input type="text" required class="form-control" id="username" name="username"  >
+                           </div>
                      </div>
                      <div class="form-row">
                         <div class="form-group col-md-5">
@@ -56,8 +77,8 @@
                         </div>
 
                         <div class="form-group col-md-7">
-                           <label for="contract">Contract Number</label>
-                           <input type="text" class="form-control" id="contract" name="contract"  >
+                           <label for="contract">Contract Number*</label>
+                           <input type="text" class="form-control" required id="contract" name="contract"  >
                         </div>
                      </div>
 
@@ -71,6 +92,27 @@
                            </select>
                         </div>
                         <div class="form-group col-md-7">
+                           <label for="contract_type"> IPB / Non IPB</label>
+                           <select  class="form-control" id="ipb"  name="ipb" >
+                              <option value="" disabled selected>Select IPB / Non IPB</option>
+                              <option  value="IPB">IPB</option>
+                              <option  value="Non IPB">Non IPB</option>
+                              
+                           </select>
+                        </div>
+                        <div class="form-group col-md-5">
+                           <label for="contract_type">Func</label>
+                           <select  class="form-control" id="func"  name="func" >
+                              <option value="" disabled selected>Select Func</option>
+                              <option value="Empty" >Empty</option>
+                              <option  value="WI">WI</option>
+                              <option  value="Drilling">Drilling</option>
+                              <option  value="Project">Project</option>
+                              <option  value="Security">Security</option>
+                              
+                           </select>
+                        </div>
+                        <div class="form-group col-md-7">
                            <label for="contract_type">Area</label>
                            <select  class="form-control" id="area"  name="area" >
                               <option value="" disabled selected>Select</option>
@@ -81,7 +123,7 @@
                         </div>
                      </div>
                      <hr>
-                     <button class="btn btn-info ">Submit</button>
+                     <button class="btn btn-primary ">Submit</button>
                      {{-- <a href="{{route('vessel.delete', enkripRambo($vessel->id))}}" class="btn btn-danger" >Delete</a> --}}
                   </div>
                </div>
@@ -92,25 +134,30 @@
                
             </div>
 
-            <div class="col-md-8">
+            <div class="col-md-6">
                <div class="card">
                   <div class="card-body">
+                     <div class="badge badge-info mb-2">Optional Data</div>
                      <div class="row">
                         <div class="col-md-12">
                            
                            <div class=" form-row">
                               <div class="form-group col-md-6">
-                                 <label for="type" >Type</label>
-                                 <input type="text" class="form-control" id="type" name="type"  >
+                                 <label for="owner">Vessel Owner</label>
+                                 <input type="text" class="form-control" id="owner" name="owner"  >
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <label for="operator">Vessel Operator</label>
+                                 <input type="text" class="form-control" id="operator" name="operator"  >
                               </div>
                               <div class="form-group col-md-6" >
                               <label for="telp" >Telp</label>
                               <input type="email" class="form-control" id="telp" name="telp" >
                               </div>
-                              <div class="form-group col-md-6">
+                              {{-- <div class="form-group col-md-6">
                               <label for="username" >Username*</label>
                               <input type="text" required class="form-control" id="username" name="username"  >
-                              </div>
+                              </div> --}}
                               <div class="form-group col-md-6">
                                  <label for="email" >Email</label>
                                  <input type="email" class="form-control" id="email" name="email"  >
@@ -143,14 +190,7 @@
                                  <label for="imo">IMO Number</label>
                                  <input type="text" class="form-control" id="imo" name="imo"  >
                               </div>
-                              <div class="form-group col-md-6">
-                                 <label for="owner">Vessel Owner</label>
-                                 <input type="text" class="form-control" id="owner" name="owner"  >
-                              </div>
-                              <div class="form-group col-md-6">
-                                 <label for="operator">Vessel Operator</label>
-                                 <input type="text" class="form-control" id="operator" name="operator"  >
-                              </div>
+                              
                               <div class="form-group col-md-6">
                                  <label for="flag">Flag</label>
                                  <input type="text" class="form-control" id="flag" name="flag"  >

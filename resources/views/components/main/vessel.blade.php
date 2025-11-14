@@ -40,14 +40,14 @@
                <div class="card-body ">
                   <h4>Welcome back, {{$vessel->name}} !</h4>
                   <div>Jika anda ingin membuat Vessel Daily Report silahkan 
-                     @if (auth()->user()->username == 'magelang' )
+                     {{-- @if (auth()->user()->username == 'magelang' )
                      klik
                      <a href="{{route('vdr.vessel.create')}}" class="btn btn-sm btn-primary">Form Lama</a> atau <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Form Baru</a>
                      
-                     @else
+                     @else --}}
                      <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
                      
-                     @endif
+                     {{-- @endif --}}
                      , atau klik VDR pada menu utama</div>
                   <hr>
                   {{-- <div class="mb-2" style="color: #1f4481 !important">

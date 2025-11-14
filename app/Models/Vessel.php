@@ -81,6 +81,13 @@ class Vessel extends Model
       return $vdrs;
    }
 
+   public function getDraftVdrs()
+   {
+      $to = Carbon::now();
+      $vdrs = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-09-16', $to])->whereIn('status', [0])->get();
+      return $vdrs;
+   }
+
    public function getRejectVdrs()
    {
       $to = Carbon::now();

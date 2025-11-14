@@ -273,6 +273,7 @@ class VdrController extends Controller
       } else {
 
          $vdrId = $this->funcStoreEmpty($vessel->id);
+         $vdr = Vdr::find($vdrId);
       }
 
 
@@ -691,8 +692,17 @@ class VdrController extends Controller
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
       $realTotalDaily = $totalDaily;
 
+
+
       // $totalDaily = round($totalDaily, 1); // di komen dulu 
-      $totalDaily = round($totalDaily);
+
+      if ($vdr->total_daily != null) {
+         if ($vdr->status == 0) {
+            $totalDaily = round($totalDaily);
+         } else {
+            $totalDaily = round($vdr->total_daily);
+         }
+      }
 
       // $totalDaily = $vdr->customRound($totalDaily);
       $vdrs = Vdr::get();
@@ -751,6 +761,12 @@ class VdrController extends Controller
       $vdrOperatingTow = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 6)->first()->time;
       $vdrOperatingAh = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 7)->first()->time;
       $vdrOperatingSb = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 8)->first()->time;
+      $vdrOperatingSp = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
+      if ($vdrOperatingSp) {
+         $vdrOperatingSp = $vdrOperatingSp->time;
+      } else {
+         $vdrOperatingSp = 0;
+      }
       // if (auth()->user()->hasRole('superuser')) {
       //   dd($lastVdr);
       // }
@@ -766,6 +782,8 @@ class VdrController extends Controller
 
       $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
       $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
+
+      $sp = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
 
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
@@ -797,9 +815,11 @@ class VdrController extends Controller
          'vdrOperatingTow' => $vdrOperatingTow,
          'vdrOperatingAh' => $vdrOperatingAh,
          'vdrOperatingSb' => $vdrOperatingSb,
+         'vdrOperatingSp' => $vdrOperatingSp,
 
          'vdrHistories' => $vdrHistories,
-         'now' => Carbon::now()->format('Y-m-d')
+         'now' => Carbon::now()->format('Y-m-d'),
+         'sp' => $sp
       ])->with('i');
 
       // return view('pages.vdr.create-vdr', [
@@ -2542,6 +2562,106 @@ class VdrController extends Controller
       ]);
    }
 
+   public function updateActivitySpAjax($vdr, $act, $sp)
+   {
+
+      $vdr = Vdr::find($vdr);
+      $vdrActivity = VdrActivity::find($act);
+
+      $vdrActivity->update([
+         'sp' => $sp,
+      ]);
+
+      $tsp = 0;
+      $activities = VdrActivity::where('vdr_id', $vdr)->get();
+
+      foreach ($activities as $key => $activity) {
+         $tsp = $this->hitungTime($tsp, $activity->sp);
+      }
+
+      $totalMode = array(
+         'sp'   => $tsp,
+      );
+
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
+      $totalSp = $operating->getSumSp();
+      $operating->update([
+         'time' => floatval($totalSp)
+      ]);
+
+
+      // Hitung Operating Data
+      $operating = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
+      $bulat = floor($operating->time);
+      $desimal = $operating->time - $bulat;
+      $a = $bulat * $operating->contractual_fuel;
+      $b = (($desimal * 100) / 60) * $operating->contractual_fuel;
+      $daily = $a + $b;
+      // dd($daily);
+
+      $operating->update([
+         'daily' => $daily
+      ]);
+
+      $vdrOperatingSp = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
+
+
+      // TOTAL JAM
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+
+
+
+      // TOTAL DAILY
+      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      $totalDaily = $vdr->customRound($totalDaily);
+
+
+
+      return response()->json([
+         'success' => true,
+         'result' => $vdr->id,
+         'totalJam' => $final,
+         'totalDaily' => $totalDaily,
+         'vdrOperatingSp' => $vdrOperatingSp,
+      ]);
+   }
+
    public function updateActivityDescAjax($vdr, $act, Request $req)
    {
 
@@ -2588,6 +2708,7 @@ class VdrController extends Controller
          'tow' => 00.00,
          'ah' => 00.00,
          'sb' => 00.00,
+         'sp' => 00.00,
          'created_by' => auth()->user()->name
       ]);
 
@@ -2720,6 +2841,10 @@ class VdrController extends Controller
          'today' => $today,
       ]);
 
+      $vdr->update([
+         'crew_onduty' => count($vdrCrews)
+      ]);
+
 
 
       return response()->json([
@@ -2747,6 +2872,9 @@ class VdrController extends Controller
 
       $vdrHseManhours->update([
          'today' => $today,
+      ]);
+      $vdr->update([
+         'crew_onduty' => count($vdrCrews)
       ]);
 
 
@@ -2906,6 +3034,12 @@ class VdrController extends Controller
       //     'sb' => 'required'
       // ]);
 
+      if ($req->sp != null) {
+         $nilaiSp = $req->sp;
+      } else {
+         $nilaiSp = '00.00';
+      }
+
 
 
       // DB::beginTransaction();
@@ -2924,7 +3058,8 @@ class VdrController extends Controller
          'idle' => $req->idle,
          'tow' => $req->tow,
          'ah' => $req->ah,
-         'sb' => $req->sb
+         'sb' => $req->sb,
+         'sp' => $nilaiSp
       ]);
 
       $high = 0;
@@ -2935,6 +3070,7 @@ class VdrController extends Controller
       $tow = 0;
       $ah = 0;
       $sb = 0;
+      $sp = 0;
       $total = 0;
 
 
@@ -2947,7 +3083,8 @@ class VdrController extends Controller
       $tow = $this->hitungTime($tow, $req->tow);
       $ah = $this->hitungTime($ah, $req->ah);
       $sb = $this->hitungTime($sb, $req->sb);
-      $sum = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
+      $sp = $this->hitungTime($sp, $nilaiSp);
+      $sum = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb + $sp; 
 
       $totalHour = explode('.', "$sum", 2)[0];
       // dd($sum);
@@ -2962,7 +3099,8 @@ class VdrController extends Controller
       $minTow = explode('.', $req->tow, 2)[1];
       $minAh = explode('.', $req->ah, 2)[1];
       $minSb = explode('.', $req->sb, 2)[1];
-      $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb;
+      $minSp = explode('.', $nilaiSp, 2)[1];
+      $totalMinute = $minHigh + $minNormal + $minSlow + $minManu + $minIdle + $minTow + $minAh + $minSb + $minSp;
       // dd($totalMinute);
       // dd($req->sb);
       // if ($totalMinute > 0) {
@@ -3007,9 +3145,13 @@ class VdrController extends Controller
       $arraySb = explode('.', $req->sb);
       $minuteSb = intval($arraySb[1]);
 
+      $hourSp =  floor($nilaiSp);
+      $arraySp = explode('.', $nilaiSp);
+      $minuteSp = intval($arraySp[1]);
 
-      $debugHour = $hourHigh + $hourNormal + $hourSlow + $hourManu + $hourIdle + $hourTow + $hourAh + $hourSb;
-      $debugMinute = $minuteHigh + $minuteNormal + $minuteSlow + $minuteManu + $minuteIdle + $minuteTow + $minuteAh + $minuteSb;
+
+      $debugHour = $hourHigh + $hourNormal + $hourSlow + $hourManu + $hourIdle + $hourTow + $hourAh + $hourSb + $hourSp;
+      $debugMinute = $minuteHigh + $minuteNormal + $minuteSlow + $minuteManu + $minuteIdle + $minuteTow + $minuteAh + $minuteSb + $minuteSp;
 
       if ($debugMinute >= 60) {
          $minLeft = $debugMinute - 60;
@@ -3064,6 +3206,7 @@ class VdrController extends Controller
          $tow = 0;
          $ah = 0;
          $sb = 0;
+         $sp = 0;
          $total = 0;
 
          $high = $this->hitungTime($high, $activity->high);
@@ -3074,6 +3217,7 @@ class VdrController extends Controller
          $tow = $this->hitungTime($tow, $activity->tow);
          $ah = $this->hitungTime($ah, $activity->ah);
          $sb = $this->hitungTime($sb, $activity->sb);
+         $sp = $this->hitungTime($sb, $activity->sp);
          // dd($idle);
 
          // $high = $activity->high;
@@ -3085,7 +3229,7 @@ class VdrController extends Controller
          // $ah = $activity->ah;
          // $sb = $activity->sb;
 
-         $total = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb;
+         $total = $high + $normal + $slow + $manu + $idle + $tow + $ah + $sb + $sp;
          // dd($total);
          // dd($high . $normal . $slow . $manu . $idle . $tow .$ah .$sb);
          // $grand = $activity->start + $total;
@@ -3108,7 +3252,8 @@ class VdrController extends Controller
          'idle'   => $idle,
          'tow'    => $tow,
          'ah'     => $ah,
-         'sb'     => $sb
+         'sb'     => $sb,
+         'sp'     => $sp
       );
 
       // $totalOperating = VdrActivity::selectRaw('SUM(high) as high, SUM(normal) as normal, SUM(slow) as slow, SUM(manu) as manu , SUM(idle) as idle, SUM(tow) as tow, SUM(ah) as ah, SUM(sb) as sb')
@@ -3136,6 +3281,7 @@ class VdrController extends Controller
          $totalTow = $operating->getSumTow();
          $totalAh = $operating->getSumAh();
          $totalSb = $operating->getSumSb();
+         $totalSp = $operating->getSumSp();
 
          if ($operating->heading_id == 1) {
             $operating->update([
@@ -3168,6 +3314,10 @@ class VdrController extends Controller
          } elseif ($operating->heading_id == 8) {
             $operating->update([
                'time' => floatval($totalSb)
+            ]);
+         } elseif ($operating->heading_id == 11) {
+            $operating->update([
+               'time' => floatval($totalSp)
             ]);
          }
 
@@ -4425,6 +4575,7 @@ class VdrController extends Controller
             'tow' => 00.00,
             'ah' => 00.00,
             'sb' => 00.00,
+            'sp' => 00.00,
             'created_by' => auth()->user()->name
          ]);
       }

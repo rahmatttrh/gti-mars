@@ -151,7 +151,7 @@
 </nav>
 
 <div class="d-none d-md-block">
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg px-3" style="background-color: #252e47" >
    <div class="">
       <ul class="navbar-nav">
          <li class="nav-item dropdown {{ (request()->is('dsp/m/dash/*')) ? 'active' : '' }}">
@@ -168,7 +168,15 @@
             {{-- <li class="nav-item"><a href="{{route('dsp.marine.intermilan', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link">Intermilan Dashboard</a></li> --}}
             <li class="nav-item"><a href="{{route('map.full')}}" class="nav-link">Map Dashboard</a></li>
             </ul>
+         </li><li class="nav-item {{ (request()->is('daily-report/*')) ? 'active' : '' }}">
+            <a href="{{route('daily.report')}}" class="nav-link {{ (request()->is('daily-report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('daily-report/*'))
+               <i class="text-primary fas fa-calendar ml-3"></i>
+               @endif
+               <span>Daily Report</span>
+            </a>
          </li>
+
          <li class="nav-item {{ (request()->is('intermilan/*')) ? 'active' : '' }}">
             <a href="{{route('intermilan.marine')}}" class="nav-link {{ (request()->is('intermilan/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('intermilan/*'))

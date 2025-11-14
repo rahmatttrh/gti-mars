@@ -2,18 +2,30 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Imports\RequestDetailImport;
+use App\Models\BargeSchedule;
 use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\FoodstuffSchedule;
+use App\Models\HopperSchedule;
 use App\Models\Intermilan;
+use App\Models\InterWeather;
+use App\Models\IpbSchedule;
+use App\Models\LiftingSchedule;
+use App\Models\MainStrategy;
+use App\Models\MaintenanceSchedule;
+use App\Models\OtherSchedule;
+use App\Models\PaxSchedule;
 use App\Models\Port;
+use App\Models\ProjectSchedule;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IntermilanController extends Controller
 {
@@ -306,6 +318,12 @@ class IntermilanController extends Controller
         return redirect()->back()->with('success', 'Intermilan added');
     }
 
+    public function importMaterial(Request $req)
+    {
+        Excel::import(new RequestDetailImport($req->requestId), $req->file('file'));
+        return redirect()->back()->with('success', 'Material successfully imported');
+    }
+
     public function deleteMarineRequest($id)
     {
 
@@ -379,6 +397,53 @@ class IntermilanController extends Controller
         $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
         $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
 
+        $weather = InterWeather::where('intermilan_id', $intermilan->id)->first();
+        if ($weather) {
+            # code...
+        } else {
+            $weather =  InterWeather::create([
+                'intermilan_id' => $intermilan->id
+            ]);
+        }
+
+        $ipbs = IpbSchedule::where('intermilan_id', $intermilan->id)->get();
+        if (count($ipbs) == 0) {
+            IpbSchedule::create([
+                'intermilan_id' => $intermilan->id,
+                'status' => 1,
+                'title' => 'SBU'
+            ]);
+            IpbSchedule::create([
+                'intermilan_id' => $intermilan->id,
+                'status' => 1,
+                'title' => 'CBU'
+            ]);
+            IpbSchedule::create([
+                'intermilan_id' => $intermilan->id,
+                'status' => 1,
+                'title' => 'NBU'
+            ]);
+        }
+
+        $liftingSchedules = LiftingSchedule::where('intermilan_id', $intermilan->id)->get();
+        $ipbs = IpbSchedule::where('intermilan_id', $intermilan->id)->get();
+
+        $barges = Port::where('type', 'barge')->get();
+        $platforms = Port::where('type', 'Platform')->get();
+
+
+        $bargeSchedules = BargeSchedule::where('intermilan_id', $intermilan->id)->get();
+        $projectSchedules = ProjectSchedule::where('intermilan_id', $intermilan->id)->get();
+        $foodstuffSchedules = FoodstuffSchedule::where('intermilan_id', $intermilan->id)->get();
+        $paxSchedules = PaxSchedule::where('intermilan_id', $intermilan->id)->get();
+        $maintenanceSchedules = MaintenanceSchedule::where('intermilan_id', $intermilan->id)->get();
+        $hopperSchedules = HopperSchedule::where('intermilan_id', $intermilan->id)->get();
+        $otherSchedules = OtherSchedule::where('intermilan_id', $intermilan->id)->get();
+        $mainStrategies = MainStrategy::where('intermilan_id', $intermilan->id)->get();
+        // dd($paxSchedules);
+
+
+
         return view('pages-stisla.marine.intermilan.detail-risalah', [
             'intermilan' => $intermilan,
             'start' => $startDate,
@@ -387,8 +452,39 @@ class IntermilanController extends Controller
             'schedules' => $schedules,
             'now' => Carbon::now(),
             'weekSchedules' => $weekSchedules,
-            'requests' => $requests
+            'requests' => $requests,
+
+            'weather' => $weather,
+            'barges' => $barges,
+            'liftingSchedules' => $liftingSchedules,
+            'ipbs' => $ipbs,
+            'bargeSchedules' => $bargeSchedules,
+            'projectSchedules' => $projectSchedules,
+            'platforms' => $platforms,
+            'foodstuffSchedules' => $foodstuffSchedules,
+            'paxSchedules' => $paxSchedules,
+            'maintenanceSchedules' => $maintenanceSchedules,
+            'hopperSchedules' => $hopperSchedules,
+            'otherSchedules' => $otherSchedules,
+            'mainStrategies' => $mainStrategies
 
         ])->with('i');
+    }
+
+
+    public function ajaxUpdate($id, Request $req)
+    {
+        $intermilan = Intermilan::find($id);
+        $intermilan->update([
+
+            'body' => $req->body,
+
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'result' => $intermilan->id,
+            'message' => 'Note berhasil di ubah'
+        ]);
     }
 }

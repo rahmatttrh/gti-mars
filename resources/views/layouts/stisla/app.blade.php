@@ -136,6 +136,24 @@
       background-color: rgb(4, 197, 4);
       color: white;
    }
+
+   #messageBox {
+      position: fixed;
+      top: 30px;               /* jarak dari atas layar */
+      left: 50%;               /* center horizontal */
+      transform: translateX(-50%);  /* benerin posisi tengah */
+      background: #499bc4;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 9999;
+      font-size: 12px;
+      text-align: center;
+      min-width: 250px;
+      animation: slideDown 0.3s ease, fadeOut 2s ease 1.5s forwards;
+   }
 </style>
 
 
@@ -149,7 +167,7 @@
       </div> --}}
       <div id="app ">
          
-         <div class="main-wrapper px-2 ">
+         <div class="main-wrapper px-3 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
                
             <div class="navbar-bg bgb-1" style="background-color: #e6e6ef"></div>
@@ -204,6 +222,9 @@
 
             <!-- Main Content -->
             <div class="main-content">
+               <div id="messageBox"
+               >
+            </div>
             @yield('content')
             </div>
             <footer class="main-footer">
@@ -254,7 +275,24 @@
       <script src="{{asset('stisla/js/custom.js')}}"></script>
       <script src="{{asset('stisla/js/page/modules-datatables.js')}}"></script>
 
+      <script>
+         
+         function showMessage(html, color = "#499bc4") {
+            console.log('message')
+              let box = document.getElementById("messageBox");
+              box.innerHTML = html;          // bisa isi HTML
+              box.style.background = color;
+              box.style.display = "block";
+
+              // auto hilang setelah 3 detik
+              setTimeout(() => {
+              box.style.display = "none";
+              }, 1800);
+           }
+     </script>
+
       {{-- MYJS --}}
+      @stack('lifting-js')
       @stack('map')
       @stack('get_schedules')
       @stack('autorefresh')

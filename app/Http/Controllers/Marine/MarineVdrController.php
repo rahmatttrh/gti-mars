@@ -311,14 +311,18 @@ class MarineVdrController extends Controller
    {
 
       $vdrValidations = collect();
+      $level = 'Marine';
       if (auth()->user()->username == 'pet') {
          $to = Carbon::now();
+         $level = 'PET';
          $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-      } elseif (auth()->user()->username == 'marine') {
+      } elseif (auth()->user()->username == 'marine'  || auth()->user()->username == 'fleet' || auth()->user()->username == 'superadmin') {
          $to = Carbon::now();
+         $level = 'Marine';
          $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfiaryanto') {
          $to = Carbon::now();
+         $level = 'Suptent';
          $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
@@ -343,6 +347,7 @@ class MarineVdrController extends Controller
 
       return view('pages-stisla.marine.vdr.validation', [
          'title' => 'Validation',
+         'level' => $level,
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -353,10 +358,11 @@ class MarineVdrController extends Controller
 
       $to = Carbon::now();
       $vdrValidations = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-
+      $level = 'PET';
 
       return view('pages-stisla.marine.vdr.validation', [
          'title' => 'Validation',
+         'level' => 'PET',
          'vdrs' => $vdrValidations
       ])->with('i');
    }
@@ -424,7 +430,7 @@ class MarineVdrController extends Controller
       if (auth()->user()->username == 'pet') {
          $to = Carbon::now();
          $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-      } elseif (auth()->user()->username == 'marine') {
+      } elseif (auth()->user()->username == 'marine' || auth()->user()->username == 'fleet' || auth()->user()->username == 'superadmin') {
          $to = Carbon::now();
          $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfiaryanto') {
@@ -464,7 +470,8 @@ class MarineVdrController extends Controller
 
       return view('pages-stisla.marine.vdr.validation', [
          'vdrs' => $vdrValidations,
-         'title' => 'Validation'
+         'title' => 'Validation',
+         'level' => 'Suptent'
       ])->with('i');
    }
 
@@ -530,6 +537,33 @@ class MarineVdrController extends Controller
          'action' => 'Undo VDR',
          'vdr_id' => $vdr->id,
          'desc' => 'PET',
+         'table' => 'vdrs'
+      ]);
+
+
+      // dd()
+
+
+
+      return redirect()->back()->with('success', 'Undo VDR success');
+   }
+
+   public function undoMarine($id)
+   {
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find(dekripRambo($id));
+      $vdr->update([
+         'status' => 2,
+
+      ]);
+
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Undo VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Marine',
          'table' => 'vdrs'
       ]);
 

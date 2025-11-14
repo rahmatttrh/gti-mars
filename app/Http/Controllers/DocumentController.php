@@ -17,16 +17,46 @@ use App\Models\VdrCargo;
 use App\Models\VdrHse;
 use App\Models\VdrOperating;
 use App\Models\VdrPeriodic;
+use App\Models\VdrPin;
 use App\Models\VdrReject;
 use App\Models\VdrWeather;
 use App\Models\Vessel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
 class DocumentController extends Controller
 {
 
+
+   public function vdrPin($id){
+      $vdr = Vdr::find(dekripRambo($id));
+
+      return view('pages.document.vdr-pin', [
+         'vdr' => $vdr
+      ]);
+
+   }
+
+   public function vdrPinCheck(Request $req){
+      $vdr = Vdr::find($req->vdrId);
+      $vdrPin = VdrPin::where('title', 'vdr')->first();
+
+      // dd($vdr->id);
+
+      if (Hash::check($req->pin, $vdrPin->pin)) {
+         return view('pages.document.vdr-finance', [
+            'vdr' => $vdr,
+            'vessel' => $vdr->vessel,
+            
+         ]);
+         // return redirect()->route('vdr.open.pdf', enkripRambo($vdr->id));
+      } else {
+         return redirect()->back()->with('danger', 'PIN yang anda masukkan salah!');
+      }
+
+   }
    public function vdr($id)
    {
 
@@ -85,12 +115,15 @@ class DocumentController extends Controller
 
       // return('email');
 
+      $sp = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
+
 
 
 
 
 
       return view('pages.document.vdr', [
+         'sp' => $sp,
          'vdr' => $vdr,
          'vessel' => $vdr->vessel,
          'vdrActivities' => $vdrActivities,
