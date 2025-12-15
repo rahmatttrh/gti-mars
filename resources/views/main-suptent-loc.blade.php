@@ -11,9 +11,19 @@
                <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
-                     Welcome back, <h4> {{auth()->user()->name}}</h4>
+                     Welcome back, 
+                     {{-- <h5>Location Company Representative/Suptent Area</h5> --}}
+                     <h4> {{auth()->user()->name}}</h4>
                      <hr>
                      Superintendent <h4>{{auth()->user()->getArea()}}</h4>
+                     <hr>
+                     Location Company Representative/Suptent Area
+                  </div>
+               </div>
+
+               <div class="card">
+                  <div class="card-body">
+                     Klik Nama Kapal atau VDR Number pada table VDR Validation untuk melakukan Validasi VDR
                   </div>
                </div>
             </div>

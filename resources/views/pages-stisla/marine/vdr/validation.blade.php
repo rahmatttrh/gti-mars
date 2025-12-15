@@ -30,9 +30,9 @@
          <div class="col-md-3">
             @if ($title == 'Validation')
                <div class="card shadow">
-                  <div class="card-header"><h5>VDR {{$level}} Validation </h5></div>
+                  <div class="card-header"><h5>VDR  Validation </h5></div>
                   <div class="card-body">
-                     Daftar VDR yang membutuhkan Approval <span class="text-uppercase">{{$level}}</span>
+                     Daftar VDR yang membutuhkan Approval <span class="text-uppercase"><b>{{$level}}</b></span>
                      <hr>
                      <div class="card bg-info">
                         <div class="card-body">

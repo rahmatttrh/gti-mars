@@ -332,6 +332,7 @@ class MarineVdrController extends Controller
 
       if (auth()->user()->hasRole('suptent_loc')) {
          $employee = Employee::where('username', auth()->user()->username)->first();
+         $level = 'Company Location Representative/Suptent Area';
          if ($employee->area != null) {
             $vdrValidations = Vdr::where('area',  $employee->area)->whereIn('status', [5])->orderBy('updated_at', 'desc')->get();
          } else {
@@ -414,7 +415,21 @@ class MarineVdrController extends Controller
       //    $vdrValidations = Vdr::where('status', 303)->orderBy('updated_at', 'desc')->get();
       // }
 
+
       $vdrValidations = Vdr::whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+
+      if (auth()->user()->hasRole('suptent_loc')) {
+         $level = 'Company Location Representative/Suptent Area';
+         $employee = Employee::where('username', auth()->user()->username)->first();
+         if ($employee->area != null) {
+            $vdrValidations = Vdr::where('area',  $employee->area)->whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+            // dd($vdrs);
+         } else {
+            $vdrValidations = Vdr::where('func', $employee->func)->whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+         }
+
+         // dd($vdrs);
+      }
 
 
 
@@ -426,21 +441,25 @@ class MarineVdrController extends Controller
 
    public function historyList()
    {
-
+      $level = '';
       if (auth()->user()->username == 'pet') {
          $to = Carbon::now();
+         $level = 'PET';
          $vdrs = Vdr::where('status', '>', 1)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'marine' || auth()->user()->username == 'fleet' || auth()->user()->username == 'superadmin') {
          $to = Carbon::now();
+         $level = 'Marine';
          $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       } elseif (auth()->user()->username == 'lutfiaryanto') {
          $to = Carbon::now();
+         $level = 'Suptent';
          $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
 
 
       if (auth()->user()->hasRole('suptent_loc')) {
+         $level = 'Company Location Representative/Suptent Area';
          $employee = Employee::where('username', auth()->user()->username)->first();
          if ($employee->area != null) {
             $vdrs = Vdr::where('area',  $employee->area)->whereIn('status', [3, 4])->orderBy('updated_at', 'desc')->get();
@@ -455,6 +474,7 @@ class MarineVdrController extends Controller
       $vessel = null;
 
       return view('pages-stisla.marine.vdr.history', [
+         'level' => $level,
          'title' => 'History',
          'vdrs' => $vdrs,
          'vessels' => $vessels,

@@ -27,7 +27,7 @@
 
    @elseif($vdr->status == 5)
    <div class="badge badge-primary">
-      Menunggu Validasi Suptent On Location
+      Menunggu Validasi Suptent Area
    </div>
    
    @elseif($vdr->status == 4)
@@ -47,5 +47,5 @@
    <div class="badge badge-danger" >Reject by Suptent</div>
    @elseif($vdr->status == 505)
    
-   <div class="badge badge-danger" >Reject by Suptent on Location</div>
+   <div class="badge badge-danger" >Reject by Suptent Area</div>
 @endif
