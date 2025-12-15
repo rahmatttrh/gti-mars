@@ -51,9 +51,12 @@ table th tr td {
       <div class="row align-items-center">
          <div class="col">
             <h2 class="page-title">
-            Vessel Daily Report
-             {{-- [{{$vdr->code}}]   --}}
-            </h2>
+               Preview Vessel Daily Report
+                {{-- [{{$vdr->code}}]   --}}
+               </h2>
+               <small>
+                  Setelah Klik Print VDR, Disarankan merubah ke <b>Mode Layout Landscape</b> dan <b>Margins Minimum</b> untuk hasil yang lebih baik.
+               </small>
          </div>
          <!-- Page title actions -->
          <div class="col-auto ms-auto d-print-none">
