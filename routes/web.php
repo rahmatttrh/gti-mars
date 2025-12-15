@@ -124,6 +124,13 @@ Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectF
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn() => phpinfo());
 
+   Route::prefix('vdr/statistic')->group(function () {
+      Route::get('vessel/{id}', [VdrController::class, 'statisticVessel'])->name('vdr.statistic.vessel');
+      // Route::get('department/{id}', [FetchController::class, 'fetchDepartment']);
+      // Route::get('subdept/{id}', [FetchController::class, 'fetchSubdept']);
+      // Route::get('position/{id}', [FetchController::class, 'fetchPosition']);
+   });
+
 
    Route::prefix('pass')->group(function () {
       Route::get('reset', [PasswordController::class, 'index'])->name('pass.reset');
@@ -202,15 +209,18 @@ Route::middleware(["auth"])->group(function () {
    Route::prefix('intermilan')->group(function () {
       Route::get('marine/index', [ControllersIntermilanController::class, 'index'])->name('intermilan.marine');
       Route::post('marine/store', [ControllersIntermilanController::class, 'storeMarine'])->name('intermilan.marine.store');
+      Route::get('marine/vessel/detail/{id}', [ControllersIntermilanController::class, 'detailVessel'])->name('intermilan.vessel.detail');
 
       Route::post('marine/request/store', [ControllersIntermilanController::class, 'storeMarineRequest'])->name('intermilan.marine.request.store');
       Route::post('marine/request/material/import/store', [ControllersIntermilanController::class, 'importMaterial'])->name('intermilan.marine.request.material.import');
 
-      Route::post('marine/delete/request/{$id}', [ControllersIntermilanController::class, 'deleteMarineRequest'])->name('intermilan.marine.request.delete');
+      Route::post('marine/delete/request', [ControllersIntermilanController::class, 'deleteMarineRequest'])->name('intermilan.marine.request.delete');
       Route::post('marine/cargo/store', [ControllersIntermilanController::class, 'storeMarineCargo'])->name('intermilan.marine.cargo.store');
       Route::put('marine/cargo/update', [ControllersIntermilanController::class, 'updateMarineCargo'])->name('intermilan.marine.cargo.update');
       Route::get('marine/detail/{id}', [ControllersIntermilanController::class, 'detail'])->name('intermilan.marine.detail');
       Route::get('marine/risalah/{id}', [ControllersIntermilanController::class, 'risalah'])->name('intermilan.marine.risalah');
+      Route::get('marine/crew/{id}', [ControllersIntermilanController::class, 'crew'])->name('intermilan.marine.crew');
+      Route::post('marine/request/drop', [ControllersIntermilanController::class, 'requestDrop'])->name('intermilan.marine.request.drop');
 
       Route::put('marine/weather/update', [InterWeatherController::class, 'update'])->name('intermilan.marine.weather.update');
       Route::post('marine/lifting/store', [LiftingScheduleController::class, 'store'])->name('intermilan.marine.lifting.store');
@@ -936,7 +946,7 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/bu/{vdr}/{bu}', [VdrController::class, 'updateBu'])->name('vdr.update.bu');
 
    Route::get('vdr/update/general/{vdr}/{date}/{loc}/{onduty}/{pax}/{contract_start}/{contract_end}/{owner}/{master}/{ce}', [VdrController::class, 'updateGeneral'])->name('vdr.update.general');
-   Route::get('vdr/update/weather/{vdr}/{weather}/{t6}/{t12}/{t18}/{t24}', [VdrController::class, 'updateWeatherAjax']);
+   Route::get('vdr/update/weather/{vdr}/{weather}', [VdrController::class, 'updateWeatherAjax']);
    Route::get('vdr/update/hsse/{vdr}/{hsse}/{prev}/{today}', [VdrController::class, 'updateHsseAjax']);
    Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
    Route::get('vdr/update/operating-b/{vdr}/{op}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingBAjax']);
@@ -1006,7 +1016,7 @@ Route::prefix('fetch/intermilan')->group(function () {
 
    // Route::get('vdr/update/bu/{vdr}/{bu}', [VdrController::class, 'updateBu'])->name('vdr.update.bu');
 
-   
+
 });
 
 

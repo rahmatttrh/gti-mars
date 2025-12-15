@@ -155,6 +155,9 @@
            
                
          </div> --}}
+
+         @if ($vdr->remark == 'void')
+         @else
          <div class="d-none d-md-block">
             <div class="col-md-12 ">
                <div class="row">
@@ -451,6 +454,9 @@
 
             
          </div>
+         @endif
+
+         
          
 
          <div class="col-md-12">
@@ -463,6 +469,14 @@
             </div> --}}
             
             <div class="table-responsive " > 
+               @if ($vdr->remark == 'void')
+                  <div class="card bg-danger mt-2">
+                     <div class="card-body text-center">
+                        <h2><i>VOID</i></h2>
+                        <i>Data ini tidak dapat digunakan sebagai dasar Invoicing</i>
+                     </div>
+                  </div>
+               @endif
                <div class="row ">
                   <div class="col-md-5">
                      
@@ -1229,7 +1243,125 @@
                         </thead>
                         <tbody>
                            
-                              @foreach ($operatings as $operating)
+                              @foreach ($operatings->where('heading_id', '<', 9) as $operating)
+                              <tr id="baris-{{$operating->id}}">
+                                 <!-- <td> -->
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$operating->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
+                                 <!-- </td> -->
+                                 <td> {{$operating->heading->description}} </td>
+                                 <td class="text-center align-middle ">
+                                    <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
+                                 </td>
+                                 <td class="text-center align-middle bg-y">
+                                       @if($operating->heading->speed == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @endif
+                                 </td>
+            
+                                 <td class="text-center align-middle bg-y">
+                                    <!-- {{$operating->contractual_fuel}} -->
+                                       @if($operating->heading->contractual == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_b_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @endif
+                                 </td>
+                                 <td class="text-center ">
+            
+            
+                                       @if($operating->heading->daily == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}}  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @endif
+                                 </td>
+                              </tr>
+                              @endforeach
+
+                              @foreach ($operatings->where('heading_id', 11) as $operating)
+                              <tr id="baris-{{$operating->id}}">
+                                 <!-- <td> -->
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$operating->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
+                                 <!-- </td> -->
+                                 <td> {{$operating->heading->description}} </td>
+                                 <td class="text-center align-middle ">
+                                    <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
+                                 </td>
+                                 <td class="text-center align-middle bg-y">
+                                       @if($operating->heading->speed == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @endif
+                                 </td>
+            
+                                 <td class="text-center align-middle bg-y">
+                                    <!-- {{$operating->contractual_fuel}} -->
+                                       @if($operating->heading->contractual == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_b_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @endif
+                                 </td>
+                                 <td class="text-center ">
+            
+            
+                                       @if($operating->heading->daily == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}}  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @endif
+                                 </td>
+                              </tr>
+                              @endforeach
+                              @foreach ($operatings->where('heading_id', 9) as $operating)
+                              <tr id="baris-{{$operating->id}}">
+                                 <!-- <td> -->
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$operating->id}}">
+                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
+                                 <!-- </td> -->
+                                 <td> {{$operating->heading->description}} </td>
+                                 <td class="text-center align-middle ">
+                                    <span class="time_{{$operating->heading_id}}">{{getTotalHours($operating->time)}}</span>
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="time_{{$operating->heading_id}}" id="time_{{$operating->id}}" name="time[]" readonly hidden  value="{{$operating->time}}">
+                                 </td>
+                                 <td class="text-center align-middle bg-y">
+                                       @if($operating->heading->speed == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                       @endif
+                                 </td>
+            
+                                 <td class="text-center align-middle bg-y">
+                                    <!-- {{$operating->contractual_fuel}} -->
+                                       @if($operating->heading->contractual == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_b_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                       @endif
+                                 </td>
+                                 <td class="text-center ">
+            
+            
+                                       @if($operating->heading->daily == '1')
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="text" readonly hidden id="dailyhidden_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}}  class="w-100 input_operating_{{$operating->id}} daily_{{$operating->heading_id}}" type="text" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @else
+                                       <input {{$editable == 0 ? 'readonly' : ''}} class="w-100 input_operating_{{$operating->id}}" type="hidden" readonly id="daily_{{$operating->id}}" name="daily[]"  value="{{$operating->daily}}">
+                                       @endif
+                                 </td>
+                              </tr>
+                              @endforeach
+                              @foreach ($operatings->where('heading_id', 10) as $operating)
                               <tr id="baris-{{$operating->id}}">
                                  <!-- <td> -->
                                  <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$operating->id}}">
@@ -2455,9 +2587,15 @@
 
                   var _token = $('meta[name="csrf-token"]').attr('content');
                   $.ajax({
-                     url: "/fetch/vdr/update/weather/" + vdr + "/" + weather +  "/"  + t6 + "/" + t12 +  "/"  + t18 + "/" + t24 ,
+                     url: "/fetch/vdr/update/weather/" + vdr + "/" + weather ,
                      method: "GET",
                      dataType: 'json',
+                     data: {
+                        t6: t6,
+                        t12: t12,
+                        t18: t18,
+                        t24: t24,
+                     },
 
                      success: function(result) {
                         console.log('result :' + result.result);

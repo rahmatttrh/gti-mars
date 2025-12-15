@@ -114,8 +114,8 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="container">
-      <ul class="navbar-nav">
+   {{-- <div class="container"> --}}
+      <ul class="navbar-nav px-3">
          {{-- <li class="nav-item dropdown {{ (request()->is('dsp/u/dash/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/u/dash/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/u/dash/*'))
@@ -191,5 +191,5 @@
 
          
       </ul>
-   </div>
+   {{-- </div> --}}
 </nav>

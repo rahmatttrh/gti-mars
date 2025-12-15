@@ -570,7 +570,7 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       Mail::to([
          "develop@ekanuri.com",
-         "rahmattrust@gmail.com",
+         // "rahmattrust@gmail.com",
          "mk.yusuf.hibatullah@pertamina.com",
          "mk.lutfa.jasworo@pertamina.com",
          "mk.luthfi.alhafiizh@pertamina.com",
@@ -645,7 +645,7 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       Mail::to([
          "develop@ekanuri.com",
-         "rahmattrust@gmail.com",
+         // "rahmattrust@gmail.com",
          "mk.umar.agam@pertamina.com",
          "mk.rezky.hardanto@pertamina.com",
          "mk.muhammad.hasan@pertamina.com",
@@ -720,7 +720,7 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       Mail::to([
          "develop@ekanuri.com",
-         "rahmattrust@gmail.com",
+         // "rahmattrust@gmail.com",
          "laryanto@pertamina.com",
 
       ])->send(new ApprovalPetMorning($data));

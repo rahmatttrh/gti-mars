@@ -100,6 +100,8 @@
                         
                      </div>
                   </div>
+                  <br>
+                  <b>Menyatakan bahwa dokumen berikut telah dilakukan pengesahan (Sign Document) dengan detail:</b>
                   
                   <table class=" mt-2">
                      <tbody>
@@ -260,7 +262,8 @@
                   
                   @if ($vdr->status == 4)
                   <br>
-                    <small class="text-muted" style="font-size: 10px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small>
+                    {{-- <small class="text-muted" style="font-size: 10px"><i>"Dokumen ini telah disetujui melalui system dan sah tanpa memerlukan tanda tangan basah"</i></small> --}}
+                  <b>Adalah benar dan tercatat pada Database Kami</b>
                     @endif
 
 

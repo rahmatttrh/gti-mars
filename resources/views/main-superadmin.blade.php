@@ -15,7 +15,9 @@
                      <hr class="bg-light">
                       <b class="mb-3">PIC of Super Admin :</b> <br>
 
-                     Mochamad Harris
+                      Joy Pranata Ginting <br>
+                      Yusuf Revy Fadillah <br>
+                      Mochamad Harris
                      
                       
                   </div>
@@ -380,77 +382,89 @@
                   </div>
 
                   <div class="col-md-12">
-                     <div class="card ">
-                        {{-- <div class="card-header">
-                           
-                        </div> --}}
-                        <div class="card-body">
-                           <span class="badge badge-info mb-2">
-                              MONITORING VDR
-                           </span>
-                           <span class="badge badge-info mb-2">
-                             16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
-                           </span>
-                           
-                           {{-- <table class="display  border">
-                              <tbody>
-                                 <tr>
-                                    <th>All Vessel Daily Report</th>
-                                 </tr>
-                              </tbody>
-                           </table> --}}
-                           <div class="table-responsive">
-                              <table class="datatables-vdr-monitoring text-dark">
-                                 
-                                 <thead>
-                                    
-                                    <tr>
-                                       
-                                       <th>Vessel</th>
-                                       <th class="text-center">Total</th>
-                                       <th class="text-center">Draft</th>
-                                       <th class="text-center">Rejected</th>
-                                       <th class="text-center">PET</th>
-                                       <th class="text-center">Marine</th>
-                                       <th class="text-center">Suptent</th>
-                                       <th class="text-center">Complete</th>
-                                    </tr>
-                                 </thead>
-                                 <tbody>
-                                    @foreach ($vessels as $vessel)
-                                   
-                                       @if (count($vessel->getVdrs()) > 0)
-                                       <tr >
-                                          <td>{{$vessel->name}}</td>
-                                          <td class="text-center">{{count($vessel->getVdrs())}}</td>
-                                          <td class="text-center">{{count($vessel->getDraftVdrs())}}</td>
-                                          <td class="text-center">{{count($vessel->getRejectVdrs())}}</td>
-                                          <td class="text-center">{{count($vessel->getPetVdrs())}}</td>
-                                          <td class="text-center">{{count($vessel->getMarineVdrs())}}</td>
-                                          <td class="text-center">{{count($vessel->getSuptentVdrs())}}</td>
-                                          {{-- <td>{{count($vessel->getProgressVdrs())}}</td> --}}
-                                          <td class="text-center">{{count($vessel->getCompleteVdrs())}}</td>
-            
-                                       </tr>
-            
-                                       
-                                       @endif
-      
-                                       
-                                       
-                                    @endforeach
-                                    
-                                   
-                                 </tbody>
-                              </table>
-                           </div>
-                        </div>
-                     </div>
+                     
                   </div>
                </div>
 
                
       
+               
+            </div>
+         </div>
+         <div class="card ">
+            {{-- <div class="card-header">
+               
+            </div> --}}
+            <div class="card-body">
+               <span class="badge badge-info mb-2">
+                  MONITORING VDR
+               </span>
+               <span class="badge badge-info mb-2">
+                 16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+               </span>
+               
+               {{-- <table class="display  border">
+                  <tbody>
+                     <tr>
+                        <th>All Vessel Daily Report</th>
+                     </tr>
+                  </tbody>
+               </table> --}}
+               
+                  <table class="datatables-vdr-monitoring text-dark">
+                     
+                     <thead>
+                     
+                        <tr>
+                           
+                           <th>Vessel</th>
+                           <th class="text-center">Total</th>
+                           <th class="">Last VDR</th>
+                           <th class="">Release at</th>
+                           <th>Release Gap</th>
+                           <th class="text-center">Draft</th>
+                           <th class="text-center">Rejected</th>
+                           <th class="text-center">PET</th>
+                           <th class="text-center">Marine</th>
+                           <th class="text-center">Suptent</th>
+                           <th class="text-center">Complete</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        @foreach ($vessels as $vessel)
+                       
+                           @if (count($vessel->getVdrs()) > 0)
+                           <tr >
+                              <td><a href="{{route('vdr.statistic.vessel', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
+                              <td class="text-center">{{count($vessel->getVdrs())}}</td>
+                              <td class="">{{formatDate($vessel->getVdrLast()->date)}}</td>
+                              <td class="">
+                                 @if ($vessel->getVdrLast()->release_date != null)
+                                 {{formatDateTimeB($vessel->getVdrLast()->release_date)}}
+                                 @endif
+                                 
+                              </td>
+                              <td class="">{{$vessel->getVdrLast()->getDistance()}}</td>
+                              <td class="text-center">{{count($vessel->getVdrs()->where('status', 0))}}</td>
+                              <td class="text-center">{{count($vessel->getRejectVdrs())}}</td>
+                              <td class="text-center">{{count($vessel->getPetVdrs())}}</td>
+                              <td class="text-center">{{count($vessel->getMarineVdrs())}}</td>
+                              <td class="text-center">{{count($vessel->getSuptentVdrs())}}</td>
+                              {{-- <td>{{count($vessel->getProgressVdrs())}}</td> --}}
+                              <td class="text-center">{{count($vessel->getCompleteVdrs())}}</td>
+
+                           </tr>
+
+                           
+                           @endif
+
+                           
+                           
+                        @endforeach
+                        
+                       
+                     </tbody>
+                  </table>
                
             </div>
          </div>

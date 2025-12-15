@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTime;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,28 @@ class Vdr extends Model
    public function rejectBy()
    {
       return $this->belongsTo(User::class, 'reject_by');
+   }
+
+   public function getDistance()
+   {
+      $date1 = new DateTime($this->date);
+      $date2 = new DateTime($this->release_date);
+
+      $diff = $date1->diff($date2);
+
+      if ($this->release_date != null) {
+         // if ($diff->m > 0) {
+         //    $m = $diff->m . ' Bulan ';
+         // } else {
+         //    $m = '';
+         // }
+         $result = $diff->days . ' Hari';
+      } else {
+         $result = '-';
+      }
+
+      // echo "Selisih: " . $diff->y . " tahun, " . $diff->m . " bulan, " . $diff->d . " hari";
+      return $result;
    }
 
    public function vessel()

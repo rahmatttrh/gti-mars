@@ -101,6 +101,9 @@
 </script>
 <!-- /END GA -->
 <style>
+   .card {
+      border-radius: 10px;
+    }
    .bga-1 {
       background-color: #365486
    }

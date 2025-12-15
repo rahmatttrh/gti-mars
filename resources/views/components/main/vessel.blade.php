@@ -70,7 +70,7 @@
                      </div>
                   </div>
                   @endif
-                  <div  class="table-responsive overflow-auto " style="height: 210px" >
+                  <div  class="table-responsive overflow-auto " style="height: 350px" >
                      <table class="table table-sm" >
                         <thead>
                            <tr>
@@ -102,7 +102,8 @@
                                       
                                     </div>
                                  </div> --}}
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> | <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Buka di Form Lama</a>
+                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> 
+                                 {{-- | <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Buka di Form Lama</a> --}}
                                     
                                      @else
                                      {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
@@ -215,18 +216,84 @@
             </div>
          </div>
          <div class="col-md-4">
-            
-            <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
-               <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
-            </marquee>
-
-
-            <div class="card card-danger shadow ">
+            <div class="card shadow-lg">
                <div class="card-body">
-                  # Pengumuman <br>
-                  Anda tidak bisa melakukan <b>Release VDR</b> ketika VDR di tanggal sebelumnya masih berstatus <b>Menunggu Validasi PET</b>, hanya bisa melalukan <b>Drafting VDR</b>. <br>
-                  Untuk menjaga data tetap berkesinambungan antar VDR.
+                  <i><h4>Announcement</h4></i>
+                 
+                  
+                  VDR Draft (Pending) periode 16 September 2025 sampai 30 November 2025 sudah di <b>Auto Complete by System</b>. Anda bisa langsung melakukan Release VDR Periode Desember 2025
+               </div>
+            </div>
+            
+            {{-- <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
+               <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
+            </marquee> --}}
+
+            @if (auth()->user()->username == 'logindo')
+            {{-- <div class="card bg-danger shadow-lg text-light">
+               <div class="card-body">
+                  Dear <b>Logindo Overcomer</b>,  
+                  <br><br>
+                  Segera lakukan Release VDR dari tanggal 23 September 2025 secara berurutan.
+                  <br><br>
+               </div>
+            </div> --}}
+            @endif
+
+            @if (auth()->user()->username == 'giatjaya')
+            {{-- <div class="card bg-danger shadow-lg text-light">
+               <div class="card-body">
+                  Dear <b>Giat Jaya</b>,  
+                  <br><br>
+                  harap lengkapi data dan release VDR tanggal 22 Oktober 2025 yang sebelumnya terdapat kendala.
+                  <br><br>
+                  - Sistem -
+               </div>
+            </div> --}}
+            @endif
+
+            {{-- @if (auth()->user()->username == 'forisa12')
+            <div class="card bg-danger shadow-lg text-light">
+               <div class="card-body">
+                  Dear <b>Forisa12</b>,  
+                  <br><br>
+                  Segera melakukan Release VDR tanggal 22 Oktober 2025.
+                  <br><br>
+                  - Sistem -
+               </div>
+            </div>
+            @endif --}}
+
+            {{-- @if (auth()->user()->username == 'magelang')
+            <div class="card bg-danger shadow-lg text-light">
+               <div class="card-body">
+                  Dear <b>CB Magelang</b>, <br><br>
+
+                 
+                  Segera lakukan Release VDR dari tanggal 18 Oktober 2025 secara berurutan.
+                  <br><br>
+                  - Sistem -
+
+               </div>
+            </div>
+            @endif --}}
+            <div class="card shadow-lg">
+               <div class="card-body">
+                  <i><h4>Notes</h4></i>
+                 
+                  
+                  Harap lakukan Release VDR Draft dari tanggal yang paling awal secara berurutan 
+               <hr>
+                  Release VDR disarankan sebelum pukul 07:00 atau sebelum pukul 19:00
                   <hr>
+                  VDR Reject harus di Revisi dan di Release Ulang sebelum pukul 16:00
+               </div>
+            </div>
+
+
+            <div class="card  shadow ">
+               <div class="card-body">
+                  
                   # Alur Approval VDR <br>
                   PET -> MARINE -> SUPTENT -> COMPLETE
                </div>

@@ -352,6 +352,19 @@
       @stack('map')
       @stack('autorefresh')
 
+      
+      <script>
+         
+         $(document).ready( function () {
+            
+            document.addEventListener('contextmenu', function(event) {
+               event.preventDefault();
+            });
+         } );
+         
+         </script>
+      
+
       <script>
          $(document).ready(function() {
             $('.example').DataTable();

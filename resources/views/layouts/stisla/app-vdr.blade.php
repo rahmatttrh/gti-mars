@@ -199,6 +199,8 @@
       <script src="{{asset('stisla/js/page/modules-datatables.js')}}"></script>
       <script src="{{asset('libs/apexcharts/dist/apexcharts.min.js')}}"></script>
 
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
       <script>
           function showMessage(html, color = "#499bc4") {
                let box = document.getElementById("messageBox");
@@ -251,6 +253,20 @@
          dateFormat: "H:i"
          });
       </script>
+
+
+
+   <script>
+      
+      $(document).ready( function () {
+         
+         document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+         });
+      } );
+   
+   </script>
+
 
 
       <script>
@@ -340,14 +356,40 @@
       @if (session('warning'))
          <script>
                $(document).ready(function() {
-                  iziToast.warning({
-                  title: 'Fail!',
-                  message: "{{ Session::get('warning') }}",
-                  position: 'topRight'
-               });
+                  // iziToast.warning({
+                  //    title: 'Fail!',
+                  //    message: "{{ Session::get('warning') }}",
+                  //    position: 'topRight'
+                  // });
+                  Swal.fire({
+                     title: 'Failed!',
+                     text: "{{ Session::get('warning') }}",
+                     icon: 'warning',
+                     confirmButtonText: 'OK'
+                  })
                   
                });
          </script>
+      @endif
+      @if (session('warning-vdr'))
+         <script>
+               $(document).ready(function() {
+                  //    iziToast.warning({
+                  //    title: 'Fail!',
+                  //    message: "{{ Session::get('warning') }}",
+                  //    position: 'topRight'
+                  // });
+                  Swal.fire({
+                     title: 'Release VDR Gagal Diproses',
+                     text: "{{ Session::get('warning-vdr') }}",
+                     icon: 'warning',
+                     confirmButtonText: 'OK'
+                     })
+                  
+               });
+         </script>
+
+         
       @endif
       @if ($errors->any())  
          @foreach ($errors->all() as $error)

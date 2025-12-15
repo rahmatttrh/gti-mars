@@ -143,105 +143,91 @@
                   <div class="col-md-6">
                      <div class="card">
                         <div class="card-body">
-                           <div class="badge badge-info mb-2">Optional Data</div>
-                           <div class="row">
-                              <div class="col-md-12">
+                           {{-- <div class="badge badge-info">VDR</div> --}}
+                           <span class=""><i>Recent VDR</i></span>
+                           
+                          
+                          @if ($lastVdr != null)
+                          <div class="table-responsive mt-2" >
+                           <table class="w-100 border">
+                             
+                              <thead>
+                                 <tr>
+                                    <td class="border">VDR ID</td>
+                                    <td class="border" colspan="2">{{$lastVdr->code}}</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="border">Date</td>
+                                    <td class="border" colspan="2">{{formatDate($lastVdr->date)}}</td>
+                                 </tr>
+                                 <tr>
+                                    <td class="border">Status</td>
+                                    <td class="border" colspan="2"><x-status-stisla.vdr-plain :vdr="$lastVdr" /></td>
+                                 </tr>
+                                 {{-- <tr>
+                                    <td colspan="5" class="border"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Operating Data</b></td>
+                                   
+                                 </tr> --}}
+                                 <tr class="text-center bg-lgray ">
+                                    {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
+                                    <th class="border">Operating Mode</th>
+                                    <th class="border">Min. Speed as Contract (Knots) <br> </th>
+                                    <th class="border" >Contractual Fuel Cons.
+                                       Remuneration Figures</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
                                  
-                                 <div class=" form-row">
-                                    <div class="form-group col-md-6">
-                                       <label for="owner">Vessel Owner</label>
-                                       <input type="text" class="form-control" id="owner" name="owner" value="{{$vessel->owner}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="operator">Vessel Operator</label>
-                                       <input type="text" class="form-control" id="operator" name="operator" value="{{$vessel->operator}}" >
-                                    </div>
-                                    <div class="form-group col-md-6" >
-                                    <label for="telp" >Telp</label>
-                                    <input type="email" class="form-control" id="telp" name="telp" value="{{$vessel->telp}}">
-                                    </div>
+                                    @foreach ($lastVdr->operatings as $operating)
+                                    @if ($operating->heading->speed == '0' && $operating->heading->contractual == '0')
+                                        @else
+                                        <tr id="baris-{{$operating->id}}">
+                                          <!-- <td> -->
+                                          <input  type="hidden" name="id[]" value="{{$operating->id}}">
+                                          <input  type="hidden" id="operating_{{$operating->id}}" value="{{$operating->id}}">
+                                          <!-- </td> -->
+                                          <td class="text-truncate border"> 
+                                             @if ( $operating->heading->description == "Maneuvering (Manu) - Including DP")
+                                             Maneuvering (Manu)
+                                                 @else
+                                                 {{$operating->heading->description}}
+                                             @endif
+                                             </td>
+                                          
+                                          <td class="text-center align-middle bg-y border">
+                                                @if($operating->heading->speed == '1')
+                                                <input class="input" style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="number" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                                @else
+                                                <input class="input" style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="hidden" id="speed_{{$operating->id}}" name="speed[]"  value="{{$operating->speed}}">
+                                                @endif
+                                          </td>
+                     
+                                          <td class="text-center align-middle bg-y border">
+                                             <!-- {{$operating->contractual_fuel}} -->
+                                                @if($operating->heading->contractual == '1')
+                                                <input class="input" style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_{{$operating->id}}" type="text" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                                @else
+                                                <input class="input" style="background-color: rgb(226, 236, 151)" class="w-100 input_operating_b_{{$operating->id}}" type="hidden" id="fuel_{{$operating->id}}" name="contractual_fuel[]"  value="{{$operating->contractual_fuel}}">
+                                                @endif
+                                          </td>
+                                          
+                                       </tr>
+                                    @endif
                                     
-                                    <div class="form-group col-md-6">
-                                       <label for="email" >Email</label>
-                                       <input type="email" class="form-control" id="email" name="email" value="{{$vessel->email}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="dpa_name">DPA Name</label>
-                                       <input type="text" class="form-control" id="dpa_name" name="dpa_name" value="{{$vessel->dpa_name}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="dpa_telp">DPA No. Telp</label>
-                                       <input type="text" class="form-control" id="dpa_telp" name="dpa_telp" value="{{$vessel->dpa_telp}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="master">Master</label>
-                                       <input type="text" class="form-control" id="master" name="master" value="{{$vessel->master}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="co">CO</label>
-                                       <input type="text" class="form-control" id="co" name="co" value="{{$vessel->co}}" >
-                                    </div>
-                                 </div>
-                              </div>
-                              <div class="col-md-12">
-                                 <div class="form-row">
-                                    <div class="form-group col-md-12">
-                                       <label for="prev_name">Prev Name</label>
-                                       <input type="text" class="form-control" id="prev_name" name="prev_name" value="{{$vessel->prev_name}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="imo">IMO Number</label>
-                                       <input type="text" class="form-control" id="imo" name="imo" value="{{$vessel->imo}}" >
-                                    </div>
-                                    
-                                    <div class="form-group col-md-6">
-                                       <label for="flag">Flag</label>
-                                       <input type="text" class="form-control" id="flag" name="flag" value="{{$vessel->flag}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="call_sign">Call Sign</label>
-                                       <input type="text" class="form-control" id="call_sign"  name="call_sign" value="{{$vessel->call_sign}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="portname">Port of Registry</label>
-                                       <input type="text" class="form-control" id="portname" name="portname" value="{{$vessel->portname}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="build">Year of Build</label>
-                                       <input type="text" class="form-control" id="build" name="build" value="{{$vessel->build}}">
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="classed_by">Vessel Classified by</label>
-                                       <input type="text" class="form-control" id="classed_by" name="classed_by" value="{{$vessel->classed_by}}" >
-                                    </div>
-                                 </div>
-                                 <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                       <label for="txid">TXID </label>
-                                       <input type="text" class="form-control" id="txid" name="txid" value="{{$vessel->txid}}" >
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                       <label for="mmsi">MMSI </label>
-                                       <input type="text" class="form-control" id="mmsi" name="mmsi" value="{{$vessel->mmsi}}" >
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                       <label for="deadweight">Deadweight </label>
-                                       <input type="text" class="form-control" id="deadweight" name="deadweight" value="{{$vessel->deadweight}}" >
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                       <label for="deckspace">Deckspace</label>
-                                       <input type="text" class="form-control" id="deckspace" name="deckspace" value="{{$vessel->deckspace}}" >
-                                    </div>
-                                    <div class="form-group col-md-4">
-                                       <label for="depth">Depth</label>
-                                       <input type="text" class="form-control" id="depth" name="depth" value="{{$vessel->depth}}" >
-                                    </div>
-                                 </div>
+                                    @endforeach
+                                   
+                  
                                  
-                              </div>
-                              
-                           </div>
+                              </tbody>
+                           </table>
                         </div>
+                              @else
+
+                              Belum ada data VDR
+                          @endif
+                           
+                        </div>
+                        
                      </div>
                      
                   </div>

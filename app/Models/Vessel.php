@@ -88,6 +88,13 @@ class Vessel extends Model
       return $vdrs;
    }
 
+   public function getVdrLast()
+   {
+      $to = Carbon::now();
+      $vdr = Vdr::where('vessel_id', $this->id)->whereBetween('date', ['2025-09-16', $to])->orderBy('release_date', 'desc')->first();
+      return $vdr;
+   }
+
    public function getRejectVdrs()
    {
       $to = Carbon::now();

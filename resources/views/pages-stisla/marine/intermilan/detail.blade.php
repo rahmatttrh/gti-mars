@@ -39,7 +39,11 @@ input {
                         <span>{{$intermilan->title}}</span>
                      </div>
                      
-                  <a href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
+                     <div>
+                        <a href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
+                        
+                     </div>
+                  
                   </div>
                   
                   <hr>
@@ -56,7 +60,8 @@ input {
                  </ul>
                  <div class="tab-content" id="myTabContent">
                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                     <a data-toggle="collapse" href="#formRequest">Add Row...</a>
+                     <a data-toggle="collapse" href="#formRequest">Add Row</a> <br>
+                     <a href="{{asset('template/template-import-material.xlsx')}}">Download Template Import Material</a>
                      <div class="collapse" id="formRequest">
                         <form action="{{route('intermilan.marine.request.store')}}" method="POST">
                            @csrf
@@ -177,7 +182,7 @@ input {
                                  @endforeach
                               </tr>
                            </thead>
-                           <tbody>
+                           <tbody class="" id="myAccordion">
 
                               @if ($requests->count() > 0)
                                  @foreach ($requests as $item)
@@ -187,15 +192,32 @@ input {
                                        <tr style="background-color: rgb(230, 221, 252)">
                                     @endif
                                     <td  class="text-uppercase bg-light">
-                                      <a data-toggle="collapse" href="#formItem-{{$item->id}}">{{$item->user->username}}</a> 
+                                      <a data-toggle="collapse" href="#requestAction-{{$item->id}}">{{$item->user->username}}</a> 
+                                      {{-- <a data-toggle="collapse" href="#formItem-{{$item->id}}">{{$item->user->username}}</a>  --}}
                                     </td>
                                    
                                        <td >
-                                          {{$item->description}} (
+                                          {{-- <a data-toggle="collapse" href="#formRequestActionDrop-{{$item->id}}">{{$item->description}}</a> --}}
+                                         @if ($item->transit == 1)
+                                             <i><b>[Transit]</b> </i>
+                                         @endif
+                                          {{$item->description}}
+                                          
+                                          @if (count($item->cargoItems) > 0)
+                                          (
                                              @foreach ($item->cargoItems as $cargo)
                                                  <a data-toggle="collapse" href="#formItemEdit-{{$cargo->id}}">{{$cargo->description}}</a>,
                                              @endforeach
                                           )
+                                          @endif
+
+                                          @if ($item->remark != null)
+                                             <i> ({{$item->remark}})</i>
+                                          @endif
+                                           
+                                       </td>
+                                       <td>
+                                          <x-status-stisla.request-plain :request="$item" />
                                        </td>
                                        <td class="text-truncate">
                                           {{-- @if ($request->activity_id < 5)
@@ -278,31 +300,303 @@ input {
                                        @endforeach
                                     </tr>
 
+                                    <tr class="collapse" id="requestAction-{{$item->id}}" data-parent="#myAccordion">
+                                       <td class="border py-2"></td>
+                                       <td class="border py-2">
+                                          <a data-toggle="collapse" href="#formItem-{{$item->id}}">Add Item</a> |
+                                          <a data-toggle="collapse" href="#formImportItem-{{$item->id}}">Import Item</a> |
+                                          <a data-toggle="collapse" href="#formRequestActionDrop-{{$item->id}}">Drop Point</a> |
+                                          
+                                          
+                                          <a href="">Complete</a> 
+                                          @if (auth()->user()->hasRole('marine') && $item->created_by == 'marine')
+                                          | <a data-toggle="collapse" href="#formRequestDelete-{{$item->id}}">Delete</a>
+                                          @endif
+                                          
+
+                                       </td>
+                                    </tr>
+
 
                                        <form action="{{route('intermilan.marine.cargo.store')}}" method="POST">
                                           @csrf
                                           <input type="number" name="requestId" id="requestId" value="{{$item->id}}" hidden>
-                                          <tr class="collapse" id="formItem-{{$item->id}}">
+                                          <tr class="collapse" id="formItem-{{$item->id}}" data-parent="#myAccordion">
                                              {{-- <div > --}}
-                                                <td>Add Item</td>
-                                                <td colspan="12" >
-                                                   <input type="text" name="desc" id="desc" style="width: 250px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name">
-                                                   <input type="text" name="qty" id="qty" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Qty">
-                                                   <input type="text" name="unit" id="unit" style=" text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Container/Pallet/Box">
-                                                   <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Satuan">
-                                                   <input type="text" name="weight" id="weight" style="width: 50px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Weight">
+                                                <td class="border">Add Item </td>
+                                                <td colspan="12" class="border">
 
-                                                   <input type="text" name="contract" id="contract" style=" text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="PO/Contract">
-                                                   <input type="text" name="remark" id="remark" style="width: 250px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Remarks">
-                                                   <button class="btn btn-sm btn-primary shadow-none" style="height: 30px" type="submit">Submit</button>
-                                                   @if ($item->created_by == 'marine')
-                                                   <a href="{{route('intermilan.marine.request.delete', enkripRambo($item->id))}}">Delete</a>
-                                                   @endif
+                                                   <table>
+                                                      <tbody>
+                                                         <tr>
+                                                            <td class="border"><b>Material Name</b></td>
+                                                            <td class="border"><b>Qty</b></td>
+                                                            <td class="border"><b>Unit/Satuan</b></td>
+                                                            <td class="border"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border"><input type="text" name="desc" id="desc" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name"></td>
+                                                            <td class="border" style="width: 80px"><input type="text" name="qty" id="qty" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Qty"></td>
+                                                            <td class="border"><input type="text" name="unit" id="unit" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Container/Pallet/Box"></td>
+                                                            <td class="border"><button class="btn btn-sm btn-block btn-primary shadow-none" style="height: 30px" type="submit">Submit</button></td>
+                                                         </tr>
+
+                                                         <tr>
+                                                            <td class="border"><b>PO/Contract</b></td>
+                                                            <td class="border"><b>Weight</b></td>
+                                                            <td class="border" colspan=""><b>Remark</b></td>
+                                                            <td class="border" rowspan="">
+                                                               
+                                                               
+                                                            </td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border"><input type="text" name="contract" id="contract" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="PO/Contract"></td>
+                                                            <td class="border" style="width: 80px"><input type="text" name="weight" id="weight" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Weight"></td>
+                                                            <td class="border" colspan=""><input type="text" name="remark" id="remark" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Remarks"></td>
+                                                            <td class="border">
+                                                               {{-- @if ($item->created_by == 'marine')
+                                                               <a href="{{route('intermilan.marine.request.delete', enkripRambo($item->id))}}" class="text-danger">Delete</a>
+                                                               @endif --}}
+                                                            </td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                   <div class="row">
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                         {{-- <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Satuan"> --}}
+                                                         
+
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                      </div>
+                                                   </div>
+                                                   
+                                                   
                                                    
                                                 </td>
                                              {{-- </div> --}}
                                           </tr>
                                        </form>
+
+                                       <form action="{{route('intermilan.marine.request.material.import')}}" method="POST" enctype="multipart/form-data">
+                                          @csrf
+                                          <input type="number" name="requestId" id="requestId" value="{{$item->id}}" hidden>
+                                          <tr class="collapse" id="formImportItem-{{$item->id}}" data-parent="#myAccordion">
+                                             {{-- <div > --}}
+                                                <td class="border">Import Item</td>
+                                                <td colspan="12" >
+
+                                                   <table>
+                                                      <tbody>
+                                                         <tr>
+                                                            
+                                                            <td class="border"><b>File Excel</b> <span class="text-muted">(Format Excel harus mengikuti Template Import yang tersedia)</span></td>
+                                                            <td class="border"></td>
+                                                            
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border">
+                                                               <input type="file" required name="file" id="file" style="width: 250px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name">
+                                                               <button class="btn btn-sm  btn-primary shadow-none" style="height: 30px" type="submit">Import</button></td>
+                                                            
+                                                            <td class="border"></td>
+                                                         </tr>
+
+                                                         
+                                                      </tbody>
+                                                   </table>
+                                                   <div class="row">
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                         {{-- <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Satuan"> --}}
+                                                         
+
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                      </div>
+                                                   </div>
+                                                   
+                                                   
+                                                   
+                                                </td>
+                                             {{-- </div> --}}
+                                          </tr>
+                                       </form>
+
+                                       <form action="{{route('intermilan.marine.request.drop')}}" method="POST">
+                                          @csrf
+                                          <input type="number" name="requestId" id="requestId" value="{{$item->id}}" hidden>
+                                          <tr class="collapse" id="formRequestActionDrop-{{$item->id}}" data-parent="#myAccordion">
+                                             {{-- <div > --}}
+                                                <td class="border">Drop Action</td>
+                                                <td class="border" colspan="12" >
+
+                                                   <table>
+                                                      <tbody>
+                                                         <tr>
+                                                            <td class="border"><b>Origin</b></td>
+                                                            <td class="border"><b>Drop Point</b></td>
+                                                            <td class="border"><b>Destination</b></td>
+                                                            <td class="border"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border">
+                                                               <select name="origin" id="origin" style="border: none">
+                                                                  @foreach ($ports as $port)
+                                                                     
+                                                                     <option {{$item->origin_id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->code}}</option>
+                                                                  @endforeach
+                                                               </select>
+                                                               {{-- <input type="text" name="desc" id="desc" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name"> --}}
+                                                            </td>
+                                                            <td class="border">
+                                                               <select name="drop" id="drop" style="border: none">
+                                                                  <option value="" selected disabled>Select</option>
+                                                                  @foreach ($ports as $port)
+                                                                     
+                                                                     <option  value="{{$port->id}}">{{$port->code}}</option>
+                                                                  @endforeach
+                                                               </select>
+                                                               {{-- <input type="text" name="desc" id="desc" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name"> --}}
+                                                            </td>
+                                                            <td class="border">
+                                                               <select name="destination" id="destination" style="border: none">
+                                                                  @foreach ($ports as $port)
+                                                                     
+                                                                     <option {{$item->destination_id == $port->id ? 'selected' : ''}} value="{{$port->id}}">{{$port->code}}</option>
+                                                                  @endforeach
+                                                               </select>
+                                                               {{-- <input type="text" name="desc" id="desc" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name"> --}}
+                                                            </td>
+                                                            {{-- <td class="border">
+                                                               <select name="" id="">
+                                                                  @foreach ($schedules as $sche)
+                                                                     @if ($sche->class == 'Cargo' || $sche->class == 'Crew')
+                                                                     <option {{$item->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{$sche->vessel->name}} </option>
+                                                                     @endif
+                                                                     
+                                                                  @endforeach
+                                                               </select>
+                                                               <input type="text" name="desc" id="desc" style="width: 100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Item Name">
+                                                            </td> --}}
+                                                            <td class="border"><button class="btn btn-sm btn-block btn-primary shadow-none" style="height: 30px" type="submit">Submit</button></td>
+                                                         </tr>
+
+                                                         <tr>
+                                                            <td class="border" colspan="4"><b>Remark</b></td>
+                                                            
+                                                               
+                                                               
+                                                            </td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border" colspan="4"><input type="text" name="remark" id="remark" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;"  placeholder="Input remarks.."></td>
+                                                            
+                                                         </tr>
+                                                         <tr>
+                                                            <td colspan="4"><small>Jika Drop Point dipilih, sistem akan otomatis duplikasi aktifitas dengan tujuan yang sama</small></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+                                                   <div class="row">
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                         {{-- <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Satuan"> --}}
+                                                         
+
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                      </div>
+                                                   </div>
+                                                   
+                                                   
+                                                   
+                                                </td>
+                                             {{-- </div> --}}
+                                          </tr>
+                                       </form>
+
+
+                                       <form action="{{route('intermilan.marine.request.delete')}}" method="POST">
+                                          @csrf
+                                          <input type="number" name="requestId" id="requestId" value="{{$item->id}}" hidden>
+                                          <tr class="collapse" id="formRequestDelete-{{$item->id}}" data-parent="#myAccordion">
+                                             {{-- <div > --}}
+                                                <td class="border">Delete Request</td>
+                                                <td colspan="12" >
+
+                                                   <table>
+                                                      <tbody>
+                                                         <tr>
+                                                            
+                                                            <td class="border"><b>Delete Request Activity?</b></td>
+                                                            <td class="border"></td>
+                                                            
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border">
+                                                               
+                                                               <button class="btn btn-sm  btn-danger shadow-none" style="height: 30px" type="submit">Delete</button></td>
+                                                            
+                                                            <td class="border"></td>
+                                                         </tr>
+
+                                                         
+                                                      </tbody>
+                                                   </table>
+                                                   <div class="row">
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                         {{-- <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required placeholder="Satuan"> --}}
+                                                         
+
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                         
+                                                      </div>
+                                                      <div class="col-4">
+                                                         
+                                                      </div>
+                                                   </div>
+                                                   
+                                                   
+                                                   
+                                                </td>
+                                             {{-- </div> --}}
+                                          </tr>
+                                       </form>
+
+
 
 
                                        @foreach ($item->cargoItems as $cargo)
@@ -313,21 +607,95 @@ input {
                                           <input type="number" name="requestId" id="requestId" value="{{$item->id}}" hidden>
                                           <input type="number" name="cargoId" id="cargoId" value="{{$cargo->id}}" hidden>
 
-                                          <tr class="collapse" id="formItemEdit-{{$cargo->id}}">
+                                          <tr class="collapse" id="formItemEdit-{{$cargo->id}}" data-parent="#myAccordion">
                                              {{-- <div > --}}
-                                                <td>Edit Item</td>
-                                                <td colspan="12" >
-                                                   <input type="text" name="desc" id="desc" style="width: 250px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->description}}">
-                                                   <input type="text" name="qty" id="qty" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->qty}}">
-                                                   <input type="text" name="unit" id="unit" style=" text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->unit}}">
-                                                   <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->qty_package}}">
-                                                   <input type="text" name="weight" id="weight" style="width: 50px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->weight}}">
+                                                <td class="border">Edit Item</td>
+                                                <td class="border" colspan="12" >
+                                                   <table>
+                                                      <tbody>
+                                                         <tr>
+                                                            <td class="border"><b>Material name</b></td>
+                                                            <td class="border"><b>Qty</b></td>
+                                                            <td class="border"><b>Unit</b></td>
+                                                            <td class="border"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border"><input type="text" name="desc" id="desc" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->description}}"></td>
+                                                            <td class="border" style="width: 80px"><input type="text" name="qty" id="qty" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->qty}}"></td>
+                                                            <td class="border"><input type="text" name="unit" id="unit" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->unit}}"></td>
+                                                            <td class="border"><button class="btn btn-sm btn-light btn-block shadow-none" style="height: 30px" type="submit">Update</button></td>
+                                                         </tr>
 
-                                                   <input type="text" name="contract" id="contract" style=" text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->contract}}">
-                                                   <input type="text" name="remark" id="remark" style="width: 250px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->remark}}">
-                                                   <button class="btn btn-sm btn-light shadow-none" style="height: 30px" type="submit">Update</button>
-                                                   {{-- <a class="btn btn-sm btn-danger shadow-none" style="height: 30px" href="#" data-bs-toggle="modal" data-bs-target="#deleteCargo_{{$cargo->id}}" >Delete</a> --}}
-                                                   <a class="btn btn-sm btn-danger shadow-none" style="height: 30px" href="{{route('cargo.delete', enkripRambo($cargo->id))}}"  >Delete</a>
+                                                         <tr>
+                                                            <td class="border"><b>PO/Contract</b></td>
+                                                            <td class="border"><b>Weight</b></td>
+                                                            <td class="border"><b>Remark</b></td>
+                                                            <td class="border"></td>
+                                                         </tr>
+                                                         <tr>
+                                                            <td class="border"><input type="text" name="contract" id="contract" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->contract}}"></td>
+                                                            <td class="border"><input type="text" name="weight" id="weight" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->weight}}"></td>
+                                                            <td class="border"><input type="text" name="remark" id="remark" style="width:100%; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->remark}}"></td>
+                                                            <td class="border"><a class="text-danger" style="height: 30px" href="{{route('cargo.delete', enkripRambo($cargo->id))}}"  >Delete</a></td>
+                                                         </tr>
+                                                      </tbody>
+                                                   </table>
+
+                                                   {{-- <div class="row">
+                                                      <div class="col-md-6">
+                                                         <div>
+                                                            <label for="">Name:</label>
+                                                            
+                                                         </div>
+                                                      </div>
+                                                      <div class="col-md-6">
+                                                         <span>
+                                                            <label for="">Qty</label>
+                                                            
+                                                            
+                                                         </span>
+                                                         <span>
+                                                            <label for="">Unit:</label>
+                                                            
+                                                         </span>
+                                                      </div>
+                                                      <div class="col-md-3">
+                                                         <span>
+                                                            
+                                                         </span>
+                                                      </div>
+                                                   </div>
+
+                                                   <span>
+                                                      <label for="">Satuan Package:</label>
+                                                      <input type="text" name="qty_package" id="qty_package" style="width: 80px; text-align: left !important;padding-top: 7px;padding-bottom: 7px;" required value="{{$cargo->qty_package}}">
+                                                   </span>
+                                                   
+                                                   <span>
+                                                      <label for="">Weight:</label>
+                                                      
+                                                   </span>
+
+                                                   <span>
+                                                      <label for="">No Contract:</label>
+                                                      
+                                                   </span>
+
+                                                   <span>
+                                                      <label for="">Remark:</label>
+                                                      
+                                                   </span> --}}
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
+
+                                                   
+                                                   
+                                                   
+                                                   
+                                                   
                                                 </td>
                                              {{-- </div> --}}
                                           </tr>

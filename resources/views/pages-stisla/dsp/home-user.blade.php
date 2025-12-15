@@ -15,6 +15,13 @@
   border-left: solid 1px rgb(255, 255, 255);
   line-height: 1.2 !important; */
 }
+input {
+      border:0;
+      outline:0;
+      text-align: center; 
+      /* background-color: rgb(226, 236, 151) */
+      
+   }
 
 input {
       /* border:0;
@@ -31,11 +38,11 @@ input {
             <div class="card border shadow-lg">
                <div class="card-body">
 
-                  <small>Name</small>
+                  {{-- <small>Name</small> --}}
                   <h4 class="text-dark">{{$user->name ?? ''}}</h4>
                   {{-- <small>Name</small> --}}
-                  <small >{{$user->port->type ?? ''}} - {{$user->port->region ?? ''}}</small><br>
-                  <b class="text-dark">{{$user->port->name ?? ''}}</b>
+                  {{-- <small >{{$user->port->type ?? ''}} - {{$user->port->region ?? ''}}</small><br>
+                  <b class="text-dark">{{$user->port->name ?? ''}}</b> --}}
                   <hr>
                   <div class="row">
                      <div class="col-md-6">
@@ -48,7 +55,8 @@ input {
                      </div>
                   </div>
                   
-                  {{-- <hr> --}}
+                  <hr>
+                  <a href="{{asset('template/template-import-material.xlsx')}}">Download Template Import Material</a>
                   
                </div>
                
@@ -58,17 +66,18 @@ input {
             </div>
 
             <div class="card shadow-lg">
-               <div class="card-body p-0">
-                  <table class="border">
-                     <tbody>
+               <div class="card-body">
+                  <div class="badge badge-info">Intermilan List</div>
+                  <table class="border mt-2">
+                     {{-- <tbody>
                         <tr>
-                           <td colspan="2"><b>Intermilan List</b></td>
-                        </tr>
+                           <td colspan=""><b>Intermilan List</b></td>
+                        </tr> --}}
 
                         @foreach ($intermilans as $inter)
                             <tr>
                               <td class="border"><a href="{{route('intermilan.user.detail', enkripRambo($inter->id))}}">{{$inter->code}}</a></td>
-                              <td>{{formatDateB($inter->from)}} - {{formatDateB($inter->to)}}</td>
+                              {{-- <td>{{formatDateB($inter->from)}} - {{formatDateB($inter->to)}}</td> --}}
                            </tr>
                         @endforeach
                      </tbody>
@@ -95,7 +104,7 @@ input {
                         {{formatDate($startDate)}} -  {{formatDate($endDate)}}
                      </div>
                      
-                     <a  data-toggle="collapse" href="#collapseExample">Add ...</a>
+                     <a  data-toggle="collapse" href="#collapseExample">Add New Intermilan...</a>
                   </div>
                   <div class="collapse" id="collapseExample">
                      <form action="{{route('intermilan.user.store')}}" method="POST">
@@ -213,7 +222,7 @@ input {
                               <th>Activity</th>
                               <th>Location</th>
                               <th>Date</th>
-                              <th>Boat</th>
+                              <th></th>
                              
                            </tr>
                         </thead>
@@ -228,11 +237,15 @@ input {
                                  </td>
                                 
                                     <td >
-                                       {{$item->description}} (
+                                       {{$item->description}} 
+                                       @if (count($item->cargoItems) > 0)
+                                       (
                                           @foreach ($item->cargoItems as $cargo)
                                               <a data-toggle="collapse" href="#formItemEdit-{{$cargo->id}}">{{$cargo->description}}</a>,
                                           @endforeach
                                        )
+                                       @endif
+                                       
                                     </td>
                                     <td class="text-truncate">
                                        {{-- @if ($request->activity_id < 5)
@@ -301,7 +314,7 @@ input {
                                        </tr>
                                     </form>
 
-                                    <form action="{{route('cargo.import')}}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{route('intermilan.marine.request.material.import')}}" method="POST" enctype="multipart/form-data">
                                        @csrf
                                        <input type="text" name="requestId" id="requestId" value="{{$item->id}}" hidden>
                                        <tr class="collapse" id="formImport-{{$item->id}}">
@@ -309,7 +322,7 @@ input {
                                           <td colspan="2">
                                              <div class="form-group">
                                                 <div class="input-group mb-3">
-                                                   <input type="file" class="form-control" id="file-cargo" name="file-cargo">
+                                                   <input type="file" class="form-control" id="file" name="file">
                                                    <div class="input-group-append">
                                                       <button class="btn btn-light border" type="submit">Import Item</button>
                                                    </div>
@@ -477,7 +490,7 @@ input {
                         </tbody> --}}
                      </table>
                   </div>
-                  
+                  <hr>
                </div>
             </div>
 
@@ -575,281 +588,9 @@ input {
                   </div>
                @endforeach
             @endif
-            <div class="d-flex  align-items-center">
-               <div class="">
-                  <span class="btn btn-white border"><b>INTERMILAN</b></span>
-                  {{-- <b class="mt-2">INTERMILAN </b> <br> --}}
-                  <div class="btn-group dropright ">
-                     <button type="button" class="btn btn-light border shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     {{$monthName}}
-                     </button>
-                     <div class="dropdown-menu dropright">
-                        <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(01), enkripRambo($year)])}}">
-                           Januari
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(02), enkripRambo($year)])}}">
-                             Februari
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(03), enkripRambo($year)])}}">
-                             Maret
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(04), enkripRambo($year)])}}">
-                             April
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(05), enkripRambo($year)])}}">
-                             Mei
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(06), enkripRambo($year)])}}">
-                             Juni
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(07), enkripRambo($year)])}}">
-                             Juli
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(8), enkripRambo($year)])}}">
-                             Agustus
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(9), enkripRambo($year)])}}">
-                             September
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(10), enkripRambo($year)])}}">
-                             Oktober
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(11), enkripRambo($year)])}}">
-                             November
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(12), enkripRambo($year)])}}">
-                             Desember
-                         </a>
-                     </div>
-                  </div>
-                  <div class="btn-group dropright">
-                     <button type="button" class="btn btn-light border shadow-none dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     {{$year}}
-                     </button>
-                     <div class="dropdown-menu dropright">
-                        <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo($month), enkripRambo(2024)])}}">
-                           2024
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo($month), enkripRambo(2023)])}}">
-                             2023
-                         </a>
-                         <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo($month), enkripRambo(2022)])}}">
-                             2022
-                         </a>
-                     </div>
-                  </div>
-               </div>
-               <div>
-                  
-                  {{-- <div class="dropdown d-inline ">
-                     <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       {{$monthName}}
-                     </button>
-                     <div class="dropdown-menu">
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(01), enkripRambo(auth()->user()->getYear())])}}">
-                         Januari
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(02), enkripRambo(auth()->user()->getYear())])}}">
-                           Februari
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(03), enkripRambo(auth()->user()->getYear())])}}">
-                           Maret
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(04), enkripRambo(auth()->user()->getYear())])}}">
-                           April
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(05), enkripRambo(auth()->user()->getYear())])}}">
-                           Mei
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(06), enkripRambo(auth()->user()->getYear())])}}">
-                           Juni
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(07), enkripRambo(auth()->user()->getYear())])}}">
-                           Juli
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(8), enkripRambo(auth()->user()->getYear())])}}">
-                           Agustus
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(9), enkripRambo(auth()->user()->getYear())])}}">
-                           September
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(10), enkripRambo(auth()->user()->getYear())])}}">
-                           Oktober
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(11), enkripRambo(auth()->user()->getYear())])}}">
-                           November
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.user', [enkripRambo(12), enkripRambo(auth()->user()->getYear())])}}">
-                           Desember
-                       </a>
-                     </div>
-                  </div> --}}
-                  {{-- <div class="dropdown d-inline">
-                     <button class="btn btn-light border btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                       {{$year}}
-                     </button>
-                     <div class="dropdown-menu">
-                       <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2024)])}}">
-                         2024
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2023)])}}">
-                           2023
-                       </a>
-                       <a class="dropdown-item" href="{{route('dsp.marine.intermilan', [enkripRambo($month), enkripRambo(2022)])}}">
-                           2022
-                       </a>
-                     </div>
-                  </div> --}}
-               </div>
-               
-            </div>
             
-            <div class="card shadow-sm border mt-2">
-               {{-- <div class="card-header">
-                  <small>INTERMILAN</small>
-               </div> --}}
-               <div class="card-body">
-                  
-                  
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
-                     @foreach ($dates as $date)
-                     <li class="nav-item">
-                        @if ($allRequests->where('date', $date->format('Y-m-d'))->first() != null)
-                        <a class="nav-link btn btn-sm btn-danger text-white mx-1 my-1"  id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true">
-                           {{-- <div class="" > --}}
-                              {{$date->format('l d')}}
-                              {{-- {{$date->format('Y-m-d')}} --}}
-                           {{-- </div> --}}
-                        </a>
-                        @else 
-                        <a class="nav-link btn btn-sm btn-info text-white mx-1 my-1"  id="date-{{$date->format('d')}}-tab" data-toggle="tab" href="#date-{{$date->format('d')}}" role="tab" aria-controls="date-{{$date->format('d')}}" aria-selected="true">
-                           {{-- <div class="btn btn-sm btn-info"> --}}
-                              {{$date->format('l d')}}
-                              {{-- {{$date->format('Y-m-d')}} --}}
-                           {{-- </div> --}}
-                        </a>
-                        @endif
-                     </li>
-                     @endforeach
-                     
-                  </ul>
-                  <div class="tab-content" id="myTabContent">
-                     <div class="tab-pane fade show active text-center" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="text-muted mt-4 mb-4">klik tanggal diatas untuk menampilkan data Intermilan</div>
-                     </div>
-                     @foreach ($dates as $date)
-                     <div class="tab-pane fade " id="date-{{$date->format('d')}}" role="tabpanel" aria-labelledby="date-{{$date->format('d')}}-tab">
-                        <div class="table-responsive">
-                        <table class="border">
-                           <thead class="">
-                              <tr class="border bg-danger text-white ">
-                                 <td colspan="6">{{$date->format('l, d F Y')}}</td>
-                              </tr>
-                              <tr>
-                                 <td>MTD</td>
-                                 <td>Desc</td>
-                                 <td>Destination</td>
-                                 {{-- <td>Activity</td> --}}
-                                 {{-- <td>Required Boat</td> --}}
-                                 
-                                 <td>User</td>
-                                 <td>Status</td>
-                                 <td>Vessel</td>
-                              </tr>
-                           </thead>
-                           <tbody>
-                              @foreach ($cargoItems as $cargo)
-                                 @if ($cargo->date == $date->format('Y-m-d'))
-                                    <tr>
-                                       <td>{{$cargo->mtd}}</td>
-                                       <td>
-                                          {{-- <a href="{{route('request.detail.new', enkripRambo($cargo->id))}}"> --}}
-                                             {{$cargo->description}}
-                                             {{-- @foreach ($req->cargoItems as $item)
-                                              {{$item->desc}}
-                                             @endforeach --}}
-                                             {{-- @if (count($req->passengerItems) >  0)
-                                                {{count($req->passengerItems)}} Total Passenger
-                                             @endif --}}
-                                          {{-- </a> --}}
-                                       </td>
-                                       <td>
-                                          {{-- @if ($req->activity_id == 5)
-                                             {{$req->employee->name}}
-                                              @else --}}
-                                              {{$cargo->request->origin->code ?? '-'}} - {{$cargo->request->destination->code ?? '-'}}
-                                          {{-- @endif --}}
-                                          
-                                       </td>
-                                       
-                                       
-                                       <td>{{$cargo->user_name ?? '-'}}</td>
-                                       @if ($cargo->schedule_id == null)
-                                       <td><x-status-stisla.request :request="$cargo->request" /> </td>
-                                          @else
-                                          <td><x-status-stisla.schedule :schedule="$cargo->schedule" /> </td>
-                                       @endif
-                                       <td>
-                                          @if ($cargo->schedule_id != null)
-                                              <a href="{{route('schedule.detail', enkripRambo($cargo->schedule_id))}}">{{$cargo->schedule->vessel->name ?? '-'}}</a>
-
-                                          @endif
-                                          </td>
-                                       
-                                    </tr>
-                                   
-                                    
-                                    
-                                    @else
-                                    
-                                 @endif
-                              @endforeach
-                              {{-- @foreach ($allRequests as $req)
-                                 @if ($req->date == $date->format('Y-m-d'))
-                                    <tr>
-                                       <td>
-                                          <a href="{{route('request.detail.new', enkripRambo($req->id))}}">
-                                             {{$req->desc}}
-                                             @foreach ($req->cargoItems as $item)
-                                              {{$item->desc}}
-                                             @endforeach
-                                             @if (count($req->passengerItems) >  0)
-                                                {{count($req->passengerItems)}} Total Passenger
-                                             @endif
-                                          </a>
-                                       </td>
-                                       <td>
-                                          @if ($req->activity_id == 5)
-                                             {{$req->employee->name}}
-                                              @else
-                                              {{$req->origin->code ?? '-'}} - {{$req->destination->code ?? '-'}}
-                                          @endif
-                                          
-                                       </td>
-                                       
-                                       <td>{{$req->schedule->vessel->name ?? '-'}}</td>
-                                       <td>{{$req->employee->name ?? '-'}}</td>
-                                       @if ($req->schedule)
-                                       <td><x-status-stisla.schedule :schedule="$req->schedule" /> {{$req->schedule_id}}</td>
-                                       @endif
-                                       
-                                    </tr>
-                                   
-                                    
-                                    
-                                    @else
-                                    
-                                 @endif
-                              @endforeach --}}
-                           </tbody>
-                        </table>
-                        </div>
-                     </div>
-                     @endforeach
-                     
-                  </div>
-               </div>
-            </div>
+            
+            
             
         
          </div>

@@ -6,6 +6,7 @@ use App\Models\Port;
 use App\Models\Report;
 use App\Models\Schedule;
 use App\Models\User;
+use App\Models\Vdr;
 use App\Models\Vessel;
 use App\Models\VesselHistory;
 use Carbon\Carbon;
@@ -315,10 +316,12 @@ class VesselController extends Controller
       $vessel = Vessel::find($dekripId);
       // dd($vessel->port->name);
       $today = Carbon::now();
+      $lastVdr = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->first();
       // return view('pages.vessel.detail', [
       return view('pages-stisla.master-data.vessel-detail', [
          'vessel' => $vessel,
-         'today' => $today
+         'today' => $today,
+         'lastVdr' => $lastVdr
       ]);
    }
 

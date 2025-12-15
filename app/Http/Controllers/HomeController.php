@@ -572,6 +572,16 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $offices = Office::get();
 
+
+         // $vdrId = [2076, 2120, 2155, 2228, 2343, 2360, 2396, 2411, 2428, 2444, 2462, 2482, 2499, 2523, 2537, 2552, 2572];
+         // $vdrForisa = Vdr::whereIn('id', $vdrId)->get();
+         // foreach ($vdrForisa as $vf) {
+         //    $vf->update([
+         //       'status' => 0
+         //    ]);
+         // }
+         // dd($vdrForisa);
+
          // $employee = Employee::create([
          //    'status' => 1,
          //    // 'level' => 'supten_loc',
@@ -872,6 +882,7 @@ class HomeController extends Controller
          $takeouts = ModelsRequest::where('undo', '!=', null)->get();
          $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
          $vessels = Vessel::where('contract_type', 'Under PO')->get();
+         $vessels = Vessel::get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
          $to = Carbon::now()->addMonth();
          $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
@@ -927,6 +938,39 @@ class HomeController extends Controller
          $totalMarine = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->get()->count();
          $totalSuptent = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->get()->count();
          $totalComplete = Vdr::where('status', 4)->whereBetween('date', ['2025-09-16', $to])->get()->count();
+
+
+         // cek vdr terdapat S/P
+         // $vdrSps = VdrActivity::where('sp', '!=', 0.00)->where('sp', '!=', null)->get();
+         // $vdrId = [];
+         // foreach ($vdrSps as $sp) {
+         //    $vdrId[] = $sp->vdr_id;
+         // }
+
+         // $allVdrs = Vdr::whereIn('id', $vdrId)->get();
+         $des = '2025-12-01';
+         $nov = '2025-11-30';
+         // $allVdrs = Vdr::whereDate('date', '<', $des)->where('status', 0)->orderBy('updated_at', 'desc')->get();
+         // $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $nov])->where('status', 1)->orderBy('updated_at', 'desc')->get();
+         // dd(count($allVdrs));
+         // foreach ($allVdrs as $v) {
+         //    $v->update([
+         //       'status' => 4,
+         //       'title1' => 'Fuel Monitoring Team',
+         //       'name1' => 'YRF',
+         //       'timestamp1' => Carbon::now(),
+
+         //       'title2' => 'Marine Dept',
+         //       'name2' => 'UA',
+         //       'timestamp2' => Carbon::now(),
+
+         //       'title3' => 'Suptent',
+         //       'name3' => 'Lutfi Aryanto',
+         //       'timestamp3' => Carbon::now(),
+         //       'remark' => 'void'
+         //    ]);
+         // }
+
 
 
          return view('main-superuser', [
@@ -1662,7 +1706,7 @@ class HomeController extends Controller
 
 
          ])->with('i');
-      }  else if (auth()->user()->hasRole('marine')) {
+      } else if (auth()->user()->hasRole('marine')) {
 
          // $employee = Employee::create([
          //    'status' => 1,
@@ -1734,9 +1778,9 @@ class HomeController extends Controller
             $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             $intermilans = Intermilan::orderBy('from', 'desc')->paginate(6);
             $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(3);
-   
+
             $inboxRequests = ModelsRequest::whereBetween('date', ['2025-09-16', $to])->where('status', 1)->get();
-   
+
             $todayDailyReport = DailyReport::where('date', Carbon::now())->first();
             if ($todayDailyReport == null) {
                // dd('kosong');
@@ -1744,12 +1788,12 @@ class HomeController extends Controller
             } else {
                $dailyReportAlert = false;
             }
-   
+
             $onHireVessels = Vessel::where('status', 1)->get();
             $offHireVessels = Vessel::where('status', 0)->get();
             $allVessels = Vessel::get();
             $logs = Log::orderBy('created_at', 'desc')->paginate(300);
-   
+
             return view('main-superadmin', [
                'allVdrs' => $allVdrs,
                'vdrs' => $vdrs,
@@ -1757,22 +1801,39 @@ class HomeController extends Controller
                'intermilans' => $intermilans,
                'dailyReports' => $dailyReports,
                'inboxRequests' => $inboxRequests,
-   
+
                'dailyReportAlert' => $dailyReportAlert,
                'onHireVessels' => $onHireVessels,
                'allVessels' => $allVessels,
                'offHireVessels' => $offHireVessels,
                'logs' => $logs,
                'vessels' => Vessel::get()
-   
-   
-   
+
+
+
             ])->with('i');
          } elseif (auth()->user()->username == 'marine') {
             $to = Carbon::now();
+            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
+
             $vdrs = Vdr::where('status', '>=', 2)->whereBetween('date', ['2025-09-16', $to])->get();
+            $intermilans = Intermilan::orderBy('from', 'desc')->paginate(10);
+            $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(30);
+            $vessels = Vessel::get();
+
+            return view('main-marine', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $vdrs,
+               'vdrValidations' => $vdrValidations,
+               'intermilans' => $intermilans,
+               'dailyReports' => $dailyReports,
+               'vessels' => $vessels
+
+
+
+            ])->with('i');
          } elseif (auth()->user()->username == 'lutfiaryanto') {
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
@@ -1988,8 +2049,9 @@ class HomeController extends Controller
          $nowSchedule = Schedule::find($currentVessel->schedule_id);
          // dd($schedules);
 
+         $to = Carbon::now();
          $myVdr = Vdr::where('vessel_id', $currentVessel->id)->where('date', date('Y-m-d'))->first();
-         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereNotIn('status', [101, 202, 303])->orderBy('date', 'desc')->paginate(10);
+         $myRecentVdrs = Vdr::where('vessel_id', $currentVessel->id)->whereBetween('date', ['2025-09-16', $to])->whereNotIn('status', [101, 202, 303])->orderBy('date', 'desc')->paginate(100);
          // dd($vdr);
 
          $requests = ModelsRequest::where('user_id', auth()->user()->id)->get();

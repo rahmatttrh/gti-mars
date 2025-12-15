@@ -324,11 +324,11 @@ class IntermilanController extends Controller
         return redirect()->back()->with('success', 'Material successfully imported');
     }
 
-    public function deleteMarineRequest($id)
+    public function deleteMarineRequest(Request $req)
     {
 
-        dd('ok');
-        $request = ModelsRequest::find(dekripRambo($id));
+        //   dd('ok');
+        $request = ModelsRequest::find($req->requestId);
 
         foreach ($request->cargoItems as $item) {
             $item->delete();
@@ -372,6 +372,74 @@ class IntermilanController extends Controller
 
 
         return view('pages-stisla.marine.intermilan.detail', [
+            'intermilan' => $intermilan,
+            'vessels' => $vessels,
+            'requests' => $requests,
+            'schedules' => $schedules,
+            'weekSchedules' => $weekSchedules,
+            'users' => Port::get(),
+            'dates' => $dates,
+            'start' => $startDate,
+            'end' => $endDate,
+            'cargoItems' => $cargoItems,
+            'now' => Carbon::now(),
+            'ports' => $ports
+        ])->with('i');
+    }
+
+    public function detailVessel($id)
+    {
+        $vessel = Vessel::find(dekripRambo($id));
+
+        $pendingRequests = ModelsRequest::where('vessel_id', $vessel->id)->where('status', '3')->get();
+        $progressRequests = ModelsRequest::where('vessel_id', $vessel->id)->where('status', '4')->get();
+        $progressCargos = CargoItem::where('vessel_id', $vessel->id)->where('status', '2')->get();
+        $confirmationRequests = ModelsRequest::where('vessel_id', $vessel->id)->where('status', '10')->get();
+
+        return view('pages-stisla.marine.intermilan.detail-vessel', [
+            'vessel' => $vessel,
+            'pendingRequests' => $pendingRequests,
+            'progressRequests' => $progressRequests,
+            'confirmationRequests' => $confirmationRequests,
+            'progressCargos' => $progressCargos
+
+        ]);
+    }
+
+
+
+    public function crew($id)
+    {
+        $intermilan = Intermilan::find(dekripRambo($id));
+        $vessels = Vessel::get();
+        $startDate = new Carbon($intermilan->from);
+        $endDate = new Carbon($intermilan->to);
+        $dates = array();
+        $ports = Port::get();
+
+        while ($startDate->lte($endDate)) {
+            $dates[] = $startDate->toDateString();
+            $startDate->addDay();
+        }
+        // dd($dates);
+
+
+        $startDate = $intermilan->from;
+        // dd($startDate);
+        $endDate = $intermilan->to;
+        $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
+        $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
+        // dd(count($requests));
+        $weekSchedules = Schedule::where('class', '!=', 'Crew Change')->whereBetween('date', [$startDate, $endDate])->orderBy('date', 'asc')->get();
+        $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
+        // dd(count($requests));
+
+        $cargoItems = CargoItem::whereBetween('date', [$startDate, $endDate])->get();
+
+
+
+
+        return view('pages-stisla.marine.intermilan.detail-crew', [
             'intermilan' => $intermilan,
             'vessels' => $vessels,
             'requests' => $requests,
