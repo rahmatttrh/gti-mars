@@ -121,6 +121,15 @@
                <span class="mx-3">Home Page</span>
             </a>
          </li>
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.export')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/report/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class=" mx-3">Export VDR</span>
+            </a>
+         </li>
 
          <li class="nav-item nav-item-b pr-3 {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
             <a href="{{route('vessel.crew')}}" class="nav-link {{ (request()->is('master/data/vessel/crew')) ? 'text-dark' : 'text-white' }}">

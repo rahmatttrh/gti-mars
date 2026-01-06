@@ -148,7 +148,7 @@
                            <h4>VDR Marine</h4>
                         </div>
                         <div class="card-body">
-                           {{count($allVdrs->where('status', 2))}}
+                           {{count($vdrValidations)}}
                            {{-- {{count($vdrs->where('status', 1))}} --}}
                         </div>
                         </div>

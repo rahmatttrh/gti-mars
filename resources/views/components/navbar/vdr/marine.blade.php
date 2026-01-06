@@ -33,7 +33,30 @@
           </a>
           <ul class="navbar-nav ">
              <li class="nav-item  text-dark"><a href="/" class="nav-link text-dark" >HOME</a></li>
-             @if (auth()->user()->username == 'pet')
+             @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin')
+                
+                <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
+                <li class="nav-item active text-dark"><a href="{{route('vdr.marine')}}" class="nav-link rounded px-2 py-1 text-white" style="background-color: #1f4481">VDR</a></li>
+               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
+               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
+               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
+               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+               @elseif(auth()->user()->username == 'pet')
+               <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
+               <li class="nav-item active text-dark"><a href="{{route('vdr.marine')}}" class="nav-link rounded px-2 py-1 text-white" style="background-color: #1f4481">VDR</a></li>
+               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
+               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
+               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
+               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+               @else
+               <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
+                <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">VDR</a></li>
+               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
+               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
+               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
+               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+             @endif
+             {{-- @if (auth()->user()->username == 'pet')
                 <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
                 @else
                 <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
@@ -43,7 +66,7 @@
              <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
              <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
              <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-             <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
+             <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li> --}}
           </ul>
        </div>
        {{-- <ul class="navbar-nav d-none d-sm-block">
@@ -126,6 +149,7 @@
    <div class="px-2">
       <ul class="navbar-nav">
          
+         @if (auth()->user()->username == 'PET' || auth()->user()->username == 'marine' || auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin' || auth()->user()->username == 'lutfiaryanto')
          <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/m/dashboard/*'))
@@ -138,6 +162,20 @@
                <span class="mx-3">Dashboard</span>
             </a>
          </li>
+         @else
+         <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
+            <a href="/" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/dashboard/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               @if (request()->is('vdr/m/act/filter'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="mx-3">Home Page</span>
+            </a>
+         </li>
+         @endif
 
          <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">

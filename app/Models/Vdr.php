@@ -17,6 +17,81 @@ class Vdr extends Model
       return $this->belongsTo(User::class, 'reject_by');
    }
 
+
+
+   public function weathers()
+   {
+      return $this->hasMany(VdrWeather::class);
+   }
+
+   public function hses()
+   {
+      return $this->hasMany(VdrHse::class);
+   }
+
+   public function activities()
+   {
+      return $this->hasMany(VdrActivity::class);
+   }
+
+   public function cargoes()
+   {
+      return $this->hasMany(VdrCargo::class);
+   }
+
+   public function periodic()
+   {
+      return $this->hasOne(VdrPeriodic::class, 'vdr_id');
+   }
+
+
+
+   public function getTotalJam()
+   {
+      $debugHours = 0;
+      $debugMinutes = 0;
+      $ops = VdrOperating::where('vdr_id', $this->id)->get();
+      foreach ($ops as $op) {
+         $time = $op->time;
+         $array = explode('.', $op->time);
+         $hours = floor($time);
+         $minutes = intval($array[1]);
+
+         $debugHours += $hours;
+         $debugMinutes += $minutes;
+      }
+      // dd($debugHours);
+
+      if ($debugMinutes >= 60) {
+         $minLeft = $debugMinutes - 60;
+         $debugMinutes = $minLeft;
+         $debugHours += 1;
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+         if ($debugMinutes >= 60) {
+            $minLeft = $debugMinutes - 60;
+            $debugMinutes = $minLeft;
+            $debugHours += 1;
+         }
+      }
+
+      if ($debugMinutes < 10) {
+         $finalMinutes = '0' . $debugMinutes;
+      } else {
+         $finalMinutes = $debugMinutes;
+      }
+      $finalHours  = sprintf('%02d', floor($debugHours));
+      $final = $finalHours . ':' . $finalMinutes;
+      return $final;
+   }
+
+
+
+
+
    public function getDistance()
    {
       $date1 = new DateTime($this->date);

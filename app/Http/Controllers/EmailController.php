@@ -568,17 +568,20 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      Mail::to([
-         "develop@ekanuri.com",
-         // "rahmattrust@gmail.com",
-         "mk.yusuf.hibatullah@pertamina.com",
-         "mk.lutfa.jasworo@pertamina.com",
-         "mk.luthfi.alhafiizh@pertamina.com",
-         "mk.setyo.wiyono@pertamina.com",
-         "mk.bryan.jhon@pertamina.com",
-         "mk.raditya.r@pertamina.com",
-         "mk.akhmad.kurniawan@pertamina.com"
-      ])->send(new ApprovalPetMorning($data));
+      if (count($vdrWaitingPets) > 0) {
+         Mail::to([
+            "develop@ekanuri.com",
+            // "rahmattrust@gmail.com",
+            "mk.yusuf.hibatullah@pertamina.com",
+            "mk.lutfa.jasworo@pertamina.com",
+            "mk.luthfi.alhafiizh@pertamina.com",
+            "mk.setyo.wiyono@pertamina.com",
+            "mk.bryan.jhon@pertamina.com",
+            "mk.raditya.r@pertamina.com",
+            "mk.akhmad.kurniawan@pertamina.com"
+         ])->send(new ApprovalPetMorning($data));
+      }
+
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
@@ -601,7 +604,7 @@ class EmailController extends Controller
    {
       $user = User::where('username', 'marine')->first();
       $to = Carbon::now();
-      $vdrWaitings = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrWaitings = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
       $vdrRejects = Vdr::where('status', 202)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
       $vdrCompletes = Vdr::where('status', 4)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
 
@@ -643,23 +646,127 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      Mail::to([
-         "develop@ekanuri.com",
-         // "rahmattrust@gmail.com",
-         "mk.umar.agam@pertamina.com",
-         "mk.rezky.hardanto@pertamina.com",
-         "mk.muhammad.hasan@pertamina.com",
-         "mk.dicky.permana@pertamina.com",
-         "mk.joy.ginting@pertamina.com",
-         "mk.mochammad.haris@pertamina.com",
-         "mk.yusuf.fadillah@pertamina.com"
-      ])->send(new ApprovalPetMorning($data));
+
+      if (count($vdrWaitings) > 0) {
+         Mail::to([
+            "develop@ekanuri.com",
+            // "rahmattrust@gmail.com",
+            "mk.umar.agam@pertamina.com",
+            "mk.rezky.hardanto@pertamina.com",
+            "mk.muhammad.hasan@pertamina.com",
+            "mk.dicky.permana@pertamina.com",
+            "mk.joy.ginting@pertamina.com",
+            "mk.mochammad.haris@pertamina.com",
+            "mk.yusuf.fadillah@pertamina.com"
+         ])->send(new ApprovalPetMorning($data));
+      }
+
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
 
       // Production
+      // Mail::to([
+      //    "mk.yusuf.hibatullah@pertamina.com", 
+      //    "mk.lutfa.jasworo@pertamina.com", 
+      //    "mk.luthfi.alhafiizh@pertamina.com", 
+      //    "mk.setyo.wiyono@pertamina.com", 
+      //    "mk.bryan.jhon@pertamina.com", 
+      //    "mk.raditya.r@pertamina.com", 
+      //    "mk.akhmad.kurniawan@pertamina.com"
+      //    ])->send(new AssignVdrEmail($data));
+      return redirect()->back()->with('success', 'Marine');
+   }
+
+
+   public function summaryVdrRadop($jam, $loc)
+   {
+      $user = User::where('username', 'marine')->first();
+      // $area = auth()->user()->getArea();
+      if ($loc == 'SBU') {
+         $user = User::where('username', 'radop_sbu')->first();
+      } elseif ($loc == 'CBU') {
+         $user = User::where('username', 'radop_cbu')->first();
+      } elseif ($loc == 'NBU') {
+         $user = User::where('username', 'radop_nbu')->first();
+      }
+      $to = Carbon::now();
+      $vdrWaitings = Vdr::where('area', $loc)->where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrRejects = Vdr::where('area', $loc)->where('status', 202)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrCompletes = Vdr::where('area', $loc)->where('status', 4)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+
+      $links = [];
+
+      foreach ($vdrWaitings as $vdrpet) {
+         $v = [$vdrpet->id, enkripRambo($vdrpet->id)];
+         $object = (object)[
+            'id' => $vdrpet->id,
+            'link' => route('vdr.pdf.email', [enkripRambo($vdrpet->id), enkripRambo('radop')]),
+            // 'enkrip' => enkripRambo($vdrpet->id)
+         ];
+         $links[] = $object;
+
+         // $links[] = $v;
+      }
+      // dd($links);
+
+      $data = [
+         'to' => 'Radop ' . $loc,
+         'from' => 'MARS System',
+         'subject' => 'Summary VDR Radop  ' . $jam . ' ' . formatDate($to) . ' ('  . count($vdrWaitings)  . ' VDR)',
+         'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi Radop ' . $loc,
+         'user_id' => $user->id,
+         'level' => 'radop',
+         'vdrs' => $vdrWaitings,
+         'vdrRejectPets' => $vdrRejects,
+         'vdrCompletes' => $vdrCompletes,
+         'links' => $links
+      ];
+
+      // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
+
+      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+
+      // foreach($petEmails as $email){
+      //    Mail::to($email)->send(new AssignVdrEmail($data));
+      // }
+
+      // TESTING
+      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      // Mail::to([
+      //    // "rahmattrust@gmail.com",
+      // ])->send(new ApprovalPetMorning($data));
+
+
+      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // END OF TESTING
+
+
+
+      // Production
+
+      if (count($vdrWaitings) > 0) {
+         if ($loc == 'SBU') {
+            Mail::to([
+               "pheoses.sbu.operator@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'CBU') {
+            Mail::to([
+               "gpheoses.cbu.radio-room@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'NBU') {
+            Mail::to([
+               "gpheoses.nbu.radioroom@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         }
+      }
+
+
+
       // Mail::to([
       //    "mk.yusuf.hibatullah@pertamina.com", 
       //    "mk.lutfa.jasworo@pertamina.com", 
@@ -718,12 +825,15 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      Mail::to([
-         "develop@ekanuri.com",
-         // "rahmattrust@gmail.com",
-         "laryanto@pertamina.com",
+      if (count($vdrWaitings) > 0) {
+         Mail::to([
+            "develop@ekanuri.com",
+            // "rahmattrust@gmail.com",
+            "laryanto@pertamina.com",
 
-      ])->send(new ApprovalPetMorning($data));
+         ])->send(new ApprovalPetMorning($data));
+      }
+
       // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
@@ -740,6 +850,123 @@ class EmailController extends Controller
       //    "mk.akhmad.kurniawan@pertamina.com"
       //    ])->send(new AssignVdrEmail($data));
       return redirect()->back()->with('success', 'suptent');
+   }
+
+   public function summaryVdrSuptentLoc($jam, $loc)
+   {
+      $user = User::where('username', 'pet')->first();
+      if ($loc == 'SBU') {
+         $user = User::where('username', 'suptent_sbu')->first();
+      } elseif ($loc == 'CBU') {
+         $user = User::where('username', 'suptent_cbu')->first();
+      } elseif ($loc == 'NBU') {
+         $user = User::where('username', 'suptent_nbu')->first();
+      } elseif ($loc == 'Cinta-T') {
+         $user = User::where('username', 'suptent_cinta')->first();
+      } elseif ($loc == 'Widuri-T') {
+         $user = User::where('username', 'suptent_widuri')->first();
+      }
+
+      $to = Carbon::now();
+      $vdrWaitings = Vdr::where('status', 5)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrRejects = Vdr::where('status', 101)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrCompletes = Vdr::where('status', 4)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+
+      $links = [];
+
+      foreach ($vdrWaitings as $vdrwait) {
+         $v = [$vdrwait->id, enkripRambo($vdrwait->id)];
+         $object = (object)[
+            'id' => $vdrwait->id,
+            'link' =>  route('vdr.pdf.email', [enkripRambo($vdrwait->id), enkripRambo('suptent-loc')]),
+            // 'enkrip' => enkripRambo($vdrpet->id)
+         ];
+         $links[] = $object;
+
+         // $links[] = $v;
+      }
+
+      $data = [
+         'to' => 'Superintendent ' . $loc,
+         'from' => 'VDR Online MARS',
+         'subject' => 'Summary VDR Suptent ' . $loc . ' ' . $jam . ' ' . formatDate($to),
+         'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi Suptent Area',
+         'user_id' => $user->id,
+         'level' => 'suptent-loc',
+         'vdrs' => $vdrWaitings,
+         'vdrRejectPets' => $vdrRejects,
+         'vdrCompletes' => $vdrCompletes,
+         'links' => $links
+      ];
+
+      // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
+
+      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+
+      // foreach($petEmails as $email){
+      //    Mail::to($email)->send(new AssignVdrEmail($data));
+      // }
+
+      // TESTING
+      // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
+      // Mail::to([
+      //    "rahmattrust@gmail.com",
+
+      // ])->send(new ApprovalPetMorning($data));
+      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // END OF TESTING
+
+
+
+      // Production
+
+      if (count($vdrWaitings) > 0) {
+         if ($loc == 'SBU') {
+            Mail::to([
+               "erry.brillyanto@pertamina.com",
+               "oka.prasetya@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'CBU') {
+            Mail::to([
+               "suroso.williem@pertamina.com",
+               "janudin@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'NBU') {
+            Mail::to([
+               "hendra.hadi@pertamina.com",
+               "sindhu.hadi@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'Cinta-T') {
+            Mail::to([
+               "norman.sasongko@pertamina.com",
+               "erin.busrian@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == 'Widuri-T') {
+            Mail::to([
+               "muhamad.mujiburichman@pertamina.com",
+               "asril1@pertamina.com",
+               "develop@ekanuri.com"
+            ])->send(new ApprovalPetMorning($data));
+         }
+      }
+
+
+
+
+      // Mail::to([
+      //    "mk.yusuf.hibatullah@pertamina.com", 
+      //    "mk.lutfa.jasworo@pertamina.com", 
+      //    "mk.luthfi.alhafiizh@pertamina.com", 
+      //    "mk.setyo.wiyono@pertamina.com", 
+      //    "mk.bryan.jhon@pertamina.com", 
+      //    "mk.raditya.r@pertamina.com", 
+      //    "mk.akhmad.kurniawan@pertamina.com"
+      //    ])->send(new AssignVdrEmail($data));
+      return redirect()->back()->with('success', 'Email Notifikasi Summary PET sent (' . $jam . ')');
    }
 
 

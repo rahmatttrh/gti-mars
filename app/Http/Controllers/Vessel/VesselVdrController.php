@@ -40,15 +40,15 @@ class VesselVdrController extends Controller
 
          // Loop semua tanggal dari start sampai 1 hari sebelum inputDate
          for ($date = $startDate->copy(); $date->lte($endDate); $date->addDay()) {
-               // Jika tanggal ini tidak pernah ada di DB → gap
-               if (!$dates->contains(fn($d) => $d->isSameDay($date))) {
-                  $missingDates[] = $date->format('Y-m-d');
-               }
+            // Jika tanggal ini tidak pernah ada di DB → gap
+            if (!$dates->contains(fn($d) => $d->isSameDay($date))) {
+               $missingDates[] = $date->format('Y-m-d');
+            }
          }
          // Jika ada tanggal yang hilang → error
          if (!empty($missingDates)) {
 
-            return redirect()->back()->with('warning-vdr', 'Entri Data tanggal sebelumnya (' . implode(', ', $missingDates). ') tidak ditemukan pada sistem. Silahkan lakukan pembuatan atau penginputan data untuk tanggal tersebut agar proses Release dapat dilanjutkan' );
+            return redirect()->back()->with('warning-vdr', 'Entri Data tanggal sebelumnya (' . implode(', ', $missingDates) . ') tidak ditemukan pada sistem. Silahkan lakukan pembuatan atau penginputan data untuk tanggal tersebut agar proses Release dapat dilanjutkan');
          }
       }
 
@@ -56,7 +56,13 @@ class VesselVdrController extends Controller
 
 
 
-
+      if ($vdr->code == '4710006534/ENCONE/251208/0') {
+         $vdr->update([
+            'status' => 4,
+            'remark' => 'offhire'
+         ]);
+         return redirect()->back()->with('success', 'VDR successfully Autocomplete (Offhire)');
+      }
 
 
 
@@ -79,7 +85,7 @@ class VesselVdrController extends Controller
       }
 
       if ($vdrDraft) {
-         return redirect()->back()->with('warning', 'Anda masih memiliki VDR Draft ditanggal sebelumnya [ ' . $vdrDraft->code .']' . ' . Release VDR tersebut terlebih dahulu.');
+         return redirect()->back()->with('warning', 'Anda masih memiliki VDR Draft ditanggal sebelumnya [ ' . $vdrDraft->code . ']' . ' . Release VDR tersebut terlebih dahulu.');
       }
 
       if ($vdr->vessel->username == 'clarisa68') {

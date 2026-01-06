@@ -46,9 +46,9 @@
          <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
          <div class="dropdown-menu dropdown-menu-right shadow">
             <div class="dropdown-title">Logged in 5 min ago</div>
-            <a href="{{route('user')}}" class="dropdown-item has-icon">
+            {{-- <a href="{{route('user')}}" class="dropdown-item has-icon">
                <i class="fa fa-users"></i> User Management
-            </a>
+            </a> --}}
             {{-- <a href="features-profile.html" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Profile
             </a>

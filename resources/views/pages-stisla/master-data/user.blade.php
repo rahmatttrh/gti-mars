@@ -149,6 +149,8 @@
                               <option value="SBU">SBU</option>
                               <option value="CBU">CBU</option>
                               <option value="NBU">NBU</option>
+                              <option value="Cinta-T">Cinta-T</option>
+                              <option value="Widuri-T">Widuri-T</option>
                
                            </select>
                         </div>

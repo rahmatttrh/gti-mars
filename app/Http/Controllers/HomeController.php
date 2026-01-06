@@ -886,6 +886,10 @@ class HomeController extends Controller
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
          $to = Carbon::now()->addMonth();
          $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+
+         $vdrEncone = Vdr::find(2992);
+
+
          // $allVdrs = Vdr::whereBetween('date', ['2025-09-23', '2025-09-28'])->where('status', 1)->orderBy('updated_at', 'desc')->get();
          // foreach($allVdrs as $v){
          //    // dd($allVdrs);
@@ -970,6 +974,15 @@ class HomeController extends Controller
          //       'remark' => 'void'
          //    ]);
          // }
+
+
+         // $vdrEncone = Vdr::find(2992);
+         // $vdrEncone->update([
+         //    'status' => 4,
+         //    'remark' => 'offhire'
+         // ]);
+         // dd('ok');
+
 
 
 
@@ -1773,7 +1786,8 @@ class HomeController extends Controller
             ])->with('i');
          } elseif (auth()->user()->username == 'superadmin') {
             $to = Carbon::now();
-            $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+
+            $vdrValidations = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             $intermilans = Intermilan::orderBy('from', 'desc')->paginate(6);
@@ -1838,6 +1852,22 @@ class HomeController extends Controller
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         } elseif (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri') {
+            // dd('ok');
+            $employee = Employee::where('email', auth()->user()->email)->first();
+            $to = Carbon::now();
+            $vdrValidations = Vdr::where('area', $employee->area)->where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            // $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
+            return view('main-radop', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $allVdrs,
+               'vdrValidations' => $vdrValidations,
+               'allVdrs' => $allVdrs
+
+
+
+            ])->with('i');
          } else {
             $to = Carbon::now();
             $vdrs = null;
@@ -1921,9 +1951,9 @@ class HomeController extends Controller
          $employee = Employee::where('email', auth()->user()->email)->first();
          if ($employee->area != null) {
             $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
-            $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->orderBy('updated_at', 'desc')->get();
          } else {
-            $allVdrs = Vdr::where('func', $employee->func)->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::where('func', $employee->func)->where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
             $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
          }
 

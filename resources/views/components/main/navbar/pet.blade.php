@@ -156,6 +156,15 @@
                      <span class="mx-3">Home Page</span>
                   </a>
                </li>
+               <li class="nav-item nav-item-b  {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+                  <a href="{{route('vdr.export.marine')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+                     @if (request()->is('vdr/report/*'))
+                     <i class="fas text-primary ml-3 fa-fire"></i>
+                     @endif
+                     
+                     <span class="mx-3">VDR Export</span>
+                  </a>
+               </li>
    
                <li class="nav-item d-block d-sm-none nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
                   <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">

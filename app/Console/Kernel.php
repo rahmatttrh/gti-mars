@@ -54,6 +54,100 @@ class Kernel extends ConsoleKernel
             $emailController->summaryVdrSuptent('21:00');
             Log::info('test marine 21:00');
         })->dailyAt('21:00');
+
+
+
+
+        // RADOP 
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'SBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('08:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'SBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('20:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'CBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('08:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'CBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('20:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'NBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('08:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrRadop('08:00', 'NBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('20:00');
+
+
+        // SUPTENT AREA
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'SBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('09:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'SBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('21:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'CBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('09:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'CBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('21:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'NBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('09:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'NBU');
+            // Log::info('test marine 21:00');
+        })->dailyAt('21:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'Cinta-T');
+            // Log::info('test marine 21:00');
+        })->dailyAt('09:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'Cinta-T');
+            // Log::info('test marine 21:00');
+        })->dailyAt('21:00');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'Widuri-T');
+            // Log::info('test marine 21:00');
+        })->dailyAt('09:00');
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrSuptentLoc('08:00', 'Widuri-T');
+            // Log::info('test marine 21:00');
+        })->dailyAt('21:00');
     }
 
     /**

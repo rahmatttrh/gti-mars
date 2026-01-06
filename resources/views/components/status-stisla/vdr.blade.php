@@ -9,9 +9,16 @@
    </div>
    
    @elseif($vdr->status == 2)
-   <div class="badge badge-info">
-      Menunggu Validasi Marine
-   </div>
+      @if ($vdr->vessel->ipb == 'IPB')
+         <div class="badge badge-primary">
+            Menunggu Validasi Radop
+         </div>
+          @else
+          <div class="badge badge-info">
+            Menunggu Validasi Marine
+         </div>
+      @endif
+   
    
    @elseif($vdr->status == 3)
       @if ($vdr->area != null || $vdr->func != null)

@@ -18,7 +18,7 @@
 input {
       border:0;
       outline:0;
-      text-align: center; 
+      text-align: center;
       /* background-color: rgb(226, 236, 151) */
       
    }

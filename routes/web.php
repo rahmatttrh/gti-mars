@@ -101,6 +101,7 @@ Route::post('vdr/pin/check/pdf', [DocumentController::class, 'vdrPinCheck'])->na
 Route::get('vdr/pin/pdf/{vdr:id}', [DocumentController::class, 'vdrPin'])->name('vdr.pin.pdf');
 
 Route::get('email/vdr/approve//{id}', [MarineVdrController::class, 'approveFromEmail'])->name('vdr.approve.from.email');
+Route::get('email/vdr/radop/approve/{id}', [MarineVdrController::class, 'approveRadopFromEmail'])->name('vdr.approve.radop.from.email');
 
 Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
 Route::get('email/vdr/approve/loc/superintendent/{id}', [MarineVdrController::class, 'approveSuptentLocFromEmail'])->name('vdr.approve.suptent.loc.from.email');
@@ -123,6 +124,15 @@ Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectF
 
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn() => phpinfo());
+
+   Route::prefix('vdr/report')->group(function () {
+      Route::get('index', [ExportController::class, 'index'])->name('vdr.export');
+      Route::post('filter', [ExportController::class, 'filter'])->name('vdr.export.filter');
+      Route::get('export/multiple/{from}/{to}/{vessel}', [ExportController::class, 'vdrMultiple'])->name('vdr.export.multiple');
+
+      Route::get('marine', [ExportController::class, 'indexMarine'])->name('vdr.export.marine');
+      Route::post('marine/filter', [ExportController::class, 'filterMarine'])->name('vdr.export.marine.filter');
+   });
 
    Route::prefix('vdr/statistic')->group(function () {
       Route::get('vessel/{id}', [VdrController::class, 'statisticVessel'])->name('vdr.statistic.vessel');
@@ -603,9 +613,12 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
          Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
          Route::get('undo/pet/{id}', [MarineVdrController::class, 'undoPet'])->name('vdr.undo.pet');
          Route::get('undo/marine/{id}', [MarineVdrController::class, 'undoMarine'])->name('vdr.undo.marine');
+         Route::get('undo/radop/{id}', [MarineVdrController::class, 'undoRadop'])->name('vdr.undo.radop');
+         Route::get('undo/suptent/area/{id}', [MarineVdrController::class, 'undoSuptentArea'])->name('vdr.undo.suptent.area');
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
+         Route::get('approve/radop/{id}', [MarineVdrController::class, 'approveRadop'])->name('vdr.approve.radop');
          Route::put('approve/suptent-loc', [MarineVdrController::class, 'approveSuptentLocForm'])->name('vdr.approve.suptent.loc.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          // Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');

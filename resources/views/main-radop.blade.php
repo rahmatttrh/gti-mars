@@ -11,9 +11,12 @@
                <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
-                     Welcome back, <br> <b> {{auth()->user()->name}}</b>
+                     Welcome back, <br> <h4 class="text-uppercase"> {{auth()->user()->name}}</h4>
                      <hr>
-                     Superintendent <h4>{{auth()->user()->getArea()}}</h4>
+                     Level User <br> <b>Radop</b>
+                     <br>
+                     Area <br>
+                     <b>{{auth()->user()->getArea()}}</b>
                      {{-- <hr>
                      Location Company Representative/Suptent Area --}}
                   </div>
@@ -23,7 +26,7 @@
                   <div class="card-body">
                      <b>Email</b>
                      <hr>
-                     @if (auth()->user()->getArea() == 'SBU' )
+                     {{-- @if (auth()->user()->getArea() == 'SBU' )
                      erry.brillyanto@pertamina.com <br>
                      oka.prasetya@pertamina.com
                      @elseif(auth()->user()->getArea() == 'CBU' )
@@ -38,7 +41,7 @@
                      @elseif(auth()->user()->getArea() == 'Widuri-T' )
                      muhamad.mujiburichman@pertamina.com <br>
                      asril1@pertamina.com
-                     @endif
+                     @endif --}}
                      
 
                   </div>
@@ -55,10 +58,10 @@
                         <div class="card-wrap">
                         <div class="card-header">
                            
-                           <h4>Waiting</h4>
+                           <h4>VDR Waiting</h4>
                         </div>
                         <div class="card-body">
-                           {{count($allVdrs->where('status', 5))}}
+                           {{count($vdrValidations)}}
                         </div>
                         </div>
                      </a>
@@ -94,7 +97,7 @@
                            <h4>History</h4>
                         </div>
                         <div class="card-body">
-                           {{count($allVdrs->whereIn('status', [3,4]))}}
+                           {{count($allVdrs->whereIn('status', [3,4,5]))}}
                         </div>
                         </div>
                      </a>
@@ -108,7 +111,8 @@
                      <div class="row">
                         <div class="col-md-12">
                            <div class="badge badge-info">VDR Monitoring ({{auth()->user()->getArea()}})</div>
-                           <div class="table-responsive " >
+                           {{-- <b></b> --}}
+                           <div class="table-responsive mt-2" >
                               <table class="datatables-vdr">
                                  
                                  <thead>

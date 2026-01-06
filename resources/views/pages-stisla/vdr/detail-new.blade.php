@@ -178,7 +178,7 @@
       
                         @if ( auth()->user()->hasRole('marine') )
                         
-                           @if (auth()->user()->username != 'pet')
+                           @if (auth()->user()->username == 'marine' || auth()->user()->username == 'superadmin')
                               @if ($vdr->status == 2)
                               <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
                               <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
@@ -187,12 +187,39 @@
                               @endif
                            
                            @endif
+
+                           @if (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri')
+                              @if ($vdr->status == 2 )
+                              <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppRadop">Approve as Radop</a>
+                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#modalRejectRadop">Reject</a>
+                              @elseif($vdr->status > 2)
+                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoRadop">Undo Approve</a>
+
+                              @endif
+                           
+                           @endif
                            
                         
                            
                         @endif
+
+
+
+                        @if (auth()->user()->hasRole('suptent_loc') )
+                        
+                           @if ($vdr->status == 5 )
+                           <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve ok</a>
+                           <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                           @elseif($vdr->status == 3)
+                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoSuptentArea">Undo Approve</a>
+
+                           @endif
+
+
+                           
+                        @endif
       
-                        @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
+                        {{-- @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
                         
                            
                            <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
@@ -201,7 +228,7 @@
                            
                         
                            
-                        @endif
+                        @endif --}}
       
                         {{-- @if ($vdr->status == 1  && auth()->user()->username == 'pet')
                        
@@ -343,10 +370,13 @@
       
                   @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
                   
+                     {{-- @if (auth()->user()->username != 'pet') --}}
                      @if (auth()->user()->username != 'pet')
                      <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
                      <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                      @endif
+
+
                      
                   
                      
@@ -477,6 +507,16 @@
                      </div>
                   </div>
                @endif
+               @if ($vdr->remark == 'offhire')
+                  <div class="card bg-danger mt-2">
+                     <div class="card-body text-center">
+                        <h2><i>OFFHIRE</i></h2>
+                        <i>Data ini tidak dapat digunakan sebagai dasar Invoicing</i>
+                     </div>
+                  </div>
+               @endif
+
+
                <div class="row ">
                   <div class="col-md-5">
                      
@@ -659,13 +699,15 @@
                                  @if ($vdr->vessel->ipb == 'IPB')
                                     @if ($vdr->status == 0)
                                      <tr>
-                                       <td>BU</td>
+                                       <td>Location</td>
                                        <td colspan="3">
                                           <select name="bu" id="bu" style="border:0; outline:0;" class="  input_bu" style="width: 100%">
                                              <option selected disabled >Choose BU</option>
-                                             <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">South Bussines Unit</option>
-                                             <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">Central Bussines Unit</option>
-                                             <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">North Bussines Unit</option>
+                                             <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
+                                             <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                                             <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                                             <option {{$vdr->area == 'Cinta-T' ? 'selected' : ''}} value="Cinta-T">Cinta-T</option>
+                                             <option {{$vdr->area == 'Widuri-T' ? 'selected' : ''}} value="Widuri-T">Widuri-T</option>
                                           </select>
                                        </td>
                                      </tr>
@@ -1187,6 +1229,7 @@
                                           <td class="text-center"><span class="manuTime">{{$vdrOperatingManu}}</span> </td>
                                           <td class="text-center"><span class="idleTime">{{$vdrOperatingIdle}}</span> </td>
                                           <td class="text-center"><span class="towTime">{{$vdrOperatingTow}}</span> </td>
+                                          {{-- <td class="text-center"><span class="towTime">{{getTotalHoursB($vdrOperatingTow)}}</span> </td> --}}
                                           <td class="text-center"><span class="ahTime">{{$vdrOperatingAh}}</span> </td>
                                           <td class="text-center"><span class="sbTime">{{$vdrOperatingSb}}</span> </td>
                                           <td class="text-center">
@@ -2206,6 +2249,54 @@
       </div>
    </div>
 
+   <div class="modal fade" id="modalUndoRadop" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Undo Approve VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               VDR {{$vdr->code}} saat ini sedang  <b><x-status-stisla.vdr-plain :vdr="$vdr" /></b>.
+               <hr>
+               Proses Undo Approve VDR akan merubah <b>Status VDR kembali ke Radop</b>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.undo.radop', enkripRambo($vdr->id))}}"  class="btn btn-info">Undo VDR</a>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="modal fade" id="modalUndoSuptentArea" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Undo Approve VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               VDR {{$vdr->code}} saat ini sedang  <b><x-status-stisla.vdr-plain :vdr="$vdr" /></b>.
+               <hr>
+               Proses Undo Approve VDR akan merubah <b>Status VDR kembali ke Suptent Area</b>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('vdr.undo.suptent.area', enkripRambo($vdr->id))}}"  class="btn btn-info">Undo VDR</a>
+            </div>
+         </div>
+      </div>
+   </div>
+
 
    <div class="modal fade" id="modalAppMarine" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -2471,6 +2562,38 @@
                <a href="{{route('vdr.approve.luthfi', enkripRambo($vdr->id))}}"  class="btn btn-info">Approve</a>
             </div>
          </div>
+      </div>
+   </div>
+   <div class="modal fade" id="modalAppRadop" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Confirmation Approve</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  <span>Approve VDR : </span> <br>
+                  <b>{{$vdr->code}}</b>
+                  <hr>
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <span>Selanjutnya VDR akan terkirim ke Suptent Area Terkait untuk proses approval berikutnya</span>
+                  
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <a class="btn btn-info" href="{{route('vdr.approve.radop', enkripRambo($vdr->id))}}">Approve</a>
+                  {{-- <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button> --}}
+               </div>
+            </div>
       </div>
    </div>
    
@@ -4164,7 +4287,7 @@
                console.log('msg :' + result.result );
                // $('.code').html(result.code);
                // $('.errordate').html(result.error);
-               showMessage("Autosave: " + "Data BU tersimpan");
+               showMessage("Autosave: " + "Data Lokasi tersimpan");
                
             },
             error: function(error) {

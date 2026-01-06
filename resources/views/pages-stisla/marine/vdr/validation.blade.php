@@ -107,7 +107,7 @@
                            @foreach($vdrs as $vdr)
                            <tr>
                               {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
-                              <td>{{$vdr->vessel->name}}</td>
+                              <td>{{$vdr->vessel->name}} </td>
                               <td>
                                  @if (auth()->user()->username == 'lutfiaryanto')
                               
@@ -135,6 +135,7 @@
                                  <span class="badge badge-success">Release</span>
                                  @endif --}}
                                  <x-status-stisla.vdr :vdr="$vdr" />
+                                 <div class="badge badge-light">{{$vdr->area}}</div>
                               </td>
                               @if ($title == 'Reject')
                                  <td class="text-truncate" style="max-width: 150px" data-toggle="tooltip" data-placement="bottom" title="{{$vdr->reject_desc}}">

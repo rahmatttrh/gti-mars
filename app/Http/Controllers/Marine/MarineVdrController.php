@@ -319,11 +319,17 @@ class MarineVdrController extends Controller
       } elseif (auth()->user()->username == 'marine'  || auth()->user()->username == 'fleet' || auth()->user()->username == 'superadmin') {
          $to = Carbon::now();
          $level = 'Marine';
-         $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         $vdrValidations = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         // dd($vdrValidations);
       } elseif (auth()->user()->username == 'lutfiaryanto') {
          $to = Carbon::now();
          $level = 'Suptent';
          $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_sbu') {
+         $employeeRadop = Employee::where('username', auth()->user()->username)->first();
+         $to = Carbon::now();
+         $level = 'Radop ' .  $employeeRadop->area;
+         $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
       // if (auth()->user()->hasRole('suptent_loc')) {
@@ -418,6 +424,11 @@ class MarineVdrController extends Controller
 
       $vdrValidations = Vdr::whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
 
+      if (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri') {
+         $employee = Employee::where('username', auth()->user()->username)->first();
+         $vdrValidations = Vdr::where('area', $employee->area)->whereIn('status', [303, 202, 101])->orderBy('updated_at', 'desc')->get();
+      }
+
       if (auth()->user()->hasRole('suptent_loc')) {
          $level = 'Company Location Representative/Suptent Area';
          $employee = Employee::where('username', auth()->user()->username)->first();
@@ -454,6 +465,12 @@ class MarineVdrController extends Controller
          $to = Carbon::now();
          $level = 'Suptent';
          $vdrs = Vdr::where('status', '>', 3)->whereNotIn('status', [303, 202, 101])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri') {
+         $to = Carbon::now();
+
+         $employee = Employee::where('username', auth()->user()->username)->first();
+         $level = 'Radop ' . $employee->area;
+         $vdrs = Vdr::where('status', '>', 2)->whereNotIn('status', [303, 202, 101])->where('area', $employee->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
 
@@ -584,6 +601,60 @@ class MarineVdrController extends Controller
          'action' => 'Undo VDR',
          'vdr_id' => $vdr->id,
          'desc' => 'Marine',
+         'table' => 'vdrs'
+      ]);
+
+
+      // dd()
+
+
+
+      return redirect()->back()->with('success', 'Undo VDR success');
+   }
+
+   public function undoRadop($id)
+   {
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find(dekripRambo($id));
+      $vdr->update([
+         'status' => 2,
+
+      ]);
+
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Undo VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Radop',
+         'table' => 'vdrs'
+      ]);
+
+
+      // dd()
+
+
+
+      return redirect()->back()->with('success', 'Undo VDR success');
+   }
+
+   public function undoSuptentArea($id)
+   {
+      // $dekripId = dekripRambo($id);
+      $vdr = Vdr::find(dekripRambo($id));
+      $vdr->update([
+         'status' => 5,
+
+      ]);
+
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+         'action' => 'Undo VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Suptent Area',
          'table' => 'vdrs'
       ]);
 
@@ -749,34 +820,34 @@ class MarineVdrController extends Controller
       $vessel = Vessel::find($vdr->vessel_id);
 
       // Cek Vessel Uner PO atau Non PO
-      // if ($vessel->contract_type == 'Under PO') {
+      if ($vessel->contract_type == 'Under PO') {
 
-      //    // Cek Vessel IPB atau bukan
-      //    if ($vessel->ipb == 'IPB') {
-      //       // dd('IPB');
-      //       // jika Vessel IPB butuh validasi Suptent BU
-      //       $status = 5;
+         // Cek Vessel IPB atau bukan
+         if ($vessel->ipb == 'IPB') {
+            // dd('IPB');
+            // jika Vessel IPB butuh validasi Suptent BU
+            $status = 5;
 
-      //       // $emailController = new EmailController();
-      //       // $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
-      //    } else {
-      //       // dd('Non IPB');
-      //       // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
-      //       $status = 3;
+            // $emailController = new EmailController();
+            // $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
+         } else {
+            // dd('Non IPB');
+            // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
+            $status = 3;
 
-      //       $emailController = new EmailController();
-      //       $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
-      //    }
-      // } else {
+            // $emailController = new EmailController();
+            // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+         }
+      } else {
 
-      //    // dd('non po');
-      //    // Jika Vessel Non PO butuh validasi Suptent Func
-      //    $status = 5;
-      //    // $emailController = new EmailController();
-      //    // $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
-      // }
+         // dd('non po');
+         // Jika Vessel Non PO butuh validasi Suptent Func
+         $status = 5;
+         // $emailController = new EmailController();
+         // $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
+      }
 
-      $status = 3;
+      // $status = 3;
 
       // $emailController = new EmailController();
       // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
@@ -816,6 +887,57 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR Marine Approved');
    }
 
+
+   public function approveRadop($id)
+   {
+      $vdr = Vdr::find(dekripRambo($id));
+
+      $vdr->update([
+         'status' => 5,
+         'title2' => 'Radop',
+         'name2' => auth()->user()->name,
+         'timestamp2' => Carbon::now()
+      ]);
+
+      Log::create([
+         'system' => 'VDR',
+         'user_id' => auth()->user()->id,
+
+         'action' => 'Approve VDR',
+         'vdr_id' => $vdr->id,
+         'desc' => 'Radop',
+         'table' => 'vdrs'
+      ]);
+
+
+      return redirect()->back()->with('success', 'VDR berhasil di Approve');
+   }
+
+   public function approveRadopFromEmail($id)
+   {
+      $vdr = Vdr::find(dekripRambo($id));
+
+      $vdr->update([
+         'status' => 5,
+         'title2' => 'Radop',
+         'name2' => 'Radop ' . $vdr->area,
+         'timestamp2' => Carbon::now()
+      ]);
+
+      // Log::create([
+      //    'system' => 'VDR',
+      //    'user_id' => auth()->user()->id,
+
+      //    'action' => 'Approve VDR',
+      //    'vdr_id' => $vdr->id,
+      //    'desc' => 'Radop',
+      //    'table' => 'vdrs'
+      // ]);
+
+
+      return redirect()->back()->with('success', 'VDR berhasil di Approve');
+   }
+
    public function approveFormEmail(Request $req)
    {
 
@@ -824,13 +946,35 @@ class MarineVdrController extends Controller
 
       $vessel = Vessel::find($vdr->vessel_id);
 
-      // if ($vessel->contract_type == 'Under PO') {
-      //    $status = 3;
-      // } else {
-      //    $status = 5;
-      // }
+      // Cek Vessel Uner PO atau Non PO
+      if ($vessel->contract_type == 'Under PO') {
 
-      $status = 3;
+         // Cek Vessel IPB atau bukan
+         if ($vessel->ipb == 'IPB') {
+            // dd('IPB');
+            // jika Vessel IPB butuh validasi Suptent BU
+            $status = 5;
+
+            // $emailController = new EmailController();
+            // $emailController->approvalVdrSuptentBu(enkripRambo($vdr->id));
+         } else {
+            // dd('Non IPB');
+            // Jika bukan Vessel IPB langsung ke Suptent (Pak Lutfi)
+            $status = 3;
+
+            // $emailController = new EmailController();
+            // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+         }
+      } else {
+
+         // dd('non po');
+         // Jika Vessel Non PO butuh validasi Suptent Func
+         $status = 5;
+         // $emailController = new EmailController();
+         // $emailController->approvalVdrSuptentLoc(enkripRambo($vdr->id));
+      }
+
+      // $status = 3;
       // dd($status);
       $vdr->update([
          'status' => $status,
@@ -884,8 +1028,8 @@ class MarineVdrController extends Controller
       ]);
       // dd()
 
-      $emailController = new EmailController();
-      $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
+      // $emailController = new EmailController();
+      // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
       return redirect()->back()->with('success', 'VDR Suptent Location Approved');
    }
@@ -1138,14 +1282,15 @@ class MarineVdrController extends Controller
       $dekripId = dekripRambo($id);
       $vdr = Vdr::find($dekripId);
       // dd('Success Approve VDR from email');
-      // $suptenLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
-      $suptenLoc = Employee::where('role', 'suptent_loc')->first();
+      $suptenLoc = Employee::where('role', 'suptent_loc')->where('area', $vdr->area)->first();
+      // $suptenLoc = Employee::where('role', 'suptent_loc')->first();
 
       // dd($vdr->title1);
       $vdr->update([
          'status' => 3,
          'title4' => 'Suptent on Location',
          'name4' => $suptenLoc->name,
+         'timestamp4' => Carbon::now()
       ]);
 
       // dd($vdr->name3);
