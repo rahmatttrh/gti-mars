@@ -17,10 +17,14 @@ class CreateContractsTable extends Migration
             $table->id();
             $table->integer('vessel_id');
             $table->integer('status');
+            $table->string('contract_number')->nullable();
             $table->string('type')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->text('desc')->nullable();
+
+            $table->string('ipb')->nullable();
+            $table->string('func')->nullable();
             $table->timestamps();
         });
     }

@@ -15,6 +15,10 @@ class CreateContractDetailsTable extends Migration
     {
         Schema::create('contract_details', function (Blueprint $table) {
             $table->id();
+            $table->integer('contract_id');
+            $table->integer('heading_id');
+            $table->decimal('speed', 15, 2)->default(0);
+            $table->decimal('contractual_fuel', 15, 2)->default(0);  
             $table->timestamps();
         });
     }
