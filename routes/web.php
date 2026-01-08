@@ -4,6 +4,7 @@ use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\BargeScheduleController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\CarrierController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\CrewController;
 use App\Http\Controllers\DailyBargeLocationController;
 use App\Http\Controllers\DailyReportController;
@@ -124,6 +125,14 @@ Route::post('vdr/reject/from/email/store', [MarineVdrController::class, 'rejectF
 
 Route::middleware(["auth"])->group(function () {
    Route::get('phpinfo', fn() => phpinfo());
+
+
+   Route::prefix("contract")->group(function () {
+      Route::post('/store', [ContractController::class, 'store'])->name('contract.store');
+
+      Route::get('/test/{id}/{test}', [ContractController::class, 'store'])->name('report.test');
+      // Route::put('/update', [NewsController::class, 'update'])->name('news.update');
+   });
 
    Route::prefix('vdr/report')->group(function () {
       Route::get('index', [ExportController::class, 'index'])->name('vdr.export');
