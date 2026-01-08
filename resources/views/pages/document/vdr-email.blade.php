@@ -43,9 +43,10 @@ table {
       
       <div class="row align-items-center">
          <div class="col">
-            <h2 class="page-title">
+            <h2 class="page-title border-bottom mb-2">
             Vessel Daily Report [{{$vdr->code}}]
             </h2>
+            
          </div>
          <!-- Page title actions -->
          <div class="col-auto ms-auto d-print-none">
@@ -224,7 +225,24 @@ table {
 <div class="page-body bg-white" >
    <div class=" px-4 bg-white rounded pb-4 pt-1 ">
       <div class="row border-bottom pt-1 mb-2 ">
-         <div class="col-12">
+         <div class="col-md-4">
+            <div class="">
+               <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
+               <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small><br>
+               <small><b>{{$vdr->code}}</b></small>
+            </div>
+         </div>
+         <div class="col-md-4">
+            <div class="text-center">
+               <small><b>VESSEL DAILY REPORT</b></small><br>
+               <small>(Every Midnight)</small>
+               
+            </div>
+         </div>
+         <div class="col-md-4 text-right">
+            <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image float-end">
+         </div>
+         {{-- <div class="col-12">
             <div class="d-flex justify-content-between">
                <div class="">
                   <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
@@ -241,7 +259,7 @@ table {
                   
                </div>
             </div>
-         </div>
+         </div> --}}
         
          {{-- <div class="col-6">
 
