@@ -79,7 +79,7 @@
                     </h2>
                     <small>
                         Setelah Klik Print VDR, Disarankan merubah ke <b>Mode Layout Landscape</b> dan <b>Margins
-                            Minimum</b> untuk hasil yang lebih baik.
+                            None</b> untuk hasil yang lebih baik.
                     </small>
                 </div>
                 <!-- Page title actions -->

@@ -82,7 +82,7 @@ table th tr td {
              {{-- [{{$vdr->code}}]   --}}
             </h2>
             <small>
-               Setelah Klik Print VDR, Disarankan merubah ke <b>Mode Layout Landscape</b> dan <b>Margins Minimum</b>
+               Setelah Klik Print VDR, Disarankan merubah ke <b>Mode Layout Landscape</b> dan <b>Margins None</b>
             </small>
          </div>
          <!-- Page title actions -->

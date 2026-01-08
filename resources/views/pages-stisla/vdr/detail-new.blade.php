@@ -696,7 +696,7 @@
                                        </td>
                                      </tr>
                                  @endif --}}
-                                 @if ($vdr->vessel->ipb == 'IPB')
+                                 @if ($vdr->vessel->ipb == 'IPB' || $vdr->vessel->type == 'Tug Boat')
                                     @if ($vdr->status == 0)
                                      <tr>
                                        <td>Location</td>
@@ -709,6 +709,7 @@
                                              <option {{$vdr->area == 'Cinta-T' ? 'selected' : ''}} value="Cinta-T">Cinta-T</option>
                                              <option {{$vdr->area == 'Widuri-T' ? 'selected' : ''}} value="Widuri-T">Widuri-T</option>
                                           </select>
+                                          <small>(Pilih area untuk Approval Radop & Suptent)</small>
                                        </td>
                                      </tr>
                                     {{-- <div class="px-2 mt-2">
