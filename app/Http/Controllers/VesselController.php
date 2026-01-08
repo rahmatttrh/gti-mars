@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
 use App\Models\Port;
 use App\Models\Report;
 use App\Models\Schedule;
@@ -317,11 +318,14 @@ class VesselController extends Controller
       // dd($vessel->port->name);
       $today = Carbon::now();
       $lastVdr = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->first();
+
+      $activeContract = Contract::where('vessel_id', $vessel->id)->where('status', 1)->first();
       // return view('pages.vessel.detail', [
       return view('pages-stisla.master-data.vessel-detail', [
          'vessel' => $vessel,
          'today' => $today,
-         'lastVdr' => $lastVdr
+         'lastVdr' => $lastVdr,
+         'activeContract' => $activeContract
       ]);
    }
 
