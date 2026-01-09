@@ -158,11 +158,11 @@
 
          @if ($vdr->remark == 'void')
          @else
-         <div class="d-none d-md-block">
+         <div class="">
             <div class="col-md-12 ">
                <div class="row">
                   <div class="col-md-12 px-2">
-                     <div class="d-flex align-items-center px-3">
+                     {{-- <div class="d-flex align-items-center px-3"> --}}
 
                   
                         @if (auth()->user()->hasRole('vessel'))
@@ -302,7 +302,7 @@
                            
                         @endif
                         
-                     </div>
+                     {{-- </div> --}}
                   </div>
                   <div class="col-md-4">
                      <div class="">
@@ -343,147 +343,7 @@
 
 
          {{-- Action Mobile View --}}
-         <div class="d-block d-sm-none">
-            <div class="row">
-               <div class="col-md-12 px-4">
-                  @if (auth()->user()->hasRole('vessel'))
-                     @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                     @if (auth()->user()->username == 'parakan' )
-                     @else
-                     <div class="row">
-                        <div class="col-6">
-                           <a href="#" class="btn btn-block  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                        </div>
-                        <div class="col-6">
-                           <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn btn-block  btn-danger  mx-2">Delete</a>
-                        </div>
-                     </div>
-                     @endif
-                     
-                     {{-- <a href="" class="btn btn-info mx-2">Edit</a> --}}
-                     
-                  
-                     
-                     
-                     @endif
-                  @endif
-      
-                  @if ($vdr->status == 2 && auth()->user()->hasRole('marine') )
-                  
-                     {{-- @if (auth()->user()->username != 'pet') --}}
-                     @if (auth()->user()->username != 'pet')
-                     <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
-                     <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                     @endif
-
-
-                     
-                  
-                     
-                  @endif
          
-                  @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
-                  
-                     
-                     <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
-                     <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-suptent-loc">Reject</a>
-                     
-                     
-                  
-                     
-                  @endif
-      
-               @if ($vdr->status == 1  && auth()->user()->username == 'pet')
-                  {{-- <div class="btn-group mr-2"> --}}
-                  {{-- <div class="btn btn-block btn-group p-0"> --}}
-                     {{-- <a href="{{route('vdr.approve.marine', enkripRambo($vdr->id))}}" class="btn btn-info btn-block">Approve </a> --}}
-                     {{-- <div class="btn-group mr-2"> --}}
-                        <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
-                        <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                     {{-- </div> --}}
-                     
-                  {{-- </div> --}}
-                  
-                  
-               
-               
-               @endif
-               </div>
-            </div>
-
-            <div class="row">
-               <div class="col-md-12">
-                  <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
-               
-               
-               
-               
-               @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
-               <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
-                  <span class="badge badge-light border">!</span> Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} :
-                  {{$vdr->reject_desc}}
-               </div>
-                                    
-               @endif
-      
-                        
-      
-               @if (count($vdrHistories) > 0)
-                  <select class="form-control" name="" id="">
-                     <option value="" selected disabled>Revision Record</option>
-                     @foreach ($vdrHistories as $vhis)
-                     <option value="">
-                        <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
-                     </option>
-                        @endforeach
-                     
-                  </select>
-                  {{-- <div class="btn-group">
-                     <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Action
-                     </button>
-                     <div class="dropdown-menu" style="max-width: 500px;min-width: 1%;" >
-                        @foreach ($vdrHistories as $vhis)
-                        <a class="dropdown-item" href="#" >{{$vhis->code}} Lorem, ipsum dolor.</a>
-                        
-                        @endforeach
-                     </div>
-                  </div> --}}
-                  {{-- <div class="dropdown">
-                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     Riwayat Revisi
-                     </button>
-                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        
-                     
-                     </div>
-                  </div> --}}
-               @endif
-
-               {{-- @if ($vdr->vessel->ipb == 'IPB')
-                  <select name="bu" id="bu" class="form-control shadow input_bu" style="width: 150px">
-                     <option selected disabled >Choose BU</option>
-                     <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
-                     <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
-                     <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
-                  </select>
-               @endif --}}
-
-               @if (auth()->user()->hasRole('vessel'))
-                  @if ($vdr->status == 0)
-                  <div class="btn btn-warning  mx-2 text-dark" style="background-color: rgb(226, 236, 151);" >
-                     <span class="badge badge-dark border">!</span> Harap isi kolom berwarna kuning
-                  </div>
-                  @endif
-                  
-                  
-               @endif
-               <a href="#" class="btn  btn-dark" data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan.">Info</a>
-               </div>
-            </div>
-
-            
-         </div>
          @endif
 
          
@@ -2327,18 +2187,34 @@
                         
                         
                         <div class="form-group">
-                           <label for="name2">PIC Marine</label>
-                           <select class="form-control" name="name2" id="name2" required>
-                              <option value="UA">Umar Agam</option>
-                              <option value="RH">Rezky Hardanto</option>
-                              <option value="MMH">Muhammad Misbakhul Hasan</option>
+                           @if ($vdr->area == null || $vdr->area == "" )
+                              <label for="name2">PIC Marine</label>
+                              <select class="form-control" name="name2" id="name2" required>
+                                 <option value="UA">Umar Agam</option>
+                                 <option value="RH">Rezky Hardanto</option>
+                                 <option value="MMH">Muhammad Misbakhul Hasan</option>
 
-                              <option value="JPG">Joy Pranata Ginting</option>
-                              <option value="MH">Mochamad Harris</option>
-                              <option value="YRF">Yusuf Revy Fadillah</option>
-                              <option value="DDP">Dicky Dandi Permana</option>
-                              
-                           </select>
+                                 <option value="JPG">Joy Pranata Ginting</option>
+                                 <option value="MH">Mochamad Harris</option>
+                                 <option value="YRF">Yusuf Revy Fadillah</option>
+                                 <option value="DDP">Dicky Dandi Permana</option>
+                                 
+                              </select>
+                              @else
+                              <label for="name2">PIC Radop</label>
+                              <select class="form-control" name="name2" id="name2" required>
+                                 <option value="UA">Umar Agam</option>
+                                 <option value="RH">Rezky Hardanto</option>
+                                 <option value="MMH">Muhammad Misbakhul Hasan</option>
+
+                                 <option value="JPG">Joy Pranata Ginting</option>
+                                 <option value="MH">Mochamad Harris</option>
+                                 <option value="YRF">Yusuf Revy Fadillah</option>
+                                 <option value="DDP">Dicky Dandi Permana</option>
+                                 
+                              </select>
+                           @endif
+                           
                           
                         </div>
                         <hr>
