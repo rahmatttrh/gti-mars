@@ -286,13 +286,13 @@
                                                 <tr>
                                                    <td class="border">Start Date</td>
                                                    <td class="border" colspan="2">
-                                                      <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->start_date }}">
+                                                      <input type="date" name="update_start_date" id="update_start_date" class="w-100 py-1" value="{{ $activeContract->start_date }}">
                                                    </td>
                                                 </tr>
                                                 <tr>
                                                    <td class="border">End Date</td>
                                                    <td class="border" colspan="2">
-                                                      <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->end_date }}">
+                                                      <input type="date" name="update_end_date" id="update_end_date" class="w-100 py-1" value="{{ $activeContract->end_date }}">
                                                    </td>
                                                 </tr>
                                                 
@@ -304,7 +304,7 @@
                                     <div class="table-responsive mt-2" >
                                        
                                     
-                                       <table class="w-100 border">
+                                       <table class="w-100 border ">
                                        
                                           <thead>
                                              
@@ -339,7 +339,9 @@
                                        
                                        <small>Note: Data diatas akan ditampilkan ketika <i>User Kapal</i> membuat VDR Online .</small>
                                     </div>
-                                    <button class="btn btn-primary mt-3" type="submit">Save Update</button>
+                                    <br>
+                                    <button class="btn btn-primary" type="submit">Save Update</button>
+                                    <small class="">Klik 'Save Update', akan merubah data semua VDR pada table 'VDRs in Current Contrcat'</small>
                                     
                                     <hr>
                                     </form>
@@ -348,6 +350,42 @@
                                   <p class="text-danger"><i>No Active Contract</i></p>
                               @endif
                               
+                        </div>
+                     </div>
+
+                     <div class="card">
+                        <div class="card-body">
+                           <h4>VDRs in Current Contract ({{ count($vdrs) }} VDR)</h4>
+                           <div class="table-responsive">
+                              <table class="table table-bordered table-sm datatables-vdr">
+                                 <thead>
+                                    <tr>
+                                       <th>VDR ID</th>
+                                       <th>No. Kontrak</th>
+                                       <th>Date</th>
+                                       
+                                       <th>Status</th>
+                                       {{-- <th>Speed (Knots)</th>
+                                       <th>Fuel Cons. (Liters)</th> --}}
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @foreach ($vdrs as $vdr)
+                                       <tr class="border-bottom">
+                                          <td class=""><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}"> {{ $vdr->code }}</a></td>
+                                          <td>{{ $vdr->contract }}</td>
+                                          <td>{{ $vdr->date }}</td>
+                                          
+                                          <td>
+                                             <x-status-stisla.vdr :vdr="$vdr" />
+                                          </td>
+                                          {{-- <td>{{ $vdr->speed }}</td>
+                                          <td>{{ $vdr->fuel_consumption }}</td> --}}
+                                       </tr>
+                                    @endforeach
+                                 </tbody>
+                              </table>
+                           </div>
                         </div>
                      </div>
                      

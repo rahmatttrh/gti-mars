@@ -320,12 +320,14 @@ class VesselController extends Controller
       $lastVdr = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->first();
 
       $activeContract = Contract::where('vessel_id', $vessel->id)->where('status', 1)->first();
+      $vdrs = Vdr::where('vessel_id', $vessel->id)->whereBetween('date', [$activeContract->start_date, $activeContract->end_date])->orderBy('date', 'desc')->get();
       // return view('pages.vessel.detail', [
       return view('pages-stisla.master-data.vessel-detail', [
          'vessel' => $vessel,
          'today' => $today,
          'lastVdr' => $lastVdr,
-         'activeContract' => $activeContract
+         'activeContract' => $activeContract,
+         'vdrs' => $vdrs
       ]);
    }
 

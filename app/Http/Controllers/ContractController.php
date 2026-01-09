@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Contract;
 use App\Models\ContractDetail;
+use App\Models\Vdr;
+use App\Models\VdrHistory;
 use App\Models\VdrOperatingHeader;
 use App\Models\Vessel;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ContractController extends Controller
@@ -47,7 +50,38 @@ class ContractController extends Controller
             ]);
         }
 
-        return redirect()->back()->with('success', 'Contract created successfully.');
+        $vdrs = Vdr::where('vessel_id', $req->vessel_id)->whereBetween('date', [$req->contract_start, $req->contract_end])->get();
+        if ($vdrs->count() > 0) {
+            dd($vdrs);
+            foreach ($vdrs as $vdr) {
+                $date = Carbon::create($vdr->date);
+                $year = $date->format('y');
+                $year = $date->format('y');
+                $month = $date->format('m');
+                $day = $date->format('d');
+
+                $awalan = $newContract->contract_number . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+
+                $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+                $timestamp = $year  . $month  . $day;
+
+                if (count($vdrHistories) > 0) {
+                    $num = count($vdrHistories);
+                } else {
+                    $num = 0;
+                }
+
+                // Menggabungkan awalan dan $idPadded
+                $hasil = $awalan . $timestamp . '/' . $num;
+                $vdr->contract_number = $newContract->contract_number;
+                $vdr->code = $hasil;
+                $vdr->save();
+            }
+        }
+
+
+
+        return redirect()->route('vessel.detail', enkripRambo($newContract->vessel_id))->with('success', 'Contract created successfully.');
     }
 
     public function updateDetails(Request $request)
@@ -59,6 +93,8 @@ class ContractController extends Controller
         $contract->ipb = $request->update_ipb;
         $contract->func = $request->update_func;
         $contract->status = $request->update_status;
+        $contract->start_date = $request->update_start_date;
+        $contract->end_date = $request->update_end_date;
         $contract->save();
 
         foreach ($request->detailId as $index => $id) {
@@ -67,7 +103,38 @@ class ContractController extends Controller
                 'contractual_fuel' => $request->contractual_fuel[$index],
             ]);
         }
-        return back()->with('success', 'ContractData updated');
+
+
+
+        $vdrs = Vdr::where('vessel_id', $contract->vessel_id)->whereBetween('date', [$contract->start_date, $contract->end_date])->get();
+        if ($vdrs->count() > 0) {
+            // dd($vdrs);
+            foreach ($vdrs as $vdr) {
+                $date = Carbon::create($vdr->date);
+                $year = $date->format('y');
+                $year = $date->format('y');
+                $month = $date->format('m');
+                $day = $date->format('d');
+
+                $awalan = $contract->contract_number . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+
+                $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+                $timestamp = $year  . $month  . $day;
+
+                if (count($vdrHistories) > 0) {
+                    $num = count($vdrHistories);
+                } else {
+                    $num = 0;
+                }
+
+                // Menggabungkan awalan dan $idPadded
+                $hasil = $awalan . $timestamp . '/' . $num;
+                $vdr->contract = $contract->contract_number;
+                $vdr->code = $hasil;
+                $vdr->save();
+            }
+        }
+        return redirect()->route('vessel.detail', enkripRambo($contract->vessel_id))->with('success', 'ContractData updated');
     }
 
     public function delete($id)
