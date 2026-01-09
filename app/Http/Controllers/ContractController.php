@@ -49,4 +49,40 @@ class ContractController extends Controller
 
         return redirect()->back()->with('success', 'Contract created successfully.');
     }
+
+    public function updateDetails(Request $request)
+    {
+        $contract = Contract::find($request->activeContractId);
+        // dd($request->all());
+        $contract->contract_number = $request->update_contract_number;
+        $contract->type = $request->update_type;
+        $contract->ipb = $request->update_ipb;
+        $contract->func = $request->update_func;
+        $contract->status = $request->update_status;
+        $contract->save();
+
+        foreach ($request->detailId as $index => $id) {
+            ContractDetail::where('id', $id)->update([
+                'speed' => $request->speed[$index],
+                'contractual_fuel' => $request->contractual_fuel[$index],
+            ]);
+        }
+        return back()->with('success', 'ContractData updated');
+    }
+
+    public function delete($id)
+    {
+        $contract = Contract::find(dekripRambo($id));
+        if ($contract) {
+            // Delete associated contract details first
+            ContractDetail::where('contract_id', $contract->id)->delete();
+            // Then delete the contract
+            $contract->delete();
+            return redirect()->back()->with('success', 'Contract deleted successfully.');
+        }
+        return redirect()->back()->with('success', 'Contract successfully deleted.');
+    }
+
+   
+
 }

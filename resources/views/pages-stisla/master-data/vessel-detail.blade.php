@@ -132,8 +132,8 @@
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="contract_type" required name="contract_type" >
                                                          <option value="" disabled selected>Select Contract</option>
-                                                         <option {{$vessel->contract_type == 'Under PO' ? 'selected' : ''}} value="Under PO">Under PO</option>
-                                                         <option {{$vessel->contract_type == 'Non PO' ? 'selected' : ''}} value="Non PO">Non PO</option>
+                                                         <option {{ $activeContract->end_date ?? old('contract_type') == 'Under PO' ? 'selected' : ''}} value="Under PO">Under PO</option>
+                                                         <option {{ $activeContract->end_date ?? old('contract_type') == 'Non PO' ? 'selected' : ''}} value="Non PO">Non PO</option>
                                                       </select>
                                                    </td>
                                                 </tr>
@@ -142,8 +142,8 @@
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="ipb"  name="ipb" >
                                                          <option value="" disabled selected>Select IPB / Non IPB</option>
-                                                         <option {{$vessel->ipb == 'IPB' ? 'selected' : ''}} value="IPB">IPB</option>
-                                                         <option {{$vessel->ipb == 'Non IPB' ? 'selected' : ''}} value="Non IPB">Non IPB</option>
+                                                         <option {{ $activeContract->ipb ?? old('ipb') == 'IPB' ? 'selected' : ''}} value="IPB">IPB</option>
+                                                         <option {{ $activeContract->ipb ?? old('ipb') == 'Non IPB' ? 'selected' : ''}} value="Non IPB">Non IPB</option>
                                                          
                                                       </select>
                                                    </td>
@@ -153,11 +153,11 @@
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="func"  name="func" >
                                                          <option value="" disabled selected>Select Func</option>
-                                                         <option value="Empty" >Non Func</option>
-                                                         <option {{$vessel->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
-                                                         <option {{$vessel->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
-                                                         <option {{$vessel->func == 'Project' ? 'selected' : ''}} value="Project">Project</option>
-                                                         <option {{$vessel->func == 'Security' ? 'selected' : ''}} value="Security">Security</option>
+                                                         <option {{ $activeContract->func ?? old('func') =='Empty' ? 'selected' : '' }} value="Empty" >Non Func</option>
+                                                         <option {{ $activeContract->func ?? old('func') == 'WI' ? 'selected' : ''}} value="WI">WI</option>
+                                                         <option {{ $activeContract->func ?? old('func') == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                                         <option {{ $activeContract->func ?? old('func') == 'Project' ? 'selected' : ''}} value="Project">Project</option>
+                                                         <option {{ $activeContract->func ?? old('func') == 'Security' ? 'selected' : ''}} value="Security">Security</option>
                                                          
                                                       </select>
                                                    </td>
@@ -182,7 +182,7 @@
                                                 <tr>
                                                    <td class="border">Start Date</td>
                                                    <td class="border" colspan="2">
-                                                      <input type="date" name="contract_start" required id="contract_start" class="w-100 py-1" value="{{ old('contract_start') }}">
+                                                      <input type="date" name="contract_start" required id="contract_start" class="w-100 py-1" value="{{ $activeContract->end_date ?? old('contract_start') }}">
                                                    </td>
                                                 </tr>
                                                 <tr>
@@ -215,127 +215,135 @@
                               </div>
 
                               @if ($activeContract)
-                                  <div class="badge badge-info">Current Contract</div>
-                              <div class="row ">
-                                 <div class="col-md-6">
-                                    <table class="w-100 border mt-2">
-                                       <tbody>
-                                          <tr>
-                                             <td class="border">Contract Number</td>
-                                             <td class="border" colspan="2">
-                                                <input type="text" class="w-100 py-1" value="{{ $activeContract->contract_number }}">
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td class="border">Contract Type</td>
-                                             <td class="border" colspan="2">
-                                                 <select  class="w-100 py-1" id="contract_type" required name="contract_type" >
-                                                   <option value="" disabled selected>Select Contract</option>
-                                                   <option {{$activeContract->type == 'Under PO' ? 'selected' : ''}} value="Under PO">Under PO</option>
-                                                   <option {{$activeContract->type == 'Non PO' ? 'selected' : ''}} value="Non PO">Non PO</option>
-                                                </select>
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td class="border">IPB</td>
-                                             <td class="border" colspan="2">
-                                                <select  class="w-100 py-1" id="ipb"  name="ipb" >
-                                                   <option value="" disabled selected>Select IPB / Non IPB</option>
-                                                   <option {{$activeContract->ipb == 'IPB' ? 'selected' : ''}} value="IPB">IPB</option>
-                                                   <option {{$activeContract->ipb == 'Non IPB' ? 'selected' : ''}} value="Non IPB">Non IPB</option>
-                                                   
-                                                </select>
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td class="border">Func</td>
-                                             <td class="border" colspan="2">
-                                                <select  class="w-100 py-1" id="func"  name="func" >
-                                                   <option value="" disabled selected>Select Func</option>
-                                                   <option value="Empty" >Empty</option>
-                                                   <option {{$activeContract->func == 'Empty' ? 'selected' : ''}} value="Empty">Non Func</option>
-                                                   <option {{$activeContract->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
-                                                   <option {{$activeContract->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
-                                                   <option {{$activeContract->func == 'Project' ? 'selected' : ''}} value="Project">Project</option>
-                                                   <option {{$activeContract->func == 'Security' ? 'selected' : ''}} value="Security">Security</option>
-                                                   
-                                                </select>
-                                             </td>
-                                          </tr>
-                                          
-                                          <tr>
-                                             <td class="border">Status</td>
-                                             <td class="border" colspan="2">
-                                                <select name="" id="" class="w-100 py-1">
-                                                   <option {{$activeContract->status == 1 ? 'selected' : ''}} value="1">Active</option>
-                                                   <option {{$activeContract->status == 0 ? 'selected' : ''}} value="0">Disable</option>
-                                                </select>
-                                             </td>
-                                          </tr>
-                                       </tbody>
-                                    </table>
-                                 </div>
+                                 <div class="badge badge-info">Current Contract </div>
+                                  <form action="{{ route('contract.update.details') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="number" name="activeContractId" id="activeContractId" value="{{ $activeContract->id }}" hidden>
+                                    <div class="row ">
+                                       <div class="col-md-6">
+                                          <table class="w-100 border mt-2">
+                                             <tbody>
+                                                <tr>
+                                                   <td class="border">Contract Number</td>
+                                                   <td class="border" colspan="2">
+                                                      <input type="text" class="w-100 py-1" name="update_contract_number" id="update_contract_number" value="{{ $activeContract->contract_number }}">
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td class="border">Contract Type</td>
+                                                   <td class="border" colspan="2">
+                                                      <select  class="w-100 py-1" id="update_type" required name="update_type" >
+                                                         <option value="" disabled selected>Select Contract</option>
+                                                         <option {{$activeContract->type == 'Under PO' ? 'selected' : ''}} value="Under PO">Under PO</option>
+                                                         <option {{$activeContract->type == 'Non PO' ? 'selected' : ''}} value="Non PO">Non PO</option>
+                                                      </select>
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td class="border">IPB</td>
+                                                   <td class="border" colspan="2">
+                                                      <select  class="w-100 py-1" id="update_ipb"  name="update_ipb" >
+                                                         <option value="" disabled selected>Select IPB / Non IPB</option>
+                                                         <option {{$activeContract->ipb == 'IPB' ? 'selected' : ''}} value="IPB">IPB</option>
+                                                         <option {{$activeContract->ipb == 'Non IPB' ? 'selected' : ''}} value="Non IPB">Non IPB</option>
+                                                         
+                                                      </select>
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td class="border">Func</td>
+                                                   <td class="border" colspan="2">
+                                                      <select  class="w-100 py-1" id="update_func"  name="update_func" >
+                                                         <option value="" disabled selected>Select Func</option>
+                                                         <option value="Empty" >Empty</option>
+                                                         <option {{$activeContract->func == 'Empty' ? 'selected' : ''}} value="Empty">Non Func</option>
+                                                         <option {{$activeContract->func == 'WI' ? 'selected' : ''}} value="WI">WI</option>
+                                                         <option {{$activeContract->func == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                                         <option {{$activeContract->func == 'Project' ? 'selected' : ''}} value="Project">Project</option>
+                                                         <option {{$activeContract->func == 'Security' ? 'selected' : ''}} value="Security">Security</option>
+                                                         
+                                                      </select>
+                                                   </td>
+                                                </tr>
+                                                
+                                                <tr>
+                                                   <td class="border">Status</td>
+                                                   <td class="border" colspan="2">
+                                                      <select name="update_status" id="update_status" class="w-100 py-1">
+                                                         <option {{$activeContract->status == 1 ? 'selected' : ''}} value="1">Active</option>
+                                                         <option {{$activeContract->status == 0 ? 'selected' : ''}} value="0">Disable</option>
+                                                      </select>
+                                                   </td>
+                                                </tr>
+                                             </tbody>
+                                          </table>
+                                       </div>
 
-                                 <div class="col-md-6">
-                                    <table class="w-100 border mt-2">
-                                       <tbody>
-                                          <tr>
-                                             <td class="border">Start Date</td>
-                                             <td class="border" colspan="2">
-                                                <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->start_date }}">
-                                             </td>
-                                          </tr>
-                                          <tr>
-                                             <td class="border">End Date</td>
-                                             <td class="border" colspan="2">
-                                                <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->end_date }}">
-                                             </td>
-                                          </tr>
-                                          
-                                          
-                                       </tbody>
-                                    </table>
-                                 </div>
-                              </div>
-                              <div class="table-responsive mt-2" >
-                                 
-
-
-                                 <table class="w-100 border">
-                                 
-                                    <thead>
+                                       <div class="col-md-6">
+                                          <table class="w-100 border mt-2">
+                                             <tbody>
+                                                <tr>
+                                                   <td class="border">Start Date</td>
+                                                   <td class="border" colspan="2">
+                                                      <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->start_date }}">
+                                                   </td>
+                                                </tr>
+                                                <tr>
+                                                   <td class="border">End Date</td>
+                                                   <td class="border" colspan="2">
+                                                      <input type="date" name="" id="" class="w-100 py-1" value="{{ $activeContract->end_date }}">
+                                                   </td>
+                                                </tr>
+                                                
+                                                
+                                             </tbody>
+                                          </table>
+                                       </div>
+                                    </div>
+                                    <div class="table-responsive mt-2" >
                                        
-                                       <tr class=" bg-lgray ">
-                                          {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
-                                          <th class="border py-2">Operating Mode</th>
-                                          <th class="border py-2">Min. Speed as Contract (Knots) <br> </th>
-                                          <th class="border py-2" >Contractual Fuel Cons.
-                                             Remuneration Figures</th>
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                       @foreach ($activeContract->details as $detail)
-                                           <tr>
-                                             <td class="text-truncate border">{{$detail->heading->description}}</td>
-                                             <td class="text-truncate border">
-                                                <input type="number" name="speed" id="speed" value="{{$detail->speed}}">
-                                             </td>
-                                             <td class="text-truncate border">
-                                                <input type="number" name="speed" id="speed" value="{{$detail->contractual_fuel}}">
-                                             </td>
-                                           </tr>
-                                       @endforeach
+                                    
+                                       <table class="w-100 border">
                                        
-                                          
+                                          <thead>
+                                             
+                                             <tr class=" bg-lgray ">
+                                                {{-- <th><input type="checkbox" name="" id="checkboxAll"></th> --}}
+                                                <th class="border py-2">Operating Mode</th>
+                                                <th class="border py-2">Min. Speed as Contract (Knots) <br> </th>
+                                                <th class="border py-2" >Contractual Fuel Cons.
+                                                   Remuneration Figures</th>
+                                             </tr>
+                                          </thead>
+                                          <tbody>
+                                             @foreach ($activeContract->details as $detail)
+                                             <input type="text" name="detailId[]" id="detailId" value="{{$detail->id}}" hidden>
+                                                <tr>
+                                                   <td class="text-truncate border">{{$detail->heading->description}}</td>
+                                                   <td class="text-truncate border">
+                                                      <input type="number" name="speed[]" id="speed" value="{{$detail->speed}}">
+                                                   </td>
+                                                   <td class="text-truncate border">
+                                                      <input type="number" name="contractual_fuel[]" id="contractual_fuel" value="{{$detail->contractual_fuel}}">
+                                                   </td>
+                                                </tr>
+                                             @endforeach
+                                             
+                                                
+                                             
+                              
+                                             
+                                          </tbody>
+                                       </table>
                                        
-                        
-                                       
-                                    </tbody>
-                                 </table>
-                                 <button class="btn btn-primary mt-3" type="submit">Update</button>
-                                 <hr>
-                                 <small>Note: Data diatas akan ditampilkan ketika <i>User Kapal</i> membuat VDR Online .</small>
-                              </div>
+                                       <small>Note: Data diatas akan ditampilkan ketika <i>User Kapal</i> membuat VDR Online .</small>
+                                    </div>
+                                    <button class="btn btn-primary mt-3" type="submit">Save Update</button>
+                                    
+                                    <hr>
+                                    </form>
+                                    <a href="#" class="text-danger mt-" data-toggle="modal" data-target="#modalDeleteContract">Delete Contract...</a>
                               @else
                                   <p class="text-danger"><i>No Active Contract</i></p>
                               @endif
@@ -397,6 +405,49 @@
     </div>
   </div>
   @endforeach --}}
+
+  @if ($activeContract)
+      <div class="modal fade" id="modalDeleteContract" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         
+         
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Delete Contract</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               Hapus data kontrak ?
+               <hr>
+               
+               <table>
+                  <tbody>
+                     <tr>
+                        <td><b>Contract Number:</b> {{ $activeContract->contract_number }}</td>
+                     </tr>
+                     <tr>
+                        <td><b>Type:</b> {{ $activeContract->type }}</td>
+                     </tr>
+                     <tr>
+                        <td><b>Start Date:</b> {{ $activeContract->start_date }}</td>
+                     </tr>
+                     <tr>
+                        <td><b>End Date:</b> {{ $activeContract->end_date }}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <a href="{{route('contract.delete', enkripRambo($activeContract->id))}}"  class="btn btn-danger">Delete Contract</a>
+            </div>
+         </div>
+      </div>
+   </div>
+  @endif
+   
   
     
 @endsection

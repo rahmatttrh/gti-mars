@@ -129,6 +129,8 @@ Route::middleware(["auth"])->group(function () {
 
    Route::prefix("contract")->group(function () {
       Route::post('/store', [ContractController::class, 'store'])->name('contract.store');
+      Route::put('/update/details', [ContractController::class, 'updateDetails'])->name('contract.update.details');
+      Route::get('/delete/{id}', [ContractController::class, 'delete'])->name('contract.delete');
 
       Route::get('/test/{id}/{test}', [ContractController::class, 'store'])->name('report.test');
       // Route::put('/update', [NewsController::class, 'update'])->name('news.update');
