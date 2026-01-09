@@ -52,7 +52,7 @@ class ContractController extends Controller
 
         $vdrs = Vdr::where('vessel_id', $req->vessel_id)->whereBetween('date', [$req->contract_start, $req->contract_end])->get();
         if ($vdrs->count() > 0) {
-            dd($vdrs);
+            // dd($vdrs);
             foreach ($vdrs as $vdr) {
                 $date = Carbon::create($vdr->date);
                 $year = $date->format('y');
@@ -81,7 +81,7 @@ class ContractController extends Controller
 
 
 
-        return redirect()->route('vessel.detail', enkripRambo($newContract->vessel_id))->with('success', 'Contract created successfully.');
+        return redirect()->route('vessel.detail', enkripRambo($newContract->vessel_id))->with('success', 'Contract created successfully.' . $vdrs->count() . ' VDR updated.');
     }
 
     public function updateDetails(Request $request)
@@ -134,7 +134,7 @@ class ContractController extends Controller
                 $vdr->save();
             }
         }
-        return redirect()->route('vessel.detail', enkripRambo($contract->vessel_id))->with('success', 'ContractData updated');
+        return redirect()->route('vessel.detail', enkripRambo($contract->vessel_id))->with('success', 'Contracts successfully updated.' . $vdrs->count() . ' VDR updated.');
     }
 
     public function delete($id)

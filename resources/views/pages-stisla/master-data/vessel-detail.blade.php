@@ -85,6 +85,31 @@
                            {{-- <a href="{{route('vessel.delete', enkripRambo($vessel->id))}}" class="btn btn-danger" >Delete</a> --}}
                         </div>
                      </div>
+
+                     <div class="card">
+                        <div class="card-body">
+                           <b>Contract Histories</b>
+                           
+                           <table class="table table-sm w-100 border mt-2">
+                              <tbody>
+                                 {{-- <tr>
+                                    <td class="border" colspan="2"><b>Total Contracts:</b> {{ count($contracts) }} </td>
+                                 </tr> --}}
+                                 <tr>
+                                    <td class="border">No. Kontrak</td>
+                                    <td class="border">Period</td>
+                                 </tr>
+                                 @foreach ($contracts as $con)
+                                    <tr>
+                                       <td class="border">{{ $con->contract_number }}</td>
+                                       <td class="border">{{ formatDate($con->start_date) }} to {{ formatDate($con->end_date) }}</td>
+                                    </tr>
+                                     
+                                 @endforeach
+                              </tbody>
+                           </table>
+                        </div>
+                     </div>
                      
 
                      
