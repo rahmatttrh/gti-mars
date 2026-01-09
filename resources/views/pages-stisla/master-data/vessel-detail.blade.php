@@ -174,7 +174,7 @@
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td class="border">Func</td>
+                                                   <td class="border">Func  {{$activeContract->func}}</td>
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="func"  name="func" >
                                                          <option value="" disabled selected>Select Func</option>
@@ -231,9 +231,10 @@
                                        </div>
                                     </div>
 
-                                    <button class="btn btn-primary mt-2" type="submit">Submit New Contract</button>
-                                    <hr>
+                                    <button class="btn btn-primary mt-3 mb-2" type="submit">Submit New Contract</button> <br>
                                     
+                                    <small>Data VDR kapal {{ $vessel->name }} pada rentang tanggal periode kontrak yg dipilih pada form akan otomatis diubah sesuai data kontrak yang disubmit</small>
+                                    <hr>
 
                                  </form>
                                
