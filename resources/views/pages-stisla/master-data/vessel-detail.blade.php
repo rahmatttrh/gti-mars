@@ -88,7 +88,7 @@
 
                      <div class="card">
                         <div class="card-body">
-                           <b>Contract Histories</b>
+                           <div class="badge badge-light">Contract Histories</div>
                            
                            <table class="table table-sm w-100 border mt-2">
                               <tbody>
@@ -380,9 +380,10 @@
 
                      <div class="card">
                         <div class="card-body">
-                           <h4>VDRs in Current Contract ({{ count($vdrs) }} VDR)</h4>
-                           <div class="table-responsive">
-                              <table class="table table-bordered table-sm datatables-vdr">
+                           <div class="badge badge-light">VDRs in Current Contract</div>
+                           <div class="badge badge-light">{{ count($vdrs) }} VDR</div>
+                           <div class="table-responsive mt-2">
+                              <table class="table table-bordered table-sm datatables-vdr ">
                                  <thead>
                                     <tr>
                                        <th>VDR ID</th>
