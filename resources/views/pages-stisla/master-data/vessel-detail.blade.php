@@ -174,7 +174,7 @@
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td class="border">Func  {{$activeContract->func}}</td>
+                                                   <td class="border">Func</td>
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="func"  name="func" >
                                                          <option value="" disabled selected>Select Func</option>
