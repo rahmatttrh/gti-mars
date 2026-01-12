@@ -9,10 +9,15 @@
    </div>
    
    @elseif($vdr->status == 2)
-      @if ($vdr->vessel->ipb == 'IPB')
+      @if ($vdr->vessel->ipb == 'IPB' || $vdr->vessel->type == 'Tug Boat')
          <div class="badge badge-primary">
             Menunggu Validasi Radop
          </div>
+               @if (auth()->user()->hasRole('superuser'))
+                  @if ($vdr->area == null)
+                     Null
+                  @endif
+               @endif
           @else
           <div class="badge badge-info">
             Menunggu Validasi Marine

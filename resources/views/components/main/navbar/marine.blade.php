@@ -217,7 +217,7 @@
          </li>
 
 
-         @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin')
+         @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin')
          
          <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
             <a href="{{route('daily.report')}}" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
@@ -296,7 +296,7 @@
                <span class="mx-3">Daily Activity</span>
             </a>
          </li> --}}
-         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'superuser')
+         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin')
          <li class="nav-item nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('master/data/*'))

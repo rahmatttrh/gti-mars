@@ -1586,23 +1586,52 @@ table {
                </button>
                
             </div>
-            <div class="modal-body">
-               <span>Approve VDR : </span> <br>
-               <b>{{$vdr->code}}</b>
-               <hr>
-               {{-- <div class="badge badge-info">Approval 1</div> --}}
-               <span>Selanjutnya VDR akan terkirim ke Suptent Area Terkait untuk proses approval berikutnya</span>
-               
+            <form action="{{route('vdr.approve.radop.from.email', enkripRambo($vdr->id))}}" method="POST">
+               @csrf
+               @method('PUT')
+               <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
+               <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+               <div class="modal-body">
+                  <span>Approve VDR : </span> <br>
+                  <b>{{$vdr->code}}</b>
+                  <hr>
+                  <div class="form-group mb-2">
+                     {{-- <label for="name2">PIC Marine</label> --}}
+                     <select class="form-control" name="name2" id="name2" required>
+                        @if ($vdr->area == 'SBU')
+                        <option value="SBU">Radop SBU</option>
+                        @elseif($vdr->area == 'CBU')
+                        <option value="JP">Jemmy Pentury</option>
+                        <option value="WN">Wahyu Nugraha</option>
+                        <option value="MS">Mochamad Syawali</option>
+                        @elseif($vdr->area == 'NBU')
+                        <option value="RH">Rachmat Hidayat</option>
+                        <option value="S">Sunaryo</option>
+                        <option value="MM">Marzuki Muslim</option>
+                        <option value="CL">Chlorid Latifoso</option>
+                        <option value="SC">Aji Catur</option>
+                        <option value="RA">Ridwan Alviyanto</option>
+                        @else
+                     
+                        @endif     
+                        
+                     </select>
+                        
+                  {{-- <div class="badge badge-info">Approval 1</div> --}}
+                  <hr>
+                  <span>Selanjutnya VDR akan terkirim ke Suptent Area Terkait untuk proses approval berikutnya</span>
+                  
 
 
-               
-               
-            </div>
-            <div class="modal-footer bg-whitesmoke">
-               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               <a class="btn btn-info" href="{{route('vdr.approve.radop.from.email', enkripRambo($vdr->id))}}">Approve</a>
-               {{-- <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button> --}}
-            </div>
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  {{-- <a class="btn btn-info" href="">Approve</a> --}}
+                  <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button>
+               </div>
+            </form>
          </div>
    </div>
 </div>

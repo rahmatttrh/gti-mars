@@ -16,7 +16,7 @@ class ContractController extends Controller
     public function store(Request $req)
     {
 
-    
+
         $vessel = Vessel::find($req->vessel_id);
 
         $lastContract = Contract::where('vessel_id', $req->vessel_id)->orderBy('id', 'desc')->first();
@@ -27,9 +27,9 @@ class ContractController extends Controller
             $lastContract->save();
         }
 
-        
 
-        $newContract =Contract::create([
+
+        $newContract = Contract::create([
             'vessel_id' => $req->vessel_id,
             'contract_number' => $req->contract_number,
             'type' => $req->contract_type,
@@ -38,6 +38,13 @@ class ContractController extends Controller
             'status' => 1,
             'ipb' => $req->ipb,
             'func' => $req->func,
+        ]);
+
+
+        $vessel->update([
+            'func' => $req->func,
+            'ipb' => $req->ipb,
+            'type' => $req->contract_type,
         ]);
 
         $operatingHeaders = VdrOperatingHeader::get();
@@ -50,38 +57,40 @@ class ContractController extends Controller
             ]);
         }
 
-        $vdrs = Vdr::where('vessel_id', $req->vessel_id)->whereBetween('date', [$req->contract_start, $req->contract_end])->get();
-        if ($vdrs->count() > 0) {
-            // dd($vdrs);
-            foreach ($vdrs as $vdr) {
-                $date = Carbon::create($vdr->date);
-                $year = $date->format('y');
-                $year = $date->format('y');
-                $month = $date->format('m');
-                $day = $date->format('d');
+        // $vdrs = Vdr::where('vessel_id', $req->vessel_id)->whereBetween('date', [$req->contract_start, $req->contract_end])->get();
+        // if ($vdrs->count() > 0) {
+        //     // dd($vdrs);
+        //     foreach ($vdrs as $vdr) {
+        //         $date = Carbon::create($vdr->date);
+        //         $year = $date->format('y');
+        //         $year = $date->format('y');
+        //         $month = $date->format('m');
+        //         $day = $date->format('d');
 
-                $awalan = $newContract->contract_number . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
+        //         $awalan = $newContract->contract_number . "/" . str_replace(' ', '', strtoupper($vdr->vessel->name)) . '/';
 
-                $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
-                $timestamp = $year  . $month  . $day;
+        //         $vdrHistories = VdrHistory::where('vdr_id', $vdr->id)->get();
+        //         $timestamp = $year  . $month  . $day;
 
-                if (count($vdrHistories) > 0) {
-                    $num = count($vdrHistories);
-                } else {
-                    $num = 0;
-                }
+        //         if (count($vdrHistories) > 0) {
+        //             $num = count($vdrHistories);
+        //         } else {
+        //             $num = 0;
+        //         }
 
-                // Menggabungkan awalan dan $idPadded
-                $hasil = $awalan . $timestamp . '/' . $num;
-                $vdr->contract_number = $newContract->contract_number;
-                $vdr->code = $hasil;
-                $vdr->save();
-            }
-        }
+        //         // Menggabungkan awalan dan $idPadded
+        //         $hasil = $awalan . $timestamp . '/' . $num;
+        //         $vdr->contract = $newContract->contract_number;
+        //         $vdr->code = $hasil;
+        //         $vdr->save();
+        //     }
+        // }
+
+        // $vdrs = obj;
 
 
 
-        return redirect()->route('vessel.detail', enkripRambo($newContract->vessel_id))->with('success', 'Contract created successfully.' . $vdrs->count() . ' VDR updated.');
+        return redirect()->route('vessel.detail', enkripRambo($newContract->vessel_id))->with('success', 'Contract created successfully.');
     }
 
     public function updateDetails(Request $request)
@@ -149,7 +158,4 @@ class ContractController extends Controller
         }
         return redirect()->back()->with('success', 'Contract successfully deleted.');
     }
-
-   
-
 }

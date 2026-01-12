@@ -598,7 +598,7 @@
                                  </tr>
                                  <tr>
                                     <td colspan="4">
-                                       @if ($vdr->vessel->ipb == 'IPB')
+                                       @if ($vdr->vessel->ipb == 'IPB' || $vdr->vessel->type == 'Tug Boat')
                                           @if ($vdr->status > 0)
                                           LOCATION : {{$vdr->area}}
                                           @endif
@@ -2453,23 +2453,59 @@
                   </button>
                   
                </div>
-               <div class="modal-body">
-                  <span>Approve VDR : </span> <br>
-                  <b>{{$vdr->code}}</b>
-                  <hr>
-                  {{-- <div class="badge badge-info">Approval 1</div> --}}
-                  <span>Selanjutnya VDR akan terkirim ke Suptent Area Terkait untuk proses approval berikutnya</span>
-                  
+               <form action="{{route('vdr.approve.radop', enkripRambo($vdr->id))}}" method="POST">
+                  @csrf
+                  @method('PUT')
 
 
-                  
-                  
-               </div>
-               <div class="modal-footer bg-whitesmoke">
-                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <a class="btn btn-info" href="{{route('vdr.approve.radop', enkripRambo($vdr->id))}}">Approve</a>
-                  {{-- <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button> --}}
-               </div>
+                   
+                   
+               
+                  <div class="modal-body">
+                     <span>Approve VDR : </span> <br>
+                     <b>{{$vdr->code}}</b> 
+                     <hr>
+                     <div class="form-group">
+                        <label for="name2">PIC Radop</label>
+                        <select class="form-control" name="name2" id="name2" required>
+                           @if ($vdr->area == 'SBU')
+                        <option value="SBU">Radop SBU</option>
+                        @elseif($vdr->area == 'CBU')
+                        <option value="JP">Jemmy Pentury</option>
+                        <option value="WN">Wahyu Nugraha</option>
+                        <option value="MS">Mochamad Syawali</option>
+                        @elseif($vdr->area == 'NBU')
+                        <option value="RH">Rachmat Hidayat</option>
+                        <option value="S">Sunaryo</option>
+                        <option value="MM">Marzuki Muslim</option>
+                        <option value="CL">Chlorid Latifoso</option>
+                        <option value="SC">Aji Catur</option>
+                        <option value="RA">Ridwan Alviyanto</option>
+                        @elseif($vdr->area == 'Cinta-T')
+                            <option value="Cinta-T">Radop Cinta-T</option>
+                            @elseif($vdr->area == 'Widuri-T')
+                            <option value="Widuri-T">Radop Widuri-T</option>
+                        @else
+                     
+                        @endif  
+                           
+                        </select>
+                     </div>
+                     <hr>
+                     {{-- <div class="badge badge-info">Approval 1</div> --}}
+                     <span>Selanjutnya VDR akan terkirim ke Suptent Area Terkait untuk proses approval berikutnya</span>
+                     
+
+
+                     
+                     
+                  </div>
+                  <div class="modal-footer bg-whitesmoke">
+                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                     {{-- <a class="btn btn-info" href="{{route('vdr.approve.radop', enkripRambo($vdr->id))}}">Approve</a> --}}
+                     <button type="submit" class="btn btn-info" onclick="handleClick(this)">Approve</button>
+                  </div>
+               </form>
             </div>
       </div>
    </div>

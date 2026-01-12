@@ -102,7 +102,7 @@ Route::post('vdr/pin/check/pdf', [DocumentController::class, 'vdrPinCheck'])->na
 Route::get('vdr/pin/pdf/{vdr:id}', [DocumentController::class, 'vdrPin'])->name('vdr.pin.pdf');
 
 Route::get('email/vdr/approve//{id}', [MarineVdrController::class, 'approveFromEmail'])->name('vdr.approve.from.email');
-Route::get('email/vdr/radop/approve/{id}', [MarineVdrController::class, 'approveRadopFromEmail'])->name('vdr.approve.radop.from.email');
+Route::put('email/vdr/radop/approve/{id}', [MarineVdrController::class, 'approveRadopFromEmail'])->name('vdr.approve.radop.from.email');
 
 Route::get('email/vdr/approve/superintendent/{id}', [MarineVdrController::class, 'approveSuptentFromEmail'])->name('vdr.approve.suptent.from.email');
 Route::get('email/vdr/approve/loc/superintendent/{id}', [MarineVdrController::class, 'approveSuptentLocFromEmail'])->name('vdr.approve.suptent.loc.from.email');
@@ -629,7 +629,7 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
 
          Route::get('approve/marine/{id}', [MarineVdrController::class, 'approve'])->name('vdr.approve.marine');
          Route::put('approve/marine', [MarineVdrController::class, 'approveForm'])->name('vdr.approve.marine.form');
-         Route::get('approve/radop/{id}', [MarineVdrController::class, 'approveRadop'])->name('vdr.approve.radop');
+         Route::put('approve/radop/{id}', [MarineVdrController::class, 'approveRadop'])->name('vdr.approve.radop');
          Route::put('approve/suptent-loc', [MarineVdrController::class, 'approveSuptentLocForm'])->name('vdr.approve.suptent.loc.form');
          Route::post('reject/marine', [MarineVdrController::class, 'reject'])->name('vdr.reject.marine');
          // Route::get('approve/suptent/{id}', [MarineVdrController::class, 'approveSuptent'])->name('vdr.approve.suptent');

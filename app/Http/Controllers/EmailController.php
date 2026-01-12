@@ -754,12 +754,21 @@ class EmailController extends Controller
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'CBU') {
             Mail::to([
-               "gpheoses.cbu.radio-room@pertamina.com",
+               // "gpheoses.cbu.radio-room@pertamina.com",
+               "ms.jemmy.pentury@pertamina.com",
+               "ms.wahyu.nugraha@pertamina.com",
+               "ms.mochamad.syawali@pertamina.com",
                "develop@ekanuri.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'NBU') {
             Mail::to([
-               "gpheoses.nbu.radioroom@pertamina.com",
+               // "gpheoses.nbu.radioroom@pertamina.com",
+               "ms.rachmat.hidayat@pertamina.com",
+               "ms.sunaryo@pertamina.com",
+               "ms.marzuki.muslim@pertamina.com",
+               "ms.chlorid.latifoso@pertamina.com",
+               "ms.aji.catur@pertamina.com",
+               "mk.ridwan.alviyanto@pertamina.com",
                "develop@ekanuri.com"
             ])->send(new ApprovalPetMorning($data));
          }

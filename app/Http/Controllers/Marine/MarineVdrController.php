@@ -330,6 +330,26 @@ class MarineVdrController extends Controller
          $to = Carbon::now();
          $level = 'Radop ' .  $employeeRadop->area;
          $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_cbu') {
+         $employeeRadop = Employee::where('username', auth()->user()->username)->first();
+         $to = Carbon::now();
+         $level = 'Radop ' .  $employeeRadop->area;
+         $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_nbu') {
+         $employeeRadop = Employee::where('username', auth()->user()->username)->first();
+         $to = Carbon::now();
+         $level = 'Radop ' .  $employeeRadop->area;
+         $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_cinta') {
+         $employeeRadop = Employee::where('username', auth()->user()->username)->first();
+         $to = Carbon::now();
+         $level = 'Radop ' .  $employeeRadop->area;
+         $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+      } elseif (auth()->user()->username == 'radop_widuri') {
+         $employeeRadop = Employee::where('username', auth()->user()->username)->first();
+         $to = Carbon::now();
+         $level = 'Radop ' .  $employeeRadop->area;
+         $vdrValidations = Vdr::where('status', 2)->where('area', $employeeRadop->area)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
       }
 
       // if (auth()->user()->hasRole('suptent_loc')) {
@@ -888,14 +908,14 @@ class MarineVdrController extends Controller
    }
 
 
-   public function approveRadop($id)
+   public function approveRadop(Request $req, $id)
    {
       $vdr = Vdr::find(dekripRambo($id));
 
       $vdr->update([
          'status' => 5,
          'title2' => 'Radop',
-         'name2' => auth()->user()->name,
+         'name2' => $req->name2,
          'timestamp2' => Carbon::now()
       ]);
 
@@ -913,14 +933,14 @@ class MarineVdrController extends Controller
       return redirect()->back()->with('success', 'VDR berhasil di Approve');
    }
 
-   public function approveRadopFromEmail($id)
+   public function approveRadopFromEmail(Request $req, $id)
    {
       $vdr = Vdr::find(dekripRambo($id));
 
       $vdr->update([
          'status' => 5,
          'title2' => 'Radop',
-         'name2' => 'Radop ' . $vdr->area,
+         'name2' => $req->name2,
          'timestamp2' => Carbon::now()
       ]);
 

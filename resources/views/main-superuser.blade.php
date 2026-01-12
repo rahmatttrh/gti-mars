@@ -123,7 +123,10 @@
                            <tr>
                               <th>ID</th>
                               <th>Vessel</th>
+                              
                               <th>Release</th>
+                              <th>Type</th>
+                              <th>Area</th>
                               {{-- <th></th> --}}
                               {{-- <th>Date</th> --}}
                               <th class="text-right">Status</th>
@@ -134,9 +137,25 @@
                               <tr >
                                  <td>{{$vdr->id}}</td>
                                  <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
+                                 
                                  <td>
                                     
                                     {{$vdr->release_date}}
+                                 </td>
+                                 <td>
+                                    @if ($vdr->vessel->type == 'Tug Boat')
+                                    {{$vdr->vessel->type}}
+                                    @endif
+                                     {{$vdr->vessel->ipb ?? ''}}
+                                 </td>
+                                 <td>
+                                    @if ($vdr->vessel->type == 'Tug Boat' || $vdr->vessel->ipb == 'IPB')
+                                       @if ($vdr->area != null)
+                                           {{$vdr->area}}
+                                           @else
+                                           Empty
+                                       @endif
+                                    @endif
                                  </td>
                                  {{-- <td>{{formatDate($sche->date)}}</td> --}}
                                  {{-- <td>{{formatRibuan(round($totaldaily))}}</td> --}}
