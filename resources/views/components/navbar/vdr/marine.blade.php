@@ -240,7 +240,7 @@
 
 
 
-<div class="d-block d-sm-none">
+{{-- <div class="d-block d-sm-none">
    <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg "  >
       <div class="px-2">
          <ul class="navbar-nav">
@@ -322,4 +322,4 @@
          </ul>
       </div>
    </nav>
-</div>
+</div> --}}

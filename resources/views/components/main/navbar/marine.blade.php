@@ -323,6 +323,57 @@
 
 
 <div class="d-block d-sm-none">
+   <nav class="navbar navbar-dark sidebar  navbar-secondary navbar-expand-lg "  >
+      <div class="px-2">
+         <ul class="navbar-nav">
+            @if (auth()->user()->username == 'marine' )
+            <li class="nav-item nav-item-b  ">
+               <a href="/" class="nav-link">
+                 
+                  <i class="fas text-primary ml-3 fa-fire"></i>
+               
+                  
+                  <span class="mx-3">Home Page</span>
+               </a>
+            </li>
+            <hr>
+            <small class="ml-2"><b>- VDR</b></small>
+            {{-- <li class="nav-item nav-item-b ">
+               <a href="{{route('vdr.marine')}}" class="nav-link ">
+                  <span class="mx-3">Dashboard</span>
+               </a>
+            </li> --}}
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('vdr.pet.validation')}}" class="nav-link ">
+                  <span class="mx-3">Waiting</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('vdr.reject.list')}}" class="nav-link ">
+                  <span class="mx-3">Reject</span>
+               </a>
+            </li>
+            <li class="nav-item nav-item-b ">
+               <a href="{{route('vdr.history.list')}}" class="nav-link ">
+                  <span class="mx-3">History</span>
+               </a>
+            </li>
+            @else
+            @endif
+            
+
+           
+
+            
+         
+            
+         
+         </ul>
+      </div>
+   </nav>
+</div>
+
+{{-- <div class="d-block d-sm-none">
    <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg "  >
       <div class="px-2">
          <ul class="navbar-nav">
@@ -404,4 +455,4 @@
          </ul>
       </div>
    </nav>
-</div>
+</div> --}}

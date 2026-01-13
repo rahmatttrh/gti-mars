@@ -119,7 +119,7 @@ table {
             @elseif(auth()->user()->hasRole('suptent_loc'))
             <x-main.navbar.suptent-loc />
             @elseif(auth()->user()->hasRole('suptent'))
-            <x-main.navbar.suptent-loc />
+            <x-main.navbar.suptent />
          @endif
        
          

@@ -118,33 +118,33 @@
 </nav>
 
 <div class="d-none d-md-block">
-<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="px-2">
-      <ul class="navbar-nav">
-         
-         <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-            <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('/'))
-               <i class="fas fa-fire ml-3"></i>
-               @endif
-               
-               <span class="">Home Page</span>
-            </a>
-         </li>
-         
-         <li class="nav-item">
-            <a href="#" class="nav-link text-white">
-               <span class="">Marine Advanced Reporting System</span>
-            </a>
-         </li>
-      </ul>
-   </div>
-</nav>
+   <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+      <div class="px-2">
+         <ul class="navbar-nav">
+            
+            <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
+               <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
+                  @if (request()->is('/'))
+                  <i class="fas fa-fire ml-3"></i>
+                  @endif
+                  
+                  <span class="">Home Page</span>
+               </a>
+            </li>
+            
+            <li class="nav-item">
+               <a href="#" class="nav-link text-white">
+                  <span class="">Marine Advanced Reporting System</span>
+               </a>
+            </li>
+         </ul>
+      </div>
+   </nav>
 </div>
 
 
 <div class="d-block d-sm-none">
-   <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg "  >
+   <nav class="navbar navbar-dark sidebar  navbar-secondary navbar-expand-lg "  >
       <div class="px-2">
          <ul class="navbar-nav">
             
