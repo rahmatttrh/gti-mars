@@ -187,6 +187,10 @@ class VdrController extends Controller
       $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
       $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
 
+      if (auth()->user()->hasRole('superuser')) {
+         dd($totalJam);
+      }
+
 
       $wHeadings = VdrWeatherHeading::get();
       $hseHeadings = VdrHseHeader::get();
@@ -814,6 +818,54 @@ class VdrController extends Controller
       }
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
+
+
+      if (auth()->user()->hasRole('superuser')) {
+         $debugMinutes = 0;
+
+         foreach ($ops as $op) {
+            // format: 1.35 (jam.desimal-menit)
+            $array = explode('.', $op->time);
+
+            $hours = intval($array[0]);
+            $minutes = isset($array[1]) ? intval($array[1]) : 0;
+
+            // ubah ke total menit
+            $debugMinutes += ($hours * 60) + $minutes;
+         }
+
+         // konversi kembali ke jam & menit
+         $finalHours = floor($debugMinutes / 60);
+         $finalMinutes = $debugMinutes % 60;
+
+         // format 2 digit
+         $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
+
+
+         // if (auth()->user()->hasRole('superuser')) {
+         //    dd($final);
+         // }
+         // dd($final);
+      }
+      $debugMinutes = 0;
+
+      foreach ($ops as $op) {
+         // format: 1.35 (jam.desimal-menit)
+         $array = explode('.', $op->time);
+
+         $hours = intval($array[0]);
+         $minutes = isset($array[1]) ? intval($array[1]) : 0;
+
+         // ubah ke total menit
+         $debugMinutes += ($hours * 60) + $minutes;
+      }
+
+      // konversi kembali ke jam & menit
+      $finalHours = floor($debugMinutes / 60);
+      $finalMinutes = $debugMinutes % 60;
+
+      // format 2 digit
+      $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
 
       if ($enkripTab != null) {
          $tab = dekripRambo($enkripTab);
@@ -1918,6 +1970,11 @@ class VdrController extends Controller
       }
       $finalHours  = sprintf('%02d', floor($debugHours));
       $final = $finalHours . ':' . $finalMinutes;
+
+
+
+
+
 
 
 
