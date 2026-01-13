@@ -126,7 +126,7 @@
                                  <tr>
                                     <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
-                                          <p style="margin: 0;">You have a {{$data['subject']}} from {{$data['from']}}. {{$data['body']}}</p>
+                                          <p style="margin: 0;">{{$data['body']}}</p>
                                        </div>
                                        {{-- <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
                                           <br>

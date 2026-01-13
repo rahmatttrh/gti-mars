@@ -714,7 +714,7 @@ class EmailController extends Controller
       $data = [
          'to' => 'Radop ' . $loc,
          'from' => 'MARS System',
-         'subject' => 'Summary VDR Radop  ' . $jam . ' ' . formatDate($to) . ' ('  . count($vdrWaitings)  . ' VDR)',
+         'subject' => 'Summary VDR Radop  ' . $loc . ' ' . $jam . ' ' . formatDate($to) . ' ('  . count($vdrWaitings)  . ' VDR)',
          'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi Radop ' . $loc,
          'user_id' => $user->id,
          'level' => 'radop',
