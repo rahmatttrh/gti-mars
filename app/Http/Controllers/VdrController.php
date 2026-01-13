@@ -784,68 +784,68 @@ class VdrController extends Controller
       $debugHours = 0;
       $debugMinutes = 0;
       $ops = VdrOperating::where('vdr_id', $vdr->id)->get();
-      foreach ($ops as $op) {
-         $time = $op->time;
-         $array = explode('.', $op->time);
-         $hours = floor($time);
-         $minutes = intval($array[1]);
+      // foreach ($ops as $op) {
+      //    $time = $op->time;
+      //    $array = explode('.', $op->time);
+      //    $hours = floor($time);
+      //    $minutes = intval($array[1]);
 
-         $debugHours += $hours;
-         $debugMinutes += $minutes;
-      }
-      // dd($debugHours);
+      //    $debugHours += $hours;
+      //    $debugMinutes += $minutes;
+      // }
+      // // dd($debugHours);
 
-      if ($debugMinutes >= 60) {
-         $minLeft = $debugMinutes - 60;
-         $debugMinutes = $minLeft;
-         $debugHours += 1;
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
-         if ($debugMinutes >= 60) {
-            $minLeft = $debugMinutes - 60;
-            $debugMinutes = $minLeft;
-            $debugHours += 1;
-         }
-      }
+      // if ($debugMinutes >= 60) {
+      //    $minLeft = $debugMinutes - 60;
+      //    $debugMinutes = $minLeft;
+      //    $debugHours += 1;
+      //    if ($debugMinutes >= 60) {
+      //       $minLeft = $debugMinutes - 60;
+      //       $debugMinutes = $minLeft;
+      //       $debugHours += 1;
+      //    }
+      //    if ($debugMinutes >= 60) {
+      //       $minLeft = $debugMinutes - 60;
+      //       $debugMinutes = $minLeft;
+      //       $debugHours += 1;
+      //    }
+      // }
 
-      if ($debugMinutes < 10) {
-         $finalMinutes = '0' . $debugMinutes;
-      } else {
-         $finalMinutes = $debugMinutes;
-      }
-      $finalHours  = sprintf('%02d', floor($debugHours));
-      $final = $finalHours . ':' . $finalMinutes;
+      // if ($debugMinutes < 10) {
+      //    $finalMinutes = '0' . $debugMinutes;
+      // } else {
+      //    $finalMinutes = $debugMinutes;
+      // }
+      // $finalHours  = sprintf('%02d', floor($debugHours));
+      // $final = $finalHours . ':' . $finalMinutes;
 
 
       if (auth()->user()->hasRole('superuser')) {
-         $debugMinutes = 0;
+         // $debugMinutes = 0;
 
-         foreach ($ops as $op) {
-            // format: 1.35 (jam.desimal-menit)
-            $array = explode('.', $op->time);
+         // foreach ($ops as $op) {
+         //    // format: 1.35 (jam.desimal-menit)
+         //    $array = explode('.', $op->time);
 
-            $hours = intval($array[0]);
-            $minutes = isset($array[1]) ? intval($array[1]) : 0;
+         //    $hours = intval($array[0]);
+         //    $minutes = isset($array[1]) ? intval($array[1]) : 0;
 
-            // ubah ke total menit
-            $debugMinutes += ($hours * 60) + $minutes;
-         }
-
-         // konversi kembali ke jam & menit
-         $finalHours = floor($debugMinutes / 60);
-         $finalMinutes = $debugMinutes % 60;
-
-         // format 2 digit
-         $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
-
-
-         // if (auth()->user()->hasRole('superuser')) {
-         //    dd($final);
+         //    // ubah ke total menit
+         //    $debugMinutes += ($hours * 60) + $minutes;
          // }
-         // dd($final);
+
+         // // konversi kembali ke jam & menit
+         // $finalHours = floor($debugMinutes / 60);
+         // $finalMinutes = $debugMinutes % 60;
+
+         // // format 2 digit
+         // $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
+
+
+         // // if (auth()->user()->hasRole('superuser')) {
+         // //    dd($final);
+         // // }
+         // // dd($final);
       }
       $debugMinutes = 0;
 

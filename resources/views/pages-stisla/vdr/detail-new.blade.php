@@ -158,10 +158,10 @@
 
          @if ($vdr->remark == 'void')
          @else
-         <div class="">
+         {{-- <div class=""> --}}
             <div class="col-md-12 ">
                <div class="row">
-                  <div class="col-md-12 px-2">
+                  <div class="col-md-12 px-4">
                      {{-- <div class="d-flex align-items-center px-3"> --}}
 
                   
@@ -336,7 +336,7 @@
                </div>
                
             </div>
-         </div>
+         {{-- </div> --}}
 
 
 
@@ -358,7 +358,7 @@
                
             </div> --}}
             
-            <div class="table-responsive " > 
+            {{-- <div class="table-responsive " >  --}}
                @if ($vdr->remark == 'void')
                   <div class="card bg-danger mt-2">
                      <div class="card-body text-center">
@@ -377,7 +377,7 @@
                @endif
 
 
-               <div class="row ">
+               <div class="row">
                   <div class="col-md-5">
                      
                      {{-- <div class="table-responsive overflow-auto" style="height: 75vh"> --}}
@@ -1755,7 +1755,7 @@
                      </div>
                   </div>
                </div>
-            </div>
+            {{-- </div> --}}
          </div>
       </div>
 
