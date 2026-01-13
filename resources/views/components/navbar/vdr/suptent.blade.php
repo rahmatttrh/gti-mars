@@ -46,7 +46,7 @@
        {{-- <ul class="navbar-nav d-none d-sm-block">
           
        </ul> --}}
-       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/"><b><i>MARS</i></b></a></h4>
+       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/" class="text-dark"><b><i>MARS</i></b></a></h4>
    </form>
    {{-- <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 

@@ -72,7 +72,7 @@
        {{-- <ul class="navbar-nav d-none d-sm-block">
           
        </ul> --}}
-       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/"><b><i>MARS</i></b></a>  </h4>
+       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/" class="text-dark"><b><i>MARS</i></b></a>  </h4>
     </form>
    
    <ul class="navbar-nav navbar-right ml-auto">
