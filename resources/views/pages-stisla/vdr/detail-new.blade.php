@@ -250,9 +250,12 @@
                            @endif
                         @endif
       
-                        <a  class="btn btn-light  bg-white mr-2 shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                        <div class="btn-group mb-2">
+                     <a  class="btn btn-light  bg-white shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                         
-                        <a href="#" class="btn btn-light  bg-white mr-2 shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan ketika muncul alert pada sistem.">Info</a>
+                        <a href="#" class="btn btn-light  bg-white  shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan ketika muncul alert pada sistem.">Info</a>
+                        </div>
+                        
                         
                         
                         {{-- @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
