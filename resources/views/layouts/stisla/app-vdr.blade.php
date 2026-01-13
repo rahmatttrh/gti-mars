@@ -112,7 +112,7 @@
      
       <div id="app ">
          
-         <div class="main-wrapper px-3 ">
+         <div class="main-wrapper px-lg-3 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
                <div id="messageBox"></div>
                
