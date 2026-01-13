@@ -1117,7 +1117,7 @@
                         </form>
                      </div>
                      <hr>
-                     <div class="table-responsive p-2" >
+                     <div class="table-responsive p-lg-2" >
                      <table class="w-100">
                        
                         <thead>
@@ -1333,6 +1333,7 @@
                <div class="row">
                   <div class="col-md-8">
                      {{-- <div class="table-responsive overflow-auto" style="height: 100vh"> --}}
+                        <div class="table-responsive p-lg-2" >
                      <table class="w-100">
                         
                         <thead>
@@ -1410,8 +1411,10 @@
                            
                         </tbody>
                      </table>
+                        </div>
 
                      <hr>
+                     <div class="table-responsive p-lg-2" >
                      <table class="w-100">
                         <tbody>
                            <tr>
@@ -1461,10 +1464,12 @@
 
                         </tbody>
                      </table>
+                     </div>
                      <hr>
                      {{-- </div> --}}
                   </div>
                   <div class="col-md-4">
+                     <div class="table-responsive p-lg-2" >
                      <table>
                         <thead>
                            <tr>
@@ -1513,6 +1518,7 @@
                         </tbody>
 
                      </table>
+                     </div>
                   </div>
                </div>
 
