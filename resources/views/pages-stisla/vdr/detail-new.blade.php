@@ -191,9 +191,9 @@
                            @if (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri')
                               @if ($vdr->status == 2 )
                               <a href="#" class="btn    btn-info mb-2 " data-toggle="modal" data-target="#modalAppRadop">Approve as Radop</a>
-                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#modalRejectRadop">Reject</a>
+                              <a href="" class="btn btn-danger mx-2 mb-2" data-toggle="modal" data-target="#modalRejectRadop">Reject</a>
                               @elseif($vdr->status > 2)
-                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoRadop">Undo Approve</a>
+                              <a href="#" class="btn   btn-info mr-2 mb-2" data-toggle="modal" data-target="#modalUndoRadop">Undo Approve</a>
 
                               @endif
                            
@@ -208,10 +208,10 @@
                         @if (auth()->user()->hasRole('suptent_loc') )
                         
                            @if ($vdr->status == 5 )
-                           <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppSuptentLoc">Approve ok</a>
-                           <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                           <a href="#" class="btn    btn-info mb-2" data-toggle="modal" data-target="#modalAppSuptentLoc">Approve</a>
+                           <a href="" class="btn btn-danger mx-2 mb-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                            @elseif($vdr->status == 3)
-                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoSuptentArea">Undo Approve</a>
+                              <a href="#" class="btn   btn-info mr-2 mb-2" data-toggle="modal" data-target="#modalUndoSuptentArea">Undo Approve</a>
 
                            @endif
 
