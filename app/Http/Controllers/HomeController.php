@@ -572,6 +572,9 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $offices = Office::get();
 
+         // $vdrSuptents = Vdr::where('status', 5)->where('area', 'NBU')->get();
+         // dd($vdrSuptents);
+
 
          // $vdrId = [2076, 2120, 2155, 2228, 2343, 2360, 2396, 2411, 2428, 2444, 2462, 2482, 2499, 2523, 2537, 2552, 2572];
          // $vdrForisa = Vdr::whereIn('id', $vdrId)->get();
@@ -627,7 +630,7 @@ class HomeController extends Controller
          // $magelangVdrs = Vdr::whereIn('id', [1548, 1530, 1529, 1528, 1527, 1526])->get();
 
          // $emailController = new EmailController();
-         // $emailController->summaryVdrSuptent('09:00'); 
+         // $emailController->summaryVdrRadop('09:00', 'CBU');
 
 
          // $vdrPendingPets = Vdr::whereIn('id', [2193,2074])->get();

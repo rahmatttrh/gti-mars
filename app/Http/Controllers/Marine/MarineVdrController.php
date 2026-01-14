@@ -912,8 +912,14 @@ class MarineVdrController extends Controller
    {
       $vdr = Vdr::find(dekripRambo($id));
 
+      if ($vdr->area == 'NBU') {
+         $status = 3;
+      } else {
+         $status = 5;
+      }
+
       $vdr->update([
-         'status' => 5,
+         'status' => $status,
          'title2' => 'Radop',
          'name2' => $req->name2,
          'timestamp2' => Carbon::now()
@@ -937,8 +943,14 @@ class MarineVdrController extends Controller
    {
       $vdr = Vdr::find(dekripRambo($id));
 
+      if ($vdr->area == 'NBU') {
+         $status = 3;
+      } else {
+         $status = 5;
+      }
+
       $vdr->update([
-         'status' => 5,
+         'status' => $status,
          'title2' => 'Radop',
          'name2' => $req->name2,
          'timestamp2' => Carbon::now()
