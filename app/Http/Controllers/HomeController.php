@@ -570,7 +570,7 @@ class HomeController extends Controller
       if (auth()->user()->hasRole('superuser')) {
 
          $vessels = Vessel::get();
-         $offices = Office::get();
+         $offices = Office::gettt();
 
 
          // $vdrId = [2076, 2120, 2155, 2228, 2343, 2360, 2396, 2411, 2428, 2444, 2462, 2482, 2499, 2523, 2537, 2552, 2572];

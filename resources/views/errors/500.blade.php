@@ -31,10 +31,13 @@
       <div class="container mt-5">
         <div class="page-error">
           <div class="page-inner">
-            <h1>500</h1>
+            <h2 style="font-size: 84px" >ERROR</h2>
             <div class="page-description">
-            	<b>Server Error</b> <br>
-               Make sure you have internet conection.
+            	<b> Maaf, terjadi kesalahan pada sistem kami.</b> <br> <br>
+               Anda bisa mengirim laporan kendala ke email <i>develop@ekanuri.com</i> dengan menyertakan <i>screenshoot</i> halaman ini
+               <hr>
+               <small>{{Request::url()}}</small>
+                  <small>{{$exception->getMessage() . ' line: ' . __LINE__}}</small>
             </div>
             <div class="page-search">
               {{-- <form>              	
@@ -56,13 +59,13 @@
               </form> --}}
               <div class="mt-3">
                   {{-- <button onclick="history.back()" class="btn btn-primary btn-lg">take me back</button> --}}
-                <a href="/" class="btn btn-primary btn-lg">Try Again</a>
+                <a href="/" class="btn btn-primary btn-lg">Back to Homepage</a>
               </div>
             </div>
           </div>
         </div>
         <div class="simple-footer mt-5">
-          Copyright &copy; 2023 DSP-PHE | Ekanuri Development
+          Copyright &copy; 2023 MARS - VDR Online | Ekanuri Development
         </div>
       </div>
     </section>
