@@ -20,7 +20,7 @@
       
       <div class="row">
          {{-- <h1>ok</h1> --}}
-         <div class="col-md-8">
+         <div class="col-md-7">
             
             
             {{-- <div class="alert bg-info">
@@ -215,15 +215,33 @@
                </table>
             </div>
          </div>
-         <div class="col-md-4">
+         <div class="col-md-5">
             <div class="card shadow-lg">
+               <div class="card-body">
+                  <i><h4>Announcement</h4></i>
+               
+                  Untuk Kapal IPB dan Tug Boat, diharuskan memilih lokasi pada kolom input "Location", untuk proses approval VDR di area tersebut
+                  
+               </div>
+            </div>
+            {{-- @if ($vessel->contract->ipb == 'IPB' || $vessel->type == 'Tug Boat')
+               <div class="card shadow-lg">
+                  <div class="card-body">
+                     <i><h4>Announcement</h4></i>
+                  
+                     Untuk Kapal IPB dan Tug Boat, diharuskan memilih lokasi pada kolom input "Location", untuk proses approval VDR di area tersebut
+                     
+                  </div>
+               </div>
+            @endif --}}
+            {{-- <div class="card shadow-lg">
                <div class="card-body">
                   <i><h4>Announcement</h4></i>
                  
                   
                   VDR Draft (Pending) periode 16 September 2025 sampai 30 November 2025 sudah di <b>Auto Complete by System</b>. Anda bisa langsung melakukan Release VDR Periode Desember 2025
                </div>
-            </div>
+            </div> --}}
             
             {{-- <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
                <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
@@ -296,6 +314,9 @@
                   
                   # Alur Approval VDR <br>
                   PET -> MARINE -> SUPTENT -> COMPLETE
+                  <hr>
+                  # Alur Approval VDR Kapal IPB / Tug Boat<br>
+                  PET -> Radop -> SUPTENT -> MARINE REPRESENTATIVE -> COMPLETE
                </div>
             </div>
             

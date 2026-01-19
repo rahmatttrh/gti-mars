@@ -81,7 +81,8 @@ table {
 
             @if ($level == 'radop')
                @if ($vdr->status == 2 )
-                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-radop"><i class="fa fa-check"></i> Approve as Radop</a>
+                  <a href
+                   class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-radop"><i class="fa fa-check"></i> Approve as Radop</a>
                   <a href="#" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                   @else
                   <a href="#" class="btn btn-light border shadow" >Approved</a>
@@ -101,7 +102,7 @@ table {
 
             @if ($level == 'suptent-loc')
                @if ($vdr->status == 5 )
-                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suptent-loc"><i class="fa fa-check"></i> Approve as Suptent Area</a>
+                  <a href="#" class="btn btn-block btn-primary  shadow" data-toggle="modal" data-target="#vdr-approve-suparea"><i class="fa fa-check"></i> Approve as Suptent Area</a>
                   <a href="#" class="btn btn-danger shadow" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
                   @else
                   <a href="#" class="btn btn-light border shadow" >Approved</a>
@@ -1508,6 +1509,40 @@ table {
       </form>
    </div>
 </div>
+
+
+<div class="modal fade" id="vdr-approve-suparea" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title">Confirmation Approve</h5>
+
+            
+            
+         </div>
+         <div class="modal-body">
+            <span>Approve VDR : </span> <br>
+            <b>{{$vdr->code}}</b>
+            <hr>
+            <span>Selanjutnya VDR akan terkirim ke Marine Representative untuk proses approval berikutnya</span>
+            
+
+            
+            
+         </div>
+         <div class="modal-footer bg-whitesmoke">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            
+            <a href="{{route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id))}}" class="btn btn-info">Approve</a>
+            {{-- <button type="submit" class="btn btn-info">Approve</button> --}}
+         </div>
+      </div>
+     
+   </div>
+</div>
+
+
 @endif
 
 <div class="modal fade" id="vdr-approve-marine" tabindex="-1" role="dialog"  aria-hidden="true">
@@ -1636,6 +1671,17 @@ table {
    </div>
 </div>
 
+
+
+
+
+
+
+
+{{--  --}}
+
+
+
 <div class="modal fade" id="vdr-approve-pet" tabindex="-1" role="dialog"  aria-hidden="true">
    <div class="modal-dialog " role="document">
       <form action="{{route('vdr.approve.pet.from.email')}}" method="POST" enctype="multipart/form-data">
@@ -1712,36 +1758,12 @@ table {
    </div>
 </div>
 
-<div class="modal fade" id="vdr-approve-suptent-loc" tabindex="-1" role="dialog"  aria-hidden="true">
-   <div class="modal-dialog" role="document">
-      
-      <div class="modal-content">
-         <div class="modal-header">
-            <h5 class="modal-title">Confirmation Approve</h5>
 
-            
-            
-         </div>
-         <div class="modal-body">
-            <span>Approve VDR : </span> <br>
-            <b>{{$vdr->code}}</b>
-            <hr>
-            <span>Selanjutnya VDR akan terkirim ke Marine Representative untuk proses approval berikutnya</span>
-            
+@if ($level == 'suptent-loc')
+               @if ($vdr->status == 5 )
 
-            
-            
-         </div>
-         <div class="modal-footer bg-whitesmoke">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            
-            <a href="{{route('vdr.approve.suptent.loc.from.email', enkripRambo($vdr->id))}}" class="btn btn-info">Approve</a>
-            {{-- <button type="submit" class="btn btn-info">Approve</button> --}}
-         </div>
-      </div>
-     
-   </div>
-</div>
+@endif
+@endif
 
 
 

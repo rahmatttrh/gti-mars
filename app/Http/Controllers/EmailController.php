@@ -758,7 +758,8 @@ class EmailController extends Controller
                "ms.jemmy.pentury@pertamina.com",
                "ms.wahyu.nugraha@pertamina.com",
                "ms.mochamad.syawali@pertamina.com",
-               "develop@ekanuri.com"
+               "develop@ekanuri.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'NBU') {
             Mail::to([
