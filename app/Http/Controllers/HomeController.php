@@ -570,7 +570,7 @@ class HomeController extends Controller
       if (auth()->user()->hasRole('superuser')) {
 
          $vessels = Vessel::get();
-         $offices = Office::gettt();
+         $offices = Office::get();
 
          // $vdrSuptents = Vdr::where('status', 5)->where('area', 'NBU')->get();
          // dd($vdrSuptents);
