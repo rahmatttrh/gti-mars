@@ -562,9 +562,9 @@
                                  @if ($vdr->vessel->ipb == 'IPB' || $vdr->vessel->type == 'Tug Boat')
                                     @if ($vdr->status == 0)
                                      <tr>
-                                       <td>Location</td>
-                                       <td colspan="3">
-                                          <select name="bu" id="bu" style="border:0; outline:0;" class="  input_bu" style="width: 100%">
+                                       <td>Area</td>
+                                       <td colspan="3" style="background-color: rgb(226, 236, 151); text-align: left !important;">
+                                          <select name="bu" id="bu" style="border:0; outline:0;background-color: rgb(226, 236, 151);" class="  input_bu" style="width: 100%">
                                              <option selected disabled >Pilih Area</option>
                                              <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                                              <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
@@ -603,7 +603,7 @@
                                     <td colspan="4">
                                        @if ($vdr->vessel->ipb == 'IPB' || $vdr->vessel->type == 'Tug Boat')
                                           @if ($vdr->status > 0)
-                                          LOCATION : {{$vdr->area}}
+                                          Area : {{$vdr->area}}
                                           @endif
                                        @endif
 

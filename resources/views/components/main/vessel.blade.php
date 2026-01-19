@@ -220,7 +220,7 @@
                <div class="card-body">
                   <i><h4>Announcement</h4></i>
                
-                  Untuk Kapal IPB dan Tug Boat, diharuskan memilih lokasi pada kolom input "Location", untuk proses approval VDR di area tersebut
+                  Untuk Kapal IPB dan Tug Boat, diharuskan memilih <b>AREA</b> pada form VDR, untuk proses approval VDR di area tersebut
                   
                </div>
             </div>
