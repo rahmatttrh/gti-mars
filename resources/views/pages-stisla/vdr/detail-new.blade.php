@@ -565,14 +565,14 @@
                                        <td>Location</td>
                                        <td colspan="3">
                                           <select name="bu" id="bu" style="border:0; outline:0;" class="  input_bu" style="width: 100%">
-                                             <option selected disabled >Choose BU</option>
+                                             <option selected disabled >Pilih Area</option>
                                              <option {{$vdr->area == 'SBU' ? 'selected' : ''}} value="SBU">SBU</option>
                                              <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
                                              <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
                                              <option {{$vdr->area == 'Cinta-T' ? 'selected' : ''}} value="Cinta-T">Cinta-T</option>
                                              <option {{$vdr->area == 'Widuri-T' ? 'selected' : ''}} value="Widuri-T">Widuri-T</option>
                                           </select>
-                                          <small>(Pilih area untuk Approval Radop & Suptent)</small>
+                                          <small>(Pilih area di samping untuk Approval Radop & Suptent)</small>
                                        </td>
                                      </tr>
                                     {{-- <div class="px-2 mt-2">
