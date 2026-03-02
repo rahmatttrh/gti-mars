@@ -5,8 +5,8 @@
    }
 </style>
 <nav class="navbar navbar-expand-lg main-navbar bg-white text-dark" style="background-color: #d5dcee">
-   <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+   <a href="https://mars-phe.enc.co.id/mars/index.php" class="navbar-brand sidebar-gone-hide">
+      <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -85,7 +85,7 @@
          </div>
       </li> --}}
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-       <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
+       <img alt="image" src="{{asset('public/stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
        <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
        <div class="dropdown-menu dropdown-menu-right">
          {{-- <div class="dropdown-title">Logged in 5 min ago</div>

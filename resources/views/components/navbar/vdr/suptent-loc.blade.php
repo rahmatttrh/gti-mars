@@ -11,7 +11,7 @@
    }
 </style>
 <nav class="navbar navbar-expand-lg main-navbar  text-dark" >
-   <a href="/" class="navbar-brand sidebar-gone-hide">
+   <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
@@ -20,7 +20,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
-         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
+         <li class="nav-item text-dark"><a href="https://app.mars-phe.com" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
          <li class="nav-item active text-dark"><a href="{{route('vdr.marine')}}" class="nav-link bgb-1 rounded px-2 py-1" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report" style="background-color: #1f4481">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>

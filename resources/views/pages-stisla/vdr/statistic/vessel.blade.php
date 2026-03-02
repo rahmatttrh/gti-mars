@@ -1,4 +1,4 @@
-@extends('layouts.stisla.app')
+@extends('layouts.stisla.app-vdr')
 @section('title')
    DSP Detail Sailing Order
 @endsection

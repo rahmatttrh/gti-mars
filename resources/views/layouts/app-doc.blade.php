@@ -36,7 +36,7 @@
                   </button>
                   {{-- navbar-brand-autodark  --}}
                   <h1 class="navbar-brand  d-none-navbar-horizontal pe-0 pe-md-3">
-                     <a href="/" class="navbar-brand sidebar-gone-hide">
+                     <a href="https://mars-phe.enc.co.id/mars/index.php" class="navbar-brand sidebar-gone-hide">
                         @if (auth()->user() != null)
                               @if (auth()->user()->hasRole('superuser') || auth()->user()->hasRole('logistic') || auth()->user()->hasRole('drilling') || auth()->user()->hasRole('marine') || auth()->user()->hasRole('vessel') || auth()->user()->hasRole('port') || auth()->user()->hasRole('department'))
                               <img src="{{asset('img/logo/phe-oses.png')}}"  alt="DSP-PHE" class="navbar-brand-image">
@@ -353,7 +353,7 @@
       @stack('autorefresh')
 
       
-      {{-- <script>
+      <script>
          
          $(document).ready( function () {
             
@@ -362,7 +362,7 @@
             });
          } );
          
-         </script> --}}
+         </script>
       
 
       <script>

@@ -20,8 +20,8 @@
           
         </li>
         <li>
-          <a href="/" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+          <a href="https://mars-phe.enc.co.id/mars/index.php" class="navbar-brand sidebar-gone-hide">
+             <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -32,7 +32,7 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" >HOME</a></li>
+             <li class="nav-item active text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" >HOME</a></li>
              
              <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
              
@@ -46,10 +46,10 @@
        {{-- <ul class="navbar-nav d-none d-sm-block">
           
        </ul> --}}
-       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/" class="text-dark"><b><i>MARS</i></b></a></h4>
+       <h4 class="d-block d-sm-none text-dark mt-2"><b><i>MARS</i></b></h4>
    </form>
    {{-- <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -71,7 +71,7 @@
       
       
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-       <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
+       <img alt="image" src="{{asset('public/stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
        <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
        <div class="dropdown-menu dropdown-menu-right">
          {{-- <div class="dropdown-title">Logged in 5 min ago</div>

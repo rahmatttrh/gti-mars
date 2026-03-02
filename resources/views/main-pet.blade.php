@@ -16,7 +16,8 @@
                      <b class="mb-3">PIC of Fuel Monitoring Team :</b> <br>
 
                      <option value="YFH">Yusuf Falah Hibatullah</option>
-                     <option value="RPR">Raditya Perdana Rachmansyah</option>
+                     {{-- <option value="RPR">Raditya Perdana Rachmansyah</option> --}}
+                     <option value="ESN">Eka Satria Nugroho</option>
                      <option value="BJ">Bryan Jhon</option>
                      <option value="LAJ">Lutfa Alprimas Jasworo</option>
                      <option value="SW">Setyo Wiyono</option>

@@ -30,16 +30,17 @@ class DocumentController extends Controller
 {
 
 
-   public function vdrPin($id){
+   public function vdrPin($id)
+   {
       $vdr = Vdr::find(dekripRambo($id));
 
       return view('pages.document.vdr-pin', [
          'vdr' => $vdr
       ]);
-
    }
 
-   public function vdrPinCheck(Request $req){
+   public function vdrPinCheck(Request $req)
+   {
       $vdr = Vdr::find($req->vdrId);
       $vdrPin = VdrPin::where('title', 'vdr')->first();
 
@@ -49,13 +50,12 @@ class DocumentController extends Controller
          return view('pages.document.vdr-finance', [
             'vdr' => $vdr,
             'vessel' => $vdr->vessel,
-            
+
          ]);
          // return redirect()->route('vdr.open.pdf', enkripRambo($vdr->id));
       } else {
          return redirect()->back()->with('danger', 'PIN yang anda masukkan salah!');
       }
-
    }
    public function vdr($id)
    {
@@ -117,7 +117,24 @@ class DocumentController extends Controller
 
       $sp = VdrOperating::where('vdr_id', $vdr->id)->where('heading_id', 11)->first();
 
+      $debugMinutes = 0;
 
+      foreach ($ops as $op) {
+         // format: 1.35 (jam.desimal-menit)
+         $array = explode('.', $op->time);
+
+         $hours = intval($array[0]);
+         $minutes = isset($array[1]) ? intval($array[1]) : 0;
+
+         // ubah ke total menit
+         $debugMinutes += ($hours * 60) + $minutes;
+      }
+
+      // konversi kembali ke jam & menit
+      $finalHours = floor($debugMinutes / 60);
+      $finalMinutes = $debugMinutes % 60;
+      // format 2 digit
+      $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
 
 
 
@@ -198,7 +215,24 @@ class DocumentController extends Controller
       $vdrRejectTables = VdrReject::where('vdr_id', $vdr->id)->get();
 
 
+      $debugMinutes = 0;
 
+      foreach ($ops as $op) {
+         // format: 1.35 (jam.desimal-menit)
+         $array = explode('.', $op->time);
+
+         $hours = intval($array[0]);
+         $minutes = isset($array[1]) ? intval($array[1]) : 0;
+
+         // ubah ke total menit
+         $debugMinutes += ($hours * 60) + $minutes;
+      }
+
+      // konversi kembali ke jam & menit
+      $finalHours = floor($debugMinutes / 60);
+      $finalMinutes = $debugMinutes % 60;
+      // format 2 digit
+      $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
 
 
 

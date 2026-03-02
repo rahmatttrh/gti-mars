@@ -163,7 +163,7 @@
                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                   <td class="border">IPB</td>
+                                                   <td class="border">IPB {{$vessel->ipb ?? ''}}</td>
                                                    <td class="border" colspan="2">
                                                       <select  class="w-100 py-1" required id="ipb"  name="ipb" >
                                                          <option value="" disabled selected>Select IPB / Non IPB</option>

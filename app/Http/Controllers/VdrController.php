@@ -1625,17 +1625,17 @@ class VdrController extends Controller
       ]);
    }
 
-   public function updatePeriodicAjax($vdr, $periodic, $activity, $time, $value, $actual, $diff)
+   public function updatePeriodicAjax($vdr, Request $req)
    {
 
       $vdr = Vdr::find($vdr);
-      $vdrPeriodic = VdrPeriodic::find($periodic);
+      $vdrPeriodic = VdrPeriodic::find($req->periodic);
       $vdrPeriodic->update([
-         'activity' => $activity,
-         'rob_time' => $time,
-         'rob_value' => $value,
-         'rob_actual' => $actual,
-         'rob_diff' => $diff
+         'activity' => $req->periodActivity,
+         'rob_time' => $req->periodTime,
+         'rob_value' => $req->periodValue,
+         'rob_actual' => $req->periodActual,
+         'rob_diff' => $req->periodDiff
       ]);
 
 
@@ -1644,8 +1644,8 @@ class VdrController extends Controller
 
       return response()->json([
          'success' => true,
-         'result' => $time,
-         'diff' => $diff,
+         'result' => $req->periodTime,
+         'diff' => $req->periodDiff,
       ]);
    }
 
@@ -1858,19 +1858,19 @@ class VdrController extends Controller
 
    }
 
-   public function updateActivityTimeAjax($vdr, $act, $start, $finish)
+   public function updateActivityTimeAjax($vdr, Request $req)
    {
 
       $vdr = Vdr::find($vdr);
-      $vdrActivity = VdrActivity::find($act);
+      $vdrActivity = VdrActivity::find($req->act);
 
 
 
 
       $vdrActivity->update([
 
-         'start' => $start,
-         'finish' => $finish,
+         'start' => $req->start,
+         'finish' => $req->finish,
 
       ]);
 

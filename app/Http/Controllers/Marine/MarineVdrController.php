@@ -912,11 +912,13 @@ class MarineVdrController extends Controller
    {
       $vdr = Vdr::find(dekripRambo($id));
 
-      if ($vdr->area == 'NBU') {
-         $status = 3;
-      } else {
-         $status = 5;
-      }
+      // if ($vdr->area == 'NBU') {
+      //    $status = 3;
+      // } else {
+      //    $status = 5;
+      // }
+
+      $status = 5;
 
       $vdr->update([
          'status' => $status,
@@ -936,18 +938,20 @@ class MarineVdrController extends Controller
       ]);
 
 
-      return redirect()->back()->with('success', 'VDR berhasil di Approve');
+      return redirect()->route('vdr.marine.validation')->with('success', 'VDR berhasil di Approve');
    }
 
    public function approveRadopFromEmail(Request $req, $id)
    {
       $vdr = Vdr::find(dekripRambo($id));
 
-      if ($vdr->area == 'NBU') {
-         $status = 3;
-      } else {
-         $status = 5;
-      }
+      // if ($vdr->area == 'NBU') {
+      //    $status = 3;
+      // } else {
+
+      // }
+
+      $status = 5;
 
       $vdr->update([
          'status' => $status,
@@ -1063,7 +1067,8 @@ class MarineVdrController extends Controller
       // $emailController = new EmailController();
       // $emailController->approvalVdrSuptent(enkripRambo($vdr->id));
 
-      return redirect()->back()->with('success', 'VDR Suptent Location Approved');
+      // return redirect()->back()->with('success', 'VDR Suptent Location Approved');
+      return redirect()->route('vdr.marine.validation')->with('success', 'VDR Suptent Area Approved');
    }
 
    public function reject(Request $req)

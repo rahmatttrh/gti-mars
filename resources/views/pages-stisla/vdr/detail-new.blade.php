@@ -966,7 +966,7 @@
                                           <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
                                        </td>
                                           <td class="text-info bg-y">
-                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="  input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             O<input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
                                           </td>
                                           <td class="text-dark bg-y">
                                              {{-- {{$activity->finish === "00:00:00"}} --}}
@@ -988,7 +988,7 @@
                                                    @endif
 
                                                    @else
-                                                   <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); width: 80px"  class="input_activity_{{$activity->id}} input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
+                                                   <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); width: 80px"  class=" input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_finish" id="finish_{{$activity->id}}" value="{{$activity->finish}}">
 
                                              @endif
                                              {{-- @if (auth()->user()->hasRole('superuser'))
@@ -2038,7 +2038,8 @@
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
                               <option value="YFH">Yusuf Falah Hibatullah</option>
-                              <option value="RPR">Raditya Perdana Rachmansyah</option>
+                              {{-- <option value="RPR">Raditya Perdana Rachmansyah</option> --}}
+                              <option value="ESN">Eka Satria Nugroho</option>
                               <option value="BJ">Bryan Jhon</option>
                               <option value="LAJ">Lutfa Alprimas Jasworo</option>
                               <option value="SW">Setyo Wiyono</option>
@@ -2491,9 +2492,17 @@
                         <option value="SC">Aji Catur</option>
                         <option value="RA">Ridwan Alviyanto</option>
                         @elseif($vdr->area == 'Cinta-T')
-                            <option value="Cinta-T">Radop Cinta-T</option>
-                            @elseif($vdr->area == 'Widuri-T')
-                            <option value="Widuri-T">Radop Widuri-T</option>
+                           <option value="YAB">Yudha Adi Bakti</option>
+                           <option value="S">Supriadi</option>
+                           <option value="K">Khamsani</option>
+                           <option value="AN">Ali Nurdin</option>
+                        
+                        
+                        @elseif($vdr->area == 'Widuri-T')
+                            <option value="R">Rizandri</option>
+                            <option value="BHS">Budi Hadi Sulistia</option>
+                            <option value="GW">Gunawan Wibisono</option>
+                            <option value="W">Wianto</option>
                         @else
                      
                         @endif  
@@ -3084,9 +3093,17 @@
 
          var _token = $('meta[name="csrf-token"]').attr('content');
          $.ajax({
-            url: "/fetch/vdr/update/periodic/" + vdr + "/" + periodic +  "/"  + periodActivity + "/" + periodTime + "/" + periodValue + "/" + periodActual + "/" + periodDiff,
+            url: "/fetch/vdr/update/periodic/" + vdr ,
             method: "GET",
             dataType: 'json',
+            data: {
+               periodic: periodic,
+               periodActivity: periodActivity,
+               periodTime: periodTime,
+               periodValue: periodValue,
+               periodActual: periodActual,
+               periodDiff: periodDiff
+            },
 
             success: function(result) {
                $('.periodDiff').html(periodDiff);
@@ -3155,13 +3172,23 @@
 
          var _token = $('meta[name="csrf-token"]').attr('content');
          $.ajax({
-            url: "/fetch/vdr/update/periodic/" + vdr + "/" + periodic +  "/"  + periodActivity + "/" + periodTime + "/" + periodValue + "/" + periodActual + "/" + periodDiff,
+            url: "/fetch/vdr/update/periodic/" + vdr,
             method: "GET",
             dataType: 'json',
+            data: {
+               periodic: periodic,
+               periodActivity: periodActivity,
+               periodTime: periodTime,
+               periodValue: periodValue,
+               periodActual: periodActual,
+               periodDiff: periodDiff
+            },
+
 
             success: function(result) {
                $('.periodDiff').html(periodDiff);
                console.log('time :' + result.result);
+               showMessage("Autosave: " + "Data Periodical Fuel ROB tersimpan");
                
             },
             error: function(error) {
@@ -3351,7 +3378,7 @@
             });
 
             $(".input_activity_time_" + '{!! $act->id !!}').change(function () {
-               console.log('activity');
+               console.log('time');
                var vdr = $('#vdr').val();
                var act = '{!! $act->id !!}';
                var start = $('#start_' + '{!! $act->id !!}').val();
@@ -3361,24 +3388,37 @@
                
                
                console.log('VDR : ' + vdr);
+               console.log('act : ' + act);
+               console.log('start : ' + start);
+               console.log('finish : ' + finish);
 
                
 
                var _token = $('meta[name="csrf-token"]').attr('content');
                $.ajax({
-                  url: "/fetch/vdr/update/time/activity/" + vdr + "/" + act +  "/"  + start + "/" + finish ,
+                  url: "/fetch/vdr/update/time/activity/" + vdr  ,
                   method: "GET",
                   dataType: 'json',
+                  data: {
+                        act: act,
+                        start: start,
+                        finish: finish,
+                     },
+                  
 
                   success: function(result) {
                      
-
+                     console.log('SUCCESS' );
                      console.log('time :' + result.result);
                      showMessage("Autosave: " + "Data Time tersimpan");
                      
                   },
                   error: function(error) {
                      console.log(error)
+                     console.log('Error' );
+                     console.log("STATUS:", status);
+                     console.log("ERROR:", error);
+                     console.log("RESPONSE:", xhr.responseText);
                   }
 
                })

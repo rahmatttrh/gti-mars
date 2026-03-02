@@ -61,13 +61,13 @@
   <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
 <!-- Start GA -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
-<script>
+{{-- <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
   gtag('config', 'UA-94034622-3');
-</script>
+</script> --}}
 <!-- /END GA -->
 <style>
    .bga-1 {
@@ -112,7 +112,7 @@
      
       <div id="app ">
          
-         <div class="main-wrapper px-lg-3 ">
+         <div class="main-wrapper px-3 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
                <div id="messageBox"></div>
                
@@ -256,16 +256,16 @@
 
 
 
-   <script>
+   {{-- <script>
       
       $(document).ready( function () {
          
-         // document.addEventListener('contextmenu', function(event) {
-         //    event.preventDefault();
-         // });
+         document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+         });
       } );
    
-   </script>
+   </script> --}}
 
 
 

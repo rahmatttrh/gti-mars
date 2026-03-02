@@ -76,16 +76,28 @@ input {
                
               
                <div class="card-body">
-                  <div class="d-flex justify-content-between">
-                     <div class="">
-                        <h5>INTERMILAN {{formatDate($start)}} - {{formatDate($end)}}</h5>
-                        <span>{{$intermilan->title}}</span>
+                  <a href="" class="btn btn-sm btn-primary mb-2">Submit</a>
+                  <a class="btn btn-sm btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
+                  <div class="row">
+                     <div class="col-md-8">
+                        <div class="">
+                           <span>{{$intermilan->code}} </span> <br>
+                           <span>{{$intermilan->title}}</span>
+                           <h5 class="mb--2">
+                           
+                              INTERMILAN {{formatDate($start)}} - {{formatDate($end)}}</h5>
+                           
+                        </div>
                      </div>
+                  </div>
+                  <div class="d-flex justify-content-between">
                      
-                  <a href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
+                     
+                     
+                  
                   </div>
                   
-                  <hr>
+                  {{-- <hr> --}}
                  <ul class="nav nav-tabs" id="myTab" role="tablist">
                    <li class="nav-item">
                      <a class="nav-link " id="home-tab"  href="{{route('intermilan.marine.detail', enkripRambo($intermilan->id))}}"  aria-controls="home" aria-selected="true">Intermilan</a>
@@ -96,6 +108,9 @@ input {
                    <li class="nav-item">
                      <a class="nav-link active" id="contact-tab" data-toggle="tab" href="{{route('intermilan.marine.risalah', enkripRambo($intermilan->id))}}" role="tab" aria-controls="contact" aria-selected="false">Risalah</a>
                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" id="ok-tab" data-toggle="tab" href="#ok" role="tab" aria-controls="ok" aria-selected="false">Schedule</a>
+                     </li>
                  </ul>
                  <div class="tab-content" id="myTabContent">
                    
@@ -1102,6 +1117,108 @@ input {
 
 
                    </div>
+
+                     <div class="tab-pane fade " id="ok" role="tabpanel" aria-labelledby="ok-tab">
+                        <div class="row">
+                           <div class="col-md-3">
+                              <div class="badge badge-info mb-2">Create Sailing Order</div>
+                              <form action="{{route('schedule.store.so')}}" method="POST">
+                                 @csrf
+                                 {{-- <div class="form-group"> --}}
+                                    <input type="date" name="start" id="start" value="{{$start}}" hidden>
+                                    <input type="date" name="end" id="end" value="{{$end}}" hidden>
+                                    <select name="vessel" id="vessel" class="form-control mb-2">
+                                       <option value="" selected disabled>Select Vessel</option>
+                                       @foreach ($vessels as $vessel)
+                                             <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                       @endforeach
+                                    </select>
+                                 {{-- </div> --}}
+                                 {{-- <div class="form-group"> --}}
+                                    <div class="input-group mb-3">
+                                       {{-- min="{{$start}}" max="{{$end}}" --}}
+                                       <input type="date" class="form-control" name="date" id="date" value="{{$now->format('Y-m-d')}}"  >
+                                       <div class="input-group-append">
+                                          <button class="btn btn-light border btn-block " type="submit">Create</button>
+                                       </div>
+                                    </div>
+                                 {{-- </div> --}}
+                              </form>
+                              <hr>
+                              <table class="table table-sm border">
+                                 <tbody>
+                                    <tr>
+                                       <th colspan="2" class="border">Description</th>
+                                       
+                                    </tr>
+                                    <tr>
+                                       <td class="border">Color</td>
+                                       <td class="border">Keterangan</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-draft border"></td>
+                                       <td class="border">Draft</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-assigned border"></td>
+                                       <td class="border">Assigned</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-complete border"></td>
+                                       <td class="border">Complete</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+
+                           <div class="col-md-9">
+                              <table class="table table-sm border">
+                                 
+                                 <tbody>
+                                    {{-- <tr><th colspan="4" class="border">Sailing Order</th></tr> --}}
+                                    <tr>
+
+                                       <th class="text-center border" style="width: 100px" >Date</th>
+                                       <th class="border" colspan="3">Vessel</th>
+                                       {{-- <th>Status</th> --}}
+                                    </tr>
+                                    @foreach ($weekSchedules as $schedule)
+                                          <tr>
+                                             @if ($schedule->status == 0)
+                                                <td class="text-center bg-draft border">{{formatDateB($schedule->date)}}</td>
+                                                @elseif($schedule->status > 0 && $schedule->status != 11)
+                                                <td class="text-center bg-assigned border">{{formatDateB($schedule->date)}}</td>
+                                                @elseif($schedule->status == 11)
+                                                <td class="text-center bg-complete border">{{formatDateB($schedule->date)}}</td>
+                                             @endif
+                                             
+                                             <td class="border" colspan="3">
+                                                <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a>
+                                                
+                                                
+                                             </td>
+                                             {{-- <td><x-status-stisla.schedule-plain :schedule="$schedule" /></td> --}}
+                                          </tr>
+                                          @foreach ($schedule->items as $item)
+                                             <tr>
+                                                <td class="border"></td>
+                                                <td class="border">{{$item->description}}</td>
+                                                <td class="border">{{$item->request->origin->name}} - {{$item->request->destination->name}}</td>
+                                                <td class="border">
+                                                   <x-status-stisla.request-plain :request="$item->request" />
+                                                </td>
+                                             </tr>
+                                          @endforeach
+                                          
+                                    @endforeach
+                                    
+                                    
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                        
+                     </div>
                  </div>
                </div>
              </div>
@@ -1194,6 +1311,46 @@ input {
          <a href="{{route('intermilan.marine.other.delete', enkripRambo($other->id))}}" class="btn btn-danger">Delete</a>
          {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
          {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+       </div>
+     </div>
+   </div>
+</div>
+@endforeach
+
+
+@foreach ($mainStrategies as $main)
+<div class="modal" tabindex="-1" role="dialog" id="modalDeleteMainStrategy-{{$main->id}}">
+   <div class="modal-dialog " role="document">
+     <div class="modal-content">
+       <div class="modal-header">
+         <h5 class="modal-title">Konfirmasi Delete Main Strategy  </h5>
+         {{-- <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+         </button> --}}
+       </div>
+       <div class="modal-body">
+         <hr>
+         <table class="table table-sm border">
+            <tbody>
+               
+               {{-- <tr>
+                  <td colspan="2"></td>
+               </tr> --}}
+               <tr>
+                  <td style="font-size: 14px;vertical-align: top;" class="border">Desc</td>
+                  <td style="font-size: 14px" class="border">{{$main->description}}</td>
+               </tr>
+               
+            </tbody>
+         </table>
+         {{-- <span></span> <br> --}}
+
+
+       </div>
+       <div class="modal-footer">
+         <a href="{{route('intermilan.marine.main.strategy.delete', enkripRambo($main->id))}}" class="btn btn-danger">Delete</a>
+         {{-- <button type="button" class="btn btn-danger">Delete</button> --}}
+         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
        </div>
      </div>
    </div>

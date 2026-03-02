@@ -88,7 +88,7 @@ table {
 
 <body class="layout-3" style="background-color: #eaeef7">
    <div id="app">
-      <div class="main-wrapper px-lg-3" >
+      <div class="main-wrapper px-3" >
          {{-- <div class="navbar-bg " style="background-color: #0b4e99"></div> --}}
          <div class="navbar-bg" style="background-color: #e6e6ef"></div>
          @if (auth()->user()->username == 'pet')
@@ -119,7 +119,7 @@ table {
             @elseif(auth()->user()->hasRole('suptent_loc'))
             <x-main.navbar.suptent-loc />
             @elseif(auth()->user()->hasRole('suptent'))
-            <x-main.navbar.suptent />
+            <x-main.navbar.suptent-loc />
          @endif
        
          

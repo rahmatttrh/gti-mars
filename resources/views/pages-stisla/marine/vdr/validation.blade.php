@@ -76,7 +76,7 @@
                         <thead>
                            <tr>
                               {{-- <th rowspan="2" class="text-center">No.</th> --}}
-                              <th rowspan="2">Vessel</th>
+                              {{-- <th rowspan="2">Vessel</th> --}}
                               <th rowspan="2">VDR Number</th>
                               {{-- <th rowspan="2">Vessel</th> --}}
                               {{-- <th rowspan="2">Day</th> --}}
@@ -107,7 +107,7 @@
                            @foreach($vdrs as $vdr)
                            <tr>
                               {{-- <td class="text-muted text-center"><small>{{++$i}}</small></td> --}}
-                              <td>{{$vdr->vessel->name}} </td>
+                              {{-- <td>{{$vdr->vessel->name}} </td> --}}
                               <td>
                                  @if (auth()->user()->username == 'lutfiaryanto')
                               

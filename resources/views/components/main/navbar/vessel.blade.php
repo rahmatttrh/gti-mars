@@ -20,7 +20,7 @@
           
         </li>
         <li>
-          <a href="/" class="navbar-brand sidebar-gone-hide">
+          <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
              <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
@@ -32,13 +32,13 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-            <li class="nav-item text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+            <li class="nav-item text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
             <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark">DSP</a></li>
             <li class="nav-item text-dark"><a href="{{route('vdr.create')}}" class="nav-link text-dark">VDR</a></li>
-            <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">PROACT</a></li>
-            <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">MAP</a></li>
-            <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">FMS</a></li>
-            <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">HSE</a></li>
+            <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">PROACT</a></li>
+            <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">MAP</a></li>
+            <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">FMS</a></li>
+            <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">HSE</a></li>
           </ul>
        </div>
        {{-- <ul class="navbar-nav d-none d-sm-block">
@@ -113,21 +113,12 @@
       <ul class="navbar-nav">
          
          <li class="nav-item nav-item-b {{ (request()->is('/')) ? 'active' : '' }}">
-            <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
+            <a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
                <span class="mx-3">Home Page</span>
-            </a>
-         </li>
-         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
-            <a href="{{route('vdr.export')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/report/*'))
-               <i class="fas fa-fire ml-3"></i>
-               @endif
-               
-               <span class=" mx-3">Export VDR</span>
             </a>
          </li>
 

@@ -21,7 +21,7 @@
           
         </li>
         <li>
-          <a href="/" class="navbar-brand sidebar-gone-hide">
+          <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
              <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
@@ -33,32 +33,8 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
-             
-             @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin')
-                
-                <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
-                <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
-               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
-               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
-               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
-               @elseif(auth()->user()->username == 'pet')
-               <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
-                <li class="nav-item text-dark"><a href="{{route('vdr.marine')}}" class="nav-link text-dark">VDR</a></li>
-               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
-               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
-               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
-               @else
-               <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
-                <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">VDR</a></li>
-               <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
-               <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
-               <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-               <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
-             @endif
-             {{-- @if (auth()->user()->username == 'pet')
+             <li class="nav-item active text-dark"><a href="https://app.mars-phe.com" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+             @if (auth()->user()->username == 'pet')
                 <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
                 @else
                 <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
@@ -68,13 +44,13 @@
              <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
              <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
              <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
-             <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li> --}}
+             <li class="nav-item text-dark"><a href="{{route('hse')}}" class="nav-link text-dark">HSE</a></li>
           </ul>
        </div>
        {{-- <ul class="navbar-nav d-none d-sm-block">
           
        </ul> --}}
-       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/" class="text-dark"><b><i>MARS</i></b></a></h4>
+       <h4 class="d-block d-sm-none text-dark mt-2"><b><i>MARS</i></b></h4>
    </form>
    {{-- <a href="/" class="navbar-brand sidebar-gone-hide">
       <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
@@ -102,8 +78,8 @@
    
    <ul class="navbar-nav navbar-right ml-auto">
       
-      @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin')
-      
+      @if (auth()->user()->username == 'pet')
+      @else
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($notifrequests) > 0  ? 'beep' : ''}} {{count($notifvdrs) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
          <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
             <div class="dropdown-header">NOTIFICATIONS
@@ -158,23 +134,15 @@
             </div>
          </div>
       </li>
-      
       @endif
-
-      {{-- @if (auth()->user()->username == 'superadmin') --}}
-      
-      
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
          <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
          <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
          <div class="dropdown-menu dropdown-menu-right shadow">
             <div class="dropdown-title">Logged in 5 min ago</div>
-
-            @if (auth()->user()->username == 'superadmin')
             <a href="{{route('user')}}" class="dropdown-item has-icon">
                <i class="fa fa-users"></i> User Management
             </a>
-            @endif
             {{-- <a href="features-profile.html" class="dropdown-item has-icon">
             <i class="far fa-user"></i> Profile
             </a>
@@ -196,7 +164,6 @@
                </a>
          </div>
       </li>
-      {{-- @endif --}}
    </ul>
 </nav>
 
@@ -215,10 +182,6 @@
                <span class="mx-3">Home Page</span>
             </a>
          </li>
-
-
-         @if (auth()->user()->username == 'marine' || auth()->user()->username == 'lutfiaryanto' || auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin')
-         
          <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
             <a href="{{route('daily.report')}}" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('daily/report/*'))
@@ -233,15 +196,6 @@
                <i class="fas fa-fire "></i>
                @endif
                <span class="mx-3">Intermilan</span>
-            </a>
-         </li>
-         <li class="nav-item nav-item-b  {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
-            <a href="{{route('vdr.export.marine')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/report/*'))
-               <i class="fas text-primary ml-3 fa-fire"></i>
-               @endif
-               
-               <span class="mx-3">VDR Export</span>
             </a>
          </li>
 
@@ -260,7 +214,6 @@
             <li class="nav-item "><a href="{{route('user')}}" class="nav-link">User</a></li>
             </ul>
          </li>
-         @endif
 
          
         
@@ -296,7 +249,7 @@
                <span class="mx-3">Daily Activity</span>
             </a>
          </li> --}}
-         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin')
+         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'superuser')
          <li class="nav-item nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('master/data/*'))
@@ -323,57 +276,6 @@
 
 
 <div class="d-block d-sm-none">
-   <nav class="navbar navbar-dark sidebar  navbar-secondary navbar-expand-lg "  >
-      <div class="px-2">
-         <ul class="navbar-nav">
-            @if (auth()->user()->username == 'marine' )
-            <li class="nav-item nav-item-b  ">
-               <a href="/" class="nav-link">
-                 
-                  <i class="fas text-primary ml-3 fa-fire"></i>
-               
-                  
-                  <span class="mx-3">Home Page</span>
-               </a>
-            </li>
-            <hr>
-            <small class="ml-2"><b>- VDR</b></small>
-            {{-- <li class="nav-item nav-item-b ">
-               <a href="{{route('vdr.marine')}}" class="nav-link ">
-                  <span class="mx-3">Dashboard</span>
-               </a>
-            </li> --}}
-            <li class="nav-item nav-item-b ">
-               <a href="{{route('vdr.pet.validation')}}" class="nav-link ">
-                  <span class="mx-3">Waiting</span>
-               </a>
-            </li>
-            <li class="nav-item nav-item-b ">
-               <a href="{{route('vdr.reject.list')}}" class="nav-link ">
-                  <span class="mx-3">Reject</span>
-               </a>
-            </li>
-            <li class="nav-item nav-item-b ">
-               <a href="{{route('vdr.history.list')}}" class="nav-link ">
-                  <span class="mx-3">History</span>
-               </a>
-            </li>
-            @else
-            @endif
-            
-
-           
-
-            
-         
-            
-         
-         </ul>
-      </div>
-   </nav>
-</div>
-
-{{-- <div class="d-block d-sm-none">
    <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg "  >
       <div class="px-2">
          <ul class="navbar-nav">
@@ -455,4 +357,4 @@
          </ul>
       </div>
    </nav>
-</div> --}}
+</div>

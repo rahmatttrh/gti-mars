@@ -21,7 +21,7 @@
          
        </li>
        <li>
-         <a href="/" class="navbar-brand sidebar-gone-hide">
+         <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
          </a>
        </li>
@@ -33,7 +33,7 @@
             <i class="fas fa-ellipsis-v"></i>
          </a>
          <ul class="navbar-nav ">
-            <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+            <li class="nav-item active text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
             @if (auth()->user()->username == 'pet')
                <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">DSP</a></li>
                @else
@@ -111,7 +111,7 @@
       </li>
       @endif
       <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-         <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
+         <img alt="image" src="{{asset('public/stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">
          <div class="d-sm-none d-lg-inline-block text-dark">{{auth()->user()->name}}</div></a>
          <div class="dropdown-menu dropdown-menu-right shadow">
             <div class="dropdown-title">Logged in 5 min ago</div>
@@ -148,21 +148,12 @@
             <ul class="navbar-nav">
                
                <li class="nav-item nav-item-b  {{ (request()->is('/')) ? 'active' : '' }}">
-                  <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
+                  <a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                      @if (request()->is('/'))
                      <i class="fas text-primary ml-3 fa-fire"></i>
                      @endif
                      
                      <span class="mx-3">Home Page</span>
-                  </a>
-               </li>
-               <li class="nav-item nav-item-b  {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
-                  <a href="{{route('vdr.export.marine')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
-                     @if (request()->is('vdr/report/*'))
-                     <i class="fas text-primary ml-3 fa-fire"></i>
-                     @endif
-                     
-                     <span class="mx-3">VDR Export</span>
                   </a>
                </li>
    

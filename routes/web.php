@@ -975,12 +975,12 @@ Route::prefix('fetch')->group(function () {
    Route::get('vdr/update/operating/{vdr}/{op}/{minspeed}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingAjax']);
    Route::get('vdr/update/operating-b/{vdr}/{op}/{contractfuel}/{daily}', [VdrController::class, 'updateOperatingBAjax']);
    Route::get('vdr/update/cargo/{vdr}/{cargo}/{opening}/{consumption}/{received}/{transferred}/{closing}', [VdrController::class, 'updateCargoAjax']);
-   Route::get('vdr/update/periodic/{vdr}/{periodic}/{activity}/{time}/{value}/{actual}/{diff}', [VdrController::class, 'updatePeriodicAjax']);
+   Route::get('vdr/update/periodic/{vdr}', [VdrController::class, 'updatePeriodicAjax']);
    Route::get('vdr/update/special/{vdr}/{periodic}/{remu}/{correct}/{actual}/{total}', [VdrController::class, 'updateSpecialAjax']);
 
    Route::get('vdr/update/activity/{vdr}/{act}/{high}/{normal}/{slow}/{manu}/{idle}/{tow}/{ah}/{sb}', [VdrController::class, 'updateActivityAjax']);
 
-   Route::get('vdr/update/time/activity/{vdr}/{act}/{start}/{finish}', [VdrController::class, 'updateActivityTimeAjax']);
+   Route::get('vdr/update/time/activity/{vdr}', [VdrController::class, 'updateActivityTimeAjax']);
    Route::get('vdr/update/high/activity/{vdr}/{act}/{high}', [VdrController::class, 'updateActivityHighAjax']);
    Route::get('vdr/update/normal/activity/{vdr}/{act}/{normal}', [VdrController::class, 'updateActivityNormalAjax']);
    Route::get('vdr/update/slow/activity/{vdr}/{act}/{slow}', [VdrController::class, 'updateActivitySlowAjax']);

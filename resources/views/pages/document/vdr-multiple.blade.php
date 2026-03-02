@@ -106,11 +106,11 @@ table th tr td {
    @foreach ($vdrs as $vdr)
        
    {{-- <a target="_blank" title="Cetak BKK" onclick="window.open('../print/cetak_bkk.php?id=<?= enkripRambo($row['id']); ?>','name','width=800,height=600')" class="btn btn-success"><i class="fa fa-print"></i> </a> --}}
-   <div class=" px-4 bg-white rounded pb-4 pt-1 ">
-      <div class="row border-bottom pt-1 mb-2 ">
+   <div class=" px-4 bg-white rounded pb-4 pt-0 ">
+      <div class="row border-bottom pt-0 mb-0 ">
          <div class="col-12">
             <div class="d-flex justify-content-between">
-               <div class="">
+               <div class="" style="font-size: 10px">
                   <small ><b>PERTAMINA HULU ENERGI OSES</b></small><br>
                   <small><b>PRODUCTION & OPERATION - MARINE TEAM</b></small><br>
                   <small><b>{{$vdr->code}}</b></small>

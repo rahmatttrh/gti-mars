@@ -572,6 +572,10 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $offices = Office::get();
 
+         $to = Carbon::now();
+         // $vdrTests = Vdr::where('area', 'SBU')->where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+
+         // dd($vdrTests);
          // $vdrSuptents = Vdr::where('status', 5)->where('area', 'NBU')->get();
          // dd($vdrSuptents);
 

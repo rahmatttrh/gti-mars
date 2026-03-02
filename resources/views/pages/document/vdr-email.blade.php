@@ -1646,6 +1646,18 @@ table {
                         <option value="CL">Chlorid Latifoso</option>
                         <option value="SC">Aji Catur</option>
                         <option value="RA">Ridwan Alviyanto</option>
+                        @elseif($vdr->area == 'Cinta-T')
+                           <option value="YAB">Yudha Adi Bakti</option>
+                           <option value="S">Supriadi</option>
+                           <option value="K">Khamsani</option>
+                           <option value="AN">Ali Nurdin</option>
+                        
+                        
+                        @elseif($vdr->area == 'Widuri-T')
+                            <option value="R">Rizandri</option>
+                            <option value="BHS">Budi Hadi Sulistia</option>
+                            <option value="GW">Gunawan Wibisono</option>
+                            <option value="W">Wianto</option>
                         @else
                      
                         @endif     
@@ -1725,7 +1737,8 @@ table {
                         <select class="form-control" name="name1" id="name1" required>
                            <option value="YFH">Yusuf Falah Hibatullah</option>
                               <option value="SW">Setyo Wiyono</option>
-                              <option value="RR">Radit R</option>
+                              {{-- <option value="RR">Radit R</option> --}}
+                              <option value="ESN">Eka Satria Nugroho</option>
                               <option value="LJ">Lutfa Jasworo</option>
                               <option value="LA">Luthfi Alhafiizh</option>
                               <option value="BJ">Bryan Jhon</option>

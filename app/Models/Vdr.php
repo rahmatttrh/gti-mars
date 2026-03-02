@@ -192,6 +192,26 @@ class Vdr extends Model
       $finalHours  = sprintf('%02d', floor($debugHours));
 
       $final = $debugHours . '.' . $finalMinutes;
+
+      $debugMinutes = 0;
+
+      foreach ($ops as $op) {
+         // format: 1.35 (jam.desimal-menit)
+         $array = explode('.', $op->time);
+
+         $hours = intval($array[0]);
+         $minutes = isset($array[1]) ? intval($array[1]) : 0;
+
+         // ubah ke total menit
+         $debugMinutes += ($hours * 60) + $minutes;
+      }
+
+      // konversi kembali ke jam & menit
+      $finalHours = floor($debugMinutes / 60);
+      $finalMinutes = $debugMinutes % 60;
+      // format 2 digit
+      $final = sprintf('%02d:%02d', $finalHours, $finalMinutes);
+
       return $final;
    }
 

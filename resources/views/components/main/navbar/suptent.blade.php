@@ -14,8 +14,8 @@
           
         </li>
         <li>
-          <a href="/" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+          <a href="https://mars-phe.enc.co.id/mars/index.php" class="navbar-brand sidebar-gone-hide">
+             <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -26,7 +26,7 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+             <li class="nav-item active text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
              
              <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
              
@@ -40,10 +40,10 @@
        {{-- <ul class="navbar-nav d-none d-sm-block">
           
        </ul> --}}
-       <h4 class="d-block d-sm-none text-dark mt-2"><a href="/" class="text-dark"><b><i>MARS</i></b></a></h4>
+       <h4 class="d-block d-sm-none text-dark mt-2"><b><i>MARS</i></b></h4>
    </form>
    {{-- <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -118,33 +118,33 @@
 </nav>
 
 <div class="d-none d-md-block">
-   <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-      <div class="px-2">
-         <ul class="navbar-nav">
-            
-            <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-               <a href="/" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
-                  @if (request()->is('/'))
-                  <i class="fas fa-fire ml-3"></i>
-                  @endif
-                  
-                  <span class="">Home Page</span>
-               </a>
-            </li>
-            
-            <li class="nav-item">
-               <a href="#" class="nav-link text-white">
-                  <span class="">Marine Advanced Reporting System</span>
-               </a>
-            </li>
-         </ul>
-      </div>
-   </nav>
+<nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
+   <div class="px-2">
+      <ul class="navbar-nav">
+         
+         <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
+            <a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('/'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Home Page</span>
+            </a>
+         </li>
+         
+         <li class="nav-item">
+            <a href="#" class="nav-link text-white">
+               <span class="">Marine Advanced Reporting System</span>
+            </a>
+         </li>
+      </ul>
+   </div>
+</nav>
 </div>
 
 
 <div class="d-block d-sm-none">
-   <nav class="navbar navbar-dark sidebar  navbar-secondary navbar-expand-lg "  >
+   <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg "  >
       <div class="px-2">
          <ul class="navbar-nav">
             
