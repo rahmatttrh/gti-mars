@@ -9,6 +9,7 @@
 
   <link rel="stylesheet" href="{{asset('stisla/modules/bootstrap/css/bootstrap.min.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/modules/fontawesome/css/all.min.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="{{asset('stisla/modules/jqvmap/dist/jqvmap.min.css')}}">
@@ -168,7 +169,7 @@
       {{-- <div class="bg-white">
          <h4>Logo</h4>
       </div> --}}
-      <div id="app ">
+      <div id="app">
          
          <div class="main-wrapper px-3 ">
             {{-- <div class="main-wrapper main-wrapper-1 "> --}}
@@ -225,8 +226,7 @@
 
             <!-- Main Content -->
             <div class="main-content">
-               <div id="messageBox"
-               >
+               <div id="messageBox">
             </div>
             @yield('content')
             </div>
@@ -301,6 +301,16 @@
       @stack('autorefresh')
       @stack('report')
       {{-- @stack('get_schedules') --}}
+      <script>
+      
+         $(document).ready( function () {
+            
+            document.addEventListener('contextmenu', function(event) {
+               event.preventDefault();
+            });
+         } );
+      
+      </script>
 
       <script>
          $(document).ready(function () {
@@ -324,6 +334,96 @@
          });
 
       </script>
+
+<script>
+   $(document).ready(function () {
+      var body = $('body');
+
+
+      
+     
+
+    
+      $('.datatables').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": [[0, 'asc']],
+       
+      });
+
+      $('.datatables-b').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": false,
+       
+      });
+
+      $('.datatables-vdr').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [2, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-vdr-b').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 25,
+         "ordering": true,
+         "order": [
+            [1, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-vdr-monitoring').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 25,
+         "ordering": true,
+         "order": [
+            [2, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-3').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [3, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-1').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [0, 'desc']
+         ],
+       
+      });
+
+      $('.datatables-2').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [2, 'desc']
+         ],
+       
+      });
+
+      
+
+   
+   });
+
+</script>
 
 
       @if (session('success'))

@@ -154,8 +154,9 @@ Route::middleware(["auth"])->group(function () {
 
 
    Route::prefix('pass')->group(function () {
-      Route::get('reset', [PasswordController::class, 'index'])->name('pass.reset');
-      Route::put('reset/update', [PasswordController::class, 'update'])->name('pass.reset.update');
+      Route::get('change', [PasswordController::class, 'index'])->name('pass.reset');
+      Route::put('change/update', [PasswordController::class, 'update'])->name('pass.reset.update');
+      Route::put('reset/update', [PasswordController::class, 'resetUpdate'])->name('pass.reset.admin');
       // Route::get('department/{id}', [FetchController::class, 'fetchDepartment']);
       // Route::get('subdept/{id}', [FetchController::class, 'fetchSubdept']);
       // Route::get('position/{id}', [FetchController::class, 'fetchPosition']);
@@ -616,6 +617,8 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
          Route::get('reject/suptent', [MarineVdrController::class, 'rejectSuptent'])->name('vdr.suptent.reject');
          Route::get('reject/list', [MarineVdrController::class, 'rejectList'])->name('vdr.reject.list');
          Route::get('history/list', [MarineVdrController::class, 'historyList'])->name('vdr.history.list');
+         Route::post('history/filter', [MarineVdrController::class, 'historyFilter'])->name('vdr.history.filter');
+
          Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
          Route::get("history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
          // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
@@ -858,6 +861,7 @@ Route::group(['middleware' => ['role:vessel|marine|superuser']], function () {
 Route::group(['middleware' => ['role:logistic|drilling|department|mm|superuser']], function () {
    Route::prefix('dsp/u/')->group(function () {
       Route::get("dash/main/{month}/{year}", [HomeController::class, "dspUser",])->name('dsp.user');
+      // Route::get("dash/main", [HomeController::class, "dspUser",])->name('dsp.user');
 
 
       // Request

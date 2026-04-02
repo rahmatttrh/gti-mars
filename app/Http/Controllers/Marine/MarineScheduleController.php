@@ -1038,7 +1038,7 @@ class MarineScheduleController extends Controller
       ];
 
       // Mail::to("rahmattrust@gmail.com")->send(new AssignEmail($data));
-      // Mail::to("develop@ekanuri.com")->send(new AssignEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignEmail($data));
 
       return redirect()->back()->with('success', 'Schedule successfully assign to ' . $vessel->name);
    }

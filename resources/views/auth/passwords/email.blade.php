@@ -1,4 +1,4 @@
-@extends('layouts.stisla.app')
+@extends('layouts.stisla.app-main')
    @section('title')
       Send Reset Password Link
    @endsection
@@ -8,15 +8,18 @@
      
       <div class="container">
          <div class="row">
-            <div class="col-md-6 mx-auto">
+            <div class="col-md-6">
                <div class="card">
-                  <div class="card-header d-flex"> 
+                  {{-- <div class="card-header d-flex"> 
                      <div class="d-flex  align-items-center">
                         <div class="card-title">Reset Password</div> 
                      </div>
                      
-                  </div> 
+                  </div>  --}}
                   <div class="card-body">
+                     <div class="card-title">Change Password</div> 
+                         <b>New Password</b> harus mengikuti kriteria Password yang telah ditentukan
+                        <hr>
                      @if (session('status'))
                            <div class="alert alert-success" role="alert">
                               {{ session('status') }}
@@ -29,16 +32,47 @@
                            <div class="row">
                               <div class="col-md-12">
                                  {{-- <img src="{{asset('img/undraw/password.png')}}" class="img-thumbnail" alt=""> --}}
+                                 
+                                 <div class="form-group form-group-default">
+
+                                    <label>Current Password *</label>
+                                    <div class="input-group">
+                                       <input id="password_current" name="password_current"  type="password" required class="form-control">
+                                       <button class="btn btn-outline-secondary" 
+                                             type="button" 
+                                             id="togglePassword3">
+                                          Show
+                                       </button>
+                                    </div>
+                                    @error('password_current')
+                                       <small class="text-danger"><i>{{ $message }}</i></small>
+                                    @enderror
+                                 </div>
+                                 
                                  <div class="form-group form-group-default">
                                     <label>New Password *</label>
-                                    <input id="password" name="password"  type="password" required class="form-control">
+                                    <div class="input-group">
+                                       <input id="password" name="password"  type="password" required class="form-control">
+                                       <button class="btn btn-outline-secondary" 
+                                             type="button" 
+                                             id="togglePassword">
+                                          Show
+                                       </button>
+                                    </div>
                                     @error('password')
                                        <small class="text-danger"><i>{{ $message }}</i></small>
                                     @enderror
                                  </div>
                                  <div class="form-group form-group-default">
                                     <label>Confirm Password *</label>
-                                    <input id="password_confirmation" name="password_confirmation"  type="password" required class="form-control">
+                                    <div class="input-group">
+                                       <input id="password_confirmation" name="password_confirmation"  type="password" required class="form-control">
+                                       <button class="btn btn-outline-secondary" 
+                                             type="button" 
+                                             id="togglePassword2">
+                                          Show
+                                       </button>
+                                    </div>
                                     @error('password_confirmation')
                                        <small class="text-danger"><i>{{ $message }}</i></small>
                                     @enderror
@@ -47,13 +81,8 @@
                                  <button type="submit" class="btn btn-primary">
                                     Change Password
                               </button>
-                              <br><br>
                               
-                              <small>Gunakan frasa unik yang gampang anda ingat</small> <br>
-                              <small>Gabungkan kata yang tidak berhubungan, contoh: PohonLompat#72</small><br>
-                              <small>Hindari menggunakan kata “password” atau “123456”</small><br>
-                              <small>Simpan password di password manager agar tidak lupa</small>
-                              <hr>
+                              {{-- <hr> --}}
                               </div>
                               {{-- <div class="col-md-6">
                                  <img src="{{asset('img/undraw/password.png')}}" class="img-thumbnail" alt="">
@@ -78,9 +107,23 @@
                      </form>
                   </div>
                   <div class="card-footer">
-                     {{-- <small>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quo, autem laborum?</small> --}}
+                     <small>Harap diingat dengan baik password yang anda buat</small>
                   </div>
                </div>
+            </div>
+
+            <div class="col-md-6">
+               <div class="alert alert-danger">
+                  <strong>Password harus memenuhi kriteria berikut:</strong>
+                  <ul class="mb-0">
+                      <li>Minimal 12 karakter</li>
+                      <li>Mengandung huruf besar (A–Z)</li>
+                      <li>Mengandung huruf kecil (a–z)</li>
+                      <li>Mengandung angka (0–9)</li>
+                      <li>Mengandung karakter spesial (!@#$%^&*)</li>
+                      <li>New Password dan Confirm Password harus sama</li>
+                  </ul>
+              </div>
             </div>
          </div>
       </div>

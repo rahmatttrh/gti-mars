@@ -21,7 +21,8 @@ use Illuminate\Support\Facades\Mail;
 class MarineRequestController extends Controller
 {
 
-   public function indexCrewChange($month, $year){
+   public function indexCrewChange($month, $year)
+   {
       $dekripMonth = dekripRambo($month);
       $dekripYear = dekripRambo($year);
       // dd('ok');
@@ -53,13 +54,13 @@ class MarineRequestController extends Controller
          $monthName = 'Desember';
       }
 
-      $requests = ModelsRequest::where('activity_id', 2)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear  ('date', $dekripYear)->get();
+      $requests = ModelsRequest::where('activity_id', 2)->where('status', 1)->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->get();
       $schedules = Schedule::where('class', 'Crew Change')->whereMonth('date', $dekripMonth)->whereYear('date', $dekripYear)->orderBy('date', 'asc')->get();
 
-      foreach($schedules as $sche){
+      foreach ($schedules as $sche) {
          $totalDepart = 0;
          $totalReturn = 0;
-         foreach($sche->requests->where('status', '>', 1) as $req){
+         foreach ($sche->requests->where('status', '>', 1) as $req) {
             $totalDepart += count($req->passengerItems->where('type', 'Departure'));
             $totalReturn += count($req->passengerItems->where('type', 'Return'));
          }
@@ -78,16 +79,18 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function filterCrewChange(Request $req){
+   public function filterCrewChange(Request $req)
+   {
       return redirect()->route('marine.crew.change', [enkripRambo($req->month), enkripRambo($req->year)]);
    }
-   public function index(){
-      
-      
+   public function index()
+   {
+
+
       // $users = User::get();
       $vessels = Vessel::get();
 
-      
+
 
       // dd($users);
 
@@ -130,7 +133,7 @@ class MarineRequestController extends Controller
          $start = $now->addDays(-3);
          $end = Carbon::now()->addDays(4);
       }
-      
+
 
       $start = $start->format('Y-m-d');
       // dd($start);
@@ -145,7 +148,7 @@ class MarineRequestController extends Controller
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -154,7 +157,7 @@ class MarineRequestController extends Controller
 
 
 
-      
+
 
       return view('pages-stisla.marine.request.inbox', [
          'vessels' => $vessels,
@@ -170,13 +173,14 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function indexList(){
-      
-      
+   public function indexList()
+   {
+
+
       // $users = User::get();
       $vessels = Vessel::get();
 
-      
+
 
       // dd($users);
 
@@ -222,7 +226,7 @@ class MarineRequestController extends Controller
 
       // dd($start);
 
-      
+
 
       $start = $start->format('Y-m-d');
       // dd($start);
@@ -238,7 +242,7 @@ class MarineRequestController extends Controller
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -248,7 +252,7 @@ class MarineRequestController extends Controller
 
 
 
-      
+
 
       return view('pages-stisla.marine.request.inbox-list', [
          'vessels' => $vessels,
@@ -265,7 +269,8 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function filter(Request $req){
+   public function filter(Request $req)
+   {
       // dd('ok');
       // $requests = ModelsRequest::where('status','=', 1)->get();
 
@@ -276,7 +281,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = new Carbon($req->end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -295,7 +300,7 @@ class MarineRequestController extends Controller
 
       $cargoItems = CargoItem::whereBetween('date', [$startDate, $endDate])->get();
 
-      
+
 
       return view('pages-stisla.marine.request.inbox-list', [
          'vessels' => $vessels,
@@ -311,13 +316,14 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function indexListCrew(){
-      
+   public function indexListCrew()
+   {
+
       // dd('ok'
       // $users = User::get();
       $vessels = Vessel::get();
 
-      
+
 
       // dd($users);
 
@@ -363,7 +369,7 @@ class MarineRequestController extends Controller
 
       // dd($start);
 
-      
+
 
       $start = $start->format('Y-m-d');
       // dd($start);
@@ -378,7 +384,7 @@ class MarineRequestController extends Controller
       $startDate = new Carbon($start);
       $endDate = new Carbon($end);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -388,7 +394,7 @@ class MarineRequestController extends Controller
 
 
 
-      
+
 
       return view('pages-stisla.marine.request.crewchange', [
          'vessels' => $vessels,
@@ -405,7 +411,8 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function filterGet($start, $end){
+   public function filterGet($start, $end)
+   {
       // $requests = ModelsRequest::where('status','=', 1)->get();
       $dekripStart = dekripRambo($start);
       $dekripEnd = dekripRambo($end);
@@ -416,7 +423,7 @@ class MarineRequestController extends Controller
       // dd($startDate);
       $endDate = new Carbon($dekripEnd);
       $dates = array();
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -433,7 +440,7 @@ class MarineRequestController extends Controller
       $schedules = Schedule::orderBy('date', 'asc')->whereBetween('date', [$startDate, $endDate])->get();
       // dd(count($requests));
 
-      
+
 
       return view('pages-stisla.marine.request.inbox', [
          'vessels' => $vessels,
@@ -448,21 +455,24 @@ class MarineRequestController extends Controller
       ])->with('i');
    }
 
-   public function inbox(){
+   public function inbox()
+   {
       $requests = ModelsRequest::where('status', 1)->get();
       return view('pages-stisla.marine.request.inbox', [
          'requests' => $requests
       ])->with('i');
    }
 
-   public function progress(){
+   public function progress()
+   {
       $requests = ModelsRequest::where('status', '>', 1)->where('status', '<=', 12)->get();
       return view('pages-stisla.marine.request.progress', [
          'requests' => $requests
       ])->with('i');
    }
 
-   public function history(){
+   public function history()
+   {
       $requests = ModelsRequest::where('status', '=', 12)->get();
       return view('pages-stisla.marine.request.history', [
          'requests' => $requests
@@ -526,7 +536,7 @@ class MarineRequestController extends Controller
       $request = ModelsRequest::find($req->requestId);
       // dd($request->id);
 
-   
+
       $request->update([
          'status' => 1,
          // 'schedule_id' => null,
@@ -655,7 +665,7 @@ class MarineRequestController extends Controller
          $request->update([
             'status' => 02,
             'schedule_id' => $request->schedule_id,
-            
+
          ]);
          RequestHistory::create([
             'request_id' => $request->id,
@@ -680,9 +690,9 @@ class MarineRequestController extends Controller
             'request_id' => $request->id,
             'status_id' => 15,
          ]);
-      } 
+      }
 
-      if ($request->activity_id ==3) {
+      if ($request->activity_id == 3) {
          $request->update([
             'status' => 02,
             'schedule_id' => $schedule->id,
@@ -709,14 +719,15 @@ class MarineRequestController extends Controller
       //    'cargos' => null,
       //    'link' => route('request.detail', enkripRambo($request->id))
       // ];
-      // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new ApprovalEmail($data));
 
 
       // dd('ok');
       return redirect()->route('schedule.detail', enkripRambo($schedule->id))->with('success', 'Request Activity set on this schedule');
    }
 
-   public function changeDestination(Request $req){
+   public function changeDestination(Request $req)
+   {
       // dd('ok');
       $now = Carbon::now();
       $request = ModelsRequest::find($req->request_id);
@@ -747,7 +758,7 @@ class MarineRequestController extends Controller
          'request_id' => $request->id,
          'remark' => 'titipan'
       ]);
-      foreach($request->cargoItems as $item){
+      foreach ($request->cargoItems as $item) {
          CargoItem::create([
             'type' => 'main',
             'status' => 1,
@@ -893,7 +904,7 @@ class MarineRequestController extends Controller
          //    'cargos' => null,
          //    'link' => route('request.detail', enkripRambo($request->id))
          // ];
-         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+         // Mail::to("system.ekanuri@gmail.com")->send(new ApprovalEmail($data));
 
 
 
@@ -988,7 +999,7 @@ class MarineRequestController extends Controller
          //    'cargos' => null,
          //    'link' => route('request.detail', enkripRambo($request->id))
          // ];
-         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+         // Mail::to("system.ekanuri@gmail.com")->send(new ApprovalEmail($data));
 
 
 
@@ -1019,7 +1030,8 @@ class MarineRequestController extends Controller
 
 
 
-   public function store(Request $req){
+   public function store(Request $req)
+   {
       $now = Carbon::today();
       $schedule = Schedule::find($req->schedule);
       // dd($schedule->vessel->name);
@@ -1052,7 +1064,8 @@ class MarineRequestController extends Controller
       return redirect()->route('request.select.schedule', [enkripRambo($requestMarine->id), enkripRambo($schedule->id)])->with('success', "Request Activity sucessfully added");
    }
 
-   public function selectVessel(Request $req){
+   public function selectVessel(Request $req)
+   {
       // dd('ok');
       // dd($req->requestId);
       $request = ModelsRequest::find($req->requestId);

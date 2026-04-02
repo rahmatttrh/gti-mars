@@ -211,7 +211,7 @@ class MarineAdditionalController extends Controller
          //    'cargos' => null,
          //    'link' => route('request.detail', enkripRambo($request->id))
          // ];
-         // Mail::to("develop@ekanuri.com")->send(new ApprovalEmail($data));
+         // Mail::to("system.ekanuri@gmail.com")->send(new ApprovalEmail($data));
 
 
 

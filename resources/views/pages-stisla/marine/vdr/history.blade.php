@@ -23,15 +23,37 @@
       <div class="row">
          <div class="col-md-3">
             <div class="card shadow">
-               <div class="card-header"><h5>VDR History</h5></div>
+               
                <div class="card-body">
-                  Daftar VDR yang sudah melewati Approval <span class="text-uppercase"><b>{{$level}}</b></span>
+                  <h5>VDR History</h5>
+                  {{-- Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->name}}</span> --}}
                   <hr>
-                  <div class="card bg-success">
+                  <div class="card bg-info">
                      <div class="card-body">
                         <h5>{{count($vdrs)}} VDR</h5>
                      </div>
                   </div>
+                  
+                  <form action="{{ route('vdr.history.filter') }}" method="POST">
+                     @csrf
+                     <div class="row">
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">From</label>
+                              <input type="date" class="form-control" name="start" id="start" value="{{$start}}">
+                           </div>
+                        </div>
+                        <div class="col-md-6">
+                           <div class="form-group">
+                              <label for="">To</label>
+                              <input type="date" class="form-control" name="to" id="to"  value="{{$to}}">
+                           </div>
+                        </div>
+                     </div>
+                     
+                     
+                     <button class="btn btn-primary btn-block" type="submit">Filter</button>
+                  </form>
                   <hr>
                   Klik pada VDR number untuk melihat detail
                   
@@ -97,38 +119,37 @@
                   <b>VDR Validation</b>
                </div> --}}
                <div class="card-body">
+                  @if ($start == null)
+                      <b>Catatan</b> : Sistem menampilkan 800 data terbaru secara default. <br>
+                        Untuk pencarian data yang lebih spesifik, silakan gunakan fitur filter.
+                        <hr>
+                        @else
+                     <b>Info</b>: Menampilkan data VDR dari tanggal {{ formatDate($start) }} – {{ formatDate($to) }} berdasarkan filter yang dipilih.
+                     <hr>
+                  @endif
                   
                   <div class="table-responsive">
-                     <table class="datatables-vdr " id="datatable">
+                     <table class="datatables-vdr" id="">
                         <thead>
                            <tr>
                               {{-- <th rowspan="2" class="text-center">No.</th> --}}
-                              <th rowspan="2">Vessel</th>
-                              <th rowspan="2">VDR Number</th>
-                              {{-- <th rowspan="2">Vessel</th> --}}
-                              {{-- <th rowspan="2">Day</th> --}}
-                              <th rowspan="2">Date</th>
-                              {{-- <th rowspan="2">Crew</th> --}}
+                              <th class="py-2">Vessel</th>
+                              <th>VDR Number</th>
+                              {{-- <th>Vessel</th> --}}
+                              {{-- <th>Day</th> --}}
+                              <th>Date</th>
+                              {{-- <th>Crew</th> --}}
                               {{-- <th>Created</th> --}}
-                              <th rowspan="2" class="text-center">Status</th>
-                              @if ($title == 'Reject')
-                                  <th rowspan="2">Note</th>
-                              @endif
+                              <th class="text-center">Status</th>
+                              {{-- @if ($title == 'Reject')
+                                  <th>Note</th>
+                              @endif --}}
                               {{-- <th colspan="2" class="text-center">High Speed Contract</th>
                               <th colspan="2" class="text-center">Normal Speed Contract</th>
                               <th colspan="2" class="text-center">Slow Speed Contract</th> --}}
-                              <th colspan="2" class="text-center">Total</th>
+                              {{-- <th colspan="" class="text-center">Total</th> --}}
                            </tr>
-                           <tr>
-                              {{-- <th>Speed</th>
-                              <th>Fuel</th>
-                              <th>Speed</th>
-                              <th>Fuel</th>
-                              <th>Speed</th>
-                              <th>Fuel</th> --}}
-                              <th class="text-center">Time</th>
-                              <th class="text-center">Daily Fuel</th>
-                           </tr>
+                           
                         </thead>
                         <tbody>
                            @foreach($vdrs as $vdr)
@@ -163,11 +184,11 @@
                                  @endif --}}
                                  <x-status-stisla.vdr :vdr="$vdr" />
                               </td>
-                              @if ($title == 'Reject')
+                              {{-- @if ($title == 'Reject')
                                  <td>
                                     {{$vdr->reject_desc}}
                                  </td>
-                              @endif
+                              @endif --}}
                               
                               {{-- <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>
                               <td>{{$vdr->operatings->where('heading_id', 1)->first()->contractual_fuel}}</td>
@@ -175,8 +196,8 @@
                               <td>{{$vdr->operatings->where('heading_id', 2)->first()->contractual_fuel}}</td>
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
                               <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
-                              <td class="text-center">{{$vdr->getTotalHours()}}</td>
-                              <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td>
+                              {{-- <td class="text-center">{{$vdr->getTotalHours()}}</td> --}}
+                              {{-- <td class="text-center">{{ceil($vdr->operatings->sum('daily'))}}</td> --}}
                            </tr>
                            @endforeach
                         </tbody>

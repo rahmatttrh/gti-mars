@@ -16,6 +16,7 @@
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{asset('stisla/css/style.css')}}">
   <link rel="stylesheet" href="{{asset('stisla/css/components.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
   <link rel="stylesheet" href="{{asset('stisla/modules/datatables/datatables.min.css')}}">
    <link rel="stylesheet" href="{{asset('stisla/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css')}}">
@@ -174,11 +175,73 @@ table {
 
   <script src="{{asset('stisla/js/scripts.js')}}"></script>
   <script src="{{asset('stisla/js/custom.js')}}"></script>
+  <script>
+      
+   // $(document).ready( function () {
+      
+   //    document.addEventListener('contextmenu', function(event) {
+   //       event.preventDefault();
+   //    });
+   // } );
+
+</script>
+
+   <script>
+      $(document).ready(function () {
+         const togglePassword = document.querySelector('#togglePassword');
+      const password = document.querySelector('#password');
+
+      togglePassword.addEventListener('click', function () {
+
+         const type = password.getAttribute('type') === 'password' 
+                        ? 'text' 
+                        : 'password';
+
+         password.setAttribute('type', type);
+
+         this.textContent = type === 'password' ? 'Show' : 'Hide';
+      });
+
+
+      const togglePassword2 = document.querySelector('#togglePassword2');
+      const password2 = document.querySelector('#password_confirmation');
+
+      togglePassword2.addEventListener('click', function () {
+
+         const type = password2.getAttribute('type') === 'password' 
+                        ? 'text' 
+                        : 'password';
+
+         password2.setAttribute('type', type);
+
+         this.textContent = type === 'password' ? 'Show' : 'Hide';
+      });
+
+
+
+      const togglePassword3 = document.querySelector('#togglePassword3');
+      const password3 = document.querySelector('#password_current');
+
+      togglePassword3.addEventListener('click', function () {
+
+         const type = password3.getAttribute('type') === 'password' 
+                        ? 'text' 
+                        : 'password';
+
+         password3.setAttribute('type', type);
+
+         this.textContent = type === 'password' ? 'Show' : 'Hide';
+      });
+      });
+   </script>
 
 
   <script>
    $(document).ready(function () {
       var body = $('body');
+
+
+      
      
 
     
@@ -256,13 +319,7 @@ table {
        
       });
 
-      // $('.datatables-vdr').dataTable({
-            
-      //       iDisplayLength: -1,
-      //       "order": [
-      //           [0, "desc"]
-      //       ]
-      //   });
+      
 
    
    });

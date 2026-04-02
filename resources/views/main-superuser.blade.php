@@ -127,14 +127,12 @@
                               <th>Release</th>
                               <th>Type</th>
                               <th>Area</th>
-                              {{-- <th></th> --}}
-                              {{-- <th>Date</th> --}}
                               <th class="text-right">Status</th>
                            </tr>
                         </thead>
                         <tbody>
                            @foreach ($allVdrs as $vdr)
-                              <tr >
+                              <tr>
                                  <td>{{$vdr->id}}</td>
                                  <td class="text-truncate" ><a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a></td>
                                  
@@ -157,15 +155,15 @@
                                        @endif
                                     @endif
                                  </td>
-                                 {{-- <td>{{formatDate($sche->date)}}</td> --}}
-                                 {{-- <td>{{formatRibuan(round($totaldaily))}}</td> --}}
-                                 <td class="text-right text-truncate">
+                                <td class="text-right text-truncate">
                                     <x-status-stisla.vdr :vdr="$vdr" />
                                  </td>
                               </tr>
                            @endforeach
                         </tbody>
                      </table>
+
+                     
                      
                      
                   </div>

@@ -43,7 +43,7 @@
       </ul>
       {{-- <h1>OK</h1> --}}
       <div class="tab-content" id="myTabContent">
-         <div class="tab-pane fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
+         <div class="tab-pane p-2 fade {{$schedule->class == 'Cargo' ? 'show active' : ''}}" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="table-responsive">
                @php
                    $bcmNull = false
@@ -74,35 +74,35 @@
                @if ($schedule->status == 0)
                
                   {{-- <h1>OK</h1> --}}
-                  <table class=" table table-sm border" style="" id="">
+                  <table class="" style="" id="">
                      
                      
                         <thead>
                            <tr>
-                              <th>Status</th>
-                              <th>BCM</th>
-                              <th>MTD</th>
-                              <th>Desc</th>
-                              <th>Contract</th>
-                              <th>Qty</th>
-                              <th>Weight</th>
-                              <th>Route</th>
+                              <th class="border">Status</th>
+                              <th class="border">BCM</th>
+                              <th class="border">MTD</th> 
+                              <th class="border">Desc</th>
+                              <th class="border">Contract</th>
+                              <th class="border">Qty</th>
+                              <th class="border">Weight</th>
+                              <th class="border">Route</th>
                            </tr>
                            
                         </thead>
                         <tbody>
                         
                         @foreach ($schedule->items as $item)
-                           <tr class="border">
-                              <td>
+                           <tr >
+                              <td class="border">
                                  @if ($item->cargo_id)
                                     <span class="text-info">Approved</span>
                                     @else
                                     <span>Waiting Validation</span>
                                  @endif
                               </td>
-                              <td>{{$item->cargo->bcm ?? '-'}}</td>
-                              <td style="">
+                              <td class="border">{{$item->cargo->bcm ?? '-'}}</td>
+                              <td class="border" style="">
                                  @if ($item->cargo_id)
                                     {{$item->mtd ?? 'MTD No. Empty'}} 
                                        @else
@@ -110,15 +110,15 @@
                                  @endif
                               
                               </td>
-                              <td class=" text-truncate ">
+                              <td class="border text-truncate ">
                               {{$item->description}} <br>
                               </td>
-                              <td class=" text-truncate">
+                              <td class="border text-truncate">
                                  {{$item->contract ?? 'Contract Empty'}}
                               </td>
-                              <td class=" text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
-                              <td class=" text-center">{{$item->weight}} Ton</td>
-                              <td>{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
+                              <td class="border text-center text-truncate" >{{$item->qty}} {{$item->unit}}</td>
+                              <td class="border text-center">{{$item->weight}} Ton</td>
+                              <td class="border">{{$item->request->origin->code}} - {{$item->request->destination->code}}</td>
                            </tr>
                         @endforeach
                         
@@ -318,7 +318,7 @@
             @endif
             
          </div>
-         <div class="tab-pane fade {{$schedule->class == 'Crew' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+         <div class="tab-pane p-2 fade {{$schedule->class == 'Crew' ? 'show active' : ''}}" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="table-responsive ">
                <table class="" id="table-3">
                <thead>

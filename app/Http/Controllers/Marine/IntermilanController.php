@@ -130,7 +130,7 @@ class IntermilanController extends Controller
          $request->update([
             'status' => 02,
             'schedule_id' => $request->schedule_id,
-            
+
          ]);
          RequestHistory::create([
             'request_id' => $request->id,
@@ -155,9 +155,9 @@ class IntermilanController extends Controller
             'request_id' => $request->id,
             'status_id' => 15,
          ]);
-      } 
+      }
 
-      if ($request->activity_id ==3) {
+      if ($request->activity_id == 3) {
          $request->update([
             'status' => 02,
             'schedule_id' => $schedule->id,
@@ -183,11 +183,55 @@ class IntermilanController extends Controller
 
    public function selectScheduleList(Request $req)
    {
+      // dd($req->requestId);
+      // dd('ok');
+      // dd($req->schedule);
+      $request = ModelsRequest::find($req->requestId);
+      $cargoItem = CargoItem::find($req->cargoItemId);
+      // dd($cargoItem);
+      // $request = ModelsRequest::find($req->requestId);
+      $schedule = Schedule::find($req->schedule);
+      // dd($req->schedule);
+      if (!$schedule->vessel_id) {
+         // dd('ok');
+         return redirect()->back()->with('error', 'Failed! Vessel is empty, choose a vessel first');
+      }
+      // dd( $request);
+
+      $vessel = Vessel::find($schedule->vessel_id);
+      $request->update([
+         'schedule_id' => $schedule->id,
+         'date' => $schedule->date
+      ]);
+
+      $cargoItems = CargoItem::where('request_id', $request->id)->get();
+      foreach ($cargoItems as $item) {
+         $item->update([
+            'schedule_id' => $schedule->id
+         ]);
+      }
+
+
+
+
+      $now = Carbon::now();
+
+
+
+
+
+
+      return redirect()->back()->with('success', 'Request Activity assigned');
+   }
+
+   public function selectScheduleListOld(Request $req)
+   {
       // dd($req->request_id);
       // dd('ok');
       // dd($req->schedule);
       $cargoItem = CargoItem::find($req->cargoItemId);
       // $request = ModelsRequest::find($req->requestId);
+      // dd($cargoItem);
       $schedule = Schedule::find($req->schedule);
       // dd($req->schedule);
       if (!$schedule->vessel_id) {
@@ -302,7 +346,7 @@ class IntermilanController extends Controller
       //    $request->update([
       //       'status' => 02,
       //       'schedule_id' => $request->schedule_id,
-            
+
       //    ]);
       //    RequestHistory::create([
       //       'request_id' => $request->id,

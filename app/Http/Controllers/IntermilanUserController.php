@@ -17,10 +17,9 @@ use Illuminate\Http\Request;
 
 class IntermilanUserController extends Controller
 {
-   public function store(Request $req){
-      $req->validate([
-
-      ]);
+   public function store(Request $req)
+   {
+      $req->validate([]);
 
       $user = User::find(auth()->user()->id);
 
@@ -34,7 +33,7 @@ class IntermilanUserController extends Controller
       $from = Carbon::make($req->from);
       $to = Carbon::make($req->to);
 
-      $code =  'I/U/' . $from->format('d') . $to->format('d')  . $from->format('m') . $from->format('y')  .  '/' . $id ;
+      $code =  'I/U/' . $from->format('d') . $to->format('d')  . $from->format('m') . $from->format('y')  .  '/' . $id;
 
       IntermilanUser::create([
          'code' => $code,
@@ -47,7 +46,8 @@ class IntermilanUserController extends Controller
       return redirect()->back()->with('success', 'Intermilan User successfully added');
    }
 
-   public function detail($id){
+   public function detail($id)
+   {
       $intermilan = IntermilanUser::find(dekripRambo($id));
       $intermilanUsers = IntermilanUser::orderBy('from', 'desc')->get();
       $startDate = new Carbon($intermilan->from);
@@ -55,7 +55,7 @@ class IntermilanUserController extends Controller
       $dates = array();
       $ports = Port::get();
 
-      while ($startDate->lte($endDate)){
+      while ($startDate->lte($endDate)) {
          $dates[] = $startDate->toDateString();
          $startDate->addDay();
       }
@@ -68,14 +68,14 @@ class IntermilanUserController extends Controller
       $requests = ModelsRequest::where('status', '>=', 1)->whereBetween('date', [$startDate, $endDate])->get();
       $users = ModelsRequest::selectRaw('id, date, department_id, code, origin_id, destination_id, func, status,user_id , user_name , description, schedule_id, activity_id')->where('status', '>', 0)->where('activity_id', '!=', 7)->whereBetween('date', [$startDate, $endDate])->get()->groupBy('user_name');
       // dd(count($requests));
-      
 
-      
+
+
 
 
       $today = Carbon::now();
 
-     
+
 
       // $month = $today->format('m');
       $month = $today->format('m');
@@ -180,9 +180,9 @@ class IntermilanUserController extends Controller
       $startDate = new Carbon($lastIntermilan->from);
       $endDate = new Carbon($lastIntermilan->to);
       $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->whereBetween('date', [$startDate, $endDate])->orderBy('parent_id', 'asc')->get();
-      
 
-      return view('pages-stisla.dsp.home-user', [
+
+      return view('pages-stisla.user.intermilan.detail', [
          'intermilans' => $intermilanUsers,
          'lastIntermilan' => $lastIntermilan,
          'startDate' => $startDate,
@@ -207,14 +207,15 @@ class IntermilanUserController extends Controller
       ])->with('i');
    }
 
-   public function storeRequest(Request $req){
+   public function storeRequest(Request $req)
+   {
       $intermilan = IntermilanUser::find($req->intermilanId);
 
-     
+
       $user = User::find(auth()->user()->id);
       $port = Port::where('email', $user->email)->first();
-      $employee = Employee::where('email',$port->email)->first();
-      
+      $employee = Employee::where('email', $port->email)->first();
+
       $now = Carbon::today();
       $request = ModelsRequest::where('user_id', $user->id)->orderBy("created_at", "desc")->first();
       // $employee = Employee::where('email', auth()->user()->email)->first();
@@ -279,42 +280,43 @@ class IntermilanUserController extends Controller
       return redirect()->back()->with('success', 'Request added');
    }
 
-   public function releaseRequest($id){
+   public function releaseRequest($id)
+   {
       $request = ModelsRequest::find(dekripRambo($id));
 
       $request->update([
          'status' => 1
       ]);
 
-      foreach($request->cargoItems as $item){
+      foreach ($request->cargoItems as $item) {
          $item->update([
             'status' => 1
          ]);
       }
 
       return redirect()->back()->with('success', 'Request successfully released');
-
    }
 
-   public function cancelRequest($id){
+   public function cancelRequest($id)
+   {
       $request = ModelsRequest::find(dekripRambo($id));
 
       $request->update([
          'status' => 0
       ]);
 
-      foreach($request->cargoItems as $item){
+      foreach ($request->cargoItems as $item) {
          $item->update([
             'status' => 0
          ]);
       }
 
       return redirect()->back()->with('success', 'Request successfully canceled');
-
    }
 
 
-   public function storeCargo(Request $req){
+   public function storeCargo(Request $req)
+   {
       // $intermilan = Intermilan::find($req->intermilan);
 
       $request = ModelsRequest::find($req->requestId);
@@ -339,15 +341,15 @@ class IntermilanUserController extends Controller
 
       if ($port->region == 'SBU') {
          $mtd = 'S' . $mtd;
-      } elseif($port->region == 'CBU'){
+      } elseif ($port->region == 'CBU') {
          $mtd = 'C' . $mtd;
-      } elseif($port->region == 'NBU'){
+      } elseif ($port->region == 'NBU') {
          $mtd = 'N' . $mtd;
       } else {
          $mtd = '0' . $mtd;
       }
 
-      
+
 
       // dd($mtd);
       // $user = User::find()
@@ -377,12 +379,13 @@ class IntermilanUserController extends Controller
       ]);
 
 
-      
+
 
       return redirect()->back()->with('success', 'Cargo Item successfully added');
    }
 
-   public function updateCargo(Request $req){
+   public function updateCargo(Request $req)
+   {
       // $intermilan = Intermilan::find($req->intermilan);
 
       $request = ModelsRequest::find($req->requestId);
@@ -390,7 +393,7 @@ class IntermilanUserController extends Controller
 
       $user = User::find($request->user_id);
       $port = Port::where('email', $user->email)->first();
-      
+
       $cargo->update([
          'contract' => $req->contract,
          'description' => $req->desc,
@@ -402,7 +405,7 @@ class IntermilanUserController extends Controller
          'remark' => $req->remark,
       ]);
 
-      
+
 
       $request->update([
          'total_size' => $request->cargoItems->sum('size'),
@@ -410,7 +413,7 @@ class IntermilanUserController extends Controller
       ]);
 
 
-      
+
 
       return redirect()->back()->with('success', 'Cargo Item successfully updated');
    }

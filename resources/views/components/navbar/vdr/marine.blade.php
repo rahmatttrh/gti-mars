@@ -21,7 +21,7 @@
         </li>
         <li>
           <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="MARS" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -53,6 +53,8 @@
     </form>
    
    <ul class="navbar-nav navbar-right ml-auto">
+      @if (auth()->user()->username == 'pet' || auth()->user()->username == 'guest01')
+      @else
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($notifvdrs) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
          <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
             <div class="dropdown-header">NOTIFICATIONS
@@ -90,6 +92,7 @@
             </div>
          </div>
       </li>
+      @endif
       
      <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
        <img alt="image" src="{{asset('stisla/img/avatar/avatar-1.png')}}" class="rounded-circle mr-1">

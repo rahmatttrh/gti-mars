@@ -29,20 +29,22 @@ input {
       <div class="row">
          <div class="col-md-12">
             
-            <div class="card shadow">
+            <div class="card">
                
               
                <div class="card-body">
                   
-                  <a href="" class="btn btn-sm btn-primary mb-2">Submit</a>
+                  <a href="" class="btn btn-sm btn-primary mb-2 mr-1">Submit</a>
                   <a class="btn btn-sm btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
                   <div class="d-flex justify-content-between">
-                     <div class="">
+                     <div class="mb-2">
                         <span>{{$intermilan->code}} </span> <br>
-                        <span>{{$intermilan->title}}</span>
-                        <h5 class="mb--2">
+                        <span style="font-size: 24px; font-weight:700" class="mb--2 text-uppercase">
                         
-                           INTERMILAN {{formatDate($start)}} - {{formatDate($end)}}</h5>
+                           INTERMILAN {{$intermilan->title}} 
+                        </span> <br>
+                        <span class="mb-2">{{formatDate($start)}} - {{formatDate($end)}}</span>
+                        
                         
                      </div>
                      
@@ -282,7 +284,7 @@ input {
                                                          @csrf
                                                          @method('PUT')
                                                          <input type="text" name="requestId" id="requestId" value="{{$item->id}}" hidden>
-                                                         <select style="width: 140px" name="schedule" id="schedule" required>
+                                                         <select style="" name="schedule" id="schedule" required>
                                                             <option value="" selected disabled>Select Schedule {{$item->schedule_id}}</option>
                                                             {{-- <option value=""><a href="/">OK</a></option> --}}
                                                             @foreach ($schedules as $sche)
@@ -300,7 +302,7 @@ input {
                                                          @endif
                                                          {{-- <button class="btn btn-sm border btn-info"> --}}
                                                             {{-- <i class="fa fa-save"></i> --}}
-                                                            Assign
+                                                            Assign 
                                                          </button>
                                                       </form>
                                                       @else
@@ -323,6 +325,8 @@ input {
                                                             @else
                                                             <button type="submit" class="btn btn-sm border btn-info">Assign</button>
                                                          @endif
+
+                                                         
                                                          
                                                       </form>
                                                    @endif

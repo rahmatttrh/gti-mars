@@ -16,6 +16,9 @@ class UserController extends Controller
    public function index()
    {
       $users = Employee::where('role', '!=', null)->orderBy('created_at', 'desc')->get();
+      // dd(count($users));
+      $users = User::get();
+      // dd(count($users));
       $usersTotal = User::get();
       $ports = Port::get();
       return view('pages-stisla.master-data.user', [
@@ -37,10 +40,11 @@ class UserController extends Controller
       ])->with('i');
    }
 
-   public function store(Request $req){
+   public function store(Request $req)
+   {
 
       // dd($req->role);
-      
+
 
       $req->validate([
          'name' => 'required',
@@ -67,21 +71,22 @@ class UserController extends Controller
 
       $employee = Employee::create([
          'name' => $req->name,
-         
+
          'username' => $req->username,
          'email' => $req->email,
          // 'no_telp' => $req->no_telp,
          'role' => $req->level,
          'area' => $area,
          'func' => $func
-         
+
       ]);
 
       $user = User::create([
          'name' => $employee->name,
          'email' => $employee->email,
          'username' => $employee->username,
-         'password' => Hash::make('oses@2025'),
+         // 'password' => Hash::make('oses@2025'),
+         'password' => Hash::make('mars@' . $req->username),
       ]);
 
       $user->assignRole($req->level);
@@ -97,7 +102,7 @@ class UserController extends Controller
       //    $user->assignRole('admin-dsp');
       // }
 
-      
+
 
       return redirect()->back()->with('success', 'User added.');
    }
@@ -130,7 +135,8 @@ class UserController extends Controller
    //    return redirect()->back()->with('success', 'User added.');
    // }
 
-   public function edit($id){
+   public function edit($id)
+   {
       $dekripId = dekripRambo($id);
       $user = Employee::find($dekripId);
       // $ports = Port::get();
@@ -140,7 +146,7 @@ class UserController extends Controller
       // $port = Port::find($employee->port_id);
       // if ($employee) {
       //    $port = Port::find($employee->port_id);
-         
+
       // } else {
       //    $port = Port::where('email', $user->email)->first();
       // }
@@ -153,7 +159,8 @@ class UserController extends Controller
       ])->with('i');
    }
 
-   public function update(Request $req){
+   public function update(Request $req)
+   {
       $employee = Employee::find($req->user);
       $user = User::where('email', $employee->email)->first();
       // $employee = Employee::where('email', $user->email)->first();
@@ -195,7 +202,8 @@ class UserController extends Controller
       return redirect()->route('user')->with('success', 'User data updated');
    }
 
-   public function delete($id){
+   public function delete($id)
+   {
       $dekripId = dekripRambo($id);
       $employee = Employee::find($dekripId);
       $user = User::where('email', $employee->email)->first();
@@ -205,7 +213,6 @@ class UserController extends Controller
       $employee->delete();
 
       return redirect()->back()->with('success', 'User deleted');
-
    }
 
 

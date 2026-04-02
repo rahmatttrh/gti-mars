@@ -86,7 +86,7 @@
                </div> --}}
                <div class="card-body">
                   <div class="d-flex justify-content-between">
-                     <h3><span class="text-uppercase">{{$data}}</span> Vessel List ({{count($vessels)}}) </h3>
+                     <b><span class="text-uppercase">{{$data}}</span> Vessel List ({{count($vessels)}}) </b>
                      @if ($data == 'onhire')
                         <a href="{{route('vessel.offhire.list')}}"> Off Hire Vessel</a>
                          @else
@@ -103,9 +103,10 @@
                            {{-- <th class="text-center">No.</th> --}}
                            <th>Name</th>
                            <th>Username</th>
-                           <th>Email</th>
+                           {{-- <th>Email</th> --}}
                            <th>Type</th>
                            <th>PO</th>
+                           <th>Password</th>
                            <th>Status</th>
                         </tr>
                      </thead>
@@ -115,7 +116,7 @@
                            {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
                            <td>{{$vessel->username }}</td>
-                           <td>{{$vessel->email}}</td>
+                           {{-- <td>{{$vessel->email}}</td> --}}
                            <td>{{$vessel->type}}</td>
                            <td>
                               {{$vessel->contract_type}}
@@ -126,6 +127,14 @@
 
                               @if ($vessel->func != null)
                                  ({{$vessel->func}})
+                              @endif
+                           </td>
+
+                           <td>
+                              @if ($vessel->password_default == null)
+                                 Default
+                                  @else
+                                  Changed
                               @endif
                            </td>
                            <td>

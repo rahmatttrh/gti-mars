@@ -14,8 +14,8 @@
           
         </li>
         <li>
-          <a href="https://mars-phe.enc.co.id/mars/index.php" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+          <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
+             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="MARS" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -26,7 +26,7 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-             <li class="nav-item active text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+             <li class="nav-item active text-dark"><a href="https://app.mars-phe.com" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
              
              <li class="nav-item text-dark"><a href="{{route('dsp.marine')}}" class="nav-link text-dark">DSP</a></li>
              

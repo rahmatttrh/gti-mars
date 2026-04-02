@@ -572,6 +572,19 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $offices = Office::get();
 
+
+
+         // $vdrPioners = Vdr::where('vessel_id', 38)->where('status', 1)->where('func', '!=', null)->get();
+         // // dd(count($vdrPioners));
+         // foreach ($vdrPioners as $v) {
+         //    $v->update([
+         //       'area' => null,
+         //       'func' => null,
+         //    ]);
+         // }
+         // dd(count($vdrPioners));
+
+
          $to = Carbon::now();
          // $vdrTests = Vdr::where('area', 'SBU')->where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
 
@@ -1855,6 +1868,28 @@ class HomeController extends Controller
 
 
             ])->with('i');
+         } elseif (auth()->user()->username == 'guest01') {
+            $to = Carbon::now();
+            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = Vdr::where('area', null)->where('status', 2)->orderBy('updated_at', 'desc')->get();
+
+            // dd($vdrValidations);
+            $vdrs = Vdr::where('status', '>=', 2)->whereBetween('date', ['2025-09-16', $to])->get();
+            $intermilans = Intermilan::orderBy('from', 'desc')->paginate(10);
+            $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(30);
+            $vessels = Vessel::get();
+
+            return view('main-marine', [
+               'allVdrs' => $allVdrs,
+               'vdrs' => $vdrs,
+               'vdrValidations' => $vdrValidations,
+               'intermilans' => $intermilans,
+               'dailyReports' => $dailyReports,
+               'vessels' => $vessels
+
+
+
+            ])->with('i');
          } elseif (auth()->user()->username == 'lutfiaryanto') {
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
@@ -2103,6 +2138,12 @@ class HomeController extends Controller
             'requests' => $requests,
             'nowSchedule' => $nowSchedule,
             'docs' => $docs
+         ])->with('i');
+      } else if (auth()->user()->hasRole('department')) {
+         // dd('ok');
+         $intermilanUsers = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(8);
+         return view('main-department', [
+            'intermilanUsers' => $intermilanUsers
          ])->with('i');
       } else {
          // dd('ok');
@@ -3095,7 +3136,7 @@ class HomeController extends Controller
 
       $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
       $ports = Port::get();
-      $intermilanUsers = IntermilanUser::orderBy('from', 'desc')->get();
+      $intermilanUsers = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('from', 'desc')->get();
 
       $lastIntermilan = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('from', 'desc')->first();
       // dd($lastIntermilan);

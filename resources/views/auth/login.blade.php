@@ -7,6 +7,7 @@
     <meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
     <link rel="icon" href="{{ asset('img/flaticon/neptune.png') }}" type="image/x-icon" />
     <script src="{{ asset('js/plugin/webfont/webfont.min.js') }}"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script>
         WebFont.load({
             google: {
@@ -53,7 +54,7 @@
     </style>
 </head>
 
-<body class="login">
+<body class="login" style="background-color: #eeeef0">
 
 
     <div class="container">
@@ -63,29 +64,28 @@
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-md-7 d-none d-lg-block "
-                                style="background-image: url({{ asset('img/bg/phe-offshore.jpg') }});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
+                                style="background-image: url({{ asset('img/bg/bg-vdr.png') }});background-repeat: no-repeat;background-size: cover;border-radius: 5px;">
                                 {{-- <img width="120px" class="mt-3" src="{{ asset('img/logo/phe-oses.png') }}"
                                     alt=""> --}}
                             </div>
                             <div class="col-md-5">
                                 <div class="p-5">
                                     <div class="">
+                                        <img src="{{asset('img/flaticon/mars-logo.png')}}" style="width: 180px" class="mr-2" alt="">
+                                        
 
-                                        <h3 class="font-weight-bold">
-                                            {{-- <img src="{{asset('img/flaticon/neptune.png')}}" style="width: 60px" class="mr-2" alt=""> --}}
-                                            <i>MAR<span class="text-primary">S</span></i>
-                                        </h3>
-
-                                        <span>Marine Advanced Reporting System </span>
+                                        {{-- <span>Marine Advanced Reporting System </span> --}}
 
                                     </div>
                                     <hr>
+                                    <span>Welcome back!</span> <br>
+                                    <span class="">Sign In with your account</span>
                                     <form class="user" method="POST" action="{{ route('login') }}">
                                         @csrf
 
 
 
-                                        <div class="form-group form-group-default">
+                                        <div class="form-group mt-2 form-group-default">
                                             <label for="username"
                                                 class="placeholder"><small>Username</small></label>
                                             <input id="username" name="username" type="text"
@@ -97,7 +97,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="form-group form-group-default">
+                                        {{-- <div class="form-group form-group-default">
                                             <label for="password" class="placeholder"><small>Password</small></label>
                                             <div class="position-relative">
                                                 <input id="password" name="password" type="password"
@@ -113,7 +113,23 @@
                                                     <strong>Fail! {{ $message }}</strong>
                                                 </span>
                                             @enderror
-                                        </div>
+                                        </div> --}}
+
+                                        <div class="form-group form-group-default">
+
+                                            <label>Password *</label>
+                                            <div class="input-group">
+                                               <input id="password" name="password"  type="password" required class="form-control @error('password') is-invalid @enderror">
+                                               <button class="btn btn-outline-secondary" 
+                                                     type="button" 
+                                                     id="togglePassword">
+                                                     <i class="far fa-eye-slash"></i>
+                                               </button>
+                                            </div>
+                                            @error('password')
+                                               <small class="text-danger"><i>{{ $message }}</i></small>
+                                            @enderror
+                                         </div>
 
                                         <button type="submit" class="btn bgb-1 btn-block text-white">Login</button>
                                         {{-- <br>
@@ -137,6 +153,30 @@
     <script src="{{ asset('js/core/popper.min.js') }}"></script>
     <script src="{{ asset('js/core/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/ready.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+           var body = $('body');
+          
+           
+           const togglePassword = document.querySelector('#togglePassword');
+           const password = document.querySelector('#password');
+     
+           togglePassword.addEventListener('click', function () {
+     
+              const type = password.getAttribute('type') === 'password' 
+                             ? 'text' 
+                             : 'password';
+     
+              password.setAttribute('type', type);
+     
+              this.innerHTML = type === 'password' ? '<i class="far fa-eye-slash"></i>' : '<i class="far fa-eye"></i>';
+           });
+     
+        
+        });
+     
+     </script>
 </body>
 
 </html>

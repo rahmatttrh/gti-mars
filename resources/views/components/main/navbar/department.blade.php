@@ -6,7 +6,7 @@
 </style>
 <nav class="navbar navbar-expand-lg main-navbar bg-white text-dark">
    <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -14,6 +14,7 @@
          <i class="fas fa-ellipsis-v"></i>
       </a>
       <ul class="navbar-nav ">
+         <li class="nav-item text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('dsp.user', [enkripRambo(auth()->user()->getMonth()), enkripRambo(auth()->user()->getYear())])}}" class="nav-link text-dark">DSP</a></li>
          <li class="nav-item text-dark"><a href="{{route('forbidden')}}" class="nav-link text-dark">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
@@ -56,7 +57,7 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="">
+   <div class="px-3">
       <ul class="navbar-nav">
          
          <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">

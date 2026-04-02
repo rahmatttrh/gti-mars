@@ -100,20 +100,21 @@ class EmailController extends Controller
       //    Mail::to([
       //       "rahmattrust@gmail.com",
       //       // "mohamad.wahyudi@pertamina.com",
-      //       // "develop@ekanuri.com"
+      //       // "system.ekanuri@gmail.com"
       //    ])->send(new AssignVdrEmail($data));
       // } else {
       //    Mail::to([
       //       "laryanto@pertamina.com",
       //       // "mohamad.wahyudi@pertamina.com",
-      //       // "develop@ekanuri.com"
+      //       // "system.ekanuri@gmail.com"
       //    ])->send(new AssignVdrEmail($data));
       // }
 
       Mail::to([
          "laryanto@pertamina.com",
          // "mohamad.wahyudi@pertamina.com",
-         "develop@ekanuri.com"
+         "system.ekanuri@gmail.com",
+         // "rahmattrust@gmail.com"
       ])->send(new AssignVdrEmail($data));
 
 
@@ -493,7 +494,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -503,7 +504,7 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
       // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -560,7 +561,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -570,7 +571,7 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       if (count($vdrWaitingPets) > 0) {
          Mail::to([
-            "develop@ekanuri.com",
+            "system.ekanuri@gmail.com",
             // "rahmattrust@gmail.com",
             "mk.yusuf.hibatullah@pertamina.com",
             "mk.lutfa.jasworo@pertamina.com",
@@ -583,7 +584,7 @@ class EmailController extends Controller
          ])->send(new ApprovalPetMorning($data));
       }
 
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -638,7 +639,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -646,14 +647,14 @@ class EmailController extends Controller
 
       // TESTING
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
-      if (count($vdrWaitingPets) > 0) {
-         Mail::to([
-            "develop@ekanuri.com",
+      // if (count($vdrWaitingPets) > 0) {
+      //    Mail::to([
+      //       "system.ekanuri@gmail.com",
 
-         ])->send(new ApprovalPetMorning($data));
-      }
+      //    ])->send(new ApprovalPetMorning($data));
+      // }
 
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -709,7 +710,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -720,7 +721,7 @@ class EmailController extends Controller
 
       if (count($vdrWaitings) > 0) {
          Mail::to([
-            "develop@ekanuri.com",
+            "system.ekanuri@gmail.com",
             // "rahmattrust@gmail.com",
             "mk.umar.agam@pertamina.com",
             "mk.rezky.hardanto@pertamina.com",
@@ -732,7 +733,7 @@ class EmailController extends Controller
          ])->send(new ApprovalPetMorning($data));
       }
 
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -801,7 +802,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -814,7 +815,7 @@ class EmailController extends Controller
       // ])->send(new ApprovalPetMorning($data));
 
 
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -823,7 +824,7 @@ class EmailController extends Controller
       // if ($loc == 'SBU') {
       //    Mail::to([
       //       // "pheoses.sbu.operator@pertamina.com",
-      //       "develop@ekanuri.com"
+      //       "system.ekanuri@gmail.com"
       //    ])->send(new ApprovalPetMorning($data));
       // }
 
@@ -831,7 +832,8 @@ class EmailController extends Controller
          if ($loc == 'SBU') {
             Mail::to([
                "pheoses.sbu.operator@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'CBU') {
             Mail::to([
@@ -839,7 +841,7 @@ class EmailController extends Controller
                "ms.jemmy.pentury@pertamina.com",
                "ms.wahyu.nugraha@pertamina.com",
                "ms.mochamad.syawali@pertamina.com",
-               "develop@ekanuri.com",
+               "system.ekanuri@gmail.com",
                // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'NBU') {
@@ -851,7 +853,8 @@ class EmailController extends Controller
                "ms.chlorid.latifoso@pertamina.com",
                "ms.aji.catur@pertamina.com",
                "mk.ridwan.alviyanto@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'Cinta-T') {
             Mail::to([
@@ -859,7 +862,8 @@ class EmailController extends Controller
                "mk.supriadi2@pertamina.com",
                "mk.khamsani@pertamina.com",
                "mk.ali.nurdin1@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'Widuri-T') {
             Mail::to([
@@ -867,7 +871,8 @@ class EmailController extends Controller
                "mk.budi.sulistia@pertamina.com",
                "mk.gunawan.wibisono1@pertamina.com",
                "mk.wianto@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          }
       }
@@ -924,7 +929,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -934,14 +939,15 @@ class EmailController extends Controller
       // Mail::to(["it.medan@grahasegara.com", "rahmattrust@gmail.com"])->send(new AssignVdrEmail($data));
       if (count($vdrWaitings) > 0) {
          Mail::to([
-            "develop@ekanuri.com",
+            "system.ekanuri@gmail.com",
             // "rahmattrust@gmail.com",
             "laryanto@pertamina.com",
+            // "rahmattrust@gmail.com"
 
          ])->send(new ApprovalPetMorning($data));
       }
 
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -1008,7 +1014,7 @@ class EmailController extends Controller
 
       // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-      // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+      // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
       // foreach($petEmails as $email){
       //    Mail::to($email)->send(new AssignVdrEmail($data));
@@ -1020,7 +1026,7 @@ class EmailController extends Controller
       //    "rahmattrust@gmail.com",
 
       // ])->send(new ApprovalPetMorning($data));
-      // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+      // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
       // END OF TESTING
 
 
@@ -1032,32 +1038,38 @@ class EmailController extends Controller
             Mail::to([
                "erry.brillyanto@pertamina.com",
                "oka.prasetya@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'CBU') {
             Mail::to([
                "suroso.williem@pertamina.com",
                "janudin@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'NBU') {
             Mail::to([
                "hendra.hadi@pertamina.com",
                "sindhu.hadi@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'Cinta-T') {
             Mail::to([
                "norman.sasongko@pertamina.com",
                "erin.busrian@pertamina.com",
-               "develop@ekanuri.com"
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'Widuri-T') {
             Mail::to([
                "muhamad.mujiburichman@pertamina.com",
                "rezza.suhanda@pertamina.com",
 
-               "develop@ekanuri.com"
+
+               "system.ekanuri@gmail.com",
+               // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
          }
       }
@@ -1148,16 +1160,16 @@ class EmailController extends Controller
 
    //    // $petEmails = ['mk.yusuf.hibatullah@pertamina.com', 'mk.lutfa.jasworo@pertamina.com', 'mk.luthfi.alhafiizh@pertamina.com', 'mk.setyo.wiyono@pertamina.com', 'mk.bryan.jhon@pertamina.com', 'mk.raditya.r@pertamina.com'];
 
-   //    // $petEmails = ["rahmattrust@gmail.com", "develop@ekanuri.com"];
+   //    // $petEmails = ["rahmattrust@gmail.com", "system.ekanuri@gmail.com"];
 
    //    // foreach($petEmails as $email){
    //    //    Mail::to($email)->send(new AssignVdrEmail($data));
    //    // }
 
    //    // TESTING
-   //    Mail::to(["rahmattrust@gmail.com", "develop@ekanuri.com"])->send(new AssignVdrEmail($data));
+   //    Mail::to(["rahmattrust@gmail.com", "system.ekanuri@gmail.com"])->send(new AssignVdrEmail($data));
    //    // Mail::to("rahmattrust@gmail.com")->send(new AssignVdrEmail($data));
-   //    // Mail::to("develop@ekanuri.com")->send(new AssignVdrEmail($data));
+   //    // Mail::to("system.ekanuri@gmail.com")->send(new AssignVdrEmail($data));
    //    // END OF TESTING
 
 

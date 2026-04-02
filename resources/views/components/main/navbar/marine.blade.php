@@ -22,7 +22,7 @@
         </li>
         <li>
           <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="MARS" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -78,7 +78,7 @@
    
    <ul class="navbar-nav navbar-right ml-auto">
       
-      @if (auth()->user()->username == 'pet')
+      @if (auth()->user()->username == 'pet' || auth()->user()->username == 'guest01')
       @else
       <li class="dropdown dropdown-list-toggle"><a href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{count($notifrequests) > 0  ? 'beep' : ''}} {{count($notifvdrs) > 0  ? 'beep' : ''}}"><i class="far fa-bell text-primary"></i></a>
          <div class="dropdown-menu shadow dropdown-list dropdown-menu-right">
@@ -249,7 +249,7 @@
                <span class="mx-3">Daily Activity</span>
             </a>
          </li> --}}
-         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'superuser')
+         @if (auth()->user()->username == 'superadmin' || auth()->user()->username == 'admin')
          <li class="nav-item nav-item-b dropdown {{ (request()->is('master/data/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown"  class="nav-link has-dropdown {{ (request()->is('master/data/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('master/data/*'))

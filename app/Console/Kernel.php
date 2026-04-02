@@ -179,11 +179,11 @@ class Kernel extends ConsoleKernel
 
 
         // TEST
-        $schedule->call(function () {
-            $emailController = new EmailController();
-            $emailController->summaryVdrTest('08:00');
-            // Log::info('test marine 21:00');
-        })->dailyAt('14:36');
+        // $schedule->call(function () {
+        //     $emailController = new EmailController();
+        //     $emailController->summaryVdrTest('08:00');
+        //     // Log::info('test marine 21:00');
+        // })->dailyAt('14:36');
 
         // $schedule->call(function () {
         //     $emailController = new EmailController();

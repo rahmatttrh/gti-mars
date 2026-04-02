@@ -966,7 +966,12 @@
                                           <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
                                        </td>
                                           <td class="text-info bg-y">
-                                             O<input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             @if (auth()->user()->hasRole('marine'))
+                                             <span class="text-dark">{{formatTime($activity->start)}}</span>
+                                                 @else
+                                                 <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                             @endif
+                                             
                                           </td>
                                           <td class="text-dark bg-y">
                                              {{-- {{$activity->finish === "00:00:00"}} --}}
@@ -1372,7 +1377,11 @@
                                  <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$cargo->id}}">
                                  <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="cargo" value="{{$cargo->id}}">
                                  <!-- </td> -->
-                                 <td> {{$cargo->heading->description}} </td>
+                                 <td> {{$cargo->heading->description}}
+                                    @if (auth()->user()->hasRole('superuser'))
+                                        {{$cargo->id}}
+                                    @endif   
+                                 </td>
                                  <td class="text-center align-middle bg-y" >
                                        <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
                                  </td>

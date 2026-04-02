@@ -21,7 +21,7 @@
         </li>
         <li>
           <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -32,7 +32,7 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-            <li class="nav-item text-dark"><a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
+            <li class="nav-item text-dark"><a href="/" class="nav-link bgb-1 rounded px-2 py-1" style="background-color: #1f4481">HOME</a></li>
             <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark">DSP</a></li>
             <li class="nav-item text-dark"><a href="{{route('vdr.create')}}" class="nav-link text-dark">VDR</a></li>
             <li class="nav-item text-dark"><a href="#" class="nav-link text-dark">PROACT</a></li>
@@ -122,7 +122,17 @@
             </a>
          </li>
 
-         <li class="nav-item nav-item-b pr-3 {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.export')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/report/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class=" mx-3">Export VDR</span>
+            </a>
+         </li>
+
+         {{-- <li class="nav-item nav-item-b pr-3 {{ (request()->is('master/data/vessel/crew')) ? 'active' : '' }}">
             <a href="{{route('vessel.crew')}}" class="nav-link {{ (request()->is('master/data/vessel/crew')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('master/data/vessel/crew'))
                <i class="fas fa-fire ml-3"></i>
@@ -130,7 +140,7 @@
                
                <span class=" mx-3">Crew List</span>
             </a>
-         </li>
+         </li> --}}
          {{-- <li class="nav-item pr-3 {{ (request()->is('v/newsfeed')) ? 'active' : '' }}">
             <a href="{{route('vessel.newsfeed')}}" class="nav-link {{ (request()->is('v/newsfeed')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('v/newsfeed'))

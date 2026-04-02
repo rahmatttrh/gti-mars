@@ -37,7 +37,8 @@
                      erin.busrian@pertamina.com
                      @elseif(auth()->user()->getArea() == 'Widuri-T' )
                      muhamad.mujiburichman@pertamina.com <br>
-                     asril1@pertamina.com
+                     rezza.suhanda@pertamina.com
+                     {{-- asril1@pertamina.com --}}
                      @endif
                      
 

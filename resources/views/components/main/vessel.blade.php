@@ -17,6 +17,20 @@
    
 </style>
 
+
+{{-- @if ($vessel->password_default == null)
+<div class="card">
+   <div class="card-body">
+      <b> ⚠️ PENTING</b>
+      <hr>
+      <b>🔒 Keamanan Akun – Aksi Ubah Password Diperlukan</b> <br>
+      Semua pengguna sistem diwajibkan <b>mengubah password</b> secepatnya demi perlindungan data dan akses sistem. <br>
+      Mohon pastikan password baru memenuhi kebijakan keamanan yang berlaku. <br> <br>
+
+      <a href="{{route('pass.reset')}}" class="btn btn-sm btn-primary">Ubah Password Disini</a>
+   </div>
+</div>
+@endif --}}
       
       <div class="row">
          {{-- <h1>ok</h1> --}}
@@ -78,10 +92,11 @@
                            </tr>
                            <tr>
                               {{-- <th class="text-center">No</th> --}}
-                              <th>ID</th>
+                              <th>VDR ID</th>
+                              <th>VDR Date</th>
                               {{-- <th>Date</th>
                               <th>Crew</th> --}}
-                              <th style="width: 120px">Status</th>
+                              <th style="width: 120px">VDR Status</th>
                               {{-- <th></th> --}}
                            </tr>
                         </thead>
@@ -111,6 +126,7 @@
                                  @endif
                                  {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
                               </td>
+                              <td>{{formatDate($myvdr->date)}}</td>
                               {{-- <td>{{formatDate($myvdr->date)}}</td>
                               <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
                               <td class="text-truncate">

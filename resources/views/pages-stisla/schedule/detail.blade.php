@@ -30,7 +30,7 @@
             @endif --}}
             
 
-            <div class="card shadow- border">
+            <div class="card ">
                {{-- <div class="card-header">
                   <x-status-stisla.schedule :schedule="$schedule" :lastreport="$lastreport" />
                </div> --}}
