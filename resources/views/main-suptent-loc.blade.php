@@ -8,15 +8,44 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
-               <div class="card bg-primary shadow">
+               {{-- <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
                      Welcome back, <br> <b> {{auth()->user()->name}}</b>
                      <hr>
                      Superintendent <h4>{{auth()->user()->getArea()}}</h4>
-                     {{-- <hr>
-                     Location Company Representative/Suptent Area --}}
+                     
                   </div>
+               </div> --}}
+
+               <div class="card welcome-card shadow">
+
+                  <div class="card-body position-relative">
+
+                     <!-- ICON BESAR -->
+                     <i class="fas fa-user welcome-icon"></i>
+
+                     <!-- HEADER -->
+                     <div class="mb-2">
+                           <small class="text-light">Welcome back 👋</small>
+                           <h4 class="mb-0 fw-bold">
+                              {{ auth()->user()->name }}
+                           </h4>
+                     </div>
+
+                     <!-- DIVIDER -->
+                     <div class="divider"></div>
+
+                     <!-- PIC -->
+                     <div>
+                           {{-- <small class="text-light">PIC of Fleet Control</small> --}}
+                           <div class="pic-list mt-2">
+                              
+                           </div>
+                     </div>
+
+                  </div>
+
                </div>
 
                <div class="card">

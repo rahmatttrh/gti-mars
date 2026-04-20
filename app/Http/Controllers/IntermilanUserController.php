@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CargoItem;
 use App\Models\Department;
 use App\Models\Employee;
+use App\Models\Intermilan;
+use App\Models\IntermilanTimeline;
 use App\Models\IntermilanUser;
 use App\Models\Port;
 use App\Models\Request as ModelsRequest;
@@ -207,6 +209,237 @@ class IntermilanUserController extends Controller
       ])->with('i');
    }
 
+
+   public function detailDate($date, $month, $year)
+   {
+
+      // dd('ok');
+      $intermilanUsers = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(8);
+      $intermilans = Intermilan::orderBy('created_at', 'desc')->paginate(2);
+
+      $month = dekripRambo($month);
+      $year = dekripRambo($year);
+      $thisDate = dekripRambo($date);
+
+      // dd(dekripRambo($date));
+
+      // dd($month);
+
+      $yearMonth = $year . '-' . $month;
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      // dd($dates);
+      foreach ($dates as $date) {
+         // dd($date->format('Y-m-d'));
+
+         $requests = ModelsRequest::get();
+         foreach ($requests as $req) {
+            if ($req->date == $date->format('Y-m-d')) {
+               // dd('Ada');
+            }
+         }
+      }
+
+      $allRequests = ModelsRequest::get();
+      $cargoItems = CargoItem::where('user_id', auth()->user()->id)->get();
+      $ports = Port::get();
+      $requests = ModelsRequest::where('date', $thisDate)->where('user_id', auth()->user()->id)->get();
+      // dd(auth()->user()->id);
+      // dd($thisDate);
+
+      $allUserRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      $userRequestIds = [];
+      foreach ($allUserRequests as $req) {
+         $userRequestIds[] = $req->id;
+      }
+      // dd($userRequests);
+      $timelines = IntermilanTimeline::whereIn('request_id', $userRequestIds)->orderBy('created_at', 'desc')->paginate(20);
+
+      return view('main-department', [
+         'intermilanUsers' => $intermilanUsers,
+         'intermilans' => $intermilans,
+         'timelines' => $timelines,
+         'monthName' => getmonthName($month),
+         'year' => $year,
+         'dates' => $dates,
+         'month' => $month,
+         'allRequests' => $allRequests,
+         'cargoItems' => $cargoItems,
+         'ports' => $ports,
+         'date' => Carbon::create($thisDate),
+         'userRequests' => $requests
+      ]);
+   }
+
+   public function detailMonth($month, $year)
+   {
+      $today = Carbon::now();
+
+      // $month = $today->format('m');
+      $month = dekripRambo($month);
+      $year = dekripRambo($year);
+      // dd($year);
+
+      $vessels = Vessel::get();
+      $vessel3 = Vessel::paginate('3');
+      // dd($today->format('m'));
+
+      if ($month == 1) {
+         $monthName = 'Januari';
+      } elseif ($month == 2) {
+         $monthName = 'Februari';
+      } elseif ($month == 3) {
+         $monthName = 'Maret';
+      } elseif ($month == 4) {
+         $monthName = 'April';
+      } elseif ($month == 5) {
+         $monthName = 'Mei';
+      } elseif ($month == 6) {
+         $monthName = 'Juni';
+      } elseif ($month == 7) {
+         $monthName = 'Juli';
+      } elseif ($month == 8) {
+         $monthName = 'Agustus';
+      } elseif ($month == 9) {
+         $monthName = 'September';
+      } elseif ($month == 10) {
+         $monthName = 'Oktober';
+      } elseif ($month == 11) {
+         $monthName = 'November';
+      } elseif ($month == 12) {
+         $monthName = 'Desember';
+      }
+
+      $now = Carbon::now();
+      // dd($now->format('Y-m-d'));
+
+      // $yearMonth = $now->format('Y-m');
+      $yearMonth = $year . '-' . $month;
+      // dd($yearMonth);
+      $start = Carbon::parse($yearMonth)->startOfMonth();
+      $end = Carbon::parse($yearMonth)->endOfMonth();
+
+      $dates = [];
+      while ($start->lte($end)) {
+         $dates[] = $start->copy();
+         $start->addDay();
+      }
+
+      // dd($dates);
+      foreach ($dates as $date) {
+         // dd($date->format('Y-m-d'));
+
+         $requests = ModelsRequest::get();
+         foreach ($requests as $req) {
+            if ($req->date == $date->format('Y-m-d')) {
+               // dd('Ada');
+            }
+         }
+      }
+
+      // dd($dates[0]->format('Y-m-d'));
+      $firstDate = $dates[0]->format('Y-m-d');
+
+      $employee = Employee::where('email', auth()->user()->email)->first();
+      $vessel = '';
+      $schedules = Schedule::where('type', 2)->where('status', '>', 1)->whereMonth('date', $month)->whereYear('date', $year)->get();
+
+      $empl = Employee::where('email', auth()->user()->email)->first();
+      if ($empl) {
+         // dd('ok');
+         $user = Employee::where('email', auth()->user()->email)->first();
+         $confirms = ModelsRequest::where('destination_id', auth()->user()->getPort())->where('status', 10)->get();
+         $requests = ModelsRequest::where('employee_id', auth()->user()->getEmployeeId())->orderBy('parent_id', 'asc')->get();
+      } else {
+         $user = User::where('email', auth()->user()->email)->first();
+         // dd($user->port_id);
+         $port = Port::where('email', auth()->user()->email)->first();
+         if ($port == null) {
+            // dd('ok');
+            $portId = auth()->user()->port_id;
+         } else {
+            $portId = $port->id;
+         }
+         $confirms = ModelsRequest::where('destination_id', $portId)->where('status', 10)->get();
+         $requests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      }
+
+      $cargoItems = CargoItem::where('user_id', auth()->user()->id)->get();
+
+      $allRequests = ModelsRequest::get();
+
+      // dd(auth()->user()->getPort());
+
+      $titipRequests = ModelsRequest::where('user_id', auth()->user()->id)->where('status', 0)->where('request_id', '!=', null)->get();
+
+      $userRequests = ModelsRequest::where('date', $firstDate)->where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      // dd(count($userRequests));
+      $ports = Port::get();
+      $intermilanUsers = IntermilanUser::orderBy('from', 'desc')->get();
+      $intermilans = Intermilan::orderBy('from', 'desc')->paginate(2);
+
+      $lastIntermilan = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('from', 'desc')->first();
+      // dd($lastIntermilan);
+      // if ($lastIntermilan) {
+      //    $lastIntermilan = $lastIntermilan;
+      //    $startDate = new Carbon($lastIntermilan->from);
+      //    $endDate = new Carbon($lastIntermilan->to);
+      //    $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->whereBetween('date', [$startDate, $endDate])->orderBy('parent_id', 'asc')->get();
+      // } else {
+      //    $userRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      //    $startDate = Carbon::now();
+      //    $endDate = Carbon::now();
+      //    $lastIntermilan = null;
+      // }
+
+
+      // dd($userRequests);
+
+      $allUserRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+      $userRequestIds = [];
+      foreach ($allUserRequests as $req) {
+         $userRequestIds[] = $req->id;
+      }
+      // dd($userRequests);
+      $timelines = IntermilanTimeline::whereIn('request_id', $userRequestIds)->orderBy('created_at', 'desc')->paginate(20);
+
+      return view('main-department', [
+         'intermilans' => $intermilans,
+         'timelines' => $timelines,
+         'lastIntermilan' => $lastIntermilan,
+
+         'ports' => $ports,
+         'userRequests' =>  $userRequests,
+
+         'month' => $month,
+         'year' => $year,
+         'user' => $user,
+         'today' => $today,
+         'allRequests' => $allRequests,
+         'requests' => $requests,
+         'monthName' => $monthName,
+         'vessel' => $vessel,
+         'vessels' => $vessels,
+         // 'vessel3' => $vessel3,
+         'schedules' => $schedules,
+         'confirms' => $confirms,
+         'dates' => $dates,
+         'titipRequests' => $titipRequests,
+         'cargoItems' => $cargoItems,
+         'date' => Carbon::create($firstDate)
+
+         // 'schedulesFix' => $schedulesFix
+      ])->with('i');
+   }
+
    public function storeRequest(Request $req)
    {
       $intermilan = IntermilanUser::find($req->intermilanId);
@@ -274,10 +507,54 @@ class IntermilanUserController extends Controller
          'date' => $req->date,
          'origin_id' => $req->origin,
          'destination_id' => $req->destination,
-         'status' => 0
+         'status' => 0,
+         'req_boat' => $req->req_boat,
       ]);
 
       return redirect()->back()->with('success', 'Request added');
+   }
+
+   public function updateRequest(Request $req)
+   {
+
+
+      $user = User::find(auth()->user()->id);
+      $requestUser = ModelsRequest::find($req->requestId);
+
+      $requestUser->update([
+         'desc' => $req->desc,
+         'description' => $req->desc,
+         'origin_id' => $req->origin,
+         'destination_id' => $req->destination,
+         'req_boat' => $req->req_boat,
+      ]);
+
+
+
+      // dd($req->date);
+
+
+
+      return redirect()->back()->with('success', 'Activity Plan updated');
+   }
+
+
+   public function deleteRequest(Request $req)
+   {
+
+
+      $user = User::find(auth()->user()->id);
+      $requestUser = ModelsRequest::find($req->requestId);
+
+      $requestUser->delete();
+
+
+
+      // dd($req->date);
+
+
+
+      return redirect()->back()->with('success', 'Activity Plan deleted');
    }
 
    public function releaseRequest($id)

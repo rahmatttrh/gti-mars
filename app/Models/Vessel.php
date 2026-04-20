@@ -11,6 +11,11 @@ class Vessel extends Model
    use HasFactory;
    protected $guarded = [];
 
+   public function office()
+   {
+      return $this->belongsTo(Office::class);
+   }
+
    // public function getVdrs()
    // {
    //    $to = Carbon::now();

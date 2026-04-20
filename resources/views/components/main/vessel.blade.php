@@ -18,6 +18,368 @@
 </style>
 
 
+<style>
+   .welcome-card {
+    background: linear-gradient(135deg, #16315b, #03061b);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* efek glow */
+.welcome-card::after {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: rgba(255,255,255,0.08);
+    top: -50%;
+    left: -50%;
+    transform: rotate(25deg);
+}
+
+/* icon */
+.welcome-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    backdrop-filter: blur(6px);
+    transition: 0.3s;
+}
+
+/* hover effect */
+.welcome-card:hover .welcome-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.welcome-card:hover {
+    transform: translateY(-3px);
+    transition: 0.3s;
+}
+</style>
+
+<style>
+   .announcement-card {
+    border-radius: 16px;
+    transition: 0.3s;
+    background: #fff;
+}
+
+.announcement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* icon header */
+.ann-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 12px;
+    background: #f1f5ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+/* item list */
+.ann-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 2px;
+    transition: 0.2s;
+    font-size: 14px;
+}
+
+/* hover tiap item */
+.ann-item:hover {
+    background: #f8f9fa;
+    transform: translateX(4px);
+}
+
+/* icon dalam item */
+.ann-item i {
+    margin-top: 3px;
+    font-size: 16px;
+}
+</style>
+
+
+<style>
+   .vdr-info {
+    background: #fff;
+    transition: 0.3s;
+}
+
+.vdr-info:hover {
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transform: translateY(-2px);
+}
+
+.vdr-icon {
+    font-size: 22px;
+    margin-top: 2px;
+}
+</style>
+
+
+<style>
+   .ui-update-card {
+    border-radius: 12px;
+    background: #fff;
+    transition: 0.3s;
+}
+
+.ui-update-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+
+.ui-icon {
+    font-size: 22px;
+    margin-top: 2px;
+}
+</style>
+
+
+
+
+
+
+
+
+
+<div class="row">
+   <div class="col-md-4">
+      <div class="card welcome-card border-0 shadow-lg text-white">
+         <div class="card-body p-4">
+
+            <div class="d-flex align-items-center justify-content-between flex-wrap">
+
+                  <!-- KIRI -->
+                  <div class="d-flex align-items-center gap-3 mb-2">
+                     <div class="welcome-icon">
+                        <i class="fa fa-anchor"></i>
+                     </div>
+                     <div>
+                        <i class="fa fa-ship"></i> Welcome Back,
+                        <h4 class="mb-1 fw-bold">
+                               
+                              {{$vessel->name}} 
+                        </h4>
+                        <hr>
+                        <span class="mb-0 opacity-75 mt-2">
+                              Utamakan keselamatan kerja dan patuhi seluruh prosedur HSE dalam setiap aktivitas.
+                        </span>
+                     </div>
+                  </div>
+
+                  <!-- KANAN (INFO TAMBAHAN) -->
+                  <div class="text-end mt-4 mt-md-0">
+                     <div class="badge bg-light text-dark mb-1">
+                        <i class="fa fa-shield-alt"></i> Safety First
+                     </div>
+                     {{-- <br>
+                     <small class="opacity-75">
+                        Status: <b>On Duty</b>
+                     </small> --}}
+                  </div>
+
+            </div>
+
+         </div>
+      </div>
+
+      <div class="card announcement-card border-0 shadow-sm">
+         <div class="card-body p-4">
+
+            <!-- HEADER -->
+            <div class="d-flex align-items-center mb-3">
+                  <div class="ann-icon mr-3">
+                     <i class="fa fa-bullhorn text-primary"></i>
+                  </div>
+                  <div>
+                     <b class="mb-0 fw-bold">Announcement</b><br>
+                     <small class="text-muted">Informasi penting terkait proses VDR</small>
+                  </div>
+            </div>
+
+            <!-- LIST INFO -->
+            <div class="ann-item">
+                  <i class="fa fa-sort-numeric-down text-primary"></i>
+                  <span><b>Release VDR Draft</b> dari tanggal paling awal secara berurutan</span>
+            </div>
+
+            <div class="ann-item">
+                  <i class="fa fa-clock text-success"></i>
+                  <span>Release VDR sebelum <b>07:00</b> atau sebelum <b>19:00</b></span>
+            </div>
+
+            <div class="ann-item">
+                  <i class="fa fa-exclamation-circle text-danger"></i>
+                  <span>VDR Reject harus direvisi dan di-release ulang sebelum <b>16:00</b></span>
+            </div>
+
+            <div class="ann-item">
+                  <i class="fa fa-ship text-info"></i>
+                  <span>Untuk Kapal IPB dan Tug Boat, diharuskan memilih <b>AREA</b> pada form VDR, untuk proses approval VDR di area tersebut</span>
+            </div>
+
+         </div>
+      </div>
+   </div>
+
+   <div class="col-md-8">
+      <div class="card border-0 shadow-sm ui-update-card">
+         <div class="card-body d-flex align-items-start gap-3">
+
+            <!-- ICON -->
+            <div class="ui-icon text-primary mr-3">
+                  <i class="fa fa-info-circle"></i>
+            </div>
+
+            <!-- CONTENT -->
+            <div>
+                  <div class="fw-bold mb-1">
+                     Update Tampilan Dashboard
+                  </div>
+
+                  <small class="text-muted">
+                     Tampilan Dashboard telah diperbarui untuk meningkatkan kenyamanan penggunaan. 
+                     Tidak perlu khawatir, data yang ditampilkan dan proses pembuatan VDR tetap sama.
+                  </small>
+            </div>
+
+         </div>
+      </div>
+
+
+      <div class="card ">
+               
+         <div class="card-body ">
+            
+            {{-- <div>Jika anda ingin membuat Vessel Daily Report silahkan 
+               
+               <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
+              
+               , atau klik VDR pada menu utama
+            </div>
+            <hr> --}}
+            {{-- <div class="mb-2" style="color: #1f4481 !important">
+               <b></b>
+            </div> --}}
+            @if (count($rejectvdrs) > 0)
+            <div class="card shadow-none border">
+               <div class="card-header py-1 bg-danger text-white">
+                  <b>VDR REJECT ALERT! </b>
+               </div>
+               <div class="card-body">
+                  @foreach ($rejectvdrs as $rejectvdr)
+                  
+                     VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name ?? ''}}</b>  
+                     {{-- dengan alasan <b>{!!$rejectvdr->reject_desc!!}</b>. --}}
+                    <br>
+                     <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a>
+                     <br>
+                     @endforeach
+               </div>
+            </div>
+            @endif
+
+            <div class="d-flex align-items-start gap-4">
+               <i class="fa fa-info-circle text-primary mt-1 mr-2"></i>
+               <div>
+                  <div class="fw-bold">Recent VDR</div>
+                  
+               </div>
+            </div>
+
+            <small class="text-muted">
+                  Menampilkan data terbaru, pastikan release tepat waktu dan revisi jika ada VDR reject
+            </small> <br>
+            <a href="{{route('vdr.vessel.create.spa')}}" class="btn btn-sm btn-primary text-white mt-2">
+                  <i class="fa fa-plus-circle"></i> Buat VDR Baru
+            </a>
+            <div  class="table-responsive overflow-auto mt-2" style="height: 350px" >
+               <table class="table table-sm" >
+                  <thead>
+                     {{-- <tr>
+                        <th colspan="4" style="color: #1f4481 !important">Recent Vessel Daily Report</th>
+                     </tr> --}}
+                     <tr>
+                        {{-- <th class="text-center">No</th> --}}
+                        <th>VDR ID</th>
+                        <th>VDR Date</th>
+                        {{-- <th>Date</th>
+                        <th>Crew</th> --}}
+                        <th style="width: 120px">VDR Status</th>
+                        {{-- <th></th> --}}
+                     </tr>
+                  </thead>
+                  <tbody>
+                     @foreach ($myrecentvdrs as $myvdr)
+                     <tr>
+
+                        <td>
+                           @if (auth()->user()->username == 'magelang' )
+                           {{-- <div class="dropdown">
+                              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                 {{$myvdr->code}}
+                              </button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                 <a class="dropdown-item" href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Baru</a>
+                                 <a class="dropdown-item" href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Lama</a>
+
+                                
+                              </div>
+                           </div> --}}
+                           <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> 
+                           {{-- | <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Buka di Form Lama</a> --}}
+                              
+                               @else
+                               {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
+                               <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
+                           @endif
+                           {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
+                        </td>
+                        <td>{{formatDate($myvdr->date)}}</td>
+                        {{-- <td>{{formatDate($myvdr->date)}}</td>
+                        <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
+                        <td class="text-truncate">
+                           {{-- @if(date('Y-m-d', strtotime($myvdr->date)) == date('Y-m-d'))
+                           <small>Draft</small>
+                           @else
+                           <small>Release</small>
+                           @endif --}}
+                           <x-status-stisla.vdr :vdr="$myvdr" />
+                        </td>
+                        {{-- <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Detail SPA</a> </td> --}}
+                     </tr>
+                     @endforeach
+                     {{-- @if ($myvdr)
+                        
+                        
+                        @else
+                        <tr><td colspan="4" class="text-center py-3">Anda belum membuat VDR hari ini</td></tr>
+                     @endif --}}
+                     
+                  </tbody>
+               </table>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
 {{-- @if ($vessel->password_default == null)
 <div class="card">
    <div class="card-body">
@@ -49,197 +411,19 @@
             
            
 
-            <div class="card shadow">
-               
-               <div class="card-body ">
-                  <h4>Welcome back, {{$vessel->name}} !</h4>
-                  <div>Jika anda ingin membuat Vessel Daily Report silahkan 
-                     {{-- @if (auth()->user()->username == 'magelang' )
-                     klik
-                     <a href="{{route('vdr.vessel.create')}}" class="btn btn-sm btn-primary">Form Lama</a> atau <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Form Baru</a>
-                     
-                     @else --}}
-                     <a class="btn btn-sm btn-primary" href="{{route('vdr.vessel.create.spa')}}">Klik disini</a>
-                     
-                     {{-- @endif --}}
-                     , atau klik VDR pada menu utama</div>
-                  <hr>
-                  {{-- <div class="mb-2" style="color: #1f4481 !important">
-                     <b></b>
-                  </div> --}}
-                  @if (count($rejectvdrs) > 0)
-                  <div class="card shadow-none border">
-                     <div class="card-header py-1 bg-danger text-white">
-                        <b>VDR REJECT ALERT! </b>
-                     </div>
-                     <div class="card-body">
-                        @foreach ($rejectvdrs as $rejectvdr)
-                        
-                           VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name ?? ''}}</b>  
-                           {{-- dengan alasan <b>{!!$rejectvdr->reject_desc!!}</b>. --}}
-                          <br>
-                           <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a>
-                           <br>
-                           @endforeach
-                     </div>
-                  </div>
-                  @endif
-                  <div  class="table-responsive overflow-auto " style="height: 350px" >
-                     <table class="table table-sm" >
-                        <thead>
-                           <tr>
-                              <th colspan="4" style="color: #1f4481 !important">Recent Vessel Daily Report</th>
-                           </tr>
-                           <tr>
-                              {{-- <th class="text-center">No</th> --}}
-                              <th>VDR ID</th>
-                              <th>VDR Date</th>
-                              {{-- <th>Date</th>
-                              <th>Crew</th> --}}
-                              <th style="width: 120px">VDR Status</th>
-                              {{-- <th></th> --}}
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @foreach ($myrecentvdrs as $myvdr)
-                           <tr>
+            
 
-                              <td>
-                                 @if (auth()->user()->username == 'magelang' )
-                                 {{-- <div class="dropdown">
-                                    <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                       {{$myvdr->code}}
-                                    </button>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                       <a class="dropdown-item" href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Baru</a>
-                                       <a class="dropdown-item" href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Form Lama</a>
-
-                                      
-                                    </div>
-                                 </div> --}}
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> 
-                                 {{-- | <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Buka di Form Lama</a> --}}
-                                    
-                                     @else
-                                     {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
-                                     <a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a>
-                                 @endif
-                                 {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
-                              </td>
-                              <td>{{formatDate($myvdr->date)}}</td>
-                              {{-- <td>{{formatDate($myvdr->date)}}</td>
-                              <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
-                              <td class="text-truncate">
-                                 {{-- @if(date('Y-m-d', strtotime($myvdr->date)) == date('Y-m-d'))
-                                 <small>Draft</small>
-                                 @else
-                                 <small>Release</small>
-                                 @endif --}}
-                                 <x-status-stisla.vdr :vdr="$myvdr" />
-                              </td>
-                              {{-- <td><a href="{{route('vdr.show.spa', [enkripRambo($myvdr->id), enkripRambo('index')])}}">Detail SPA</a> </td> --}}
-                           </tr>
-                           @endforeach
-                           {{-- @if ($myvdr)
-                              
-                              
-                              @else
-                              <tr><td colspan="4" class="text-center py-3">Anda belum membuat VDR hari ini</td></tr>
-                           @endif --}}
-                           
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
-
-            <div class="card shadow">
-               <div class="card-body">
-                  <div class="mb-2" style="color: #1f4481 !important">
-                     <b>Sailing Order</b>
-                  </div>
-                  <div class="table-responsive overflow-auto " style="height: 120px">
-                     <table class="" >
-                        <thead >
-                           {{-- <tr>
-                              <th colspan="4" style="color: #1f4481 !important">Sailing Order</th>
-                           </tr> --}}
-                           <tr>
-                              {{-- <th class="text-center">No</th> --}}
-                              
-                              <th>ID</th>
-                              {{-- <th>Date</th> --}}
-                              {{-- <th>Type</th> --}}
-                              <th style="width: 120px">Status</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @if (count($schedules) > 0)
-                              @foreach ($schedules as $sche)
-                              <tr>
-                                 <td><a href="{{route('schedule.detail', enkripRambo($sche->id))}}">{{$sche->code}}</a> </td>
-                                 <td>{{formatDate($sche->date)}}</td>
-                                 <td>{{$sche->class}}</td>
-                                 <td><x-status-stisla.schedule-plain :schedule="$sche" /></td>
-                              </tr>
-                              @endforeach
-                              @else
-                              <tr><td colspan="4" class="text-center py-3">Tidak ada Sailing Order</td></tr>
-                           @endif
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
             
             
             
             
             
             
-            <div class="table-responsive mt-4">
-               <table class="" id="table-6">
-                  <thead >
-                     <tr>
-                        <th colspan="4" class="py-1" style="color: #1f4481 !important">My Request</th>
-                     </tr>
-                     <tr>
-                        {{-- <th class="text-center">No</th> --}}
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th class="text-center">Qty (KL)</th>
-                        <th style="width: 120px">Status</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     @if (count($requests) > 0)
-                        @foreach ($requests as $req)
-                            <tr>
-                              <td><a href="{{route('request.detail', enkripRambo($req->id))}}">{{$req->code}}</a></td>
-                              <td>{{formatDate($req->date)}}</td>
-                              <td>{{$req->activity->name}}</td>
-                              <td class="text-center">{{$req->qty}}</td>
-                              <td><x-status-stisla.request-plain :request="$req" /></td>
-                            </tr>
-                        @endforeach
-                        @else
-                        <tr><td colspan="5" class="text-center py-3">Anda belum membuat Request Activity</td></tr>
-                     @endif
-                     
-                  </tbody>
-               </table>
-            </div>
+            
+            
          </div>
          <div class="col-md-5">
-            <div class="card shadow-lg">
-               <div class="card-body">
-                  <i><h4>Announcement</h4></i>
-               
-                  Untuk Kapal IPB dan Tug Boat, diharuskan memilih <b>AREA</b> pada form VDR, untuk proses approval VDR di area tersebut
-                  
-               </div>
-            </div>
+            
             {{-- @if ($vessel->contract->ipb == 'IPB' || $vessel->type == 'Tug Boat')
                <div class="card shadow-lg">
                   <div class="card-body">
@@ -311,18 +495,7 @@
                </div>
             </div>
             @endif --}}
-            <div class="card shadow-lg">
-               <div class="card-body">
-                  <i><h4>Notes</h4></i>
-                 
-                  
-                  Harap lakukan Release VDR Draft dari tanggal yang paling awal secara berurutan 
-               <hr>
-                  Release VDR disarankan sebelum pukul 07:00 atau sebelum pukul 19:00
-                  <hr>
-                  VDR Reject harus di Revisi dan di Release Ulang sebelum pukul 16:00
-               </div>
-            </div>
+            
 
 
             <div class="card  shadow ">

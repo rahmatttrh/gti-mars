@@ -15,6 +15,16 @@ class Request extends Model
       return $this->belongsTo(ParentRequest::class);
    }
 
+   public function vessel()
+   {
+      return $this->belongsTo(Vessel::class);
+   }
+
+   public function vessels()
+   {
+      return $this->hasMany(RequestVessel::class);
+   }
+
    public function activity()
    {
       return $this->belongsTo(Activity::class);
@@ -45,7 +55,8 @@ class Request extends Model
       return $this->hasMany(PassengerItem::class);
    }
 
-   public function bargeItem(){
+   public function bargeItem()
+   {
       return $this->hasOne(BargeItem::class);
    }
 
@@ -90,11 +101,13 @@ class Request extends Model
       return $this->hasMany(RequestReject::class);
    }
 
-   public function fuel(){
+   public function fuel()
+   {
       return $this->hasOne(FuelItem::class);
    }
 
-   public function water(){
+   public function water()
+   {
       return $this->hasOne(WaterItem::class);
    }
 

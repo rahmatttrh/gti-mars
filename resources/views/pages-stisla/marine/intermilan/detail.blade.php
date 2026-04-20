@@ -3,29 +3,31 @@
     DSP Intermilan Management 
 @endsection
 @section('content')
+<style>
+   table {
+      font-size: 11px;
+   }
+
+   td {
+   border-right: solid 1px rgb(255, 255, 255); 
+   border-left: solid 1px rgb(255, 255, 255);
+   line-height: 1.2 !important;
+   }
+
+   input {
+         border:0;
+         outline:0;
+         /* text-align: center;  */
+         /* background-color: rgb(226, 236, 151) */
+         
+      }
+</style>
 <section class="section">
 
-   <style>
-      table {
-         font-size: 11px;
-      }
-
-      td {
-  border-right: solid 1px rgb(255, 255, 255); 
-  border-left: solid 1px rgb(255, 255, 255);
-  line-height: 1.2 !important;
-}
-
-input {
-      border:0;
-      outline:0;
-      text-align: center; 
-      /* background-color: rgb(226, 236, 151) */
-      
-   }
-   </style>
    
-   <div class="section-body">
+   
+   <div class="section-body mt--3">
+      {{-- Home / Intermilan / Detail --}}
       <div class="row">
          <div class="col-md-12">
             
@@ -34,8 +36,8 @@ input {
               
                <div class="card-body">
                   
-                  <a href="" class="btn btn-sm btn-primary mb-2 mr-1">Submit</a>
-                  <a class="btn btn-sm btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
+                  {{-- <a href="" class="btn  btn-primary mb-2 mr-1">Submit</a>
+                  <a class="btn  btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
                   <div class="d-flex justify-content-between">
                      <div class="mb-2">
                         <span>{{$intermilan->code}} </span> <br>
@@ -50,12 +52,68 @@ input {
                      
                      
                   
+                  </div> --}}
+
+                  <div class="row">
+                     <div class="col-md-6">
+                        
+                        <table class="table table-sm border">
+                           <tbody>
+                              <tr>
+                                 <td colspan="2" class="border">
+                                     <h5> <i class="text-primary fa fa-calendar-alt"></i> INTERMILAN</h5>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="border">ID</td>
+                                 <td class="border">{{$intermilan->code}}</td>
+                              </tr>
+                              <tr>
+                                 <td class="border">Periode</td>
+                                 <td class="border">{{formatDate($start)}} - {{formatDate($end)}}</td>
+                              </tr><tr>
+                                 <td class="border">Title</td>
+                                 <td class="border">{{$intermilan->title}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                     <div class="col-md-6">
+                        
+                            
+                        <div class="btn-group">
+                           <button onclick="location.reload()" class="btn mb-2 btn-info">
+                              <i class="fa fa-refresh"></i>
+                              Refresh Data
+                            </button>
+                           @if (auth()->user()->hasRole('fleet|marine|superuser'))
+                           <a href="#" data-toggle="modal" data-target="#modalSubmitIntermilan" class="btn  btn-primary mb-2"><i class="fa fa-paper-plane"></i> Submit</a>
+                           <a href="#" class="btn  btn-light border mb-2">Edit</a>
+                           <a href="#" class="btn  btn-light border mb-2">Delete</a>
+                           @endif
+                           
+                           <a class="btn  btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">
+                              <i class="fa fa-file"></i>
+                              Export PDF 
+                           </a>
+                        </div>
+                        @if (auth()->user()->hasRole('fleet|marine|superuser'))
+                        <a href="{{asset('template/template-import-material.xlsx')}}" class="btn btn-success mb-2 mx-1"><i class="fa fa-download"></i> Download Template Import Material</a>
+                         <br>
+                         <div class="my-2">
+                           <small><b>Note: </b> Klik "Refresh Data" untuk menampilkan Activity Plan terbaru dari User</small>
+                           <br>
+                           <small><b>Note: </b> Klik "Submit" untuk mengirim Activity Plan ke Kapal</small>
+                        </div>
+                        @endif
+                        
+                     </div>
                   </div>
                   
                   {{-- <hr> --}}
                   <ul class="nav nav-tabs" id="myTab" role="tablist">
                      <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Intermilan</a>
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Activity</a>
                      </li>
                      <li class="nav-item">
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew</a>
@@ -63,16 +121,84 @@ input {
                      <li class="nav-item">
                         <a class="nav-link" id="contact-tab"  href="{{route('intermilan.marine.risalah', enkripRambo($intermilan->id))}}"  aria-controls="contact" aria-selected="false">Risalah</a>
                      </li>
-
                      <li class="nav-item">
-                        <a class="nav-link" id="ok-tab" data-toggle="tab" href="#ok" role="tab" aria-controls="ok" aria-selected="false">Schedule</a>
+                        <a class="nav-link"  href="{{route('intermilan.marine.timeline', enkripRambo($intermilan->id))}}"  aria-controls="ok" aria-selected="false">Timeline</a>
                      </li>
+
+                     {{-- <li class="nav-item">
+                        <a class="nav-link" id="ok-tab" data-toggle="tab" href="#ok" role="tab" aria-controls="ok" aria-selected="false">Schedule</a>
+                     </li> --}}
                   </ul>
                   <div class="tab-content" id="myTabContent">
                      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         <div class="row">
-                           <div class="col-md-10">
-                              <a data-toggle="collapse" href="#formRequest">Add Row</a> |
+                           <div class="col-md-12">
+
+                              <a data-toggle="collapse" href="#formRequest" class="btn btn-sm btn-light border-bottom mb-2"><i class="fa fa-plus"></i> Add Activity</a>
+                              {{-- <hr> --}}
+                              <div class="collapse" id="formRequest">
+                                 
+                                 <form action="{{route('intermilan.marine.request.store')}}" method="POST">
+                                    @csrf
+                                    <input type="text" name="intermilan" id="intermilan" value="{{$intermilan->id}}" hidden>
+
+
+                                    <div class="row">
+                                       <div class="col-md-2">
+                                          <select  class="form-control" name="user" id="user">
+                                                <option value="" selected disabled>User</option>
+                                                @foreach ($ports as $port)
+                                                <option value="{{$port->id}}">{{$port->name}}</option>
+                                             @endforeach
+                                                
+                                             </select>
+                                       </div>
+                                       <div class="col-md-4">
+                                          <input type="text" name="desc" id="desc" class="form-control" required placeholder="Activity...">
+                                       </div>
+                                       <div class="col-md-2">
+                                          <select  class="form-control" id="origin"  name="origin">
+                                                <option value="" selected disabled>Origin</option>
+                                                @foreach ($ports as $port)
+                                                   <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->code }}</option>
+                                                @endforeach
+                                                
+                                             </select>
+                                       </div>
+                                       <div class="col-md-2">
+                                          <select  class="form-control" id="destination"  name="destination">
+                                                <option value="" selected disabled>Destination</option>
+                                                @foreach ($ports as $port)
+                                                   <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->code }}</option>
+                                                @endforeach
+                                                
+                                             </select>
+                                       </div>
+                                       
+                                       <div class="col-md-2">
+                                          {{-- <input type="text" name="desc" id="desc" class="form-control"  required placeholder="Activity..."> --}}
+                                             <select  class="form-control" id="req_boat" required  name="req_boat">
+                                                <option value="" selected disabled>Required Boat</option>
+                                                <option value="AHTS">AHTS</option>
+                                                <option value="Cargo">Cargo</option>
+                                                <option value="Supply Boat">Supply Boat</option>
+                                                <option value="AHTS / Cargo">AHTS / Cargo</option>
+                                                <option value="AHTS / Supply Boat">AHTS / Supply Boat</option>
+                                                <option value="Crew Boat">Crew Boat</option>
+                                                <option value="CC 114">CC 114</option>
+                                                
+                                             </select>
+                                       </div>
+                                    </div>
+                                    <button class="btn  btn-primary mt-2 px-2" type="submit" > <i class="fa fa-save"></i> Save</button> 
+                                    
+                                    
+                                 </form>  
+                                 <hr>
+                              </div>
+
+
+                              {{-- <a data-toggle="collapse" href="#formRequest">Add Row</a> |
                               <a data-toggle="collapse" href="#formSchedule">Add Schedule</a> |
                               <a href="{{asset('template/template-import-material.xlsx')}}">Download Template Import Material</a>
                               <div class="collapse" id="formRequest">
@@ -82,15 +208,9 @@ input {
                                     
                                     <table class="table table-sm table-striped border">
                                        <tr>
-                                          {{-- <td class="text-center bg-y" style="width: 180px">
-                                             <input  style="background-color: rgb(226, 236, 151)" class="w-100 }" type="text" style="border-color: red!"  >
-                                          </td> --}}
+                                          
                                           <td style="width:150px">
-                                             {{-- <select  name="user" id="user"  style="padding: 5px; width:100%" required>
-                                                @foreach ($ports as $port)
-                                                   <option value="">{{$port->name}}</option>
-                                                @endforeach
-                                             </select> --}}
+                                             
                                              <select  style="width:100%; border:none !important; padding-left:none; text-align: left !important;padding-top: 5px;padding-bottom: 5px;" name="user" id="user">
                                                 <option value="" selected disabled>User</option>
                                                 @foreach ($ports as $port)
@@ -118,60 +238,14 @@ input {
                                                 @endforeach
                                                 
                                              </select>
-                                             {{-- <select class="" id="origin"  name="origin" style="padding: 5px; width:150px">
-                                                <option disabled selected>Origin</option>
-                                                @foreach ($ports as $port)
-                                                   <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
-                                                @endforeach
-                                                
-                                             </select> --}}
-                                             {{-- <select class=" " id="destination"  name="destination" style="padding: 5px;width:150px">
-                                                <option disabled selected>Destination</option>
-                                                @foreach ($ports as $port)
-                                                   <option {{ old('destination') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
-                                                @endforeach
-                                             
-                                             </select> --}}
+                                            
                                           </td>
                                           <td>
                                              <button class="btn btn-sm btn-primary btn-block" type="submit" > Add</button> 
                                           </td>
                                        </tr>
                                     </table>
-                                    {{-- <div class="row">
-                                       <div class="col-md-6">
-                                          <div class="form-group form-group-default">
-                                             <label>User</label>
-                                             
-                                             
-                                          </div>
-                                       </div>
-                                       <div class="form-group col-md-3">
-                                          <label>Origin/From</label>
-                                          <select class="custom-select origin" id="origin"  name="origin">
-                                             <option disabled selected>Choose one</option>
-                                             @foreach ($ports as $port)
-                                                <option {{ old('origin') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
-                                             @endforeach
-                                             
-                                          </select>
-                                       </div>
-                                       <div class="form-group col-md-3 ">
-                                          <label>Destination</label>
-                                          <select class="custom-select " id="destination"  name="destination">
-                                             <option disabled selected>Choose one</option>
-                                             @foreach ($ports as $port)
-                                                <option {{ old('destination') == $port->id ? 'selected' : '' }} value="{{ $port->id }}">{{ $port->name }}</option>
-                                             @endforeach
-                                          
-                                          </select>
-                                       </div>
-                                       
-                                    </div>
-                                    <div class="form-group form-group-default">
-                                       
-                                       <input type="text" name="activity" id="activity" class="form-control" required placeholder="Activity...">
-                                    </div> --}}
+                                   
                                     
                                     
                                     
@@ -180,7 +254,10 @@ input {
                                     
                                     
                                  </form>  
-                              </div>
+                              </div> --}}
+
+
+
                               <div class="collapse" id="formSchedule">
                                  <form action="{{route('schedule.store.so')}}" method="POST">
                                     @csrf
@@ -218,10 +295,12 @@ input {
                                        <tr>
                                           <th>Station</th>
                                           <th>Activity</th>
-                                          <th>Status</th>
+                                          
                                           <th>Location</th>
-                                          <th>Date</th>
+                                          <th>Req Date</th>
+                                          <th>Req Boat</th>
                                           <th>Boat</th>
+                                          <th>Status</th>
                                           @foreach ($dates as $date)
                                              <th class="text-center">{{formatDateOnly($date)}}</th>
                                           @endforeach
@@ -261,9 +340,7 @@ input {
                                                    @endif
                                                    
                                                 </td>
-                                                <td>
-                                                   <x-status-stisla.request-plain :request="$item" />
-                                                </td>
+                                                
                                                 <td class="text-truncate">
                                                    {{-- @if ($request->activity_id < 5)
                                                    {{$request->origin->code}} to {{$request->destination->code}}
@@ -278,15 +355,15 @@ input {
                                                    - {{$item->destination->code}}
                                                 </td>
                                                 <td>{{formatDateB($item->date)}}</td>
-                                                <td class="d-flex align-items-center">
-                                                   @if ($item->activity_id == 1 || $item->activity_id == 2)
+                                                <td>{{$item->req_boat}}</td>
+                                                <td class="d-flex align-items-center py-2">
+                                                   {{-- @if ($item->activity_id == 1 || $item->activity_id == 2)
                                                       <form action="{{route('intermilan.marine.select.schedule.list')}}" method="POST" class="d-flex">
                                                          @csrf
                                                          @method('PUT')
                                                          <input type="text" name="requestId" id="requestId" value="{{$item->id}}" hidden>
                                                          <select style="" name="schedule" id="schedule" required>
-                                                            <option value="" selected disabled>Select Schedule {{$item->schedule_id}}</option>
-                                                            {{-- <option value=""><a href="/">OK</a></option> --}}
+                                                            <option value="" selected disabled>Select Schedule </option>
                                                             @foreach ($schedules as $sche)
                                                                @if ($sche->class == 'Cargo' || $sche->class == 'Crew')
                                                                <option {{$item->schedule_id == $sche->id ? 'selected' : ''}} value="{{$sche->id}}">{{formatDateOnly($sche->date)}} {{$sche->vessel->name}} </option>
@@ -300,14 +377,12 @@ input {
                                                             @else
                                                             <button class="btn btn-sm border btn-light">
                                                          @endif
-                                                         {{-- <button class="btn btn-sm border btn-info"> --}}
-                                                            {{-- <i class="fa fa-save"></i> --}}
+                                                         
                                                             Assign 
                                                          </button>
                                                       </form>
                                                       @else
-                                                      {{-- <a href="{{route('schedule.detail', enkripRambo($request->schedule_id))}}"> {{$request->schedule->vessel->name ?? 'Not Available'}}</a> --}}
-                                                      <form action="{{route('intermilan.marine.select.vessel')}}" method="POST" class="d-flex">
+                                                     <form action="{{route('intermilan.marine.select.vessel')}}" method="POST" class="d-flex">
                                                          @csrf
                                                          @method('PUT')
                                                          <input type="text" name="requestId" id="requestId" value="{{$item->id}}" hidden>
@@ -329,13 +404,46 @@ input {
                                                          
                                                          
                                                       </form>
+                                                   @endif --}}
+
+                                                   @if ($item->vessel_id != null)
+                                                       <a href="#"  data-toggle="modal" data-target="#modalAssignVessel-{{$item->id}}" class="">{{$item->vessel->name}}</a>
+                                                       @else
+                                                       <a href="#"  data-toggle="modal" data-target="#modalAssignVessel-{{$item->id}}" class="">Empty</a>
                                                    @endif
                                                    
                                                    
                                                    
                                                    
                                                 </td>
+                                                <td>
+                                                   <x-status-stisla.request-plain :request="$item" />
+                                                </td>
                                                 @foreach ($dates as $date)
+                                                   @php
+                                                      $found = false;
+                                                   @endphp
+
+                                                   @foreach ($item->vessels as $v)
+                                                      @if ($v->date == $date)
+                                                            @php $found = true; @endphp
+                                                            @break
+                                                      @endif
+                                                   @endforeach
+
+                                                   @if ($found)
+                                                      <x-status-stisla.item-vessel :item="$item" :itemdate="$v->date" :date="$date" />
+                                                   @else
+                                                      <td class="text-center">
+                                                      -
+                                                   </td>
+                                                   @endif
+
+                                                   {{-- <td class="text-center">
+                                                      {{ $found ? $date : '-' }}
+                                                   </td> --}}
+                                                @endforeach
+                                                {{-- @foreach ($dates as $date)
                                                    @if ($date == $item->date)
                                                       <x-status-stisla.item-vessel :item="$item" />
                                                       
@@ -344,7 +452,7 @@ input {
                                                    <td class="text-center">- </td>
                                                    @endif
                                                 
-                                                @endforeach
+                                                @endforeach --}}
                                              </tr>
 
                                              <tr class="collapse" id="requestAction-{{$item->id}}" data-parent="#myAccordion">
@@ -371,7 +479,7 @@ input {
                                                    <tr class="collapse" id="formItem-{{$item->id}}" data-parent="#myAccordion">
                                                       {{-- <div > --}}
                                                          <td class="border">Add Item </td>
-                                                         <td colspan="12" class="border">
+                                                         <td colspan="6" class="border">
 
                                                             <table>
                                                                <tbody>
@@ -441,7 +549,7 @@ input {
                                                    <tr class="collapse" id="formImportItem-{{$item->id}}" data-parent="#myAccordion">
                                                       {{-- <div > --}}
                                                          <td class="border">Import Item</td>
-                                                         <td colspan="12" >
+                                                         <td colspan="6" >
 
                                                             <table>
                                                                <tbody>
@@ -494,7 +602,7 @@ input {
                                                    <tr class="collapse" id="formRequestActionDrop-{{$item->id}}" data-parent="#myAccordion">
                                                       {{-- <div > --}}
                                                          <td class="border">Drop Action</td>
-                                                         <td class="border" colspan="12" >
+                                                         <td class="border" colspan="6" >
 
                                                             <table>
                                                                <tbody>
@@ -657,7 +765,7 @@ input {
                                                    <tr class="collapse" id="formItemEdit-{{$cargo->id}}" data-parent="#myAccordion">
                                                       {{-- <div > --}}
                                                          <td class="border">Edit Item</td>
-                                                         <td class="border" colspan="12" >
+                                                         <td class="border" colspan="6" >
                                                             <table>
                                                                <tbody>
                                                                   <tr>
@@ -971,89 +1079,157 @@ input {
                                     </tbody> --}}
                                  </table>
                               </div>
+                              <div class="my-2">
+                                 <small><b>Note: </b> Klik data pada kolom "Boat" untuk memilih/merubah kapal dan estimasi pelaksanaan</small>
+                              </div>
+                           </div>
+                          
+                        </div>
+
+                        <hr>
+
+                        <div class="row">
+                           <div class="col-md-5">
+                              <table class="border table table-sm">
+                                 <tbody>
+                                    <tr>
+                                       <th colspan="4" class=" border"> <b>Boat List</b> </th>
+                                    </tr>
+                                    @foreach ($vessels as $vessel)
+                                       <tr>
+                                          @if ($vessel->type == 'Tug Boat')
+                                                <td class="text-center border" style="background-color: rgb(44, 95, 249)">J</td>
+                                                @elseif($vessel->ipb == 'IPB')
+                                                <td class="text-center border" style="background-color: rgb(251, 161, 128)">I</td>
+                                             @else 
+                                                @if ($vessel->id == 7)
+                                                {{-- Triton Jawara --}}
+                                                <td class="text-center border" style="background-color: rgb(255, 231, 16)">A</td>
+                                                @elseif($vessel->id == 2)
+                                                {{-- Transko Balihe --}}
+                                                <td class="text-white text-center border" style="background-color: rgb(244, 66, 66)">B</td>
+                                                {{-- @elseif($vessel->id == 7)
+                                                SK Canopus
+                                                <td class="text-center border" style="background-color: rgb(184, 152, 46)">C</td> --}}
+                                                @elseif($vessel->id == 3)
+                                                {{-- Logindo Overcomer --}}
+                                                <td class="text-center border" style="background-color: rgb(89, 192, 51)">D</td>
+                                                @elseif($vessel->id == 9)
+                                                {{-- Elok Jaya --}}
+                                                <td class="text-center text-white" style="background-color: rgb(41, 95, 134)">E</td>
+                                                @elseif($vessel->id == 4)
+                                                {{-- Indoliziz Satu --}}
+                                                <td class="text-center border" style="background-color: rgb(172, 236, 149)">F</td>
+                                                @elseif($vessel->id == 11)
+                                                {{-- Giat Jaya --}}
+                                                <td class="text-center border" style="background-color: rgb(129, 181, 245)">G</td>
+                                                @elseif($vessel->id == 6 || $vessel->id == 36)
+                                                {{-- Sigap Jaya --}}
+                                                <td class="text-center border" style="background-color: rgb(241, 156, 38)">L</td>
+                                                @elseif($vessel->id == 1)
+                                                {{-- Transko Moloko --}}
+                                                <td class="text-center border" style="background-color: rgb(213, 226, 131)">G</td>
+                                                @else
+                                                <td class="text-center border" style="background-color: rgb(192, 190, 189)"></td>
+                                             @endif
+                                          @endif
+                                          
+
+                                             <td class="border">
+                                                {{ $vessel->name }}
+                                             </td>
+                                             <td class="border">
+                                                {{ $vessel->type }}
+                                             </td>
+                                             <td class="border">
+                                                {{ $vessel->ipb }}
+                                             </td>
+                                             
+                                       </tr>
+                                    @endforeach
+                                 </tbody>
+                              </table>
                            </div>
                            <div class="col-md-2">
                               
-                                 <table>
-                                    <thead>
-                                       <tr><th colspan="2" class="">Schedule</th></tr>
-                                       <tr>
+                              {{-- <table>
+                                 <thead>
+                                    <tr><th colspan="2" class="">Schedule</th></tr>
+                                    <tr>
 
-                                          <th class="text-center">Date</th>
-                                          <th>Vessel</th>
-                                          {{-- <th>Status</th> --}}
-                                       </tr>
-                                    </thead>
-                                    <tbody>
-                                       @foreach ($weekSchedules as $schedule)
-                                             <tr>
-                                             @if ($schedule->status == 0)
-                                                <td class="text-center bg-draft">{{formatDateOnly($schedule->date)}}</td>
-                                                @elseif($schedule->status > 0 && $schedule->status != 11)
-                                                <td class="text-center bg-assigned">{{formatDateOnly($schedule->date)}}</td>
-                                                @elseif($schedule->status == 11)
-                                                <td class="text-center bg-complete">{{formatDateOnly($schedule->date)}}</td>
-                                             @endif
+                                       <th class="text-center">Date</th>
+                                       <th>Vessel</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    @foreach ($weekSchedules as $schedule)
+                                          <tr>
+                                          @if ($schedule->status == 0)
+                                             <td class="text-center bg-draft">{{formatDateOnly($schedule->date)}}</td>
+                                             @elseif($schedule->status > 0 && $schedule->status != 11)
+                                             <td class="text-center bg-assigned">{{formatDateOnly($schedule->date)}}</td>
+                                             @elseif($schedule->status == 11)
+                                             <td class="text-center bg-complete">{{formatDateOnly($schedule->date)}}</td>
+                                          @endif
+                                          
+                                          <td>
+                                             <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a>
                                              
-                                             <td>
-                                                <a href="{{route('schedule.detail', enkripRambo($schedule->id))}}">{{$schedule->vessel->name ?? 'Not Available'}} </a>
-                                                
-                                                
-                                             </td>
-                                             {{-- <td><x-status-stisla.schedule-plain :schedule="$schedule" /></td> --}}
-                                             </tr>
-                                       @endforeach
-                                       <tr>
-                                          <td></td>
-                                       </tr>
-                                       <tr>
-                                          <th colspan="2">Description</th>
-                                          
-                                       </tr>
-                                       <tr>
-                                          <td>Color</td>
-                                          <td>Keterangan</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-draft"></td>
-                                          <td>Draft</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-assigned"></td>
-                                          <td>Assigned</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-complete"></td>
-                                          <td>Complete</td>
-                                       </tr>
+                                             
+                                          </td>
+                                         </tr>
+                                    @endforeach
+                                    <tr>
+                                       <td></td>
+                                    </tr>
+                                    <tr>
+                                       <th colspan="2">Description</th>
                                        
-                                    </tbody>
-                                 </table>
-                                 <table class="table table-sm border">
-                                    <tbody>
-                                       <tr>
-                                          <th colspan="2" class="border">Description</th>
-                                          
-                                       </tr>
-                                       <tr>
-                                          <td class="border">Color</td>
-                                          <td class="border">Keterangan</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-draft border"></td>
-                                          <td class="border">Draft</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-assigned border"></td>
-                                          <td class="border">Assigned</td>
-                                       </tr>
-                                       <tr>
-                                          <td class="bg-complete border"></td>
-                                          <td class="border">Complete</td>
-                                       </tr>
-                                    </tbody>
-                                 </table>
-                           </div>
+                                    </tr>
+                                    <tr>
+                                       <td>Color</td>
+                                       <td>Keterangan</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-draft"></td>
+                                       <td>Draft</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-assigned"></td>
+                                       <td>Assigned</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-complete"></td>
+                                       <td>Complete</td>
+                                    </tr>
+                                    
+                                 </tbody>
+                              </table> --}}
+                              <table class="table table-sm border">
+                                 <tbody>
+                                    <tr>
+                                       <th colspan="2" class="border">Description</th>
+                                       
+                                    </tr>
+                                    <tr>
+                                       <td class="border">Color</td>
+                                       <td class="border">Keterangan</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-draft border"></td>
+                                       <td class="border">Draft</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-assigned border"></td>
+                                       <td class="border">Assigned</td>
+                                    </tr>
+                                    <tr>
+                                       <td class="bg-complete border"></td>
+                                       <td class="border">Complete</td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                        </div>
                         </div>
                         
                      </div>
@@ -1113,8 +1289,30 @@ input {
                         <div class="tab-pane fade " id="ok" role="tabpanel" aria-labelledby="ok-tab">
                            <div class="row">
                               <div class="col-md-3">
-                                 <div class="badge badge-info mb-2">Schedule</div>
-                                 
+                                 <div class="badge badge-info mb-2">Create Sailing Order</div>
+                              <form action="{{route('schedule.store.so')}}" method="POST">
+                                 @csrf
+                                 {{-- <div class="form-group"> --}}
+                                    <input type="date" name="start" id="start" value="{{$start}}" hidden>
+                                    <input type="date" name="end" id="end" value="{{$end}}" hidden>
+                                    <select name="vessel" id="vessel" class="form-control mb-2">
+                                       <option value="" selected disabled>Select Vessel</option>
+                                       @foreach ($vessels as $vessel)
+                                             <option value="{{$vessel->id}}">{{$vessel->name}}</option>
+                                       @endforeach
+                                    </select>
+                                 {{-- </div> --}}
+                                 {{-- <div class="form-group"> --}}
+                                    <div class="input-group mb-3">
+                                       {{-- min="{{$start}}" max="{{$end}}" --}}
+                                       <input type="date" class="form-control" name="date" id="date" value="{{$now->format('Y-m-d')}}"  >
+                                       <div class="input-group-append">
+                                          <button class="btn btn-light border btn-block " type="submit">Create</button>
+                                       </div>
+                                    </div>
+                                 {{-- </div> --}}
+                              </form>
+                              <hr>
                                  <table class="table table-sm border">
                                     <tbody>
                                        <tr>
@@ -1207,7 +1405,185 @@ input {
    </div>
 </section>
 
+
+<div class="modal fade" id="modalSubmitIntermilan" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{ route('intermilan.marine.submit') }}" method="POST" enctype="multipart/form-data">
+         @csrf
+         @method('PUT')
+
+         <input type="number" name="intermilanId" id="intermilanId" value="{{ $intermilan->id }}" hidden>
+
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title"> 
+                  <i class="fas fa-exclamation-triangle text-warning"></i>
+                  {{-- <i class="fas fa-exclamation-circle text-warning fa-bounce"></i>  --}}
+                  Konfirmasi Submit Intermilan</h5>
+
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               
+            </div>
+            <div class="modal-body">
+               
+               {{-- <i class="fas fa-times-circle text-danger"></i> --}}
+               <b>Apakah Anda yakin ingin mengirim data ini?</b> <br>
+                <small>Activity Plan dengan status "Vessel Assigned" akan ditampilkan di akun Kapal. <br><br></small>
+              
+                
+               
+               <div class="table-responsive">
+                  <table class="table table-sm border">
+                     <tbody>
+                        
+                        <tr>
+                              <td class="">ID</td>
+                              <td class="">{{$intermilan->code}}</td>
+                           </tr>
+                           <tr>
+                              <td class="">Periode</td>
+                              <td class="">{{formatDate($start)}} - {{formatDate($end)}}</td>
+                           </tr><tr>
+                              <td class="">Title</td>
+                              <td class="">{{$intermilan->title}}</td>
+                           </tr>
+                        
+                     </tbody>
+                  </table>
+               </div>
+
+               
+
+                  <small> <b>Note:</b> Setelah submit, data akan ditampilkan pada akun Kapal. </small>
+               
+
+
+               
+               
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info" onclick="handleClick(this)">Submit</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
 @foreach ($requests as $request)
+
+<div class="modal fade" id="modalAssignVessel-{{ $request->id }}" tabindex="-1" role="dialog"  aria-hidden="true">
+   <div class="modal-dialog" role="document">
+      <form action="{{route('intermilan.marine.assign')}}" method="POST" enctype="multipart/form-data">
+         @csrf
+         @method('PUT')
+         <input type="number" name="intermilanId" id="intermilanId" value="{{ $intermilan->id }}" hidden>
+         <input type="number" name="requestId" id="requestId" value="{{ $request->id }}" hidden>
+
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Assign Vessel</h5>
+
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               
+            </div>
+            <div class="modal-body">
+
+               <div class="table-responsive">
+                  <table class="table table-sm border">
+                     <tbody>
+                        <tr>
+                           <td>User</td>
+                           <td>{{$request->user->username}}</td>
+                        </tr>
+                        <tr>
+                           <td>Activity</td>
+                           <td>
+                              {{$request->description}}
+                               @if (count($request->cargoItems) > 0)
+                                                (
+                                                   @foreach ($request->cargoItems as $cargo)
+                                                      <a data-toggle="collapse" href="#formItemEdit-{{$cargo->id}}">{{$cargo->description}}</a>,
+                                                   @endforeach
+                                                )
+                                                @endif
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Loc</td>
+                           <td>
+                              {{$request->origin->code}} - {{$request->destination->code}}
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Request Date</td>
+                           <td>
+                              {{ formatDate($request->date) }}
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               
+               @if ($request->vessel_id != null)
+                      <a href="{{ route('intermilan.vessel.detail', enkripRambo($request->vessel_id)) }}" class="btn btn-sm btn-primary mb-4">Lihat Manifest Kapal</a>
+                  @endif
+               {{-- <div class="badge badge-info">Approval 1</div> --}}
+               <div class="row mb-2">
+                  
+                  <div class="col-md-12">
+                     <div class="form-group">
+                        {{-- <label for="" class="label">Vessel</label> --}}
+                     <select class="form-control" name="vessel" id="vessel" required>
+                           <option value="" selected  disabled>Select Vessel  </option>
+                           @foreach ($vessels as $vessel)
+                              
+                              <option {{$request->vessel_id == $vessel->id ? 'selected' : ''}} value="{{$vessel->id}}">{{$vessel->name}} </option>
+                             
+                              
+                           @endforeach
+                           
+                        </select>
+                        </div>
+                  </div>
+
+                  <div class="col-md-12">
+                     <div class="badge badge-info">Estimasi tanggal pelaksanaan</div>
+                     <div class="row mt-2">
+                        <div class="col-md-6">
+
+                           <input type="date" class="form-control" required name="est_start" id="est_start" value="{{ $request->est_start }}" min="{{ $start }}" max="{{ $end }}">
+                        </div>
+                        <div class="col-md-6">
+                           
+                           <input type="date" class="form-control" required name="est_end" id="est_end" value="{{ $request->est_end }}" min="{{ $start }}" max="{{ $end }}">
+                        </div>
+                     </div>
+                  </div>
+
+                  
+                  
+               </div>
+
+
+               
+               
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" class="btn btn-info" onclick="handleClick(this)">Assign</button>
+            </div>
+         </div>
+      </form>
+   </div>
+</div>
+
+
+
     @foreach ($request->cargoItems as $cargo)
     <div class="modal modal-blur fade" id="deleteCargo_{{$cargo->id}}" tabindex="" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-sm modal-dialog-centered" role="document">

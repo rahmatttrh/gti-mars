@@ -8,7 +8,31 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
-               <div class="card bg-primary shadow">
+
+               <div class="card welcome-card shadow">
+
+                  <div class="card-body position-relative">
+
+                     <!-- ICON BESAR -->
+                     <i class="fas fa-user welcome-icon"></i>
+
+                     <!-- HEADER -->
+                     <div class="mb-2">
+                           <small class="text-light">Welcome back 👋</small>
+                           <h4 class="mb-0 fw-bold">
+                              {{ auth()->user()->name }}
+                           </h4>
+                     </div>
+
+                     <!-- DIVIDER -->
+                     <div class="divider"></div>
+                     Superintendent & Marine Representative
+                     
+
+                  </div>
+
+               </div>
+               {{-- <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
                      <i class="fas fa-user"></i> Welcome back, <h4> {{auth()->user()->name}}</h4>
@@ -16,7 +40,7 @@
                       <b>Superintendent & Marine Representative</b>
                       
                   </div>
-               </div>
+               </div> --}}
                <div class="card shadow">
                   
                   <div class="card-body">
@@ -116,8 +140,16 @@
                      <div class="row">
                         <div class="col-md-12">
                            {{-- <h4></h4> --}}
-                           <div class="badge badge-info">VDR Validation</div>
-                           
+                           {{-- <div class="badge badge-info">VDR Validation</div> --}}
+                           <div class="d-flex align-items-center gap-2 mb-2">
+                              <i class="fa fa-check-circle text-primary mr-3"></i>
+                              <div>
+                                 <div class="fw-bold">Daftar VDR yang Memerlukan Persetujuan Anda</div>
+                                 <small class="text-muted">
+                                       Silahkan tinjau dan lakukan persetujuan untuk memastikan proses berjalan sesuai prosedur.
+                                 </small>
+                              </div>
+                           </div>
                            <div class="table-responsive mt-2" >
                               <table class="datatables">
                                  
@@ -136,19 +168,19 @@
                                  </thead>
                                  <tbody>
                                     @foreach ($vdrValidations as $vdr)
-                                       <tr class="border" style="border: 1px black">
-                                          <td>{{++$i}}</td>
-                                          <td>
+                                       <tr >
+                                          <td class="border-bottom">{{++$i}}</td>
+                                          <td class="border-bottom">
                                              <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->vessel->name ?? ''}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
-                                          <td>
+                                          <td class="border-bottom">
                                              <a href="{{route('document.vdr', enkripRambo($vdr->id))}}">{{$vdr->code}}</a>
                                              {{-- <a href="{{route('vdr.show', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
                                           </td>
                                           {{-- <td>{{$vdr->code}}</td> --}}
-                                          <td>{{formatDate($vdr->updated_at)}}</td>
-                                          <td class="text-right">
+                                          <td class="border-bottom">{{formatDate($vdr->updated_at)}}</td>
+                                          <td class="text-right border-bottom">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
                                        </tr>

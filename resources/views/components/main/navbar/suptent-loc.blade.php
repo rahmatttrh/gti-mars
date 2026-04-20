@@ -12,7 +12,7 @@
 </style>
 <nav class="navbar navbar-expand-lg main-navbar  text-dark" >
    <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/flaticon/mar-logo.png')}}" width="110" height="" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">

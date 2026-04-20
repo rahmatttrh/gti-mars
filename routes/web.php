@@ -29,6 +29,7 @@ use App\Http\Controllers\HopperScheduleController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\IntermilanController as ControllersIntermilanController;
 use App\Http\Controllers\IntermilanUserController;
+use App\Http\Controllers\IntermilanVesselController;
 use App\Http\Controllers\InterWeatherController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\IpbScheduleController;
@@ -233,6 +234,9 @@ Route::middleware(["auth"])->group(function () {
       Route::post('marine/store', [ControllersIntermilanController::class, 'storeMarine'])->name('intermilan.marine.store');
       Route::get('marine/vessel/detail/{id}', [ControllersIntermilanController::class, 'detailVessel'])->name('intermilan.vessel.detail');
 
+      Route::put('intermilan/assign/vessel', [ControllersIntermilanController::class, 'assignVessel'])->name('intermilan.marine.assign');
+      Route::put('marine/submit', [ControllersIntermilanController::class, 'submitMarine'])->name('intermilan.marine.submit');
+
       Route::post('marine/request/store', [ControllersIntermilanController::class, 'storeMarineRequest'])->name('intermilan.marine.request.store');
       Route::post('marine/request/material/import/store', [ControllersIntermilanController::class, 'importMaterial'])->name('intermilan.marine.request.material.import');
 
@@ -242,6 +246,8 @@ Route::middleware(["auth"])->group(function () {
       Route::get('marine/detail/{id}', [ControllersIntermilanController::class, 'detail'])->name('intermilan.marine.detail');
       Route::get('marine/risalah/{id}', [ControllersIntermilanController::class, 'risalah'])->name('intermilan.marine.risalah');
       Route::get('marine/crew/{id}', [ControllersIntermilanController::class, 'crew'])->name('intermilan.marine.crew');
+      Route::get('marine/timeline/{id}', [ControllersIntermilanController::class, 'timeline'])->name('intermilan.marine.timeline');
+
       Route::post('marine/request/drop', [ControllersIntermilanController::class, 'requestDrop'])->name('intermilan.marine.request.drop');
 
       Route::put('marine/weather/update', [InterWeatherController::class, 'update'])->name('intermilan.marine.weather.update');
@@ -266,6 +272,10 @@ Route::middleware(["auth"])->group(function () {
       Route::get('marine/main-strategy/delete/{id}', [MainStrategyController::class, 'delete'])->name('intermilan.marine.main.strategy.delete');
    });
 
+   Route::prefix('intermilan/vessel')->group(function () {
+      Route::get('detail/{id}', [IntermilanVesselController::class, 'detail'])->name('intermilan.vessel.detail');
+   });
+
 
    Route::prefix('daily-report')->group(function () {
       Route::get('marine/index', [DailyReportController::class, 'index'])->name('daily.report');
@@ -286,18 +296,23 @@ Route::middleware(["auth"])->group(function () {
       Route::post('store', [IntermilanUserController::class, 'store'])->name('intermilan.user.store');
 
       Route::post('request/store', [IntermilanUserController::class, 'storeRequest'])->name('intermilan.user.request.store');
+      Route::put('request/update', [IntermilanUserController::class, 'updateRequest'])->name('intermilan.user.request.update');
+      Route::put('request/delete', [IntermilanUserController::class, 'deleteRequest'])->name('intermilan.user.request.delete');
+
       Route::get('cancel/request/{id}', [IntermilanUserController::class, 'cancelRequest'])->name('intermilan.user.request.cancel');
       Route::get('release/request/{id}', [IntermilanUserController::class, 'releaseRequest'])->name('intermilan.user.request.release');
 
 
 
-      Route::post('delete/request/{$id}', [IntermilanUserController::class, 'deleteRequest'])->name('intermilan.user.request.delete');
+      // Route::post('delete/request/{$id}', [IntermilanUserController::class, 'deleteRequest'])->name('intermilan.user.request.delete');
       Route::post('cargo/store', [IntermilanUserController::class, 'storeCargo'])->name('intermilan.user.cargo.store');
       Route::put('cargo/update', [IntermilanUserController::class, 'updateCargo'])->name('intermilan.user.cargo.update');
       Route::get('detail/{id}', [IntermilanUserController::class, 'detail'])->name('intermilan.user.detail');
       Route::get('risalah/{id}', [IntermilanUserController::class, 'risalah'])->name('intermilan.user.risalah');
 
 
+      Route::get('monthly/detail/{month}/{year}', [IntermilanUserController::class, 'detailMonth'])->name('intermilan.user.detail.month');
+      Route::get('date/detail/{date}/{month}/{year}', [IntermilanUserController::class, 'detailDate'])->name('intermilan.user.detail.date');
 
       // Route::get('edit/{id}', [UserController::class, 'edit'])->name('user.edit');
       // Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');

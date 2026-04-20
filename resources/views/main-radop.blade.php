@@ -8,7 +8,32 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
-               <div class="card bg-primary shadow">
+
+               <div class="card welcome-card shadow">
+
+                  <div class="card-body position-relative">
+
+                     <!-- ICON BESAR -->
+                     <i class="fas fa-user welcome-icon"></i>
+
+                     <!-- HEADER -->
+                     <div class="mb-2">
+                           <small class="text-light">Welcome back 👋</small>
+                           <h4 class="mb-0 fw-bold">
+                              {{ auth()->user()->name }}
+                           </h4>
+                     </div>
+
+                     <!-- DIVIDER -->
+                     <div class="divider"></div>
+
+                     <!-- PIC -->
+                     
+
+                  </div>
+
+               </div>
+               {{-- <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
                      Welcome back, <br> <h4 class="text-uppercase"> {{auth()->user()->name}}</h4>
@@ -17,10 +42,8 @@
                      <br>
                      Area <br>
                      <b>{{auth()->user()->getArea()}}</b>
-                     {{-- <hr>
-                     Location Company Representative/Suptent Area --}}
                   </div>
-               </div>
+               </div> --}}
 
                <div class="card">
                   <div class="card-body">

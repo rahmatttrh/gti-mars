@@ -2,11 +2,11 @@
    @if ($request->status == 0)
       Draft
       @elseif($request->status == 1)
-      Validasi Marine
-      @elseif($request->status == 2)
-      Schedule on Set
-      @elseif($request->status == 3)
       Waiting Vessel
+      @elseif($request->status == 2)
+      Vessel Assigned
+      @elseif($request->status == 3)
+      Progress
       @elseif($request->status == 4)
         {{$request->getStatus()->status->name}} {{$request->getStatus()->port_id == null ? '' : 'at ' . $request->getStatus()->port->code}}
       @elseif($request->status == 5)

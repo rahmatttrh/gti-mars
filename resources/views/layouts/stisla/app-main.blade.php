@@ -85,6 +85,112 @@ table {
 
    
 </style>
+
+<style>
+   .welcome-card {
+       border: none;
+       border-radius: 10px;
+       background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+       color: white;
+       overflow: hidden;
+       position: relative;
+   }
+   
+   .welcome-card:hover {
+       transform: translateY(-3px);
+       box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+       transition: 0.3s;
+   }
+   
+   .welcome-icon {
+       font-size: 50px;
+       opacity: 0.2;
+       position: absolute;
+       right: 20px;
+       top: 20px;
+   }
+   
+   .pic-list span {
+       display: inline-block;
+       background: rgba(255,255,255,0.2);
+       padding: 5px 10px;
+       border-radius: 20px;
+       margin: 3px;
+       font-size: 12px;
+   }
+   
+   .divider {
+       border-top: 1px solid rgba(255,255,255,0.3);
+       margin: 15px 0;
+   }
+   </style>
+
+
+
+<style id="x9m2qa">
+   .timeline-wrapper {
+       max-height: 360px; /* tinggi area scroll */
+       overflow-y: auto;
+       padding-right: 10px;
+   }
+   
+   .timeline {
+       position: relative;
+       padding-left: 30px;
+       border-left: 2px solid #dee2e6;
+   }
+   
+   .timeline-item {
+       position: relative;
+       margin-bottom: 7px;
+   }
+   
+   .timeline-item::before {
+       content: "";
+       position: absolute;
+       left: -10px;
+       top: 5px;
+       width: 15px;
+       height: 15px;
+       background: #0d6efd;
+       border-radius: 50%;
+   }
+   
+   .timeline-content {
+       padding: 10px;
+       background: #f8f9fa;
+       border-radius: 10px;
+   }
+   </style>
+
+<style>
+   .stat-card {
+    border-radius: 16px;
+    transition: 0.3s;
+    background: #fff;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+/* ICON */
+.stat-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+/* ANGKA */
+.stat-number h4 {
+    font-size: 24px;
+}
+</style>
 </head>
 
 <body class="layout-3" style="background-color: #eaeef7">

@@ -8,7 +8,46 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
-               <div class="card bg-primary shadow">
+
+               <div class="card welcome-card shadow">
+
+                  <div class="card-body position-relative">
+
+                     <!-- ICON BESAR -->
+                     <i class="fas fa-user welcome-icon"></i>
+
+                     <!-- HEADER -->
+                     <div class="mb-2">
+                           <small class="text-light">Welcome back 👋</small>
+                           <h4 class="mb-0 fw-bold">
+                              {{ auth()->user()->name }}
+                           </h4>
+                     </div>
+
+                     <!-- DIVIDER -->
+                     <div class="divider"></div>
+
+                     <!-- PIC -->
+                     <div>
+                           {{-- <small class="text-light">PIC of Fleet Control</small> --}}
+                           <div class="pic-list mt-2">
+                              <span value="YFH">Yusuf Falah Hibatullah</span>
+                              {{-- <span value="RPR">Raditya Perdana Rachmansyah</span> --}}
+                              <span value="ESN">Eka Satria Nugroho</span>
+                              <span value="BJ">Bryan Jhon</span>
+                              <span value="LAJ">Lutfa Alprimas Jasworo</span>
+                              <span value="SW">Setyo Wiyono</span>
+                              <span value="LA">Luthfi Alhafiizh</span>
+                              <span value="ARK">Akhmad Rizki Kurniawan</span>
+                           </div>
+                     </div>
+
+                  </div>
+
+               </div>
+
+
+               {{-- <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
                      <i class="fas fa-user"></i> Welcome back, <h4> {{auth()->user()->name}}</h4>
@@ -16,8 +55,7 @@
                      <b class="mb-3">PIC of Fuel Monitoring Team :</b> <br>
 
                      <option value="YFH">Yusuf Falah Hibatullah</option>
-                     {{-- <option value="RPR">Raditya Perdana Rachmansyah</option> --}}
-                     <option value="ESN">Eka Satria Nugroho</option>
+                      <option value="ESN">Eka Satria Nugroho</option>
                      <option value="BJ">Bryan Jhon</option>
                      <option value="LAJ">Lutfa Alprimas Jasworo</option>
                      <option value="SW">Setyo Wiyono</option>
@@ -25,19 +63,13 @@
                      <option value="ARK">Akhmad Rizki Kurniawan</option>
                       
                   </div>
-               </div>
+               </div> --}}
       
-               <div class="card shadow d-none d-md-block">
+               {{-- <div class="card shadow d-none d-md-block">
                   <div class="card-body px-1">
                      <div class=" table-responsive  overflow-auto" style="height: 250px">
                         <table class=" display  "   >
-                          {{-- <thead>
-                             <tr>
-                                <th>Time</th>
-                                <th>User</th>
-                                <th>Action</th>
-                             </tr>
-                          </thead> --}}
+                         
                           <tbody>
                              <tr>
                                 <th style="color: #1f4481 !important">Log Activity</th>
@@ -56,13 +88,49 @@
                        </table>
                      </div>
                   </div>
+               </div> --}}
+
+               <div class="timeline-wrapper mb-3">
+
+                  <div class="timeline">
+                     @foreach ($logs as $log)
+                     
+                     <div class="timeline-item ">
+                           <div class="timeline-content">
+                              <small class="mb-1">
+                                    <b> <i class="fa fa-check-circle text-success"></i> {{$log->user->name ?? ''}}</b>
+                              </small> <br>
+                              <small class="text-muted">{{formatDateTime($log->created_at)}}</small>
+                              <br>
+                                 <small>
+                                {{$log->action}} 
+                                {{-- {{$log->desc}} --}}
+                                @if ($log->vdr_id != null)
+                                        <small>{{$log->vdr->code ?? ''}}</small>
+                                            
+                                        @endif
+                                {{-- @if ($log->vdr_id != null)
+                                           {{$log->vdr->code}}
+                                      @endif --}}
+                                          </small>
+                                       
+                           </div>
+                        </div>
+                  @endforeach
+
+                       
+
+                        
+
+                  </div>
+
                </div>
                
             </div>
             <div class="col-md-9">
                <div class="row ">
                   <div class="col-md-4">
-                     <div class="card card-statistic-1 shadow-lg">
+                     {{-- <div class="card card-statistic-1 shadow-lg">
                         <a href="{{route('vdr.pet.validation')}}">
                         <div class="card-icon bg-info">
                         <i class="fas fa-user"></i>
@@ -76,44 +144,125 @@
                            {{count($vdrs->where('status', 1))}}
                         </div>
                         </div>
+                        </a>
+                     </div> --}}
+                     <a href="{{route('vdr.pet.validation')}}" class="text-decoration-none">
+                        <div class="card stat-card border-0 shadow-lg">
+
+                              <div class="card-body d-flex align-items-center justify-content-between">
+
+                                 <!-- KIRI: ICON -->
+                                 <div class="stat-icon bg-info-subtle text-info">
+                                    <i class="fa fa-hourglass-half"></i>
+                                 </div>
+
+                                 <!-- TENGAH: TEXT -->
+                                 <div class="text-center flex-grow-1">
+                                    <div class="text-muted small">VDR Status</div>
+                                    <h5 class="mb-0 fw-bold">Waiting</h5>
+                                 </div>
+
+                                 <!-- KANAN: ANGKA -->
+                                 <div class="stat-number text-end">
+                                    <h4 class="mb-0 fw-bold text-info">
+                                          {{count($vdrs->where('status', 1))}}
+                                    </h4>
+                                 </div>
+
+                              </div>
+
+                        </div>
                      </a>
-                     </div>
                   </div>
                   <div class="col-md-4">
-                     <div class="card card-statistic-1 shadow-lg">
+                     {{-- <div class="card card-statistic-1 shadow-lg">
                         <a href="{{route('vdr.reject.list')}}">
-                        <div class="card-icon bg-danger">
-                        <i class="fas fa-bolt"></i>
-                        </div>
-                        <div class="card-wrap">
-                        <div class="card-header">
-                           
-                           <h4>Rejected</h4>
-                        </div>
-                        <div class="card-body">
-                           {{count($vdrs->where('status', 101))}}
-                        </div>
+                           <div class="card-icon bg-danger">
+                           <i class="fas fa-bolt"></i>
+                           </div>
+                           <div class="card-wrap">
+                           <div class="card-header">
+                              
+                              <h4>Rejected</h4>
+                           </div>
+                           <div class="card-body">
+                              {{count($vdrs->where('status', 101))}}
+                           </div>
+                           </div>
+                        </a>
+                     </div> --}}
+                     <a href="{{route('vdr.reject.list')}}" class="text-decoration-none">
+                        <div class="card stat-card border-0 shadow-lg">
+
+                              <div class="card-body d-flex align-items-center justify-content-between">
+
+                                 <!-- ICON -->
+                                 <div class="stat-icon bg-danger-subtle text-danger">
+                                    <i class="fa fa-exclamation-triangle"></i>
+                                 </div>
+
+                                 <!-- TEXT -->
+                                 <div class="text-center flex-grow-1">
+                                    <div class="text-muted small">VDR Status</div>
+                                    <h6 class="mb-0 fw-bold text-danger">Rejected</h6>
+                                 </div>
+
+                                 <!-- ANGKA -->
+                                 <div class="text-end">
+                                    <h4 class="mb-0 fw-bold text-danger">
+                                          {{count($vdrs->where('status', 101))}}
+                                    </h4>
+                                 </div>
+
+                              </div>
+
                         </div>
                      </a>
-                     </div>
                   </div>
                   <div class="col-md-4">
-                     <div class="card card-statistic-1 shadow-lg">
+                     {{-- <div class="card card-statistic-1 shadow-lg">
                         <a href="{{route('vdr.history.list')}}">
-                        <div class="card-icon bg-success">
-                        <i class="fas fa-user"></i>
-                        </div>
-                        <div class="card-wrap">
-                        <div class="card-header">
-                           
-                           <h4>History</h4>
-                        </div>
-                        <div class="card-body">
-                           {{count($vdrs->where('status', '>', 1))}}
-                        </div>
+                           <div class="card-icon bg-success">
+                           <i class="fas fa-user"></i>
+                           </div>
+                           <div class="card-wrap">
+                           <div class="card-header">
+                              
+                              <h4>History</h4>
+                           </div>
+                           <div class="card-body">
+                              {{count($vdrs->where('status', '>', 1))}}
+                           </div>
+                           </div>
+                        </a>
+                     </div> --}}
+                     <a href="{{route('vdr.history.list')}}" class="text-decoration-none">
+                        <div class="card stat-card border-0 shadow-lg">
+
+                              <div class="card-body d-flex align-items-center justify-content-between">
+
+                                 <!-- ICON -->
+                                 <div class="stat-icon bg-success-subtle text-success">
+                                    <i class="fa fa-history"></i>
+                                 </div>
+
+                                 <!-- TEXT -->
+                                 <div class="text-center flex-grow-1">
+                                    <div class="text-muted small">VDR Data</div>
+                                    <h6 class="mb-0 fw-bold text-success">History</h6>
+                                 </div>
+
+                                 <!-- ANGKA -->
+                                 <div class="text-end">
+                                    <h4 class="mb-0 fw-bold text-success">
+                                          {{count($vdrs->where('status', '>', 1))}}
+                                    </h4>
+                                 </div>
+
+                              </div>
+
                         </div>
                      </a>
-                     </div>
                   </div>
                   
                </div>
@@ -122,6 +271,15 @@
                   <div class="card-body">
                      <div class="row">
                         <div class="col-md-12">
+                           <div class="d-flex align-items-center gap-2 mb-2">
+                              <i class="fa fa-check-circle text-primary mr-3"></i>
+                              <div>
+                                 <div class="fw-bold">Daftar VDR yang Memerlukan Persetujuan Anda</div>
+                                 <small class="text-muted">
+                                       Silahkan tinjau dan lakukan persetujuan untuk memastikan proses berjalan sesuai prosedur.
+                                 </small>
+                              </div>
+                           </div>
                            <div class="table-responsive " >
                               <table class="datatables-3">
                                  
@@ -147,17 +305,17 @@
                                     @foreach ($vdrValidations as $vdr)
                                        <tr class="border" style="border: 1px black">
                                         
-                                          <td>
+                                          <td class="border-bottom">
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name ?? ''}}</a>
                                           </td>
-                                          <td>
+                                          <td class="border-bottom">
                                              <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
                                            </td>
-                                          <td>{{$vdr->date}}</td>
-                                          <td>{{$vdr->release_date}}</td>
+                                          <td class="border-bottom">{{$vdr->date}}</td>
+                                          <td class="border-bottom">{{$vdr->release_date}}</td>
                                           
                                           
-                                          <td class="text-right">
+                                          <td class="text-right border-bottom">
                                              <x-status-stisla.vdr :vdr="$vdr" />
                                           </td>
                                        </tr>

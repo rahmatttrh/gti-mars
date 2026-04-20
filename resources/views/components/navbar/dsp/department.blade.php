@@ -116,7 +116,7 @@
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
    {{-- <div class="container"> --}}
-      <ul class="navbar-nav px-3">
+      <ul class="navbar-nav mx-3">
          {{-- <li class="nav-item dropdown {{ (request()->is('dsp/u/dash/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/u/dash/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/u/dash/*'))
@@ -140,7 +140,7 @@
             </a>
          </li>
 
-         <li class="nav-item dropdown {{ (request()->is('dsp/u/request/create/*')) ? 'active' : '' }}">
+         {{-- <li class="nav-item dropdown {{ (request()->is('dsp/u/request/create/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/u/request/create/*')) ? 'text-dark' : 'text-white' }} ">
                @if (request()->is('dsp/u/request/create/*'))
                <i class="fas fa-fire ml-3"></i>
@@ -154,7 +154,7 @@
                <li class="nav-item"><a href="{{route('request.create', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link">Multiple Destination</a></li>
             </ul>
          </li>
-         
+          --}}
          {{-- <li class="nav-item {{ (request()->is('dsp/u/request/create')) ? 'active' : '' }}">
             <a href="{{route('request.create', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link {{ (request()->is('dsp/u/request/create')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/u/request/create'))
@@ -166,7 +166,15 @@
          </li> --}}
 
          <li class="nav-item pr-3 {{ (request()->is('dsp/u/request/progress')) ? 'active' : '' }}">
-            <a href="{{route('request.progress')}}" class="nav-link {{ (request()->is('dsp/u/request/progress')) ? 'text-dark' : 'text-white' }}">
+            {{-- <a href="{{route('request.progress')}}" class="nav-link {{ (request()->is('dsp/u/request/progress')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('dsp/u/request/progress'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="">Progress Request</span>
+            </a> --}}
+
+            <a href="#" class="nav-link {{ (request()->is('dsp/u/request/progress')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('dsp/u/request/progress'))
                <i class="fas fa-fire ml-3"></i>
                @endif

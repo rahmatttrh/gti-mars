@@ -10,6 +10,7 @@ use App\Models\Employee;
 use App\Models\FoodstuffSchedule;
 use App\Models\HopperSchedule;
 use App\Models\Intermilan;
+use App\Models\IntermilanTimeline;
 use App\Models\InterWeather;
 use App\Models\IpbSchedule;
 use App\Models\LiftingSchedule;
@@ -20,6 +21,7 @@ use App\Models\PaxSchedule;
 use App\Models\Port;
 use App\Models\ProjectSchedule;
 use App\Models\Request as ModelsRequest;
+use App\Models\RequestVessel;
 use App\Models\Schedule;
 use App\Models\User;
 use App\Models\Vessel;
@@ -113,6 +115,106 @@ class IntermilanController extends Controller
             'start' => $start->format('Y-m-d'),
             'end' => $end->format('Y-m-d')
         ])->with('i');
+    }
+
+
+    public function assignVessel(Request $req)
+    {
+        $request = ModelsRequest::find($req->requestId);
+        $vessel = Vessel::find($req->vessel);
+
+        $activity = null;
+        $activity2 = null;
+        if ($request->vessel_id == null) {
+            $activity = 'Vessel Assigned to ' . $vessel->name;
+            # code...
+        } else {
+            if ($request->vessel_id != $req->vessel) {
+                $activity = 'Vessel Changed to '  . $vessel->name;
+            }
+        }
+        if ($activity) {
+            IntermilanTimeline::create([
+                'intermilan_id' => $req->intermilanId,
+                'request_id' => $request->id,
+                'user_id' => auth()->user()->id,
+                'activity' => $activity
+            ]);
+        }
+
+
+        if ($request->est_start == null) {
+            $activity2 = 'Date Set to ' . formatDate($req->est_start) . ' - ' . formatDate($req->est_end);
+        } else {
+            if ($request->est_start != $req->est_start || $request->est_end != $req->est_end) {
+                $activity2 = 'Date Changed to' . formatDate($req->est_start) . ' - ' . formatDate($req->est_end);
+            }
+        }
+
+        if ($activity2) {
+            IntermilanTimeline::create([
+                'intermilan_id' => $req->intermilanId,
+                'request_id' => $request->id,
+                'user_id' => auth()->user()->id,
+                'activity' => $activity2
+            ]);
+        }
+
+        $request->update([
+            'vessel_id' => $req->vessel,
+            'status' => 2,
+            'intermilan_id' => $req->intermilanId,
+            'est_start' => $req->est_start,
+            'est_end' => $req->est_end
+        ]);
+
+        $requestVessels = RequestVessel::where('request_id', $request->id)->get();
+        if (count($requestVessels) > 0) {
+            foreach ($requestVessels as $rv) {
+                $rv->delete();
+            }
+        }
+
+        $start = Carbon::parse($req->est_start);
+        $end   = Carbon::parse($req->est_end);
+
+        $dates = [];
+
+        while ($start->lte($end)) {
+            $dates[] = $start->copy()->format('Y-m-d');
+            $start->addDay();
+        }
+
+        // dd($dates);
+
+        foreach ($dates as $d) {
+            RequestVessel::create([
+                'request_id' => $request->id,
+                'vessel_id' => $req->vessel,
+                'date' => $d
+            ]);
+        }
+
+
+
+
+
+
+
+        return redirect()->back()->with('success', 'Vessel successfully assigned');
+    }
+
+    public function submitMarine(Request $req)
+    {
+        $intermilan = Intermilan::find($req->intermilanId);
+        $requestUsers = ModelsRequest::where('intermilan_id', $intermilan->id)->where('status', 2)->get();
+        foreach ($requestUsers as $request) {
+            $request->update([
+                'status' => 3
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Intermilan submitted, Activity Plan in this Intermilan has been submitted to vessel');
     }
 
 
@@ -312,7 +414,8 @@ class IntermilanController extends Controller
             'origin_id' => $req->origin,
             'destination_id' => $req->destination,
             'status' => $status,
-            'created_by' => 'marine'
+            'created_by' => 'marine',
+            'req_boat' => $req->req_boat
         ]);
 
         return redirect()->back()->with('success', 'Intermilan added');
@@ -535,6 +638,34 @@ class IntermilanController extends Controller
             'hopperSchedules' => $hopperSchedules,
             'otherSchedules' => $otherSchedules,
             'mainStrategies' => $mainStrategies
+
+        ])->with('i');
+    }
+
+
+    public function timeline($id)
+    {
+        $intermilan = Intermilan::find(dekripRambo($id));
+        $startDate = new Carbon($intermilan->from);
+        $endDate = new Carbon($intermilan->to);
+        $vessels = Vessel::get();
+
+        $timelines = IntermilanTimeline::where('intermilan_id', $intermilan->id)->orderBy('created_at', 'desc')->get();
+
+
+        // dd($paxSchedules);
+
+
+
+        return view('pages-stisla.marine.intermilan.detail-timeline', [
+            'intermilan' => $intermilan,
+            'start' => $startDate,
+            'end' => $endDate,
+            'vessels' => $vessels,
+            'now' => Carbon::now(),
+            'timelines' => $timelines
+
+
 
         ])->with('i');
     }

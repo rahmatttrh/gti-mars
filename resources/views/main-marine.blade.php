@@ -8,7 +8,48 @@
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
-               <div class="card bg-primary shadow">
+
+               <div class="card welcome-card shadow">
+
+                  <div class="card-body position-relative">
+
+                     <!-- ICON BESAR -->
+                     <i class="fas fa-user welcome-icon"></i>
+
+                     <!-- HEADER -->
+                     <div class="mb-2">
+                           <small class="text-light">Welcome back 👋</small>
+                           <h4 class="mb-0 fw-bold">
+                              {{ auth()->user()->name }}
+                           </h4>
+                     </div>
+
+                     <!-- DIVIDER -->
+                     <div class="divider"></div>
+
+                     <!-- PIC -->
+                     <div>
+                           {{-- <small class="text-light">PIC of Fleet Control</small> --}}
+                           <div class="pic-list mt-2">
+                              <span value="YFH">Umar Agam</span>
+                              {{-- <span value="RPR">Raditya Perdana Rachmansyah</span> --}}
+                              <span value="ESN">Rezky Hardanto</span>
+                              <span value="BJ">Muhammad Misbakhul Hasan</span>
+                              
+                           </div>
+                     </div>
+
+                     <div class="divider"></div>
+                     On behalf of Port Captain : <br>
+                      Joy Pranata Ginting,
+                     Mochamad Harris,
+                     Yusuf Revy Fadillah,
+                     Dicky Dandi Permana
+
+                  </div>
+
+               </div>
+               {{-- <div class="card bg-primary shadow">
                   <div class="card-body ">
                      
                      <i class="fas fa-user"></i> Welcome back, <h4> {{auth()->user()->name}}</h4>
@@ -28,7 +69,7 @@
                       
                   </div>
                   
-               </div>
+               </div> --}}
 
 
                {{-- @if ($dailyReportAlert == true)
@@ -145,22 +186,31 @@
                   <div class="col-md-8">
                      <div class="card shadow">
                         <div class="card-body">
-                           <div class="d-flex justify-content-between">
+                           {{-- <div class="d-flex justify-content-between">
                               <div class="badge badge-info"><a href="{{route('intermilan.marine')}}" style="color: aliceblue">VDR Marine</a></div>
-                              {{-- <a href="">See All..</a> --}}
+                              
                               <span><i>Approval Marine</i></span>
+                           </div> --}}
+                           <div class="d-flex align-items-center gap-2 mb-2">
+                              <i class="fa fa-check-circle text-primary mr-3"></i>
+                              <div>
+                                 <div class="fw-bold">Daftar VDR yang Memerlukan Persetujuan Anda</div>
+                                 <small class="text-muted">
+                                       Silahkan tinjau dan lakukan persetujuan untuk memastikan proses berjalan sesuai prosedur.
+                                 </small>
+                              </div>
                            </div>
                            
                            <div class="row mt-1">
                               <div class="col-md-12">
-                                 <div class="table-responsive overflow-auto p-1" style="max-height: 200px">
+                                 <div class="table-responsive overflow-auto p-1" style="max-height: 300px">
                                     <table class=" ">
                                        
                                        <thead>
                                           
                                           <tr class="border-bottom">
                                              
-                                             <th>Code</th>
+                                             <th>VDR ID</th>
                                              {{-- <th>Date</th> --}}
                                              {{-- <th>Date</th> --}}
                                              <th>Status</th>

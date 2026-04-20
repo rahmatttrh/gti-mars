@@ -76,25 +76,47 @@ input {
                
               
                <div class="card-body">
-                  <a href="" class="btn btn-sm btn-primary mb-2">Submit</a>
-                  <a class="btn btn-sm btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">Export PDF </a>
                   <div class="row">
-                     <div class="col-md-8">
-                        <div class="">
-                           <span>{{$intermilan->code}} </span> <br>
-                           <span>{{$intermilan->title}}</span>
-                           <h5 class="mb--2">
+                     <div class="col-md-6">
                            
-                              INTERMILAN {{formatDate($start)}} - {{formatDate($end)}}</h5>
-                           
-                        </div>
+                        <table class="table table-sm border">
+                           <tbody>
+                              <tr>
+                                 <td colspan="2" class="border">
+                                    <h4>INTERMILAN</h4>
+                                 </td>
+                              </tr>
+                              <tr>
+                                 <td class="border">ID</td>
+                                 <td class="border">{{$intermilan->code}}</td>
+                              </tr>
+                              <tr>
+                                 <td class="border">Periode</td>
+                                 <td class="border">{{formatDate($start)}} - {{formatDate($end)}}</td>
+                              </tr><tr>
+                                 <td class="border">Title</td>
+                                 <td class="border">{{$intermilan->title}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
                      </div>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                     
-                     
-                     
-                  
+                     <div class="col-md-6">
+
+                        <div class="btn-group">
+                           <button onclick="location.reload()" class="btn mb-2 btn-info">
+                              <i class="fa fa-refresh"></i>
+                              Refresh Data
+                           </button>
+                           
+                           
+                           <a class="btn  btn-light border mb-2" href="{{route('document.intermilan.export', [enkripRambo($start),enkripRambo($end)])}}" target="_blank" class="" data-toggle="tooltip" data-placement="top" title="Export PDF">
+                              <i class="fa fa-file"></i>
+                              Export PDF 
+                           </a>
+                        </div>
+
+                        
+                     </div>
                   </div>
                   
                   {{-- <hr> --}}
@@ -106,11 +128,14 @@ input {
                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Crew</a>
                    </li>
                    <li class="nav-item">
-                     <a class="nav-link active" id="contact-tab" data-toggle="tab" href="{{route('intermilan.marine.risalah', enkripRambo($intermilan->id))}}" role="tab" aria-controls="contact" aria-selected="false">Risalah</a>
+                     <a class="nav-link active" id="contact-tab" data-toggle="tab" href="#" role="tab" aria-controls="contact" aria-selected="false">Risalah</a>
                    </li>
-                     <li class="nav-item">
+                   <li class="nav-item">
+                     <a class="nav-link"  href="{{route('intermilan.marine.timeline', enkripRambo($intermilan->id))}}"  aria-controls="ok" aria-selected="false">Timeline</a>
+                  </li>
+                     {{-- <li class="nav-item">
                         <a class="nav-link" id="ok-tab" data-toggle="tab" href="#ok" role="tab" aria-controls="ok" aria-selected="false">Schedule</a>
-                     </li>
+                     </li> --}}
                  </ul>
                  <div class="tab-content" id="myTabContent">
                    

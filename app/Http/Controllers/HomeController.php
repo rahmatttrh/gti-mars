@@ -24,6 +24,7 @@ use App\Models\CargoItem;
 use App\Models\DailyReport;
 use App\Models\Document;
 use App\Models\Intermilan;
+use App\Models\IntermilanTimeline;
 use App\Models\IntermilanUser;
 use App\Models\Log;
 use App\Models\MaterialMan;
@@ -572,6 +573,15 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $offices = Office::get();
 
+         // dd('ok');
+
+         // $vdrProsperos = Vdr::where('vessel_id', 50)->where('status', 5)->get();
+         // // dd(count($vdrProsperos));
+         // foreach ($vdrProsperos as $pros) {
+         //    $pros->update([
+         //       'status' => 3
+         //    ]);
+         // }
 
 
          // $vdrPioners = Vdr::where('vessel_id', 38)->where('status', 1)->where('func', '!=', null)->get();
@@ -1002,6 +1012,17 @@ class HomeController extends Controller
          //    'remark' => 'offhire'
          // ]);
          // dd('ok');
+
+         $parakan = Vessel::find(44);
+         // $parakanVdrs = Vdr::where('vessel_id', 44)->where('status', 0)->get();
+         // dd($parakan->name);
+         // dd(count($parakanVdrs));
+         // foreach ($parakanVdrs as $parakanVdr) {
+         //    $parakanVdr->update([
+         //       'status' => 4,
+         //       'remark' => 'offhire'
+         //    ]);
+         // }
 
 
 
@@ -1650,6 +1671,7 @@ class HomeController extends Controller
          ]);
       } else if (auth()->user()->hasRole('suptent')) {
          // dd('ok');
+
          $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
          $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
 
@@ -1727,9 +1749,12 @@ class HomeController extends Controller
          } else {
             $dailyReportAlert = false;
          }
+
+         $vessels = Vessel::get();
          return view('main-fleet', [
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
+            'vessels' => $vessels,
             'vdrValidations' => $vdrValidations,
             'intermilans' => $intermilans,
             'dailyReports' => $dailyReports,
@@ -1849,7 +1874,7 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'marine') {
             $to = Carbon::now();
             $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-            $vdrValidations = Vdr::where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = Vdr::where('status', 2)->where('area', '')->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
 
             $vdrs = Vdr::where('status', '>=', 2)->whereBetween('date', ['2025-09-16', $to])->get();
@@ -1911,6 +1936,7 @@ class HomeController extends Controller
 
             ])->with('i');
          } else {
+            dd('ok');
             $to = Carbon::now();
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
@@ -2077,6 +2103,7 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if (auth()->user()->hasRole('office')) {
+
          // dd('ok');
          $now = Carbon::now();
          $office = Office::where('username', auth()->user()->username)->first();
@@ -2099,7 +2126,9 @@ class HomeController extends Controller
 
          $now = Carbon::now();
          $currentVessel = Vessel::where('email', auth()->user()->email)->first();
-
+         if (auth()->user()->username == 'encone_office') {
+            $currentVessel = Vessel::where('name', 'ENC ONE')->first();
+         }
          if ($currentVessel->id == 24) {
             // dd('ok');
             // $allVdrActivities = VdrActivity::get();
@@ -2140,13 +2169,71 @@ class HomeController extends Controller
             'docs' => $docs
          ])->with('i');
       } else if (auth()->user()->hasRole('department')) {
-         // dd('ok');
          $intermilanUsers = IntermilanUser::where('user_id', auth()->user()->id)->orderBy('created_at', 'desc')->paginate(8);
+
+
+
+         $month = auth()->user()->getMonth();
+         $year = auth()->user()->getYear();
+
+         $yearMonth = $year . '-' . $month;
+         // dd($yearMonth);
+         $start = Carbon::parse($yearMonth)->startOfMonth();
+         $end = Carbon::parse($yearMonth)->endOfMonth();
+
+         $dates = [];
+         while ($start->lte($end)) {
+            $dates[] = $start->copy();
+            $start->addDay();
+         }
+
+
+         $firstDate = $dates[0]->format('Y-m-d');
+
+         // dd($dates);
+         foreach ($dates as $date) {
+            // dd($date->format('Y-m-d'));
+
+            $requests = ModelsRequest::get();
+            foreach ($requests as $req) {
+               if ($req->date == $date->format('Y-m-d')) {
+                  // dd('Ada');
+               }
+            }
+         }
+
+         $allRequests = ModelsRequest::get();
+         $cargoItems = CargoItem::where('user_id', auth()->user()->id)->get();
+         $ports = Port::get();
+         $intermilans = Intermilan::orderBy('from', 'desc')->paginate(2);
+
+         $userRequests = ModelsRequest::where('date', $firstDate)->where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+
+         $allUserRequests = ModelsRequest::where('user_id', auth()->user()->id)->orderBy('parent_id', 'asc')->get();
+         $userRequestIds = [];
+         foreach ($allUserRequests as $req) {
+            $userRequestIds[] = $req->id;
+         }
+         // dd($userRequests);
+         $timelines = IntermilanTimeline::whereIn('request_id', $userRequestIds)->orderBy('created_at', 'desc')->paginate(20);
+
          return view('main-department', [
-            'intermilanUsers' => $intermilanUsers
+            'intermilanUsers' => $intermilanUsers,
+            'timelines' => $timelines,
+            'monthName' => getMonthName($month),
+            'year' => $year,
+            'dates' => $dates,
+            'month' => $month,
+            'allRequests' => $allRequests,
+            'cargoItems' => $cargoItems,
+            'ports' => $ports,
+            'intermilans' => $intermilans,
+            'date' => Carbon::create($firstDate),
+            'userRequests' => $userRequests
          ])->with('i');
       } else {
          // dd('ok');
+
          $currentVessel = null;
          $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
          $requests = null;
@@ -2159,6 +2246,8 @@ class HomeController extends Controller
          $myRecentVdrs = null;
          $vessels = null;
       }
+
+
 
       $feed = News::get()->first();
 
