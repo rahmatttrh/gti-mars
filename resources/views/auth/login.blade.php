@@ -15,8 +15,10 @@
             },
             custom: {
                 "families": ["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands"],
-                urls: ['{{ asset('
-                                                                					css / fonts.css ') }}']
+                urls: [
+                    '{{ asset('
+                                                                                                                                                                    					css / fonts.css ') }}'
+                ]
             },
             active: function() {
                 sessionStorage.fonts = true;
@@ -60,7 +62,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-xl-10 col-lg-12 col-md-9">
-                <div class="card o-hidden border shadow-lg my-5">
+                <div class="card o-hidden  my-5" style="box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.08), 0 0 15px 0 rgba(0, 0, 0, 0.03); border:none">
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-md-7 d-none d-lg-block "
@@ -71,8 +73,9 @@
                             <div class="col-md-5">
                                 <div class="p-5">
                                     <div class="">
-                                        <img src="{{asset('img/flaticon/mars-logo.png')}}" style="width: 180px" class="mr-2" alt="">
-                                        
+                                        <img src="{{ asset('img/flaticon/mars-logo.png') }}" style="width: 180px"
+                                            class="mr-2" alt="">
+
 
                                         {{-- <span>Marine Advanced Reporting System </span> --}}
 
@@ -83,11 +86,8 @@
                                     <form class="user" method="POST" action="{{ route('login') }}">
                                         @csrf
 
-
-
                                         <div class="form-group mt-2 form-group-default">
-                                            <label for="username"
-                                                class="placeholder"><small>Username</small></label>
+                                            <label for="username" class="placeholder"><small>Username *</small></label>
                                             <input id="username" name="username" type="text"
                                                 class="form-control @error('username') is-invalid @enderror" required>
                                             @error('username')
@@ -117,19 +117,19 @@
 
                                         <div class="form-group form-group-default">
 
-                                            <label>Password *</label>
+                                            <label for="password" class="placeholder"><small>Password *</small></label>
                                             <div class="input-group">
-                                               <input id="password" name="password"  type="password" required class="form-control @error('password') is-invalid @enderror">
-                                               <button class="btn btn-outline-secondary" 
-                                                     type="button" 
-                                                     id="togglePassword">
-                                                     <i class="far fa-eye-slash"></i>
-                                               </button>
+                                                <input id="password" name="password" type="password" required
+                                                    class="form-control @error('password') is-invalid @enderror">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="togglePassword">
+                                                    <i class="far fa-eye-slash"></i>
+                                                </button>
                                             </div>
                                             @error('password')
-                                               <small class="text-danger"><i>{{ $message }}</i></small>
+                                                <small class="text-danger"><i>{{ $message }}</i></small>
                                             @enderror
-                                         </div>
+                                        </div>
 
                                         <button type="submit" class="btn bgb-1 btn-block text-white">Login</button>
                                         {{-- <br>
@@ -155,28 +155,28 @@
     <script src="{{ asset('js/ready.js') }}"></script>
 
     <script>
-        $(document).ready(function () {
-           var body = $('body');
-          
-           
-           const togglePassword = document.querySelector('#togglePassword');
-           const password = document.querySelector('#password');
-     
-           togglePassword.addEventListener('click', function () {
-     
-              const type = password.getAttribute('type') === 'password' 
-                             ? 'text' 
-                             : 'password';
-     
-              password.setAttribute('type', type);
-     
-              this.innerHTML = type === 'password' ? '<i class="far fa-eye-slash"></i>' : '<i class="far fa-eye"></i>';
-           });
-     
-        
+        $(document).ready(function() {
+            var body = $('body');
+
+
+            const togglePassword = document.querySelector('#togglePassword');
+            const password = document.querySelector('#password');
+
+            togglePassword.addEventListener('click', function() {
+
+                const type = password.getAttribute('type') === 'password' ?
+                    'text' :
+                    'password';
+
+                password.setAttribute('type', type);
+
+                this.innerHTML = type === 'password' ? '<i class="far fa-eye-slash"></i>' :
+                    '<i class="far fa-eye"></i>';
+            });
+
+
         });
-     
-     </script>
+    </script>
 </body>
 
 </html>

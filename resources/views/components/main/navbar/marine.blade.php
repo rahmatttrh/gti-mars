@@ -182,6 +182,19 @@
                <span class="mx-3">Home Page</span>
             </a>
          </li>
+
+         @if (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri')
+             @else
+         
+         <li class="nav-item nav-item-b  {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.export.marine')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/report/*'))
+               <i class="fas text-primary ml-3 fa-fire"></i>
+               @endif
+               
+               <span class="mx-3">VDR Export</span>
+            </a>
+         </li>
          <li class="nav-item nav-item-b pr-3 {{ (request()->is('marine/daily/*')) ? 'active' : '' }}">
             <a href="{{route('daily.report')}}" data-toggle="tooltip" data-placement="top" title="Fitur ini masih dalam tahap pengembangan" class="nav-link {{ (request()->is('marine/daily/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('daily/report/*'))
@@ -214,6 +227,7 @@
             <li class="nav-item "><a href="{{route('user')}}" class="nav-link">User</a></li>
             </ul>
          </li>
+         @endif
 
          
         

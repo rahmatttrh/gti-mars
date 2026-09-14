@@ -32,7 +32,30 @@
 
   gtag('config', 'UA-94034622-3');
 </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- /END GA -->
+
+ <script>
+   $(document).ready(function () {
+    const topScroll = document.getElementById('scrollTop');
+    const bottomScroll = document.getElementById('scrollBottom');
+
+    // samakan lebar
+    topScroll.firstElementChild.style.width = bottomScroll.scrollWidth + 'px';
+
+    // sync scroll
+    topScroll.addEventListener('scroll', () => {
+        bottomScroll.scrollLeft = topScroll.scrollLeft;
+    });
+
+    bottomScroll.addEventListener('scroll', () => {
+        topScroll.scrollLeft = bottomScroll.scrollLeft;
+    });
+
+   });
+</script>
+
+
 <style>
 
 table {
@@ -200,7 +223,7 @@ table {
          <div class="navbar-bg" style="background-color: #e6e6ef"></div>
          @if (auth()->user()->username == 'pet')
          <x-main.navbar.pet :notifrequests="$notifRequests" :notifvdrs="$notifVdrs" :notif="$notif" />
-         @elseif (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
+         @elseif (auth()->user()->hasRole('marine|superuser|lead') || auth()->user()->hasRole('superadmin-dsp') || auth()->user()->hasRole('superadmin-vdr') )
             <x-main.navbar.marine :notifrequests="$notifRequests" :notifvdrs="$notifVdrs" :notif="$notif" />
             
             @elseif (auth()->user()->hasRole('vessel'))
@@ -209,6 +232,8 @@ table {
             <x-main.navbar.fm />
             @elseif (auth()->user()->hasRole('department'))
             <x-main.navbar.department />
+            @elseif (auth()->user()->hasRole('costcontrol'))
+            <x-main.navbar.costcontrol />
             @elseif(auth()->user()->hasRole('suptent'))
             <x-main.navbar.suptent :notif="$notif" :vdrs="$vdrs" />
             @elseif(auth()->user()->hasRole('chief'))
@@ -223,7 +248,7 @@ table {
             <x-main.navbar.admin-logistic />
             @elseif(auth()->user()->hasRole('office'))
             <x-main.navbar.office />
-            @elseif(auth()->user()->hasRole('suptent_loc'))
+            @elseif(auth()->user()->hasRole('suptent_loc|coman'))
             <x-main.navbar.suptent-loc />
             @elseif(auth()->user()->hasRole('suptent'))
             <x-main.navbar.suptent-loc />
@@ -362,6 +387,16 @@ table {
          "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
          "pageLength": 10,
          "ordering": false,
+       
+      });
+
+      $('.datatables-vdr-management').DataTable( {
+         "lengthMenu": [[5,8, 10, 15, 25, 50, 100 , -1], [5,8, 10, 15, 25, 50, 100, "All"]],
+         "pageLength": 10,
+         "ordering": true,
+         "order": [
+            [1, 'desc']
+         ],
        
       });
 

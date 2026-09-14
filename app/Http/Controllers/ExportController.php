@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Office;
 use App\Models\Request as ModelsRequest;
 use App\Models\Schedule;
 use App\Models\Vdr;
@@ -11,6 +12,31 @@ use Illuminate\Http\Request;
 
 class ExportController extends Controller
 {
+
+
+   public function mbComan()
+   {
+
+
+
+      return view('pages.document.mb-coman', []);
+   }
+
+   public function mbFm()
+   {
+
+
+
+      return view('pages.document.mb-fm', []);
+   }
+
+   public function mbIntermilanUser()
+   {
+
+
+
+      return view('pages.document.mb-intermilan-user', []);
+   }
    public function schedule($status, $month)
    {
 
@@ -228,7 +254,11 @@ class ExportController extends Controller
 
    public function indexMarine()
    {
-      $vessels = Vessel::get();
+      $vessels = Vessel::orderBy('name', 'asc')->get();
+      if (auth()->user()->hasRole('office')) {
+         $office = Office::where('username', auth()->user()->username)->first();
+         $vessels = Vessel::where('office_id', $office->id)->get();
+      }
       return view('pages-stisla.vdr.report.index-marine', [
          'vessels' => $vessels,
          'data' => 0
@@ -241,7 +271,7 @@ class ExportController extends Controller
       $from = Carbon::create($req->from);
       $to = Carbon::create($req->to);
       $vessel = Vessel::find($req->vessel);
-      $vessels = Vessel::get();
+      $vessels = Vessel::orderBy('name', 'asc')->get();
 
       $vdrs = Vdr::where('vessel_id', $vessel->id)->whereBetween('date', [$from, $to])->where('status', 4)->orderBy('date', 'desc')->get();
       return view('pages-stisla.vdr.report.index-marine', [

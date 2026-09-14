@@ -92,11 +92,11 @@
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    padding: 10px 12px;
+    padding: 8px 10px;
     border-radius: 10px;
-    margin-bottom: 2px;
+    /* margin-bottom: 2px; */
     transition: 0.2s;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 /* hover tiap item */
@@ -127,6 +127,24 @@
 .vdr-icon {
     font-size: 22px;
     margin-top: 2px;
+}
+</style>
+
+<style>
+   .flow-badge{
+    padding: 6px 12px;
+    border-radius: 20px;
+    color: white;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.flow-row{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 </style>
 
@@ -175,7 +193,8 @@
                                
                               {{$vessel->name}} 
                         </h4>
-                        <hr>
+                        <small>{{$vessel->type}}</small>
+                        <hr class="bg-light">
                         <span class="mb-0 opacity-75 mt-2">
                               Utamakan keselamatan kerja dan patuhi seluruh prosedur HSE dalam setiap aktivitas.
                         </span>
@@ -219,6 +238,14 @@
             </div>
 
             <div class="ann-item">
+               <i class="fa fa-check-circle text-success"></i>
+               <span>
+                  <b>Release VDR</b> hanya dapat dilakukan jika VDR sebelumnya sudah
+                  melewati Approval PET
+               </span>
+            </div>
+
+            <div class="ann-item">
                   <i class="fa fa-clock text-success"></i>
                   <span>Release VDR sebelum <b>07:00</b> atau sebelum <b>19:00</b></span>
             </div>
@@ -235,10 +262,113 @@
 
          </div>
       </div>
+
+      {{-- <div class="card">
+         @if ($vessel->email == null || $vessel->email_office == null)
+            
+               <div class="card-body text-danger">
+                  (!) Anda belum mengatur 
+                  @if ($vessel->email == null)
+                      Email Vessel
+                  @endif
+                  @if ($vessel->email_vessel == null)
+                      Email Vessel
+                  @endif
+               </div>
+         
+         @endif
+         <div class="card-body">
+           
+            
+            <form action="{{route('vessel.update.email')}}" method="POST">
+               @csrf
+               @method('PUT')
+               <input type="text" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
+               <div class="form-floating mb-3">
+                  
+                  <label for="name">Email Kapal</label>
+                  <input type="text" required class="form-control" id="email_vessel" name="email_vessel" value="{{$vessel->email}}"  >
+                  
+               </div>
+               <div class="form-floating mb-3">
+                  
+                  <label for="name">Email Office</label>
+                  <input type="text" required class="form-control" id="email_office" name="email_office"  value="{{$vessel->email_office}}">
+                  
+               </div>
+               <button class="btn btn-primary" type="submit">Update</button>
+            </form>
+         </div>
+      </div> --}}
+
+      <div class="card shadow-sm border-0">
+
+         <!-- ALERT -->
+         @if ($vessel->email == null || $vessel->email_office == null)
+         <div class="card-body py-2 px-3 bg-light text-danger small">
+            <i class="fa fa-exclamation-circle mr-1"></i>
+            Data belum lengkap:
+            @if ($vessel->email == null)
+               <b>Email Vessel</b>
+            @endif
+            @if ($vessel->email_office == null)
+               @if ($vessel->email == null) & @endif
+               <b>Email Office</b>
+            @endif
+         </div>
+         @endif
+
+         <!-- FORM -->
+         <div class="card-body">
+
+            <form action="{{route('vessel.update.email')}}" method="POST">
+               @csrf
+               @method('PUT')
+
+               <input type="hidden" name="vessel" value="{{$vessel->id}}">
+
+               <!-- Email Vessel -->
+               <div class="form-group row mb-2 align-items-center">
+                  <label class="col-md-4 col-form-label small text-muted">
+                     Email Vessel
+                  </label>
+                  <div class="col-md-8">
+                     <input type="text" required
+                        class="form-control form-control-sm"
+                        name="email_vessel"
+                        value="{{$vessel->email}}">
+                  </div>
+               </div>
+
+               <!-- Email Office -->
+               <div class="form-group row mb-2 align-items-center">
+                  <label class="col-md-4 col-form-label small text-muted">
+                     Email Office
+                  </label>
+                  <div class="col-md-8">
+                     <input type="text" required
+                        class="form-control form-control-sm"
+                        name="email_office"
+                        value="{{$vessel->email_office}}">
+                  </div>
+               </div>
+
+               <!-- ACTION -->
+               <div class="text-right mt-2">
+                  <button class="btn btn-primary btn-sm">
+                     <i class="fa fa-save"></i> Update
+                  </button>
+               </div>
+
+            </form>
+
+         </div>
+
+      </div>
    </div>
 
    <div class="col-md-8">
-      <div class="card border-0 shadow-sm ui-update-card">
+      {{-- <div class="card border-0 shadow-sm ui-update-card">
          <div class="card-body d-flex align-items-start gap-3">
 
             <!-- ICON -->
@@ -259,12 +389,206 @@
             </div>
 
          </div>
-      </div>
+      </div> --}}
 
 
       <div class="card ">
                
          <div class="card-body ">
+
+            @if ($vessel->contract_type == 'Non PO')
+                <div class="alert alert-info border-0 shadow-none rounded">
+                  <div class="d-flex align-items-center">
+                     <i class="fas fa-info-circle fa-lg mr-3 mt-1"></i>
+                     <div>
+                        <small>
+                           <strong>Petunjuk Pengisian</strong><br>
+                           Silakan pilih <b>Coman Area</b> pada form Create VDR agar lokasi dan area kerja dapat teridentifikasi dengan benar. 
+                           Jika VDR yang diajukan <b>tidak memerlukan approval COMAN</b>, pilih opsi <b>Not Required</b> pada field Coman Area untuk melanjutkan proses pengajuan tanpa persetujuan COMAN.
+                        </small>
+                     </div>
+                  </div>
+               </div>
+            @endif
+
+            <!-- Header -->
+            <div class="d-flex align-items-center mb-2">
+               <div class="mr-2">
+                  <i class="fas fa-route text-primary fs-4"></i>
+               </div>
+               <div>
+                  {{-- <h6 class="mb-0 fw-bold">VDR Approval Flow</h6> --}}
+                  <small class="text-muted">VDR Approval Flow</small>
+               </div>
+         </div>
+
+         
+         @if ($vessel->contract_type != 'Non PO')
+             
+         
+               @if ($vessel->type == 'Tug Boat' || $vessel->ipb == 'IPB')
+               <!-- Flow Tug Boat -->
+               <div class="flow-row">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-anchor text-warning mr-1"></i> IPB / Tug Boat
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-broadcast-tower mr-1"></i> Radop
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning ">
+                           <i class="fas fa-user-tie mr-1"></i> Suptent
+                        </span>
+                        
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary">
+                           <i class="fas fa-user-shield mr-1"></i> Marine Rep
+                        </span>
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+               @else
+               <!-- Flow Normal -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-file-alt text-primary mr-1"></i> Regular
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-ship mr-1"></i> Marine
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary ">
+                           <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                        </span>
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+               @endif
+            @else
+            @if ($vessel->username == 'bestlink88')
+            <!-- Flow Normal Non PO -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-file-alt text-primary mr-1"></i> Patrol Boat
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> FM
+                        </span>
+                         <i class="fas fa-chevron-right text-muted mx-1"></i>
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                         <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-ship mr-1"></i> Lead Command
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary">
+                           <i class="fas fa-user-tie mr-1"></i> Suptent Security
+                        </span>
+
+                        
+
+                        {{-- <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary ">
+                           <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                        </span> --}}
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+             @else
+               
+               <div class="flow-row mb-2">
+                  <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                     <i class="fas fa-ship text-primary mr-1"></i> Non PO
+                  </span>
+
+                  <div class="d-flex align-items-center flex-wrap gap-2">
+                     <span class="flow-badge bg-info">
+                        <i class="fas fa-user-edit mr-1"></i> FM
+                     </span>
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+                     <span class="flow-badge bg-info">
+                        <i class="fas fa-user-edit mr-1"></i> PET
+                     </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                     <span class="flow-badge bg-warning">
+                        <i class="fas fa-ship mr-1"></i> Coman
+                     </span>
+
+                     <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                     <span class="flow-badge bg-warning">
+                        <i class="fas fa-ship mr-1"></i> Marine
+                     </span>
+
+                     <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                     <span class="flow-badge bg-primary ">
+                        <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                     </span>
+
+                     
+
+                     <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                     <span class="flow-badge bg-success">
+                        <i class="fas fa-check-circle mr-1"></i> Complete
+                     </span>
+                  </div>
+               </div>
+         @endif
+
+         @endif
+
+
+         <hr>
             
             {{-- <div>Jika anda ingin membuat Vessel Daily Report silahkan 
                
@@ -277,7 +601,7 @@
                <b></b>
             </div> --}}
             @if (count($rejectvdrs) > 0)
-            <div class="card shadow-none border">
+            {{-- <div class="card shadow-none border">
                <div class="card-header py-1 bg-danger text-white">
                   <b>VDR REJECT ALERT! </b>
                </div>
@@ -285,11 +609,70 @@
                   @foreach ($rejectvdrs as $rejectvdr)
                   
                      VDR ID  <b>{{$rejectvdr->code}}</b> telah di <b>Reject</b> oleh <b>{{$rejectvdr->rejectBy->name ?? ''}}</b>  
-                     {{-- dengan alasan <b>{!!$rejectvdr->reject_desc!!}</b>. --}}
                     <br>
                      <a class="btn btn-sm btn-primary" href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" >Klik disini untuk melakukan Revisi</a>
                      <br>
                      @endforeach
+               </div>
+            </div> --}}
+            <div class="card shadow-none border">
+
+               <!-- Header -->
+               <div class="card-header bg-danger text-white py-2 d-flex justify-content-between align-items-center">
+                  <div>
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        <strong>VDR Rejection Alert</strong>
+                  </div>
+
+                  <span class="badge badge-light text-danger">
+                        {{count($rejectvdrs)}} Rejected
+                  </span>
+               </div>
+
+               <!-- Body -->
+               <div class="card-body py-3">
+
+                  
+
+                  @foreach ($rejectvdrs as $rejectvdr)
+                  <div class="border rounded p-3 mb-3 bg-light">
+
+                        <div class="d-flex justify-content-between flex-wrap">
+                           
+                           <div>
+                              <h6 class="mb-1">
+                                    <i class="fas fa-file-alt text-danger mr-1"></i>
+                                    VDR ID: <strong>{{$rejectvdr->code}}</strong>
+                              </h6>
+
+                              <small class="text-muted">
+                                    Rejected by 
+                                    <strong>{{$rejectvdr->rejectBy->name ?? '-'}}</strong>
+                              </small>
+
+                              @if($rejectvdr->reject_desc)
+                              <div class="mt-2">
+                                    <small class="text-danger">
+                                       <i class="fas fa-comment-alt mr-1"></i>
+                                       Reason: {!! $rejectvdr->reject_desc !!}
+                                    </small>
+                              </div>
+                              @endif
+                           </div>
+
+                           <div class="mt-2 mt-md-0">
+                              <a href="{{route('vdr.revisi.store', enkripRambo($rejectvdr->id))}}" 
+                                 class="btn btn-danger btn-sm">
+                                    <i class="fas fa-edit mr-1"></i>
+                                    Revisi VDR
+                              </a>
+                           </div>
+
+                        </div>
+
+                  </div>
+                  @endforeach
+
                </div>
             </div>
             @endif
@@ -303,12 +686,12 @@
             </div>
 
             <small class="text-muted">
-                  Menampilkan data terbaru, pastikan release tepat waktu dan revisi jika ada VDR reject
+               Menampilkan data VDR terbaru, <a href="{{ route('vdr.create') }}">Klik disini</a> untuk mengelola seluruh VDR {{ $vessel->name }} yang telah tercatat dalam sistem.
             </small> <br>
             <a href="{{route('vdr.vessel.create.spa')}}" class="btn btn-sm btn-primary text-white mt-2">
                   <i class="fa fa-plus-circle"></i> Buat VDR Baru
             </a>
-            <div  class="table-responsive overflow-auto mt-2" style="height: 350px" >
+            <div  class="table-responsive overflow-auto mt-2" style="height: 450px" >
                <table class="table table-sm" >
                   <thead>
                      {{-- <tr>
@@ -320,6 +703,8 @@
                         <th>VDR Date</th>
                         {{-- <th>Date</th>
                         <th>Crew</th> --}}
+                        <th>Released at</th>
+                        <th>Area</th>
                         <th style="width: 120px">VDR Status</th>
                         {{-- <th></th> --}}
                      </tr>
@@ -328,7 +713,7 @@
                      @foreach ($myrecentvdrs as $myvdr)
                      <tr>
 
-                        <td>
+                        <td class="border-bottom">
                            @if (auth()->user()->username == 'magelang' )
                            {{-- <div class="dropdown">
                               <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -350,10 +735,12 @@
                            @endif
                            {{-- <a href="{{route('vdr.show', [enkripRambo($myvdr->id), enkripRambo('index')])}}">{{$myvdr->code}}</a> --}}
                         </td>
-                        <td>{{formatDate($myvdr->date)}}</td>
+                        <td class="border-bottom">{{formatDate($myvdr->date)}}</td>
+                        <td class="border-bottom">{{$myvdr->release_date}}</td>
+                        <td class="border-bottom">{{$myvdr->area ?? '-'}}</td>
                         {{-- <td>{{formatDate($myvdr->date)}}</td>
                         <td>{{$myvdr->crew_onduty}} / {{$myvdr->crew_max}}</td> --}}
-                        <td class="text-truncate">
+                        <td class="text-truncate border-bottom">
                            {{-- @if(date('Y-m-d', strtotime($myvdr->date)) == date('Y-m-d'))
                            <small>Draft</small>
                            @else
@@ -424,165 +811,16 @@
          </div>
          <div class="col-md-5">
             
-            {{-- @if ($vessel->contract->ipb == 'IPB' || $vessel->type == 'Tug Boat')
-               <div class="card shadow-lg">
-                  <div class="card-body">
-                     <i><h4>Announcement</h4></i>
-                  
-                     Untuk Kapal IPB dan Tug Boat, diharuskan memilih lokasi pada kolom input "Location", untuk proses approval VDR di area tersebut
-                     
-                  </div>
-               </div>
-            @endif --}}
-            {{-- <div class="card shadow-lg">
-               <div class="card-body">
-                  <i><h4>Announcement</h4></i>
-                 
-                  
-                  VDR Draft (Pending) periode 16 September 2025 sampai 30 November 2025 sudah di <b>Auto Complete by System</b>. Anda bisa langsung melakukan Release VDR Periode Desember 2025
-               </div>
-            </div> --}}
-            
-            {{-- <marquee  class="px-4  shadow rounded text-white py-2 px-2 mb-2"  style="background-color: #1f4481">
-               <i class="fa fa-bell"></i> Welcome to MARS (Marine Advanced Reporting System) Klik 'VDR' pada Menu Utama dibagian atas untuk mengakses data VDR secara lengkap | Email Vessel & Email Office digunakan untuk menerima notifikasi terkait VDR
-            </marquee> --}}
-
-            @if (auth()->user()->username == 'logindo')
-            {{-- <div class="card bg-danger shadow-lg text-light">
-               <div class="card-body">
-                  Dear <b>Logindo Overcomer</b>,  
-                  <br><br>
-                  Segera lakukan Release VDR dari tanggal 23 September 2025 secara berurutan.
-                  <br><br>
-               </div>
-            </div> --}}
-            @endif
-
-            @if (auth()->user()->username == 'giatjaya')
-            {{-- <div class="card bg-danger shadow-lg text-light">
-               <div class="card-body">
-                  Dear <b>Giat Jaya</b>,  
-                  <br><br>
-                  harap lengkapi data dan release VDR tanggal 22 Oktober 2025 yang sebelumnya terdapat kendala.
-                  <br><br>
-                  - Sistem -
-               </div>
-            </div> --}}
-            @endif
-
-            {{-- @if (auth()->user()->username == 'forisa12')
-            <div class="card bg-danger shadow-lg text-light">
-               <div class="card-body">
-                  Dear <b>Forisa12</b>,  
-                  <br><br>
-                  Segera melakukan Release VDR tanggal 22 Oktober 2025.
-                  <br><br>
-                  - Sistem -
-               </div>
-            </div>
-            @endif --}}
-
-            {{-- @if (auth()->user()->username == 'magelang')
-            <div class="card bg-danger shadow-lg text-light">
-               <div class="card-body">
-                  Dear <b>CB Magelang</b>, <br><br>
-
-                 
-                  Segera lakukan Release VDR dari tanggal 18 Oktober 2025 secara berurutan.
-                  <br><br>
-                  - Sistem -
-
-               </div>
-            </div>
-            @endif --}}
-            
-
-
-            <div class="card  shadow ">
-               <div class="card-body">
-                  
-                  # Alur Approval VDR <br>
-                  PET -> MARINE -> SUPTENT -> COMPLETE
-                  <hr>
-                  # Alur Approval VDR Kapal IPB / Tug Boat<br>
-                  PET -> Radop -> SUPTENT -> MARINE REPRESENTATIVE -> COMPLETE
-               </div>
-            </div>
             
             
-            <div class="card shadow">
-               @if ($vessel->email == null || $vessel->email_office == null)
-                  
-                     <div class="card-body text-danger">
-                        (!) Anda belum mengatur 
-                        {{-- {{$vessel->email}} --}}
-                        @if ($vessel->email == null)
-                            Email Vessel
-                        @endif
-                        @if ($vessel->email_vessel == null)
-                            Email Vessel
-                        @endif
-                     </div>
-               
-            @endif
-               <div class="card-body">
-                  {{-- @if ($vessel->email == null || $vessel->email_office == null)
-                  <div class="alert bg-danger">
-                     oke
-                  </div>
-                  @endif --}}
-                  
-                  <form action="{{route('vessel.update.email')}}" method="POST">
-                     @csrf
-                     @method('PUT')
-                     <input type="text" name="vessel" id="vessel" value="{{$vessel->id}}" hidden>
-                     <div class="form-floating mb-3">
-                        
-                        <label for="name">Email Kapal</label>
-                        <input type="text" required class="form-control" id="email_vessel" name="email_vessel" value="{{$vessel->email}}"  >
-                        
-                     </div>
-                     <div class="form-floating mb-3">
-                        
-                        <label for="name">Email Office</label>
-                        <input type="text" required class="form-control" id="email_office" name="email_office"  value="{{$vessel->email_office}}">
-                        
-                     </div>
-                     <button class="btn btn-primary" type="submit">Update</button>
-                  </form>
-               </div>
-            </div>
+
+
             
-            <div class="card shadow">
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table-sm" id="table-6">
-                        <thead >
-                           <tr>
-                              <th  class="py-2">Alert</th>
-                              <th  class="text-center"><a href="#" data-toggle="modal" data-target="#modal-add-doc">Add New</a></th>
-                           </tr>
-                           
-                        </thead>
-                        <tbody>
-                           @if (count($docs) > 0)
-                              @foreach ($docs as $doc)
-                                 <tr>
-                                    <td class="py-2"><x-status-stisla.doc :doc="$doc" /> </td>
-                                    <td class="text-center"><a href="#" data-toggle="modal" data-target="#modal-edit-doc-{{$doc->id}}">{{formatDate($doc->date)}}</a> </td>
-                                 </tr>
-                              @endforeach
-                              @else
-                              <tr><td colspan="2" class="py-3 text-center">Empty</td></tr>
-                           @endif
-                           
-                           
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
-            </div>
-            <hr>
+            
+            
+            
+            
+            
 
 
             

@@ -56,8 +56,12 @@
                                         <select class="form-control" id="type" required name="type">
                                             <option value="" disabled selected>Select</option>
                                             <option value="Crew Boat">Crew Boat</option>
+                                            
                                             <option value="AHTS">AHTS</option>
                                             <option value="Supply">Supply</option>
+                                            <option value="Tug Boat">Tug Boat</option>
+                                            <option value="Oil Barge">Oil Barge</option>
+                                            <option value="Self Propelled Oil Barge">Self Propelled Oil Barge</option>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-7">

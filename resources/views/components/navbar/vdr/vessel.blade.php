@@ -20,8 +20,8 @@
           
         </li>
         <li>
-          <a href="https://app.mars-phe.com" class="navbar-brand sidebar-gone-hide">
-             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" height="" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+          <a href="/" class="navbar-brand sidebar-gone-hide">
+             <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
           </a>
         </li>
  
@@ -32,7 +32,7 @@
              <i class="fas fa-ellipsis-v"></i>
           </a>
           <ul class="navbar-nav ">
-            <li class="nav-item text-dark"><a href="https://app.mars-phe.com" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
+            <li class="nav-item text-dark"><a href="/" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Homepage">HOME</a></li>
          <li class="nav-item text-dark"><a href="{{route('dsp.vessel')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Digital Smart Port">DSP</a></li>
          <li class="nav-item text-dark active" ><a href="{{route('vdr.create')}}" class="nav-link  rounded px-2 py-1" style="background-color: #1f4481" data-toggle="tooltip" data-placement="bottom" title="Vessel Daily Report">VDR</a></li>
          <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark" data-toggle="tooltip" data-placement="bottom" title="Progress Tracking and Operation Control Tool">PROACT</a></li>
@@ -48,7 +48,7 @@
    </form>
    
    {{-- <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('public/img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -106,7 +106,7 @@
 
 <div class="d-none d-md-block">
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="">
+   <div class="px-3">
       <ul class="navbar-nav">
          {{-- <li class="nav-item dropdown {{ (request()->is('dsp/u/dash/*')) ? 'active' : '' }}">
             <a href="#" data-toggle="dropdown" class="nav-link has-dropdown {{ (request()->is('dsp/u/dash/*')) ? 'text-dark' : 'text-white' }}">
@@ -128,7 +128,16 @@
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="mx-3">Dashboard</span>
+               <span class="mx-3">VDR Management</span>
+            </a>
+         </li>
+         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.export')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/report/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class=" mx-3">Export VDR</span>
             </a>
          </li>
          {{-- @if (auth()->user()->username == 'parakan' )
@@ -148,7 +157,7 @@
 
          @if (auth()->user()->username == 'parakan' )
          @else
-         <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
+         {{-- <li class="nav-item nav-item-b {{ (request()->is('vdr/v/act/create/spa')) ? 'active' : '' }}">
             <a href="{{route('vdr.vessel.create.spa')}}" class="nav-link {{ (request()->is('vdr/v/act/create/spa')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/create/spa'))
                <i class="fas fa-fire ml-3"></i>
@@ -156,11 +165,11 @@
                
                <span class="mx-3">Create by OnePageForm</span>
             </a>
-         </li>
+         </li> --}}
          @endif
 
          
-         <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
+         {{-- <li class="nav-item nav-item-b pr-3 {{ (request()->is('vdr/v/act/history')) ? 'active' : '' }}">
             <a href="{{route('vdr.history')}}" class="nav-link {{ (request()->is('vdr/v/act/history')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/v/act/history'))
                <i class="fas fa-fire ml-3"></i>
@@ -168,7 +177,7 @@
                
                <span class="mx-3">History</span>
             </a>
-         </li>
+         </li> --}}
          
          
 
@@ -216,10 +225,10 @@
             <small class="ml-2"><b>- VDR</b></small>
             <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.create')}}" class="nav-link ">
-                  <span class="mx-3">Dashboard</span>
+                  <span class="mx-3">VDR Management</span>
                </a>
             </li>
-            <li class="nav-item nav-item-b ">
+            {{-- <li class="nav-item nav-item-b ">
                <a href="{{route('vdr.vessel.create')}}" class="nav-link ">
                   <span class="mx-3">Create</span>
                </a>
@@ -233,7 +242,7 @@
                <a href="{{route('vdr.history')}}" class="nav-link ">
                   <span class="mx-3">History</span>
                </a>
-            </li>
+            </li> --}}
 
 
             <hr>

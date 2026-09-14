@@ -119,11 +119,11 @@
 
 <div class="d-none d-md-block">
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="px-2">
+   <div class="px-3">
       <ul class="navbar-nav">
          
          <li class="nav-item {{ (request()->is('/')) ? 'active' : '' }}">
-            <a href="https://mars-phe.enc.co.id/mars/index.php" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
+            <a href="https://app.mars-phe.com" class="nav-link {{ (request()->is('/')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('/'))
                <i class="fas fa-fire ml-3"></i>
                @endif

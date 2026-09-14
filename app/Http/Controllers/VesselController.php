@@ -161,14 +161,27 @@ class VesselController extends Controller
       ]);
    }
 
+
+   public function exportPdf()
+   {
+      $vessels = Vessel::where('status', 1)->where('contract_type', 'Non PO')->get();
+      $vesselb = Vessel::where('username', 'inapermata1')->orWhere('username', 'inapermata2')->get();
+
+      $finalVessels  = $vessels->merge($vesselb);
+
+      return view('pages.document.vessel', [
+         'vessels' => $finalVessels
+      ]);
+   }
+
    public function update(Request $req)
    {
 
       // dd('OK');
       $req->validate([
          'name' => 'required',
-         'username' => 'required',
-         'email' => 'required|email',
+         // 'username' => 'required',
+         // 'email' => 'required|email',
          // 'deadweight' => 'required',
          // 'deckspace' => 'required'
       ]);
@@ -194,8 +207,8 @@ class VesselController extends Controller
          'area' => $area,
          'func' => $func,
          'ipb' => $req->ipb,
-         'username' => $req->username,
-         'email' => $req->email,
+         // 'username' => $req->username,
+         // 'email' => $req->email,
          'telp' => $req->telp,
          'imo' => $req->imo,
          'type' => $req->type,
@@ -257,11 +270,11 @@ class VesselController extends Controller
          'dpa_telp' => $req->dpa_telp
       ]);
 
-      $user->update([
-         'name' => $req->name,
-         'username' => $req->username,
-         'email' => $req->email
-      ]);
+      // $user->update([
+      //    'name' => $req->name,
+      //    'username' => $req->username,
+      //    'email' => $req->email
+      // ]);
       return redirect()->route('vessel')->with('success', 'Vessel successfuly updated');
    }
 
@@ -326,7 +339,7 @@ class VesselController extends Controller
          $vdrs = [];
       }
       $contracts = Contract::where('vessel_id', $vessel->id)->orderBy('start_date', 'desc')->get();
-      
+
       // return view('pages.vessel.detail', [
       return view('pages-stisla.master-data.vessel-detail', [
          'vessel' => $vessel,

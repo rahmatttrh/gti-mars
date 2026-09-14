@@ -4,17 +4,91 @@
 @endsection
 
 @section('content')
+<style>
+   .activity-wrapper {
+       border-radius: 12px;
+   }
+   
+   /* HEADER */
+   .activity-header h6 {
+       font-size: 14px;
+   }
+   
+   /* BOX */
+   .activity-box {
+       max-height: 350px;
+       overflow-y: auto;
+       padding-right: 5px;
+   }
+   
+   /* ITEM */
+   .activity-item {
+       display: flex;
+       gap: 10px;
+       padding: 10px 5px;
+       border-bottom: 1px solid #f1f1f1;
+       transition: 0.2s;
+   }
+   
+   .activity-item:hover {
+       background: #f9fafc;
+   }
+   
+   /* ICON */
+   .activity-icon {
+       width: 35px;
+       height: 35px;
+       border-radius: 50%;
+       color: white;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       font-size: 14px;
+   }
+   
+   /* CONTENT */
+   .activity-content {
+       flex: 1;
+   }
+   
+   /* SCROLL STYLE */
+   .activity-box::-webkit-scrollbar {
+       width: 5px;
+   }
+   
+   .activity-box::-webkit-scrollbar-thumb {
+       background: #ccc;
+       border-radius: 10px;
+   }
+   </style>
+   <style>
+      .flow-badge{
+       padding: 6px 12px;
+       border-radius: 20px;
+       color: white;
+       font-size: 12px;
+       font-weight: 500;
+       white-space: nowrap;
+   }
+   
+   .flow-row{
+       display: flex;
+       align-items: center;
+       flex-wrap: wrap;
+       gap: 8px;
+   }
+   </style>
    <section class="section">
       <div class="section-body">
          <div class="row">
             <div class="col-md-3">
 
-               <div class="card welcome-card shadow">
+               <div class="card welcome-card shadow-lg">
 
                   <div class="card-body position-relative">
 
                      <!-- ICON BESAR -->
-                     <i class="fas fa-user welcome-icon"></i>
+                     <i class="fas fa-gas-pump welcome-icon"></i>
 
                      <!-- HEADER -->
                      <div class="mb-2">
@@ -26,6 +100,20 @@
 
                      <!-- DIVIDER -->
                      <div class="divider"></div>
+
+                     <!-- JOBDESK NOTE -->
+                     <div class="alert alert-light border-0 py-2 px-3 mb-3">
+                        <div class="d-flex align-items-start">
+                           <i class="fas fa-clipboard-check text-primary mr-2 mt-1"></i>
+                           <div>
+                              <strong class="text-dark">Your Responsibility</strong>
+                              <div class="small text-muted">
+                                 <b>Reviewer Daily Operation Performance</b> <br>
+                                    Melakukan review terhadap Summary Daily Operating Data | Summary of Daily Fuel, Water, and Cargoes Remaining | Detail Operational Activity
+                              </div>
+                           </div>
+                        </div>
+                     </div>
 
                      <!-- PIC -->
                      <div>
@@ -90,41 +178,69 @@
                   </div>
                </div> --}}
 
-               <div class="timeline-wrapper mb-3">
+               <div class="card ">
+                  <div class="card-body">
 
-                  <div class="timeline">
-                     @foreach ($logs as $log)
-                     
-                     <div class="timeline-item ">
-                           <div class="timeline-content">
-                              <small class="mb-1">
-                                    <b> <i class="fa fa-check-circle text-success"></i> {{$log->user->name ?? ''}}</b>
-                              </small> <br>
-                              <small class="text-muted">{{formatDateTime($log->created_at)}}</small>
-                              <br>
-                                 <small>
-                                {{$log->action}} 
-                                {{-- {{$log->desc}} --}}
-                                @if ($log->vdr_id != null)
-                                        <small>{{$log->vdr->code ?? ''}}</small>
-                                            
-                                        @endif
-                                {{-- @if ($log->vdr_id != null)
-                                           {{$log->vdr->code}}
-                                      @endif --}}
-                                          </small>
-                                       
-                           </div>
+                 
+                  <div class="activity-wrapper">
+
+                     <!-- HEADER -->
+                     <div class="activity-header d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                              <h6 class="mb-0 fw-bold">
+                                 <i class="fa fa-history text-primary me-1"></i> Log Activity System
+                              </h6>
+                              <small class="text-muted">Riwayat aktivitas terbaru pengguna</small>
                         </div>
-                  @endforeach
 
-                       
+                        <span class="badge bg-light text-dark border">
+                              {{ count($logs) }} Activity
+                        </span>
+                     </div>
 
-                        
+                     <!-- CONTENT -->
+                     <div class="activity-box">
 
+                        @foreach ($logs as $log)
+                        <div class="activity-item">
+
+                              <!-- ICON -->
+                              <div class="activity-icon bg-primary">
+                                 <i class="fa fa-user"></i>
+                              </div>
+
+                              <!-- CONTENT -->
+                              <div class="activity-content">
+
+                                 <div class="d-flex justify-content-between">
+                                    <strong class="small">
+                                          {{ $log->user->name ?? '-' }}
+                                    </strong>
+                                    <small class="text-muted">
+                                          {{ formatDateTime($log->created_at) }}
+                                    </small>
+                                 </div>
+
+                                 
+                                 <div class="small text-muted" style="">
+                                    {{ $log->action }}
+                                    @if ($log->vdr_id)
+                                          <span class="">
+                                             {{ $log->vdr->code ?? '' }}
+                                          </span>
+                                    @endif
+                                 </div>
+
+                              </div>
+                        </div>
+                        @endforeach
+
+                     </div>
                   </div>
-
+                </div>
                </div>
+
+               
                
             </div>
             <div class="col-md-9">
@@ -267,7 +383,7 @@
                   
                </div>
       
-               <div class="card shadow">
+               <div class="card ">
                   <div class="card-body">
                      <div class="row">
                         <div class="col-md-12">
@@ -295,7 +411,7 @@
                                        <th>Number</th>
                                        <th>Date</th>
                                        <th>Release at</th>
-                                       
+                                       <th>Flow</th>
                                        
                                        {{-- <th>Last Update</th> --}}
                                        <th class="text-center">Status</th>
@@ -313,7 +429,10 @@
                                            </td>
                                           <td class="border-bottom">{{$vdr->date}}</td>
                                           <td class="border-bottom">{{$vdr->release_date}}</td>
-                                          
+                                          <td class="border-bottom">
+                                
+                                             <x-status-stisla.vdr-flow :vessel="$vdr->vessel" />
+                                          </td>
                                           
                                           <td class="text-right border-bottom">
                                              <x-status-stisla.vdr :vdr="$vdr" />
@@ -357,87 +476,267 @@
                      
                   </div>
                </div>
+
+               <div class="card">
+                  {{-- <div class="card-header">
+                     
+                  </div> --}}
+                  <div class="card-body">
+
+                     <!-- Header -->
+               <div class="d-flex align-items-center mb-2">
+                  <div class="mr-2">
+                     <i class="fas fa-route text-primary fs-4"></i>
+                  </div>
+                  <div>
+                     {{-- <h6 class="mb-0 fw-bold">VDR Approval Flow</h6> --}}
+                     <small class="text-muted">VDR Approval Flow</small>
+                  </div>
             </div>
-         </div>
 
+         
+               <!-- Flow Normal -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-file-alt text-primary mr-1"></i> Regular
+                     </span>
 
-         <div class="card shadow-lg">
-            {{-- <div class="card-header">
-               
-            </div> --}}
-            <div class="card-body">
-               <span class="badge badge-info mb-2">
-                  MONITORING VDR
-               </span>
-               <span class="badge badge-info mb-2">
-                 16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
-               </span>
-               
-               {{-- <table class="display  border">
-                  <tbody>
-                     <tr>
-                        <th>All Vessel Daily Report</th>
-                     </tr>
-                  </tbody>
-               </table> --}}
-               
-                  <table class="datatables-vdr-monitoring text-dark">
-                     
-                     <thead>
-                     
-                        <tr>
-                           
-                           <th>Vessel</th>
-                           <th class="text-center">Total</th>
-                           <th class="">Last VDR</th>
-                           <th class="">Release at</th>
-                           <th>Release Gap</th>
-                           <th class="text-center">Draft</th>
-                           <th class="text-center">Rejected</th>
-                           <th class="text-center">PET</th>
-                           <th class="text-center">Marine</th>
-                           <th class="text-center">Suptent</th>
-                           <th class="text-center">Complete</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach ($vessels as $vessel)
-                       
-                           @if (count($vessel->getVdrs()) > 0)
-                           <tr >
-                              <td><a href="{{route('vdr.statistic.vessel', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
-                              <td class="text-center">{{count($vessel->getVdrs())}}</td>
-                              <td class="">{{formatDate($vessel->getVdrLast()->date)}}</td>
-                              <td class="">
-                                 @if ($vessel->getVdrLast()->release_date != null)
-                                 {{formatDateTimeB($vessel->getVdrLast()->release_date)}}
-                                 @endif
-                                 
-                              </td>
-                              <td class="">{{$vessel->getVdrLast()->getDistance()}}</td>
-                              <td class="text-center">{{count($vessel->getVdrs()->where('status', 0))}}</td>
-                              <td class="text-center">{{count($vessel->getRejectVdrs())}}</td>
-                              <td class="text-center">{{count($vessel->getPetVdrs())}}</td>
-                              <td class="text-center">{{count($vessel->getMarineVdrs())}}</td>
-                              <td class="text-center">{{count($vessel->getSuptentVdrs())}}</td>
-                              {{-- <td>{{count($vessel->getProgressVdrs())}}</td> --}}
-                              <td class="text-center">{{count($vessel->getCompleteVdrs())}}</td>
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+                        {{-- <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> FM
+                        </span> --}}
 
-                           </tr>
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
 
-                           
-                           @endif
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-ship mr-1"></i> Marine
+                        </span>
 
-                           
-                           
-                        @endforeach
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary ">
+                           <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                        </span>
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+               <!-- Flow Tug Boat -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-anchor text-warning mr-1"></i> IPB / Tug Boat
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        {{-- <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> FM
+                        </span> --}}
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-broadcast-tower mr-1"></i> Radop
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning ">
+                           <i class="fas fa-user-tie mr-1"></i> Suptent
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary">
+                           <i class="fas fa-user-shield mr-1"></i> Marine Rep
+                        </span>
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+         
+               <!-- Flow Patrol Boat -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-ship text-primary mr-1"></i> Non PO
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> FM
+                        </span>
+                           <i class="fas fa-chevron-right text-muted mx-1"></i>
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                           <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-ship mr-1"></i> Coman
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                     <i class="fas fa-ship mr-1"></i> Marine
+                  </span>
+
+                  <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                  <span class="flow-badge bg-primary ">
+                     <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                  </span>
+
                         
-                       
-                     </tbody>
-                  </table>
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+         
+                  <!-- Flow Patrol Boat -->
+               <div class="flow-row mb-2">
+                     <span class="badge bg-light text-dark mr-2 px-2 py-2">
+                        <i class="fas fa-shield-alt text-primary mr-1"></i> Patrol Boat
+                     </span>
+
+                     <div class="d-flex align-items-center flex-wrap gap-2">
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> FM
+                        </span>
+                           <i class="fas fa-chevron-right text-muted mx-1"></i>
+                        <span class="flow-badge bg-info">
+                           <i class="fas fa-user-edit mr-1"></i> PET
+                        </span>
+
+                           <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-warning">
+                           <i class="fas fa-ship mr-1"></i> Lead Command
+                        </span>
+
+                        <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary">
+                           <i class="fas fa-user-tie mr-1"></i> Suptent Security
+                        </span>
+
+                        
+
+                        {{-- <i class="fas fa-chevron-right text-muted mx-1"></i>
+
+                        <span class="flow-badge bg-primary ">
+                           <i class="fas fa-user-tie mr-1"></i> Marine Rep
+                        </span> --}}
+
+                        <i class="fas fa-chevron-right text-success mx-1"></i>
+
+                        <span class="flow-badge bg-success">
+                           <i class="fas fa-check-circle mr-1"></i> Complete
+                        </span>
+                     </div>
+               </div>
+                   
+                    
                
+
+
+
+                     <hr>
+                     <span class="badge badge-info mb-2">
+                        MONITORING VDR
+                     </span>
+                     <span class="badge badge-info mb-2">
+                       16/09/2025 -  {{\Carbon\Carbon::now()->format('d/m/Y')}}
+                     </span>
+                     
+                     {{-- <table class="display  border">
+                        <tbody>
+                           <tr>
+                              <th>All Vessel Daily Report</th>
+                           </tr>
+                        </tbody>
+                     </table> --}}
+                     
+                        <table class="datatables-vdr-monitoring text-dark">
+                           
+                           <thead>
+                           
+                              <tr>
+                                 
+                                 <th>Vessel</th>
+                                 <th class="text-center">Total</th>
+                                 <th class="">Last VDR</th>
+                                 <th class="">Release at</th>
+                                 <th>Release Gap</th>
+                                 <th class="text-center">Draft</th>
+                                 <th class="text-center">Rejected</th>
+                                 <th class="text-center">PET</th>
+                                 <th class="text-center">Marine</th>
+                                 <th class="text-center">Suptent</th>
+                                 <th class="text-center">Complete</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              @foreach ($vessels as $vessel)
+                             
+                                 @if (count($vessel->getVdrs()) > 0)
+                                 <tr >
+                                    <td class="border-bottom"><a href="{{route('vdr.statistic.vessel', enkripRambo($vessel->id))}}">{{$vessel->name}}</a></td>
+                                    <td class="text-center border-bottom">{{count($vessel->getVdrs())}}</td>
+                                    <td class="border-bottom">{{formatDate($vessel->getVdrLast()->date)}}</td>
+                                    <td class="border-bottom">
+                                       @if ($vessel->getVdrLast()->release_date != null)
+                                       {{formatDateTimeB($vessel->getVdrLast()->release_date)}}
+                                       @endif
+                                       
+                                    </td>
+                                    <td class="border-bottom">{{$vessel->getVdrLast()->getDistance()}}</td>
+                                    <td class="text-center border-bottom">{{count($vessel->getVdrs()->where('status', 0))}}</td>
+                                    <td class="text-center border-bottom">{{count($vessel->getRejectVdrs())}}</td>
+                                    <td class="text-center border-bottom">{{count($vessel->getPetVdrs())}}</td>
+                                    <td class="text-center border-bottom">{{count($vessel->getMarineVdrs())}}</td>
+                                    <td class="text-center border-bottom">{{count($vessel->getSuptentVdrs())}}</td>
+                                    {{-- <td>{{count($vessel->getProgressVdrs())}}</td> --}}
+                                    <td class="text-center border-bottom">{{count($vessel->getCompleteVdrs())}}</td>
+      
+                                 </tr>
+      
+                                 
+                                 @endif
+      
+                                 
+                                 
+                              @endforeach
+                              
+                             
+                           </tbody>
+                        </table>
+                     
+                  </div>
+               </div>
             </div>
          </div>
+
+
+         
 
       
       </div>

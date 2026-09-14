@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Imports\CrewVdr;
 use App\Models\Cargo;
 use App\Models\Log as ModelsLog;
+use App\Models\Port;
 use App\Models\Vdr;
 use App\Models\VdrActivity;
 use App\Models\VdrCargo;
@@ -106,28 +107,31 @@ class VdrController extends Controller
       // Opsi 1 
       $vessel = Vessel::where('email', $user->email)->first();
 
-      $vdr = Vdr::where('vessel_id', $vessel->id)->where('date', date('Y-m-d'))->first();
+      // $vdr = Vdr::where('vessel_id', $vessel->id)->where('date', date('Y-m-d'))->first();
       // dd($vdr->id);
 
-      $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
-      $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
-      $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
-      $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
-      $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
-      $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
-      $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
-      $periodic = $vdr ? VdrPeriodic::where('vdr_id', $vdr->id)->first() : null;
-      $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
-      $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+      // $activities = $vdr ? VdrActivity::where('vdr_id', $vdr->id)->get() : null;
+      // $cargos = $vdr ? VdrCargo::where('vdr_id', $vdr->id)->get() : null;
+      // $weathers = $vdr ? VdrWeather::where('vdr_id', $vdr->id)->get() : null;
+      // $hses = $vdr ? VdrHse::where('vdr_id', $vdr->id)->get() : null;
+      // $engines = $vdr ? VdrEngine::where('vdr_id', $vdr->id)->get() : null;
+      // $crews = $vdr ? VdrCrew::where('vdr_id', $vdr->id)->orderBy('is_crew', 'desc')->get() : null;
+      // $operatings = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->get() : null;
+      // $periodic = $vdr ? VdrPeriodic::where('vdr_id', $vdr->id)->first() : null;
+      // $totalJam = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('time') : null;
+      // $totalDaily = $vdr ? VdrOperating::where('vdr_id', $vdr->id)->sum('daily') : null;
+
+      // $vdrs = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->get();
+
+
+
+      // $wHeadings = VdrWeatherHeading::get();
+      // $hseHeadings = VdrHseHeader::get();
+      // $operatingHeadings = VdrOperatingHeader::get();
+      // $cargoHeadings = VdrCargoHeading::get();
 
       $vdrs = Vdr::where('vessel_id', $vessel->id)->orderBy('date', 'desc')->get();
-
-
-
-      $wHeadings = VdrWeatherHeading::get();
-      $hseHeadings = VdrHseHeader::get();
-      $operatingHeadings = VdrOperatingHeader::get();
-      $cargoHeadings = VdrCargoHeading::get();
+      $vdrProgress = Vdr::where('vessel_id', $vessel->id)->whereNotIn('status', [0, 4])->count();
 
 
 
@@ -136,23 +140,24 @@ class VdrController extends Controller
          //   return view('pages.vdr.create-vdr', [
          'user' => $user,
          'vdrs' => $vdrs,
+         'vdrProgress' => $vdrProgress,
          'vessel' => $vessel,
-         'vdr' => $vdr,
-         'activities' => $activities,
-         'operatings' => $operatings,
-         'cargos' => $cargos,
-         'weathers' => $weathers,
-         'hses' => $hses,
-         'engines' => $engines,
-         'crews' => $crews,
-         'periodic' => $periodic,
-         'totalJam' => $totalJam,
-         'totalDaily' => $totalDaily,
+         // 'vdr' => $vdr,
+         // 'activities' => $activities,
+         // 'operatings' => $operatings,
+         // 'cargos' => $cargos,
+         // 'weathers' => $weathers,
+         // 'hses' => $hses,
+         // 'engines' => $engines,
+         // 'crews' => $crews,
+         // 'periodic' => $periodic,
+         // 'totalJam' => $totalJam,
+         // 'totalDaily' => $totalDaily,
 
-         'wHeadings' => $wHeadings,
-         'hseHeadings' => $hseHeadings,
-         'operatingHeadings' => $operatingHeadings,
-         'cargoHeadings' => $cargoHeadings
+         // 'wHeadings' => $wHeadings,
+         // 'hseHeadings' => $hseHeadings,
+         // 'operatingHeadings' => $operatingHeadings,
+         // 'cargoHeadings' => $cargoHeadings
       ])->with('i');
    }
 
@@ -690,6 +695,7 @@ class VdrController extends Controller
       $vdr = Vdr::find($dekripId);
       // dd($vdr->id);
       $user = auth()->user();
+      $barges = Port::where('type', 'Barge')->get();
 
 
       if (auth()->user()->hasRole('superuser')) {
@@ -908,6 +914,7 @@ class VdrController extends Controller
 
       return view('pages-stisla.vdr.detail-new', [
          //   return view('pages.vdr.show-vdr', [
+         'barges' => $barges,
          'vdrRejectTables' => $vdrRejectTables,
          'realTotalDaily' => $realTotalDaily,
          'editable' => $editable,
@@ -4648,7 +4655,11 @@ class VdrController extends Controller
 
 
       if ($vessel->contract_type == 'Non PO') {
-         $func = $vessel->func;
+         if ($vessel->username == 'bestlink88') {
+            $func = 'Security';
+         } else {
+            $func = $vessel->func;
+         }
          $area = $vessel->area;
       } else {
          $func = '';
@@ -4786,23 +4797,23 @@ class VdrController extends Controller
 
       if ($lastVdr) {
          foreach ($lastVdrCrews as $lastCrew) {
-            if ($lastCrew->is_crew == 1) {
-               if ($lastCrew->status == null) {
-                  $status = 1;
-               } else {
-                  $status = $lastCrew->status;
-               }
-               $createVdrCrew = VdrCrew::create([
-                  'vdr_id' => $vdr->id,
-                  'is_crew' => $lastCrew->is_crew,
-                  'name' => $lastCrew->name,
-                  'rank' => $lastCrew->rank,
-                  'company' => $lastCrew->company,
-                  'status' => $status,
-                  'created_at' => NOW(),
-                  'updated_at' => NOW()
-               ]);
+            // if ($lastCrew->is_crew == 1) {
+            if ($lastCrew->status == null) {
+               $status = 1;
+            } else {
+               $status = $lastCrew->status;
             }
+            $createVdrCrew = VdrCrew::create([
+               'vdr_id' => $vdr->id,
+               'is_crew' => $lastCrew->is_crew,
+               'name' => $lastCrew->name,
+               'rank' => $lastCrew->rank,
+               'company' => $lastCrew->company,
+               'status' => $status,
+               'created_at' => NOW(),
+               'updated_at' => NOW()
+            ]);
+            // }
          }
 
          $vdrCrew = VdrCrew::where('vdr_id', $vdr->id)->where('is_crew', 1)->where('status', 1)->get();

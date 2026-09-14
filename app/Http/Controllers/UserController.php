@@ -202,6 +202,25 @@ class UserController extends Controller
       return redirect()->route('user')->with('success', 'User data updated');
    }
 
+   public function exportPdf()
+   {
+      $users = User::whereIn('username', ['fm', 'suptent_project', 'suptent_wi', 'suptent_drilling'])->orderBy('created_at', 'desc')->get();
+      $usersTotal = User::get();
+      $ports = Port::get();
+
+      $barges = Port::where('type', 'barge')->get();
+      $bargesId = [];
+      foreach ($barges as $barge) {
+         $bargesId[] = $barge->id;
+      }
+
+      $users = User::whereIn('port_id', $bargesId)->get();
+
+      return view('pages.document.user', [
+         'users'  => $users,
+      ]);
+   }
+
    public function delete($id)
    {
       $dekripId = dekripRambo($id);

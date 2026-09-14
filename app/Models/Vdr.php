@@ -12,6 +12,66 @@ class Vdr extends Model
 
    protected $guarded = [];
 
+   public function getTotalHigh()
+   {
+      $vdrOperatingHigh = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 1)->first()->time ?? 0;
+      return $vdrOperatingHigh;
+   }
+
+   public function getTotalNormal()
+   {
+      $vdrOperatingNormal = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 2)->first()->time ?? 0;
+      return $vdrOperatingNormal;
+   }
+
+   public function getTotalSlow()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 3)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getTotalManu()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 4)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getTotalIdle()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 5)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getTotalTow()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 6)->first()->time ?? 0;
+      return $result;
+   }
+   public function getTotalAh()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 7)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getTotalSb()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 8)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getTotalSp()
+   {
+      $result = VdrOperating::where('vdr_id', $this->id)->where('heading_id', 11)->first()->time ?? 0;
+      return $result;
+   }
+
+   public function getFuelRemark()
+   {
+      $cargo = $this->cargoes->where('heading_id', 1)->first();
+
+      return $cargo->remarks;
+   }
+
    public function rejectBy()
    {
       return $this->belongsTo(User::class, 'reject_by');

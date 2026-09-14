@@ -28,14 +28,37 @@
                   <h5>VDR History</h5>
                   {{-- Daftar VDR yang sudah melewati Approval <span class="text-uppercase">{{auth()->user()->name}}</span> --}}
                   <hr>
-                  <div class="card bg-info">
-                     <div class="card-body">
-                        <h5>{{count($vdrs)}} VDR</h5>
+                  <div class="row text-center">
+
+                     <div class="col-12">
+                         <div class="card bg-light  border-0 mb-3">
+                             <div class="card-body py-3">
+         
+                                 {{-- <i class="fas fa-file-alt fa-2x mb-2"></i> --}}
+         
+                                 <h3 class="mb-0 text-primary">
+                                     {{ count($vdrs) }}
+                                 </h3>
+         
+                                 <i class="fas fa-file-alt  mb-2 mr-1 text-primary"></i> <small>Total VDR</small>
+         
+                             </div>
+                         </div>
                      </div>
-                  </div>
+         
+                 </div>
                   
                   <form action="{{ route('vdr.history.filter') }}" method="POST">
                      @csrf
+
+                     <div class="form-group">
+                        <label for="">Divisi</label>
+                        <select name="divisi" id="divisi" required class="form-control">
+                           <option value="" disabled selected>-- Select --</option>
+                           <option {{ $divisi == 'Under PO' ? 'selected' : '' }} value="Under PO">Under PO</option>
+                           <option {{ $divisi == 'Non PO' ? 'selected' : '' }} value="Non PO">Non PO</option>
+                        </select>
+                     </div>
                      <div class="row">
                         <div class="col-md-6">
                            <div class="form-group">
@@ -55,7 +78,19 @@
                      <button class="btn btn-primary btn-block" type="submit">Filter</button>
                   </form>
                   <hr>
-                  Klik pada VDR number untuk melihat detail
+                  <div class="">
+
+                     <div class="d-flex align-items-center">
+         
+                         <i class="fas fa-mouse-pointer text-primary mr-2"></i>
+         
+                         <small class="text-muted">
+                              Click the <b>Filter</b> button to display the data.
+                           </small>
+         
+                     </div>
+         
+                  </div>
                   
                </div>
             </div>
@@ -124,8 +159,34 @@
                         Untuk pencarian data yang lebih spesifik, silakan gunakan fitur filter.
                         <hr>
                         @else
-                     <b>Info</b>: Menampilkan data VDR dari tanggal {{ formatDate($start) }} – {{ formatDate($to) }} berdasarkan filter yang dipilih.
-                     <hr>
+                     {{-- <b>Info</b>: Menampilkan data VDR dari tanggal {{ formatDate($start) }} – {{ formatDate($to) }} berdasarkan filter yang dipilih. --}}
+                     <div class="alert alert-light border shadow-none mb-3">
+                        <div class="d-flex align-items-center mb-2">
+                           <i class="fas fa-info-circle text-primary mr-2"></i>
+                           <span class="fw-bold">Filter Summary</span>
+                        </div>
+
+                        {{-- <div class="small text-muted">
+                           Menampilkan data <b>Vendor Data Report (VDR)</b> sesuai filter yang dipilih.
+                        </div> --}}
+
+                        <div class="mt-2 d-flex flex-wrap gap-2">
+
+                           <span class="badge badge-white text-dark border px-3 py-2">
+                                 <i class="far fa-calendar-alt text-primary mr-1"></i>
+                                 <b>Periode</b>
+                                 {{ formatDate($start) }} – {{ formatDate($to) }}
+                           </span>
+
+                           <span class="badge badge-white text-dark border px-3 py-2">
+                                 <i class="fas fa-building text-success mr-1"></i>
+                                 <b>Divisi</b>
+                                 {{ $divisi ?? 'Semua Divisi' }}
+                           </span>
+
+                        </div>
+                     </div>
+                     
                   @endif
                   
                   <div class="table-responsive">
@@ -140,6 +201,7 @@
                               <th>Date</th>
                               {{-- <th>Crew</th> --}}
                               {{-- <th>Created</th> --}}
+                              <th>Type</th>
                               <th class="text-center">Status</th>
                               {{-- @if ($title == 'Reject')
                                   <th>Note</th>
@@ -176,6 +238,9 @@
                               </td>
                               {{-- <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td> --}}
                               {{-- <td>{{$vdr->created_by}}</td> --}}
+                              <td>
+                                 <x-status-stisla.vdr-flow-plain :vessel="$vdr->vessel" />
+                              </td>
                               <td class="text-center">
                                  {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
                                  <span class="badge badge-warning">Draft</span>

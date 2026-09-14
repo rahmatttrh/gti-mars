@@ -3,6 +3,22 @@
     Dashboard
 @endsection
 @section('content')
+
+<style>
+   .mapboxgl-popup-content {
+    padding: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-radius: 12px !important;
+}
+
+.mapboxgl-popup-close-button {
+    color: white;
+    font-size: 16px;
+    right: 10px;
+    top: 8px;
+}
+</style>
    <section class="section">
       <div id="map" class="card shadow-lg" style="height: 74vh; width:auto; border-radius: 15px;background-size: cover;">
                
@@ -153,11 +169,58 @@
          var long = e.features[0].properties.long;
          var speed = e.features[0].properties.speed;
          var heading = e.features[0].properties.heading;
+         var date = e.features[0].properties.date;
 
+         console.log(e.features[0]);
          new mapboxgl.Popup()
             .setLngLat(coordinates)
             .setHTML(
-                  "<div class='card'><div class='card-header'><span class='font-bold text-lg'><b>" + nama +"</b></span></div><div class='card-body'><div class='row'><div class='col-md-2'>S <br> H</div><div class='col-md-10'>: "+ speed + " Knot<br>: " + heading + "</div></div></div>  <div class='card-footer'>"+lat+", "+long + "</div></div>"
+               "<div class='card border-0 shadow-sm' style='min-width:260px; border-radius:12px; overflow:hidden;'>"
+
++ "<div class='card-header bg-primary text-white'>"
+   + ""
+   + "<span class='font-bold text-lg'><b> " + nama + "</b></span>"
++ "</div>"
+
++ "<div class='card-body'>"
+
+   + "<div class='row mb-2'>"
+      + "<div class='col-5 text-muted'>"
+         + "<i class='fas fa-tachometer-alt text-primary mr-1'></i> Speed"
+      + "</div>"
+      + "<div class='col-7'>"
+         + ": <b>" + speed + " Knot</b>"
+      + "</div>"
+   + "</div>"
+
+   + "<div class='row mb-2'>"
+      + "<div class='col-5 text-muted'>"
+         + "<i class='fas fa-compass text-success mr-1'></i> Heading"
+      + "</div>"
+      + "<div class='col-7'>"
+         + ": <b>" + heading + "</b>"
+      + "</div>"
+   + "</div>"
+
+   + "<div class='row'>"
+      + "<div class='col-5 text-muted'>"
+         + "<i class='fas fa-map-marker-alt text-danger mr-1'></i> Location"
+      + "</div>"
+      + "<div class='col-7'>"
+         + ": <b>" + lat + ", " + long + "</b>"
+      + "</div>"
+   + "</div>"
+
++ "</div>"
+
++ "<div class='card-footer bg-light'>"
+   + "<small class='text-muted'>"
+      + "<i class='fas fa-clock text-primary mr-1'></i> Last Update: " + date
+   + "</small>"
++ "</div>"
+
++ "</div>"
+                  // "<div class='card'><div class='card-header'><span class='font-bold text-lg'><b>" + nama +"</b></span></div><div class='card-body'><div class='row'><div class='col-md-2'>S <br> H</div><div class='col-md-10'>: "+ speed + " Knot<br>: " + heading + "</div></div></div>  <div class='card-footer'>"+lat+", "+long + "</div></div>"
             )
             .addTo(map);
       });

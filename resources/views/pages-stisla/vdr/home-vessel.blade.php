@@ -18,276 +18,389 @@
       padding-left: 5px
    }
 </style>
-   <section class="section">
-      {{-- <h4>OVERVIEW VDR</h4> --}}
-      <div class="row ">
-         
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-primary">
-                  <i class="fas fa-star"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Total</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs)}}
-                  </div>
-                  </div>
-               </a>
-            </div>
-            
+  
+
+{{-- <div class="card shadow-sm border-0 mb-3">
+   <div class="card-body py-2">
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+         <div>
+            <h5 class="mb-0">
+               <i class="fas fa-ship text-primary mr-2"></i>
+               Vessel Daily Report
+            </h5>
+            <small class="text-muted">
+               Monitor & Manage Vessel Operations
+            </small>
          </div>
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-info">
-                  <i class="fas fa-edit"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Draft</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs->where('status', 0))}}
-                  </div>
-                  </div>
-               </a>
-            </div>
+
+         <div class="d-flex flex-wrap">
+
+            <span class="badge badge-light border mr-2 p-2">
+               <i class="fas fa-file-alt text-primary"></i>
+               {{count($vdrs)}} Total
+            </span>
+
+            <span class="badge badge-light border mr-2 p-2">
+               <i class="fas fa-pencil-alt text-warning"></i>
+               {{count($vdrs->where('status',0))}} Draft
+            </span>
+
+            <span class="badge badge-light border mr-2 p-2">
+               <i class="fas fa-user-check text-info"></i>
+               {{count($vdrs->where('status',1))}} PET
+            </span>
+
+            <span class="badge badge-light border mr-2 p-2">
+               <i class="fas fa-anchor text-primary"></i>
+               {{count($vdrs->where('status',2))}} Marine
+            </span>
+
+            <span class="badge badge-light border mr-2 p-2">
+               <i class="fas fa-user-tie text-danger"></i>
+               {{count($vdrs->where('status',3))}} Chief
+            </span>
+
+            <span class="badge badge-success p-2">
+               <i class="fas fa-check-circle"></i>
+               {{count($vdrs->where('status',4))}} Done
+            </span>
+
          </div>
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-info">
-                  <i class="fas fa-user"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>PET</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs->where('status', 1))}}
-                  </div>
-                  </div>
-               </a>
-            </div>
-         </div>
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-info">
-                  <i class="fas fa-user"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Marine</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs->where('status', 2))}}
-                  </div>
-                  </div>
-               </a>
-            </div>
-         </div>
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-info">
-                  <i class="fas fa-user"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Chief</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs->where('status', 3))}}
-                  </div>
-                  </div>
-               </a>
-            </div>
-         </div>
-         <div class="col-md-2">
-            <div class="card card-statistic-1 border">
-               <a href="{{route('vdr.marine.validation')}}">
-                  <div class="card-icon bg-success">
-                  <i class="fas fa-check"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Done</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vdrs->where('status', 4))}}
-                  </div>
-                  </div>
-               </a>
-            </div>
-         </div>
+
       </div>
 
-      <div class="row">
-         <div class="col-md-2">
-           
-            
+   </div>
+</div> --}}
 
-            {{-- <div class="row">
-               <div class="col-md-3">
-                  <div class="card card-statistic-1 border">
-                     <a href="">
-                        <div class="card-icon bg-primary">
-                        <i class="fas fa-star"></i>
-                        </div>
-                        <div class="card-wrap">
-                        <div class="card-header">
+
+
+<div class="section">
+   <div class="section-body">
+
+   
+
+<div class="card border-0 shadow-sm">
+
+   {{-- HEADER --}}
+   <div class="card-body border-bottom">
+
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+         <div>
+
+            <div class="d-flex align-items-center">
+
+               {{-- <div class="mr-3">
+
+                 <div class="vdr-avatar">
+
+                              <i class="fas fa-ship"></i>
+
+                           </div>
+
+               </div> --}}
+
+               <div>
+
+                  <div class="text-primary font-weight-bold text-uppercase small">
+                     VDR Management
+                  </div>
+
+                  <h6 class="mb-1 font-weight-bold">
+
+                     {{$vessel->name}}
+
+                     
+
+                  </h6>
+
+                  <div class="text-muted text-sm">
+
+                     <small>
+                     <i class="fas fa-route mr-1"></i>
+                     Operations Monitoring
+
+                     <span class="mx-2">•</span>
+
+                     <i class="fas fa-user-check mr-1"></i>
+                     Approval Tracking
+                     </small>
+
+                  </div>
+
+                  <div class="mt-1">
+
+                     <div class="d-flex align-items-center">
+
+                        <i class="fas fa-info-circle text-primary mr-2"></i>
+
+                        <small class="mb-0">
+
+                           Untuk membuat <strong>Vessel Daily Report (VDR)</strong> baru, silakan kembali ke
+                           <strong><a href="/">Homepage</a></strong> dan klik tombol "Buat VDR Baru".
                            
-                           <h4>Total</h4>
-                        </div>
-                        <div class="card-body">
-                           {{count($vdrs)}}
-                        </div>
-                        </div>
-                     </a>
+
+                        </small>
+
+                     </div>
+
                   </div>
                </div>
-            </div> --}}
-            {{-- <div class="table-responsive">
-            <table>
-               <tbody>
-                  <tr>
-                     <td>Total</td>
-                     <td>{{count($vdrs)}}</td>
-                  </tr>
-                  <tr>
-                     <td>Draft</td>
-                     <td>{{count($vdrs->where('status', 0))}}</td>
-                  </tr>
-                  <tr>
-                     <td>PET</td>
-                     <td>{{count($vdrs->where('status', 1))}}</td>
-                  </tr>
-                  <tr>
-                     <td>Marine</td>
-                     <td>{{count($vdrs->where('status', 2))}}</td>
-                  </tr>
-                  <tr>
-                     <td>Suptend</td>
-                     <td>{{count($vdrs->where('status', 3))}}</td>
-                  </tr>
-                  <tr>
-                     <td>Done</td>
-                     <td>{{count($vdrs->where('status', 4))}}</td>
-                  </tr>
-               </tbody>
-            </table>
-            </div> --}}
-            {{-- Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est libero deserunt autem consectetur ea nihil, iusto distinctio corrupti harum. At debitis ipsum est. --}}
-         </div>
-         <div class="col-md-12">
-            <div class="card">
-               <div class="card-body">
-                  <div class="table-responsive">
-                     <table class="table-sm" id="table-1">
-                        <thead>
-                           <tr>
-                              <th rowspan="2" class="text-center">No.</th>
-                              <th rowspan="2">VDR Number</th>
-                              {{-- <th rowspan="2">Vessel</th> --}}
-                              <th rowspan="2">Date</th>
-                              <th rowspan="2">Crew</th>
-                              {{-- <th>Created</th> --}}
-                              <th rowspan="2" class="text-center">Status</th>
-                              {{-- <th colspan="2" class="text-center">High Speed Contract</th>
-                              <th colspan="2" class="text-center">Normal Speed Contract</th>
-                              <th colspan="2" class="text-center">Slow Speed Contract</th> --}}
-                              <th colspan="2" class="text-center">Total</th>
-                              {{-- <th></th> --}}
-                           </tr>
-                           <tr>
-                              {{-- <th>Speed</th>
-                              <th>Fuel</th>
-                              <th>Speed</th>
-                              <th>Fuel</th>
-                              <th>Speed</th>
-                              <th>Fuel</th> --}}
-                              <th>Time</th>
-                              <th>Daily Fuel</th>
-                              <th></th>
-                           </tr>
-                        </thead>
-                        <tbody>
-            
-                           @foreach($vdrs as $vdr)
-                           <tr>
-                              <td class="text-muted text-center"><small>{{++$i}} </small></td>
-                              <td>
-                                 {{-- @if (auth()->user()->username == 'logindo' || auth()->user()->username == 'tegasjaya') --}}
-                                    <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                     {{-- @else
-                                     <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
-                                 @endif --}}
-                                 {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>  --}}
-                                 {{-- <small>{{$vdr->vessel->name}}</small> --}}
-                              </td>
-                              {{-- <td>{{$vdr->vessel->name}}</td> --}}
-                              <td>
-                                 {{formatDate($vdr->date)}} 
-                                 {{-- <small>{{formatDayName($vdr->date)}}</small> --}}
-                              </td>
-                              <td>{{$vdr->crew_onduty}} / {{$vdr->crew_max}}</td>
-                              {{-- <td>{{$vdr->created_by}}</td> --}}
-                              <td class="text-center">
-                                 {{-- @if(date('Y-m-d', strtotime($vdr->date)) == date('Y-m-d'))
-                                 <span class="badge badge-warning">Draft</span>
-                                 @else
-                                 <span class="badge badge-success">Release</span>
-                                 @endif --}}
-                                 <x-status-stisla.vdr :vdr="$vdr" />
-                              </td>
-                              
-                              {{-- <td>{{$vdr->operatings->where('heading_id', 1)->first()->speed}}</td>
-                              <td>{{$vdr->operatings->where('heading_id', 1)->first()->contractual_fuel}}</td>
-                              <td>{{$vdr->operatings->where('heading_id', 2)->first()->speed}}</td>
-                              <td>{{$vdr->operatings->where('heading_id', 2)->first()->contractual_fuel}}</td>
-                              <td>{{$vdr->operatings->where('heading_id', 3)->first()->speed}}</td>
-                              <td>{{$vdr->operatings->where('heading_id', 3)->first()->contractual_fuel}}</td> --}}
-                              <td>{{$vdr->getTotalHours()}}</td>
-                              {{-- <td>{{$vdr->customRound($vdr->operatings->sum('daily'))}}</td> --}}
-                              @php
-                                    $totalDaily = round($vdr->operatings->sum('daily'), 1);
-                                    $totalDaily = round($totalDaily);
-                              @endphp
-                              <td>{{$totalDaily}}</td>
-                              <td>
-                                 <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">Detail SPA</a>
-                              </td>
-                           </tr>
-                           @endforeach
-                        </tbody>
-                     </table>
-                  </div>
-               </div>
+
             </div>
+
          </div>
+
+         <div class="d-flex flex-wrap mt-2 mt-md-0">
+
+            {{-- <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-file-alt text-primary mr-1"></i>
+               {{count($vdrs)}} Reports
+            </span> --}}
+
+            <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-pencil-alt text-warning mr-1"></i>
+               {{count($vdrs->where('status',0))}} Draft
+            </span>
+
+            <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-user-check text-info mr-1"></i>
+               {{count($vdrs->where('status',1))}} PET
+            </span>
+
+            <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-user-tie text-danger mr-1"></i>
+               {{ $vdrProgress }} Progress Approval
+            </span>
+
+            {{-- <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-anchor text-primary mr-1"></i>
+               {{count($vdrs->where('status',2))}} Marine
+            </span>
+
+            <span class="badge badge-light border px-3 py-2 mr-2">
+               <i class="fas fa-user-tie text-danger mr-1"></i>
+               {{count($vdrs->where('status',3))}} Chief
+            </span> --}}
+
+            <span class="badge badge-success px-3 py-2">
+               <i class="fas fa-check-circle mr-1"></i>
+               {{count($vdrs->where('status',4))}} Done
+            </span>
+
+         </div>
+
       </div>
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-   </section>
+
+   </div>
+
+   {{-- TOOLBAR --}}
+   {{-- <div class="card-body py-2 border-bottom">
+
+      <div class="row align-items-center">
+
+         <div class="col-md-4">
+
+            <div class="input-group input-group-sm">
+
+               <div class="input-group-prepend">
+                  <span class="input-group-text bg-white">
+                     <i class="fas fa-search"></i>
+                  </span>
+               </div>
+
+               <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Search VDR Number...">
+
+            </div>
+
+         </div>
+
+         <div class="col-md-8 text-md-right mt-2 mt-md-0">
+
+            <button class="btn btn-light btn-sm border">
+               <i class="fas fa-filter mr-1"></i>
+               Filter
+            </button>
+
+            <button class="btn btn-light btn-sm border">
+               <i class="fas fa-sync-alt"></i>
+            </button>
+
+         </div>
+
+      </div>
+
+   </div> --}}
+
+   {{-- CONTENT --}}
+   <div class="card-body">
+
+      <div class="card border shadow-none  mb-3">
+
+         <div class="card-body py-2 px-3">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+
+               <div>
+
+                  <span class="font-weight-bold">
+                     <i class="fas fa-clipboard-list text-primary mr-1"></i>
+                     VDR Repository
+                  </span>
+
+                  <small class="text-muted ml-2">
+                     Menampilkan seluruh Vessel Daily Report yang telah tercatat dalam sistem.
+                  </small>
+
+               </div>
+
+               <div class="mt-1 mt-md-0">
+
+                  <span class="badge badge-primary px-3 py-2">
+                     <i class="fas fa-file-alt mr-1"></i>
+                     {{count($vdrs)}} Reports
+                  </span>
+
+               </div>
+
+            </div>
+
+         </div>
+
+      </div>
+
+      <div class="table-responsive">
+
+         <table class="table table-sm table-hover mb-0" id="table-1">
+
+            <thead class="bg-light">
+
+               <tr>
+                  <th>VDR Number</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Fuel Daily</th>
+                  <th>Area</th>
+                  <th width="180">Status</th>
+                  {{-- <th width="130">Action</th> --}}
+               </tr>
+
+            </thead>
+
+            <tbody>
+
+               @foreach($vdrs as $vdr)
+
+               @php
+                  $crewPercent = $vdr->crew_max > 0
+                     ? ($vdr->crew_onduty / $vdr->crew_max) * 100
+                     : 0;
+
+                  $totalDaily = round($vdr->operatings->sum('daily'));
+               @endphp
+
+               <tr class="border-bottom">
+
+                  <td class="border-bottom">
+
+                     <i class="fas fa-ship mr-1"></i>
+
+                    
+                              <a href="{{route('vdr.show.spa',[enkripRambo($vdr->id),enkripRambo('index')])}}">
+                                 {{$vdr->code}}
+                              </a>
+
+                           
+
+                  </td>
+
+                  <td class="border-bottom">
+                     <i class="far fa-calendar-alt mr-1"></i>
+                              {{formatDate($vdr->date)}}
+                  </td>
+
+                  <td class="border-bottom">
+                     <i class="fas fa-clock mr-1"></i>
+                              {{$vdr->getTotalHours()}}
+                  </td>
+
+
+                  <td class="border-bottom">
+                     <i class="fas fa-gas-pump mr-1"></i>
+                              {{$totalDaily}} L
+                  </td>
+
+
+                  <td class="border-bottom">
+                     {{ $vdr->area ?? '-' }}
+                  </td>
+                  
+
+                  <td class="border-bottom">
+
+                     <x-status-stisla.vdr :vdr="$vdr" />
+
+                  </td>
+
+                  
+
+               </tr>
+
+               @endforeach
+
+            </tbody>
+
+         </table>
+
+      </div>
+
+   </div>
+
+</div>
+
+</div>
+</div>
+
+<style>
+
+.vdr-avatar{
+   width:42px;
+   height:42px;
+   border-radius:12px;
+   background:#e8f2ff;
+   color:#0d6efd;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   font-size:16px;
+}
+
+.table tbody tr{
+   transition:.2s;
+}
+
+.table tbody tr:hover{
+   background:#f8fafc;
+}
+
+.badge{
+   font-weight:500;
+}
+
+.progress{
+   border-radius:20px;
+}
+
+.card{
+   border-radius:18px;
+}
+
+</style>
 
   
    

@@ -917,8 +917,8 @@ class EmailController extends Controller
       $data = [
          'to' => 'Lutfi Aryanto',
          'from' => 'MARS System',
-         'subject' => 'Summary VDR Superintendent  ' . $jam . ' ' . formatDate($to) . ' ('  . count($vdrWaitings)  . ' VDR)',
-         'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi Superintendent',
+         'subject' => 'Summary VDR Marine Representative  ' . $jam . ' ' . formatDate($to) . ' ('  . count($vdrWaitings)  . ' VDR)',
+         'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi Marine Representative',
          'user_id' => $user->id,
          'level' => 'suptent',
          'vdrs' => $vdrWaitings,
@@ -1043,8 +1043,11 @@ class EmailController extends Controller
             ])->send(new ApprovalPetMorning($data));
          } elseif ($loc == 'CBU') {
             Mail::to([
-               "suroso.williem@pertamina.com",
-               "janudin@pertamina.com",
+               // "suroso.williem@pertamina.com",
+               // "janudin@pertamina.com",
+               "gita.dimarsandy@pertamina.com",
+               "erry.brillyanto@pertamina.com",
+               "indra.dipanegara@pertamina.com",
                "system.ekanuri@gmail.com",
                // "rahmattrust@gmail.com"
             ])->send(new ApprovalPetMorning($data));
@@ -1093,7 +1096,66 @@ class EmailController extends Controller
 
 
 
+   public function summaryVdrComan($jam, $loc)
+   {
 
+      $user = User::where('username', 'coman_' . $loc)->first();
+
+      $to = Carbon::now();
+      $vdrWaitings = Vdr::where('status', 5)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrRejects = Vdr::where('status', 101)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+      $vdrCompletes = Vdr::where('status', 4)->where('area', $loc)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+
+      $links = [];
+
+      foreach ($vdrWaitings as $vdrwait) {
+         $v = [$vdrwait->id, enkripRambo($vdrwait->id)];
+         $object = (object)[
+            'id' => $vdrwait->id,
+            'link' =>  route('vdr.pdf.email', [enkripRambo($vdrwait->id), enkripRambo('suptent-loc')]),
+            // 'enkrip' => enkripRambo($vdrpet->id)
+         ];
+         $links[] = $object;
+
+         // $links[] = $v;
+      }
+
+      $data = [
+         'to' => 'Coman ' . $loc,
+         'from' => 'VDR Online MARS',
+         'subject' => 'Summary VDR Coman ' . $loc . ' ' . $jam . ' ' . formatDate($to),
+         'body' => 'Total ' . count($vdrWaitings) . ' VDR Menunggu Validasi anda',
+         'user_id' => $user->id,
+         'level' => 'suptent-loc',
+         'vdrs' => $vdrWaitings,
+         'vdrRejectPets' => $vdrRejects,
+         'vdrCompletes' => $vdrCompletes,
+         'links' => $links
+      ];
+
+
+
+      if (count($vdrWaitings) > 0) {
+         if ($loc == '222') {
+            Mail::to([
+               "pheoses.cosl222@pertamina.com",
+               "system.ekanuri@gmail.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == '223') {
+            Mail::to([
+               "pheoses.cosl223@pertamina.com",
+               "system.ekanuri@gmail.com"
+            ])->send(new ApprovalPetMorning($data));
+         } elseif ($loc == '225') {
+            Mail::to([
+               "pheoses.cosl225@pertamina.com",
+               "system.ekanuri@gmail.com"
+            ])->send(new ApprovalPetMorning($data));
+         }
+      }
+
+      return redirect()->back()->with('success', 'Email Notifikasi Summary PET sent (' . $jam . ')');
+   }
 
 
    // public function approvalVdrPet($id){

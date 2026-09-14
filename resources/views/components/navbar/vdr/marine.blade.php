@@ -126,23 +126,39 @@
 
 <div class="d-none d-md-block">
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="px-2">
+   <div class="px-3">
       <ul class="navbar-nav">
          
-         <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
-            <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
-               @if (request()->is('vdr/m/dashboard/*'))
-               <i class="fas fa-fire ml-3"></i>
-               @endif
-               @if (request()->is('vdr/m/act/filter'))
+         @if (auth()->user()->hasRole('fm') )
+             @else
+             
+             <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
+               <a href="{{route('vdr.marine')}}" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
+                  @if (request()->is('vdr/m/dashboard/*'))
+                  <i class="fas fa-fire ml-3"></i>
+                  @endif
+                  @if (request()->is('vdr/m/act/filter'))
+                  <i class="fas fa-fire ml-3"></i>
+                  @endif
+                  
+                  <span class="mx-3">Dashboard</span>
+               </a>
+            </li>
+         @endif
+         
+
+         @if (auth()->user()->hasRole('fm') ||  auth()->user()->username == 'PET')
+         <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.pet.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/validation/*'))
                <i class="fas fa-fire ml-3"></i>
                @endif
                
-               <span class="mx-3">Dashboard</span>
+               <span class="mx-3">Validation</span>
             </a>
          </li>
-
-         <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
+             @else
+             <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('vdr/m/act/validation/*'))
                <i class="fas fa-fire ml-3"></i>
@@ -151,6 +167,16 @@
                <span class="mx-3">Validation</span>
             </a>
          </li>
+         @endif
+         {{-- <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/m/act/validation/*'))
+               <i class="fas fa-fire ml-3"></i>
+               @endif
+               
+               <span class="mx-3">Validation</span>
+            </a>
+         </li> --}}
 
          <li class="nav-item nav-item-b {{ (request()->is('vdr/m/act/reject/*')) ? 'active' : '' }}">
             <a href="{{route('vdr.reject.list')}}" class="nav-link {{ (request()->is('vdr/m/act/reject/*')) ? 'text-dark' : 'text-white' }}">

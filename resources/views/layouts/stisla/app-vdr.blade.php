@@ -120,11 +120,11 @@
             <div class="navbar-bg " style="background-color: #e6e6ef;"></div>
             
             {{-- NAVBAR --}}
-            @if (auth()->user()->hasRole('marine|superuser') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
+            @if (auth()->user()->hasRole('marine|superuser|fm') || auth()->user()->hasRole('admin-dsp') || auth()->user()->hasRole('superadmin-dsp'))
             <x-navbar.vdr.marine :notifvdrs="$notifVdrs" :notif="$notif" />
             @elseif(auth()->user()->hasRole('department'))
             <x-navbar.vdr.department />
-            @elseif(auth()->user()->hasRole('suptent_loc'))
+            @elseif(auth()->user()->hasRole('suptent_loc|coman'))
             <x-navbar.vdr.suptent-loc />
             @elseif(auth()->user()->hasRole('vessel'))
             <x-navbar.vdr.vessel />

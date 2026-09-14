@@ -56,13 +56,13 @@ class VesselVdrController extends Controller
 
 
 
-      if ($vdr->code == '4710006534/ENCONE/251208/0') {
-         $vdr->update([
-            'status' => 4,
-            'remark' => 'offhire'
-         ]);
-         return redirect()->back()->with('success', 'VDR successfully Autocomplete (Offhire)');
-      }
+      // if ($vdr->code == '4710006534/ENCONE/251208/0') {
+      //    $vdr->update([
+      //       'status' => 4,
+      //       'remark' => 'offhire'
+      //    ]);
+      //    return redirect()->back()->with('success', 'VDR successfully Autocomplete (Offhire)');
+      // }
 
 
 
@@ -114,6 +114,15 @@ class VesselVdrController extends Controller
          $status = 2;
       } else {
          $status = 1;
+      }
+
+
+
+      if ($vdr->vessel->contract_type == 'Non PO') {
+         $status = 11;
+         // dd($status);
+      } else {
+         $status = 11;
       }
 
       // if ($status == 1) {

@@ -78,6 +78,20 @@
                <span class="mx-3">Dashboard</span>
             </a>
          </li> --}}
+         @if (auth()->user()->hasRole('coman'))
+         <li class="nav-item nav-item-b {{ (request()->is('vdr/m/dashboard/*')) ? 'active' : '' }} {{ (request()->is('vdr/m/act/filter')) ? 'active' : '' }}">
+         <a href="/" class="nav-link {{ (request()->is('vdr/m/dashboard/*')) ? 'text-dark' : 'text-white' }} {{ (request()->is('vdr/m/act/filter')) ? 'text-dark' : 'text-white' }}">
+            @if (request()->is('vdr/m/dashboard/*'))
+            <i class="fas fa-fire ml-3"></i>
+            @endif
+            @if (request()->is('vdr/m/act/filter'))
+            <i class="fas fa-fire ml-3"></i>
+            @endif
+            
+            <span class="mx-3">Back to Homepage</span>
+         </a>
+      </li>
+      @else
 
          <li class="nav-item  nav-item-b {{ (request()->is('vdr/m/act/validation/*')) ? 'active' : '' }}">
             <a href="{{route('vdr.marine.validation')}}" class="nav-link {{ (request()->is('vdr/m/act/validation/*')) ? 'text-dark' : 'text-white' }}">
@@ -108,7 +122,7 @@
                <span class="mx-3">History</span>
             </a>
          </li>
-         
+         @endif
          {{-- <li class="nav-item {{ (request()->is('schedule/*')) ? 'active' : '' }}">
             <a href="{{route('schedule.all', enkripRambo(auth()->user()->getMonth()))}}" class="nav-link {{ (request()->is('schedule/*')) ? 'text-dark' : 'text-white' }}">
                @if (request()->is('schedule/*'))

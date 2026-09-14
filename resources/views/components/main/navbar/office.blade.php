@@ -6,7 +6,7 @@
 </style>
 <nav class="navbar navbar-expand-lg main-navbar  text-dark">
    <a href="/" class="navbar-brand sidebar-gone-hide">
-      <img src="{{asset('img/logo/phe-oses.png')}}" width="110" height="32" alt="DSP-PHE" class="navbar-brand-image mr-4"> 
+      <img src="{{asset('img/flaticon/mars-logo.png')}}" width="110"  alt="DSP-PHE" class="navbar-brand-image mr-4"> 
    </a>
    <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
    <div class="nav-collapse">
@@ -15,7 +15,7 @@
       </a>
       <ul class="navbar-nav ">
          {{-- <li class="nav-item text-dark"><a href="/" class="nav-link text-dark">DSP</a></li> --}}
-         <li class="nav-item text-dark"><a href="/" class="nav-link text-dark"><b>Vessel Daily Report</b></a></li>
+         {{-- <li class="nav-item text-dark"><a href="/" class="nav-link text-dark"><b>Vessel Daily Report</b></a></li> --}}
          {{-- <li class="nav-item text-dark"><a href="{{route('proact')}}" class="nav-link text-dark">PROACT</a></li>
          <li class="nav-item text-dark"><a href="{{route('map')}}" class="nav-link text-dark">MAP</a></li>
          <li class="nav-item text-dark"><a href="{{route('fms')}}" class="nav-link text-dark">FMS</a></li>
@@ -123,7 +123,7 @@
 </nav>
 
 <nav class="navbar navbar-dark  navbar-secondary navbar-expand-lg " style="background-color: #252e47" >
-   <div class="px-2">
+   <div class="px-3">
       <ul class="navbar-nav">
          
          <li class="nav-item px-3 {{ (request()->is('/')) ? 'active' : '' }}">
@@ -133,6 +133,16 @@
                @endif
                
                <span class="">Home Page</span>
+            </a>
+         </li>
+
+         <li class="nav-item nav-item-b  {{ (request()->is('vdr/report/*')) ? 'active' : '' }}">
+            <a href="{{route('vdr.export.marine')}}" class="nav-link {{ (request()->is('vdr/report/*')) ? 'text-dark' : 'text-white' }}">
+               @if (request()->is('vdr/report/*'))
+               <i class="fas text-primary ml-3 fa-fire"></i>
+               @endif
+               
+               <span class="mx-3">VDR Export</span>
             </a>
          </li>
          {{-- <li class="nav-item px-3 {{ (request()->is('/history')) ? 'active' : '' }}">

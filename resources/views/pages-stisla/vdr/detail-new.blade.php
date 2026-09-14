@@ -9,7 +9,7 @@
       width: 100%;
       background-color: white;
       border-radius: 10px;
-      box-shadow: 1px 1px 5px rgb(159, 158, 158);
+      box-shadow: 1px 1px 5px rgb(207, 206, 206);
       
    }
 
@@ -167,22 +167,66 @@
                   
                         @if (auth()->user()->hasRole('vessel'))
                            @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303) 
-                           <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
-                           
-                           <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn  btn-danger  mx-2">Delete</a>
+                           {{-- @if ($vdr->vessel->contract_type != 'Non PO') --}}
+                              <a href="#" class="btn mb-2  btn-primary" data-toggle="modal" data-target="#modalReleaseVdr">Release</a>
+                              {{-- @else
+                              <a href="#" class="btn   btn-primary" >Release</a>
+                           @endif --}}
+                           <a href="#" data-toggle="modal" data-target="#modalDeleteVdr" class="btn mb-2  btn-danger  mx-2">Delete</a>
                         
                            
                            
                            @endif
                         @endif
+
+
+                        @if (auth()->user()->hasRole('lead'))
+                           @if ($vdr->status == 22) 
+                           <a href="#" class="btn   btn-primary" data-toggle="modal" data-target="#modalApproveLead">Approve</a>
+                           
+                           <a href="#"   class="btn  btn-danger  mx-2">Reject</a>
+                        
+                  
+                           
+                           @endif
+                        @endif
+
+
       
                         @if ( auth()->user()->hasRole('marine') )
                         
                            @if (auth()->user()->username == 'marine' || auth()->user()->username == 'superadmin')
                               @if ($vdr->status == 2)
-                              <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
-                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                              @elseif($vdr->status > 2)
+                                 @if ($vdr->vessel->loan == 1 && auth()->user()->username == 'superadmin')
+                                 {{-- <a href="#" class="btn  mb-2  btn-primary " data-toggle="modal" data-target="#modalAppMarine">Override Approve</a>
+                                 <a href="" class="btn mb-2 btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a> --}}
+                                 <a href="#"
+                                    class="btn btn-primary shadow-sm mb-2"
+                                    data-toggle="modal"
+                                    data-target="#modalAppSuperadmin">
+
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    Override Approve VDR
+
+                                 </a>
+
+                                 <a href="#"
+                                    class="btn btn-outline-danger shadow-sm mx-2 mb-2"
+                                    {{-- data-toggle="modal"
+                                    data-target="#vdr-reject-marine" --}}
+                                    >
+
+                                    <i class="fas fa-times-circle mr-2"></i>
+                                    Reject VDR
+
+                                 </a>
+                              @else
+                                 <a href="#" class="btn  mb-2  btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                                 <a href="" class="btn btn-danger mb-2 mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                           @endif
+                              {{-- <a href="#" class="btn    btn-info " data-toggle="modal" data-target="#modalAppMarine">Approve</a>
+                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a> --}}
+                              @elseif($vdr->status > 2 && $vdr->status != 11)
                               <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoMarine">Undo Approve</a>
                               @endif
                            
@@ -218,6 +262,39 @@
 
                            
                         @endif
+
+
+
+
+
+                        @if (auth()->user()->hasRole('coman') )
+                        
+                           @if ($vdr->status == 5 )
+                           <a href="#"
+                              class="btn btn-primary shadow-sm mb-2"
+                              data-toggle="modal"
+                              data-target="#modalAppComan">
+
+                              <i class="fas fa-check-circle mr-2"></i>
+                              Approve VDR
+
+                           </a>
+
+                           <a href="#"
+                              class="btn btn-outline-danger shadow-sm mx-2 mb-2"
+                              data-toggle="modal"
+                              data-target="#modalRejectComan"
+                              >
+
+                              <i class="fas fa-times-circle mr-2"></i>
+                              Reject VDR
+
+                           </a>
+                           @endif
+
+
+                           
+                        @endif
       
                         {{-- @if ($vdr->status == 5 && auth()->user()->hasRole('suptent_loc') )
                         
@@ -240,21 +317,31 @@
                         
                         @endif --}}
 
+                        @if (auth()->user()->hasRole('fm'))
+                           @if ($vdr->status == 11)
+                        
+                              <a href="#" class="btn  btn-primary mb-2 " data-toggle="modal" data-target="#modalAppFm"><i class="fas fa-check mr-1"></i> Approve VDR</a>
+                              <a href="" class="btn btn-danger mx-2 mb-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              @elseif($vdr->status > 1 && $vdr->status != 11)
+                              <a href="#" class="btn   btn-info mr-2 mb-2" data-toggle="modal" data-target="#modalUndoPet">Undo Approve</a>
+                           @endif
+                        @endif
+
                         @if (auth()->user()->username == 'pet')
                            @if ($vdr->status == 1)
                         
-                              <a href="#" class="btn   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
-                              <a href="" class="btn btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
-                              @elseif($vdr->status > 1)
-                              <a href="#" class="btn   btn-info mr-2" data-toggle="modal" data-target="#modalUndoPet">Undo Approve</a>
+                              <a href="#" class="btn mb-2   btn-info " data-toggle="modal" data-target="#modalAppPet">Approve PET</a>
+                              <a href="" class="btn mb-2 btn-danger mx-2" data-toggle="modal" data-target="#vdr-reject-marine">Reject</a>
+                              @elseif($vdr->status > 1 && $vdr->status != 11)
+                              <a href="#" class="btn mb-2  btn-info mr-2" data-toggle="modal" data-target="#modalUndoPet">Undo Approve</a>
                            @endif
                         @endif
       
-                        <div class="btn-group mb-2">
-                     <a  class="btn btn-light  bg-white shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
+                        {{-- <div class="btn-group ">
+                           <a  class="btn btn-light  bg-white shadow-sm" href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank" class=""><i class="fa fa-file"></i> Export PDF</a>
                         
-                        <a href="#" class="btn btn-light  bg-white  shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan ketika muncul alert pada sistem.">Info</a>
-                        </div>
+                           <a href="#" class="btn btn-light  bg-white  shadow-sm"  data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan ketika muncul alert pada sistem.">Info</a>
+                        </div> --}}
                         
                         
                         
@@ -313,30 +400,7 @@
                      </div>
                   </div>
                </div>
-               <div class="d-flex px-1 mb-2">
-                  
-
-                  {{-- @if (auth()->user()->hasRole('marine'))
-                     <div class="btn-group ml-2 ">
-                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.pet', enkripRambo($vdr->id))}}">Email PET</a>
-                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.marine', enkripRambo($vdr->id))}}">Email Marine</a>
-                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent.loc', enkripRambo($vdr->id))}}">Email Suptent on Location</a>
-                        <a class="btn btn-light border" href="{{route('vdr.sent.email.approval.suptent', enkripRambo($vdr->id))}}">Email Suptent</a>
-                        
-                        
-                     </div>
-                  @endif --}}
-
-
-                  
-
                
-                  
-                  
-                  {{-- <div class="card bg-warning">
-                     <div class="card-boy"></div>
-                  </div> --}}
-               </div>
                
             </div>
          {{-- </div> --}}
@@ -495,51 +559,169 @@
                            <table class="">
                               <thead>
                                  <tr>
+                                    <td colspan="5">
+                                       <div class="card border-0 mb-2 shadow-none overflow-hidden"
+                                          style="border-radius:16px;
+                                                   background:linear-gradient(135deg,#ffffff 0%,#f8fbff 100%);
+                                                   ">
+
+                                          <div class="card-body py-2 px-2">
+
+                                             {{-- TOP SECTION --}}
+                                             <div class="d-flex justify-content-between align-items-center">
+
+                                                   {{-- LEFT --}}
+                                                   <div class="flex-grow-1 pr-2">
+
+                                                      <div class="d-flex align-items-center">
+
+                                                         {{-- ICON --}}
+                                                         <div class="rounded-circle d-flex align-items-center justify-content-center mr-2"
+                                                               style="width:40px;
+                                                                     height:40px;
+                                                                     background:rgba(0,123,255,.08);">
+
+                                                               <i class="fas fa-fingerprint text-primary"></i>
+
+                                                         </div>
+
+                                                         {{-- INFO --}}
+                                                         <div>
+
+                                                               <div class="fw-bold text-dark code"
+                                                                  style="font-size:15px; line-height:1.1;">
+                                                                  {{$vdr->code}}
+                                                               </div>
+
+                                                               <div class="mt-1">
+                                                                  <small>
+                                                                     <x-status-stisla.vdr :vdr="$vdr" />
+                                                                  </small>
+                                                               </div>
+
+                                                         </div>
+
+                                                      </div>
+
+                                                      {{-- FLOW --}}
+                                                      <div class="mt-2 small text-muted">
+
+                                                         <i class="fas fa-route text-warning mr-1"></i>
+
+                                                         Type :
+                                                         <b class="text-dark">
+                                                               <x-status-stisla.vdr-flow-plain :vessel="$vdr->vessel" />
+                                                         </b>
+
+                                                      </div>
+
+                                                   </div>
+
+                                                   {{-- RIGHT ACTION --}}
+                                                   <div class="d-flex flex-column align-items-center">
+
+                                                      <a href="{{route('document.vdr', enkripRambo($vdr->id))}}" target="_blank"
+                                                         class="btn btn-light btn-sm rounded-pill px-3 py-1 mb-1 shadow-sm"
+                                                         style="font-size:11px;">
+
+                                                         <i class="fas text-primary fa-file-pdf mr-1"></i>
+                                                         PDF
+
+                                                      </a>
+
+                                                      <button type="button"
+                                                               class="btn btn-light btn-sm rounded-pill border px-3 py-1"
+                                                               style="font-size:11px;"
+                                                                data-toggle="tooltip" data-placement="top" title="Fitur Auto-save: Active / Perubahan yang anda lakukan pada halaman ini akan otomatis tersimpan pada sistem.">
+
+                                                         <i class="fas fa-info-circle text-primary mr-1"></i>
+                                                         Info
+
+                                                      </button>
+
+                                                   </div>
+
+                                             </div>
+
+                                             <x-vdr.timestamp :vdr="$vdr" />
+
+                                          </div>
+
+                                       </div>
+                                    </td>
+                                 </tr>
+                                 {{-- <tr>
                                     <td>ID VDR</td>
                                     <td colspan="4"><b class="code">{{$vdr->code}}</b></td>
-                                    {{-- <td colspan="2" class="text-right py-2 pr-1"></td> --}}
                                  </tr>
                                  <tr>
                                     <td>Status</td>
                                     <td colspan="4"><x-status-stisla.vdr :vdr="$vdr" /></td>
-                                    {{-- <td>
-                                       @if ($vdr->vessel->ipb == 'IPB')
-                                          @if ($vdr->status > 0)
-                                          LOCATION : {{$vdr->area}}
-                                          @endif
-                                       @endif
-                                    </td> --}}
-                                 </tr>
+                                   
+                                 </tr> --}}
                                  @if ($vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303 || $vdr->reject_by != null)
+                                 @if ($vdr->status != 4)
                                  <tr>
-                                    <td colspan="4">
-                                       {{-- <div class="btn btn-danger  mx-2 " style="background-color: rgb(200, 54, 54);" >
-                                          <span class="badge badge-light border">!</span>  --}}
+                                    {{-- <td colspan="4">
+                                      
                                           Rejected by {{$vdr->rejectBy->name}} at {{formatDateTime($vdr->reject_date)}} <br>
                                           
                                           {!! $vdr->reject_desc !!}
                                           <small><i>Harap Perhatikan Table yang berwarna Merah</i></small>
-                                       {{-- </div> --}}
+                                       
+                                    </td> --}}
+                                    <td colspan="4">
+                                       <div class="alert alert-danger py-2 px-3 mb-0">
+
+                                          <div class="small  mb-2">
+                                             <i class="fas fa-times-circle"></i>
+                                             <strong>Reject {{$vdr->rejectBy->name}}</strong>
+                                              •
+                                             {{formatDateTimeB($vdr->reject_date)}}
+                                          </div>
+
+                                          <div class="bg-white rounded border-left border-danger px-3 py-2 mb-2">
+                                             <div class="small text-muted mb-1">
+                                                Catatan Reviewer
+                                             </div>
+
+                                             <div class="font-weight-bold text-dark">
+                                                {{-- <i class="fas fa-quote-left text-danger "></i> --}}
+                                                {!! $vdr->reject_desc !!}
+                                             </div>
+                                          </div>
+
+                                          <small class="">
+                                             <i class="fas fa-arrow-circle-right"></i>
+                                           <i>  Perbaiki data pada section yang ditandai warna merah lalu Release ulang VDR.</i>
+                                          </small>
+
+                                       </div>
                                     </td>
                                  </tr> 
+                                 @endif
                                                       
                                  @endif
 
                                  @if (count($vdrHistories) > 0)
+                                 @if ($vdr->status != 4)
+                                     
+                                 
                                  <tr>
                                     <td></td>
                                     <td colspan="3">
-                                    <select  style="border:none; padding-left:none; text-align: left !important;" name="" id="">
-                                       <option value="" selected disabled>Revision Record</option>
-                                       @foreach ($vdrHistories as $vhis)
-                                       <option value="">
-                                          <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
-                                       </option>
-                                          @endforeach
-                                       
-                                    </select>
-                                 </td>
-                              </tr> 
+                                       <select  style="border:none; padding-left:none; text-align: left !important;" name="" id="">
+                                          <option value="" selected disabled>Revision Record</option>
+                                          @foreach ($vdrHistories as $vhis)
+                                          <option value="">
+                                             <a class="dropdown-item" href="#" >{{$vhis->code}}</a>
+                                          </option>
+                                             @endforeach
+                                          
+                                       </select>
+                                    </td>
+                                 </tr> 
+                                 @endif
 
                                     
                                     
@@ -583,8 +765,71 @@
                                     @endif
                                     
                                  @endif
+                                 @if ($vdr->vessel->contract_type == 'Non PO')
+                                    @if ($vdr->status == 0)
+                                       <tr>
+                                          <td>Coman</td>
+                                          <td colspan="3" style="background-color: rgb(226, 236, 151); text-align: left !important;">
+                                             <select name="bu" id="bu" style="border:0; outline:0;background-color: rgb(226, 236, 151);" class="  input_bu" style="width: 100%">
+                                                <option selected disabled >Select</option>
+                                                @if ($vdr->vessel->username == 'bestlink88')
+                                                    <option  {{$vdr->area == 'Security' ? 'selected' : ''}} value="Security">Security</option>
+                                                @endif
+                                                @foreach ($barges as $barge)
+                                                   <option {{$vdr->area == $barge->code ? 'selected' : ''}} value="{{ $barge->code }}">{{ $barge->code }}</option>
+                                                @endforeach
+                                                <option  {{$vdr->area == 'Drilling' ? 'selected' : ''}} value="Drilling">Drilling</option>
+                                                <option  {{$vdr->area == 'Patra Marine' ? 'selected' : ''}} value="Patra Marine">Patra Marine</option>
+                                                <option  {{$vdr->area == 'Patra Offshore' ? 'selected' : ''}} value="Patra Offshore">Patra Offshore</option>
+                                                <option  {{$vdr->area == 'Selina78' ? 'selected' : ''}} value="Selina78">Selina78</option>
+                                                <option  {{$vdr->area == 'Setia Satria' ? 'selected' : ''}} value="Setia Satria">Setia Satria</option>
+                                                <hr>
+                                                <option  {{$vdr->area == 'Not Required' ? 'selected' : ''}} value="Not Required">Not Required</option>
+                                                {{-- <option {{$vdr->area == 'CBU' ? 'selected' : ''}} value="CBU">CBU</option>
+                                                <option {{$vdr->area == 'NBU' ? 'selected' : ''}} value="NBU">NBU</option>
+                                                <option {{$vdr->area == 'Cinta-T' ? 'selected' : ''}} value="Cinta-T">Cinta-T</option>
+                                                <option {{$vdr->area == 'Widuri-T' ? 'selected' : ''}} value="Widuri-T">Widuri-T</option> --}}
+                                             </select>
+                                             <small>(Pilih area di samping untuk Approval Coman)</small>
+                                          </td>
+                                       </tr>
+                                       {{-- <div class="px-2 mt-2">
+                                          
+                                       </div> --}}
+                                       @else
+                                       <tr>
+                                          <td>Coman</td>
+                                          <td colspan="3" style="background-color: rgb(226, 236, 151); text-align: left !important;">
+                                             {{ $vdr->area }}
+                                          </td>
+                                       </tr>
+                                       {{-- <a href="#" class="btn btn-light bg-white shadow-sm border" >LOCATION : {{$vdr->area}}</a> --}}
+                                    @endif
+                                    
+                                 @endif
                                  <tr>
-                                    @if ($vdr->reject_data == 'General Information')
+                                    @php
+                                       $isRejectedGeneralInfo =
+                                          $vdr->reject_data == 'General Information' ||
+                                          collect($vdrRejectTables)->contains('table', 'General Information');
+                                    @endphp
+
+                                    @if($isRejectedGeneralInfo)
+
+                                       <td colspan="4" class="text-light bg-danger">
+                                          <b>General Information</b>
+                                       </td>
+
+                                    @else
+
+                                       <td colspan="4">
+                                          <b class="text-primary" style="color:#1f4481 !important">
+                                             General Information
+                                          </b>
+                                       </td>
+
+                                    @endif
+                                    {{-- @if ($vdr->reject_data == 'General Information')
                                     <td colspan="4" class="text-light bg-danger"><b  style="">General Information</b></td>
                                        @elseif(count($vdrRejectTables) > 0)
                                           @foreach ($vdrRejectTables as $r)
@@ -594,10 +839,8 @@
                                           @endforeach
                                         @else
                                         <td colspan="4"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td>
-                                    @endif
-                                    {{-- <td colspan="3"><b class="text-primary" style="color: #1f4481 !important">General Information</b></td> --}}
-                                    {{-- <td colspan="3" class="text-right py-2 pr-1"><x-status-stisla.vdr :vdr="$vdr" /></td> --}}
-                                    
+                                    @endif --}}
+                                   
                                  </tr>
                                  <tr>
                                     <td colspan="4">
@@ -605,13 +848,16 @@
                                           @if ($vdr->status > 0)
                                           Area : {{$vdr->area}}
                                           @endif
+
+                                          @else
+                                           @if ($vdr->func != null)
+                                                   {{-- @if ($vdr->status > 0) --}}
+                                                FUNC : {{$vdr->func}}
+                                                {{-- @endif --}}
+                                             @endif
                                        @endif
 
-                                       @if ($vdr->func != null)
-                                          {{-- @if ($vdr->status > 0) --}}
-                                          FUNC : {{$vdr->func}}
-                                          {{-- @endif --}}
-                                       @endif
+                                      
                                     </td>
                                  </tr>
                               </thead>
@@ -675,10 +921,10 @@
                         </div>
                      
                         {{-- Weather --}}
-                        <hr>
+                        
                      
-                        <div class="table-responsive p-2" >
-                           <table>
+                        <div class="table-responsive p-1" >
+                           <table class="mb-2">
                               <thead>
                                  <tr>
                                     @if ($vdr->reject_data == 'Weather Condition')
@@ -736,7 +982,7 @@
                            </table>
 
                            {{-- HSSE --}}
-                           <hr>
+                           {{-- <hr> --}}
                         
                            <table>
                               <thead>
@@ -827,7 +1073,7 @@
                            </table>
                         </div>
                      {{-- </div> --}}
-                     <hr>
+                     
                      
                      
                   </div>
@@ -881,7 +1127,11 @@
                                     <td rowspan="2" class="text-center">Activities</td>
                                  </tr>
                                  <tr>
-                                    <th><input type="checkbox" name="" id="checkboxAllActivity"></th>
+                                    <th>
+                                       @if ($editable == 1)
+                                       <input type="checkbox" name="" id="checkboxAllActivity">
+                                       @endif
+                                    </th>
                                     <td class="text-center">Start</td>
                                     <td class="text-center">Finish</td>
                                     <td class="text-center">High</td>
@@ -963,13 +1213,19 @@
 
                                     <tr>
                                        <td>
+                                          @if ($editable == 1)
                                           <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" name="checkActivity[]" value="{{$activity->id}}" id="checkActivity-{{$activity->id}}">
+                                          @endif
                                        </td>
                                           <td class="text-info bg-y">
                                              @if (auth()->user()->hasRole('marine'))
                                              <span class="text-dark">{{formatTime($activity->start)}}</span>
                                                  @else
+                                                 @if ($editable == 1)
                                                  <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); width: 80px"   class="input_activity_time_{{$activity->id}} flat_time"  type="time" name="activity_start" id="start_{{$activity->id}}" value="{{$activity->start}}">
+                                                @else
+                                                <span class="text-dark">{{formatTime($activity->start)}}</span>
+                                                @endif
                                              @endif
                                              
                                           </td>
@@ -1124,8 +1380,8 @@
                            </table>
                         </form>
                      </div>
-                     <hr>
-                     <div class="table-responsive p-lg-2" >
+                     {{-- <hr> --}}
+                     <div class="table-responsive p-1 mt-2" >
                      <table class="w-100">
                        
                         <thead>
@@ -1341,92 +1597,93 @@
                <div class="row">
                   <div class="col-md-8">
                      {{-- <div class="table-responsive overflow-auto" style="height: 100vh"> --}}
-                        <div class="table-responsive p-lg-2" >
-                     <table class="w-100">
-                        
-                        <thead>
-                           <tr>
-                              @if ($vdr->reject_data == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
-                                    <td colspan="7" class="text-light bg-danger"><b  style="">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
-                                    @elseif(count($vdrRejectTables) > 0)
-                                       @foreach ($vdrRejectTables as $r)
-                                          @if ($r->table == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
+                        <div class="table-responsive p-1" >
+                           <table class="w-100">
+                              
+                              <thead>
+                                 <tr>
+                                    @if ($vdr->reject_data == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
                                           <td colspan="7" class="text-light bg-danger"><b  style="">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                                          @elseif(count($vdrRejectTables) > 0)
+                                             @foreach ($vdrRejectTables as $r)
+                                                @if ($r->table == 'Summary of Daily Fuel, Water, and Cargoes Remaining Onboard')
+                                                <td colspan="7" class="text-light bg-danger"><b  style="">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
+                                                @endif
+                                             @endforeach 
+                                          
+                                          @else
+                                          <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
                                           @endif
-                                       @endforeach 
-                                    
-                                    @else
-                                    <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td>
-                                    @endif
-                              {{-- <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td> --}}
-                           </tr>
-                           <tr class="text-center align-middle bg-lgray">
-                              <th style="width: 120px">TYPE</th>
-                              <th style="width: 100px">Opening <br> <small>(ROB from Previous Day)</small></th>
-                              <th style="width: 100px" >Actual Consumption <br> <small>(Based on Actual Sounding)</small></th>
-                              <th style="width: 100px">Received</th>
-                              <th style="width: 100px">Transferred</th>
-                              <th style="width: 100px">Closing</th>
-                              <th style="width: 180px">Remarks</th>
-                           </tr>
-                        </thead>
-                        <tbody>
-                           @foreach ($cargos as $cargo)
-                              <tr>
-                                 <!-- <td> -->
-                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$cargo->id}}">
-                                 <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="cargo" value="{{$cargo->id}}">
-                                 <!-- </td> -->
-                                 <td> {{$cargo->heading->description}}
-                                    @if (auth()->user()->hasRole('superuser'))
-                                        {{$cargo->id}}
-                                    @endif   
-                                 </td>
-                                 <td class="text-center align-middle bg-y" >
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
-                                 </td>
-                                 
-                                       @if($cargo->heading->is_consumption == '1')
-                                       <td class="text-center align-middle">
-                                          <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="w-100 input_cargo_{{$cargo->id}} consumption_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
-                                          {{-- <span class="my-2 consumption">{{$cargo->consumption}}</span> --}}
+                                    {{-- <td colspan="7"><b class="text-primary" style="color: #1f4481 !important">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</b></td> --}}
+                                 </tr>
+                                 <tr class="text-center align-middle bg-lgray">
+                                    <th style="width: 120px">TYPE</th>
+                                    <th style="width: 100px">Opening <br> <small>(ROB from Previous Day)</small></th>
+                                    <th style="width: 100px" >Actual Consumption <br> <small>(Based on Actual Sounding)</small></th>
+                                    <th style="width: 100px">Received</th>
+                                    <th style="width: 100px">Transferred</th>
+                                    <th style="width: 100px">Closing</th>
+                                    <th style="width: 180px">Remarks</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 @foreach ($cargos as $cargo)
+                                    <tr>
+                                       <!-- <td> -->
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" name="id[]" value="{{$cargo->id}}">
+                                       <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" id="cargo" value="{{$cargo->id}}">
+                                       <!-- </td> -->
+                                       <td> {{$cargo->heading->description}}
+                                          @if (auth()->user()->hasRole('superuser'))
+                                             {{$cargo->id}}
+                                          @endif   
                                        </td>
-                                       @else
-                                       <td class="" style="background-color: rgb(167, 171, 170)">
-                                       <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" style="width: 100px" readonly name="consumption[]"  value="{{$cargo->consumption}}">
+                                       <td class="text-center align-middle bg-y" >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="number" id="opening_{{$cargo->id}}" name="opening[]"   value="{{$cargo->opening}}">
                                        </td>
-                                       @endif
-                                 
-                                 <td class="text-center align-middle bg-y">
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
-                                 </td>
-                                 <td class="text-center align-middle bg-y">
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
-                                 </td>
-                                 
-                                    @if($cargo->heading->is_consumption == '1')
-                                    <td class="text-center align-middle bg-y">
-                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
-                                       @else
-                                       <td class="text-center align-middle ">
-                                       <span class="my-2">{{ $cargo->closing}}</span>
-                                       <input {{$editable == 0 ? 'readonly' : ''}} type="text" hidden name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
-                                    </td>
-                                    @endif
-                                 
-                                 <td class="text-center align-middle bg-y"  >
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
-                                 </td>
-                              </tr>
-                           @endforeach
+                                       
+                                             @if($cargo->heading->is_consumption == '1')
+                                             <td class="text-center align-middle">
+                                                <input {{$editable == 0 ? 'readonly' : ''}} type="text" class="w-100 input_cargo_{{$cargo->id}} consumption_{{$cargo->id}}"  readonly id="consumption_{{$cargo->id}}" name="consumption[]"  value="{{$cargo->consumption}}">
+                                                {{-- <span class="my-2 consumption">{{$cargo->consumption}}</span> --}}
+                                             </td>
+                                             @else
+                                             <td class="" style="background-color: rgb(167, 171, 170)">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="hidden" style="width: 100px" readonly name="consumption[]"  value="{{$cargo->consumption}}">
+                                             </td>
+                                             @endif
+                                       
+                                       <td class="text-center align-middle bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="received_{{$cargo->id}}" name="received[]"   value="{{$cargo->received}}">
+                                       </td>
+                                       <td class="text-center align-middle bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" type="number" class="w-100 input_cargo_{{$cargo->id}}" id="transferred_{{$cargo->id}}" name="transferred[]" style="width: 100px"  value="{{$cargo->transferred}}">
+                                       </td>
+                                       
+                                          @if($cargo->heading->is_consumption == '1')
+                                          <td class="text-center align-middle bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                             @else
+                                             <td class="text-center align-middle bg-y">
+                                             {{-- <span class="my-2">{{ $cargo->closing}}</span> --}}
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="text" style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" id="closing_{{$cargo->id}}" name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="text" hidden name="closing[]" style="width: 100px"   value="{{$cargo->closing}}">
+                                          </td>
+                                          @endif
+                                       
+                                       <td class="text-center align-middle bg-y"  >
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_cargo_{{$cargo->id}}" type="text" id="remark_{{$cargo->id}}" name="remarks[]"  value="{{$cargo->remarks}}">
+                                       </td>
+                                    </tr>
+                                 @endforeach
 
-                           
-                        </tbody>
-                     </table>
+                                 
+                              </tbody>
+                           </table>
                         </div>
 
-                     <hr>
-                     <div class="table-responsive p-lg-2" >
+                     {{-- <hr> --}}
+                     <div class="table-responsive p-1" >
                      <table class="w-100">
                         <tbody>
                            <tr>
@@ -1458,7 +1715,28 @@
                                  </select>
                               </td>
                               <td class="bg-y">
+                                 @if ($vdr->status == 0)
                                  <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)"  class="w-100 input_periodic_b flat_time"  type="time" name="rob_time" id="period_rob_time" value="{{$periodic->rob_time}}">
+                                     @else
+                                     <span class="text-dark">
+                                       @if ($periodic->activity == 'Not Applicable')
+                                       -
+                                           @else
+                                           @if ($periodic->rob_time != null)
+                                                @if ($periodic->rob_time == '00:00:00')
+                                                   24:00
+                                                @else
+                                                {{formatTime($periodic->rob_time)}} 
+                                          @endif
+                                       @endif
+                                       @endif
+                                       
+                                     
+                                    </span>
+                                     
+                                 @endif
+                                 
+                              
                               </td>
                               
                               <td class="bg-y"><input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151)" class="w-100 input_periodic"  type="number" name="rob_value" id="period_rob_value" value="{{$periodic->rob_value}}" ></td>
@@ -1477,11 +1755,11 @@
                         </tbody>
                      </table>
                      </div>
-                     <hr>
+                     {{-- <hr> --}}
                      {{-- </div> --}}
                   </div>
                   <div class="col-md-4">
-                     <div class="table-responsive p-lg-2" >
+                     <div class="table-responsive p-1" >
                      <table>
                         <thead>
                            <tr>
@@ -1536,7 +1814,7 @@
 
                
                <hr>
-               <div class="table-responsive ">
+               {{-- <div class="table-responsive "> --}}
                   <table class="" >
                      <thead>
                         <tr class="bg-lgray">
@@ -1651,33 +1929,62 @@
                               <tbody>
                                  <input type="text" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
                                  @foreach ($crews->where('is_crew', 1) as $crew)
+                                    @if ($vdr->status == 0)
+                                       <tr>
+                                          <td>
+                                             @if (auth()->user()->hasRole('vessel'))
+                                                @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" {{$crew->status == 1 ? 'checked' : ''}} name="checkCrew" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                             {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                             @endif
+                                             @endif
+                                          </td>
+                                          <td class="bg-y" >
+                                             {{-- {{$crew->id}} --}}
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                                          </td>
+                                          <td class="bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                          </td>
+                                          <td>
+                                             @if (auth()->user()->hasRole('vessel'))
+                                                @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+                                                <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
+                                                @endif
+                                             @endif
+                                          </td>
+                                          
+                                       </tr>
+                                       @else
 
-                                 <tr>
-                                    <td>
-                                       @if (auth()->user()->hasRole('vessel'))
-                                          @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
-                                       <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" {{$crew->status == 1 ? 'checked' : ''}} name="checkCrew" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
-                                       {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                       @if ($crew->status == 1)
+                                       <tr>
+                                          <td>
+                                             @if (auth()->user()->hasRole('vessel'))
+                                                @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+                                             <input {{$editable == 0 ? 'readonly' : ''}} type="checkbox" {{$crew->status == 1 ? 'checked' : ''}} name="checkCrew" value="{{$crew->id}}" id="checkCrew-{{$crew->id}}">
+                                             {{-- <input {{$editable == 0 ? 'readonly' : ''}} class="idActivity" type="checkbox" name="idActivity" id="idActivity"> --}}
+                                             @endif
+                                             @endif
+                                          </td>
+                                          <td class="bg-y" >
+                                             {{-- {{$crew->id}} --}}
+                                             <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
+                                          </td>
+                                          <td class="bg-y">
+                                             <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
+                                          </td>
+                                          <td>
+                                             @if (auth()->user()->hasRole('vessel'))
+                                                @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
+                                                <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
+                                                @endif
+                                             @endif
+                                          </td>
+                                          
+                                       </tr>
                                        @endif
-                                       @endif
-                                    </td>
-                                    <td class="bg-y" >
-                                       {{-- {{$crew->id}} --}}
-                                       <input {{$editable == 0 ? 'readonly' : ''}}  style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_name_{{$crew->id}}"  value="{{$crew->name}} ">
-                                    </td>
-                                    <td class="bg-y">
-                                       <input {{$editable == 0 ? 'readonly' : ''}} style="background-color: rgb(226, 236, 151); text-align: left !important;" class="w-100 input_crew_{{$crew->id}}" type="text"  id="crew_rank_{{$crew->id}}"  value="{{$crew->rank}} ">
-                                    </td>
-                                    <td>
-                                       @if (auth()->user()->hasRole('vessel'))
-                                          @if ($vdr->status == 0 || $vdr->status == 101 || $vdr->status == 202 || $vdr->status == 303)
-                                          <a href="#" data-toggle="modal" data-target="#deleteCrew-{{$crew->id}}" class="btn btn-sm btn-danger">Delete</a>
-                                          @endif
-                                       @endif
-                                    </td>
-                                    
-                                 </tr>
-
+                                    @endif
                                  
 
                                  
@@ -1772,7 +2079,7 @@
                         </form>
                      </div>
                   </div>
-               </div>
+               {{-- </div> --}}
             {{-- </div> --}}
          </div>
       </div>
@@ -1883,7 +2190,7 @@
    </div>
 </div>
 
-@if (auth()->user()->hasRole('marine|suptent_loc') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
+@if (auth()->user()->hasRole('marine|suptent_loc|fm|lead|coman') || auth()->user()->hasRole('pet') || auth()->user()->hasRole('suptent')|| auth()->user()->hasRole('chief'))
    <div class="modal fade" id="modalEditApproval" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
          <form action="{{route('vdr.update.approval')}}" method="POST" enctype="multipart/form-data">
@@ -2005,9 +2312,9 @@
          </form>
       </div>
    </div>
-   <div class="modal fade" id="modalAppPet" tabindex="-1" role="dialog"  aria-hidden="true">
+   {{-- <div class="modal fade" id="modalAppFm" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog " role="document">
-         <form action="{{route('vdr.approve.pet')}}" method="POST" enctype="multipart/form-data">
+         <form action="{{route('vdr.approve.fm')}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <input type="hidden" name="id" value="{{$vdr->id}}" id="">
@@ -2025,8 +2332,168 @@
                <div class="modal-body">
                   
                   <b>{{$vdr->code}}</b>
+                  <div class="row ">
+                     
+                     <div class="col-6">
+                        
+                       
+                           <select hidden name="title11" id="title11" required>
+                              <option value="Fuel Management" selected>Fuel Management</option>
+                             
+                           </select>
+                          
+                        
+                     </div>
+                     <div class="col-md-12">
+                        <div class="form-group">
+                           <label for="title1">PIC FM</label>
+                           <select class="form-control" name="name11" id="name11" required>
+                              <option value="Fuel Management">Fuel Management</option>
+                              
+                           </select>
+                          
+                        </div>
+                     </div>
+                    
+                  </div>
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Approve FM</button>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div> --}}
+   <div class="modal fade" id="modalAppFm" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog " role="document">
+         <form action="{{route('vdr.approve.fm')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content border-0 shadow-lg rounded-lg">
+
+            <!-- Header -->
+            <div class="modal-header border-0 pb-2">
+               <div>
+                  <h5 class="modal-title mb-1">
+                     <i class="fas fa-check-circle text-success mr-2"></i>
+                     Approve VDR
+                  </h5>
+                  <small class="text-muted">
+                     Review informasi berikut sebelum melakukan approval
+                  </small>
+               </div>
+
+               <button type="button" class="close" data-dismiss="modal">
+                  <span>&times;</span>
+               </button>
+            </div>
+
+            <!-- Body -->
+            <div class="modal-body pt-2">
+
+               <!-- VDR Info Card -->
+               <div class="card border shadow-none mb-3 bg-light">
+                  <div class="card-body py-3">
+                     <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                           {{-- <small class="text-muted d-block">VDR Code</small> --}}
+                           <h6 class="mb-0 font-weight-bold">{{$vdr->code}}</h6>
+                        </div>
+
+                        
+                     </div>
+                  </div>
+               </div>
+
+               
+
+               <!-- Hidden title -->
+               <select hidden name="title11" id="title11" required>
+                  <option value="Fuel Management" selected>
+                     Fuel Management
+                  </option>
+               </select>
+
+               <!-- PIC Selection -->
+               <div class="form-group">
+                  <label class="font-weight-bold">
+                     <i class="fas fa-user-check text-info mr-1"></i>
+                     PIC Approval
+                  </label>
+
+                  <select class="form-control" name="name11" id="name11" required>
+                     <option value="" disabled selected>- Select PIC -</option>
+                     <option value="RG">Ridwan Gunawan</option>
+                     <option value="DT">David Thompson</option>
+                  </select>
+
+                  <small class="text-muted">
+                     Pilih PIC yang bertanggung jawab untuk approval ini.
+                  </small>
+               </div>
+
+
+                <!-- Approval Note -->
+                <div class="alert alert-white border mt-3">
+                  <small class="text-muted">
+                     <i class="fas fa-info-circle text-primary mr-1"></i>
+                     Pastikan data VDR telah diperiksa dengan benar sebelum melanjutkan approval.
+                  </small>
+               </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer border-0 bg-light">
+               <button 
+                  type="button" 
+                  class="btn btn-outline-secondary"
+                  data-dismiss="modal">
+                  <i class="fas fa-times mr-1"></i>
+                  Cancel
+               </button>
+
+               <button 
+                  type="submit" 
+                  class="btn btn-primary px-4">
+                  <i class="fas fa-check mr-1"></i>
+                  Approve Now
+               </button>
+            </div>
+
+         </div>
+         </form>
+      </div>
+   </div>
+   <div class="modal fade" id="modalAppPet" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog " role="document">
+         <form action="{{route('vdr.approve.pet')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            {{-- <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Form Approve VDR</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  
+                  <b>{{$vdr->code}}</b>
                   <hr>
-                  {{-- <div class="badge badge-info">Approval 1</div> --}}
                   <div class="row ">
                      
                      <div class="col-6">
@@ -2034,10 +2501,7 @@
                        
                            <select hidden name="title1" id="title1" required>
                               <option value="Fuel Monitoring Team" selected>Fuel Monitoring Team</option>
-                              {{-- <option value="PET Kalijapat">PET Kalijapat</option> --}}
-                              {{-- <option value="PET SBU">PET SBU</option>
-                              <option value="PET CBU">PET CBU</option>
-                              <option value="PET NBU">PET NBU</option> --}}
+                             
                            </select>
                           
                         
@@ -2047,8 +2511,7 @@
                            <label for="title1">PIC PET</label>
                            <select class="form-control" name="name1" id="name1" required>
                               <option value="YFH">Yusuf Falah Hibatullah</option>
-                              {{-- <option value="RPR">Raditya Perdana Rachmansyah</option> --}}
-                              <option value="ESN">Eka Satria Nugroho</option>
+                             <option value="ESN">Eka Satria Nugroho</option>
                               <option value="BJ">Bryan Jhon</option>
                               <option value="LAJ">Lutfa Alprimas Jasworo</option>
                               <option value="SW">Setyo Wiyono</option>
@@ -2058,15 +2521,7 @@
                           
                         </div>
                      </div>
-                     {{-- <div class="col-12">
-                        <div class="form-group">
-                           <label for="name1">Name </label>
-                           <input class="form-control" id="name1" name="name1" required type="text" value="{{$vdr->name1}}" >
-                           @error('name1')
-                              <small class="form-hint nvalid-feedback text-danger">{{ $message }}</small>
-                           @enderror
-                        </div>
-                     </div> --}}
+                     
                   </div>
 
 
@@ -2077,6 +2532,230 @@
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                   <button type="submit" class="btn btn-info">Approve</button>
                </div>
+            </div> --}}
+            <div class="modal-content border-0 shadow-lg rounded-lg">
+
+               <!-- Header -->
+               <div class="modal-header border-0 pb-2">
+                  <div>
+                     <h5 class="modal-title mb-1">
+                        <i class="fas fa-check-circle text-success mr-2"></i>
+                        Approve VDR
+                     </h5>
+                     <small class="text-muted">
+                        Pilih PIC Fuel Monitoring Team sebelum melakukan approval
+                     </small>
+                  </div>
+
+                  <button type="button" class="close" data-dismiss="modal">
+                     <span>&times;</span>
+                  </button>
+               </div>
+
+               <!-- Body -->
+               <div class="modal-body pt-2">
+
+                  <!-- VDR Information -->
+                  <div class="card border shadow-none bg-light mb-3">
+                     <div class="card-body py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                           <div>
+                              <small class="text-muted d-block">VDR Code</small>
+                              <h6 class="mb-0 font-weight-bold">{{$vdr->code}}</h6>
+                           </div>
+
+                           <span class="badge badge-warning px-3 py-2">
+                              Waiting Approval
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Info Note -->
+                  <div class="alert alert-light border mb-3">
+                     <small class="text-muted">
+                        <i class="fas fa-info-circle text-primary mr-1"></i>
+                        Pastikan PIC yang dipilih sesuai dengan person in charge yang bertanggung jawab terhadap VDR ini.
+                     </small>
+                  </div>
+
+                  <!-- Hidden Field -->
+                  <select hidden name="title1" id="title1" required>
+                     <option value="Fuel Monitoring Team" selected>
+                        Fuel Monitoring Team
+                     </option>
+                  </select>
+
+                  <!-- PIC Selection -->
+                  <div class="form-group">
+                     <label class="font-weight-bold">
+                        <i class="fas fa-user-check text-info mr-1"></i>
+                        PIC Fuel Monitoring Team
+                     </label>
+
+                     <select class="form-control" name="name1" id="name1" required>
+                        <option value="">-- Select PIC --</option>
+                        <option value="YFH">Yusuf Falah Hibatullah</option>
+                             <option value="ESN">Eka Satria Nugroho</option>
+                              <option value="BJ">Bryan Jhon</option>
+                              <option value="LAJ">Lutfa Alprimas Jasworo</option>
+                              <option value="SW">Setyo Wiyono</option>
+                              <option value="LA">Luthfi Alhafiizh</option>
+                              <option value="ARK">Akhmad Rizki Kurniawan</option>
+                     </select>
+
+                     <small class="text-muted mt-2 d-block">
+                        Pilih PIC untuk melanjutkan proses approval VDR.
+                     </small>
+                  </div>
+
+               </div>
+
+               <!-- Footer -->
+               <div class="modal-footer border-0 bg-light">
+                  <button 
+                     type="button" 
+                     class="btn btn-outline-secondary"
+                     data-dismiss="modal">
+                     <i class="fas fa-times mr-1"></i>
+                     Cancel
+                  </button>
+
+                  <button 
+                     type="submit" 
+                     class="btn btn-success px-4">
+                     <i class="fas fa-check mr-1"></i>
+                     Approve Now
+                  </button>
+               </div>
+
+            </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="modal fade" id="modalApproveLead" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog " role="document">
+         <form action="{{route('vdr.approve.lead')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="id" value="{{$vdr->id}}" id="">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            {{-- <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title">Form Approve VDR</h5>
+
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                  </button>
+                  
+               </div>
+               <div class="modal-body">
+                  
+                  <b>{{$vdr->code}}</b>
+                  <hr>
+                  <div class="row ">
+                     
+                     <div class="col-6">
+                        
+                       
+                           <select hidden name="title1" id="title1" required>
+                              <option value="Fuel Monitoring Team" selected>Fuel Monitoring Team</option>
+                           </select>
+                          
+                        
+                     </div>
+                     <div class="col-md-12">
+                        <div class="form-group">
+                           <label for="title1">PIC PET</label>
+                           <select class="form-control" name="name1" id="name1" required>
+                              <option value="YFH">Yusuf Falah Hibatullah</option>
+                              <option value="RPR">Raditya Perdana Rachmansyah</option>
+                              <option value="BJ">Bryan Jhon</option>
+                              <option value="LAJ">Lutfa Alprimas Jasworo</option>
+                              <option value="SW">Setyo Wiyono</option>
+                              <option value="LA">Luthfi Alhafiizh</option>
+                              <option value="ARK">Akhmad Rizki Kurniawan</option>
+                           </select>
+                          
+                        </div>
+                     </div>
+                  </div>
+
+
+                  
+                  
+               </div>
+               <div class="modal-footer bg-whitesmoke">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-info">Approve</button>
+               </div>
+            </div> --}}
+            <div class="modal-content border-0 shadow-lg rounded-lg">
+
+               <!-- Header -->
+               <div class="modal-header border-0 pb-2">
+                  <div>
+                     <h5 class="modal-title mb-1">
+                        <i class="fas fa-check-circle text-success mr-2"></i>
+                        Approve VDR
+                     </h5>
+                     <small class="text-muted">
+                        Pastikan seluruh data telah sesuai dan benar sebelum melakukan proses approval VDR.
+                     </small>
+                  </div>
+
+                  <button type="button" class="close" data-dismiss="modal">
+                     <span>&times;</span>
+                  </button>
+               </div>
+
+               <!-- Body -->
+               <div class="modal-body pt-2">
+
+                  <!-- VDR Information -->
+                  <div class="card border shadow-none bg-light mb-3">
+                     <div class="card-body py-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                           <div>
+                              <small class="text-muted d-block">VDR Code</small>
+                              <h6 class="mb-0 font-weight-bold">{{$vdr->code}}</h6>
+                           </div>
+
+                           <span class="badge badge-warning px-3 py-2">
+                              Waiting Approval
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!-- Info Note -->
+                  
+
+                  
+                 
+
+               </div>
+
+               <!-- Footer -->
+               <div class="modal-footer border-0 bg-light">
+                  <button 
+                     type="button" 
+                     class="btn btn-outline-secondary"
+                     data-dismiss="modal">
+                     <i class="fas fa-times mr-1"></i>
+                     Cancel
+                  </button>
+
+                  <button 
+                     type="submit" 
+                     class="btn btn-success px-4">
+                     <i class="fas fa-check mr-1"></i>
+                     Approve Now
+                  </button>
+               </div>
+
             </div>
          </form>
       </div>
@@ -2174,6 +2853,170 @@
                <a href="{{route('vdr.undo.suptent.area', enkripRambo($vdr->id))}}"  class="btn btn-info">Undo VDR</a>
             </div>
          </div>
+      </div>
+   </div>
+
+   <div class="modal fade" id="modalAppSuperadmin" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.marine.loan.approve')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+            <div class="modal-content">
+
+            <div class="modal-header bg-info text-white">
+               <h5 class="modal-title">
+                     <i class="fas fa-user-shield mr-2"></i>
+                     Override Approval VDR
+               </h5>
+
+               <button type="button"
+                     class="close text-white"
+                     data-dismiss="modal">
+                     <span>&times;</span>
+               </button>
+            </div>
+
+            <div class="modal-body">
+
+               {{-- <div class="alert alert-warning">
+
+                     <div class="font-weight-bold">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Superadmin Action Required
+                     </div>
+
+                     <small>
+                        This action will bypass the standard approval workflow and
+                        manually approve the selected VDR.
+                     </small>
+
+               </div> --}}
+
+               <div class="card bg-light border-0 mb-3">
+                     <div class="card-body py-2">
+
+                        <div class="row">
+
+                           <div class="col-md-12">
+                                 <small class="text-muted">VDR Number</small>
+                                 <div class="font-weight-bold">
+                                    {{$vdr->code}}
+                                 </div>
+                           </div>
+
+                           <div class="col-md-6">
+                                 <small class="text-muted">Approval Type</small>
+                                 <div class="font-weight-bold text-info">
+                                    Override Approval
+                                 </div>
+                           </div>
+
+                        </div>
+
+                     </div>
+               </div>
+
+               <h6 class="mb-3">
+                     <i class="fas fa-user-check text-primary"></i>
+                     Approval Timestamp
+               </h6>
+
+               <div class="row">
+
+
+                  <div class="col-md-6">
+
+                        <div class="form-group">
+                           <label>Radop</label>
+
+                           <input type="datetime-local"
+                                 class="form-control"
+                                 name="radop_timestamp" required
+                                 value="{{ now()->format('Y-m-d\TH:i') }}">
+                        </div>
+
+                     </div>
+                     <div class="col-md-6">
+
+                        <div class="form-group">
+                           <label>Suptent</label>
+
+                           <input type="datetime-local"
+                                 class="form-control"
+                                 name="suptent_timestamp" required
+                                 value="{{ now()->format('Y-m-d\TH:i') }}">
+                        </div>
+
+                     </div>
+
+                     
+
+               </div>
+
+               <hr>
+
+               
+
+               {{-- <div class="form-group">
+
+                     <label>
+                        <i class="fas fa-sticky-note text-warning"></i>
+                        Override Notes
+                     </label>
+
+                     <textarea
+                        class="form-control"
+                        rows="3"
+                        name="override_notes"
+                        placeholder="Provide justification for override approval..."></textarea>
+
+               </div> --}}
+
+               <div class="alert alert-warning">
+                  <small>
+                  <i class="fas fa-exclamation-triangle"></i>
+                  Setelah VDR disetujui, sistem akan langsung mengirimkan VDR ini kepada <b>Marine Representative</b> sebagai approver terakhir untuk proses final approval.
+                  </small>
+               </div>
+
+               {{-- <div class="alert alert-light border mb-0">
+
+                     <i class="fas fa-info-circle text-info"></i>
+
+                     The selected PIC initials and approval timestamps will be
+                     displayed in the VDR PDF approval section.
+
+               </div> --}}
+
+            </div>
+
+            <div class="modal-footer">
+
+               <button type="button"
+                     class="btn btn-light"
+                     data-dismiss="modal">
+
+                     Cancel
+
+               </button>
+
+               <button type="submit"
+                     class="btn btn-success"
+                     onclick="handleClick(this)">
+
+                     <i class="fas fa-check-circle mr-1"></i>
+
+                     Execute Override Approval
+
+               </button>
+
+            </div>
+
+         </div>
+         </form>
       </div>
    </div>
 
@@ -2318,6 +3161,241 @@
       </div>
    </div>
 
+   <div class="modal fade" id="modalAppComan" tabindex="-1" role="dialog"  aria-hidden="true">
+      <div class="modal-dialog" role="document">
+         <form action="{{route('vdr.coman.approve')}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" name="vdr" value="{{$vdr->id}}" id="vdr">
+            <input type="hidden" name="vessel_id" value="{{$vessel->id}}" id="">
+            <input type="hidden" name="created_by" value="{{$user->name}}">
+           <div class="modal-content border-0 shadow">
+
+            <div class="modal-header border-0 pb-0">
+
+               <div>
+
+                  <h5 class="modal-title mb-1">
+                     <i class="fas fa-check-circle text-success mr-2"></i>
+                     Approve Vessel Daily Report
+                  </h5>
+
+                  <small class="text-muted">
+                     Konfirmasi persetujuan laporan operasional kapal
+                  </small>
+
+               </div>
+
+               <button type="button"
+                  class="close"
+                  data-dismiss="modal">
+
+                  <span>&times;</span>
+
+               </button>
+
+            </div>
+
+            <div class="modal-body">
+
+               <!-- VDR INFO -->
+               <div class="border rounded p-3 bg-light mb-3">
+
+                  <div class="row">
+
+                     {{-- <div class="col-4 text-muted">
+                        VDR Number
+                     </div> --}}
+
+                     <div class="col-12 font-weight-bold">
+                        {{$vdr->code}}
+                     </div>
+
+                  </div>
+
+               </div>
+
+              
+
+               <!-- COMAN -->
+               <div class="form-group mb-0">
+
+                  <label class="font-weight-bold">
+
+                     <i class="fas fa-user-check text-primary mr-1"></i>
+
+                     Company Man
+
+                  </label>
+
+                  <select class="form-control" name="coman" required>
+
+                     <option value="" >
+                        -- Pilih Company Man --
+                     </option>
+
+                     <option value="Coman 222">
+                        Coman 222
+                     </option>
+
+                     <option value="Coman 223">
+                        Coman 223
+                     </option>
+
+                     <option value="Coman 225">
+                        Coman 225
+                     </option>
+                     <option value="Coman Petroleum">
+                        Coman Petroleum
+                     </option>
+                     <option value="Coman Star Onix">
+                        Coman Star Onix
+                     </option>
+                     <option value="Coman Gunung Jati">
+                        Coman Gunung Jati
+                     </option>
+                     <option value="Coman Drilling">
+                        Coman Drilling
+                     </option>
+                     <option value="Coman Petroleum">
+                        Coman Petroleum
+                     </option>
+                     <option value="Coman Patra Marine">
+                        Coman Patra Marine
+                     </option>
+                     <option value="Coman Patra Offshore">
+                        Coman Patra Offshore
+                     </option>
+                     <hr>
+                     <option value="Dhimas Haryo Priyoko">
+                        Dhimas Haryo Priyoko
+                     </option>
+                     <option value="Edy Soun Palabiran">
+                        Edy Soun Palabiran
+                     </option>
+                     
+
+                  </select>
+
+                  <small class="text-muted">
+
+                     Pilih Company Man yang melakukan approval VDR.
+
+                  </small>
+
+               </div>
+
+                <!-- NEXT STEP -->
+               <div class="alert alert-white border mt-3">
+
+                  <div class="d-flex align-items-center">
+
+                     <i class="fas fa-route text-info mr-3"></i>
+
+                     <div>
+
+                        {{-- <div class="font-weight-bold">
+                           Approval Workflow
+                        </div> --}}
+
+                        <small class="text-muted">
+                           Setelah disetujui, VDR akan diteruskan ke
+                           <strong>Marine Department</strong>
+                           untuk proses validasi berikutnya.
+                        </small>
+
+                     </div>
+
+                  </div>
+
+               </div>
+
+            </div>
+
+            <div class="modal-footer border-0">
+
+               <button
+                  type="button"
+                  class="btn btn-light"
+                  data-dismiss="modal">
+
+                  <i class="fas fa-times mr-1"></i>
+                  Cancel
+
+               </button>
+
+               <button
+                  type="submit"
+                  class="btn btn-primary">
+
+                  <i class="fas fa-check mr-1"></i>
+                  Approve VDR
+
+               </button>
+
+            </div>
+
+         </div>
+         </form>
+      </div>
+   </div>
+
+   <div class="modal fade" id="modalRejectComan" tabindex="1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+         <form action="{{route('vdr.reject.marine')}}" method="POST">
+         @csrf
+         <input type="number" name="vdr" id="vdr" value="{{$vdr->id}}" hidden>
+         <div class="modal-content">
+            <div class="modal-header">
+               <h5 class="modal-title">Form Reject VDR</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+               <b>{{$vdr->code}}</b>
+                  <hr>
+
+                  <div class="form-group ">
+                     <label for="desc">Data yang harus di Revisi</label>
+                     <select name="data[]" style="width: 100%"  id="data" class="form-control text-danger select2" multiple="multiple" required>
+                        <option value="General Information">General Information</option>
+                        <option value="Weather Condition">Weather Condition</option>
+                        <option value="HSSE">HSSE</option>
+                        <option value="Daily Operational Activity">Daily Operational Activity</option>
+                        <option value="Summary of Daily Operating Data">Summary of Daily Operating Data</option>
+                        <option value="Summary of Daily Fuel, Water, and Cargoes Remaining Onboard">Summary of Daily Fuel, Water, and Cargoes Remaining Onboard</option>
+                        <option value="Special Calculation">Special Calculation</option>
+                        <option value="Periodical Fuel">Periodical Fuel</option>
+                        <option value="Crew List">Crew List</option>
+                        <option value="Pax List">Pax List</option>
+                     </select>
+                  </div>
+               <div class="form-row">
+                  <div class="form-group col-md-12">
+                     <label for="desc">Description</label>
+                     {{-- <textarea class="form-control" id="desc" name="desc"   rows="3"></textarea> --}}
+                     {{-- <input type="text" class="form-control text-left" id="desc" name="desc" > --}}
+                     <textarea name="desc" id="desc" cols="30" rows="5" hidden></textarea>
+               {{-- <span>B</span> --}}
+                  <main>
+                     <trix-toolbar id="my_toolbar"></trix-toolbar>
+                     <div class="more-stuff-inbetween"></div>
+                     <trix-editor toolbar="my_toolbar" input="desc" ></trix-editor>
+                  </main>
+                  </div>
+               </div>
+               <small>VDR akan dikembalikan ke pihak Kapal {{$vdr->vessel->name}} untuk dilakukan perbaikan</small>
+            </div>
+            <div class="modal-footer bg-whitesmoke">
+               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+               <button type="submit" disabled class="btn btn-danger">Reject</button>
+            </div>
+         </div>
+         </form>
+      </div>
+   </div>
+
    <div class="modal fade" id="modalAppSuptentLoc" tabindex="-1" role="dialog"  aria-hidden="true">
       <div class="modal-dialog" role="document">
          <form action="{{route('vdr.approve.suptent.loc.form')}}" method="POST" enctype="multipart/form-data">
@@ -2382,6 +3460,7 @@
          </form>
       </div>
    </div>
+
    <div class="modal fade" id="vdr-reject-suptent-loc" tabindex="1" role="dialog" aria-hidden="true">
       <div class="modal-dialog" role="document">
          <form action="{{route('vdr.reject.marine')}}" method="POST">

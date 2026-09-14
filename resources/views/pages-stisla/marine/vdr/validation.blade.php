@@ -29,35 +29,92 @@
       <div class="row">
          <div class="col-md-3">
             @if ($title == 'Validation')
+               
                <div class="card shadow">
-                  <div class="card-header"><h5>VDR  Validation </h5></div>
                   <div class="card-body">
+                     <h5>VDR  Validation </h5>
                      Daftar VDR yang membutuhkan Approval <span class="text-uppercase"><b>{{$level}}</b></span>
                      <hr>
-                     <div class="card bg-info">
-                        <div class="card-body">
-                           <h5>{{count($vdrs)}} VDR</h5>
+                     <div class="row text-center">
+
+                        <div class="col-12">
+                            <div class="card bg-info text-white border-0 mb-3">
+                                <div class="card-body py-3">
+            
+                                    <i class="fas fa-file-alt fa-2x mb-2"></i>
+            
+                                    <h2 class="mb-0">
+                                        {{ count($vdrs) }}
+                                    </h2>
+            
+                                    <small>Pending VDR Approval</small>
+            
+                                </div>
+                            </div>
                         </div>
+            
                      </div>
-                     <hr>
-                     Klik pada VDR number untuk melakukan Approval
+                    <div class="border-top pt-3">
+
+                     <div class="d-flex align-items-center">
+         
+                         <i class="fas fa-mouse-pointer text-primary mr-2"></i>
+         
+                         <small class="text-muted">
+                             Click the <b>VDR Number</b> to review and approve the report.
+                         </small>
+         
+                     </div>
+         
+                 </div>
                      
                   </div>
                </div>
                 @elseif($title == 'Reject')
 
                 <div class="card">
-                  <div class="card-header"><h5>VDR Reject</h5></div>
                   <div class="card-body">
+                     <h5>VDR Reject</h5>
                      Daftar VDR yang sudah di Reject </span>
                      <hr>
-                     <div class="card bg-danger">
+                     {{-- <div class="card bg-danger">
                         <div class="card-body">
                            <h5>{{count($vdrs)}} VDR</h5>
                         </div>
+                     </div> --}}
+                     <div class="row text-center">
+
+                        <div class="col-12">
+                            <div class="card bg-danger text-white border-0 mb-3">
+                                <div class="card-body py-3">
+            
+                                    <i class="fas fa-file-alt fa-2x mb-2"></i>
+            
+                                    <h2 class="mb-0">
+                                        {{ count($vdrs) }}
+                                    </h2>
+            
+                                    <small>VDR Rejected</small>
+            
+                                </div>
+                            </div>
+                        </div>
+            
                      </div>
                      <hr>
-                     Klik pada VDR number untuk melihat detail
+                     <div class="border-top pt-3">
+
+                        <div class="d-flex align-items-center">
+            
+                            <i class="fas fa-mouse-pointer text-primary mr-2"></i>
+            
+                            <small class="text-muted">
+                                Click the <b>VDR Number</b> to review and approve the report.
+                            </small>
+            
+                        </div>
+            
+                    </div>
                      
                   </div>
                </div>
@@ -115,7 +172,13 @@
                                  @else
                                  <a href="{{route('vdr.show.spa', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->code}}</a>
                                  {{-- <a href="{{route('vdr.show', [enkripRambo($vdr->id), enkripRambo('index')])}}">{{$vdr->vessel->name}}</a> --}}
-      
+                                 @if ($level == 'Radop' && $vdr->area != null && $vdr->status == 2 && $vdr->vessel->loan == 1)
+                                 <small class="">
+                                    <i class="fas fa-info-circle"></i>
+                                    Approval Not Required
+                                 </small>   
+                                 
+                                 @endif
                                  @endif
                                  {{-- <a href="{{route('vdr.show.spa', [enkripRambo( $vdr->id), enkripRambo('index')])}}">{{vdrId($vdr->id)}}</a> <br> --}}
                                  {{-- <small>{{$vdr->vessel->name}}</small> --}}

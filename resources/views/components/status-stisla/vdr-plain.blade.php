@@ -20,7 +20,7 @@
          
           @else
           
-            Menunggu Validasi Superintendent
+            Menunggu Validasi Marine Representative
          
       @endif
    

@@ -15,6 +15,7 @@ use App\Http\Controllers\Department\DepartmentScheduleController;
 use App\Http\Controllers\Department\PassengerItemController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DirectorController;
+use App\Http\Controllers\CostSummaryController;
 use App\Http\Controllers\DocController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EmailController;
@@ -63,8 +64,10 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\SurveillanceCargoController;
 use App\Http\Controllers\SurveillanceController;
 use App\Http\Controllers\SurveillanceCrewController;
+use App\Http\Controllers\TimesheetController;
 use App\Http\Controllers\TrackingController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VdrComanController;
 use App\Http\Controllers\VdrController;
 use App\Http\Controllers\VdrCrewController;
 use App\Http\Controllers\VdrPeriodicController;
@@ -137,6 +140,17 @@ Route::middleware(["auth"])->group(function () {
       // Route::put('/update', [NewsController::class, 'update'])->name('news.update');
    });
 
+   Route::prefix("cost/summary")->group(function () {
+      Route::get('/detail/{id}', [CostSummaryController::class, 'detail'])->name('costsummary.detail');
+   });
+
+   Route::prefix("timesheet")->group(function () {
+      Route::put('filter', [TimesheetController::class, 'filter'])->name('timesheet.filter');
+      Route::put('vessel/filter', [TimesheetController::class, 'filterVessel'])->name('timesheet.vessel.filter');
+      Route::get('vessel/detail/{id}/{month}/{year}', [TimesheetController::class, 'vesselDetail'])->name('timesheet.vessel.detail');
+      Route::get('export/pdf/vessel/{id}/{month}/{year}', [TimesheetController::class, 'exportPdf'])->name('timesheet.vessel.pdf');
+   });
+
    Route::prefix('vdr/report')->group(function () {
       Route::get('index', [ExportController::class, 'index'])->name('vdr.export');
       Route::post('filter', [ExportController::class, 'filter'])->name('vdr.export.filter');
@@ -193,7 +207,9 @@ Route::middleware(["auth"])->group(function () {
       Route::get('director/vessel/data/{id}', [DirectorController::class, 'vesselData'])->name('vessel.data');
    });
 
-
+   Route::get('mb/intermilan/user/export/pdf', [ExportController::class, 'mbIntermilanUser'])->name('intermilan.user.export.pdf');
+   Route::get('mb/coman/export/pdf', [ExportController::class, 'mbComan'])->name('mb.coman.export.pdf');
+   Route::get('mb/fm/export/pdf', [ExportController::class, 'mbFm'])->name('mb.fm.export.pdf');
 
 
 
@@ -227,6 +243,8 @@ Route::middleware(["auth"])->group(function () {
       Route::get('detail/{id}', [UserController::class, 'detail'])->name('user.detail');
       Route::put('update', [UserController::class, 'update'])->name('user.update');
       Route::get('delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+
+      Route::get('export/pdf', [UserController::class, 'exportPdf'])->name('user.export.pdf');
    });
 
    Route::prefix('intermilan')->group(function () {
@@ -545,10 +563,15 @@ Route::middleware(["auth"])->group(function () {
 // });
 
 
+Route::prefix('coman/vdr')->group(function () {
+   Route::put('approve', [VdrComanController::class, 'approve'])->name('vdr.coman.approve');
+   Route::get('reject/list', [VdrComanController::class, 'rejectList'])->name('vdr.coman.reject.list');
+   Route::get('history/list', [VdrComanController::class, 'historyList'])->name('vdr.coman.history.list');
+});
 
 
 // Level Admin
-Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
+Route::group(['middleware' => ['role:marine|superuser|suptent_loc|fm|admin-logistic|lead|admin-dsp|superadmin-dsp|admin-vdr|superadmin-vdr|suptent|chief']], function () {
    Route::prefix('m/statistic')->group(function () {
       Route::post('filter', [HomeController::class, 'indexFilter'])->name('statistic.filter');
    });
@@ -634,13 +657,20 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
          Route::get('history/list', [MarineVdrController::class, 'historyList'])->name('vdr.history.list');
          Route::post('history/filter', [MarineVdrController::class, 'historyFilter'])->name('vdr.history.filter');
 
+
+         Route::get('loan/marine', [MarineVdrController::class, 'loanMarine'])->name('vdr.marine.loan');
+         Route::put('loan/marine/approve', [MarineVdrController::class, 'loanMarineApprove'])->name('vdr.marine.loan.approve');
+
+
          Route::post("filter", [HomeController::class, "vdrFilter",])->name('vdr.filter');
          Route::get("history", [HomeController::class, "vdrMarineTable",])->name('vdr.marine.table');
          // Route::get("vessel-dashboard", [HomeController::class, "vdrVessel",])->name('vdr.vessel');
          // Route::get("user-dashboard", [HomeController::class, "dspUser",])->name('dsp.user');
 
+         Route::put('approve/fm', [MarineVdrController::class, 'approveFm'])->name('vdr.approve.fm');
          Route::put('approve/pet', [MarineVdrController::class, 'approvePet'])->name('vdr.approve.pet');
          Route::get('undo/pet/{id}', [MarineVdrController::class, 'undoPet'])->name('vdr.undo.pet');
+         Route::put('approve/lead', [MarineVdrController::class, 'approveLead'])->name('vdr.approve.lead');
          Route::get('undo/marine/{id}', [MarineVdrController::class, 'undoMarine'])->name('vdr.undo.marine');
          Route::get('undo/radop/{id}', [MarineVdrController::class, 'undoRadop'])->name('vdr.undo.radop');
          Route::get('undo/suptent/area/{id}', [MarineVdrController::class, 'undoSuptentArea'])->name('vdr.undo.suptent.area');
@@ -774,6 +804,9 @@ Route::group(['middleware' => ['role:marine|superuser|suptent_loc|admin-logistic
       Route::put('update', [VesselController::class, 'update'])->name('vessel.update');
 
       Route::get('delete/{vessel:id}', [VesselController::class, 'delete'])->name('vessel.delete');
+
+
+      Route::get('export/pdf', [VesselController::class, 'exportPdf'])->name('vessel.export.pdf');
 
       Route::get('crew', [VesselCrewController::class, 'index'])->name('vessel.crew');
    });

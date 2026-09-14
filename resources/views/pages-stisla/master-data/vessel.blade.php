@@ -19,73 +19,97 @@
         We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.
       </p> --}}
 
-      <div class="row">
-         <div class="col-md-3">
-            
-             <div class="section-header">
-               
-               <div class="breadcrumb-item ">Master Data</div>
-               <div class="breadcrumb-item active">Vessel</div>
-              
-            </div>
-            <a href="{{route('vessel.create')}}" class="btn btn-primary btn-block"><i class=" fas fa-plus"></i> Add New Vessel</a>
-            <hr>
-            <div class="card card-statistic-1 shadow-lg">
-               
-                  <div class="card-icon bg-info">
-                  <i class="fas fa-ship"></i>
-                  </div>
-                  <div class="card-wrap">
-                     <div class="card-header">
-                        
-                        <h4>Under PO</h4>
-                     </div>
-                     <div class="card-body">
-                        {{count($vessels->where('contract_type', 'Under PO'))}}
-                     </div>
-                  </div>
-            
-            </div>
-            <div class="card card-statistic-1 shadow-lg">
-               
-                  <div class="card-icon bg-primary">
-                  <i class="fas fa-ship"></i>
-                  </div>
-                  <div class="card-wrap">
-                  <div class="card-header">
-                     
-                     <h4>Non PO</h4>
-                  </div>
-                  <div class="card-body">
-                     {{count($vessels->where('contract_type', 'Non PO'))}}
-                  </div>
-                  </div>
-               
-            </div>
-            {{-- <div class="card shadow">
-               <div class="card-body">
-                  <b>Form Add Vessel</b>
-               <hr>
-            
-               <form action="{{route('vessel.store')}}" method="POST">
-                  @csrf
-                  <input type="text" name="name" id="name" class="form-control mb-2" placeholder="Vessel name...">
-                  <input type="text" name="type" id="type" class="form-control mb-2" placeholder="Vessel type...">
-                  <input type="email" name="email" id="email" class="form-control mb-2" placeholder="Email...">
-                  <input type="text" name="username" id="username" class="form-control" placeholder="Username...">
-                  <hr>
-                  <button type="submit" class="btn btn-info">Create New</button>
-               </form>
-               </div>
-            </div> --}}
-         </div>
-         <div class="col-md-9">
-            <div class="card shadow">
+      <div class="card shadow">
                {{-- <div class="card-header">
                   <h3>Vessel List</h3>
                </div> --}}
                <div class="card-body">
-                  <div class="d-flex justify-content-between">
+
+                  <div class="row">
+                     <div class="col-md-3">
+
+    <!-- Master Data Info -->
+    <div class="card shadow-none border mb-3">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <small class="text-muted d-block">Master Data</small>
+                <h5 class="mb-0">
+                    <i class="fas fa-ship text-primary mr-2"></i>
+                    Vessel Management
+                </h5>
+                <small class="text-muted">
+                    Manage vessel data, contracts, and export reports.
+                </small>
+            </div>
+
+            <hr>
+
+            <!-- Action Buttons -->
+            <div class="d-grid gap-2">
+
+                <a href="{{route('vessel.create')}}" class="btn btn-primary btn-block mb-2">
+                    <i class="fas fa-plus mr-1"></i>
+                    Add New Vessel
+                </a>
+
+                <a href="{{ route('vessel.export.pdf') }}" target="_blank" class="btn btn-danger btn-block">
+                    <i class="fas fa-file-pdf mr-1"></i>
+                    Export PDF
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Summary Stats -->
+    <div class="card shadow-none border mb-3">
+        <div class="card-body">
+
+            <h6 class="mb-3">
+                <i class="fas fa-chart-pie text-info mr-1"></i>
+                Vessel Summary
+            </h6>
+
+            <!-- Under PO -->
+            <div class="d-flex justify-content-between align-items-center mb-3 p-2 bg-light rounded">
+                <div>
+                    <small class="text-muted d-block">Under PO</small>
+                    <strong>{{count($vessels->where('contract_type','Under PO'))}}</strong>
+                </div>
+                <i class="fas fa-file-contract text-info fa-lg"></i>
+            </div>
+
+            <!-- Non PO -->
+            <div class="d-flex justify-content-between align-items-center p-2 bg-light rounded">
+                <div>
+                    <small class="text-muted d-block">Non PO</small>
+                    <strong>{{count($vessels->where('contract_type','Non PO'))}}</strong>
+                </div>
+                <i class="fas fa-anchor text-primary fa-lg"></i>
+            </div>
+
+        </div>
+    </div>
+
+
+    <!-- Quick Note -->
+    <div class="card shadow-none border">
+        <div class="card-body">
+            <div class="d-flex">
+                <i class="fas fa-info-circle text-warning mr-2 mt-1"></i>
+                <small class="text-muted">
+                    Ensure vessel contract type and operational status are updated regularly for accurate reporting.
+                </small>
+            </div>
+        </div>
+    </div>
+
+</div>
+                              <div class="col-md-9">
+                         <div class="d-flex justify-content-between">
                      <b><span class="text-uppercase">{{$data}}</span> Vessel List ({{count($vessels)}}) </b>
                      @if ($data == 'onhire')
                         <a href="{{route('vessel.offhire.list')}}"> Off Hire Vessel</a>
@@ -102,11 +126,11 @@
                         <tr>
                            {{-- <th class="text-center">No.</th> --}}
                            <th>Name</th>
+                           <th>Owner</th>
                            <th>Username</th>
-                           {{-- <th>Email</th> --}}
+                           <th>Email</th>
                            <th>Type</th>
                            <th>PO</th>
-                           <th>Password</th>
                            <th>Status</th>
                         </tr>
                      </thead>
@@ -115,8 +139,10 @@
                         <tr>
                            {{-- <td class="text-center">{{++$i}}</td> --}}
                            <td><a href="{{route('vessel.detail', enkripRambo($vessel->id))}}">{{$vessel->name}}</a> </td>
+                           
+                           <td>{{$vessel->office->name ?? ''}}</td>
                            <td>{{$vessel->username }}</td>
-                           {{-- <td>{{$vessel->email}}</td> --}}
+                           <td>{{$vessel->email}}</td>
                            <td>{{$vessel->type}}</td>
                            <td>
                               {{$vessel->contract_type}}
@@ -127,14 +153,6 @@
 
                               @if ($vessel->func != null)
                                  ({{$vessel->func}})
-                              @endif
-                           </td>
-
-                           <td>
-                              @if ($vessel->password_default == null)
-                                 Default
-                                  @else
-                                  Changed
                               @endif
                            </td>
                            <td>
@@ -158,8 +176,16 @@
                      </tbody>
                      </table>
                   </div>
+                     </div>
+                  </div>
+                 
                </div>
             </div>
+
+      <div class="row">
+         
+         <div class="col-md-9">
+            
          </div>
       </div>
     </div>

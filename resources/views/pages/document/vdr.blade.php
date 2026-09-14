@@ -1382,11 +1382,21 @@
                                         <td class="text-center bg-yellow">
                                             {{-- {{$vdrPeriodic->rob_time}} --}}
                                             {{-- {{$vdrPeriodic->rob_time->format(hh:mm) ?? '0'}} --}}
-                                            @if ($vdrPeriodic->rob_time != null)
-                                                {{ \Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('H:i') }}
+                                            @if ($vdrPeriodic->activity == 'Not Applicable')
+                                            -
+                                                @else
+                                                @if ($vdrPeriodic->rob_time != null)
+                                                @if ($vdrPeriodic->rob_time == '00:00:00')
+                                                    24:00
+                                                    @else
+                                                    {{ \Carbon\Carbon::parse($vdrPeriodic->rob_time)->format('H:i') }}
+                                                @endif
+                                                
                                             @else
                                                 -
                                             @endif
+                                            @endif
+                                            
 
                                         </td>
                                         <td class="text-center bg-yellow" style="border-right: none">
@@ -1486,6 +1496,30 @@
                </div> --}}
 
                         {{-- {{$vdr->title1}} --}}
+
+                        @if ($vdr->title11 != null)
+                        <div class="col pt-1">
+                            <small>Checked by,</small>
+                            <br>
+                            <small>{{ $vdr->title11 ?? '-' }} : {{ $vdr->name11 ?? '-' }}</small><br>
+                            @if ($vdr->title11 != null)
+                                <small>Status : <span
+                                        style="color:rgb(44, 133, 251)"><i>APPROVED</i></span></small><br>
+                                {{-- <small class="text-muted">{{formatDateTime($vdr->times->where('status', 2)->first()->created_at)}}</small><br> --}}
+                                @if ($vdr->timestamp11 != null)
+                                    <small>Time : <span style="color:rgb(44, 133, 251)"><i>
+                                                {{ $vdr->timestamp11 }}
+                                            </i></span></small><br>
+                                @endif
+                            @else
+                                <small>Status : ____________</small>
+                            @endif
+
+
+                        </div>
+
+
+                    @endif
 
                         @if ($vdr->title1 != null)
                             <div class="col pt-1">

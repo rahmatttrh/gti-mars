@@ -16,6 +16,20 @@ class Vessel extends Model
       return $this->belongsTo(Office::class);
    }
 
+   public function getTotalVdrs($month, $year)
+   {
+      $vdrVessels = Vdr::where('vessel_id', $this->id)
+         ->whereMonth('date', $month)
+         ->whereYear('date', $year)
+         ->where('status', 4)
+         ->get();
+
+      // dd($vdrVessels);
+
+      $totalVdrs = count($vdrVessels);
+      return $totalVdrs;
+   }
+
    // public function getVdrs()
    // {
    //    $to = Carbon::now();

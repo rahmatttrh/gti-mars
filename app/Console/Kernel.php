@@ -158,11 +158,13 @@ class Kernel extends ConsoleKernel
             $emailController->summaryVdrSuptentLoc('08:00', 'Cinta-T');
             // Log::info('test marine 21:00');
         })->dailyAt('09:07');
+        // ->dailyAt('09:07');
         $schedule->call(function () {
             $emailController = new EmailController();
             $emailController->summaryVdrSuptentLoc('08:00', 'Cinta-T');
             // Log::info('test marine 21:00');
         })->dailyAt('21:07');
+        // ->dailyAt('21:07');
 
         $schedule->call(function () {
             $emailController = new EmailController();
@@ -175,6 +177,38 @@ class Kernel extends ConsoleKernel
             $emailController->summaryVdrSuptentLoc('08:00', 'Widuri-T');
             // Log::info('test marine 21:00');
         })->dailyAt('21:10');
+
+
+
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrComan('08:00', '221');
+            // Log::info('test marine 21:00');
+        })->dailyAt('13:40');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrComan('08:00', '222');
+            // Log::info('test marine 21:00');
+        })->dailyAt('13:50');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrComan('08:00', '223');
+            // Log::info('test marine 21:00');
+        })->dailyAt('13:52');
+
+        $schedule->call(function () {
+            $emailController = new EmailController();
+            $emailController->summaryVdrComan('08:00', '225');
+            // Log::info('test marine 21:00');
+        })->dailyAt('13:55');
+
+
+
+
+
 
 
 

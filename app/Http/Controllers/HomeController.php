@@ -43,6 +43,7 @@ use App\Models\VdrTimestamp;
 use App\Models\VesselHistory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Testing\Fluent\Concerns\Has;
 use Throwable;
 
 class HomeController extends Controller
@@ -449,6 +450,8 @@ class HomeController extends Controller
 
 
 
+
+
       // $users = User::get();
       // foreach($users as $user){
       //    $user->update([
@@ -565,13 +568,183 @@ class HomeController extends Controller
       // }
 
 
+      // if (auth()->user()->username == 'lutfiaryanto') {
+      //    $to = Carbon::now();
+      //    $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+      //    $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
 
+
+      //    $cargoValidations = ModelsRequest::where('status', 1)->get();
+      //    $schedules = Schedule::orderBy('updated_at', 'desc')->paginate(10);
+      //    $cargoItems = CargoItem::where('cargo_id', '!=', null)->orderBy('updated_at', 'asc')->get();
+      //    $takeouts = ModelsRequest::where('undo', '!=', null)->get();
+      //    $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
+      //    $vessels = Vessel::get();
+      //    $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
+
+      //    $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
+      //    $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
+
+      //    $rawDates = [];
+      //    while ($start->lte($end)) {
+      //       $rawDates[] = $start->copy();
+      //       $start->addDay();
+      //    }
+      //    $dates = array();
+      //    $values = array();
+      //    $vdrsArray = array();
+      //    foreach ($rawDates as $d) {
+      //       $dates[] = $d->format('l, d/m/Y');
+      //       $totalRequests = ModelsRequest::where('date', $d->format('Y-m-d'))->get();
+      //       $values[] = count($totalRequests);
+      //    }
+
+      //    $logs = Log::orderBy('created_at', 'desc')->paginate(500);
+
+      //    $allVdrs = Vdr::orderBy('updated_at', 'desc')->paginate(700);
+
+
+
+
+      //    return view('main', [
+      //       'allVdrs' => $allVdrs,
+      //       'vdrs' => $vdrs,
+      //       'vdrValidations' => $vdrValidations,
+      //       'cargoValidations' => $cargoValidations,
+      //       'schedules' => $schedules,
+      //       'cargoItems' => $cargoItems,
+      //       'takeouts' => $takeouts,
+      //       'itemRejects' => $itemRejects,
+      //       'vessels' => $vessels,
+      //       'allRequests' => $allRequests,
+      //       'dates' => $dates,
+      //       'values' => $values,
+      //       'vdrsArray' => $vdrsArray,
+
+      //       'logs' => $logs
+
+      //    ])->with('i');
+      // }
+
+      // dd('test');
 
 
       if (auth()->user()->hasRole('superuser')) {
-
+         // dd('ok');
          $vessels = Vessel::get();
          $offices = Office::get();
+
+         // $accVdrs = Vdr::where('vessel_id', 31)
+         //    ->whereBetween('date', ['2026-08-01', '2026-08-13'])
+         //    ->get();
+         // // dd($accVdrs);
+         // foreach ($accVdrs as $accvdr) {
+         //    $accvdr->update([
+         //       'contract_end' => '2027-01-27'
+         //    ]);
+         // }
+         // dd($accVdrs);
+
+         $nonPoVessels = Vessel::where('contract_type', 'Non PO')->pluck('id');
+
+         // $arjunaVdrs = Vdr::whereIn('vessel_id', $nonPoVessels)->where('status', 5)->where('timestamp2', '!=', null)->get();
+         // // dd($arjunaVdrs);
+         // foreach ($arjunaVdrs as $vdr) {
+         //    $vdr->update([
+         //       'status' => 3
+         //    ]);
+         // }
+
+
+
+         $barges = Port::where('type', 'barge')->get();
+         // dd($barges);
+
+         foreach ($barges as $barge) {
+            // $user = User::create([
+            //    'name' => 'Coman ' . $barge->name,
+            //    'username' => 'coman_' . $barge->code,
+            //    'password' => Hash::make('oses@2025'),
+            //    'email' => 'coman_' . $barge->code . '@example.com',
+            //    'port_id' => $barge->id
+            // ]);
+
+            // $user->assignRole('suptent_loc');
+
+            // $employee = Employee::create([
+            //    'status' => 1,
+            //    'level' => 'supten_loc',
+            //    'area' => $barge->code,
+            //    'name' => 'Coman ' . $barge->name,
+            //    'username' => 'coman_' . $barge->code,
+            //    'email' =>  'coman_' . $barge->code . '@example.com',
+            // ]);
+         }
+
+
+
+         // $leadCom = Employee::create([
+         //    'status' => 1,
+         //    'level' => 'lead',
+         //    'area' => 'Security',
+         //    'name' => 'Lead Command',
+         //    'username' => 'leadcommand',
+         //    'email' => 'leadcommand@example.com'
+         // ]);
+
+         // $userLeadCom = User::create([
+         //    'name' => $leadCom->name,
+         //    'username' => $leadCom->username,
+         //    'email' => $leadCom->email,
+         //    'password' => Hash::make('oses@2025'),
+         // ]);
+
+         // $userLeadCom->assignRole('lead');
+
+
+
+         // $user = User::create([
+         //    'name' => 'Suptent Security',
+         //    'username' => 'suptent_security',
+         //    'password' => Hash::make('oses@2025'),
+         //    'email' => 'suptent_security@example.com',
+         //    // 'port_id' => $barge->id
+         // ]);
+
+         // $user->assignRole('suptent_loc');
+         // $employee = Employee::create([
+         //    'status' => 1,
+         //    'level' => 'suptent_loc',
+         //    'area' => 'Security',
+         //    'name' => 'Suptent Security',
+         //    'username' => 'suptent_security',
+         //    'email' =>  'suptent_security@example.com',
+         // ]);
+
+
+
+
+
+         // $comandwi = User::create([
+         //    'name' => 'Fuel Monitoring',
+         //    'username' => 'fm',
+         //    'email' => 'fm@example.com',
+         //    'password' => Hash::make('oses@2025'),
+
+         // ]);
+         // $comandwi->assignRole('fm');
+
+         // $cost = User::create([
+         //    'username' => 'costcontrol',
+         //    'name' => 'Cost Control',
+         //    'email' => 'costcontrol@example.com',
+         //    'password' => Hash::make('oses@2025'),
+         //    'created_at' => NOW(),
+         //    'updated_at' => NOW()
+         // ]);
+         // $cost->assignRole('costcontrol');
+
+
 
          // dd('ok');
 
@@ -803,6 +976,45 @@ class HomeController extends Controller
          // }
 
 
+         // $nonPoVessels = Vessel::where('contract_type', 'Non PO')->where('status', 1)->get();
+         // // dd($nonPoVessels);
+
+         // foreach ($nonPoVessels as $nv) {
+
+         //    $currentOffice = Office::find($nv->office_id);
+         //    if ($currentOffice) {
+         //       $currentOffice->delete();
+         //    }
+
+         //    $office = Office::create([
+         //       'name' => $nv->name . ' Office',
+         //       // 'description' => $nv->name .  'OFFICE',
+         //       'username' => $nv->username . '_office',
+         //       'code' =>  $nv->username,
+         //    ]);
+
+         //    $nv->update([
+         //       'office_id' => $office->id
+         //    ]);
+
+
+         //    $currentUser = User::where('username', $office->username)->first();
+         //    if ($currentUser) {
+         //       $currentUser->delete();
+         //    }
+
+         //    $user = User::create([
+         //       'name' => $office->name,
+         //       'username' => $office->username,
+         //       'email' =>  $office->code . 'office@example.com',
+         //       'password' => Hash::make('oses_2025'),
+         //       'created_at' => NOW(),
+         //       'updated_at' => NOW()
+         //    ]);
+         //    $user->assignRole('office');
+         // }
+
+
 
          // dd('ok');
          // $sburadop = User::create([
@@ -915,8 +1127,8 @@ class HomeController extends Controller
          $vessels = Vessel::get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
          $to = Carbon::now()->addMonth();
-         $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-
+         $allVdrs = Vdr::whereBetween('date', ['2026-02-01', $to])->orderBy('updated_at', 'desc')->paginate(2000);
+         // 2025-09-16
          $vdrEncone = Vdr::find(2992);
 
 
@@ -1023,6 +1235,26 @@ class HomeController extends Controller
          //       'remark' => 'offhire'
          //    ]);
          // }
+
+
+
+
+         // $employee = Employee::create([
+         //    'status' => 1,
+         //    // 'level' => 'supten_loc',
+         //    // 'area' => 'CBU',
+         //    'name' => 'Company Man',
+         //    'username' => 'coman',
+         //    'email' => 'coman@example.com'
+         // ]);
+
+         // $user = User::create([
+         //    'name' => $employee->name,
+         //    'username' => $employee->username,
+         //    'email' => $employee->email,
+         //    'password' => Hash::make('oses@2025'),
+         // ]);
+         // $user->assignRole('coman');
 
 
 
@@ -1670,10 +1902,11 @@ class HomeController extends Controller
 
          ]);
       } else if (auth()->user()->hasRole('suptent')) {
-         // dd('ok');
+
+
 
          $vdrValidations = Vdr::where('status', 3)->orderBy('updated_at', 'desc')->get();
-         $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->get();
+         $vdrs = Vdr::where('status', '>=', 3)->orderBy('updated_at', 'desc')->paginate(1000);
 
          // dd($vdrValidations);
 
@@ -1684,6 +1917,7 @@ class HomeController extends Controller
          $itemRejects = CargoItem::where('status', 0)->where('undo', '!=', null)->get();
          $vessels = Vessel::get();
          $allRequests = ModelsRequest::whereMonth('date', $today->format('m'))->whereYear('date', $today->format('Y'))->orderBy('date', 'asc')->simplePaginate('12');
+
 
          $start = Carbon::parse($today->format('Y-m'))->startOfMonth();
          $end = Carbon::parse($today->format('Y-m'))->endOfMonth();
@@ -1703,20 +1937,40 @@ class HomeController extends Controller
          }
 
          $logs = Log::get();
+         // dd('system');
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->paginate(1500);
+         // dd('suptent');
+         $to = Carbon::now();
+         $totalPendingVdr = Vdr::whereBetween('date', ['2025-09-16', $to])->where('status', 3)->count();
+         $totalRejectVdr = Vdr::whereBetween('date', ['2025-09-16', $to])->whereIn('status', [101, 202, 303])->count();
+         $totalHistoryVdr = Vdr::whereBetween('date', ['2025-09-16', $to])->where('status', 4)->count();
 
-         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
          $intermilan = Intermilan::orderBy('from', 'desc')->first();
          $dailyReports = DailyReport::orderBy('date', 'desc')->paginate(3);
+         if (auth()->user()->username == 'lutfiaryanto') {
+            // dd('perbaikan');
+            // $user = User::where('username', 'lutfiaryanto')->first();
 
+
+            // $user->roles()->detach();
+
+
+            // $user->assignRole('suptent');
+         }
          // $user = User::where('username', auth()->user()->username)->first();
          // $user->roles()->detach();
          // $user->assignRole('suptent');
-         // dd($user); 
+         // dd($user);
+
          return view('main-suptent', [
+            'totalPendingVdr' => $totalPendingVdr,
+            'totalRejectVdr' => $totalRejectVdr,
+            'totalHistoryVdr' => $totalHistoryVdr,
             'intermilan' => $intermilan,
             'dailyReports' => $dailyReports,
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
+            'notif' => collect(),
             'vdrValidations' => $vdrValidations,
             'cargoValidations' => $cargoValidations,
             'schedules' => $schedules,
@@ -1750,9 +2004,16 @@ class HomeController extends Controller
             $dailyReportAlert = false;
          }
 
+         $vdrMarines = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         $vesselNonPo = Vessel::where('contract_type', 'Non PO')->pluck('id');
+         $vdrNonPo = Vdr::where('status', 2)->whereIn('vessel_id', $vesselNonPo)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+
+         $vdrMarines = $vdrMarines->merge($vdrNonPo);
+
          $vessels = Vessel::get();
          return view('main-fleet', [
             'allVdrs' => $allVdrs,
+            'vdrMarines' => $vdrMarines,
             'vdrs' => $vdrs,
             'vessels' => $vessels,
             'vdrValidations' => $vdrValidations,
@@ -1766,6 +2027,9 @@ class HomeController extends Controller
          ])->with('i');
       } else if (auth()->user()->hasRole('marine')) {
 
+         // if (auth()->user()->username == 'lutfiaryanto') {
+         //    dd('test');
+         // }
          // $employee = Employee::create([
          //    'status' => 1,
          //    // 'level' => 'supten_loc',
@@ -1832,9 +2096,35 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'superadmin') {
             $to = Carbon::now();
 
+
+
+            // dd('superadmin');
             $vdrValidations = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
+
+            $vdrFm = Vdr::where('status', 11)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->count();
+            $vdrPet = Vdr::where('status', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->count();
+            $vdrMarine = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->count();
+            $vdrRadop = Vdr::where('status', 2)->whereNotIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->count();
+            $vdrSuptent = Vdr::where('status', 5)->whereBetween('date', ['2025-09-16', $to])->count();
+            $vdrMarineRep = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->count();
+            $vdrRecents = Vdr::whereBetween('date', ['2025-09-16', $to])->where('status', '>', 0)->orderBy('updated_at', 'desc')->paginate(1000);
+
+
+            $vdrMarines = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $vesselNonPo = Vessel::where('contract_type', 'Non PO')->pluck('id');
+            $vdrNonPo = Vdr::where('status', 2)->whereIn('vessel_id', $vesselNonPo)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+
+            $vdrMarine = $vdrMarines->merge($vdrNonPo);
+
+            $vesselLoanIds = Vessel::where('loan', 1)
+               ->pluck('id')
+               ->toArray();
+            $vdrLoans = Vdr::whereIn('vessel_id', $vesselLoanIds)->whereBetween('date', ['2025-09-16', $to])->where('status', 2)->orderBy('updated_at', 'desc')->get();
+
             $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->paginate(3000);
+            $totalCompleteVdr = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->count();
+
             $intermilans = Intermilan::orderBy('from', 'desc')->paginate(6);
             $dailyReports  = DailyReport::orderBy('date', 'desc')->paginate(3);
 
@@ -1852,8 +2142,35 @@ class HomeController extends Controller
             $offHireVessels = Vessel::where('status', 0)->get();
             $allVessels = Vessel::get();
             $logs = Log::orderBy('created_at', 'desc')->paginate(300);
+            // where('user_id', 227)->
+            $poVessels = Vessel::where('contract_type', 'Under PO')->pluck('id');
+            $poVessels = Vessel::where('contract_type', '!=', 'Under PO')->pluck('id');
+            // $vdrRecents = Vdr::whereIn('vessel_id', $poVessels)->whereBetween('date', ['2025-09-16', $to])->where('status', 1)->get();
+            // foreach ($vdrRecents as $vr) {
+
+            //    if ($vr->func == 'Security') {
+            //       // dd('sec');
+            //       $status = 22;
+            //    } else {
+            //       // dd('non sec');
+            //       $status = 5;
+            //    }
+            //    $vr->update([
+            //       'status' => $status
+            //    ]);
+            // }
+
 
             return view('main-superadmin', [
+               'totalCompleteVdr' => $totalCompleteVdr,
+               'vdrLoans' => $vdrLoans,
+               'vdrRecents' => $vdrRecents,
+               'vdrFm' => $vdrFm,
+               'vdrPet' => $vdrPet,
+               'vdrMarine' => $vdrMarine,
+               'vdrRadop' => $vdrRadop,
+               'vdrSuptent' => $vdrSuptent,
+               'vdrMarineRep' => $vdrMarineRep,
                'allVdrs' => $allVdrs,
                'vdrs' => $vdrs,
                'vdrValidations' => $vdrValidations,
@@ -1874,8 +2191,20 @@ class HomeController extends Controller
          } elseif (auth()->user()->username == 'marine') {
             $to = Carbon::now();
             $allVdrs = Vdr::whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
-            $vdrValidations = Vdr::where('status', 2)->where('area', '')->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            // $vdrValidations = Vdr::where('status', 2)->where('area', '')->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             // dd($vdrValidations);
+
+            $nonPoVesselIds = Vessel::where('contract_type', 'Non PO')
+               ->pluck('id')
+               ->toArray();
+
+            $vdrMarinePo = Vdr::where('status', 2)->whereIn('area', [null, ""])->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $vdrMarineNonPo = Vdr::where('status', 2)->whereIn('vessel_id', $nonPoVesselIds)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = $vdrMarinePo
+               ->merge($vdrMarineNonPo)
+               ->unique('id')
+               ->sortByDesc('updated_at');
+
 
             $vdrs = Vdr::where('status', '>=', 2)->whereBetween('date', ['2025-09-16', $to])->get();
             $intermilans = Intermilan::orderBy('from', 'desc')->paginate(10);
@@ -1916,6 +2245,7 @@ class HomeController extends Controller
 
             ])->with('i');
          } elseif (auth()->user()->username == 'lutfiaryanto') {
+            // dd('test');
             $to = Carbon::now();
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
             $vdrs = Vdr::where('status', '>=', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
@@ -1924,7 +2254,7 @@ class HomeController extends Controller
             $employee = Employee::where('email', auth()->user()->email)->first();
             $to = Carbon::now();
             $vdrValidations = Vdr::where('area', $employee->area)->where('status', 2)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'asc')->get();
-            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
             // $allVdrs = Vdr::where('area', $employee->area)->orderBy('updated_at', 'desc')->get();
             return view('main-radop', [
                'allVdrs' => $allVdrs,
@@ -1941,6 +2271,8 @@ class HomeController extends Controller
             $vdrs = null;
             $vdrValidations = Vdr::where('status', 3)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
          }
+
+
 
          // dd($vdrValidations);
 
@@ -1971,7 +2303,7 @@ class HomeController extends Controller
 
          $logs = Log::orderBy('created_at', 'desc')->paginate(500);
 
-         $allVdrs = Vdr::orderBy('updated_at', 'desc')->get();
+         $allVdrs = Vdr::orderBy('updated_at', 'desc')->paginate(700);
 
          if (auth()->user()->username == 'pet') {
             // dd('ok');
@@ -1995,6 +2327,8 @@ class HomeController extends Controller
 
             ])->with('i');
          }
+
+
          return view('main', [
             'allVdrs' => $allVdrs,
             'vdrs' => $vdrs,
@@ -2013,13 +2347,37 @@ class HomeController extends Controller
             'logs' => $logs
 
          ])->with('i');
+      } else if (auth()->user()->hasRole('lead')) {
+
+
+         $employee = Employee::where('email', auth()->user()->email)->first();
+         // dd($employee->area);
+         if ($employee->area != null) {
+            $vdrValidations = Vdr::where('func', $employee->area)->where('status', 22)->orderBy('updated_at', 'desc')->get();
+            // dd($vdrValidations);
+            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->orderBy('updated_at', 'desc')->get();
+         } else {
+            $allVdrs = Vdr::where('func', $employee->func)->where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
+            $vdrValidations = Vdr::where('func', $employee->func)->where('status', 22)->orderBy('updated_at', 'desc')->get();
+         }
+
+         // dd($vdrValidations);
+
+         // dd('suptent-loc');
+         // dd($allVdrs);
+         return view('main-lead', [
+            'employee' => $employee,
+            'allVdrs' => $allVdrs,
+            'vdrValidations' => $vdrValidations
+
+         ])->with('i');
       } else if (auth()->user()->hasRole('suptent_loc')) {
 
 
          $employee = Employee::where('email', auth()->user()->email)->first();
          if ($employee->area != null) {
             $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
-            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->orderBy('updated_at', 'desc')->get();
+            $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
          } else {
             $allVdrs = Vdr::where('func', $employee->func)->where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
             $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
@@ -2033,6 +2391,40 @@ class HomeController extends Controller
             'employee' => $employee,
             'allVdrs' => $allVdrs,
             'vdrValidations' => $vdrValidations
+
+         ])->with('i');
+      } else if (auth()->user()->hasRole('coman')) {
+
+
+         $employee = Employee::where('email', auth()->user()->email)->first();
+         $nonPoVesselIds = Vessel::where('contract_type', 'Non PO')
+            ->pluck('id')
+            ->toArray();
+
+         $vdrComans = Vdr::whereIn('vessel_id', $nonPoVesselIds)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+         $vdrRejects = Vdr::whereIn('vessel_id', $nonPoVesselIds)->whereIn('status',  [101, 202, 303])->orderBy('updated_at', 'desc')->get();
+         $vdrHistories = Vdr::whereIn('vessel_id', $nonPoVesselIds)->whereIn('status', [2, 3, 4])->orderBy('updated_at', 'desc')->get();
+
+
+         // if ($employee->area != null) {
+         //    $vdrValidations = Vdr::where('area', $employee->area)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+         //    $allVdrs = Vdr::where('area', $employee->area)->where('status', '>', 0)->where('status', '!=', 4)->orderBy('updated_at', 'desc')->get();
+         // } else {
+         //    $allVdrs = Vdr::where('func', $employee->func)->where('status', '>', 0)->orderBy('updated_at', 'desc')->get();
+         //    $vdrValidations = Vdr::where('func', $employee->func)->where('status', 5)->orderBy('updated_at', 'desc')->get();
+         // }
+
+         // dd($vdrValidations);
+
+         // dd('suptent-loc');
+         // dd($allVdrs);
+         return view('main-coman', [
+            'title' => 'waiting',
+            'employee' => $employee,
+            'vdrs' => $vdrComans,
+            'vdrComans' => $vdrComans,
+            'vdrRejects' => $vdrRejects,
+            'vdrHistories' => $vdrHistories
 
          ])->with('i');
       } else if (auth()->user()->username == 'lutfiaryanto') {
@@ -2103,7 +2495,6 @@ class HomeController extends Controller
 
          ])->with('i');
       } else if (auth()->user()->hasRole('office')) {
-
          // dd('ok');
          $now = Carbon::now();
          $office = Office::where('username', auth()->user()->username)->first();
@@ -2117,7 +2508,7 @@ class HomeController extends Controller
 
          // dd($vdrs);
 
-         return view('main', [
+         return view('main-office', [
             'office' => $office,
             'vessels' => $vessels,
             'vdrs' => $vdrs
@@ -2230,6 +2621,54 @@ class HomeController extends Controller
             'intermilans' => $intermilans,
             'date' => Carbon::create($firstDate),
             'userRequests' => $userRequests
+         ])->with('i');
+      } else if (auth()->user()->hasRole('costcontrol')) {
+         $now = Carbon::now();
+         $month = $now->month;
+         $year = $now->year;
+
+         $vessels = Vessel::get();
+         $vesselId = [];
+
+         foreach ($vessels as $vessel) {
+            $vesselId[] = $vessel->id;
+         }
+         $vdrs = Vdr::whereIn('vessel_id', $vesselId)->get();
+
+
+
+         $totalDays = Carbon::create($year, $month)->daysInMonth;
+
+         // dd($vdrs);
+
+         return view('main-costcontrol', [
+            'vessels' => $vessels,
+            'vdrs' => $vdrs,
+            'month' => $month,
+            'year' => $year,
+            'totalDays' => $totalDays
+
+         ])->with('i');
+      } else if (auth()->user()->hasRole('fm')) {
+
+         // $vessels = Vessel::where('contract_type', '!=', 'Under PO')->get();
+         $vessels = Vessel::get();
+         $vesselId = [];
+         foreach ($vessels as $vessel) {
+            $vesselId[] = $vessel->id;
+         }
+         // dd($vessels);
+         $to = Carbon::now();
+         $vdrValidations = Vdr::whereIn('vessel_id', $vesselId)->where('status', 11)->whereBetween('date', ['2025-09-16', $to])->orderBy('date', 'desc')->get();
+         // dd($vdrValidations);
+         $vdrs = Vdr::whereIn('vessel_id', $vesselId)->where('status', '>=', 1)->whereBetween('date', ['2025-09-16', $to])->orderBy('updated_at', 'desc')->get();
+         $logs = Log::whereIn('vessel_id', $vesselId)->orderBy('created_at', 'desc')->paginate(500);
+
+         return view('main-fm', [
+            'vdrValidations' => $vdrValidations,
+            'vdrs' => $vdrs,
+            'vessels' => $vessels,
+            'logs' => $logs
          ])->with('i');
       } else {
          // dd('ok');
@@ -2455,7 +2894,7 @@ class HomeController extends Controller
          // $elok = Vessel::where('imo', '9543483')->first();
          // dd($elok->name);
 
-         $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+         $url = 'https://api.scu.co.id/vtms/oses/position2?mmsi=all';
          $token = '73ob73y64nt3n63MP4tk4l1';
          $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -2670,6 +3109,10 @@ class HomeController extends Controller
    {
       // dd('ok');
       $this->map();
+
+      if (auth()->user()->username == 'radop_sbu' || auth()->user()->username == 'radop_cbu' || auth()->user()->username == 'radop_nbu' || auth()->user()->username == 'radop_cinta' || auth()->user()->username == 'radop_widuri') {
+         return redirect()->to('/');
+      }
 
       // $tegas = User::where('email', 'tegasjaya@gmail.com')->first();
       // dd($tegas);
@@ -3565,7 +4008,7 @@ class HomeController extends Controller
       // $elok = Vessel::where('imo', '9543483')->first();
       // dd($elok->name);
 
-      $url = 'https://api.scu.co.id/vtms/oses/position?mmsi=all';
+      $url = 'https://api.scu.co.id/vtms/oses/position2?mmsi=all';
       $token = '73ob73y64nt3n63MP4tk4l1';
       $response = Http::withHeaders([
          'Authorization' => 'Bearer ' . $token,

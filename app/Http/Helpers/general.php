@@ -46,6 +46,12 @@ function getRequestUserDate($date)
    return $requestUsers;
 }
 
+function formatDateTimeCompact($data)
+{
+   $date = \Carbon\Carbon::parse($data)->format('  d/m/y H:i ');
+   return $date;
+}
+
 
 
 function formatRibuan($data)
